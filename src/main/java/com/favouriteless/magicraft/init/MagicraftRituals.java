@@ -18,7 +18,7 @@ public class MagicraftRituals {
 
 
 
-    public static void init() {
+    public static void init() { // Adds ritual types to map
         RITUALS.put("RiteOfChargingStone", new RiteOfChargingStone(new ArrayList<Entity>()));
     }
 
@@ -70,63 +70,6 @@ public class MagicraftRituals {
             }
         }
         return null;
-    }
-
-
-
-    public static List<Entity> GetEntities(List<Entity> ritualEntitiesIn, Ritual ritual) {
-        List<EntityType<?>> targetEntities = ritual.ENTITIES;
-        HashMap<Item, Integer> targetItems = new HashMap<>(ritual.ITEMS);
-
-        List<Entity> ritualEntities = new ArrayList<>(ritualEntitiesIn);
-        List<Entity> out = new ArrayList<>();
-
-        boolean hasEntity = false;
-
-        // ENTITIES
-        for (EntityType<?> entityType : targetEntities) {
-            hasEntity = false;
-            for (Entity entity : ritualEntities) {
-                if (entity.getType() == entityType) {
-                    hasEntity = true;
-                    out.add(entity);
-                    ritualEntities.remove(entity);
-                    break;
-                }
-            }
-            if (!hasEntity) {
-                return null;
-            }
-        }
-
-        // ITEMS
-        for (Item item : targetItems.keySet()) {
-            hasEntity = false;
-            List<Entity> toRemove = new ArrayList<>();
-
-            for (Entity entity : ritualEntities) {
-                if (entity.getType() == EntityType.ITEM) {
-                    ItemEntity itemEntity = (ItemEntity) entity;
-
-                    if (itemEntity.getItem().getItem() == item) {
-                        out.add(entity);
-
-                        if (itemEntity.getItem().getCount() >= targetItems.get(item)) {
-                            hasEntity = true;
-                            targetItems.remove(item);
-                        }
-                        else { targetItems.put(item, targetItems.get(item) - itemEntity.getItem().getCount()); }
-
-                        toRemove.add(entity);
-                        if (hasEntity) { break; }
-                    }
-                }
-            }
-            if (!hasEntity) { return null; }
-            ritualEntities.removeAll(toRemove);
-
-        }
-        return out;
     }
 
 }

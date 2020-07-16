@@ -90,7 +90,7 @@ public abstract class Ritual implements ITickable {
     }
 
     @Override
-    public void tick() {
+    public void tick() { // Tick based activation stuff, ie items disappearing, entities dying, particles etc
         if(this.activating) {
             this.ticks++;
 
@@ -133,7 +133,7 @@ public abstract class Ritual implements ITickable {
 
     protected abstract void onTick();
 
-    public boolean CheckGlyphs(String[] glyphsIn) {
+    public boolean CheckGlyphs(String[] glyphsIn) { // Checks if the blocks in 15x15 area centered on gold chalk are correct for the ritual
 
         for (int i = 0; i < this.GLYPHS.length; i++) {
             if (this.GLYPHS[i].equals("X")) {
@@ -148,7 +148,7 @@ public abstract class Ritual implements ITickable {
         return true;
     }
 
-    public List<Entity> GetEntities(List<Entity> ritualEntitiesIn) {
+    public List<Entity> GetEntities(List<Entity> ritualEntitiesIn) { // Checks if entities within area are correct for ritual
         HashMap<Item, Integer> targetItems = new HashMap<>(this.ITEMS);
 
         List<Entity> ritualEntities = new ArrayList<>(ritualEntitiesIn);

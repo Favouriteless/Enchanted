@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 
 public class Distillery extends ContainerBlock {
 
+    // unfinished models but functionality done
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 

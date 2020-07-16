@@ -19,6 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ChalkBase extends Block {
 
+    // BASE CLASS FOR CHALK STUFF, DONT CHANGE
     public ChalkBase(Material material) {
         super(Block.Properties.create(material)
                 .hardnessAndResistance(2.5f, 0f)

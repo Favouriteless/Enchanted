@@ -21,6 +21,7 @@ import java.util.Random;
 
 public class ChalkCircle extends ChalkBase {
 
+    // Regular chalk types - red white purple
     public static final IntegerProperty GLYPH = IntegerProperty.create("glyph", 0, 47);
     public static final Random random = new Random();
     private final BasicParticleType particleType;

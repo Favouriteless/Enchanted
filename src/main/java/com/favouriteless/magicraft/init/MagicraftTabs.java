@@ -12,14 +12,6 @@ public class MagicraftTabs {
         }
     };
 
-    public static final ItemGroup ANIME = new ItemGroup(  "magicraft.anime") {
-        @Override
-        public ItemStack createIcon()
-        {
-            return new ItemStack(MagicraftItems.MEGUMIN.get());
-        }
-    };
-
     public static final ItemGroup INGREDIENTS = new ItemGroup(  "magicraft.ingredients") {
         @Override
         public ItemStack createIcon()

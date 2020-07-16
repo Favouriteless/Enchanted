@@ -14,6 +14,7 @@ public class MagicraftItems {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Magicraft.MOD_ID);
 
     // Block Items
+    public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(MagicraftBlocks.ALTAR.get(), new Item.Properties().group(MagicraftTabs.MAIN)));
     public static final RegistryObject<Item> LEATHER_BLOCK = ITEMS.register("leather_block", () -> new BlockItem(MagicraftBlocks.LEATHER_BLOCK.get(), new Item.Properties().group(MagicraftTabs.MAIN)));
     public static final RegistryObject<Item> WITCH_OVEN = ITEMS.register("witch_oven", () -> new BlockItem(MagicraftBlocks.WITCH_OVEN.get(), new Item.Properties().group(MagicraftTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(MagicraftBlocks.FUME_FUNNEL.get(), new Item.Properties().group(MagicraftTabs.MAIN)));

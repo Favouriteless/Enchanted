@@ -41,8 +41,6 @@ public class MagicraftItems {
     public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart", () -> new BlockItem(MagicraftBlocks.DEMON_HEART.get(), new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
 
     // Items
-    public static final RegistryObject<Item> MEGUMIN = ITEMS.register("megumin", () -> new Item(new Item.Properties().group(MagicraftTabs.ANIME)));
-    public static final RegistryObject<Item> YUE = ITEMS.register("yue", () -> new Item(new Item.Properties().group(MagicraftTabs.ANIME)));
 
     public static final RegistryObject<Item> CLAY_JAR_SOFT = ITEMS.register("clay_jar_soft", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
     public static final RegistryObject<Item> CLAY_JAR = ITEMS.register("clay_jar", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));

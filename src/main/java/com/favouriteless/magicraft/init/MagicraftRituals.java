@@ -19,7 +19,6 @@ public class MagicraftRituals {
 
 
     public static void init() {
-        RITUALS.put("MeguminRitual", new MeguminRitual(new ArrayList<Entity>()));
         RITUALS.put("RiteOfChargingStone", new RiteOfChargingStone(new ArrayList<Entity>()));
     }
 

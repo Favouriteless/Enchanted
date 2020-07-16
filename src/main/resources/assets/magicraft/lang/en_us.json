@@ -1,7 +1,4 @@
 {
-    "item.magicraft.megumin": "Megumin",
-    "item.magicraft.yue": "Yue",
-
     "item.magicraft.emerald_helmet": "Emerald Helmet",
     "item.magicraft.emerald_chestplate": "Emerald Chestplate",
     "item.magicraft.emerald_leggings": "Emerald Leggings",
@@ -64,7 +61,6 @@
     "container.distillery": "Distillery",
 
     "itemGroup.magicraft.main": "Magicraft",
-    "itemGroup.magicraft.anime": "Magicraft Anime",
     "itemGroup.magicraft.ingredients": "Magicraft Ingredients",
     "itemGroup.magicraft.plants": "Magicraft Plants"
 }

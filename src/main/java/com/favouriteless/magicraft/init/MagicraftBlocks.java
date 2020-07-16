@@ -44,6 +44,8 @@ public class MagicraftBlocks {
 
     public static final RegistryObject<Block> LEATHER_BLOCK = BLOCKS.register("leather_block", LeatherBlock::new);
 
+    public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", Altar::new);
+
     public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", WitchOven::new);
     public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", FumeFunnel::new);
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", FumeFunnelFiltered::new);

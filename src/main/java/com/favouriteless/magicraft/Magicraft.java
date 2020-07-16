@@ -35,7 +35,6 @@ public class Magicraft
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        WitchOvenTileEntity.init();
         MagicraftRituals.init();
     }
 }

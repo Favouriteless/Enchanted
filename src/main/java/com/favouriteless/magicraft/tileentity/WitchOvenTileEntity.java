@@ -34,32 +34,6 @@ import java.util.Random;
 public class WitchOvenTileEntity extends FurnaceTileEntityBase {
 
     private static final Random random = new Random();
-    private static final HashMap<Item, Item> BYPRODUCTS = new HashMap<Item, Item>();
-
-    public static void init() {
-        BYPRODUCTS.put(Items.BIRCH_SAPLING, MagicraftItems.BREATH_OF_THE_GODDESS.get());
-        BYPRODUCTS.put(Items.OAK_SAPLING, MagicraftItems.EXHALE_OF_THE_HORNED_ONE.get());
-        BYPRODUCTS.put(Items.JUNGLE_SAPLING, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.ACACIA_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.BIRCH_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.DARK_OAK_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.JUNGLE_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.OAK_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.SPRUCE_LOG, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.POTATO, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.BEEF, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.PORKCHOP, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.MUTTON, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.RABBIT, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.CHICKEN, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.COD, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.SALMON, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.KELP, MagicraftItems.FOUL_FUME.get());
-        BYPRODUCTS.put(Items.SPRUCE_SAPLING, MagicraftItems.HINT_OF_REBIRTH.get());
-        BYPRODUCTS.put(MagicraftItems.ROWAN_SAPLING.get(), MagicraftItems.WHIFF_OF_MAGIC.get());
-        BYPRODUCTS.put(MagicraftItems.HAWTHORN_SAPLING.get(), MagicraftItems.ODOUR_OF_PURITY.get());
-        BYPRODUCTS.put(MagicraftItems.ALDER_SAPLING.get(), MagicraftItems.REEK_OF_MISFORTUNE.get());
-    }
 
     public WitchOvenTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));

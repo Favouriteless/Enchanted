@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "magicraft:wood_ash"
+    }
+  ],
+  "result":
+  {
+    "item": "magicraft:quicklime",
+    "count": 1
+  }
+}

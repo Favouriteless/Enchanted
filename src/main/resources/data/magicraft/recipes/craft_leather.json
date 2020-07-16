@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "magicraft:leather_block"
+    }
+  ],
+  "result":
+  {
+    "item": "minecraft:leather",
+    "count": 9
+  }
+}

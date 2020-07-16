@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "magicraft:fume_funnel"
+    },
+    {
+      "item": "magicraft:fume_filter"
+    }
+  ],
+  "result":
+  {
+    "item": "magicraft:fume_funnel_filtered",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " b ",
+    "iii",
+    "ibi"
+  ],
+  "key":
+  {
+    "i": { "item": "minecraft:iron_ingot" },
+    "b": { "item": "minecraft:iron_bars" }
+  },
+  "result":
+  {
+    "item": "magicraft:witch_oven",
+    "count": 1
+  }
+}

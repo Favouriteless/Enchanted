@@ -1,0 +1,15 @@
+{
+  "type": "magicraft:distillery",
+  "iteminputs": [
+    { "item": "magicraft:clay_jar", "count": 3 },
+    { "item": "magicraft:breath_of_the_goddess", "count": 1 },
+    { "item": "minecraft:lapis_lazuli", "count": 1 }
+  ],
+  "itemoutputs": [
+    { "item": "magicraft:tear_of_the_goddess", "count": 1 },
+    { "item": "magicraft:whiff_of_magic", "count": 1 },
+    { "item": "minecraft:slime_ball", "count": 1 },
+    { "item": "magicraft:foul_fume", "count": 1 }
+  ],
+  "cookTime": 200
+}

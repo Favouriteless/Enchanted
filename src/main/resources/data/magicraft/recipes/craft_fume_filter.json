@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "ggg",
+    "iai",
+    "ggg"
+  ],
+  "key":
+  {
+    "i": { "item": "minecraft:iron_ingot" },
+    "a": { "item": "magicraft:attuned_stone_charged" },
+    "g": { "item": "minecraft:glass" }
+  },
+  "result":
+  {
+    "item": "magicraft:fume_filter",
+    "count": 1
+  }
+}

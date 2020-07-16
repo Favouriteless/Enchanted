@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "magicraft:chalk_gold",
+    "magicraft:chalk_white",
+    "magicraft:chalk_red",
+    "magicraft:chalk_purple"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:jungle_leaves",
+    "minecraft:oak_leaves",
+    "minecraft:spruce_leaves",
+    "minecraft:dark_oak_leaves",
+    "minecraft:acacia_leaves",
+    "minecraft:birch_leaves",
+    "magicraft:rowan_leaves",
+    "magicraft:hawthorn_leaves",
+    "magicraft:alder_leaves"
+  ]
+}

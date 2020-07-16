@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,lit=false": { "model": "magicraft:block/witch_oven" },
+    "facing=south,lit=false": { "model": "magicraft:block/witch_oven", "y": 180 },
+    "facing=west,lit=false":  { "model": "magicraft:block/witch_oven", "y": 270 },
+    "facing=east,lit=false":  { "model": "magicraft:block/witch_oven", "y": 90 },
+    "facing=north,lit=true": { "model": "magicraft:block/witch_oven_on" },
+    "facing=south,lit=true": { "model": "magicraft:block/witch_oven_on", "y": 180 },
+    "facing=west,lit=true":  { "model": "magicraft:block/witch_oven_on", "y": 270 },
+    "facing=east,lit=true":  { "model": "magicraft:block/witch_oven_on", "y": 90 }
+  }
+}

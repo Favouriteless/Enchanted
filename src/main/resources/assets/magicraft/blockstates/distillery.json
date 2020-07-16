@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,lit=false": { "model": "magicraft:block/distillery" },
+    "facing=south,lit=false": { "model": "magicraft:block/distillery", "y": 180 },
+    "facing=west,lit=false":  { "model": "magicraft:block/distillery", "y": 270 },
+    "facing=east,lit=false":  { "model": "magicraft:block/distillery", "y": 90 },
+    "facing=north,lit=true": { "model": "magicraft:block/distillery_on" },
+    "facing=south,lit=true": { "model": "magicraft:block/distillery_on", "y": 180 },
+    "facing=west,lit=true":  { "model": "magicraft:block/distillery_on", "y": 270 },
+    "facing=east,lit=true":  { "model": "magicraft:block/distillery_on", "y": 90 }
+  }
+}

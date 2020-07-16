@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:birch_sapling",
+  "result": "magicraft:breath_of_the_goddess",
+  "jarsneeded": 1
+}

@@ -6,6 +6,8 @@ import com.favouriteless.magicraft.containers.WitchOvenContainer;
 import com.favouriteless.magicraft.init.MagicraftBlocks;
 import com.favouriteless.magicraft.init.MagicraftItems;
 import com.favouriteless.magicraft.init.MagicraftTileEntities;
+import com.favouriteless.magicraft.recipe.distillery.DistilleryRecipe;
+import com.favouriteless.magicraft.recipe.witch_oven.WitchOvenRecipe;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,6 +28,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class WitchOvenTileEntity extends FurnaceTileEntityBase {
@@ -143,7 +146,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
             ItemStack itemstack2 = this.inventoryContents.get(2);
 
             if(random.nextInt(10) <= getByproductChance()) {
-                createByproduct(itemstack);
+                createByproduct();
             }
 
             if (itemstack2.isEmpty()) {
@@ -164,18 +167,18 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
         }
     }
 
-    private void createByproduct(ItemStack itemStackIn) {
-        Item inputItem = itemStackIn.getItem();
+    private void createByproduct() {
+        WitchOvenRecipe currentRecipe = matchRecipe();
         ItemStack outputStack = this.inventoryContents.get(4);
         ItemStack jarStack = this.inventoryContents.get(3);
 
-        if(BYPRODUCTS.keySet().contains(inputItem) && !jarStack.isEmpty()) {
+        if(currentRecipe != null && !jarStack.isEmpty()) {
             if (outputStack.isEmpty()) {
-                this.inventoryContents.set(4, new ItemStack(BYPRODUCTS.get(inputItem)));
-                jarStack.shrink(1);
-            } else if (outputStack.getItem() == BYPRODUCTS.get(inputItem) && outputStack.getCount() < outputStack.getMaxStackSize()) {
+                this.inventoryContents.set(4, currentRecipe.getOutput().copy());
+                jarStack.shrink(currentRecipe.getJarsNeeded());
+            } else if (outputStack.getItem() == currentRecipe.getOutput().getItem() && outputStack.getCount() < outputStack.getMaxStackSize()) {
                 outputStack.grow(1);
-                jarStack.shrink(1);
+                jarStack.shrink(currentRecipe.getJarsNeeded());
             }
         }
     }
@@ -219,6 +222,25 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
             }
         }
         return byproductChance;
+    }
+
+    private WitchOvenRecipe matchRecipe() {
+        WitchOvenRecipe currentRecipe = null;
+        if (world != null) {
+            currentRecipe = world.getRecipeManager()
+                    .getRecipes()
+                    .stream()
+                    .filter(recipe -> recipe instanceof WitchOvenRecipe)
+                    .map(recipe -> (WitchOvenRecipe) recipe)
+                    .filter(recipe -> matchRecipe(recipe))
+                    .findFirst()
+                    .orElse(null);
+        }
+        return currentRecipe;
+    }
+
+    private boolean matchRecipe(WitchOvenRecipe recipe) {
+        return recipe.matches(this.inventoryContents.get(0));
     }
 
 }

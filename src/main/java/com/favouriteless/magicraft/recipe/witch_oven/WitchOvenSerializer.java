@@ -16,8 +16,8 @@ public class WitchOvenSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>
     @Override
     public WitchOvenRecipe read(ResourceLocation recipeId, JsonObject json) {
 
-        ItemStack itemIn = new ItemStack(Registry.ITEM.getValue(new ResourceLocation(JSONUtils.getString(json, "ingredient"))).orElseThrow(() -> new IllegalStateException("Item does not exist")));
-        ItemStack itemOut = new ItemStack(Registry.ITEM.getValue(new ResourceLocation(JSONUtils.getString(json, "result"))).orElseThrow(() -> new IllegalStateException("Item does not exist")));
+        ItemStack itemIn = new ItemStack(Registry.ITEM.getValue(new ResourceLocation(JSONUtils.getString(json, "ingredient"))).orElseThrow(() -> new IllegalStateException("Item does not exist" + JSONUtils.getString(json, "ingredient"))));
+        ItemStack itemOut = new ItemStack(Registry.ITEM.getValue(new ResourceLocation(JSONUtils.getString(json, "result"))).orElseThrow(() -> new IllegalStateException("Item does not exist" + JSONUtils.getString(json, "result"))));
         int jarsNeeded = JSONUtils.getInt(json, "jarsneeded", 1);
 
         return new WitchOvenRecipe(recipeId, itemIn, itemOut, jarsNeeded);

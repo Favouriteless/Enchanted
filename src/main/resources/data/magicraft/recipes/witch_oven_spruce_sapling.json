@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:spruce_sapling",
+  "result": "magicraft:hint_of_rebirth",
+  "jarsneeded": 1
+}

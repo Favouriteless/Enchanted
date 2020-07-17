@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:rowan_sapling",
+  "result": "magicraft:whiff_of_magic",
+  "jarsneeded": 1
+}

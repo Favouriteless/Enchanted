@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:oak_sapling",
+  "result": "magicraft:exhale_of_the_horned_one",
+  "jarsneeded": 1
+}

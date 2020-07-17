@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:hawthorn_sapling",
+  "result": "magicraft:odour_of_purity",
+  "jarsneeded": 1
+}

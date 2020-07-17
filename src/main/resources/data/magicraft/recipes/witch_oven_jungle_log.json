@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:jungle_log",
+  "result": "magicraft:foul_fume",
+  "jarsneeded": 1
+}

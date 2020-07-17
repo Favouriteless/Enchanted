@@ -1,0 +1,6 @@
+{
+  "type": "magicraft:witch_oven",
+  "ingredient": "minecraft:alder_sapling",
+  "result": "magicraft:reek_of_misfortune",
+  "jarsneeded": 1
+}

@@ -6,6 +6,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 
 import javax.annotation.Nullable;
 
@@ -27,6 +28,11 @@ public class Altar extends Block {
     /* I wont do logic for you but this is called when the block is placed and needs to return if it is joined or not.
     it needs to detect a 2x3 area of altar blocks, if so return with JOINED true, else JOINED false
      */
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(JOINED);
+    }
 
 
 

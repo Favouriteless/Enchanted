@@ -1,15 +1,12 @@
 {
-    "item.magicraft.megumin": "Megumin",
-    "item.magicraft.yue": "Yue",
-
     "item.magicraft.emerald_helmet": "Casque émeraude",
     "item.magicraft.emerald_chestplate": "Pansière d'émeraude",
     "item.magicraft.emerald_leggings": "Jambières émeraude",
-    "item.magicraft.emerald_boots": "Emerald Boots",
+    "item.magicraft.emerald_boots": "Bottes émeraude",
 
     "item.magicraft.chalk_gold": "Craie dorée",
     "item.magicraft.chalk_white": "Craie blanche",
-    "item.magicraft.chalk_red": "Craie blanche",
+    "item.magicraft.chalk_red": "Craie rouge",
     "item.magicraft.chalk_purple": "Craie violette",
 
     "item.magicraft.breath_of_the_goddess": "Souffle de la déesse",
@@ -43,7 +40,7 @@
 
 	"block.magicraft.leather_block": "Bloc de cuir",
      "block.magicraft.witch_oven": "Four à sorcières",
-     "block.magicraft.fume_funnel": "Fume Funnel",
+     "block.magicraft.fume_funnel": "Entonnoir de fumées",
      "block.magicraft.fume_funnel_filtered": "Entonnoir de fumées filtrées",
      "block.magicraft.distillery": "Distillerie",
      "block.magicraft.rowan_log": "Journal de Rowan",
@@ -65,7 +62,6 @@
     "container.distillery": "Distillerie",
 
     "itemGroup.magicraft.main": "Magicraft",
-    "itemGroup.magicraft.anime": "Magicraft Anime",
     "itemGroup.magicraft.ingredients": "Ingrédients de Magicraft",
     "itemGroup.magicraft.plants": "Plantes de Magicraft"
 }

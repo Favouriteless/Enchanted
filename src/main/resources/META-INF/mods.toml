@@ -19,7 +19,7 @@ displayName="MagiCraft" #mandatory
 
 logoFile="examplemod.png" #optional
 
-#credits="Heavily inspired by Witchery (by Emoniph)" #optional
+#credits="Heavily inspired by Enimoph's witchery mod" #optional
 
 authors="Favouriteless" #optional
 # The description text for the mod (multi line!) (#mandatory)

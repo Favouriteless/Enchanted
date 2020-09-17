@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class MagicraftItems {
 
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Magicraft.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Magicraft.MOD_ID);
 
     // Block Items
     public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(MagicraftBlocks.ALTAR.get(), new Item.Properties().group(MagicraftTabs.MAIN)));
@@ -34,10 +34,10 @@ public class MagicraftItems {
     public static final RegistryObject<Item> ALDER_LEAVES = ITEMS.register("alder_leaves", () -> new BlockItem(MagicraftBlocks.ALDER_LEAVES.get(), new Item.Properties().group(MagicraftTabs.PLANTS)));
     public static final RegistryObject<Item> ALDER_SAPLING = ITEMS.register("alder_sapling", () -> new BlockItem(MagicraftBlocks.ALDER_SAPLING.get(), new Item.Properties().group(MagicraftTabs.PLANTS)));
 
-    public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", ChalkGoldItem::new);
-    public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(MagicraftBlocks.CHALK_WHITE.get(), "white"));
-    public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(MagicraftBlocks.CHALK_RED.get(), "red"));
-    public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(MagicraftBlocks.CHALK_PURPLE.get(), "purple"));
+    public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", () -> new ChalkItem(new Item.Properties().group(MagicraftTabs.MAIN).maxStackSize(1).maxDamage(3), MagicraftBlocks.CHALK_GOLD.get()));
+    public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().group(MagicraftTabs.MAIN).maxStackSize(1).maxDamage(40), MagicraftBlocks.CHALK_WHITE.get()));
+    public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().group(MagicraftTabs.MAIN).maxStackSize(1).maxDamage(40), MagicraftBlocks.CHALK_RED.get()));
+    public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(new Item.Properties().group(MagicraftTabs.MAIN).maxStackSize(1).maxDamage(40), MagicraftBlocks.CHALK_PURPLE.get()));
 
     public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart", () -> new BlockItem(MagicraftBlocks.DEMON_HEART.get(), new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
 

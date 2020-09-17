@@ -1,7 +1,6 @@
 package com.favouriteless.magicraft;
 
 import com.favouriteless.magicraft.init.*;
-import com.favouriteless.magicraft.tileentity.WitchOvenTileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;

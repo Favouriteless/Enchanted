@@ -1,26 +1,34 @@
-
+# This is an example mods.toml file. It contains the data relating to the loading mods.
+# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
+# The overall format is standard TOML format, v0.5.0.
+# Note that there are a couple of TOML lists in this file.
+# Find more information on toml format here:  https://github.com/toml-lang/toml
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
-
-loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-
-#issueTrackerURL="http://my.issue.tracker/" #optional
-
+# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
+loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+# The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
+# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+license="GNU General Public License v3.0"
+# A URL to refer people to when problems occur with this mod
+issueTrackerURL="http://my.issue.tracker/" #optional
+# A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
-
+# The modid of the mod
 modId="magicraft" #mandatory
-
-version="1.15.2-1.0.0" #mandatory
-
+# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+version="1.16.3-1.0.0" #mandatory
+ # A display name for the mod
 displayName="MagiCraft" #mandatory
-
-#updateJSONURL="http://myurl.me/" #optional
-
-#displayURL="http://example.com/" #optional
-
+# A URL to query for updates for this mod. See the JSON update specification <here>
+updateJSONURL="http://myurl.me/" #optional
+# A URL for the "homepage" for this mod, displayed in the mod UI
+displayURL="http://example.com/" #optional
+# A file name (in the root of the mod JAR) containing a logo for display
 logoFile="examplemod.png" #optional
-
-#credits="Heavily inspired by Enimoph's witchery mod" #optional
-
+# A text field displayed in the mod UI
+credits="Heavily inspired by Enimoph's witchery mod" #optional
+# A text field displayed in the mod UI
 authors="Favouriteless" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
@@ -33,7 +41,7 @@ This mod adds various magical spells and items to the game
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[31,)" #mandatory
+    versionRange="[34,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -42,6 +50,7 @@ This mod adds various magical spells and items to the game
 [[dependencies.examplemod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.3]"
     ordering="NONE"
     side="BOTH"
+

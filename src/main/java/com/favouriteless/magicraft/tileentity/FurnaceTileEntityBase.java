@@ -115,43 +115,43 @@ public abstract class FurnaceTileEntityBase extends LockableLootTileEntity imple
     protected abstract ITextComponent getDefaultName();
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
         this.inventoryContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.inventoryContents);
-        this.burnTime = compound.getInt("BurnTime");
-        this.cookTime = compound.getInt("CookTime");
-        this.cookTimeTotal = compound.getInt("CookTimeTotal");
+        ItemStackHelper.loadAllItems(nbt, this.inventoryContents);
+        this.burnTime = nbt.getInt("BurnTime");
+        this.cookTime = nbt.getInt("CookTime");
+        this.cookTimeTotal = nbt.getInt("CookTimeTotal");
         this.recipesUsed = this.getBurnTime(this.inventoryContents.get(1));
-        int i = compound.getShort("RecipesUsedSize");
+        int i = nbt.getShort("RecipesUsedSize");
 
         for(int j = 0; j < i; ++j) {
-            ResourceLocation resourcelocation = new ResourceLocation(compound.getString("RecipeLocation" + j));
-            int k = compound.getInt("RecipeAmount" + j);
+            ResourceLocation resourcelocation = new ResourceLocation(nbt.getString("RecipeLocation" + j));
+            int k = nbt.getInt("RecipeAmount" + j);
             this.field_214022_n.put(resourcelocation, k);
         }
 
-        this.readAdditional(compound);
+        this.readAdditional(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
-        compound.putInt("BurnTime", this.burnTime);
-        compound.putInt("CookTime", this.cookTime);
-        compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        ItemStackHelper.saveAllItems(compound, this.inventoryContents);
-        compound.putShort("RecipesUsedSize", (short)this.field_214022_n.size());
+    public CompoundNBT write(CompoundNBT nbt) {
+        super.write(nbt);
+        nbt.putInt("BurnTime", this.burnTime);
+        nbt.putInt("CookTime", this.cookTime);
+        nbt.putInt("CookTimeTotal", this.cookTimeTotal);
+        ItemStackHelper.saveAllItems(nbt, this.inventoryContents);
+        nbt.putShort("RecipesUsedSize", (short)this.field_214022_n.size());
         int i = 0;
 
         for(Map.Entry<ResourceLocation, Integer> entry : this.field_214022_n.entrySet()) {
-            compound.putString("RecipeLocation" + i, entry.getKey().toString());
-            compound.putInt("RecipeAmount" + i, entry.getValue());
+            nbt.putString("RecipeLocation" + i, entry.getKey().toString());
+            nbt.putInt("RecipeAmount" + i, entry.getValue());
             ++i;
         }
 
-        this.writeAdditional(compound);
-        return compound;
+        this.writeAdditional(nbt);
+        return nbt;
     }
 
     protected void readAdditional(CompoundNBT nbt) {}

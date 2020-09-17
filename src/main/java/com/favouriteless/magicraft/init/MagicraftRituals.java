@@ -49,7 +49,7 @@ public class MagicraftRituals {
                     ritualTag.getDouble("zPos"),
                     ritualTag.getUniqueId("casterUUID"),
                     ritualTag.getUniqueId("targetUUID"),
-                    ritualTag.getInt("dimensionID"),
+                    ritualTag.getString("dimensionKey"),
                     world)
             );
 

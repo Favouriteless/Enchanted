@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public enum MagicraftArmorMaterials implements IArmorMaterial
 {
-    EMERALD(Magicraft.MOD_ID + ":emerald", 33, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+    EMERALD(Magicraft.MOD_ID + ":emerald", 33, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, 0, () -> {
         return Ingredient.fromItems(Items.EMERALD);
     });
 
@@ -27,8 +27,9 @@ public enum MagicraftArmorMaterials implements IArmorMaterial
     private final SoundEvent soundEvent;
     private final float toughness;
     private final LazyValue<Ingredient> repairMaterial;
+    private final float knockbackResistance;
 
-    MagicraftArmorMaterials(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountIn, int enchantabilityIn, SoundEvent soundEventIn, float toughnessIn, Supplier<Ingredient> repairMaterialIn)
+    MagicraftArmorMaterials(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountIn, int enchantabilityIn, SoundEvent soundEventIn, float toughnessIn, float knockbackResistance, Supplier<Ingredient> repairMaterialIn)
     {
         this.name = nameIn;
         this.maxDamageFactor = maxDamageFactorIn;
@@ -37,6 +38,7 @@ public enum MagicraftArmorMaterials implements IArmorMaterial
         this.soundEvent = soundEventIn;
         this.toughness = toughnessIn;
         this.repairMaterial = new LazyValue<>(repairMaterialIn);
+        this.knockbackResistance = 0f;
     }
 
     @Override
@@ -73,5 +75,10 @@ public enum MagicraftArmorMaterials implements IArmorMaterial
     @Override
     public float getToughness() {
         return this.toughness;
+    }
+
+    @Override
+    public float getKnockbackResistance() {
+        return this.knockbackResistance;
     }
 }

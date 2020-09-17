@@ -147,14 +147,8 @@ public class FumeFunnel extends Block {
             Block.makeCuboidShape(1, 3, 4, 2, 10, 7), Block.makeCuboidShape(0, 4, 10, 1, 8, 11), Block.makeCuboidShape(0, 3, 14, 15, 4, 15)
     ).reduce((v1, v2) -> {return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);}).get();
 
-    public FumeFunnel() {
-        super(Block.Properties.create(Material.IRON)
-                .hardnessAndResistance(5.0F, 6.0F)
-                .sound(SoundType.ANVIL)
-                .notSolid()
-                .harvestLevel(1)
-                .harvestTool(ToolType.PICKAXE)
-        );
+    public FumeFunnel(Block.Properties builder) {
+        super(builder);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(LIT, false).with(TYPE, 0));
     }
 
@@ -208,11 +202,6 @@ public class FumeFunnel extends Block {
                         return SHAPE_DEFAULT_EAST;
                 }
         }
-    }
-
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(LIT) ? 13 : 0;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -307,7 +296,6 @@ public class FumeFunnel extends Block {
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 
         BlockPos pos = currentPos;
-        World world = worldIn.getWorld();
 
         Direction _facing = stateIn.get(FACING);
         int _type = 3;
@@ -315,8 +303,8 @@ public class FumeFunnel extends Block {
 
         for(Direction dir : Direction.values()) {
             if(dir != Direction.UP) {
-                if (world.getBlockState(pos.add(dir.getDirectionVec())).getBlock() == MagicraftBlocks.WITCH_OVEN.get()) {
-                    BlockState ovenState = world.getBlockState(pos.add(dir.getDirectionVec()));
+                if (worldIn.getBlockState(pos.add(dir.getDirectionVec())).getBlock() == MagicraftBlocks.WITCH_OVEN.get()) {
+                    BlockState ovenState = worldIn.getBlockState(pos.add(dir.getDirectionVec()));
 
                     if (dir != ovenState.get(WitchOven.FACING) && dir != ovenState.get(WitchOven.FACING).getOpposite()) {
 

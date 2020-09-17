@@ -5,9 +5,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -17,8 +20,8 @@ import java.util.UUID;
 public class RitualTemplate extends Ritual {
 
     // This constructor is for loading entities. Do not use.
-    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, int dimensionId, ServerWorld world) {
-        super(xPos, yPos, zPos, caster, target, dimensionId, world);
+    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
+        super(xPos, yPos, zPos, caster, target, world);
     }
 
     public RitualTemplate(List<Entity> entitiesNeeded) {
@@ -59,8 +62,12 @@ public class RitualTemplate extends Ritual {
     } // Change RitualTemplate in this method to new class name
 
     @Override
-    public Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, int dimensionId, ServerWorld world) {
-        return new RitualTemplate(xPos, yPos, zPos, caster, target, dimensionId, world);
+    public Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
+        ResourceLocation dimensionKey = new ResourceLocation(dimensionString);
+        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionKey);
+        ServerWorld world = serverWorld.getServer().getWorld(key);
+
+        return new RitualTemplate(xPos, yPos, zPos, caster, target, world);
     } // Change RitualTemplate in this method to new class name
 
 

@@ -48,14 +48,8 @@ public class Distillery extends ContainerBlock {
 
 
 
-    public Distillery() {
-        super(Block.Properties.create(Material.IRON)
-                .hardnessAndResistance(5.0F, 6.0F)
-                .sound(SoundType.ANVIL)
-                .notSolid()
-                .harvestLevel(1)
-                .harvestTool(ToolType.PICKAXE)
-        );
+    public Distillery(Block.Properties builder) {
+        super(builder);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
     }
 
@@ -125,11 +119,6 @@ public class Distillery extends ContainerBlock {
         }
     }
      */
-
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(LIT) ? 13 : 0;
-    }
 
     @OnlyIn(Dist.CLIENT)
     public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {

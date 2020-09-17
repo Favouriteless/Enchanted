@@ -4,8 +4,10 @@ import com.google.gson.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
@@ -37,8 +39,7 @@ public class StaticJSONHelper {
 
     private static ItemStack deserializeItem(JsonObject json) {
         if (json.has("item")) {
-            ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getString(json, "item"));
-            ItemStack stack = Registry.ITEM.getValue(resourcelocation).orElseThrow(() -> new JsonSyntaxException("Unknown item '" + resourcelocation + "'")).getDefaultInstance();
+            ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getString(json, "item"))));
             stack.setCount(Math.max(1, JSONUtils.getInt(json, "count")));
             return stack;
         } else {

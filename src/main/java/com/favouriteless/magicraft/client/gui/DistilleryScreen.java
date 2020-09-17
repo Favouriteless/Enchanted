@@ -3,6 +3,7 @@ package com.favouriteless.magicraft.client.gui;
 import com.favouriteless.magicraft.Magicraft;
 import com.favouriteless.magicraft.containers.DistilleryContainer;
 import com.favouriteless.magicraft.containers.WitchOvenContainer;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,40 +36,40 @@ public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
         ySize = 166;
     }
 
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     // Draw the Tool tip text if hovering over something of interest on the screen
-    protected void renderHoveredToolTip(int mouseX, int mouseY) {
+    protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
         if (!this.minecraft.player.inventory.getItemStack().isEmpty()) return;  // no tooltip if the player is dragging something
-            super.renderHoveredToolTip(mouseX, mouseY);
+            super.renderHoveredTooltip(matrixStack, x, y);
     }
 
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int x, int y) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
         int edgeSpacingX = (this.width - this.xSize) / 2;
         int edgeSpacingY = (this.height - this.ySize) / 2;
-        this.blit(edgeSpacingX, edgeSpacingY, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.xSize, this.ySize);
 
         // Draw cook progress bar
         int cookProgressionScaled = this.container.getCookProgressionScaled(COOK_BAR_WIDTH);
-        this.blit(this.guiLeft + COOK_BAR_XPOS, this.guiTop + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
+        this.blit(matrixStack, this.guiLeft + COOK_BAR_XPOS, this.guiTop + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
 
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
         final int LABEL_XPOS = 62;
         final int LABEL_YPOS = 5;
-        font.drawString(title.getFormattedText(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
+        font.drawString(matrixStack, title.getUnformattedComponentText(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
     }
 
     // Returns true if the given x,y coordinates are within the given rectangle

@@ -3,7 +3,6 @@ package com.favouriteless.magicraft.blocks;
 import com.favouriteless.magicraft.init.MagicraftTileEntities;
 import com.favouriteless.magicraft.tileentity.WitchOvenTileEntity;
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -25,7 +24,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -64,14 +62,8 @@ public class WitchOven extends ContainerBlock {
 
 
 
-    public WitchOven() {
-        super(Block.Properties.create(Material.IRON)
-                .hardnessAndResistance(5.0F, 6.0F)
-                .sound(SoundType.ANVIL)
-                .notSolid()
-                .harvestLevel(1)
-                .harvestTool(ToolType.PICKAXE)
-        );
+    public WitchOven(AbstractBlock.Properties builder) {
+        super(builder);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
     }
 
@@ -139,11 +131,6 @@ public class WitchOven extends ContainerBlock {
             case EAST:
                 return SHAPE_EAST;
         }
-    }
-
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(LIT) ? 13 : 0;
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -5,13 +5,12 @@ import com.favouriteless.magicraft.tileentity.*;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class MagicraftTileEntities {
 
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Magicraft.MOD_ID);
+    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Magicraft.MOD_ID);
 
     public static final RegistryObject<TileEntityType<ChalkGoldTileEntity>> CHALK_GOLD = TILE_ENTITY_TYPES.register("chalk_gold",
             () -> TileEntityType.Builder.create(ChalkGoldTileEntity::new, MagicraftBlocks.CHALK_GOLD.get()).build(null));

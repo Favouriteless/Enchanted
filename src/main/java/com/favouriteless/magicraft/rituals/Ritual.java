@@ -17,7 +17,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.*;
@@ -46,10 +45,10 @@ public abstract class Ritual implements ITickable {
 
     public Ritual() { this.name = "Ritual"; }
 
-    public Ritual(double xPos, double yPos, double zPos, UUID caster, UUID target, int dimensionId, ServerWorld world) {
+    public Ritual(double xPos, double yPos, double zPos, UUID caster, UUID target, World world) {
         this();
         this.pos = new BlockPos(xPos, yPos, zPos);
-        this.world = world.getServer().getWorld(Objects.requireNonNull(DimensionType.getById(dimensionId)));
+        this.world = world;
         this.state = this.world.getBlockState(this.pos);
         this.casterUUID = caster;
         this.targetUUID = target;
@@ -58,14 +57,14 @@ public abstract class Ritual implements ITickable {
 
     public abstract void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID);
     public abstract Ritual GetRitual(List<Entity> entitiesNeeded);
-    public abstract Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, int dimensionId, ServerWorld world);
+    public abstract Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionKey, ServerWorld world);
 
     public CompoundNBT GetTag() {
         CompoundNBT tag = new CompoundNBT();
 
         tag.putString("name", this.name);
 
-        tag.putInt("dimensionID", this.world.getDimension().getType().getId());
+        tag.putString("dimensionKey", this.world.getDimensionKey().getRegistryName().toString());
 
         tag.putDouble("xPos", this.pos.getX());
         tag.putDouble("yPos", this.pos.getY());

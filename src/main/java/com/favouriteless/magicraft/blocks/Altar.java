@@ -14,10 +14,8 @@ public class Altar extends Block {
 
     public static final BooleanProperty JOINED = BooleanProperty.create("joined"); // this is the property itself
 
-    public Altar() {
-        super(Block.Properties.create(Material.ROCK)
-                .hardnessAndResistance(5.0F, 6.0F)
-                .sound(SoundType.STONE));
+    public Altar(Block.Properties builder) {
+        super(builder);
     }
 
     @Override

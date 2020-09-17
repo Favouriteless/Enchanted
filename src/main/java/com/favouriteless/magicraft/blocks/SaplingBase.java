@@ -19,7 +19,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Random;
 import java.util.function.Supplier;
-
+/*
 public class SaplingBase extends BushBlock implements IGrowable {
 
     public static final IntegerProperty STAGE = BlockStateProperties.STAGE_0_1;
@@ -74,3 +74,5 @@ public class SaplingBase extends BushBlock implements IGrowable {
         builder.add(STAGE);
     }
 }
+ */
+public class SaplingBase {}

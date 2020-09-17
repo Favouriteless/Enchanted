@@ -53,7 +53,7 @@ public class MagicraftBlocks {
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new Altar(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.STONE)));
 
     public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", () -> new WitchOven(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.ANVIL).notSolid().setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE).setLightLevel(getLightValueLit(13))));
-    public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnel(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.ANVIL).notSolid().setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnel(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.ANVIL).notSolid().setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE).setLightLevel(getLightValueLit(13))));
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", () -> new FumeFunnel(Block.Properties.from(FUME_FUNNEL.get())));
 
     public static final RegistryObject<Block> DISTILLERY = BLOCKS.register("distillery", () -> new Distillery(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.ANVIL).notSolid().setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE).setLightLevel(getLightValueLit(13))));

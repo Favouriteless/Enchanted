@@ -15,9 +15,9 @@ public class RowanTree extends Tree {
     public static final BaseTreeFeatureConfig ROWAN_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(
             new SimpleBlockStateProvider(MagicraftBlocks.ROWAN_LOG.get().getDefaultState()),
             new SimpleBlockStateProvider(MagicraftBlocks.ROWAN_LEAVES.get().getDefaultState()),
-            new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3),
-            new StraightTrunkPlacer(4, 2, 0),
-            new TwoLayerFeature(1, 0, 1)))
+            new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(0), 3),
+            new StraightTrunkPlacer(4, 4, 0),
+            new TwoLayerFeature(2, 0, 1)))
             .setIgnoreVines()
             .build();
 

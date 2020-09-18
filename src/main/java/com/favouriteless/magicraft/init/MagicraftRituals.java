@@ -25,6 +25,7 @@ public class MagicraftRituals {
         CHARACTER_MAP.put(MagicraftMaterials.PURPLECHALK, "P");
         CHARACTER_MAP.put(Material.AIR, "A");
 
+        // THE ORDER IN WHICH THESE ARE PUT IS THE PRIORITY IN WHICH THEY ARE USED. CARE FOR OVERLAPPING INGREDIENTS IN RITUALS, THE ONE PUT FIRST WILL BE EXECUTED FIRST AND THE SECOND WILL BE UNUSABLE
         RITUALS.put("RiteOfChargingStone", new RiteOfChargingStone(new ArrayList<Entity>()));
     }
 
@@ -65,17 +66,21 @@ public class MagicraftRituals {
 
 
 
-    public static Ritual GetRitual(String[] ritualGlyphs, List<Entity> ritualEntities) {
-
+    public static List<Ritual> GetRituals(String[] ritualGlyphs, List<Entity> ritualEntities) {
+        List<Ritual> out = new ArrayList<Ritual>();
         for(Ritual ritual : RITUALS.values()) {
             if(ritual.CheckGlyphs(ritualGlyphs)) {
 
                 List<Entity> entitiesNeeded = ritual.GetEntities(ritualEntities);
+                ritualEntities.removeAll(entitiesNeeded);
 
-                if(entitiesNeeded != null) { return ritual.GetRitual(entitiesNeeded); }
+                if(entitiesNeeded != null) {
+                    out.add(ritual.GetRitual(entitiesNeeded));
+                }
             }
         }
-        return null;
+
+        return out;
     }
 
 }

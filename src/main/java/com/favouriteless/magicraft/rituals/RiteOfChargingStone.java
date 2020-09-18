@@ -31,7 +31,7 @@ public class RiteOfChargingStone extends Ritual {
 
         this.name = "RiteOfChargingStone"; // Change this to the name of the class
 
-        this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything *except* chalk, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
+        this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "W", "W", "W", "W", "W", "X", "X", "X", "X", "X",

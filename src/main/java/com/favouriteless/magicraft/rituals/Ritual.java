@@ -135,13 +135,10 @@ public abstract class Ritual implements ITickable {
     public boolean CheckGlyphs(String[] glyphsIn) { // Checks if the blocks in 15x15 area centered on gold chalk are correct for the ritual
 
         for (int i = 0; i < this.GLYPHS.length; i++) {
-            if (this.GLYPHS[i].equals("X")) {
-                if (chalkCharacters.contains(glyphsIn[i])) {
+            if (!this.GLYPHS[i].equals("X")) {
+                if (!this.GLYPHS[i].equals(glyphsIn[i])) {
                     return false;
                 }
-            }
-            else if (!this.GLYPHS[i].equals(glyphsIn[i])) {
-                return false;
             }
         }
         return true;

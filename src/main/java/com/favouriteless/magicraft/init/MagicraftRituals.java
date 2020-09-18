@@ -1,10 +1,8 @@
 package com.favouriteless.magicraft.init;
 
 import com.favouriteless.magicraft.rituals.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 
@@ -15,10 +13,18 @@ public class MagicraftRituals {
     private static final Set<String> chalkCharacters = new HashSet<String>(Arrays.asList("G","W","R","P"));
     public static HashMap<String, Ritual> RITUALS = new HashMap<>();
     public static List<Ritual> ACTIVE_RITUALS = new ArrayList<>();
+    public static HashMap<Material, String> CHARACTER_MAP = new HashMap<>();
 
 
 
     public static void init() { // Adds ritual types to map
+
+        CHARACTER_MAP.put(MagicraftMaterials.GOLDCHALK, "G");
+        CHARACTER_MAP.put(MagicraftMaterials.WHITECHALK, "W");
+        CHARACTER_MAP.put(MagicraftMaterials.REDCHALK, "R");
+        CHARACTER_MAP.put(MagicraftMaterials.PURPLECHALK, "P");
+        CHARACTER_MAP.put(Material.AIR, "A");
+
         RITUALS.put("RiteOfChargingStone", new RiteOfChargingStone(new ArrayList<Entity>()));
     }
 

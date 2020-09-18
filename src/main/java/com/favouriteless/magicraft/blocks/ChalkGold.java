@@ -13,8 +13,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import java.util.Objects;
-
 public class ChalkGold extends ChalkBase {
 
     public ChalkGold() {
@@ -36,7 +34,7 @@ public class ChalkGold extends ChalkBase {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
     {
-        ( (ChalkGoldTileEntity) Objects.requireNonNull(world.getTileEntity(pos))).Execute(state, world, pos, player, hand, hit);
+        ( (ChalkGoldTileEntity) world.getTileEntity(pos)).Execute(state, world, pos, player, hand, hit);
         return ActionResultType.PASS;
     }
 

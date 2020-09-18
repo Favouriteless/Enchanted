@@ -1,6 +1,5 @@
 package com.favouriteless.magicraft.tileentity;
 
-import com.favouriteless.magicraft.init.MagicraftMaterials;
 import com.favouriteless.magicraft.init.MagicraftRituals;
 import com.favouriteless.magicraft.init.MagicraftTileEntities;
 import com.favouriteless.magicraft.rituals.Ritual;
@@ -46,11 +45,13 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                     Material blockMaterial = world.getBlockState(corner.add(x, 0, z)).getMaterial();
                     String type = "XX";
 
-                    if(blockMaterial == MagicraftMaterials.GOLDCHALK) { type = "G"; }
-                    else if(blockMaterial == MagicraftMaterials.WHITECHALK) { type = "W"; }
-                    else if(blockMaterial == MagicraftMaterials.REDCHALK) { type = "R"; }
-                    else if(blockMaterial == MagicraftMaterials.PURPLECHALK) { type = "P"; }
-                    else if(blockMaterial == Material.AIR) { type = "A"; }
+                    for(Material material : MagicraftRituals.CHARACTER_MAP.keySet())
+                    {
+                        if (material == blockMaterial) {
+                            type = MagicraftRituals.CHARACTER_MAP.get(material);
+                            break;
+                        }
+                    }
 
                     ritualGlyphs[(x + (z*15))] = type;
 

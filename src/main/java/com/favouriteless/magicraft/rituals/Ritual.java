@@ -140,6 +140,7 @@ public abstract class Ritual implements ITickable {
                     return false;
                 }
             }
+
         }
         return true;
     }

@@ -42,7 +42,6 @@ public class MagicraftItems {
     public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart", () -> new BlockItem(MagicraftBlocks.DEMON_HEART.get(), new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
 
     // Items
-
     public static final RegistryObject<Item> CLAY_JAR_SOFT = ITEMS.register("clay_jar_soft", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
     public static final RegistryObject<Item> CLAY_JAR = ITEMS.register("clay_jar", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
     public static final RegistryObject<Item> BREATH_OF_THE_GODDESS = ITEMS.register("breath_of_the_goddess", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
@@ -69,7 +68,6 @@ public class MagicraftItems {
     public static final RegistryObject<Item> REFINED_EVIL = ITEMS.register("refined_evil", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
     public static final RegistryObject<Item> ROWAN_BERRIES = ITEMS.register("rowan_berries", () -> new Item((new Item.Properties()).group(MagicraftTabs.INGREDIENTS).food(new Food.Builder().hunger(3).build())));
     public static final RegistryObject<Item> WOOD_ASH = ITEMS.register("wood_ash", () -> new Item(new Item.Properties().group(MagicraftTabs.INGREDIENTS)));
-
     public static final RegistryObject<Item> FUME_FILTER = ITEMS.register("fume_filter", () -> new Item(new Item.Properties().group(MagicraftTabs.MAIN)));
 
     // Armor

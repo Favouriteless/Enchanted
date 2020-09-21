@@ -19,17 +19,12 @@ import java.util.UUID;
 
 public class RitualTemplate extends Ritual {
 
-    // This constructor is for loading entities. Do not use.
-    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
-        super(xPos, yPos, zPos, caster, target, world);
-    }
+    // Do not use these constructors
+    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
+    public RitualTemplate(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
-    public RitualTemplate(List<Entity> entitiesNeeded) {
-        this.ENTITIES_TO_KILL = entitiesNeeded; // Entities needed to start ritual. Includes items. DO NOT TOUCH.
-
-        this.name = "RitualTemplate"; // Change this to the name of the class
-
-        this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
+    public RitualTemplate() {
+        this.GLYPHS_REQUIRED = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
@@ -47,40 +42,16 @@ public class RitualTemplate extends Ritual {
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"
         };
 
+        ITEMS_REQUIRED.put(Items.DIAMOND, 5); // Add items, count required for ritual
 
-        this.ENTITIES.add(EntityType.PIG); // Add entities needed for ritual
-
-        this.ITEMS.put(Items.DIAMOND, 5); // Add items, count needed for ritual
-
-        // NOTE: ANY NEW VARS WILL NOT BE SAVED UPON WORLD UNLOAD. ONLY CREATE TEMP VARS.
-
+        ENTITIES_REQUIRED = new EntityType<?>[] {  // Add entities required for ritual
+                EntityType.PIG
+        };
     }
-
-    @Override
-    public Ritual GetRitual(List<Entity> entitiesNeeded) {
-        return new RitualTemplate(entitiesNeeded);
-    } // Change RitualTemplate in this method to new class name
-
-    @Override
-    public Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
-        ResourceLocation dimensionKey = new ResourceLocation(dimensionString);
-        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionKey);
-        ServerWorld world = serverWorld.getServer().getWorld(key);
-
-        return new RitualTemplate(xPos, yPos, zPos, caster, target, world);
-    } // Change RitualTemplate in this method to new class name
-
-
 
     @Override
     public void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID) {
         // Do ritual effects here
-        if(!world.isRemote) {
-            ((ServerWorld) this.world).spawnParticle(ParticleTypes.WITCH, pos.getX(), pos.getY() + 1, pos.getZ(), 200, 1, 1, 1, 0);
-            this.world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1f, 1f);
-        }
-        this.inactive = true;
-        this.isExecutingEffect = false;
     }
     
     @Override

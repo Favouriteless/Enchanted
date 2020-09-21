@@ -11,10 +11,13 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
@@ -25,8 +28,9 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
     private boolean executing = false;
     private int ticks = 0;
-    private final String[] ritualGlyphs = new String[225];
-    private List<Entity> ritualEntities = new ArrayList<Entity>();
+
+    public final String[] ritualGlyphs = new String[225];
+    public List<Entity> ritualEntities = new ArrayList<Entity>();
 
     public ChalkGoldTileEntity(final TileEntityType<?> tileEntityTypeIn) { super(tileEntityTypeIn); }
 
@@ -62,8 +66,10 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
             if(!currentRituals.isEmpty()) {
                 for(Ritual ritual : currentRituals) {
-                    ritual.StartRitual(state, world, pos, player);
+                    ritual.StartRitual(state, (ServerWorld)world, pos, player);
                 }
+            } else {
+                this.world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
             }
         }
     }

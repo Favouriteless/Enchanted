@@ -1,5 +1,6 @@
 package com.favouriteless.magicraft.rituals;
 
+import com.favouriteless.magicraft.init.MagicraftDamageSources;
 import com.favouriteless.magicraft.init.MagicraftRituals;
 import net.minecraft.block.BlockState;
 
@@ -10,43 +11,45 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class Ritual implements ITickable {
+public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
 
-    private static final Set<String> chalkCharacters = new HashSet<String>(Arrays.asList("G","W","R","P"));
-    public String[] GLYPHS;
-    public List<EntityType<?>> ENTITIES = new ArrayList<EntityType<?>>();
-    public HashMap<Item, Integer> ITEMS = new HashMap<Item, Integer>();
-    public String name;
+    public String[] GLYPHS_REQUIRED;
+    public EntityType<?>[] ENTITIES_REQUIRED;
+    public HashMap<Item, Integer> ITEMS_REQUIRED = new HashMap<Item, Integer>();
 
-    public boolean isExecutingEffect;
+    protected List<Entity> ENTITIES_TO_KILL = new ArrayList<Entity>();
+    protected List<ItemEntity> ITEMS_TO_USE = new ArrayList<ItemEntity>();
+    protected List<ItemStack> ITEMS_USED = new ArrayList<ItemStack>();
 
-
-    protected List<Entity> ENTITIES_TO_KILL;
     protected boolean activating = false; // True if currently killing entities
-    protected int ticks = 0;
     public boolean inactive = false; // Removed from ACTIVE_RITUALS next tick if true
 
+    public boolean isExecutingEffect;
+    protected int ticks = 0;
+
     public BlockState state; // Blockstate ritual started at
-    public World world; // World ritual started in
+    public ServerWorld world; // World ritual started in
     public BlockPos pos; // Position ritual started at
-    protected UUID casterUUID; // Player who started ritual
+    public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
 
-    public Ritual() { this.name = "Ritual"; }
+    public Ritual() { }
 
-    public Ritual(double xPos, double yPos, double zPos, UUID caster, UUID target, World world) {
-        this();
+    public Ritual(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
         this.pos = new BlockPos(xPos, yPos, zPos);
         this.world = world;
         this.state = this.world.getBlockState(this.pos);
@@ -56,13 +59,12 @@ public abstract class Ritual implements ITickable {
     }
 
     public abstract void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID);
-    public abstract Ritual GetRitual(List<Entity> entitiesNeeded);
-    public abstract Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionKey, ServerWorld world);
+    protected abstract void onTick();
 
     public CompoundNBT GetTag() {
         CompoundNBT tag = new CompoundNBT();
 
-        tag.putString("name", this.name);
+        //tag.putString("name", this.name);
 
         tag.putString("dimensionKey", this.world.getDimensionKey().getRegistryName().toString());
 
@@ -79,46 +81,78 @@ public abstract class Ritual implements ITickable {
         return tag;
     }
 
-    public void StartRitual(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+    public void StartRitual(BlockState state, ServerWorld world, BlockPos pos, PlayerEntity player) {
         MagicraftRituals.ACTIVE_RITUALS.add(this);
         this.activating = true;
         this.state = state;
         this.world = world;
         this.pos = pos;
         this.casterUUID = player.getUniqueID();
+
+        for(Entity entity : this.ENTITIES_TO_KILL) {
+            if(entity instanceof ItemEntity) {
+                this.ITEMS_TO_USE.add((ItemEntity)entity);
+            }
+        }
+        this.ENTITIES_TO_KILL.removeAll(this.ITEMS_TO_USE);
     }
 
     @Override
     public void tick() { // Tick based activation stuff, ie items disappearing, entities dying, particles etc
-        if(this.activating) {
-            this.ticks++;
+        if (activating) {
+            ticks++;
 
-            if(this.ticks == 20) {
-                this.ticks = 0;
+            if (ticks == 20) {
+                ticks = 0;
 
-                if(!world.isRemote()) {
-                    if (!this.ENTITIES_TO_KILL.isEmpty()) {
-                        Entity entity = this.ENTITIES_TO_KILL.get(0);
+                if (!world.isRemote()) {
 
-                        if(entity.isAlive()) {
+                    // OTHER ENTITIES
+                    if (!ENTITIES_TO_KILL.isEmpty()) {
+                        Entity entity = ENTITIES_TO_KILL.get(0);
 
-                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.POOF, entity.getPosX(), entity.getPosY(), entity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
+                        if (entity.isAlive()) {
 
+                            ((ServerWorld) world).spawnParticle(ParticleTypes.POOF, entity.getPosX(), entity.getPosY(), entity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
                             if (entity instanceof LivingEntity) {
-                                entity.attackEntityFrom(DamageSource.MAGIC, 1000);
+                                entity.attackEntityFrom(MagicraftDamageSources.RITUAL_SACRIFICE, Float.MAX_VALUE);
                             } else {
-                                this.world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 1f, 1f);
+                                world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
                                 entity.remove();
                             }
+                            ENTITIES_TO_KILL.remove(entity);
+                        } else {
+                            StopActivating();
+                        }
+                        // ITEMS
+                    } else if (!ITEMS_TO_USE.isEmpty()) {
+                        ItemEntity itemEntity = ITEMS_TO_USE.get(0);
 
-                            this.ENTITIES_TO_KILL.remove(entity);
+                        if (itemEntity.isAlive()) {
+                            ItemStack item = itemEntity.getItem();
+
+                            ((ServerWorld) world).spawnParticle(ParticleTypes.POOF, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
+                            world.playSound(null, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
+
+                            if (item.getCount() <= ITEMS_REQUIRED.get(item.getItem())) {
+                                ITEMS_USED.add(item);
+                                ITEMS_REQUIRED.replace(item.getItem(), ITEMS_REQUIRED.get(item.getItem()) - item.getCount());
+                                itemEntity.remove();
+                            } else if (item.getCount() > ITEMS_REQUIRED.get(item.getItem())) {
+                                int countNeeded = ITEMS_REQUIRED.get(item.getItem());
+                                ITEMS_USED.add(new ItemStack(item.getItem(), countNeeded));
+                                item.setCount(item.getCount() - countNeeded);
+                                ITEMS_REQUIRED.remove(item.getItem());
+                            }
+                            ITEMS_TO_USE.remove(itemEntity);
+
+                        } else {
+                            StopActivating();
                         }
-                        else {
-                            this.activating = false;
-                        }
+
                     } else {
-                        this.Execute(state, world, pos, casterUUID);
-                        this.activating = false;
+                        Execute(state, world, pos, casterUUID);
+                        activating = false;
                     }
                 }
 
@@ -130,72 +164,24 @@ public abstract class Ritual implements ITickable {
         }
     }
 
-    protected abstract void onTick();
-
-    public boolean CheckGlyphs(String[] glyphsIn) { // Checks if the blocks in 15x15 area centered on gold chalk are correct for the ritual
-
-        for (int i = 0; i < this.GLYPHS.length; i++) {
-            if (!this.GLYPHS[i].equals("X")) {
-                if (!this.GLYPHS[i].equals(glyphsIn[i])) {
-                    return false;
-                }
-            }
-
+    public void StopActivating() {
+        activating = false;
+        inactive = true;
+        for (ItemStack item : ITEMS_USED) {
+            world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1.1, pos.getZ(), item));
         }
-        return true;
+        world.spawnParticle(ParticleTypes.CLOUD, pos.getX(), pos.getY() + 1, pos.getZ(), 200, 1, 1, 1, 0);
+        world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
     }
 
-    public List<Entity> GetEntities(List<Entity> ritualEntitiesIn) { // Checks if entities within area are correct for ritual
-        HashMap<Item, Integer> targetItems = new HashMap<>(this.ITEMS);
 
-        List<Entity> ritualEntities = new ArrayList<>(ritualEntitiesIn);
-        List<Entity> out = new ArrayList<>();
 
-        boolean hasEntity = false;
-
-        // ENTITIES
-        for (EntityType<?> entityType : this.ENTITIES) {
-            hasEntity = false;
-            for (Entity entity : ritualEntities) {
-                if (entity.getType() == entityType) {
-                    hasEntity = true;
-                    out.add(entity);
-                    ritualEntities.remove(entity);
-                    break;
-                }
-            }
-            if (!hasEntity) {
-                return null;
-            }
-        }
-
-        // ITEMS
-        for (Item item : targetItems.keySet()) {
-            hasEntity = false;
-            List<Entity> toRemove = new ArrayList<>();
-
-            for (Entity entity : ritualEntities) {
-                if (entity.getType() == EntityType.ITEM) {
-                    ItemEntity itemEntity = (ItemEntity) entity;
-
-                    if (itemEntity.getItem().getItem() == item) {
-                        out.add(entity);
-
-                        if (itemEntity.getItem().getCount() >= targetItems.get(item)) {
-                            hasEntity = true;
-                        }
-                        else { targetItems.put(item, targetItems.get(item) - itemEntity.getItem().getCount()); }
-
-                        toRemove.add(entity);
-                        if (hasEntity) { break; }
-                    }
-                }
-            }
-            if (!hasEntity) { return null; }
-            ritualEntities.removeAll(toRemove);
-
-        }
-        return out;
-    }
+    @Override
+    public Ritual setRegistryName(ResourceLocation name) { return null; }
+    @Nullable
+    @Override
+    public ResourceLocation getRegistryName() { return null; }
+    @Override
+    public Class getRegistryType() { return null; }
 
 }

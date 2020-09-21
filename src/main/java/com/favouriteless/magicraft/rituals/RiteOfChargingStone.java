@@ -21,15 +21,12 @@ import java.util.UUID;
 
 public class RiteOfChargingStone extends Ritual {
 
-    // This constructor is for loading entities. Do not use.
-    public RiteOfChargingStone(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
-        super(xPos, yPos, zPos, caster, target, world);
-    }
+    // Do not use these constructors
+    public RiteOfChargingStone() { super(); }
+    public RiteOfChargingStone(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
 
     public RiteOfChargingStone(List<Entity> entitiesNeeded) {
         this.ENTITIES_TO_KILL = entitiesNeeded; // Entities needed to start ritual. Includes items. DO NOT TOUCH.
-
-        this.name = "RiteOfChargingStone"; // Change this to the name of the class
 
         this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
@@ -62,7 +59,7 @@ public class RiteOfChargingStone extends Ritual {
     @Override
     public Ritual GetRitual(List<Entity> entitiesNeeded) {
         return new RiteOfChargingStone(entitiesNeeded);
-    } // Change RitualTemplate in this method to new class name
+    } // Change RiteOfChargingStone in this method to new class name
 
     @Override
     public Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
@@ -71,7 +68,7 @@ public class RiteOfChargingStone extends Ritual {
         ServerWorld world = serverWorld.getServer().getWorld(key);
 
         return new RiteOfChargingStone(xPos, yPos, zPos, caster, target, world);
-    } // Change RitualTemplate in this method to new class name
+    } // Change RiteOfChargingStone in this method to new class name
 
 
 

@@ -1,33 +1,32 @@
 package com.favouriteless.magicraft.init;
 
+import com.favouriteless.magicraft.Magicraft;
 import com.favouriteless.magicraft.rituals.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.*;
 
 public class MagicraftRituals {
 
-    private static final Set<String> chalkCharacters = new HashSet<String>(Arrays.asList("G","W","R","P"));
-    public static HashMap<String, Ritual> RITUALS = new HashMap<>();
+    public static final DeferredRegister<Ritual> RITUAL_TYPES = DeferredRegister.create(Ritual.class, Magicraft.MOD_ID);
+
+    public static final RegistryObject<Ritual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
+    public static final RegistryObject<Ritual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
+
     public static List<Ritual> ACTIVE_RITUALS = new ArrayList<>();
     public static HashMap<Material, String> CHARACTER_MAP = new HashMap<>();
 
-
-
     public static void init() { // Adds ritual types to map
-
         CHARACTER_MAP.put(MagicraftMaterials.GOLDCHALK, "G");
         CHARACTER_MAP.put(MagicraftMaterials.WHITECHALK, "W");
         CHARACTER_MAP.put(MagicraftMaterials.REDCHALK, "R");
         CHARACTER_MAP.put(MagicraftMaterials.PURPLECHALK, "P");
         CHARACTER_MAP.put(Material.AIR, "A");
-
-        // THE ORDER IN WHICH THESE ARE PUT IS THE PRIORITY IN WHICH THEY ARE USED. CARE FOR OVERLAPPING REQUIREMENTS IN RITUALS, THE ONE PUT FIRST WILL BE EXECUTED FIRST AND THE SECOND WILL BE UNUSABLE
-        RITUALS.put("RiteOfChargingStone", new RiteOfChargingStone(new ArrayList<Entity>()));
-        RITUALS.put("RiteOfTotalEclipse", new RiteOfTotalEclipse(new ArrayList<Entity>()));
     }
 
 
@@ -66,22 +65,14 @@ public class MagicraftRituals {
     }
 
 
+    /*
+    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
+        ResourceLocation dimensionKey = new ResourceLocation(dimensionString);
+        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionKey);
+        ServerWorld world = serverWorld.getServer().getWorld(key);
 
-    public static List<Ritual> GetRituals(String[] ritualGlyphs, List<Entity> ritualEntities) {
-        List<Ritual> out = new ArrayList<Ritual>();
-        for(Ritual ritual : RITUALS.values()) {
-            if(ritual.CheckGlyphs(ritualGlyphs)) {
-
-                List<Entity> entitiesNeeded = ritual.GetEntities(ritualEntities);
-                ritualEntities.removeAll(entitiesNeeded);
-
-                if(entitiesNeeded != null) {
-                    out.add(ritual.GetRitual(entitiesNeeded));
-                }
-            }
-        }
-
-        return out;
+        this(xPos, yPos, zPos, caster, target, world);
     }
+    */
 
 }

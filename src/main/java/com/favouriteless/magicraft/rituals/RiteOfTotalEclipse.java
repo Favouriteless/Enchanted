@@ -21,15 +21,12 @@ import java.util.UUID;
 
 public class RiteOfTotalEclipse extends Ritual {
 
-    // This constructor is for loading entities. Do not use.
-    public RiteOfTotalEclipse(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
-        super(xPos, yPos, zPos, caster, target, world);
-    }
+    // Do not use these constructors
+    public RiteOfTotalEclipse() { super(); }
+    public RiteOfTotalEclipse(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
 
     public RiteOfTotalEclipse(List<Entity> entitiesNeeded) {
         this.ENTITIES_TO_KILL = entitiesNeeded; // Entities needed to start ritual. Includes items. DO NOT TOUCH.
-
-        this.name = "RiteOfTotalEclipse"; // Change this to the name of the class
 
         this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",

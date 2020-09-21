@@ -57,7 +57,7 @@ public class ServerEventBusSubscriber {
 
             if(saver.data.contains("MagicraftActiveRituals"))
             {
-                MagicraftRituals.LoadRitualsTag( (CompoundNBT) Objects.requireNonNull(saver.data.get("MagicraftActiveRituals")),((ServerWorld) event.getWorld()).getWorld());
+                MagicraftRituals.LoadRitualsTag( (CompoundNBT)saver.data.get("MagicraftActiveRituals"), (ServerWorld)event.getWorld());
             }
         }
 

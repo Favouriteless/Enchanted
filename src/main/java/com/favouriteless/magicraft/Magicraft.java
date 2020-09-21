@@ -28,6 +28,7 @@ public class Magicraft
         MagicraftItems.ITEMS.register(modEventBus);
         MagicraftTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
         MagicraftContainerTypes.CONTAINER_TYPES.register(modEventBus);
+        MagicraftRituals.RITUAL_TYPES.register(modEventBus);
 
         instance = this;
         MinecraftForge.EVENT_BUS.register(this);

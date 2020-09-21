@@ -7,13 +7,9 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
@@ -22,13 +18,11 @@ import java.util.UUID;
 public class RiteOfChargingStone extends Ritual {
 
     // Do not use these constructors
-    public RiteOfChargingStone() { super(); }
     public RiteOfChargingStone(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
+    public RiteOfChargingStone(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
-    public RiteOfChargingStone(List<Entity> entitiesNeeded) {
-        this.ENTITIES_TO_KILL = entitiesNeeded; // Entities needed to start ritual. Includes items. DO NOT TOUCH.
-
-        this.GLYPHS = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
+    public RiteOfChargingStone() {
+        GLYPHS_REQUIRED = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
                 "X", "X", "X", "X", "X", "W", "W", "W", "W", "W", "X", "X", "X", "X", "X",
@@ -46,42 +40,22 @@ public class RiteOfChargingStone extends Ritual {
                 "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"
         };
 
-        this.ITEMS.put(MagicraftItems.ATTUNED_STONE.get(), 1);
-        this.ITEMS.put(Items.GLOWSTONE_DUST, 1);
-        this.ITEMS.put(Items.REDSTONE, 1);
-        this.ITEMS.put(MagicraftItems.WOOD_ASH.get(), 1);
-        this.ITEMS.put(MagicraftItems.QUICKLIME.get(), 1);
-
-        // NOTE: ANY NEW VARS WILL NOT BE SAVED UPON WORLD UNLOAD. ONLY CREATE TEMP VARS.
-
+        ITEMS_REQUIRED.put(MagicraftItems.ATTUNED_STONE.get(), 1);
+        ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
+        ITEMS_REQUIRED.put(Items.REDSTONE, 1);
+        ITEMS_REQUIRED.put(MagicraftItems.WOOD_ASH.get(), 1);
+        ITEMS_REQUIRED.put(MagicraftItems.QUICKLIME.get(), 1);
     }
 
     @Override
-    public Ritual GetRitual(List<Entity> entitiesNeeded) {
-        return new RiteOfChargingStone(entitiesNeeded);
-    } // Change RiteOfChargingStone in this method to new class name
+    public void Execute(BlockState state, BlockPos pos, UUID casterUUID) {
+        world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1.1, pos.getZ(), new ItemStack(MagicraftItems.ATTUNED_STONE_CHARGED.get(), 1)));
+        world.spawnParticle(ParticleTypes.WITCH, pos.getX(), pos.getY() + 1, pos.getZ(), 200, 1, 1, 1, 0);
+        world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1f, 1f);
 
-    @Override
-    public Ritual GetRitualFromData(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
-        ResourceLocation dimensionKey = new ResourceLocation(dimensionString);
-        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionKey);
-        ServerWorld world = serverWorld.getServer().getWorld(key);
-
-        return new RiteOfChargingStone(xPos, yPos, zPos, caster, target, world);
-    } // Change RiteOfChargingStone in this method to new class name
-
-
-
-    @Override
-    public void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID) {
-        if(!world.isRemote) {
-            world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1.1, pos.getZ(), new ItemStack(MagicraftItems.ATTUNED_STONE_CHARGED.get(), 1)));
-            ((ServerWorld) this.world).spawnParticle(ParticleTypes.WITCH, pos.getX(), pos.getY() + 1, pos.getZ(), 200, 1, 1, 1, 0);
-            this.world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1f, 1f);
-        }
-        this.inactive = true;
+        inactive = true;
     }
-    
+
     @Override
     protected void onTick() {
         // Do tick based ritual effects here

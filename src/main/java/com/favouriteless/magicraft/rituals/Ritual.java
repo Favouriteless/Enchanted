@@ -58,7 +58,7 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
         this.isExecutingEffect = true;
     }
 
-    public abstract void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID);
+    public abstract void Execute(BlockState state, BlockPos pos, UUID casterUUID);
     protected abstract void onTick();
 
     public CompoundNBT GetTag() {
@@ -151,7 +151,7 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
                         }
 
                     } else {
-                        Execute(state, world, pos, casterUUID);
+                        Execute(state, pos, casterUUID);
                         activating = false;
                     }
                 }

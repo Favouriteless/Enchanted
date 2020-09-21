@@ -50,7 +50,7 @@ public class RitualTemplate extends Ritual {
     }
 
     @Override
-    public void Execute(BlockState state, World world, BlockPos pos, UUID casterUUID) {
+    public void Execute(BlockState state, BlockPos pos, UUID casterUUID) {
         // Do ritual effects here
     }
     

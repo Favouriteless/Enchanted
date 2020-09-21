@@ -2,7 +2,7 @@ package com.favouriteless.magicraft.tileentity;
 
 import com.favouriteless.magicraft.init.MagicraftRituals;
 import com.favouriteless.magicraft.init.MagicraftTileEntities;
-import com.favouriteless.magicraft.rituals.Ritual;
+import com.favouriteless.magicraft.rituals.AbstractRitual;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -41,7 +41,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
     public void Execute(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if(!executing && !world.isRemote()) {
-            this.executing = true;
+            executing = true;
 
             BlockPos corner = pos.add(-7, 0, -7);
             for (int z = 0; z < 15; z++) {
@@ -61,15 +61,15 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
                 }
             }
-            this.ritualEntities = world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(corner, corner.add(15, 2, 15)));
-            List<Ritual> currentRituals = MagicraftRituals.GetRituals(this.ritualGlyphs, this.ritualEntities);
+            ritualEntities = world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(corner, corner.add(15, 2, 15)));
+            List<AbstractRitual> currentRituals = MagicraftRituals.GetRituals(ritualGlyphs, ritualEntities);
 
             if(!currentRituals.isEmpty()) {
-                for(Ritual ritual : currentRituals) {
+                for(AbstractRitual ritual : currentRituals) {
                     ritual.StartRitual(state, (ServerWorld)world, pos, player);
                 }
             } else {
-                this.world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
+                world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
             }
         }
     }

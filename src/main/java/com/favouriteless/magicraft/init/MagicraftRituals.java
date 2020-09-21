@@ -3,7 +3,6 @@ package com.favouriteless.magicraft.init;
 import com.favouriteless.magicraft.Magicraft;
 import com.favouriteless.magicraft.rituals.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.RegistryObject;
@@ -13,12 +12,12 @@ import java.util.*;
 
 public class MagicraftRituals {
 
-    public static final DeferredRegister<Ritual> RITUAL_TYPES = DeferredRegister.create(Ritual.class, Magicraft.MOD_ID);
+    public static final DeferredRegister<AbstractRitual> RITUAL_TYPES = DeferredRegister.create(AbstractRitual.class, Magicraft.MOD_ID);
 
-    public static final RegistryObject<Ritual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
-    public static final RegistryObject<Ritual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
+    public static final RegistryObject<AbstractRitual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
+    public static final RegistryObject<AbstractRitual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
 
-    public static List<Ritual> ACTIVE_RITUALS = new ArrayList<>();
+    public static List<AbstractRitual> ACTIVE_RITUALS = new ArrayList<>();
     public static HashMap<Material, String> CHARACTER_MAP = new HashMap<>();
 
     public static void init() { // Adds ritual types to map
@@ -35,7 +34,7 @@ public class MagicraftRituals {
         CompoundNBT tag = new CompoundNBT();
         int counter = 0;
 
-        for(Ritual ritual : ACTIVE_RITUALS) {
+        for(AbstractRitual ritual : ACTIVE_RITUALS) {
             if(ritual.isExecutingEffect) {
                 tag.put(Integer.toString(counter), ritual.GetTag());
                 counter++;

@@ -4,20 +4,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.UUID;
 
-public class RitualTemplate extends Ritual {
+public class RitualTemplate extends AbstractRitual {
 
     // Do not use these constructors
     public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }

@@ -1,15 +1,10 @@
 package com.favouriteless.magicraft.util;
 
 import com.favouriteless.magicraft.init.MagicraftRituals;
-import com.favouriteless.magicraft.rituals.Ritual;
-import net.minecraft.entity.player.PlayerEntity;
+import com.favouriteless.magicraft.rituals.AbstractRitual;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +12,6 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class ServerEventBusSubscriber {
@@ -28,9 +22,9 @@ public class ServerEventBusSubscriber {
         // Server side start tick
         if(event.phase == TickEvent.Phase.START) {
             // For rituals
-            List<Ritual> ritualsToRemove = new ArrayList<>();
+            List<AbstractRitual> ritualsToRemove = new ArrayList<>();
             if (MagicraftRituals.ACTIVE_RITUALS != null) {
-                for (Ritual ritual : MagicraftRituals.ACTIVE_RITUALS) {
+                for (AbstractRitual ritual : MagicraftRituals.ACTIVE_RITUALS) {
 
                     if (ritual.inactive) {
                         ritualsToRemove.add(ritual);
@@ -39,7 +33,7 @@ public class ServerEventBusSubscriber {
                     }
 
                 }
-                for (Ritual ritual : ritualsToRemove) {
+                for (AbstractRitual ritual : ritualsToRemove) {
                     MagicraftRituals.ACTIVE_RITUALS.remove(ritual);
                 }
             }

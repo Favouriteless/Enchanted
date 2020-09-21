@@ -13,7 +13,7 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.List;
 import java.util.UUID;
 
-public class RiteOfTotalEclipse extends Ritual {
+public class RiteOfTotalEclipse extends AbstractRitual {
 
     // Do not use these constructors
     public RiteOfTotalEclipse(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }

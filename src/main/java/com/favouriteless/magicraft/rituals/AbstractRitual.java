@@ -18,14 +18,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
+public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<AbstractRitual> {
 
     public String[] GLYPHS_REQUIRED;
     public EntityType<?>[] ENTITIES_REQUIRED;
@@ -47,9 +46,9 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
     public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
 
-    public Ritual() { }
+    public AbstractRitual() { }
 
-    public Ritual(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
+    public AbstractRitual(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
         this.pos = new BlockPos(xPos, yPos, zPos);
         this.world = world;
         this.state = this.world.getBlockState(this.pos);
@@ -91,10 +90,10 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
 
         for(Entity entity : this.ENTITIES_TO_KILL) {
             if(entity instanceof ItemEntity) {
-                this.ITEMS_TO_USE.add((ItemEntity)entity);
+                ITEMS_TO_USE.add((ItemEntity)entity);
             }
         }
-        this.ENTITIES_TO_KILL.removeAll(this.ITEMS_TO_USE);
+        ENTITIES_TO_KILL.removeAll(this.ITEMS_TO_USE);
     }
 
     @Override
@@ -105,55 +104,52 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
             if (ticks == 20) {
                 ticks = 0;
 
-                if (!world.isRemote()) {
+                // OTHER ENTITIES
+                if (!ENTITIES_TO_KILL.isEmpty()) {
+                    Entity entity = ENTITIES_TO_KILL.get(0);
 
-                    // OTHER ENTITIES
-                    if (!ENTITIES_TO_KILL.isEmpty()) {
-                        Entity entity = ENTITIES_TO_KILL.get(0);
+                    if (entity.isAlive()) {
 
-                        if (entity.isAlive()) {
-
-                            ((ServerWorld) world).spawnParticle(ParticleTypes.POOF, entity.getPosX(), entity.getPosY(), entity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
-                            if (entity instanceof LivingEntity) {
-                                entity.attackEntityFrom(MagicraftDamageSources.RITUAL_SACRIFICE, Float.MAX_VALUE);
-                            } else {
-                                world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
-                                entity.remove();
-                            }
-                            ENTITIES_TO_KILL.remove(entity);
+                        world.spawnParticle(ParticleTypes.POOF, entity.getPosX(), entity.getPosY(), entity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
+                        if (entity instanceof LivingEntity) {
+                            entity.attackEntityFrom(MagicraftDamageSources.RITUAL_SACRIFICE, Float.MAX_VALUE);
                         } else {
-                            StopActivating();
+                            world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
+                            entity.remove();
                         }
-                        // ITEMS
-                    } else if (!ITEMS_TO_USE.isEmpty()) {
-                        ItemEntity itemEntity = ITEMS_TO_USE.get(0);
+                        ENTITIES_TO_KILL.remove(entity);
+                    } else {
+                        StopActivating();
+                    }
+                    // ITEMS
+                } else if (!ITEMS_TO_USE.isEmpty()) {
+                    ItemEntity itemEntity = ITEMS_TO_USE.get(0);
 
-                        if (itemEntity.isAlive()) {
-                            ItemStack item = itemEntity.getItem();
+                    if (itemEntity.isAlive()) {
+                        ItemStack item = itemEntity.getItem();
 
-                            ((ServerWorld) world).spawnParticle(ParticleTypes.POOF, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
-                            world.playSound(null, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
+                        world.spawnParticle(ParticleTypes.POOF, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), 10, 0.3, 0.3, 0.3, 0);
+                        world.playSound(null, itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.MASTER, 2f, 1f);
 
-                            if (item.getCount() <= ITEMS_REQUIRED.get(item.getItem())) {
-                                ITEMS_USED.add(item);
-                                ITEMS_REQUIRED.replace(item.getItem(), ITEMS_REQUIRED.get(item.getItem()) - item.getCount());
-                                itemEntity.remove();
-                            } else if (item.getCount() > ITEMS_REQUIRED.get(item.getItem())) {
-                                int countNeeded = ITEMS_REQUIRED.get(item.getItem());
-                                ITEMS_USED.add(new ItemStack(item.getItem(), countNeeded));
-                                item.setCount(item.getCount() - countNeeded);
-                                ITEMS_REQUIRED.remove(item.getItem());
-                            }
-                            ITEMS_TO_USE.remove(itemEntity);
-
-                        } else {
-                            StopActivating();
+                        if (item.getCount() <= ITEMS_REQUIRED.get(item.getItem())) {
+                            ITEMS_USED.add(item);
+                            ITEMS_REQUIRED.replace(item.getItem(), ITEMS_REQUIRED.get(item.getItem()) - item.getCount());
+                            itemEntity.remove();
+                        } else if (item.getCount() > ITEMS_REQUIRED.get(item.getItem())) {
+                            int countNeeded = ITEMS_REQUIRED.get(item.getItem());
+                            ITEMS_USED.add(new ItemStack(item.getItem(), countNeeded));
+                            item.setCount(item.getCount() - countNeeded);
+                            ITEMS_REQUIRED.remove(item.getItem());
                         }
+                        ITEMS_TO_USE.remove(itemEntity);
 
                     } else {
-                        Execute(state, pos, casterUUID);
-                        activating = false;
+                        StopActivating();
                     }
+
+                } else {
+                    Execute(state, pos, casterUUID);
+                    activating = false;
                 }
 
             }
@@ -177,7 +173,7 @@ public abstract class Ritual implements ITickable, IForgeRegistryEntry<Ritual> {
 
 
     @Override
-    public Ritual setRegistryName(ResourceLocation name) { return null; }
+    public AbstractRitual setRegistryName(ResourceLocation name) { return null; }
     @Nullable
     @Override
     public ResourceLocation getRegistryName() { return null; }

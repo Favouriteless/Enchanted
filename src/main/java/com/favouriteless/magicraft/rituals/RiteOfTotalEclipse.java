@@ -1,7 +1,6 @@
 package com.favouriteless.magicraft.rituals;
 
 import com.favouriteless.magicraft.init.MagicraftItems;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
@@ -15,8 +14,7 @@ import java.util.UUID;
 
 public class RiteOfTotalEclipse extends AbstractRitual {
 
-    // Do not use these constructors
-    public RiteOfTotalEclipse(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
+    // Do not use this constructor
     public RiteOfTotalEclipse(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
     public RiteOfTotalEclipse() {
@@ -43,7 +41,7 @@ public class RiteOfTotalEclipse extends AbstractRitual {
     }
 
     @Override
-    public void Execute(BlockState state, BlockPos pos, UUID casterUUID) {
+    public void execute() {
         world.spawnParticle(ParticleTypes.WITCH, pos.getX(), pos.getY() + 1, pos.getZ(), 200, 1, 1, 1, 0);
         world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1f, 1f);
         world.func_241114_a_((long)14000);

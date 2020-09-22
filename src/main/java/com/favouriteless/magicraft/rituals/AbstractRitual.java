@@ -35,12 +35,11 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
     protected List<ItemStack> ITEMS_USED = new ArrayList<ItemStack>();
 
     protected boolean activating = false; // True if currently killing entities
-    public boolean inactive = false; // Removed from ACTIVE_RITUALS next tick if true
 
     public boolean isExecutingEffect;
     protected int ticks = 0;
 
-    public BlockState state; // Blockstate ritual started at
+    public String name; // Registry name of the ritual
     public ServerWorld world; // World ritual started in
     public BlockPos pos; // Position ritual started at
     public UUID casterUUID; // Player who started ritual
@@ -48,52 +47,46 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
 
     public AbstractRitual() { }
 
-    public AbstractRitual(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) {
-        this.pos = new BlockPos(xPos, yPos, zPos);
-        this.world = world;
-        this.state = this.world.getBlockState(this.pos);
-        this.casterUUID = caster;
-        this.targetUUID = target;
-        this.isExecutingEffect = true;
-    }
-
-    public abstract void Execute(BlockState state, BlockPos pos, UUID casterUUID);
+    public abstract void execute();
     protected abstract void onTick();
 
-    public CompoundNBT GetTag() {
+    public void setData(BlockPos pos, UUID caster, UUID target, ServerWorld world) {
+        this.pos = pos;
+        this.world = world;
+        this.casterUUID = caster;
+        this.targetUUID = target;
+    };
+
+    public CompoundNBT getTag() {
         CompoundNBT tag = new CompoundNBT();
 
-        //tag.putString("name", this.name);
-
-        tag.putString("dimensionKey", this.world.getDimensionKey().getRegistryName().toString());
-
-        tag.putDouble("xPos", this.pos.getX());
-        tag.putDouble("yPos", this.pos.getY());
-        tag.putDouble("zPos", this.pos.getZ());
-
-        tag.putUniqueId("casterUUID", this.casterUUID);
+        tag.putString("name", name);
+        tag.putString("dimensionKey", world.getDimensionKey().getRegistryName().toString());
+        tag.putDouble("xPos", pos.getX());
+        tag.putDouble("yPos", pos.getY());
+        tag.putDouble("zPos", pos.getZ());
+        tag.putUniqueId("casterUUID", casterUUID);
 
         if(this.targetUUID != null) {
-            tag.putUniqueId("targetUUID", this.targetUUID);
+            tag.putUniqueId("targetUUID", targetUUID);
         }
 
         return tag;
     }
 
-    public void StartRitual(BlockState state, ServerWorld world, BlockPos pos, PlayerEntity player) {
+    public void startRitual(BlockState state, ServerWorld world, BlockPos pos, PlayerEntity player) {
         MagicraftRituals.ACTIVE_RITUALS.add(this);
         this.activating = true;
-        this.state = state;
         this.world = world;
         this.pos = pos;
         this.casterUUID = player.getUniqueID();
 
-        for(Entity entity : this.ENTITIES_TO_KILL) {
+        for(Entity entity : ENTITIES_TO_KILL) {
             if(entity instanceof ItemEntity) {
                 ITEMS_TO_USE.add((ItemEntity)entity);
             }
         }
-        ENTITIES_TO_KILL.removeAll(this.ITEMS_TO_USE);
+        ENTITIES_TO_KILL.removeAll(ITEMS_TO_USE);
     }
 
     @Override
@@ -119,7 +112,7 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
                         }
                         ENTITIES_TO_KILL.remove(entity);
                     } else {
-                        StopActivating();
+                        stopActivating();
                     }
                     // ITEMS
                 } else if (!ITEMS_TO_USE.isEmpty()) {
@@ -144,11 +137,11 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
                         ITEMS_TO_USE.remove(itemEntity);
 
                     } else {
-                        StopActivating();
+                        stopActivating();
                     }
 
                 } else {
-                    Execute(state, pos, casterUUID);
+                    execute();
                     activating = false;
                 }
 
@@ -160,9 +153,8 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
         }
     }
 
-    public void StopActivating() {
+    public void stopActivating() {
         activating = false;
-        inactive = true;
         for (ItemStack item : ITEMS_USED) {
             world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1.1, pos.getZ(), item));
         }
@@ -176,7 +168,7 @@ public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<A
     public AbstractRitual setRegistryName(ResourceLocation name) { return null; }
     @Nullable
     @Override
-    public ResourceLocation getRegistryName() { return null; }
+    public ResourceLocation getRegistryName() { return new ResourceLocation("magicraft", name); }
     @Override
     public Class getRegistryType() { return null; }
 

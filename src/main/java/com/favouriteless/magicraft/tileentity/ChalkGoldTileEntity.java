@@ -62,11 +62,11 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                 }
             }
             ritualEntities = world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(corner, corner.add(15, 2, 15)));
-            List<AbstractRitual> currentRituals = MagicraftRituals.GetRituals(ritualGlyphs, ritualEntities);
+            List<AbstractRitual> currentRituals = MagicraftRituals.getRituals(ritualGlyphs, ritualEntities);
 
             if(!currentRituals.isEmpty()) {
                 for(AbstractRitual ritual : currentRituals) {
-                    ritual.StartRitual(state, (ServerWorld)world, pos, player);
+                    ritual.startRitual(state, (ServerWorld)world, pos, player);
                 }
             } else {
                 world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);

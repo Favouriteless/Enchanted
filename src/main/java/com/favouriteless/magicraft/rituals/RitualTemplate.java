@@ -1,6 +1,5 @@
 package com.favouriteless.magicraft.rituals;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -12,8 +11,7 @@ import java.util.UUID;
 
 public class RitualTemplate extends AbstractRitual {
 
-    // Do not use these constructors
-    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, ServerWorld world) { super(xPos, yPos, zPos, caster, target, world); }
+    // Do not use this constructor
     public RitualTemplate(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
     public RitualTemplate() {
@@ -43,7 +41,7 @@ public class RitualTemplate extends AbstractRitual {
     }
 
     @Override
-    public void Execute(BlockState state, BlockPos pos, UUID casterUUID) {
+    public void execute() {
         // Do ritual effects here
     }
     

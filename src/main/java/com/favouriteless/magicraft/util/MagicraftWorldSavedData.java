@@ -12,30 +12,19 @@ public class MagicraftWorldSavedData extends WorldSavedData implements Supplier 
 
     public CompoundNBT data = new CompoundNBT();
 
-    public MagicraftWorldSavedData() {
-        super(Magicraft.MOD_ID);
-    }
-
-    public MagicraftWorldSavedData(String name) {
-        super(name);
-    }
-
-
+    public MagicraftWorldSavedData() { super(Magicraft.MOD_ID); }
+    public MagicraftWorldSavedData(String name) { super(name); }
 
     @Override
     public void read(CompoundNBT nbt) {
         data = nbt.getCompound("magicraft_data");
     }
 
-
-
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
         nbt.put("magicraft_data", data);
         return nbt;
     }
-
-
 
     public static MagicraftWorldSavedData forWorld(ServerWorld world) {
 
@@ -44,8 +33,6 @@ public class MagicraftWorldSavedData extends WorldSavedData implements Supplier 
 
         return saveData;
     }
-
-
 
     @Override
     public Object get()

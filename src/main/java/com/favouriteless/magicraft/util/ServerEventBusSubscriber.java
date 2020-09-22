@@ -1,7 +1,6 @@
 package com.favouriteless.magicraft.util;
 
 import com.favouriteless.magicraft.init.MagicraftRituals;
-import com.favouriteless.magicraft.rituals.AbstractRitual;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
@@ -11,7 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class ServerEventBusSubscriber {
@@ -19,25 +17,6 @@ public class ServerEventBusSubscriber {
     @SubscribeEvent
     public static void OnServerTick(TickEvent.ServerTickEvent event) {
 
-        // Server side start tick
-        if(event.phase == TickEvent.Phase.START) {
-            // For rituals
-            List<AbstractRitual> ritualsToRemove = new ArrayList<>();
-            if (MagicraftRituals.ACTIVE_RITUALS != null) {
-                for (AbstractRitual ritual : MagicraftRituals.ACTIVE_RITUALS) {
-
-                    if (ritual.inactive) {
-                        ritualsToRemove.add(ritual);
-                    } else {
-                        ritual.tick();
-                    }
-
-                }
-                for (AbstractRitual ritual : ritualsToRemove) {
-                    MagicraftRituals.ACTIVE_RITUALS.remove(ritual);
-                }
-            }
-        }
     }
 
 
@@ -51,7 +30,7 @@ public class ServerEventBusSubscriber {
 
             if(saver.data.contains("MagicraftActiveRituals"))
             {
-                MagicraftRituals.LoadRitualsTag( (CompoundNBT)saver.data.get("MagicraftActiveRituals"), (ServerWorld)event.getWorld());
+                MagicraftRituals.loadRitualsTag( (CompoundNBT)saver.data.get("MagicraftActiveRituals"), (ServerWorld)event.getWorld());
             }
         }
 
@@ -68,7 +47,7 @@ public class ServerEventBusSubscriber {
 
             CompoundNBT nbt = new CompoundNBT();
 
-            nbt.put("MagicraftActiveRituals", MagicraftRituals.GetRitualsTag());
+            nbt.put("MagicraftActiveRituals", MagicraftRituals.getRitualsTag());
 
             saver.data = nbt;
             saver.markDirty();

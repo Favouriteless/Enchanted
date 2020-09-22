@@ -1,12 +1,18 @@
 package com.favouriteless.magicraft.init;
 
 import com.favouriteless.magicraft.Magicraft;
+import com.favouriteless.magicraft.init.registries.RitualRegistry;
 import com.favouriteless.magicraft.rituals.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -30,13 +36,13 @@ public class MagicraftRituals {
 
 
 
-    public static CompoundNBT GetRitualsTag() {
+    public static CompoundNBT getRitualsTag() {
         CompoundNBT tag = new CompoundNBT();
         int counter = 0;
 
         for(AbstractRitual ritual : ACTIVE_RITUALS) {
             if(ritual.isExecutingEffect) {
-                tag.put(Integer.toString(counter), ritual.GetTag());
+                tag.put(Integer.toString(counter), ritual.getTag());
                 counter++;
             }
         }
@@ -45,22 +51,20 @@ public class MagicraftRituals {
 
 
 
-    public static void LoadRitualsTag(CompoundNBT tag, ServerWorld world) {
+    public static void loadRitualsTag(CompoundNBT tag, ServerWorld world) {
         for(String key : tag.keySet()) {
             CompoundNBT ritualTag = tag.getCompound(key);
 
-            ACTIVE_RITUALS.add(RITUALS.get(ritualTag.getString("name")).GetRitualFromData(
-                    ritualTag.getDouble("xPos"),
-                    ritualTag.getDouble("yPos"),
-                    ritualTag.getDouble("zPos"),
-                    ritualTag.getUniqueId("casterUUID"),
-                    ritualTag.getUniqueId("targetUUID"),
-                    ritualTag.getString("dimensionKey"),
-                    world)
-            );
+            AbstractRitual ritual = RitualRegistry.INSTANCE.getValue(new ResourceLocation("magicraft", tag.getString("name")));
+            ritual.setData(
+                    new BlockPos(tag.getInt("xPos"), tag.getInt("yPos"), tag.getInt("zPos")),
+                    tag.getUniqueId("casterUUID"),
+                    tag.getUniqueId("targetUUID"),
+                    world.getServer().getWorld(RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(tag.getString("dimensionKey"))))
+                    );
 
+            ACTIVE_RITUALS.add(ritual);
         }
-
     }
 
 

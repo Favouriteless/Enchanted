@@ -29,9 +29,6 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
     private boolean executing = false;
     private int ticks = 0;
 
-    public final String[] ritualGlyphs = new String[225];
-    public List<Entity> ritualEntities = new ArrayList<Entity>();
-
     public ChalkGoldTileEntity(final TileEntityType<?> tileEntityTypeIn) { super(tileEntityTypeIn); }
 
     public ChalkGoldTileEntity()
@@ -43,26 +40,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         if(!executing && !world.isRemote()) {
             executing = true;
 
-            BlockPos corner = pos.add(-7, 0, -7);
-            for (int z = 0; z < 15; z++) {
-                for (int x = 0; x < 15; x++) {
-                    Material blockMaterial = world.getBlockState(corner.add(x, 0, z)).getMaterial();
-                    String type = "XX";
-
-                    for(Material material : MagicraftRituals.CHARACTER_MAP.keySet())
-                    {
-                        if (material == blockMaterial) {
-                            type = MagicraftRituals.CHARACTER_MAP.get(material);
-                            break;
-                        }
-                    }
-
-                    ritualGlyphs[(x + (z*15))] = type;
-
-                }
-            }
-            ritualEntities = world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(corner, corner.add(15, 2, 15)));
-            List<AbstractRitual> currentRituals = MagicraftRituals.getRituals(ritualGlyphs, ritualEntities);
+            List<AbstractRitual> currentRituals = getRitualsFor(pos, world, player);
 
             if(!currentRituals.isEmpty()) {
                 for(AbstractRitual ritual : currentRituals) {
@@ -83,6 +61,33 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                 executing = false;
             }
         }
+    }
+
+    public static List<AbstractRitual> getRitualsFor(BlockPos pos, World world, PlayerEntity player) {
+
+        String[] ritualGlyphs = new String[225];
+        List<Entity> ritualEntities = new ArrayList<Entity>();
+        BlockPos corner = pos.add(-7, 0, -7);
+        // GET GLYPHS ARRAY
+        for (int z = 0; z < 15; z++) {
+            for (int x = 0; x < 15; x++) {
+                Material blockMaterial = world.getBlockState(corner.add(x, 0, z)).getMaterial();
+                String type = "XX";
+
+                for(Material material : MagicraftRituals.CHARACTER_MAP.keySet())
+                {
+                    if (material == blockMaterial) {
+                        type = MagicraftRituals.CHARACTER_MAP.get(material);
+                        break;
+                    }
+                }
+                ritualGlyphs[(x + (z*15))] = type;
+            }
+        }
+        // GET ENTITIES LIST
+        ritualEntities = world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(corner, corner.add(15, 2, 15)));
+
+        return MagicraftRituals.forData(ritualGlyphs, ritualEntities);
     }
 
 }

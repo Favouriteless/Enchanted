@@ -4,6 +4,7 @@ import com.favouriteless.magicraft.Magicraft;
 import com.favouriteless.magicraft.init.registries.RitualRegistry;
 import com.favouriteless.magicraft.rituals.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -34,8 +35,6 @@ public class MagicraftRituals {
         CHARACTER_MAP.put(Material.AIR, "A");
     }
 
-
-
     public static CompoundNBT getRitualsTag() {
         CompoundNBT tag = new CompoundNBT();
         int counter = 0;
@@ -49,7 +48,12 @@ public class MagicraftRituals {
         return tag;
     }
 
+    public static List<AbstractRitual> forData(String[] glyphs, List<Entity> entities) {
+        
 
+
+        return null;
+    }
 
     public static void loadRitualsTag(CompoundNBT tag, ServerWorld world) {
         for(String key : tag.keySet()) {
@@ -57,7 +61,7 @@ public class MagicraftRituals {
 
             AbstractRitual ritual = RitualRegistry.INSTANCE.getValue(new ResourceLocation("magicraft", tag.getString("name")));
             ritual.setData(
-                    new BlockPos(tag.getInt("xPos"), tag.getInt("yPos"), tag.getInt("zPos")),
+                    new BlockPos(tag.getDouble("xPos"), tag.getDouble("yPos"), tag.getDouble("zPos")),
                     tag.getUniqueId("casterUUID"),
                     tag.getUniqueId("targetUUID"),
                     world.getServer().getWorld(RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(tag.getString("dimensionKey"))))
@@ -66,16 +70,5 @@ public class MagicraftRituals {
             ACTIVE_RITUALS.add(ritual);
         }
     }
-
-
-    /*
-    public RitualTemplate(double xPos, double yPos, double zPos, UUID caster, UUID target, String dimensionString, ServerWorld serverWorld) {
-        ResourceLocation dimensionKey = new ResourceLocation(dimensionString);
-        RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionKey);
-        ServerWorld world = serverWorld.getServer().getWorld(key);
-
-        this(xPos, yPos, zPos, caster, target, world);
-    }
-    */
 
 }

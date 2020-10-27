@@ -5,6 +5,7 @@ import com.favouriteless.magicraft.init.registries.RitualRegistry;
 import com.favouriteless.magicraft.rituals.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -49,8 +50,13 @@ public class MagicraftRituals {
     }
 
     public static List<AbstractRitual> forData(String[] glyphs, List<Entity> entities) {
-        
+        List<ItemEntity> itemEntities = new ArrayList<ItemEntity>();
 
+        for(Entity entity : entities) {
+            if(entity instanceof ItemEntity) {
+                itemEntities.add((ItemEntity)entity);
+            }
+        }
 
         return null;
     }

@@ -3,7 +3,7 @@ package com.favouriteless.magicraft.init.registries;
 import com.favouriteless.magicraft.Magicraft;
 import com.favouriteless.magicraft.init.MagicraftRituals;
 import com.favouriteless.magicraft.rituals.AbstractRitual;
-import com.sun.istack.internal.NotNull;
+
 import com.sun.istack.internal.Nullable;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;

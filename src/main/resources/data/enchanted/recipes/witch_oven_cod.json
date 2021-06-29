@@ -1,0 +1,6 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": "minecraft:cod",
+  "result": "enchanted:foul_fume",
+  "jarsneeded": 1
+}

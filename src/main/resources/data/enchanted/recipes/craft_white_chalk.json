@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "ata",
+    "aga",
+    "aga"
+  ],
+  "key":
+  {
+    "a": { "item": "enchanted:wood_ash" },
+    "t": { "item": "enchanted:tear_of_the_goddess" },
+    "g": { "item": "enchanted:gypsum" }
+  },
+  "result":
+  {
+    "item": "enchanted:chalk_white",
+    "count": 1
+  }
+}

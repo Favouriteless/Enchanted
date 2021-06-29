@@ -1,0 +1,14 @@
+{
+  "type": "enchanted:distillery",
+  "iteminputs": [
+    { "item": "enchanted:clay_jar", "count": 1 },
+    { "item": "enchanted:foul_fume", "count": 1 },
+    { "item": "enchanted:quicklime", "count": 1 }
+  ],
+  "itemoutputs": [
+    { "item": "enchanted:gypsum", "count": 1 },
+    { "item": "enchanted:oil_of_vitriol", "count": 1 },
+    { "item": "minecraft:slime_ball", "count": 1 }
+  ],
+  "cookTime": 300
+}

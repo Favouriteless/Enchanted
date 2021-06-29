@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "joined=true": { "model": "enchanted:block/altar_joined" },
+    "joined=false": { "model": "enchanted:block/altar" }
+  }
+}

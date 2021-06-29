@@ -1,0 +1,13 @@
+{
+  "type": "enchanted:distillery",
+  "iteminputs": [
+    { "item": "enchanted:clay_jar", "count": 1 },
+    { "item": "minecraft:blaze_powder", "count": 1 },
+    { "item": "minecraft:gunpowder", "count": 1 }
+  ],
+  "itemoutputs": [
+    { "item": "minecraft:glowstone_dust", "count": 2 },
+    { "item": "enchanted:reek_of_misfortune", "count": 1 }
+  ],
+  "cookTime": 300
+}

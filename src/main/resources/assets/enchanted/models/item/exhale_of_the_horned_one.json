@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enchanted:items/exhale_of_the_horned_one"
+  }
+}

@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "magicraft:items/oil_of_vitriol"
-  }
-}

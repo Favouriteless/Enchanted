@@ -1,0 +1,6 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": "minecraft:spruce_log",
+  "result": "enchanted:foul_fume",
+  "jarsneeded": 1
+}

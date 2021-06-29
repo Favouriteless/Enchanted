@@ -1,0 +1,9 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "particle": "enchanted:blocks/altar_joined",
+    "bottom": "enchanted:blocks/altar_top",
+    "top": "enchanted:blocks/altar_joined_top",
+    "side": "enchanted:blocks/altar_joined"
+  }
+}

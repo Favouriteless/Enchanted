@@ -1,0 +1,16 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "enchanted:blocks/glyph_gold",
+		"particle": "enchanted:blocks/glyph_gold"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 0.25, 16],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	]
+}

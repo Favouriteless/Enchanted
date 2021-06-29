@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "magicraft:blocks/altar_top",
-    "side": "magicraft:blocks/altar"
-  }
-}

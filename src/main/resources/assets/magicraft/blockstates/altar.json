@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "joined=true": { "model": "magicraft:block/altar_joined" },
-    "joined=false": { "model": "magicraft:block/altar" }
-  }
-}

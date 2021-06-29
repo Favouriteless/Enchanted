@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enchanted:items/reek_of_misfortune"
+  }
+}

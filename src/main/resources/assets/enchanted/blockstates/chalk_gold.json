@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      { "model": "enchanted:block/chalk_gold" },
+      { "model": "enchanted:block/chalk_gold", "y": 90},
+      { "model": "enchanted:block/chalk_gold", "y": 180},
+      { "model": "enchanted:block/chalk_gold", "y": 270}
+    ]
+  }
+}

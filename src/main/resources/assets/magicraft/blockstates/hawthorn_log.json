@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "magicraft:block/hawthorn_log" },
-    "axis=z": { "model": "magicraft:block/hawthorn_log", "x": 90},
-    "axis=x": { "model": "magicraft:block/hawthorn_log", "x": 90, "y": 90}
-  }
-}

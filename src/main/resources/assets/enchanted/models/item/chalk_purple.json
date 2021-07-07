@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/chalk_purple"
+    "layer0": "enchanted:item/chalk_purple"
   }
 }

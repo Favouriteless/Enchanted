@@ -39,8 +39,8 @@ public class EnchantedBlocks {
 
     public static final RegistryObject<Block> LEATHER_BLOCK = BLOCKS.register("leather_block", () -> new Block(AbstractBlock.Properties.of(Material.WOOL, MaterialColor.COLOR_BROWN).strength(0.8F).sound(SoundType.WOOL)));
 
-//    public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", Altar::new);
-    public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", () -> new WitchOvenBlock(AbstractBlock.Properties.copy(Blocks.ANVIL).strength(5.0F, 1200.0F).lightLevel(getLightValueLit(13))));
+    public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", AltarBlock::new);
+    public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", () -> new WitchOvenBlock(AbstractBlock.Properties.copy(Blocks.ANVIL).strength(5.0F, 1200.0F).lightLevel(getLightValueLit(13)).noOcclusion()));
     public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnel(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", () -> new FumeFunnel(AbstractBlock.Properties.copy(FUME_FUNNEL.get())));
 

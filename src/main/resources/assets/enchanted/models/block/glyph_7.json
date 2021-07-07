@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"0": "enchanted:blocks/glyph_7",
-		"particle": "enchanted:blocks/glyph_7"
+		"0": "enchanted:block/glyph_7",
+		"particle": "enchanted:block/glyph_7"
 	},
 	"elements": [
 		{

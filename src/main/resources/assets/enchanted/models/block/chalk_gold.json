@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "enchanted:blocks/glyph_gold",
-		"particle": "enchanted:blocks/glyph_gold"
+		"0": "enchanted:block/glyph_gold",
+		"particle": "enchanted:block/glyph_gold"
 	},
 	"elements": [
 		{

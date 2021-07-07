@@ -13,7 +13,7 @@ public class EnchantedItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Enchanted.MOD_ID);
 
     // Block Items
-    //public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(EnchantedBlocks.ALTAR.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(EnchantedBlocks.ALTAR.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> LEATHER_BLOCK = ITEMS.register("leather_block", () -> new BlockItem(EnchantedBlocks.LEATHER_BLOCK.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> WITCH_OVEN = ITEMS.register("witch_oven", () -> new BlockItem(EnchantedBlocks.WITCH_OVEN.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));

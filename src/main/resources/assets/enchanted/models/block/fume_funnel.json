@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "enchanted:blocks/witch_oven_metal",
-		"2": "enchanted:blocks/fume_funnel_fire_off",
-		"3": "enchanted:blocks/fume_funnel_light_metal",
-		"particle": "enchanted:blocks/witch_oven_metal"
+		"0": "enchanted:block/dark_metal",
+		"2": "enchanted:block/fume_funnel_fire_off",
+		"3": "enchanted:block/medium_metal",
+		"particle": "enchanted:block/dark_metal"
 	},
 	"elements": [
 		{

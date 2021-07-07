@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "enchanted:blocks/rowan_sapling"
+    "cross": "enchanted:block/rowan_sapling"
   }
 }

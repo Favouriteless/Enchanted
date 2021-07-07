@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/odour_of_purity"
+    "layer0": "enchanted:item/odour_of_purity"
   }
 }

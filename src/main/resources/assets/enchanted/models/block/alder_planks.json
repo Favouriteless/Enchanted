@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "enchanted:blocks/alder_planks"
+    "all": "enchanted:block/alder_planks"
   }
 }

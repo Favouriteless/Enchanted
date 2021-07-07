@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/demon_heart"
+    "layer0": "enchanted:item/demon_heart"
   }
 }

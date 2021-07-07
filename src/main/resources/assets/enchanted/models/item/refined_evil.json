@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/refined_evil"
+    "layer0": "enchanted:item/refined_evil"
   }
 }

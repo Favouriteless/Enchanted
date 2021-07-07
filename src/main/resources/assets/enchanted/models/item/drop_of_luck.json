@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/drop_of_luck"
+    "layer0": "enchanted:item/drop_of_luck"
   }
 }

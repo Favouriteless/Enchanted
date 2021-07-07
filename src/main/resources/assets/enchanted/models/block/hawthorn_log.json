@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "end": "enchanted:blocks/hawthorn_log_top",
-    "side": "enchanted:blocks/hawthorn_log"
+    "end": "enchanted:block/hawthorn_log_top",
+    "side": "enchanted:block/hawthorn_log"
   }
 }

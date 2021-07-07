@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:blocks/rowan_sapling"
+    "layer0": "enchanted:block/rowan_sapling"
   }
 }

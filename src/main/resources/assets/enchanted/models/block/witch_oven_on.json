@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "enchanted:blocks/witch_oven_metal",
-		"1": "enchanted:blocks/witch_oven_fire",
-		"particle": "enchanted:blocks/witch_oven_metal"
+		"0": "enchanted:block/dark_metal",
+		"1": "enchanted:block/witch_oven_fire",
+		"particle": "enchanted:block/dark_metal"
 	},
 	"elements": [
 		{

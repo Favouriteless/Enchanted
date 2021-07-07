@@ -1,6 +1,14 @@
 {
   "variants": {
-    "joined=true": { "model": "enchanted:block/altar_joined" },
-    "joined=false": { "model": "enchanted:block/altar" }
+    "formed=unformed": { "model": "enchanted:block/altar" },
+    "formed=p000": { "model": "enchanted:block/altar_joined" },
+    "formed=p001": { "model": "enchanted:block/altar_joined" },
+    "formed=p002": { "model": "enchanted:block/altar_joined" },
+    "formed=p100": { "model": "enchanted:block/altar_joined" },
+    "formed=p101": { "model": "enchanted:block/altar_joined" },
+    "formed=p102": { "model": "enchanted:block/altar_joined" },
+    "formed=p200": { "model": "enchanted:block/altar_joined" },
+    "formed=p201": { "model": "enchanted:block/altar_joined" },
+    "formed=p202": { "model": "enchanted:block/altar_joined" }
   }
 }

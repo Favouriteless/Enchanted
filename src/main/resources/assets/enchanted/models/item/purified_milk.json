@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/purified_milk"
+    "layer0": "enchanted:item/purified_milk"
   }
 }

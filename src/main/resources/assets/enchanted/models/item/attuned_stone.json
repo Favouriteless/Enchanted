@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/attuned_stone"
+    "layer0": "enchanted:item/attuned_stone"
   }
 }

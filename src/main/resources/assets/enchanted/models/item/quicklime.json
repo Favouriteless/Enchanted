@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "enchanted:items/quicklime"
+    "layer0": "enchanted:item/quicklime"
   }
 }

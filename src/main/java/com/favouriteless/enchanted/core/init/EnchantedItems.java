@@ -14,7 +14,6 @@ public class EnchantedItems {
 
     // Block Items
     public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(EnchantedBlocks.ALTAR.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
-    public static final RegistryObject<Item> LEATHER_BLOCK = ITEMS.register("leather_block", () -> new BlockItem(EnchantedBlocks.LEATHER_BLOCK.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> WITCH_OVEN = ITEMS.register("witch_oven", () -> new BlockItem(EnchantedBlocks.WITCH_OVEN.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL_FILTERED = ITEMS.register("fume_funnel_filtered", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL_FILTERED.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
@@ -23,16 +22,18 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ROWAN_LOG = ITEMS.register("rowan_log", () -> new BlockItem(EnchantedBlocks.ROWAN_LOG.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ROWAN_PLANKS = ITEMS.register("rowan_planks", () -> new BlockItem(EnchantedBlocks.ROWAN_PLANKS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ROWAN_LEAVES = ITEMS.register("rowan_leaves", () -> new BlockItem(EnchantedBlocks.ROWAN_LEAVES.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    //public static final RegistryObject<Item> ROWAN_SAPLING = ITEMS.register("rowan_sapling", () -> new BlockItem(EnchantedBlocks.ROWAN_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> ROWAN_SAPLING = ITEMS.register("rowan_sapling", () -> new BlockItem(EnchantedBlocks.ROWAN_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> HAWTHORN_LOG = ITEMS.register("hawthorn_log", () -> new BlockItem(EnchantedBlocks.HAWTHORN_LOG.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> HAWTHORN_PLANKS = ITEMS.register("hawthorn_planks", () -> new BlockItem(EnchantedBlocks.HAWTHORN_PLANKS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> HAWTHORN_LEAVES = ITEMS.register("hawthorn_leaves", () -> new BlockItem(EnchantedBlocks.HAWTHORN_LEAVES.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    //public static final RegistryObject<Item> HAWTHORN_SAPLING = ITEMS.register("hawthorn_sapling", () -> new BlockItem(EnchantedBlocks.HAWTHORN_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-
+    public static final RegistryObject<Item> HAWTHORN_SAPLING = ITEMS.register("hawthorn_sapling", () -> new BlockItem(EnchantedBlocks.HAWTHORN_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ALDER_LOG = ITEMS.register("alder_log", () -> new BlockItem(EnchantedBlocks.ALDER_LOG.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ALDER_PLANKS = ITEMS.register("alder_planks", () -> new BlockItem(EnchantedBlocks.ALDER_PLANKS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ALDER_LEAVES = ITEMS.register("alder_leaves", () -> new BlockItem(EnchantedBlocks.ALDER_LEAVES.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    //public static final RegistryObject<Item> ALDER_SAPLING = ITEMS.register("alder_sapling", () -> new BlockItem(EnchantedBlocks.ALDER_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> ALDER_SAPLING = ITEMS.register("alder_sapling", () -> new BlockItem(EnchantedBlocks.ALDER_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+
+    public static final RegistryObject<Item> BELLADONNA_SEEDS = ITEMS.register("belladonna_seeds", () -> new BlockNamedItem(EnchantedBlocks.BELLADONNA.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> BELLADONNA_FLOWER = ITEMS.register("belladonna_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
     public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(3), EnchantedBlocks.CHALK_GOLD.get()));
     public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_WHITE.get()));

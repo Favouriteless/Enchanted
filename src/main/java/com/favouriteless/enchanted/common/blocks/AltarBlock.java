@@ -8,12 +8,14 @@ import com.favouriteless.enchanted.core.util.MultiBlockTools;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -31,20 +33,15 @@ import javax.annotation.Nullable;
 public class AltarBlock extends Block {
 
     public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.<AltarPartIndex>create("formed", AltarPartIndex.class);
+    public static final BooleanProperty FACING_X = BooleanProperty.create("facing_x");
 
     public AltarBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE)
+        super(AbstractBlock.Properties.copy(Blocks.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 6.0F)
         );
 
-        this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED));
-    }
-
-    @Override
-    @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED);
+        this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED).setValue(FACING_X, true));
     }
 
     @Override
@@ -67,6 +64,7 @@ public class AltarBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FORMED);
+        builder.add(FACING_X);
     }
 
     @Override

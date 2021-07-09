@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "bwe",
+    "srs",
+    "srs"
+  ],
+  "key":
+  {
+    "b": { "item": "enchanted:breath_of_the_goddess" },
+    "w": { "item": "minecraft:potion", "nbt": "{Potion:'minecraft:water'}"},
+    "e": { "item": "enchanted:exhale_of_the_horned_one" },
+    "s": { "item": "minecraft:stone_bricks" },
+    "r": { "item": "enchanted:rowan_log" }
+  },
+  "result":
+  {
+    "item": "enchanted:altar",
+    "count": 3
+  }
+}

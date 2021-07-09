@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.common.blocks.ChalkBlockBase;
+import com.favouriteless.enchanted.common.blocks.chalk.ChalkBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;

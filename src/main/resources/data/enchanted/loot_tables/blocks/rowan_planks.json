@@ -8,6 +8,11 @@
           "type": "minecraft:item",
           "name": "enchanted:rowan_planks"
         }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
       ]
     }
   ]

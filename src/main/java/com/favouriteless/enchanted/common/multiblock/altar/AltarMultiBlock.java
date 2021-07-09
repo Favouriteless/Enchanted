@@ -35,7 +35,7 @@ public class AltarMultiBlock implements IMultiBlockType {
             for (int dx = 0; dx < 3; dx++) {
                 for (int dz = 0; dz < 2; dz++) {
                     if (isValidUnformedBlock(world, pos, dx, 0, dz)) {
-                        formBlock(world, pos.offset(dx, 0, dz), dx, 0, dz);
+                        formBlock(world, pos.offset(dx, 0, dz), dx, 0, dz, true);
                     }
                 }
             }
@@ -44,7 +44,7 @@ public class AltarMultiBlock implements IMultiBlockType {
             for (int dx = 0; dx < 2; dx++) {
                 for (int dz = 0; dz < 3; dz++) {
                     if (isValidUnformedBlock(world, pos, dx, 0, dz)) {
-                        formBlock(world, pos.offset(dx, 0, dz), dx, 0, dz);
+                        formBlock(world, pos.offset(dx, 0, dz), dx, 0, dz, false);
                     }
                 }
             }
@@ -76,6 +76,13 @@ public class AltarMultiBlock implements IMultiBlockType {
         BlockState state = world.getBlockState(pos);
         if(state.is(EnchantedBlocks.ALTAR.get())) {
             world.setBlock(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)), 3);
+        }
+    }
+
+    public void formBlock(World world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {
+        BlockState state = world.getBlockState(pos);
+        if(state.is(EnchantedBlocks.ALTAR.get())) {
+            world.setBlock(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX), 3);
         }
     }
 

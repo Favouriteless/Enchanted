@@ -22,7 +22,7 @@ public class EnchantedTabs {
     public static final ItemGroup PLANTS = new ItemGroup(  "enchanted.plants") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(EnchantedItems.WHIFF_OF_MAGIC.get());
+            return new ItemStack(EnchantedItems.ROWAN_SAPLING.get());
         }
     };
 }

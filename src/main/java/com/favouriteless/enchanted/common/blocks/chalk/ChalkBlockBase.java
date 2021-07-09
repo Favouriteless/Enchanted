@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blocks;
+package com.favouriteless.enchanted.common.blocks.chalk;
 
 import com.favouriteless.enchanted.core.init.EnchantedMaterials;
 import net.minecraft.block.Block;

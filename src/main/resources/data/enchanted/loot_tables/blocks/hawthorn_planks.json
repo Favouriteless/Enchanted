@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "enchanted:rowan_log"
+          "name": "enchanted:hawthorn_planks"
         }
       ],
       "conditions": [

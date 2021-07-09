@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blocks;
+package com.favouriteless.enchanted.common.blocks.chalk;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "enchanted:block/rowan_planks" }
+    "": { "model": "enchanted:block/trees/rowan_planks" }
   }
 }

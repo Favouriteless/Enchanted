@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.core.init;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.items.ArtichokeSeedsItem;
 import com.favouriteless.enchanted.common.items.ChalkItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -34,6 +35,11 @@ public class EnchantedItems {
 
     public static final RegistryObject<Item> BELLADONNA_SEEDS = ITEMS.register("belladonna_seeds", () -> new BlockNamedItem(EnchantedBlocks.BELLADONNA.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> BELLADONNA_FLOWER = ITEMS.register("belladonna_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> ARTICHOKE_SEEDS = ITEMS.register("artichoke_seeds", () -> new ArtichokeSeedsItem(EnchantedBlocks.ARTICHOKE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> ARTICHOKE = ITEMS.register("artichoke", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> MANDRAKE_SEEDS = ITEMS.register("mandrake_seeds", () -> new BlockNamedItem(EnchantedBlocks.MANDRAKE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> MANDRAKE_ROOT = ITEMS.register("mandrake_root", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
 
     public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(3), EnchantedBlocks.CHALK_GOLD.get()));
     public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_WHITE.get()));

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "enchanted:block/hawthorn_leaves" }
+    "": { "model": "enchanted:block/trees/hawthorn_leaves" }
   }
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "axis=y": { "model": "enchanted:block/hawthorn_log" },
-    "axis=z": { "model": "enchanted:block/hawthorn_log", "x": 90},
-    "axis=x": { "model": "enchanted:block/hawthorn_log", "x": 90, "y": 90}
+    "axis=y": { "model": "enchanted:block/trees/hawthorn_log" },
+    "axis=z": { "model": "enchanted:block/trees/hawthorn_log", "x": 90},
+    "axis=x": { "model": "enchanted:block/trees/hawthorn_log", "x": 90, "y": 90}
   }
 }

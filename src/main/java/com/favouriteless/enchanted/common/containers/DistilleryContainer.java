@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import com.favouriteless.enchanted.core.init.EnchantedBlocks;
-import com.favouriteless.enchanted.core.init.EnchantedContainerTypes;
+import com.favouriteless.enchanted.core.init.EnchantedContainers;
 import com.favouriteless.enchanted.core.init.EnchantedItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,7 +16,7 @@ import net.minecraft.util.IntArray;
 public class DistilleryContainer extends FurnaceContainerBase {
 
     public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final FurnaceTileEntityBase tileEntity, final IIntArray furnaceDataIn) {
-        super(EnchantedContainerTypes.DISTILLERY.get(),
+        super(EnchantedContainers.DISTILLERY.get(),
                 windowId,
                 tileEntity,
                 IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),

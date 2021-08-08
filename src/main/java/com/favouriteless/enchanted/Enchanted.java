@@ -28,11 +28,11 @@ public class Enchanted
 
         EnchantedRecipeTypes.init();
         EnchantedRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
-        //EnchantedEntities.ENTITY_TYPES.register(modEventBus);
+        EnchantedEntityTypes.ENTITY_TYPES.register(modEventBus);
         EnchantedBlocks.BLOCKS.register(modEventBus);
         EnchantedItems.ITEMS.register(modEventBus);
         EnchantedTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
-        EnchantedContainerTypes.CONTAINER_TYPES.register(modEventBus);
+        EnchantedContainers.CONTAINER_TYPES.register(modEventBus);
     }
 
 

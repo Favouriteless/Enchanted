@@ -57,7 +57,7 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.minecraft.getTextureManager().bind(TEXTURE);
+        this.minecraft.getTextureManager().bind(TEXTURE);
 
         int edgeSpacingX = (this.width - this.imageWidth) / 2;
         int edgeSpacingY = (this.height - this.imageHeight) / 2;

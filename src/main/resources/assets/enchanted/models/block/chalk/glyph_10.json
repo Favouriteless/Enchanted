@@ -1,0 +1,15 @@
+{
+	"textures": {
+		"0": "enchanted:block/chalk/glyph_10",
+		"particle": "enchanted:block/chalk/glyph_10"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 0.25, 16],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0}
+			}
+		}
+	]
+}

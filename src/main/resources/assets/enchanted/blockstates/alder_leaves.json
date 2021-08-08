@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "enchanted:block/alder_leaves" }
+    "": { "model": "enchanted:block/trees/alder_leaves" }
   }
 }

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "enchanted:block/alder_planks" }
+    "": { "model": "enchanted:block/trees/alder_planks" }
   }
 }

@@ -39,6 +39,14 @@
 
     "item.enchanted.belladonna_seeds": "Belladonna Seeds",
     "item.enchanted.belladonna_flower": "Belladonna Flower",
+    "block.enchanted.belladonna": "Belladonna",
+    "item.enchanted.artichoke_seeds": "Water Artichoke Seeds",
+    "item.enchanted.artichoke": "Water Artichoke",
+    "block.enchanted.artichoke": "Water Artichoke",
+    "item.enchanted.mandrake_seeds": "Mandrake Seeds",
+    "item.enchanted.mandrake_root": "Mandrake Root",
+    "block.enchanted.mandrake": "Mandrake",
+    "entity.enchanted.mandrake": "Mandrake",
 
     "block.enchanted.witch_oven": "Witches Oven",
     "block.enchanted.fume_funnel": "Fume Funnel",

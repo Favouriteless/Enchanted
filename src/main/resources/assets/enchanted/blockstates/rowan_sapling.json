@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "enchanted:block/rowan_sapling" }
+    "": { "model": "enchanted:block/trees/rowan_sapling" }
   }
 }

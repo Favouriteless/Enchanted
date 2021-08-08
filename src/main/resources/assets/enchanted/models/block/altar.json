@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "enchanted:block/altar_top",
-    "side": "enchanted:block/altar"
-  }
-}

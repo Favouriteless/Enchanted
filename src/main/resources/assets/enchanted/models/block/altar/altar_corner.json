@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "up": "enchanted:block/altar/altar_joined_top",
+    "down": "enchanted:block/altar/altar_top",
+    "west": "enchanted:block/altar/altar_corner_right",
+    "east": "enchanted:block/altar/altar_corner_right",
+    "north": "enchanted:block/altar/altar_corner_left",
+    "south": "enchanted:block/altar/altar_corner_left",
+    "particle": "enchanted:block/altar/altar"
+  }
+}

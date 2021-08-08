@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "enchanted:block/crops/belladonna_stage_2"
+  }
+}

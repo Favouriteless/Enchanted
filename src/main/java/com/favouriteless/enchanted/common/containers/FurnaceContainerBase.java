@@ -1,17 +1,14 @@
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import com.favouriteless.enchanted.core.init.EnchantedItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;

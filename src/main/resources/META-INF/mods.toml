@@ -2,7 +2,7 @@ modLoader="javafml" #mandatory
 
 loaderVersion="[36,)"
 
-license="All rights reserved"
+license="GNU GPLv3"
 
 [[mods]] #mandatory
 

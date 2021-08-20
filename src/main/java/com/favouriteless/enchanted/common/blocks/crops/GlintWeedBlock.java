@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.common.blocks.crops;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
@@ -38,14 +39,13 @@ public class GlintWeedBlock extends BushBlock {
 
     @Override
     public boolean canSurvive(BlockState pState, IWorldReader pLevel, BlockPos pPos) {
-        for(Direction dir : Direction.values()) {
-            if(pLevel.getBlockState(pPos.offset(dir.getNormal()))
-                    .isFaceSturdy(pLevel, pPos.offset(dir.getNormal()), dir.getOpposite())) {
-                return true;
-            }
-        }
-        return false;
+        BlockState state1 = pLevel.getBlockState(pPos.below());
+        BlockState state2 = pLevel.getBlockState(pPos.above());
+
+        return (!pLevel.isEmptyBlock(pPos.below()) && state1.isFaceSturdy(pLevel, pPos.below(), Direction.UP) || state1.is(BlockTags.LEAVES) ) ||
+                (!pLevel.isEmptyBlock(pPos.above()) && state2.isFaceSturdy(pLevel, pPos.above(), Direction.DOWN) || state2.is(BlockTags.LEAVES) );
     }
+
 
     @Override
     public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
@@ -55,7 +55,7 @@ public class GlintWeedBlock extends BushBlock {
                     RANDOM.nextInt(7) - 3,
                     RANDOM.nextInt(7) - 3));
 
-            if(pLevel.isEmptyBlock(newPos) && pLevel.getBlockState(newPos).isFaceSturdy(pLevel, newPos, Direction.UP)) {
+            if(pLevel.isEmptyBlock(newPos) && this.canSurvive(pState, pLevel, pPos)) {
                 pLevel.setBlockAndUpdate(newPos, pState);
             }
         }

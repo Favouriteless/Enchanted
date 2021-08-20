@@ -64,6 +64,8 @@ public class EnchantedBlocks {
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.ARTICHOKE.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.MANDRAKE.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.GLINT_WEED.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(EnchantedBlocks.EMBER_MOSS.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(EnchantedBlocks.SPANISH_MOSS.get(), RenderType.cutout());
     }
 
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", AltarBlock::new);
@@ -94,6 +96,9 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> MANDRAKE = BLOCKS.register("mandrake", () -> new MandrakeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
     public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
+    public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
+    public static final RegistryObject<Block> GARLIC = BLOCKS.register("garlic", () -> new GarlicBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
 
     public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldChalkBlock::new);
     public static final RegistryObject<Block> CHALK_WHITE = BLOCKS.register("chalk_white", () -> new ChalkCircleBlock(null));

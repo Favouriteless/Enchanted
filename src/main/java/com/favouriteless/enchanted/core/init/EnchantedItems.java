@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.core.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.ArtichokeSeedsItem;
 import com.favouriteless.enchanted.common.items.ChalkItem;
+import com.favouriteless.enchanted.common.items.MutandisItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -64,7 +65,12 @@ public class EnchantedItems {
     public static final RegistryObject<Item> MANDRAKE_ROOT = ITEMS.register("mandrake_root", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> EMBER_MOSS = ITEMS.register("ember_moss", () -> new BlockItem(EnchantedBlocks.EMBER_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> GARLIC = ITEMS.register("garlic", () -> new BlockNamedItem(EnchantedBlocks.GARLIC.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> WOLFSBANE_SEEDS = ITEMS.register("wolfsbane_seeds", () -> new BlockNamedItem(EnchantedBlocks.WOLFSBANE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
+    public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(3), EnchantedBlocks.CHALK_GOLD.get()));
     public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_WHITE.get()));
     public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_RED.get()));

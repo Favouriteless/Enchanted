@@ -38,6 +38,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -88,9 +89,11 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> ALDER_SAPLING = BLOCKS.register("alder_sapling", () -> new SaplingBlock(new AlderTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> BELLADONNA = BLOCKS.register("belladonna", () -> new BelladonnaBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> SNOWBELL = BLOCKS.register("snowbell", () -> new SnowbellBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> ARTICHOKE = BLOCKS.register("artichoke", () -> new ArtichokeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT).sound(SoundType.LILY_PAD)));
     public static final RegistryObject<Block> MANDRAKE = BLOCKS.register("mandrake", () -> new MandrakeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
+    public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
 
     public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldChalkBlock::new);
     public static final RegistryObject<Block> CHALK_WHITE = BLOCKS.register("chalk_white", () -> new ChalkCircleBlock(null));

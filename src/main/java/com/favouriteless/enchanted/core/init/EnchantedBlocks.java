@@ -66,6 +66,8 @@ public class EnchantedBlocks {
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.GLINT_WEED.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.EMBER_MOSS.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.SPANISH_MOSS.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(EnchantedBlocks.WOLFSBANE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(EnchantedBlocks.GARLIC.get(), RenderType.cutout());
     }
 
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", AltarBlock::new);

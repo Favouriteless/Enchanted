@@ -35,7 +35,6 @@ public class EnchantedItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Enchanted.MOD_ID);
 
-    // Block Items
     public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(EnchantedBlocks.ALTAR.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> WITCH_OVEN = ITEMS.register("witch_oven", () -> new BlockItem(EnchantedBlocks.WITCH_OVEN.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
@@ -55,30 +54,37 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ALDER_LEAVES = ITEMS.register("alder_leaves", () -> new BlockItem(EnchantedBlocks.ALDER_LEAVES.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ALDER_SAPLING = ITEMS.register("alder_sapling", () -> new BlockItem(EnchantedBlocks.ALDER_SAPLING.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
 
-    public static final RegistryObject<Item> BELLADONNA_SEEDS = ITEMS.register("belladonna_seeds", () -> new BlockNamedItem(EnchantedBlocks.BELLADONNA.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> BELLADONNA_FLOWER = ITEMS.register("belladonna_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
-    public static final RegistryObject<Item> SNOWBELL_SEEDS = ITEMS.register("snowbell_seeds", () -> new BlockNamedItem(EnchantedBlocks.SNOWBELL.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> ICY_NEEDLE = ITEMS.register("icy_needle", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+
+
     public static final RegistryObject<Item> ARTICHOKE_SEEDS = ITEMS.register("artichoke_seeds", () -> new ArtichokeSeedsItem(EnchantedBlocks.ARTICHOKE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> ARTICHOKE = ITEMS.register("artichoke", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> BELLADONNA_SEEDS = ITEMS.register("belladonna_seeds", () -> new BlockNamedItem(EnchantedBlocks.BELLADONNA.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> MANDRAKE_SEEDS = ITEMS.register("mandrake_seeds", () -> new BlockNamedItem(EnchantedBlocks.MANDRAKE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> MANDRAKE_ROOT = ITEMS.register("mandrake_root", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
-    public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> EMBER_MOSS = ITEMS.register("ember_moss", () -> new BlockItem(EnchantedBlocks.EMBER_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
-    public static final RegistryObject<Item> GARLIC = ITEMS.register("garlic", () -> new BlockNamedItem(EnchantedBlocks.GARLIC.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> SNOWBELL_SEEDS = ITEMS.register("snowbell_seeds", () -> new BlockNamedItem(EnchantedBlocks.SNOWBELL.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> WOLFSBANE_SEEDS = ITEMS.register("wolfsbane_seeds", () -> new BlockNamedItem(EnchantedBlocks.WOLFSBANE.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+
+    public static final RegistryObject<Item> ARTICHOKE = ITEMS.register("artichoke", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> BELLADONNA_FLOWER = ITEMS.register("belladonna_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> EMBER_MOSS = ITEMS.register("ember_moss", () -> new BlockItem(EnchantedBlocks.EMBER_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> GARLIC = ITEMS.register("garlic", () -> new BlockNamedItem(EnchantedBlocks.GARLIC.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
+    public static final RegistryObject<Item> ICY_NEEDLE = ITEMS.register("icy_needle", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
     public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(EnchantedTabs.MAIN)));
+
+
+
     public static final RegistryObject<Item> CHALK_GOLD = ITEMS.register("chalk_gold", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(3), EnchantedBlocks.CHALK_GOLD.get()));
     public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_WHITE.get()));
     public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_RED.get()));
     public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(new Item.Properties().tab(EnchantedTabs.MAIN).stacksTo(1).durability(40), EnchantedBlocks.CHALK_PURPLE.get()));
 
+
+
     //public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart", () -> new BlockItem(EnchantedBlocks.DEMON_HEART.get(), new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
-    // Items
     public static final RegistryObject<Item> CLAY_JAR_SOFT = ITEMS.register("clay_jar_soft", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> CLAY_JAR = ITEMS.register("clay_jar", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> BREATH_OF_THE_GODDESS = ITEMS.register("breath_of_the_goddess", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
@@ -107,7 +113,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> WOOD_ASH = ITEMS.register("wood_ash", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> FUME_FILTER = ITEMS.register("fume_filter", () -> new Item(new Item.Properties().tab(EnchantedTabs.MAIN)));
 
-    // Armor
+
+
     public static final RegistryObject<Item> EMERALD_HELMET = ITEMS.register("emerald_helmet", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> EMERALD_CHESTPLATE = ITEMS.register("emerald_chestplate", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.CHEST, new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> EMERALD_LEGGINGS = ITEMS.register("emerald_leggings", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.LEGS, new Item.Properties().tab(EnchantedTabs.MAIN)));

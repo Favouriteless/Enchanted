@@ -50,11 +50,10 @@
     "block.enchanted.glint_weed": "Glint Weed",
     "block.enchanted.ember_moss": "Ember Moss",
     "block.enchanted.spanish_moss": "Spanish Moss",
-    "item.enchanted.mutandis": "Mutandis",
-    "item.enchanted.icy_needle": "Icy Needle",
-    "item.enchanted.wolfsbane_flower": "Wolfsbane Flower",
     "item.enchanted.snowbell_seeds": "Snowbell Seeds",
+    "item.enchanted.icy_needle": "Icy Needle",
     "item.enchanted.wolfsbane_seeds": "Wolfsbane Seeds",
+    "item.enchanted.wolfsbane_flower": "Wolfsbane Flower",
     "item.enchanted.garlic": "Garlic",
 
     "block.enchanted.witch_oven": "Witches Oven",
@@ -74,7 +73,8 @@
     "block.enchanted.alder_leaves": "Alder Leaves",
     "block.enchanted.alder_sapling": "Alder Sapling",
     "block.enchanted.demon_heart": "Demon Heart",
-	
+
+    "item.enchanted.mutandis": "Mutandis",
 	"block.enchanted.altar": "Altar",
     "container.witch_oven": "Witches Oven",
     "container.distillery": "Distillery",

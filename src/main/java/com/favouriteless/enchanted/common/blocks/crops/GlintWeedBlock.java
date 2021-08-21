@@ -55,7 +55,7 @@ public class GlintWeedBlock extends BushBlock {
                     RANDOM.nextInt(7) - 3,
                     RANDOM.nextInt(7) - 3));
 
-            if(pLevel.isEmptyBlock(newPos) && this.canSurvive(pState, pLevel, pPos)) {
+            if(pLevel.isEmptyBlock(newPos) && this.canSurvive(pState, pLevel, newPos)) {
                 pLevel.setBlockAndUpdate(newPos, pState);
             }
         }

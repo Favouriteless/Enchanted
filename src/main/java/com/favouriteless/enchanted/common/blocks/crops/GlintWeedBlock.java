@@ -59,6 +59,34 @@ public class GlintWeedBlock extends BushBlock {
                 pLevel.setBlockAndUpdate(newPos, pState);
             }
         }
+
+        if (pRandom.nextInt(14) == 0) {
+
+            int weedLimit = 5;
+            int j = 4;
+            for(BlockPos blockpos : BlockPos.betweenClosed(pPos.offset(-4, -1, -4), pPos.offset(4, 1, 4))) {
+                if (pLevel.getBlockState(blockpos).is(this)) {
+                    weedLimit--;
+                    if (weedLimit <= 0) {
+                        return;
+                    }
+                }
+            }
+
+            BlockPos newPos = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
+
+            for(int k = 0; k < 4; k++) {
+                if (pLevel.isEmptyBlock(newPos) && pState.canSurvive(pLevel, newPos)) {
+                    pPos = newPos;
+                }
+
+                newPos = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
+            }
+
+            if (pLevel.isEmptyBlock(newPos) && pState.canSurvive(pLevel, newPos)) {
+                pLevel.setBlock(newPos, pState, 2);
+            }
+        }
     }
 
 }

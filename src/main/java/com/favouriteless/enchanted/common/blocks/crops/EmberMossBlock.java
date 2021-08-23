@@ -21,11 +21,15 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -61,5 +65,10 @@ public class EmberMossBlock extends BushBlock {
     public void entityInside(BlockState pState, World pWorld, BlockPos pPos, Entity pEntity) {
         pEntity.setSecondsOnFire(1);
         super.entityInside(pState, pWorld, pPos, pEntity);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
     }
 }

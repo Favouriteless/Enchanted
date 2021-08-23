@@ -29,7 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -66,11 +65,6 @@ public class LootModifiers {
                 EnchantedItems.GARLIC.get()
         );
 
-        /**
-         * Constructs a LootModifier.
-         *
-         * @param conditionsIn the ILootConditions that need to be matched before the loot is modified.
-         */
         protected GrassSeedModifier(ILootCondition[] conditionsIn) {
             super(conditionsIn);
         }

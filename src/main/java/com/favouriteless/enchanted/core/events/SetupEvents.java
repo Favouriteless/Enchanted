@@ -28,6 +28,7 @@ import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.core.init.*;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -62,5 +63,9 @@ public class SetupEvents {
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(EnchantedEntityTypes.MANDRAKE.get(), MandrakeEntity.createAttributes().build());
+    }
+
+    @SubscribeEvent
+    public static void createRegistries(RegistryEvent.NewRegistry event) {
     }
 }

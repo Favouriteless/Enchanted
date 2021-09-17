@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.core.init.*;
+import com.favouriteless.enchanted.core.init.registries.RitualRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +55,8 @@ public class Enchanted
         EnchantedItems.ITEMS.register(modEventBus);
         EnchantedTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
         EnchantedContainers.CONTAINER_TYPES.register(modEventBus);
+        RitualRegistry.init();
+        EnchantedRituals.RITUAL_TYPES.register(modEventBus);
     }
 
 

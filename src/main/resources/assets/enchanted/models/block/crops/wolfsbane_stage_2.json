@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/crop",
+  "parent": "minecraft:block/cross",
   "textures": {
-    "crop": "enchanted:block/crops/wolfsbane_stage_2"
+    "cross": "enchanted:block/crops/wolfsbane_stage_2"
   }
 }

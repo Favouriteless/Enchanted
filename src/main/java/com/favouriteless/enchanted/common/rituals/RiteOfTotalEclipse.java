@@ -36,23 +36,7 @@ public class RiteOfTotalEclipse extends AbstractRitual {
     public RiteOfTotalEclipse(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
     public RiteOfTotalEclipse() {
-        GLYPHS_REQUIRED = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "W", "W", "W", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "W", "X", "X", "X", "W", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "W", "X", "X", "X", "X", "X", "W", "X", "X", "X", "X",
-                "X", "X", "X", "X", "W", "X", "X", "G", "X", "X", "W", "X", "X", "X", "X",
-                "X", "X", "X", "X", "W", "X", "X", "X", "X", "X", "W", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "W", "X", "X", "X", "W", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "W", "W", "W", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"
-        };
+        CIRCLES_REQUIRED = new ChalkColour[] { ChalkColour.WHITE, null, null };
 
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
         ITEMS_REQUIRED.put(Items.STONE_AXE, 1);

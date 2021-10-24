@@ -48,7 +48,7 @@ import java.util.*;
 
 public abstract class AbstractRitual implements ITickable, IForgeRegistryEntry<AbstractRitual> {
 
-    public String[] GLYPHS_REQUIRED;
+    public ChalkColour[] CIRCLES_REQUIRED;
     public EntityType<?>[] ENTITIES_REQUIRED;
     public HashMap<Item, Integer> ITEMS_REQUIRED = new HashMap<Item, Integer>();
 

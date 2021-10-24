@@ -38,23 +38,7 @@ public class RiteOfChargingStone extends AbstractRitual {
     public RiteOfChargingStone(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
 
     public RiteOfChargingStone() {
-        GLYPHS_REQUIRED = new String[] { // 2D representation of chalk circles. X = anything, A = air, W = white chalk, R = red chalk, P = purple chalk, G = gold chalk (must be in center)
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "W", "W", "W", "W", "W", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "W", "A", "A", "A", "A", "A", "W", "X", "X", "X", "X",
-                "X", "X", "X", "W", "A", "A", "W", "W", "W", "A", "A", "W", "X", "X", "X",
-                "X", "X", "W", "A", "A", "W", "A", "A", "A", "W", "A", "A", "W", "X", "X",
-                "X", "X", "W", "A", "W", "A", "A", "A", "A", "A", "W", "A", "W", "X", "X",
-                "X", "X", "W", "A", "W", "A", "A", "G", "A", "A", "W", "A", "W", "X", "X",
-                "X", "X", "W", "A", "W", "A", "A", "A", "A", "A", "W", "A", "W", "X", "X",
-                "X", "X", "W", "A", "A", "W", "A", "A", "A", "W", "A", "A", "W", "X", "X",
-                "X", "X", "X", "W", "A", "A", "W", "W", "W", "A", "A", "W", "X", "X", "X",
-                "X", "X", "X", "X", "W", "A", "A", "A", "A", "A", "W", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "W", "W", "W", "W", "W", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X",
-                "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"
-        };
+        CIRCLES_REQUIRED = new ChalkColour[] { ChalkColour.WHITE, ChalkColour.WHITE, null };
 
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE.get(), 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);

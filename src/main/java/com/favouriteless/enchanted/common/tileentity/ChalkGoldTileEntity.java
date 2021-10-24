@@ -61,15 +61,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         if(!executing && !world.isClientSide) {
             executing = true;
 
-            List<AbstractRitual> currentRituals = getRitualsFor(pos, world, player);
-
-            if(!currentRituals.isEmpty()) {
-                for(AbstractRitual ritual : currentRituals) {
-                    ritual.startRitual(state, (ServerWorld)world, pos, player);
-                }
-            } else {
-                world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
-            }
+            world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
         }
     }
 
@@ -82,33 +74,6 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                 executing = false;
             }
         }
-    }
-
-    public static List<AbstractRitual> getRitualsFor(BlockPos pos, World world, PlayerEntity player) {
-
-        String[] ritualGlyphs = new String[225];
-        List<Entity> ritualEntities;
-        BlockPos corner = pos.offset(-7, 0, -7);
-        // GET GLYPHS ARRAY
-        for (int z = 0; z < 15; z++) {
-            for (int x = 0; x < 15; x++) {
-                Block blockType = world.getBlockState(corner.offset(x, 0, z)).getBlock();
-                String type = "XX";
-
-                for(Block block : EnchantedRituals.CHARACTER_MAP.keySet())
-                {
-                    if (block == blockType) {
-                        type = EnchantedRituals.CHARACTER_MAP.get(blockType);
-                        break;
-                    }
-                }
-                ritualGlyphs[(x + (z*15))] = type;
-            }
-        }
-        // GET ENTITIES LIST
-        ritualEntities = world.getEntities(player, new AxisAlignedBB(corner, corner.offset(15, 2, 15)));
-
-        return EnchantedRituals.forData(ritualGlyphs, ritualEntities);
     }
 
 }

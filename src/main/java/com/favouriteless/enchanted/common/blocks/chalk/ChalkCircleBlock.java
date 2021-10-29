@@ -67,4 +67,9 @@ public class ChalkCircleBlock extends ChalkBlockBase {
 
     }
 
+    public enum ChalkColour {
+        WHITE,
+        RED,
+        PURPLE
+    }
 }

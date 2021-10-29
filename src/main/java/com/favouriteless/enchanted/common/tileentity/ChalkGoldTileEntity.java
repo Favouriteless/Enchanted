@@ -21,13 +21,8 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.common.rituals.AbstractRitual;
-import com.favouriteless.enchanted.core.init.EnchantedRituals;
 import com.favouriteless.enchanted.core.init.EnchantedTileEntities;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -35,14 +30,9 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEntity {
 

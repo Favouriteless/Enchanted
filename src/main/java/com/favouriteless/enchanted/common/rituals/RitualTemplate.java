@@ -21,35 +21,25 @@
 
 package com.favouriteless.enchanted.common.rituals;
 
-import net.minecraft.entity.Entity;
+import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock.ChalkColour;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 
-import java.util.List;
-
 public class RitualTemplate extends AbstractRitual {
 
-    // Do not use this constructor
-    public RitualTemplate(List<Entity> entitiesNeeded) { ENTITIES_TO_KILL = entitiesNeeded; }
-
     public RitualTemplate() {
-
-        CIRCLES_REQUIRED = new ChalkColour[] { null, null, null };
-
-        ITEMS_REQUIRED.put(Items.DIAMOND, 5); // Add items, count required for ritual
-
-        ENTITIES_REQUIRED = new EntityType<?>[] {  // Add entities required for ritual
-                EntityType.PIG
-        };
+        CIRCLES_REQUIRED = new ChalkColour[] { null, null, null }; // Small, medium, large
+        ITEMS_REQUIRED.put(Items.DIAMOND, 5); // Add item, count required for ritual
+        ENTITIES_REQUIRED.put(EntityType.PIG, 1);  // Add entity, count required for ritual
     }
 
     @Override
     public void execute() {
         // Do ritual effects here
     }
-    
+
     @Override
-    protected void onTick() {
+    public void onTick() {
         // Do tick based ritual effects here
     }
 

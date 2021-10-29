@@ -23,18 +23,6 @@ package com.favouriteless.enchanted.core.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.rituals.*;
-import com.favouriteless.enchanted.core.init.registries.RitualRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -42,9 +30,9 @@ import java.util.*;
 
 public class EnchantedRituals {
 
-    public static final DeferredRegister<AbstractRitual> RITUAL_TYPES = DeferredRegister.create(AbstractRitual.class, Enchanted.MOD_ID);
-
-    public static final RegistryObject<AbstractRitual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
-    public static final RegistryObject<AbstractRitual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
+//    public static final DeferredRegister<AbstractRitual> RITUAL_TYPES = DeferredRegister.create(AbstractRitual.class, Enchanted.MOD_ID);
+//
+//    public static final RegistryObject<AbstractRitual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
+//    public static final RegistryObject<AbstractRitual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
 
 }

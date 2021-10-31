@@ -24,12 +24,8 @@ package com.favouriteless.enchanted.common.blocks;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,18 +37,19 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class AltarBlock extends Block {
+public class AltarCoreBlock extends ContainerBlock {
 
-    public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.<AltarPartIndex>create("formed", AltarPartIndex.class);
-    public static final BooleanProperty FACING_X = BooleanProperty.create("facing_x");
+    public static final EnumProperty<AltarPartIndex> FORMED = AltarBlock.FORMED;
+    public static final BooleanProperty FACING_X = AltarBlock.FACING_X;
 
-    public AltarBlock(AbstractBlock.Properties properties) {
+    public AltarCoreBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED).setValue(FACING_X, true));
+        this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.P000).setValue(FACING_X, true));
     }
 
     @Override
@@ -65,7 +62,7 @@ public class AltarBlock extends Block {
     @Override
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(!world.isClientSide()) {
-            if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
+            if(state != newState) {
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
         }
@@ -81,13 +78,25 @@ public class AltarBlock extends Block {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if(state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-            BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
-            BlockState cornerState = world.getBlockState(cornerPos);
-
-            cornerState.getBlock().use(cornerState, world, cornerPos, player, hand, hit);
+            TileEntity tileEntity = world.getBlockEntity(pos);
+            if(tileEntity instanceof AltarTileEntity) {
+                ((AltarTileEntity)tileEntity).updatePower();
+            }
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.FAIL;
     }
 
+    @Nullable
+    @Override
+    public TileEntity newBlockEntity(IBlockReader blockReader) {
+        AltarTileEntity tileEntity = new AltarTileEntity();
+        tileEntity.recalculateBlocks();
+        return new AltarTileEntity();
+    }
+
+    @Override
+    public BlockRenderType getRenderShape(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
 }

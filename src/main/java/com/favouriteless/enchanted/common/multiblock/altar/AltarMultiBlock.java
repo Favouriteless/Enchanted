@@ -75,7 +75,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     @Nullable
     @Override
     public BlockPos getBottomLowerLeft(World world, BlockPos pos, BlockState state) {
-        if(state.is(EnchantedBlocks.ALTAR.get())) {
+        if(isFormedAltar(state)) {
             AltarPartIndex index = state.getValue(AltarBlock.FORMED);
             return pos.offset(-index.getDx(), -index.getDy(), -index.getDz());
         }
@@ -87,23 +87,21 @@ public class AltarMultiBlock implements IMultiBlockType {
     @Override
     public void unformBlock(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        if(state.is(EnchantedBlocks.ALTAR.get())) {
-            world.setBlock(pos, state.setValue(AltarBlock.FORMED, AltarPartIndex.UNFORMED), 3);
+        if(state.is(EnchantedBlocks.ALTAR.get()) || state.is(EnchantedBlocks.ALTAR_CORE.get())) {
+            world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState());
         }
     }
 
     @Override
     public void formBlock(World world, BlockPos pos, int dx, int dy, int dz) {
-        BlockState state = world.getBlockState(pos);
-        if(state.is(EnchantedBlocks.ALTAR.get())) {
-            world.setBlock(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)), 3);
-        }
+
     }
 
     public void formBlock(World world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {
-        BlockState state = world.getBlockState(pos);
-        if(state.is(EnchantedBlocks.ALTAR.get())) {
-            world.setBlock(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX), 3);
+        if(dx == 0 && dz == 0) {
+            world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR_CORE.get().defaultBlockState().setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
+        } else {
+            world.setBlockAndUpdate(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
         }
     }
 
@@ -178,7 +176,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     private static boolean isFormedAltar(BlockState state) {
-        return state.is(EnchantedBlocks.ALTAR.get()) && state.getValue(AltarBlock.FORMED) != AltarPartIndex.UNFORMED;
+        return (state.is(EnchantedBlocks.ALTAR.get()) && state.getValue(AltarBlock.FORMED) != AltarPartIndex.UNFORMED) || state.is(EnchantedBlocks.ALTAR_CORE.get());
     }
 
     @Override

@@ -48,7 +48,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class FumeFunnel extends Block {
+public class FumeFunnelBlock extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -74,7 +74,7 @@ public class FumeFunnel extends Block {
     private static final VoxelShape SHAPE_DEFAULT_WEST = Stream.of(Block.box(0, 3, 1, 1, 6, 2), Block.box(0, 6, 1, 1, 7, 4), Block.box(1, 0, 1, 15, 1, 15), Block.box(1, 12, 1, 15, 13, 15), Block.box(3, 13, 3, 13, 14, 13), Block.box(1, 1, 3, 2, 5, 5), Block.box(1, 1, 11, 2, 5, 13), Block.box(1, 1, 5, 2, 6, 11), Block.box(2, 1, 2, 14, 12, 14), Block.box(0, 0, 2, 1, 1, 14), Block.box(1, 6, 3, 2, 7, 4), Block.box(1, 9, 5, 2, 10, 11), Block.box(15, 3, 2, 16, 4, 6), Block.box(14, 7, 5, 15, 8, 6), Block.box(14, 3, 9, 15, 10, 12), Block.box(15, 4, 5, 16, 8, 6), Block.box(1, 3, 1, 16, 4, 2)).reduce((v1, v2) -> {return VoxelShapes.join(v1, v2, IBooleanFunction.OR);}).get();
     private static final VoxelShape SHAPE_DEFAULT_EAST = Stream.of(Block.box(15, 3, 14, 16, 6, 15), Block.box(15, 6, 12, 16, 7, 15), Block.box(1, 0, 1, 15, 1, 15), Block.box(1, 12, 1, 15, 13, 15), Block.box(3, 13, 3, 13, 14, 13), Block.box(14, 1, 11, 15, 5, 13), Block.box(14, 1, 3, 15, 5, 5), Block.box(14, 1, 5, 15, 6, 11), Block.box(2, 1, 2, 14, 12, 14), Block.box(15, 0, 2, 16, 1, 14), Block.box(14, 6, 12, 15, 7, 13), Block.box(14, 9, 5, 15, 10, 11), Block.box(0, 3, 10, 1, 4, 14), Block.box(1, 7, 10, 2, 8, 11), Block.box(1, 3, 4, 2, 10, 7), Block.box(0, 4, 10, 1, 8, 11), Block.box(0, 3, 14, 15, 4, 15)).reduce((v1, v2) -> {return VoxelShapes.join(v1, v2, IBooleanFunction.OR);}).get();
 
-    public FumeFunnel(Properties builder) {
+    public FumeFunnelBlock(Properties builder) {
         super(builder);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(TYPE, 0));
     }

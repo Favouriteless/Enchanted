@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.common.blocks.FumeFunnel;
+import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.recipes.witch_oven.WitchOvenRecipe;
@@ -188,7 +188,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
             };
 
             for (BlockPos _pos : potentialFilters) {
-                if (this.level.getBlockState(_pos).getBlock() instanceof FumeFunnel) {
+                if (this.level.getBlockState(_pos).getBlock() instanceof FumeFunnelBlock) {
                     this.level.setBlock(_pos, this.level.getBlockState(_pos).setValue(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
                 }
             }

@@ -71,7 +71,6 @@ public class EnchantedBlocks {
     }
 
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new AltarBlock(AbstractBlock.Properties.of(EnchantedMaterials.ALTAR).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
-    public static final RegistryObject<Block> ALTAR_CORE = BLOCKS.register("altar_core", () -> new AltarCoreBlock(AbstractBlock.Properties.of(EnchantedMaterials.ALTAR).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
     public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", () -> new WitchOvenBlock(AbstractBlock.Properties.copy(Blocks.ANVIL).strength(5.0F, 1200.0F).lightLevel(getLightValueLit(13)).noOcclusion()));
     public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(FUME_FUNNEL.get())));

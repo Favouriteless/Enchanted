@@ -43,5 +43,5 @@ public class EnchantedTileEntities {
             () -> TileEntityType.Builder.of(DistilleryTileEntity::new, EnchantedBlocks.DISTILLERY.get()).build(null));
 
     public static final RegistryObject<TileEntityType<AltarTileEntity>> ALTAR = TILE_ENTITY_TYPES.register("altar",
-            () -> TileEntityType.Builder.of(AltarTileEntity::new, EnchantedBlocks.ALTAR_CORE.get()).build(null));
+            () -> TileEntityType.Builder.of(AltarTileEntity::new, EnchantedBlocks.ALTAR.get()).build(null));
 }

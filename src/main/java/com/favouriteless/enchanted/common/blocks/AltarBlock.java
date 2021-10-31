@@ -26,10 +26,7 @@ import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.core.init.EnchantedBlocks;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,13 +38,14 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class AltarBlock extends Block {
+public class AltarBlock extends ContainerBlock {
 
-    public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.<AltarPartIndex>create("formed", AltarPartIndex.class);
+    public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.create("formed", AltarPartIndex.class);
     public static final BooleanProperty FACING_X = BooleanProperty.create("facing_x");
 
     public AltarBlock(AbstractBlock.Properties properties) {
@@ -84,10 +82,32 @@ public class AltarBlock extends Block {
             BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
             BlockState cornerState = world.getBlockState(cornerPos);
 
-            cornerState.getBlock().use(cornerState, world, cornerPos, player, hand, hit);
+            if(cornerState.getValue(FORMED) == AltarPartIndex.P000) {
+                TileEntity tileEntity = world.getBlockEntity(cornerPos);
+                if (tileEntity instanceof AltarTileEntity) {
+                    ((AltarTileEntity) tileEntity).updatePower();
+                }
+            }
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.FAIL;
     }
 
+    @Nullable
+    @Override
+    public TileEntity newBlockEntity(IBlockReader blockReader) {
+        AltarTileEntity tileEntity = new AltarTileEntity();
+        tileEntity.recalculateBlocks();
+        return new AltarTileEntity();
+    }
+
+    @Override
+    public BlockRenderType getRenderShape(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return state.getValue(FORMED) == AltarPartIndex.P000;
+    }
 }

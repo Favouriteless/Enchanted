@@ -87,7 +87,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     @Override
     public void unformBlock(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        if(state.is(EnchantedBlocks.ALTAR.get()) || state.is(EnchantedBlocks.ALTAR_CORE.get())) {
+        if(state.is(EnchantedBlocks.ALTAR.get())) {
             world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState());
         }
     }
@@ -98,11 +98,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     public void formBlock(World world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {
-        if(dx == 0 && dz == 0) {
-            world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR_CORE.get().defaultBlockState().setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
-        } else {
-            world.setBlockAndUpdate(pos, world.getBlockState(pos).setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
-        }
+        world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState().setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
     }
 
     @Override
@@ -176,7 +172,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     private static boolean isFormedAltar(BlockState state) {
-        return (state.is(EnchantedBlocks.ALTAR.get()) && state.getValue(AltarBlock.FORMED) != AltarPartIndex.UNFORMED) || state.is(EnchantedBlocks.ALTAR_CORE.get());
+        return (state.is(EnchantedBlocks.ALTAR.get()) && state.getValue(AltarBlock.FORMED) != AltarPartIndex.UNFORMED);
     }
 
     @Override

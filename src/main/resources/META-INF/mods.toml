@@ -10,7 +10,7 @@ modId="enchanted" #mandatory
 
 version="${file.jarVersion}" #mandatory
 displayName="Enchanted" #mandatory
-logoFile="examplemod.png" #optional
+logoFile="icon.png" #optional
 
 credits="Heavily inspired by Emoniph's Witchery mod" #optional
 authors="Favouriteless" #optional

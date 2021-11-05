@@ -94,7 +94,7 @@ public class AltarMultiBlock implements IMultiBlockType {
 
     @Override
     public void formBlock(World world, BlockPos pos, int dx, int dy, int dz) {
-
+        formBlock(world, pos, dx, dy, dz, false);
     }
 
     public void formBlock(World world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {

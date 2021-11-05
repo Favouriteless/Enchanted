@@ -21,10 +21,11 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
+import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.events.AltarEvents;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
@@ -67,6 +68,10 @@ public class AltarBlock extends ContainerBlock {
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
         }
+        TileEntity tileEntity = world.getBlockEntity(pos);
+        if(tileEntity instanceof AltarTileEntity) {
+            AltarEvents.LISTENERS.remove(tileEntity);
+        }
         super.onRemove(state, world, pos, newState, pIsMoving);
     }
 
@@ -79,14 +84,17 @@ public class AltarBlock extends ContainerBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if(state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-            BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
-            BlockState cornerState = world.getBlockState(cornerPos);
+            if (!world.isClientSide) {
+                BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
+                BlockState cornerState = world.getBlockState(cornerPos);
 
-            if(cornerState.getValue(FORMED) == AltarPartIndex.P000) {
-                TileEntity tileEntity = world.getBlockEntity(cornerPos);
-                if (tileEntity instanceof AltarTileEntity) {
-                    ((AltarTileEntity) tileEntity).updatePower();
+                if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
+                    TileEntity tileEntity = world.getBlockEntity(cornerPos);
+                    if (tileEntity instanceof AltarTileEntity) {
+                        Enchanted.LOGGER.info((String.format("%d/%d", ((AltarTileEntity) tileEntity).fields.get(1), ((AltarTileEntity) tileEntity).fields.get(0))));
+                    }
                 }
+                return ActionResultType.CONSUME;
             }
             return ActionResultType.SUCCESS;
         }
@@ -96,10 +104,10 @@ public class AltarBlock extends ContainerBlock {
     @Nullable
     @Override
     public TileEntity newBlockEntity(IBlockReader blockReader) {
-        AltarTileEntity tileEntity = new AltarTileEntity();
-        tileEntity.recalculateBlocks();
         return new AltarTileEntity();
     }
+
+
 
     @Override
     public BlockRenderType getRenderShape(BlockState state) {

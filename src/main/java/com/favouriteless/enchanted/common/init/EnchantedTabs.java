@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.init;
+package com.favouriteless.enchanted.common.init;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

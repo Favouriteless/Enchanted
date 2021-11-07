@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.multiblock.altar;
 
 import com.favouriteless.enchanted.common.blocks.AltarBlock;
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.core.util.IMultiBlockType;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

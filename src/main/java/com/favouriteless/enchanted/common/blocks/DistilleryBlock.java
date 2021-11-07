@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
-import com.favouriteless.enchanted.core.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;

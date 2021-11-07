@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
 import com.favouriteless.enchanted.common.recipes.distillery.DistilleryRecipe;
-import com.favouriteless.enchanted.core.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;

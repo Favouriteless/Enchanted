@@ -22,7 +22,6 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.events.AltarEvents;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
@@ -67,10 +66,6 @@ public class AltarBlock extends ContainerBlock {
             if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
-        }
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if(tileEntity instanceof AltarTileEntity) {
-            AltarEvents.LISTENERS.remove(tileEntity);
         }
         super.onRemove(state, world, pos, newState, pIsMoving);
     }

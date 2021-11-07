@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.world.features;
 
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;

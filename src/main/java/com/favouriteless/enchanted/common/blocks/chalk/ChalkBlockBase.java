@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
-import com.favouriteless.enchanted.core.init.EnchantedMaterials;
+import com.favouriteless.enchanted.common.init.EnchantedMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

@@ -19,12 +19,13 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.init;
+package com.favouriteless.enchanted.common.init;
 
-import net.minecraft.util.DamageSource;
+public class EnchantedRituals {
 
-public class EnchantedDamageSources {
-
-    public static final DamageSource SACRIFICE = new DamageSource("sacrifice").bypassArmor().bypassMagic().bypassInvul();
+//    public static final DeferredRegister<AbstractRitual> RITUAL_TYPES = DeferredRegister.create(AbstractRitual.class, Enchanted.MOD_ID);
+//
+//    public static final RegistryObject<AbstractRitual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
+//    public static final RegistryObject<AbstractRitual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
 
 }

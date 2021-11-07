@@ -22,9 +22,9 @@
 package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
-import com.favouriteless.enchanted.core.init.EnchantedContainers;
-import com.favouriteless.enchanted.core.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedContainers;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;

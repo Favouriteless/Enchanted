@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.recipes.distillery;
 
-import com.favouriteless.enchanted.core.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

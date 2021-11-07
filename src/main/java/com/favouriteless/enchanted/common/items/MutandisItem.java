@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

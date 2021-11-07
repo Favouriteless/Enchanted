@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.core.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ITickableTileEntity;

@@ -22,21 +22,18 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.blocks.AltarBlock;
-import com.favouriteless.enchanted.common.events.AltarEvents;
-import com.favouriteless.enchanted.core.init.EnchantedTileEntities;
-import net.minecraft.block.Block;;
-import net.minecraft.block.Blocks;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag.INamedTag;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 import java.awt.*;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -95,7 +92,6 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
 
     public AltarTileEntity() {
         this(EnchantedTileEntities.ALTAR.get());
-        AltarEvents.LISTENERS.add(new WeakReference<>(this));
     }
 
     @Override
@@ -153,45 +149,30 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
         if(currentPower > maxPower) currentPower = maxPower;
     }
 
-    static {
-        AltarBlockData.addSource(Blocks.DRAGON_EGG, 250, 1);
-        AltarBlockData.addSource(BlockTags.LEAVES, 3, 100);
-    }
-
     public static class AltarBlockData {
-        public static HashMap<Block, Point> BLOCKS = new HashMap<>();
-        public static HashMap<INamedTag<Block>, Point> TAGS = new HashMap<>();
         public HashMap<Block, Integer> blocksAmount = new HashMap<>();
-        public HashMap<INamedTag<Block>, Integer> tagsAmount = new HashMap<>();
+        public HashMap<IOptionalNamedTag<Block>, Integer> tagsAmount = new HashMap<>();
 
         public AltarBlockData() {
-            for(Block block : BLOCKS.keySet()) {
+            for(Block block : AltarPowerReloadListener.INSTANCE.BLOCKS.keySet()) {
                 blocksAmount.put(block, 0);
             }
-            for(INamedTag<Block> tag : TAGS.keySet()) {
+            for(IOptionalNamedTag<Block> tag : AltarPowerReloadListener.INSTANCE.TAGS.keySet()) {
                 tagsAmount.put(tag, 0);
             }
-        }
-
-        public static void addSource(Block block, int power, int max) {
-            BLOCKS.put(block, new Point(power, max));
-        }
-
-        public static void addSource(INamedTag<Block> tag, int power, int max) {
-            TAGS.put(tag, new Point(power, max));
         }
 
         public int addBlock(Block block) {
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                ArrayList<INamedTag<Block>> tagKeys = new ArrayList<>(TAGS.keySet());
+                ArrayList<IOptionalNamedTag<Block>> tagKeys = new ArrayList<>(AltarPowerReloadListener.INSTANCE.TAGS.keySet());
 
-                for(INamedTag<Block> tag : tagKeys) { // For all tags
+                for(IOptionalNamedTag<Block> tag : tagKeys) { // For all tags
                     if(block.is(tag)) { // If block part of tag
                         amount = tagsAmount.get(tag);
 
-                        Point tagValues = TAGS.get(tag);
+                        Point tagValues = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
                         tagsAmount.replace(tag, tagsAmount.get(tag) + 1);
                         if(amount >= tagValues.y) {
                             return 0;
@@ -206,7 +187,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 return 0;
             }
 
-            Point blockValues = BLOCKS.get(block);
+            Point blockValues = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
             blocksAmount.replace(block, amount + 1);
             if(amount >= blockValues.y) { // Too many of block
                 return 0;
@@ -220,13 +201,13 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                ArrayList<INamedTag<Block>> tagKeys = new ArrayList<>(TAGS.keySet());
+                ArrayList<IOptionalNamedTag<Block>> tagKeys = new ArrayList<>(AltarPowerReloadListener.INSTANCE.TAGS.keySet());
 
-                for(INamedTag<Block> tag : tagKeys) { // For all tags
+                for(IOptionalNamedTag<Block> tag : tagKeys) { // For all tags
                     if(block.is(tag)) { // If block part of tag
                         amount = tagsAmount.get(tag);
 
-                        Point tagValues = TAGS.get(tag);
+                        Point tagValues = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
                         tagsAmount.replace(tag, tagsAmount.get(tag) - 1);
                         if(amount <= tagValues.y) {
                             return tagValues.x;
@@ -241,7 +222,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 return 0;
             }
 
-            Point blockValues = BLOCKS.get(block);
+            Point blockValues = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
             blocksAmount.replace(block, amount - 1);
             if(amount <= blockValues.y) { // Too many of block
                 return blockValues.x;

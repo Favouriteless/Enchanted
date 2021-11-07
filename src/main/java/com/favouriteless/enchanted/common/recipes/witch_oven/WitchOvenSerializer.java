@@ -48,7 +48,6 @@ public class WitchOvenSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>
     @Nullable
     @Override
     public WitchOvenRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-
         ItemStack itemIn = buffer.readItem();
         ItemStack itemOut = buffer.readItem();
         int jarsNeeded = buffer.readInt();
@@ -58,11 +57,9 @@ public class WitchOvenSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>
 
     @Override
     public void toNetwork(PacketBuffer buffer, WitchOvenRecipe recipe) {
-
         buffer.writeItem(recipe.getInput());
         buffer.writeItem(recipe.getOutput());
         buffer.writeInt(recipe.getJarsNeeded());
-
     }
 
 }

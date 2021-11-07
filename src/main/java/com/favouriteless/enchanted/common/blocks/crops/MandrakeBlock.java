@@ -22,9 +22,9 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
-import com.favouriteless.enchanted.core.init.EnchantedBlocks;
-import com.favouriteless.enchanted.core.init.EnchantedEntityTypes;
-import com.favouriteless.enchanted.core.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

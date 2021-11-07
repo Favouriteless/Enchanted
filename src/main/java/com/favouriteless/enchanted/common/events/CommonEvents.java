@@ -22,10 +22,17 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class CommonEvents {
 
+    @SubscribeEvent
+    public static void addReloadListenerEvent(AddReloadListenerEvent event) {
+        event.addListener(new AltarPowerReloadListener());
+    }
 }

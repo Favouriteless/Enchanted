@@ -21,9 +21,6 @@ archivesBaseName = 'enchanted'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
-repositories {
-}
-
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
 
@@ -81,17 +78,18 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+repositories {
+    maven {
+        name 'hellfirepvp maven'
+        url 'https://maven.hellfiredev.net/'
+    }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
 
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
+    runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
 }
 
 jar {

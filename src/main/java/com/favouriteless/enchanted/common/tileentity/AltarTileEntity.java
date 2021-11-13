@@ -21,14 +21,20 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.AltarBlock;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
+import hellfirepvp.observerlib.api.ChangeSubscriber;
+import hellfirepvp.observerlib.api.ObserverHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
@@ -41,50 +47,18 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
 
     public static final int RANGE = 16;
 
-    private int maxPower; // 0
-    private int currentPower; // 1
-    private int rechargeMultiplier; // 2
+    public int maxPower; // 0
+    public int currentPower; // 1
+    public int rechargeMultiplier; // 2
 
     public final AltarBlockData altarBlockData = new AltarBlockData();
-    public final IIntArray fields = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0:
-                    return maxPower;
-                case 1:
-                    return currentPower;
-                case 2:
-                    return rechargeMultiplier;
-                default:
-                    return 0;
-            }
-        }
-
-        @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0:
-                    maxPower = value;
-                    break;
-                case 1:
-                    currentPower = value;
-                    break;
-                case 2:
-                    rechargeMultiplier = value;
-                    break;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    };
+    private ChangeSubscriber<?> changeSubscriber;
 
     private boolean loaded = false;
-    private Vector3d centerPos;
+    public Vector3d centerPos;
     private boolean facingX;
+
+    private int ticksAlive = 0;
 
     public AltarTileEntity(TileEntityType<?> type) {
         super(type);
@@ -96,23 +70,33 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if(level != null && !loaded) {
-            facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
-            centerPos = facingX ?
-                    Vector3d.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
-                    Vector3d.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
+        if(level != null) {
 
-            recalculateBlocks();
-            loaded = true;
+            if (!loaded) {
+                facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
+                centerPos = facingX ?
+                        Vector3d.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
+                        Vector3d.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
+
+                changeSubscriber = ObserverHelper.getHelper().getSubscriber(level, worldPosition);
+                if (changeSubscriber == null) {
+                    createChangeSubscriber();
+                }
+                recalculateBlocks();
+                loaded = true;
+            } else if (!level.isClientSide) {
+                if(ticksAlive % 20 == 0) changeSubscriber.isValid(level);
+            }
+            ticksAlive++;
         }
     }
 
     public void recalculateBlocks() {
         if(level != null && !level.isClientSide) {
             BlockPos startingPos = new BlockPos(centerPos.add(-(RANGE+2), -(RANGE+2), -(RANGE+2)));
-            altarBlockData.reset();
             int newPower = 0;
 
+            altarBlockData.reset();
             for (int x = 0; x < (RANGE+2)*2; x++) {
                 for (int y = 0; y < (RANGE+2)*2; y++) {
                     for (int z = 0; z < (RANGE+2)*2; z++) {
@@ -122,8 +106,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                     }
                 }
             }
-            maxPower = newPower;
-            if(currentPower > maxPower) currentPower = maxPower;
+            setPower(newPower);
         }
     }
 
@@ -140,6 +123,11 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
         return false;
     }
 
+    public void setPower(int power) {
+        maxPower = power;
+        if(currentPower > maxPower) currentPower = maxPower;
+    }
+
     public void addPower(Block block) {
         this.maxPower += altarBlockData.addBlock(block);
     }
@@ -147,6 +135,10 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
     public void removePower(Block block) {
         this.maxPower -= altarBlockData.removeBlock(block);
         if(currentPower > maxPower) currentPower = maxPower;
+    }
+
+    private void createChangeSubscriber() {
+        changeSubscriber = ObserverHelper.getHelper().observeArea(level, worldPosition, new AltarObserverProvider(new ResourceLocation(Enchanted.MOD_ID, "altar_observer")));
     }
 
     public static class AltarBlockData {

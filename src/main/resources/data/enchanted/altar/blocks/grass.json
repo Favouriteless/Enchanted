@@ -1,5 +1,5 @@
 {
   "block": "minecraft:grass",
-  "power": 2,
-  "limit": 80
+  "power": 3,
+  "limit": 25
 }

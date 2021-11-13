@@ -18,3 +18,10 @@ authors="Favouriteless" #optional
 description='''
 Enchanted is your mod for all things occult or witchcraft. A modernized attempt at Emoniph's Witchery.
 '''
+
+[[dependencies.enchanted]]
+    modId="observerlib"
+    mandatory=true
+    versionRange="[1.16.5-1.5,]"
+    ordering="NONE"
+    side="BOTH"

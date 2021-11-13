@@ -86,7 +86,7 @@ public class AltarBlock extends ContainerBlock {
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
                     TileEntity tileEntity = world.getBlockEntity(cornerPos);
                     if (tileEntity instanceof AltarTileEntity) {
-                        Enchanted.LOGGER.info((String.format("%d/%d", ((AltarTileEntity) tileEntity).fields.get(1), ((AltarTileEntity) tileEntity).fields.get(0))));
+                        Enchanted.LOGGER.info((String.format("%d/%d", ((AltarTileEntity)tileEntity).currentPower, ((AltarTileEntity)tileEntity).maxPower)));
                     }
                 }
                 return ActionResultType.CONSUME;

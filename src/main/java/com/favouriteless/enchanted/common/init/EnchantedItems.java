@@ -25,6 +25,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.ArtichokeSeedsItem;
 import com.favouriteless.enchanted.common.items.ChalkItem;
 import com.favouriteless.enchanted.common.items.MutandisItem;
+import com.favouriteless.enchanted.common.items.RedstoneSoupItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -40,6 +41,12 @@ public class EnchantedItems {
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> FUME_FUNNEL_FILTERED = ITEMS.register("fume_funnel_filtered", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL_FILTERED.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
     public static final RegistryObject<Item> DISTILLERY = ITEMS.register("distillery", () -> new BlockItem(EnchantedBlocks.DISTILLERY.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+
+    public static final RegistryObject<Item> CHALICE = ITEMS.register("chalice", () -> new BlockItem(EnchantedBlocks.CHALICE.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> CHALICE_FILLED = ITEMS.register("chalice_filled", () -> new BlockItem(EnchantedBlocks.CHALICE_FILLED.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> CHALICE_FILLED_MILK = ITEMS.register("chalice_filled_milk", () -> new BlockItem(EnchantedBlocks.CHALICE_FILLED_MILK.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> CANDELABRA = ITEMS.register("candelabra", () -> new BlockItem(EnchantedBlocks.CANDELABRA.get(), new Item.Properties().tab(EnchantedTabs.MAIN)));
+
 
     public static final RegistryObject<Item> ROWAN_LOG = ITEMS.register("rowan_log", () -> new BlockItem(EnchantedBlocks.ROWAN_LOG.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ROWAN_PLANKS = ITEMS.register("rowan_planks", () -> new BlockItem(EnchantedBlocks.ROWAN_PLANKS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
@@ -112,6 +119,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ROWAN_BERRIES = ITEMS.register("rowan_berries", () -> new Item((new Item.Properties()).tab(EnchantedTabs.INGREDIENTS).food(new Food.Builder().nutrition(3).build())));
     public static final RegistryObject<Item> WOOD_ASH = ITEMS.register("wood_ash", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> FUME_FILTER = ITEMS.register("fume_filter", () -> new Item(new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new RedstoneSoupItem(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
 
 

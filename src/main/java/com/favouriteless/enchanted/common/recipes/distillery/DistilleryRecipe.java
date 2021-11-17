@@ -118,4 +118,8 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
         return type;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
 }

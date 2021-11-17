@@ -86,7 +86,7 @@ public class AltarBlock extends ContainerBlock {
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
                     TileEntity tileEntity = world.getBlockEntity(cornerPos);
                     if (tileEntity instanceof AltarTileEntity) {
-                        Enchanted.LOGGER.info((String.format("%d/%d", ((AltarTileEntity)tileEntity).currentPower, ((AltarTileEntity)tileEntity).maxPower)));
+                        Enchanted.LOGGER.info((String.format("%s/%s (%s)", ((AltarTileEntity)tileEntity).currentPower, ((AltarTileEntity)tileEntity).maxPower, (((AltarTileEntity) tileEntity).rechargeMultiplier))));
                     }
                 }
                 return ActionResultType.CONSUME;
@@ -102,7 +102,22 @@ public class AltarBlock extends ContainerBlock {
         return new AltarTileEntity();
     }
 
+    @Override
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if(fromPos == pos.above() && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
+            BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
 
+            TileEntity tileEntity = world.getBlockEntity(cornerPos);
+            if(tileEntity instanceof AltarTileEntity) {
+                AltarTileEntity altar = (AltarTileEntity)tileEntity;
+
+//                if(world.getBlockState(fromPos).getBlock()) {
+//
+//                }
+            }
+        }
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+    }
 
     @Override
     public BlockRenderType getRenderShape(BlockState state) {

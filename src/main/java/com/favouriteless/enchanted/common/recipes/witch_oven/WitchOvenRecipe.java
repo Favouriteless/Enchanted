@@ -97,4 +97,9 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
     public IRecipeType<?> getType() {
         return type;
     }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
 }

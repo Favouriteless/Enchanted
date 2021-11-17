@@ -36,6 +36,7 @@
     "item.enchanted.fume_filter": "Fume Filter",
     "item.enchanted.gypsum": "Gypsum",
     "item.enchanted.refined_evil": "Refined Evil",
+    "item.enchanted.redstone_soup": "Redstone Soup",
 
     "item.enchanted.belladonna_seeds": "Belladonna Seeds",
     "item.enchanted.belladonna_flower": "Belladonna Flower",
@@ -78,6 +79,11 @@
 	"block.enchanted.altar": "Altar",
     "container.witch_oven": "Witches Oven",
     "container.distillery": "Distillery",
+
+    "block.enchanted.chalice": "Chalice",
+    "block.enchanted.chalice_filled": "Filled Chalice",
+    "block.enchanted.chalice_filled_milk": "Filled Chalice",
+    "block.enchanted.candelabra": "Candelabra",
 
     "itemGroup.enchanted.main": "Enchanted",
     "itemGroup.enchanted.ingredients": "Enchanted Ingredients",

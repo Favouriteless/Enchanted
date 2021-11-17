@@ -1,13 +1,14 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/cube",
 	"textures": {
 		"0": "enchanted:block/oak_log_sideways",
-		"1": "enchanted:block/distillery",
+		"1": "enchanted:block/distillery/distillery",
 		"2": "enchanted:block/medium_metal",
 		"3": "minecraft:block/flower_pot",
 		"4": "enchanted:block/light_metal",
-		"5": "enchanted:block/distillery_cloth",
-		"6": "enchanted:block/distillery_logs",
+		"5": "enchanted:block/distillery/distillery_cloth",
+		"6": "enchanted:block/distillery/distillery_logs",
 		"particle": "enchanted:block/oak_log_sideways"
 	},
 	"elements": [
@@ -388,36 +389,6 @@
 			}
 		}
 	],
-	"display": {
-		"thirdperson_righthand": {
-			"rotation": [70, 0, 0],
-			"scale": [0.375, 0.375, 0.375]
-		},
-		"thirdperson_lefthand": {
-			"rotation": [70, 0, 0],
-			"scale": [0.375, 0.375, 0.375]
-		},
-		"firstperson_righthand": {
-			"translation": [0, 2.5, 0],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"firstperson_lefthand": {
-			"translation": [0, 2.5, 0],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"ground": {
-			"translation": [0, -1, 0],
-			"scale": [0.25, 0.25, 0.25]
-		},
-		"gui": {
-			"rotation": [27, -116, 0],
-			"translation": [-0.75, 1.5, 0],
-			"scale": [0.75, 0.75, 0.75]
-		},
-		"fixed": {
-			"translation": [0, 0, -1.5]
-		}
-	},
 	"groups": [
 		{
 			"name": "VoxelShapes",

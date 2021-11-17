@@ -74,8 +74,12 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> WITCH_OVEN = BLOCKS.register("witch_oven", () -> new WitchOvenBlock(AbstractBlock.Properties.copy(Blocks.ANVIL).strength(5.0F, 1200.0F).lightLevel(getLightValueLit(13)).noOcclusion()));
     public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(FUME_FUNNEL.get())));
-
     public static final RegistryObject<Block> DISTILLERY = BLOCKS.register("distillery", () -> new DistilleryBlock(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
+
+    public static final RegistryObject<Block> CHALICE = BLOCKS.register("chalice", () -> new ChaliceBlock(AbstractBlock.Properties.of(Material.STONE).strength(1.0F, 6.0F).noOcclusion(), false));
+    public static final RegistryObject<Block> CHALICE_FILLED = BLOCKS.register("chalice_filled", () -> new ChaliceBlock(AbstractBlock.Properties.copy(CHALICE.get()), true));
+    public static final RegistryObject<Block> CHALICE_FILLED_MILK = BLOCKS.register("chalice_filled_milk", () -> new ChaliceBlockMilk(AbstractBlock.Properties.copy(CHALICE.get())));
+    public static final RegistryObject<Block> CANDELABRA = BLOCKS.register("candelabra", () -> new CandelabraBlock(AbstractBlock.Properties.copy(CHALICE.get())));
 
     public static final RegistryObject<Block> ROWAN_PLANKS = BLOCKS.register("rowan_planks", () -> new Block(AbstractBlock.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> ROWAN_LOG = BLOCKS.register("rowan_log", () -> log(MaterialColor.WOOD, MaterialColor.PODZOL));
@@ -98,7 +102,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> MANDRAKE = BLOCKS.register("mandrake", () -> new MandrakeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
     public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
-    public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new SpanishMossBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
+    public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> GARLIC = BLOCKS.register("garlic", () -> new GarlicBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
 

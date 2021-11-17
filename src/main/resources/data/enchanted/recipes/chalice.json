@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "nan",
+    "ngn",
+    " g "
+  ],
+  "key":
+  {
+    "a": { "item": "enchanted:attuned_stone" },
+    "n": { "item": "minecraft:gold_nugget" },
+    "g": { "item": "minecraft:gold_ingot" }
+  },
+  "result":
+  {
+    "item": "enchanted:chalice",
+    "count": 1
+  }
+}

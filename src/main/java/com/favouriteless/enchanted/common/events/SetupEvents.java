@@ -26,8 +26,10 @@ import com.favouriteless.enchanted.client.screens.DistilleryScreen;
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -67,5 +69,9 @@ public class SetupEvents {
 
     @SubscribeEvent
     public static void createRegistries(RegistryEvent.NewRegistry event) {
+    }
+
+    @SubscribeEvent
+    public static void registerParticles(ParticleFactoryRegisterEvent event) {
     }
 }

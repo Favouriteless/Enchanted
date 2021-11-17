@@ -69,6 +69,9 @@ public class AltarChangeObserver extends ChangeObserver {
                             altar.removePower(change.getOldState().getBlock());
                             altar.addPower(change.getNewState().getBlock());
                         }
+                        if(altar.posIsUpgrade(change.getAbsolutePosition())) {
+                            altar.recalculateUpgrades();
+                        }
                     }
                 }
             }

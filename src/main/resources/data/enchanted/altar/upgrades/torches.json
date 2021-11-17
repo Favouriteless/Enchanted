@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "block": "enchanted:candelabra",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 2.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:torch",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 0
+    }
+  ]
+}

@@ -66,11 +66,7 @@ public class ChalkBlockBase extends Block {
     public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
         BlockPos blockpos = pos.below();
         BlockState blockstate = worldIn.getBlockState(blockpos);
-        return canSurviveOn(worldIn, blockpos, blockstate);
-    }
-
-    private boolean canSurviveOn(IBlockReader reader, BlockPos pos, BlockState state) {
-        return state.isFaceSturdy(reader, pos, Direction.UP);
+        return blockstate.isFaceSturdy(worldIn, blockpos, Direction.UP);
     }
 
 }

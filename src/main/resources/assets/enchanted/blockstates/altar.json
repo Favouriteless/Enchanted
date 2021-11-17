@@ -14,6 +14,13 @@
     "formed=p002,facing_x=false": { "model": "enchanted:block/altar/altar_corner_2", "y": 90 },
     "formed=p100,facing_x=false": { "model": "enchanted:block/altar/altar_corner_2", "y": 90 },
     "formed=p101,facing_x=false": { "model": "enchanted:block/altar/altar_middle", "y": 90 },
-    "formed=p102,facing_x=false": { "model": "enchanted:block/altar/altar_corner", "y": 90 }
+    "formed=p102,facing_x=false": { "model": "enchanted:block/altar/altar_corner", "y": 90 },
+
+    "formed=p201,facing_x=false": {"model":  "enchanted:block/altar/altar" },
+    "formed=p202,facing_x=false,": {"model":  "enchanted:block/altar/altar" },
+    "formed=p200,facing_x=false": {"model":  "enchanted:block/altar/altar" },
+    "formed=p102,facing_x=true": {"model":  "enchanted:block/altar/altar" },
+    "formed=p002,facing_x=true": {"model":  "enchanted:block/altar/altar" },
+    "formed=p202,facing_x=true": {"model":  "enchanted:block/altar/altar" }
   }
 }

@@ -1,0 +1,22 @@
+{
+  "values": [
+    {
+      "block": "minecraft:player_head",
+      "powerMultiplier": 2.5,
+      "rechargeMultiplier": 3.0,
+      "priority": 2
+    },
+    {
+      "block": "minecraft:wither_skeleton_skull",
+      "powerMultiplier": 2.0,
+      "rechargeMultiplier": 2.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:skeleton_skull",
+      "powerMultiplier": 1.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 0
+    }
+  ]
+}

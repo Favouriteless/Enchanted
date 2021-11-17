@@ -29,8 +29,6 @@ import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -42,14 +40,16 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
 
     public static final int RANGE = 16;
 
-    public int maxPower; // 0
-    public int currentPower; // 1
-    public int rechargeMultiplier; // 2
+    public double maxPower;
+    public double currentPower;
+    public double rechargeMultiplier = 1.0D;
+    public double powerMultiplier = 1.0D;
 
     public final AltarBlockData altarBlockData = new AltarBlockData();
     private ChangeSubscriber<?> changeSubscriber;
@@ -82,10 +82,11 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 if (changeSubscriber == null) {
                     createChangeSubscriber();
                 }
+                recalculateUpgrades();
                 recalculateBlocks();
                 loaded = true;
             } else if (!level.isClientSide) {
-                if(ticksAlive % 20 == 0) changeSubscriber.isValid(level);
+                if(ticksAlive % 10 == 0) changeSubscriber.isValid(level);
             }
             ticksAlive++;
         }
@@ -101,12 +102,69 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 for (int y = 0; y < (RANGE+2)*2; y++) {
                     for (int z = 0; z < (RANGE+2)*2; z++) {
                         if(posWithinRange(startingPos.offset(x, y, z))) {
-                            newPower += altarBlockData.addBlock(level.getBlockState(startingPos.offset(x, y, z)).getBlock());
+                            newPower += altarBlockData.addBlock(level.getBlockState(startingPos.offset(x, y, z)).getBlock(), this.powerMultiplier);
                         }
                     }
                 }
             }
             setPower(newPower);
+        }
+    }
+
+    public void recalculateUpgrades() {
+        if (level != null) {
+            int xMax;
+            int zMax;
+            if(facingX) {
+                xMax = 3;
+                zMax = 2;
+            } else {
+                xMax = 2;
+                zMax = 3;
+            }
+            List<AltarUpgrade> upgradesUsed = new ArrayList<>();
+
+            for (int x = 0; x < xMax; x++) {
+                for (int z = 0; z < zMax; z++) {
+                    for (AltarUpgrade newUpgrade : AltarPowerReloadListener.INSTANCE.UPGRADES) {
+                        if (level.getBlockState(worldPosition.offset(x, 1, z)).getBlock().is(newUpgrade.getBlock())) { // If block is of upgrade
+                            if(upgradesUsed.isEmpty()) {
+                                upgradesUsed.add(newUpgrade);
+                            }
+                            else {
+                                AltarUpgrade match = null;
+                                for(AltarUpgrade upgrade : upgradesUsed) {
+                                    if(newUpgrade.getType().equals(upgrade.getType())) { // If same type
+                                        match = upgrade;
+                                    }
+                                }
+                                if(match != null) {
+                                    if(newUpgrade.getPriority() > match.getPriority()) {
+                                        upgradesUsed.remove(match);
+                                        upgradesUsed.add(newUpgrade);
+                                    }
+                                }
+                                else {
+                                    upgradesUsed.add(newUpgrade);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            double newPowerMultiplier = 1.0D;
+            double newRechargeMultiplier = 1.0D;
+            for(AltarUpgrade upgrade : upgradesUsed) {
+                newPowerMultiplier += upgrade.getPowerMultiplier();
+                newRechargeMultiplier += upgrade.getRechargeMultiplier();
+            }
+
+            if(this.powerMultiplier != newPowerMultiplier) {
+                this.setPower(altarBlockData.recalculatePower(newPowerMultiplier));
+            }
+            this.powerMultiplier = newPowerMultiplier;
+            this.rechargeMultiplier = newRechargeMultiplier;
         }
     }
 
@@ -123,17 +181,35 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
         return false;
     }
 
-    public void setPower(int power) {
+    public boolean posIsUpgrade(BlockPos pos) {
+        if(this.level != null) {
+            int xMax;
+            int zMax;
+
+            if(facingX) {
+                xMax = 2;
+                zMax = 1;
+            } else {
+                xMax = 1;
+                zMax = 2;
+            }
+
+            return pos.getY() == worldPosition.getY()+1 && pos.getX() - worldPosition.getX() <= xMax && pos.getZ() - worldPosition.getZ() <= zMax;
+        }
+        return false;
+    }
+
+    public void setPower(double power) {
         maxPower = power;
         if(currentPower > maxPower) currentPower = maxPower;
     }
 
     public void addPower(Block block) {
-        this.maxPower += altarBlockData.addBlock(block);
+        this.maxPower += altarBlockData.addBlock(block, this.powerMultiplier);
     }
 
     public void removePower(Block block) {
-        this.maxPower -= altarBlockData.removeBlock(block);
+        this.maxPower -= altarBlockData.removeBlock(block, this.powerMultiplier);
         if(currentPower > maxPower) currentPower = maxPower;
     }
 
@@ -154,7 +230,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
             }
         }
 
-        public int addBlock(Block block) {
+        public double addBlock(Block block, double powerMultiplier) {
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
@@ -170,7 +246,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                             return 0;
                         }
                         else {
-                            return tagValues.x;
+                            return tagValues.x * powerMultiplier;
                         }
                     }
                 }
@@ -185,11 +261,11 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 return 0;
             }
             else {
-                return blockValues.x;
+                return blockValues.x * powerMultiplier;
             }
         }
 
-        public int removeBlock(Block block) {
+        public double removeBlock(Block block, double powerMultiplier) {
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
@@ -202,7 +278,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                         Point tagValues = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
                         tagsAmount.replace(tag, tagsAmount.get(tag) - 1);
                         if(amount <= tagValues.y) {
-                            return tagValues.x;
+                            return tagValues.x * powerMultiplier;
                         }
                         else {
                             return 0;
@@ -217,16 +293,69 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
             Point blockValues = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
             blocksAmount.replace(block, amount - 1);
             if(amount <= blockValues.y) { // Too many of block
-                return blockValues.x;
+                return blockValues.x * powerMultiplier;
             }
             else {
                 return 0;
             }
         }
 
+        public double recalculatePower(double powerMultiplier) {
+            double newPower = 0.0D;
+
+            for(Block block : blocksAmount.keySet()) {
+                Point blockData = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
+                newPower += Math.max(0, Math.min(blockData.y, blocksAmount.get(block))) * blockData.x * powerMultiplier;
+            }
+            for(IOptionalNamedTag<?> tag : tagsAmount.keySet()) {
+                Point tagData = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
+                newPower += Math.max(0, Math.min(tagData.y, tagsAmount.get(tag))) * tagData.x * powerMultiplier;
+            }
+
+            return newPower;
+        }
+
         public void reset() {
             blocksAmount.replaceAll((key,value) -> value = 0);
             tagsAmount.replaceAll((key,value) -> value = 0);
+        }
+
+    }
+
+    public static class AltarUpgrade {
+
+        private final ResourceLocation type;
+        private final Block block;
+        private final double powerMultiplier;
+        private final double rechargeMultiplier;
+        private final int priority;
+
+        public AltarUpgrade(ResourceLocation type, Block block, double rechargeMultiplier, double powerMultiplier, int priority) {
+            this.type = type;
+            this.block = block;
+            this.powerMultiplier = powerMultiplier;
+            this.rechargeMultiplier = rechargeMultiplier;
+            this.priority = priority;
+        }
+
+        public ResourceLocation getType() {
+            return type;
+        }
+
+        public Block getBlock() {
+            return block;
+        }
+
+        public double getPowerMultiplier() {
+            return powerMultiplier;
+        }
+
+        public double getRechargeMultiplier() {
+            return rechargeMultiplier;
+        }
+
+        public int getPriority() {
+            return priority;
         }
     }
 }

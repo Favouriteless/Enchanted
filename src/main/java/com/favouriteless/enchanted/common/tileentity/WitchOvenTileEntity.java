@@ -198,7 +198,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
     private double getByproductChance() {
         Direction facing = this.level.getBlockState(this.worldPosition).getValue(WitchOvenBlock.FACING);
 
-        double byproductChance = 1.0D;
+        double byproductChance = 0.3D;
 
         Block[] potentialFilters = new Block[] { // Top filter is just decoration
                 this.level.getBlockState(this.worldPosition.offset(facing.getClockWise().getNormal())).getBlock(),

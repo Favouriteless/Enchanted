@@ -37,4 +37,6 @@ public class EnchantedContainers {
             () -> IForgeContainerType.create(WitchOvenContainer::new));
     public static final RegistryObject<ContainerType<DistilleryContainer>> DISTILLERY = CONTAINER_TYPES.register("distillery",
             () -> IForgeContainerType.create(DistilleryContainer::new));
+    public static final RegistryObject<ContainerType<AltarContainer>> ALTAR = CONTAINER_TYPES.register("altar",
+            () -> IForgeContainerType.create(AltarContainer::new));
 }

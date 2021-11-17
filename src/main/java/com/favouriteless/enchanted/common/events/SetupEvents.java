@@ -22,11 +22,9 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.screens.DistilleryScreen;
-import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
+import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -50,6 +48,7 @@ public class SetupEvents {
     public static void clientSetup(FMLClientSetupEvent event) {
         ScreenManager.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
         ScreenManager.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
+        ScreenManager.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
         
         EnchantedBlocks.initRender();
         EnchantedEntityTypes.registerEntityRenderers();

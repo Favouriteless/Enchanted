@@ -29,9 +29,12 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
+@OnlyIn(Dist.CLIENT)
 public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
 
     private DistilleryContainer container;

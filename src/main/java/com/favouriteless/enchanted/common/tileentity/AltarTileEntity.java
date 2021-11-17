@@ -23,26 +23,38 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.AltarBlock;
+import com.favouriteless.enchanted.common.containers.AltarContainer;
+import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
+public class AltarTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public static final int RANGE = 16;
 
@@ -50,6 +62,39 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
     public double currentPower;
     public double rechargeMultiplier = 1.0D;
     public double powerMultiplier = 1.0D;
+
+    private final IIntArray fields = new IIntArray() {
+        @Override
+        public int get(int pIndex) {
+            switch(pIndex) {
+                case 0:
+                    return (int)Math.round(currentPower);
+                case 1:
+                    return (int)Math.round(maxPower);
+                case 2:
+                    return (int)Math.round(rechargeMultiplier);
+                default:
+                    return 0;
+            }
+        }
+
+        @Override
+        public void set(int pIndex, int pValue) {
+            switch(pIndex) {
+                case 0:
+                    currentPower = pValue;
+                case 1:
+                    maxPower = pValue;
+                case 2:
+                    rechargeMultiplier = pValue;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    };
 
     public final AltarBlockData altarBlockData = new AltarBlockData();
     private ChangeSubscriber<?> changeSubscriber;
@@ -86,10 +131,29 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
                 recalculateBlocks();
                 loaded = true;
             } else if (!level.isClientSide) {
-                if(ticksAlive % 10 == 0) changeSubscriber.isValid(level);
+                if(ticksAlive % 10 == 0) {
+                    changeSubscriber.isValid(level);
+                }
             }
             ticksAlive++;
+
+            if(currentPower <= maxPower)
+                currentPower += 10.0D * rechargeMultiplier;
+            if(currentPower > maxPower)
+                currentPower = maxPower;
         }
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        nbt.putDouble("currentPower", currentPower);
+        return super.save(nbt);
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
+        this.currentPower = nbt.getDouble("currentPower");
     }
 
     public void recalculateBlocks() {
@@ -215,6 +279,17 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity {
 
     private void createChangeSubscriber() {
         changeSubscriber = ObserverHelper.getHelper().observeArea(level, worldPosition, new AltarObserverProvider(new ResourceLocation(Enchanted.MOD_ID, "altar_observer")));
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return new TranslationTextComponent("container.enchanted.altar");
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+        return new AltarContainer(id, playerInventory, this, this.fields);
     }
 
     public static class AltarBlockData {

@@ -19,13 +19,11 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.core.util.reloadlisteners;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity.AltarUpgrade;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity.*;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
@@ -40,11 +38,9 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.io.IOUtils;
 
-import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -60,28 +56,43 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
     private static final int PATH_SUFFIX_LENGTH = ".json".length();
     private static final Gson GSON = new Gson();
 
-    public HashMap<Block, Point> BLOCKS = new HashMap<>();
-    public HashMap<IOptionalNamedTag<Block>, Point> TAGS = new HashMap<>();
+    public List<AltarPowerProvider<Block>> POWER_BLOCKS;
+    public List<AltarPowerProvider<IOptionalNamedTag<Block>>> POWER_TAGS;
     public List<AltarUpgrade> UPGRADES = new ArrayList<>();
+
+
+    public AltarPowerProvider<Block> providerOf(Block block) {
+        for(AltarPowerProvider<Block> provider : POWER_BLOCKS) {
+            if(provider.is(block)) return provider;
+        }
+        return null;
+    }
+
+    public AltarPowerProvider<IOptionalNamedTag<Block>> providerOf(IOptionalNamedTag<Block> tag) {
+        for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : POWER_TAGS) {
+            if(provider.is(tag)) return provider;
+        }
+        return null;
+    }
 
     @Override
     public CompletableFuture<Void> reload(IStage pStage, IResourceManager pResourceManager, IProfiler pPreparationsProfiler, IProfiler pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor) {
-        CompletableFuture<HashMap<Block, Point>> futureBlocks = prepareBlocks(pResourceManager, pBackgroundExecutor);
-        CompletableFuture<HashMap<IOptionalNamedTag<Block>, Point>> futureTags = prepareTags(pResourceManager, pBackgroundExecutor);
+        CompletableFuture<List<AltarPowerProvider<Block>>> futureBlocks = prepareBlocks(pResourceManager, pBackgroundExecutor);
+        CompletableFuture<List<AltarPowerProvider<IOptionalNamedTag<Block>>>> futureTags = prepareTags(pResourceManager, pBackgroundExecutor);
         CompletableFuture<List<AltarUpgrade>> futureUpgrades = prepareUpgrades(pResourceManager, pBackgroundExecutor);
 
         return CompletableFuture.allOf(futureBlocks, futureTags, futureUpgrades).thenCompose(pStage::wait).thenAcceptAsync((result) -> {
-            BLOCKS = futureBlocks.join();
-            TAGS = futureTags.join();
+            POWER_BLOCKS = futureBlocks.join();
+            POWER_TAGS = futureTags.join();
             UPGRADES = futureUpgrades.join();
 
             INSTANCE = this;
         }, pGameExecutor);
     }
 
-    private CompletableFuture<HashMap<Block, Point>> prepareBlocks(IResourceManager resourceManager, Executor executor) {
+    private CompletableFuture<List<AltarPowerProvider<Block>>> prepareBlocks(IResourceManager resourceManager, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
-            HashMap<Block, Point> blocksMap = new HashMap<>();
+            List<AltarPowerProvider<Block>> blocks = new ArrayList<>();
             List<Block> removeList = new ArrayList<>();
 
             for(ResourceLocation resourceLocation : resourceManager.listResources(BLOCKS_DIRECTORY, (filter) -> filter.endsWith(".json"))) {
@@ -103,7 +114,30 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
                                 int limit = JSONUtils.getAsInt(jsonObject, "limit");
                                 if(block != null) {
                                     if(power != 0 && limit > 0) {
-                                        blocksMap.put(block, new Point(power, limit));
+                                        AltarPowerProvider<Block> newPowerProvider = new AltarPowerProvider<>(block, power, limit);
+                                        if(blocks.isEmpty()) {
+                                            blocks.add(newPowerProvider);
+                                        }
+                                        else {
+                                            // Very crude sorting for priority
+                                            for(int i = 0; i < blocks.size(); i++ ) {
+                                                AltarPowerProvider<Block> powerProvider = blocks.get(i);
+                                                if(newPowerProvider.getPower() > powerProvider.getPower()) {
+                                                    blocks.add(i, newPowerProvider);
+                                                    break;
+                                                }
+                                                if(newPowerProvider.getPower() == powerProvider.getPower()) {
+                                                    if(newPowerProvider.getLimit() > powerProvider.getLimit()) {
+                                                        blocks.add(i, newPowerProvider);
+                                                        break;
+                                                    }
+                                                }
+                                                if(i == blocks.size()-1) {
+                                                    blocks.add(newPowerProvider);
+                                                    break;
+                                                }
+                                            }
+                                        }
                                     }
                                     else {
                                         removeList.add(block);
@@ -123,15 +157,15 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
             }
 
             for(Block block : removeList) {
-                blocksMap.remove(block);
+                blocks.removeIf(provider -> provider.is(block));
             }
-            return blocksMap;
+            return blocks;
         }, executor);
     }
 
-    private CompletableFuture<HashMap<IOptionalNamedTag<Block>, Point>> prepareTags(IResourceManager resourceManager, Executor executor) {
+    private CompletableFuture<List<AltarPowerProvider<IOptionalNamedTag<Block>>>> prepareTags(IResourceManager resourceManager, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
-            HashMap<IOptionalNamedTag<Block>, Point> tagsMap = new HashMap<>();
+            List<AltarPowerProvider<IOptionalNamedTag<Block>>> tags = new ArrayList<>();
             List<IOptionalNamedTag<Block>> removeList = new ArrayList<>();
 
             for(ResourceLocation resourceLocation : resourceManager.listResources(TAGS_DIRECTORY, (filter) -> filter.endsWith(".json"))) {
@@ -153,7 +187,30 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
                                 int limit = JSONUtils.getAsInt(jsonObject, "limit");
 
                                 if(power != 0 && limit > 0) {
-                                    tagsMap.put(tag, new Point(power, limit));
+                                    AltarPowerProvider<IOptionalNamedTag<Block>> newPowerProvider = new AltarPowerProvider<>(tag, power, limit);
+                                    if(tags.isEmpty()) {
+                                        tags.add(newPowerProvider);
+                                    }
+                                    else {
+                                        // Very crude sorting for priority
+                                        for(int i = 0; i < tags.size(); i++ ) {
+                                            AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = tags.get(i);
+                                            if(newPowerProvider.getPower() > powerProvider.getPower()) {
+                                                tags.add(i, newPowerProvider);
+                                                break;
+                                            }
+                                            if(newPowerProvider.getPower() == powerProvider.getPower()) {
+                                                if(newPowerProvider.getLimit() > powerProvider.getLimit()) {
+                                                    tags.add(i, newPowerProvider);
+                                                    break;
+                                                }
+                                            }
+                                            if(i == tags.size()-1) {
+                                                tags.add(newPowerProvider);
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                                 else {
                                     removeList.add(tag);
@@ -172,9 +229,9 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
             }
 
             for(IOptionalNamedTag<Block> tag : removeList) {
-                tagsMap.remove(tag);
+                tags.removeIf(provider -> provider.is(tag));
             }
-            return tagsMap;
+            return tags;
         }, executor);
     }
 
@@ -227,6 +284,39 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
 
             return upgradesList;
         }, executor);
+    }
+
+    public static class AltarPowerProvider<T> {
+
+        private final T key;
+        private final int power;
+        private final int limit;
+
+        public AltarPowerProvider(T key, int power, int limit) {
+            this.key = key;
+            this.power = power;
+            this.limit = limit;
+        }
+
+        public boolean sameKey(AltarPowerProvider<?> powerProvider) {
+            return powerProvider.key.equals(this.key);
+        }
+
+        public boolean is(T key) {
+            return this.key == key;
+        }
+
+        public T getKey() {
+            return this.key;
+        }
+
+        public int getPower() {
+            return this.power;
+        }
+
+        public int getLimit() {
+            return this.limit;
+        }
     }
 
 }

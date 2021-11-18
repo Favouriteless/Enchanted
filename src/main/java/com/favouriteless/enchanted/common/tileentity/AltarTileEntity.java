@@ -24,10 +24,10 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
-import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
-import com.favouriteless.enchanted.core.util.AltarPowerReloadListener;
+import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener;
+import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener.*;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
 import net.minecraft.block.Block;
@@ -49,7 +49,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -297,11 +296,11 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
         public HashMap<IOptionalNamedTag<Block>, Integer> tagsAmount = new HashMap<>();
 
         public AltarBlockData() {
-            for(Block block : AltarPowerReloadListener.INSTANCE.BLOCKS.keySet()) {
-                blocksAmount.put(block, 0);
+            for(AltarPowerProvider<Block> provider : AltarPowerReloadListener.INSTANCE.POWER_BLOCKS) {
+                blocksAmount.put(provider.getKey(), 0);
             }
-            for(IOptionalNamedTag<Block> tag : AltarPowerReloadListener.INSTANCE.TAGS.keySet()) {
-                tagsAmount.put(tag, 0);
+            for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) {
+                tagsAmount.put(provider.getKey(), 0);
             }
         }
 
@@ -309,20 +308,12 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                ArrayList<IOptionalNamedTag<Block>> tagKeys = new ArrayList<>(AltarPowerReloadListener.INSTANCE.TAGS.keySet());
+                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) { // For all tag power providers
+                    if(block.is(provider.getKey())) { // If block part of provider tag
+                        amount = tagsAmount.get(provider.getKey());
+                        tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) + 1);
 
-                for(IOptionalNamedTag<Block> tag : tagKeys) { // For all tags
-                    if(block.is(tag)) { // If block part of tag
-                        amount = tagsAmount.get(tag);
-
-                        Point tagValues = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
-                        tagsAmount.replace(tag, tagsAmount.get(tag) + 1);
-                        if(amount >= tagValues.y) {
-                            return 0;
-                        }
-                        else {
-                            return tagValues.x * powerMultiplier;
-                        }
+                        return amount < provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
                     }
                 }
             }
@@ -330,34 +321,21 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 return 0;
             }
 
-            Point blockValues = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
+            AltarPowerProvider<Block> provider = AltarPowerReloadListener.INSTANCE.providerOf(block);
             blocksAmount.replace(block, amount + 1);
-            if(amount >= blockValues.y) { // Too many of block
-                return 0;
-            }
-            else {
-                return blockValues.x * powerMultiplier;
-            }
+            return amount < provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
         }
 
         public double removeBlock(Block block, double powerMultiplier) {
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                ArrayList<IOptionalNamedTag<Block>> tagKeys = new ArrayList<>(AltarPowerReloadListener.INSTANCE.TAGS.keySet());
+                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) { // For all tag power providers
+                    if(block.is(provider.getKey())) { // If block part of provider tag
+                        amount = tagsAmount.get(provider.getKey());
+                        tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) - 1);
 
-                for(IOptionalNamedTag<Block> tag : tagKeys) { // For all tags
-                    if(block.is(tag)) { // If block part of tag
-                        amount = tagsAmount.get(tag);
-
-                        Point tagValues = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
-                        tagsAmount.replace(tag, tagsAmount.get(tag) - 1);
-                        if(amount <= tagValues.y) {
-                            return tagValues.x * powerMultiplier;
-                        }
-                        else {
-                            return 0;
-                        }
+                        return amount <= provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
                     }
                 }
             }
@@ -365,26 +343,21 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 return 0;
             }
 
-            Point blockValues = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
+            AltarPowerProvider<Block> provider = AltarPowerReloadListener.INSTANCE.providerOf(block);
             blocksAmount.replace(block, amount - 1);
-            if(amount <= blockValues.y) { // Too many of block
-                return blockValues.x * powerMultiplier;
-            }
-            else {
-                return 0;
-            }
+            return amount <= provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
         }
 
         public double recalculatePower(double powerMultiplier) {
             double newPower = 0.0D;
 
             for(Block block : blocksAmount.keySet()) {
-                Point blockData = AltarPowerReloadListener.INSTANCE.BLOCKS.get(block);
-                newPower += Math.max(0, Math.min(blockData.y, blocksAmount.get(block))) * blockData.x * powerMultiplier;
+                AltarPowerProvider<Block> powerProvider = AltarPowerReloadListener.INSTANCE.providerOf(block);
+                newPower += Math.max(0, Math.min(powerProvider.getLimit(), blocksAmount.get(block))) * powerProvider.getPower() * powerMultiplier;
             }
-            for(IOptionalNamedTag<?> tag : tagsAmount.keySet()) {
-                Point tagData = AltarPowerReloadListener.INSTANCE.TAGS.get(tag);
-                newPower += Math.max(0, Math.min(tagData.y, tagsAmount.get(tag))) * tagData.x * powerMultiplier;
+            for(IOptionalNamedTag<Block> tag : tagsAmount.keySet()) {
+                AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = AltarPowerReloadListener.INSTANCE.providerOf(tag);
+                newPower += Math.max(0, Math.min(powerProvider.getLimit(), tagsAmount.get(tag))) * powerProvider.getPower() * powerMultiplier;
             }
 
             return newPower;

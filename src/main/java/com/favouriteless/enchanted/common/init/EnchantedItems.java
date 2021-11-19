@@ -22,10 +22,7 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.items.ArtichokeSeedsItem;
-import com.favouriteless.enchanted.common.items.ChalkItem;
-import com.favouriteless.enchanted.common.items.MutandisItem;
-import com.favouriteless.enchanted.common.items.RedstoneSoupItem;
+import com.favouriteless.enchanted.common.items.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -76,10 +73,13 @@ public class EnchantedItems {
     public static final RegistryObject<Item> GARLIC = ITEMS.register("garlic", () -> new BlockNamedItem(EnchantedBlocks.GARLIC.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> ICY_NEEDLE = ITEMS.register("icy_needle", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
+    public static final RegistryObject<Item> BONE_NEEDLE = ITEMS.register("bone_needle", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
     public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(EnchantedTabs.PLANTS)));
     public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(EnchantedTabs.INGREDIENTS)));
 
     public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(new Item.Properties().tab(EnchantedTabs.MAIN)));
+    public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockItemFilled(new Item.Properties().tab(EnchantedTabs.MAIN)));
 
 
 

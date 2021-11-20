@@ -122,10 +122,4 @@ public class EnchantedItems {
     public static final RegistryObject<Item> FUME_FILTER = ITEMS.register("fume_filter", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new RedstoneSoupItem(new Item.Properties().tab(Enchanted.TAB)));
 
-
-
-    public static final RegistryObject<Item> EMERALD_HELMET = ITEMS.register("emerald_helmet", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> EMERALD_CHESTPLATE = ITEMS.register("emerald_chestplate", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.CHEST, new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> EMERALD_LEGGINGS = ITEMS.register("emerald_leggings", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.LEGS, new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> EMERALD_BOOTS = ITEMS.register("emerald_boots", () -> new ArmorItem(EnchantedArmorMaterials.EMERALD, EquipmentSlotType.FEET, new Item.Properties().tab(Enchanted.TAB)));
 }

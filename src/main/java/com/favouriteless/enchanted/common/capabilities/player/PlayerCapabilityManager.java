@@ -61,7 +61,7 @@ public class PlayerCapabilityManager {
     public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<TileEntity> event) {
         final TileEntity obj = event.getObject();
         if(obj instanceof BedTileEntity) {
-            event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, PlayerCapability::new));
+            event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, () -> new PlayerCapability()));
         }
     }
 

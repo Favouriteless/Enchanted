@@ -38,6 +38,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.tileentity.BedTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
@@ -78,14 +79,14 @@ public class TaglockItem extends Item {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
         if(state.getBlock() instanceof BedBlock) {
             if(!context.getLevel().isClientSide) {
-                BedTileEntity bed;
+                TileEntity tileEntity;
                 if (state.getValue(BedBlock.PART) == BedPart.HEAD) {
-                    bed = (BedTileEntity) context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
+                    tileEntity = context.getLevel().getBlockEntity(context.getClickedPos());
                 } else {
-                    bed = (BedTileEntity) context.getLevel().getBlockEntity(context.getClickedPos());
+                    tileEntity = context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
                 }
-                if (bed == null) return ActionResultType.FAIL;
-                IPlayerCapability playerCapability = bed.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
+                if (tileEntity == null) return ActionResultType.FAIL;
+                IPlayerCapability playerCapability = tileEntity.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
 
                 if (playerCapability.getValue() != null) {
                     fillTaglock(context.getPlayer(), context.getItemInHand(), context.getLevel().getPlayerByUUID(playerCapability.getValue()));

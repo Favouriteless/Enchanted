@@ -21,6 +21,8 @@
 
 package com.favouriteless.enchanted;
 
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapability;
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
 import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

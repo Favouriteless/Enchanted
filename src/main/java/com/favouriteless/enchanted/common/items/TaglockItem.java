@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.capabilities.player.IPlayerCapability;
 import com.favouriteless.enchanted.common.capabilities.player.PlayerCapability;
 import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
@@ -76,18 +77,21 @@ public class TaglockItem extends Item {
     public ActionResultType useOn(ItemUseContext context) {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
         if(state.getBlock() instanceof BedBlock) {
-            BedTileEntity bed;
-            if(state.getValue(BedBlock.PART) == BedPart.HEAD) {
-                bed = (BedTileEntity)context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
-            } else {
-                bed = (BedTileEntity)context.getLevel().getBlockEntity(context.getClickedPos());
-            }
-            if(bed == null) return ActionResultType.FAIL;
-            IPlayerCapability playerCapability = bed.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
+            if(!context.getLevel().isClientSide) {
+                BedTileEntity bed;
+                if (state.getValue(BedBlock.PART) == BedPart.HEAD) {
+                    bed = (BedTileEntity) context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
+                } else {
+                    bed = (BedTileEntity) context.getLevel().getBlockEntity(context.getClickedPos());
+                }
+                if (bed == null) return ActionResultType.FAIL;
+                IPlayerCapability playerCapability = bed.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
 
-            if(playerCapability.getValue() != null) {
-                fillTaglock(context.getPlayer(), context.getItemInHand(), context.getLevel().getPlayerByUUID(playerCapability.getValue()));
-                context.getLevel().getPlayerByUUID(playerCapability.getValue());
+                if (playerCapability.getValue() != null) {
+                    fillTaglock(context.getPlayer(), context.getItemInHand(), context.getLevel().getPlayerByUUID(playerCapability.getValue()));
+                    context.getLevel().getPlayerByUUID(playerCapability.getValue());
+                }
+                return ActionResultType.CONSUME;
             }
             return ActionResultType.SUCCESS;
         }
@@ -121,4 +125,6 @@ public class TaglockItem extends Item {
 
         return !(Math.acos((v1.x * v2.x + v1.y *v2.y) / (Math.sqrt(v1.x * v1.x + v1.y * v1.y) * Math.sqrt(v2.x * v2.x + v2.y * v2.y))) > Math.PI/2);
     }
+
+
 }

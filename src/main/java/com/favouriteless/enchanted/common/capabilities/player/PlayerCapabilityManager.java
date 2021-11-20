@@ -66,7 +66,7 @@ public class PlayerCapabilityManager {
     }
 
     @SubscribeEvent
-    public static void playerSleepInBed(PlayerSleepInBedEvent event){
+    public static void onPlayerSleeping(PlayerSleepInBedEvent event){
         BlockPos pos = event.getPos();
         PlayerEntity player = event.getPlayer();
         if(pos != null){

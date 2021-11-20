@@ -21,11 +21,12 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.blocks.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.capabilities.player.IPlayerCapability;
-import com.favouriteless.enchanted.common.capabilities.player.PlayerCapability;
 import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -37,13 +38,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BedPart;
-import net.minecraft.tileentity.BedTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class TaglockItem extends Item {
 
@@ -69,28 +75,46 @@ public class TaglockItem extends Item {
                 return ActionResultType.FAIL;
             }
         }
-        fillTaglock(player, stack, target);
+        fillTaglockEntity(player, stack, target);
 
         return ActionResultType.SUCCESS;
     }
 
     @Override
     public ActionResultType useOn(ItemUseContext context) {
-        BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+        World world = context.getLevel();
+        BlockState state = world.getBlockState(context.getClickedPos());
         if(state.getBlock() instanceof BedBlock) {
-            if(!context.getLevel().isClientSide) {
+            if(!world.isClientSide) {
                 TileEntity tileEntity;
                 if (state.getValue(BedBlock.PART) == BedPart.HEAD) {
-                    tileEntity = context.getLevel().getBlockEntity(context.getClickedPos());
+                    tileEntity = world.getBlockEntity(context.getClickedPos());
                 } else {
-                    tileEntity = context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
+                    tileEntity = world.getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
                 }
                 if (tileEntity == null) return ActionResultType.FAIL;
                 IPlayerCapability playerCapability = tileEntity.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
 
                 if (playerCapability.getValue() != null) {
-                    fillTaglock(context.getPlayer(), context.getItemInHand(), context.getLevel().getPlayerByUUID(playerCapability.getValue()));
+                    fillTaglockEntity(context.getPlayer(), context.getItemInHand(), world.getPlayerByUUID(playerCapability.getValue()));
                     context.getLevel().getPlayerByUUID(playerCapability.getValue());
+                }
+                return ActionResultType.CONSUME;
+            }
+            return ActionResultType.SUCCESS;
+        }
+        else if(state.getBlock().is(EnchantedBlocks.BLOOD_POPPY.get())) {
+            if(!world.isClientSide) {
+                if (state.getValue(BloodPoppyBlock.FILLED)) {
+                    TileEntity tileEntity = world.getBlockEntity(context.getClickedPos());
+                    if (tileEntity != null) {
+                        BloodPoppyTileEntity poppyTileEntity = (BloodPoppyTileEntity)tileEntity;
+                        fillTaglock(context.getPlayer(), context.getItemInHand(), poppyTileEntity.getUUID(), poppyTileEntity.getName());
+                        BloodPoppyBlock.reset(world, context.getClickedPos());
+                    }
+                    else {
+                        return ActionResultType.FAIL;
+                    }
                 }
                 return ActionResultType.CONSUME;
             }
@@ -99,11 +123,16 @@ public class TaglockItem extends Item {
         return ActionResultType.FAIL;
     }
 
-    public void fillTaglock(PlayerEntity player, ItemStack stack, LivingEntity entity) {
+    public void fillTaglockEntity(PlayerEntity player, ItemStack stack, LivingEntity entity) {
+        fillTaglock(player, stack, entity.getUUID(), entity.getDisplayName().getString());
+    }
+
+    public void fillTaglock(PlayerEntity player, ItemStack stack, UUID uuid, String name) {
         ItemStack newStack = new ItemStack(EnchantedItems.TAGLOCK_FILLED.get(), 1);
+
         CompoundNBT nbt = new CompoundNBT();
-        nbt.putUUID("entity", entity.getUUID());
-        nbt.putString("entityName", entity.getDisplayName().getString());
+        nbt.putUUID("entity", uuid);
+        nbt.putString("entityName", name);
         newStack.setTag(nbt);
 
         if(!player.inventory.add(newStack)) {

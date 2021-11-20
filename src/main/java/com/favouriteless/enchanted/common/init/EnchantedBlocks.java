@@ -68,6 +68,7 @@ public class EnchantedBlocks {
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.WOLFSBANE.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.GARLIC.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(EnchantedBlocks.SNOWBELL.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(EnchantedBlocks.BLOOD_POPPY.get(), RenderType.cutout());
     }
 
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new AltarBlock(AbstractBlock.Properties.of(EnchantedMaterials.ALTAR).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
@@ -105,6 +106,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> GARLIC = BLOCKS.register("garlic", () -> new GarlicBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> BLOOD_POPPY = BLOCKS.register("blood_poppy", () -> new BloodPoppyBlock(AbstractBlock.Properties.copy(Blocks.POPPY)));
 
     public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldChalkBlock::new);
     public static final RegistryObject<Block> CHALK_WHITE = BLOCKS.register("chalk_white", () -> new ChalkCircleBlock(null));

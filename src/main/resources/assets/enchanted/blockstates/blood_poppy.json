@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "filled=false": { "model": "enchanted:block/blood_poppy" },
+    "filled=true": { "model": "enchanted:block/blood_poppy_filled" }
+  }
+}

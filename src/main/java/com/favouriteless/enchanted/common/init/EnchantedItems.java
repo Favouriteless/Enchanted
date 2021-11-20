@@ -76,6 +76,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> BONE_NEEDLE = ITEMS.register("bone_needle", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> BLOOD_POPPY = ITEMS.register("blood_poppy", () -> new BlockItem(EnchantedBlocks.BLOOD_POPPY.get(), new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(new Item.Properties().tab(Enchanted.TAB)));

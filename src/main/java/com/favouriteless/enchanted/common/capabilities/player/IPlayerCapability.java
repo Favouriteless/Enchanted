@@ -19,22 +19,14 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.capabilities.player;
 
-import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.util.INBTSerializable;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
-public class CommonEvents {
+import java.util.UUID;
 
-    @SubscribeEvent
-    public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        event.addListener(new AltarPowerReloadListener());
-    }
+public interface IPlayerCapability extends INBTSerializable<CompoundNBT> {
+    UUID getValue();
+    void setValue(UUID uuid);
 }

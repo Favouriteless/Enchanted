@@ -19,22 +19,37 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.capabilities.player;
 
-import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraft.nbt.CompoundNBT;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
-public class CommonEvents {
+import java.util.UUID;
 
-    @SubscribeEvent
-    public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        event.addListener(new AltarPowerReloadListener());
+public class PlayerCapability implements IPlayerCapability {
+
+    private static final String KEY_NAME = "playeruuid";
+    private UUID value;
+
+    @Override
+    public UUID getValue() {
+        return value;
     }
+
+    @Override
+    public void setValue(UUID uuid) {
+        value = uuid;
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        CompoundNBT nbt = new CompoundNBT();
+        if(value != null) nbt.putUUID(KEY_NAME, value);
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        if(nbt.contains(KEY_NAME)) this.setValue(nbt.getUUID(KEY_NAME));
+    }
+
 }

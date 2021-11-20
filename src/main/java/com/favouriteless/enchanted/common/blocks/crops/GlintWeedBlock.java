@@ -49,25 +49,13 @@ public class GlintWeedBlock extends BushBlock {
 
     @Override
     public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
-        if (pLevel.random.nextInt(6) == 0 && pLevel.isAreaLoaded(pPos, 4)) {
-            BlockPos newPos = pPos.offset(new BlockPos(
-                    RANDOM.nextInt(7) - 3,
-                    RANDOM.nextInt(7) - 3,
-                    RANDOM.nextInt(7) - 3));
+        if (pRandom.nextInt(8) == 0) {
 
-            if(pLevel.isEmptyBlock(newPos) && this.canSurvive(pState, pLevel, newPos)) {
-                pLevel.setBlockAndUpdate(newPos, pState);
-            }
-        }
-
-        if (pRandom.nextInt(14) == 0) {
-
-            int weedLimit = 5;
-            int j = 4;
+            int limit = 5;
             for(BlockPos blockpos : BlockPos.betweenClosed(pPos.offset(-4, -1, -4), pPos.offset(4, 1, 4))) {
                 if (pLevel.getBlockState(blockpos).is(this)) {
-                    weedLimit--;
-                    if (weedLimit <= 0) {
+                    limit--;
+                    if (limit <= 0) {
                         return;
                     }
                 }

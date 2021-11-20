@@ -23,6 +23,8 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.screens.*;
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapability;
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.client.gui.ScreenManager;
@@ -42,6 +44,7 @@ public class SetupEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         EnchantedRecipeTypes.init();
+        PlayerCapabilityManager.registerCapabilities();
     }
 
     @SubscribeEvent

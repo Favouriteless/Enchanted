@@ -21,27 +21,27 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.common.capabilities.player.IPlayerCapability;
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapability;
+import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.block.BedBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BedPart;
+import net.minecraft.tileentity.BedTileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
 
 public class TaglockItem extends Item {
 
@@ -68,9 +68,30 @@ public class TaglockItem extends Item {
             }
         }
         fillTaglock(player, stack, target);
-        if(player.level.isClientSide) player.level.playSound(player, player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0F, 1.0F);
 
         return ActionResultType.SUCCESS;
+    }
+
+    @Override
+    public ActionResultType useOn(ItemUseContext context) {
+        BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+        if(state.getBlock() instanceof BedBlock) {
+            BedTileEntity bed;
+            if(state.getValue(BedBlock.PART) == BedPart.HEAD) {
+                bed = (BedTileEntity)context.getLevel().getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
+            } else {
+                bed = (BedTileEntity)context.getLevel().getBlockEntity(context.getClickedPos());
+            }
+            if(bed == null) return ActionResultType.FAIL;
+            IPlayerCapability playerCapability = bed.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
+
+            if(playerCapability.getValue() != null) {
+                fillTaglock(context.getPlayer(), context.getItemInHand(), context.getLevel().getPlayerByUUID(playerCapability.getValue()));
+                context.getLevel().getPlayerByUUID(playerCapability.getValue());
+            }
+            return ActionResultType.SUCCESS;
+        }
+        return ActionResultType.FAIL;
     }
 
     public void fillTaglock(PlayerEntity player, ItemStack stack, LivingEntity entity) {
@@ -87,6 +108,7 @@ public class TaglockItem extends Item {
             player.level.addFreshEntity(itemEntity);
         }
 
+        if(player.level.isClientSide) player.level.playSound(player, player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0F, 1.0F);
         stack.shrink(1);
     }
 

@@ -36,7 +36,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class EmberMossBlock extends BushBlock {
+public class EmberMossBlock extends GlintWeedBlock {
 
     public EmberMossBlock(Properties properties) {
         super(properties);
@@ -45,20 +45,6 @@ public class EmberMossBlock extends BushBlock {
     @Override
     public boolean canSurvive(BlockState pState, IWorldReader pLevel, BlockPos pPos) {
         return !pLevel.isEmptyBlock(pPos.below()) && pLevel.getBlockState(pPos.below()).isFaceSturdy(pLevel, pPos.below(), Direction.UP);
-    }
-    
-    @Override
-    public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
-        if (pLevel.random.nextInt(6) == 0 && pLevel.isAreaLoaded(pPos, 4)) {
-            BlockPos newPos = pPos.offset(new BlockPos(
-                    RANDOM.nextInt(7) - 3,
-                    RANDOM.nextInt(7) - 3,
-                    RANDOM.nextInt(7) - 3));
-
-            if(pLevel.isEmptyBlock(newPos) && this.canSurvive(pState, pLevel, pPos)) {
-                pLevel.setBlockAndUpdate(newPos, pState);
-            }
-        }
     }
 
     @Override

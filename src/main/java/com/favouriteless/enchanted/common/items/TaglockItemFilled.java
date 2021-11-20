@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -65,5 +66,12 @@ public class TaglockItemFilled extends Item {
             return true;
         }
         return false;
+    }
+
+    public UUID getUUID(ItemStack stack) {
+        if(stack.getItem() == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
+            return NBTUtil.loadUUID(stack.getTag().get("entity"));
+        }
+        return null;
     }
 }

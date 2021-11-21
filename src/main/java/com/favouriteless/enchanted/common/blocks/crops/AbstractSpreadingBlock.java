@@ -21,60 +21,47 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class GlintWeedBlock extends BushBlock {
+public abstract class AbstractSpreadingBlock extends Block {
 
-    public GlintWeedBlock(Properties properties) {
+    public AbstractSpreadingBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public boolean canSurvive(BlockState pState, IWorldReader pLevel, BlockPos pPos) {
-        BlockState state1 = pLevel.getBlockState(pPos.below());
-        BlockState state2 = pLevel.getBlockState(pPos.above());
-
-        return (!pLevel.isEmptyBlock(pPos.below()) && state1.isFaceSturdy(pLevel, pPos.below(), Direction.UP) || state1.is(BlockTags.LEAVES) ) ||
-                (!pLevel.isEmptyBlock(pPos.above()) && state2.isFaceSturdy(pLevel, pPos.above(), Direction.DOWN) || state2.is(BlockTags.LEAVES) );
-    }
-
-
-    @Override
     public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
-        if (pRandom.nextInt(8) == 0) {
+        if (pRandom.nextInt(25) == 0) {
+            int i = 5;
 
-            int limit = 5;
             for(BlockPos blockpos : BlockPos.betweenClosed(pPos.offset(-4, -1, -4), pPos.offset(4, 1, 4))) {
                 if (pLevel.getBlockState(blockpos).is(this)) {
-                    limit--;
-                    if (limit <= 0) {
+                    --i;
+                    if (i <= 0) {
                         return;
                     }
                 }
             }
 
-            BlockPos newPos = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
+            BlockPos blockpos1 = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
 
-            for(int k = 0; k < 4; k++) {
-                if (pLevel.isEmptyBlock(newPos) && pState.canSurvive(pLevel, newPos)) {
-                    pPos = newPos;
+            for(int k = 0; k < 4; ++k) {
+                if (pLevel.isEmptyBlock(blockpos1) && pState.canSurvive(pLevel, blockpos1)) {
+                    pPos = blockpos1;
                 }
 
-                newPos = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
+                blockpos1 = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(2) - pRandom.nextInt(2), pRandom.nextInt(3) - 1);
             }
 
-            if (pLevel.isEmptyBlock(newPos) && pState.canSurvive(pLevel, newPos)) {
-                pLevel.setBlock(newPos, pState, 2);
+            if (pLevel.isEmptyBlock(blockpos1) && pState.canSurvive(pLevel, blockpos1)) {
+                pLevel.setBlock(blockpos1, pState, 2);
             }
         }
-    }
 
+    }
 }

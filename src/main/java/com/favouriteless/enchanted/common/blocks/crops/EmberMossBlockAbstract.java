@@ -23,7 +23,6 @@ package com.favouriteless.enchanted.common.blocks.crops;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -32,13 +31,10 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
-import java.util.Random;
+public class EmberMossBlockAbstract extends AbstractSpreadingBlock {
 
-public class EmberMossBlock extends GlintWeedBlock {
-
-    public EmberMossBlock(Properties properties) {
+    public EmberMossBlockAbstract(Properties properties) {
         super(properties);
     }
 

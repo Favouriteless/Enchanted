@@ -34,7 +34,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class ChalkCircleBlock extends ChalkBlockBase {
+public class ChalkCircleBlock extends AbstractChalkBlock {
 
     // Regular chalk types - white red purple
     public static final IntegerProperty GLYPH = IntegerProperty.create("glyph", 0, 47);
@@ -61,8 +61,12 @@ public class ChalkCircleBlock extends ChalkBlockBase {
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 
         if(this.particleType != null) {
-            if(random.nextInt(8) == 1)
-                world.addParticle(particleType, pos.getX() + 0.5D, pos.getY() + 0.1D, pos.getZ() + 0.5D, 0, 0, 0);
+            if(random.nextInt(6) == 1) {
+                double dx = random.nextDouble();
+                double dz = random.nextDouble();
+
+                world.addParticle(particleType, pos.getX() + dx, pos.getY() + 0.1D, pos.getZ() + dz, 0, 0, 0);
+            }
         }
 
     }

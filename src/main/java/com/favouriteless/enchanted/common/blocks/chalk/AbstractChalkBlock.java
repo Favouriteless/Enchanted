@@ -36,10 +36,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class ChalkBlockBase extends Block {
+public abstract class AbstractChalkBlock extends Block {
 
     // BASE CLASS FOR CHALK STUFF, DONT CHANGE
-    public ChalkBlockBase() {
+    public AbstractChalkBlock() {
         super(AbstractBlock.Properties.of(EnchantedMaterials.CHALK)
                 .noCollission()
                 .strength(0.5f, 0f)

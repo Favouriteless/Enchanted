@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.blocks;
+package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
 import net.minecraft.block.Block;

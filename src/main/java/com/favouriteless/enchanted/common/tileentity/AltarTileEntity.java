@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.blocks.AltarBlock;
+import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;

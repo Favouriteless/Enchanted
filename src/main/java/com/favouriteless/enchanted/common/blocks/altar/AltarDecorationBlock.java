@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.blocks;
+package com.favouriteless.enchanted.common.blocks.altar;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class AltarDecorationBlock extends Block {
+public abstract class AltarDecorationBlock extends Block {
 
     public AltarDecorationBlock(Properties properties) {
         super(properties);

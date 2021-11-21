@@ -19,43 +19,29 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.blocks.chalk;
+package com.favouriteless.enchanted.common.blocks.altar;
 
-import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class GoldChalkBlock extends ChalkBlockBase {
+public class ChaliceBlockMilk extends ChaliceBlock{
 
-    public GoldChalkBlock() {
-        super();
+    public ChaliceBlockMilk(Properties properties) {
+        super(properties, false);
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if(!world.isClientSide) {
+            player.removeAllEffects();
+            world.playSound(null, pos, SoundEvents.GENERIC_DRINK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            world.setBlockAndUpdate(pos, EnchantedBlocks.CHALICE.get().defaultBlockState());
+        }
+        return ActionResultType.SUCCESS;
     }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
-    {
-        return EnchantedTileEntities.CHALK_GOLD.get().create();
-    }
-
-    @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
-    {
-        ( (ChalkGoldTileEntity) world.getBlockEntity(pos)).Execute(state, world, pos, player, hand, hit);
-        return ActionResultType.PASS;
-    }
-
 }

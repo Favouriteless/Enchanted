@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.blocks;
+package com.favouriteless.enchanted.common.blocks.altar;
 
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;

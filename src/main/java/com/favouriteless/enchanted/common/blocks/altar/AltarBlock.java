@@ -21,10 +21,9 @@
 
 package com.favouriteless.enchanted.common.blocks.altar;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
@@ -67,6 +66,9 @@ public class AltarBlock extends ContainerBlock {
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(!world.isClientSide()) {
             if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
+                AltarTileEntity tileEntity = (AltarTileEntity)world.getBlockEntity(AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state));
+                tileEntity.clearConsumers();
+
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
         }

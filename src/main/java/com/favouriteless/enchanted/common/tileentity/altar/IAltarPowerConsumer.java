@@ -19,37 +19,14 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities.player;
+package com.favouriteless.enchanted.common.tileentity.altar;
 
-import net.minecraft.nbt.CompoundNBT;
+import java.util.List;
 
-import java.util.UUID;
+public interface IAltarPowerConsumer {
 
-public class PlayerCapability implements IPlayerCapability {
-
-    private static final String KEY_NAME = "playeruuid";
-    private UUID value;
-
-    @Override
-    public UUID getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(UUID uuid) {
-        value = uuid;
-    }
-
-    @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        if(value != null) nbt.putUUID(KEY_NAME, value);
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        if(nbt.contains(KEY_NAME)) this.setValue(nbt.getUUID(KEY_NAME));
-    }
+    List<AltarTileEntity> getAltars();
+    void removeAltar(AltarTileEntity altar);
+    void addAltar(AltarTileEntity altar);
 
 }

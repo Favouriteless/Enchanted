@@ -19,9 +19,10 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.tileentity;
+package com.favouriteless.enchanted.common.tileentity.altar;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
@@ -97,6 +98,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
     public final AltarBlockData altarBlockData = new AltarBlockData();
     private ChangeSubscriber<?> changeSubscriber;
+    private final List<IAltarPowerConsumer> powerConsumers = new ArrayList<>();
 
     private boolean loaded = false;
     public Vector3d centerPos;
@@ -137,7 +139,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             ticksAlive++;
 
             if(currentPower <= maxPower)
-                currentPower += 10.0D * rechargeMultiplier;
+                currentPower += 2.0D * rechargeMultiplier;
             if(currentPower > maxPower)
                 currentPower = maxPower;
         }
@@ -157,15 +159,22 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
     public void recalculateBlocks() {
         if(level != null && !level.isClientSide) {
-            BlockPos startingPos = new BlockPos(centerPos.add(-(RANGE+2), -(RANGE+2), -(RANGE+2)));
+            BlockPos startingPos = facingX ?
+                    new BlockPos(centerPos.add(-(RANGE+4), -(RANGE+2), -(RANGE+2))) :
+                    new BlockPos(centerPos.add(-(RANGE+2), -(RANGE+2), -(RANGE+4)));
+
             int newPower = 0;
 
             altarBlockData.reset();
             for (int x = 0; x < (RANGE+2)*2; x++) {
                 for (int y = 0; y < (RANGE+2)*2; y++) {
                     for (int z = 0; z < (RANGE+2)*2; z++) {
-                        if(posWithinRange(startingPos.offset(x, y, z))) {
-                            newPower += altarBlockData.addBlock(level.getBlockState(startingPos.offset(x, y, z)).getBlock(), this.powerMultiplier);
+                        BlockPos currentPos = startingPos.offset(x, y, z);
+                        if(level.getBlockState(currentPos).getBlock() instanceof IAltarPowerConsumerProvider) {
+                            addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
+                        }
+                        else if(posWithinRange(currentPos, RANGE)) {
+                            newPower += altarBlockData.addBlock(level.getBlockState(currentPos).getBlock(), this.powerMultiplier);
                         }
                     }
                 }
@@ -231,17 +240,43 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
         }
     }
 
-    public boolean posWithinRange(BlockPos pos) {
+    public boolean posWithinRange(BlockPos pos, int range) {
         if(this.level != null) {
-            double rx = facingX ? RANGE+1 : RANGE;
-            double ry = RANGE;
-            double rz = facingX ? RANGE : RANGE+1;
+            double rx = facingX ? range+1 : range;
+            double ry = range;
+            double rz = facingX ? range : range+1;
             double dx = pos.getX() - centerPos.x;
             double dy = pos.getY() - centerPos.y;
             double dz = pos.getZ() - centerPos.z;
             return (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) + (dz * dz) / (rz * rz) <= 1;
         }
         return false;
+    }
+
+    public void addConsumer(IAltarPowerConsumer consumer) {
+        powerConsumers.add(consumer);
+        consumer.addAltar(this);
+    }
+
+    public void removeConsumer(IAltarPowerConsumer consumer) {
+        powerConsumers.remove(consumer);
+        consumer.removeAltar(this);
+    }
+
+    /**
+     * Destroys consumer references
+     */
+    public void clearConsumers() {
+        for(IAltarPowerConsumer consumer : powerConsumers) {
+            consumer.removeAltar(this);
+        }
+    }
+
+    public double distanceTo(BlockPos pos) {
+        double dx = pos.getX() - centerPos.x;
+        double dy = pos.getY() - centerPos.y;
+        double dz = pos.getZ() - centerPos.z;
+        return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
     }
 
     public boolean posIsUpgrade(BlockPos pos) {

@@ -112,7 +112,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> BLOOD_POPPY = BLOCKS.register("blood_poppy", () -> new BloodPoppyBlock(AbstractBlock.Properties.copy(Blocks.POPPY)));
 
-    public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldAbstractChalkBlock::new);
+    public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldChalkBlock::new);
     public static final RegistryObject<Block> CHALK_WHITE = BLOCKS.register("chalk_white", () -> new ChalkCircleBlock(null));
     public static final RegistryObject<Block> CHALK_RED = BLOCKS.register("chalk_red", () -> new ChalkCircleBlock(ParticleTypes.FLAME));
     public static final RegistryObject<Block> CHALK_PURPLE = BLOCKS.register("chalk_purple", () -> new ChalkCircleBlock(ParticleTypes.DRAGON_BREATH));

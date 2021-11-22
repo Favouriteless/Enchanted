@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities.player;
+package com.favouriteless.enchanted.common.capabilities.bed;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.capabilities.SimpleCapabilityStorage;
@@ -41,19 +41,19 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(modid=Enchanted.MOD_ID)
-public class PlayerCapabilityManager {
+public class BedPlayerCapabilityManager {
 
-    @CapabilityInject(IPlayerCapability.class)
-    public static Capability<IPlayerCapability> INSTANCE = null;
+    @CapabilityInject(IBedPlayerCapability.class)
+    public static Capability<IBedPlayerCapability> INSTANCE = null;
     public static final ResourceLocation NAME = new ResourceLocation(Enchanted.MOD_ID, "player_bed");
 
-    public PlayerCapabilityManager() {}
+    public BedPlayerCapabilityManager() {}
 
     public static void registerCapabilities() {
         CapabilityManager.INSTANCE.register(
-                IPlayerCapability.class,
+                IBedPlayerCapability.class,
                 SimpleCapabilityStorage.create(() -> INSTANCE, Constants.NBT.TAG_COMPOUND),
-                PlayerCapability::new
+                BedPlayerCapability::new
         );
     }
 
@@ -61,7 +61,7 @@ public class PlayerCapabilityManager {
     public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<TileEntity> event) {
         final TileEntity obj = event.getObject();
         if(obj instanceof BedTileEntity) {
-            event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, () -> new PlayerCapability()));
+            event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, () -> new BedPlayerCapability()));
         }
     }
 

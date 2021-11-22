@@ -46,11 +46,11 @@ public class WitchOvenContainer extends FurnaceContainerBase {
                 furnaceDataIn);
 
         // Container Inventory
-        this.addSlot(new SlotInput(tileEntity, 0, 56, 17)); // Ingredient input
-        this.addSlot(new SlotFuel(tileEntity, 1, 83, 53)); // Fuel Slot
-        this.addSlot(new SlotOutput(tileEntity, 2, 110, 17)); // Smelting output
-        this.addSlot(new SlotJarInput(tileEntity, 3, 56, 53)); // Jar input
-        this.addSlot(new SlotOutput(tileEntity, 4, 110, 53)); // Jar output
+        this.addSlot(new SlotInput(tileEntity, 0, 53, 17)); // Ingredient input
+        this.addSlot(new SlotFuel(tileEntity, 1, 80, 53)); // Fuel Slot
+        this.addSlot(new SlotOutput(tileEntity, 2, 107, 17)); // Smelting output
+        this.addSlot(new SlotJarInput(tileEntity, 3, 53, 53)); // Jar input
+        this.addSlot(new SlotOutput(tileEntity, 4, 107, 53)); // Jar output
 
         this.AddInventorySlots(playerInventory); // Player inventory starts at 5
     }

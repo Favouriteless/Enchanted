@@ -22,8 +22,8 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
-import com.favouriteless.enchanted.common.capabilities.player.IPlayerCapability;
-import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
+import com.favouriteless.enchanted.common.capabilities.bed.IBedPlayerCapability;
+import com.favouriteless.enchanted.common.capabilities.bed.BedPlayerCapabilityManager;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
@@ -49,7 +49,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.UUID;
 
@@ -95,7 +94,7 @@ public class TaglockItem extends Item {
                     tileEntity = world.getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
                 }
                 if (tileEntity == null) return ActionResultType.FAIL;
-                IPlayerCapability playerCapability = tileEntity.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
+                IBedPlayerCapability playerCapability = tileEntity.getCapability(BedPlayerCapabilityManager.INSTANCE).orElse(null);
 
                 if (playerCapability.getValue() != null) {
                     fillTaglockEntity(context.getPlayer(), context.getItemInHand(), world.getPlayerByUUID(playerCapability.getValue()));

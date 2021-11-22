@@ -19,14 +19,14 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities.player;
+package com.favouriteless.enchanted.common.capabilities.bed;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.UUID;
 
-public interface IPlayerCapability extends INBTSerializable<CompoundNBT> {
+public interface IBedPlayerCapability extends INBTSerializable<CompoundNBT> {
     UUID getValue();
     void setValue(UUID uuid);
 }

@@ -21,7 +21,9 @@
 
 package com.favouriteless.enchanted.common.observerlib.altar;
 
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
+import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.altar.IAltarPowerConsumer;
 import hellfirepvp.observerlib.api.ChangeObserver;
 import hellfirepvp.observerlib.api.ObservableArea;
 import hellfirepvp.observerlib.api.ObservableAreaBoundingBox;
@@ -62,10 +64,14 @@ public class AltarChangeObserver extends ChangeObserver {
         if(!world.isClientSide) {
             TileEntity te = world.getBlockEntity(center);
             if (te instanceof AltarTileEntity) {
-                AltarTileEntity altar = (AltarTileEntity) te;
+                AltarTileEntity altar = (AltarTileEntity)te;
+
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
-                    if (altar.posWithinRange(change.getAbsolutePosition())) { // Change is relevant
-                        if(change.getOldState().getBlock() != change.getNewState().getBlock()) { // Block changed
+                    if (altar.posWithinRange(change.getAbsolutePosition(), AltarTileEntity.RANGE)) { // Change is relevant
+                        if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
+                            if(change.getNewState().getBlock() instanceof IAltarPowerConsumerProvider) {
+                                altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));
+                            }
                             altar.removePower(change.getOldState().getBlock());
                             altar.addPower(change.getNewState().getBlock());
                         }

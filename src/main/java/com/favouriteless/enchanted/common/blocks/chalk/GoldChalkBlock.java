@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
+import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.BlockState;
@@ -33,9 +34,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class GoldAbstractChalkBlock extends AbstractChalkBlock {
+public class GoldChalkBlock extends AbstractChalkBlock implements IAltarPowerConsumerProvider {
 
-    public GoldAbstractChalkBlock() {
+    public GoldChalkBlock() {
         super();
     }
 
@@ -55,7 +56,7 @@ public class GoldAbstractChalkBlock extends AbstractChalkBlock {
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
     {
         ( (ChalkGoldTileEntity) world.getBlockEntity(pos)).Execute(state, world, pos, player, hand, hit);
-        return ActionResultType.PASS;
+        return ActionResultType.SUCCESS;
     }
 
 }

@@ -21,9 +21,9 @@
 
 package com.favouriteless.enchanted.common.observerlib.altar;
 
-import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
-import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity;
-import com.favouriteless.enchanted.common.tileentity.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import hellfirepvp.observerlib.api.ChangeObserver;
 import hellfirepvp.observerlib.api.ObservableArea;
 import hellfirepvp.observerlib.api.ObservableAreaBoundingBox;

@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities;
+package com.favouriteless.enchanted.api.capabilities;
 
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;

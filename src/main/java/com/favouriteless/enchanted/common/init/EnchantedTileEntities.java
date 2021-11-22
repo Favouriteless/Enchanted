@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.tileentity.*;
 
-import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

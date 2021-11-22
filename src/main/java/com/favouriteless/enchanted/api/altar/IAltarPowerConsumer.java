@@ -19,7 +19,9 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.tileentity.altar;
+package com.favouriteless.enchanted.api.altar;
+
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 
 import java.util.List;
 

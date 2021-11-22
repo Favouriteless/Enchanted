@@ -19,10 +19,11 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.tileentity.altar;
+package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
@@ -131,17 +132,17 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 recalculateUpgrades();
                 recalculateBlocks();
                 loaded = true;
-            } else if (!level.isClientSide) {
+            }
+            else if (!level.isClientSide) {
                 if(ticksAlive % 10 == 0) {
                     changeSubscriber.isValid(level);
                 }
+                if(currentPower <= maxPower)
+                    currentPower += 2.0D * rechargeMultiplier;
+                if(currentPower > maxPower)
+                    currentPower = maxPower;
             }
             ticksAlive++;
-
-            if(currentPower <= maxPower)
-                currentPower += 2.0D * rechargeMultiplier;
-            if(currentPower > maxPower)
-                currentPower = maxPower;
         }
     }
 

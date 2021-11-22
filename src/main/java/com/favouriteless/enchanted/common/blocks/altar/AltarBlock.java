@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.blocks.altar;
 
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
-import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;

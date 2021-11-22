@@ -22,8 +22,8 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
-import com.favouriteless.enchanted.common.capabilities.bed.IBedPlayerCapability;
-import com.favouriteless.enchanted.common.capabilities.bed.BedPlayerCapabilityManager;
+import com.favouriteless.enchanted.api.capabilities.bed.IBedPlayerCapability;
+import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;

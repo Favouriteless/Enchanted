@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.blocks.altar.IAltarPowerConsumerProvider;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.Block;

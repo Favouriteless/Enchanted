@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.core.util.reloadlisteners;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.tileentity.altar.AltarTileEntity.*;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

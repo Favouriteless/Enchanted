@@ -19,11 +19,11 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities.bed;
+package com.favouriteless.enchanted.api.capabilities.bed;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.capabilities.SimpleCapabilityStorage;
-import com.favouriteless.enchanted.common.capabilities.SimplePersistentCapabilityProvider;
+import com.favouriteless.enchanted.api.capabilities.SimpleCapabilityStorage;
+import com.favouriteless.enchanted.api.capabilities.SimplePersistentCapabilityProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.BedTileEntity;
 import net.minecraft.tileentity.TileEntity;

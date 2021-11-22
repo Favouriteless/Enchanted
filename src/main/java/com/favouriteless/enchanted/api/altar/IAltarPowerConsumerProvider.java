@@ -19,37 +19,10 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.capabilities.bed;
+package com.favouriteless.enchanted.api.altar;
 
-import net.minecraft.nbt.CompoundNBT;
-
-import java.util.UUID;
-
-public class BedPlayerCapability implements IBedPlayerCapability {
-
-    private static final String KEY_NAME = "playeruuid";
-    private UUID value;
-
-    @Override
-    public UUID getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(UUID uuid) {
-        value = uuid;
-    }
-
-    @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        if(value != null) nbt.putUUID(KEY_NAME, value);
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        if(nbt.contains(KEY_NAME)) this.setValue(nbt.getUUID(KEY_NAME));
-    }
-
+/**
+ * Use this interface to mark a block as having a power consuming tile entity, currently has no functionality.
+ */
+public interface IAltarPowerConsumerProvider {
 }

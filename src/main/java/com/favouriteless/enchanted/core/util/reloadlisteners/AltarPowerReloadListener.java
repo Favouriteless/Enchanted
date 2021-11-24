@@ -77,8 +77,8 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
 
     @Override
     public CompletableFuture<Void> reload(IStage pStage, IResourceManager pResourceManager, IProfiler pPreparationsProfiler, IProfiler pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor) {
-        CompletableFuture<List<AltarPowerProvider<Block>>> futureBlocks = prepareBlocks(pResourceManager, pBackgroundExecutor);
-        CompletableFuture<List<AltarPowerProvider<IOptionalNamedTag<Block>>>> futureTags = prepareTags(pResourceManager, pBackgroundExecutor);
+        CompletableFuture<List<AltarPowerProvider<Block>>> futureBlocks = prepare(BLOCKS_DIRECTORY, pResourceManager, pBackgroundExecutor, ForgeRegistries.BLOCKS::getValue);
+        CompletableFuture<List<AltarPowerProvider<IOptionalNamedTag<Block>>>> futureTags = prepare(TAGS_DIRECTORY, pResourceManager, pBackgroundExecutor, BlockTags::createOptional);
         CompletableFuture<List<AltarUpgrade>> futureUpgrades = prepareUpgrades(pResourceManager, pBackgroundExecutor);
 
         return CompletableFuture.allOf(futureBlocks, futureTags, futureUpgrades).thenCompose(pStage::wait).thenAcceptAsync((result) -> {
@@ -90,148 +90,77 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
         }, pGameExecutor);
     }
 
-    private CompletableFuture<List<AltarPowerProvider<Block>>> prepareBlocks(IResourceManager resourceManager, Executor executor) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<AltarPowerProvider<Block>> blocks = new ArrayList<>();
-            List<Block> removeList = new ArrayList<>();
-
-            for(ResourceLocation resourceLocation : resourceManager.listResources(BLOCKS_DIRECTORY, (filter) -> filter.endsWith(".json"))) {
-                String path = resourceLocation.getPath();
-                ResourceLocation resourceLocation1 = new ResourceLocation(resourceLocation.getNamespace(), path.substring(BLOCKS_DIRECTORY.length() + 1, path.length() - PATH_SUFFIX_LENGTH));
-
-                try {
-                    for(IResource resource : resourceManager.getResources(resourceLocation)) {
-                        try (InputStream inputstream = resource.getInputStream();
-                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8))) {
-
-                            JsonObject jsonObject = JSONUtils.fromJson(GSON, reader, JsonObject.class);
-
-                            if (jsonObject == null) {
-                                Enchanted.LOGGER.error("Couldn't load power {} from {} in data pack {} as it is empty or null", resourceLocation1, resourceLocation, resource.getSourceName());
-                            } else {
-                                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(JSONUtils.getAsString(jsonObject, "block")));
-                                int power = JSONUtils.getAsInt(jsonObject, "power");
-                                int limit = JSONUtils.getAsInt(jsonObject, "limit");
-                                if(block != null) {
-                                    if(power != 0 && limit > 0) {
-                                        AltarPowerProvider<Block> newPowerProvider = new AltarPowerProvider<>(block, power, limit);
-                                        if(blocks.isEmpty()) {
-                                            blocks.add(newPowerProvider);
-                                        }
-                                        else {
-                                            // Very crude sorting for priority
-                                            for(int i = 0; i < blocks.size(); i++ ) {
-                                                AltarPowerProvider<Block> powerProvider = blocks.get(i);
-                                                if(newPowerProvider.getPower() > powerProvider.getPower()) {
-                                                    blocks.add(i, newPowerProvider);
-                                                    break;
-                                                }
-                                                if(newPowerProvider.getPower() == powerProvider.getPower()) {
-                                                    if(newPowerProvider.getLimit() > powerProvider.getLimit()) {
-                                                        blocks.add(i, newPowerProvider);
-                                                        break;
-                                                    }
-                                                }
-                                                if(i == blocks.size()-1) {
-                                                    blocks.add(newPowerProvider);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else {
-                                        removeList.add(block);
-                                    }
-                                }
-                            }
-
-                        } catch (RuntimeException | IOException ioexception) {
-                            Enchanted.LOGGER.error("Couldn't read power {} from {} in data pack {}", resourceLocation1, resourceLocation, resource.getSourceName(), ioexception);
-                        } finally {
-                            IOUtils.closeQuietly(resource);
-                        }
-                    }
-                } catch (IOException ioexception1) {
-                    Enchanted.LOGGER.error("Couldn't read power {} from {}", resourceLocation1, resourceLocation, ioexception1);
-                }
-            }
-
-            for(Block block : removeList) {
-                blocks.removeIf(provider -> provider.is(block));
-            }
-            return blocks;
-        }, executor);
+    @FunctionalInterface
+    private interface KeySupplier<T> {
+        T get(ResourceLocation resourceLocation);
     }
 
-    private CompletableFuture<List<AltarPowerProvider<IOptionalNamedTag<Block>>>> prepareTags(IResourceManager resourceManager, Executor executor) {
+    private <T> CompletableFuture<List<AltarPowerProvider<T>>> prepare(String directory, IResourceManager resourceManager, Executor executor, KeySupplier<T> keySupplier) {
         return CompletableFuture.supplyAsync(() -> {
-            List<AltarPowerProvider<IOptionalNamedTag<Block>>> tags = new ArrayList<>();
-            List<IOptionalNamedTag<Block>> removeList = new ArrayList<>();
+            List<AltarPowerProvider<T>> outputList = new ArrayList<>();
+            List<T> removeList = new ArrayList<>();
 
-            for(ResourceLocation resourceLocation : resourceManager.listResources(TAGS_DIRECTORY, (filter) -> filter.endsWith(".json"))) {
+            for(ResourceLocation resourceLocation : resourceManager.listResources(directory, (filter) ->
+                    filter.endsWith(".json")))
+            {
                 String path = resourceLocation.getPath();
-                ResourceLocation resourceLocation1 = new ResourceLocation(resourceLocation.getNamespace(), path.substring(TAGS_DIRECTORY.length() + 1, path.length() - PATH_SUFFIX_LENGTH));
+                ResourceLocation resourceLocation1 = new ResourceLocation(resourceLocation.getNamespace(), path.substring(directory.length() + 1, path.length() - PATH_SUFFIX_LENGTH));
 
-                try {
-                    for(IResource resource : resourceManager.getResources(resourceLocation)) {
-                        try (InputStream inputstream = resource.getInputStream();
-                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8))) {
+                try (
+                        IResource resource = resourceManager.getResource(resourceLocation);
+                        InputStream inputstream = resource.getInputStream();
+                        Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
+                ) {
+                    JsonObject jsonObject = JSONUtils.fromJson(GSON, reader, JsonObject.class);
 
-                            JsonObject jsonObject = JSONUtils.fromJson(GSON, reader, JsonObject.class);
+                    if (jsonObject == null) {
+                        Enchanted.LOGGER.error("Couldn't load power {} from {} in data pack {} as it is empty or null", resourceLocation1, resourceLocation, resource.getSourceName());
+                    } else {
+                        T key = keySupplier.get(resourceLocation1);
+                        int power = JSONUtils.getAsInt(jsonObject, "power");
+                        int limit = JSONUtils.getAsInt(jsonObject, "limit");
 
-                            if (jsonObject == null) {
-                                Enchanted.LOGGER.error("Couldn't load power {} from {} in data pack {} as it is empty or null", resourceLocation1, resourceLocation, resource.getSourceName());
-                            } else {
-                                IOptionalNamedTag<Block> tag = BlockTags.createOptional(new ResourceLocation(JSONUtils.getAsString(jsonObject, "tag")));
-                                int power = JSONUtils.getAsInt(jsonObject, "power");
-                                int limit = JSONUtils.getAsInt(jsonObject, "limit");
-
-                                if(power != 0 && limit > 0) {
-                                    AltarPowerProvider<IOptionalNamedTag<Block>> newPowerProvider = new AltarPowerProvider<>(tag, power, limit);
-                                    if(tags.isEmpty()) {
-                                        tags.add(newPowerProvider);
-                                    }
-                                    else {
-                                        // Very crude sorting for priority
-                                        for(int i = 0; i < tags.size(); i++ ) {
-                                            AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = tags.get(i);
-                                            if(newPowerProvider.getPower() > powerProvider.getPower()) {
-                                                tags.add(i, newPowerProvider);
-                                                break;
-                                            }
-                                            if(newPowerProvider.getPower() == powerProvider.getPower()) {
-                                                if(newPowerProvider.getLimit() > powerProvider.getLimit()) {
-                                                    tags.add(i, newPowerProvider);
-                                                    break;
-                                                }
-                                            }
-                                            if(i == tags.size()-1) {
-                                                tags.add(newPowerProvider);
+                        if(key != null) {
+                            if(power != 0 && limit > 0) {
+                                AltarPowerProvider<T> newPowerProvider = new AltarPowerProvider<>(key, power, limit);
+                                if(outputList.isEmpty()) {
+                                    outputList.add(newPowerProvider);
+                                }
+                                else {
+                                    // Very crude sorting for priority
+                                    for(int i = 0; i < outputList.size(); i++ ) {
+                                        AltarPowerProvider<T> powerProvider = outputList.get(i);
+                                        if(newPowerProvider.getPower() > powerProvider.getPower()) {
+                                            outputList.add(i, newPowerProvider);
+                                            break;
+                                        }
+                                        if(newPowerProvider.getPower() == powerProvider.getPower()) {
+                                            if(newPowerProvider.getLimit() > powerProvider.getLimit()) {
+                                                outputList.add(i, newPowerProvider);
                                                 break;
                                             }
                                         }
+                                        if(i == outputList.size()-1) {
+                                            outputList.add(newPowerProvider);
+                                            break;
+                                        }
                                     }
                                 }
-                                else {
-                                    removeList.add(tag);
-                                }
                             }
-
-                        } catch (RuntimeException | IOException ioexception) {
-                            Enchanted.LOGGER.error("Couldn't read power {} from {} in data pack {}", resourceLocation1, resourceLocation, resource.getSourceName(), ioexception);
-                        } finally {
-                            IOUtils.closeQuietly(resource);
+                            else {
+                                removeList.add(key);
+                            }
                         }
                     }
-                } catch (IOException ioexception1) {
-                    Enchanted.LOGGER.error("Couldn't read power {} from {}", resourceLocation1, resourceLocation, ioexception1);
+                } catch (RuntimeException | IOException ioexception) {
+                    Enchanted.LOGGER.error("Couldn't read power {} from {} in data pack {}", resourceLocation1, resourceLocation, ioexception);
                 }
             }
 
-            for(IOptionalNamedTag<Block> tag : removeList) {
-                tags.removeIf(provider -> provider.is(tag));
+            for(T key : removeList) {
+                outputList.removeIf(provider -> provider.is(key));
             }
-            return tags;
+            return outputList;
         }, executor);
     }
 
@@ -318,5 +247,4 @@ public class AltarPowerReloadListener implements IFutureReloadListener {
             return this.limit;
         }
     }
-
 }

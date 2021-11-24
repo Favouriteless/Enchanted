@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.observerlib.altar;
 
+import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
@@ -41,9 +42,10 @@ import javax.annotation.Nonnull;
 
 public class AltarChangeObserver extends ChangeObserver {
 
+    private final int range = EnchantedConfig.ALTAR_RANGE.get();
     private final ObservableArea observableArea = new ObservableAreaBoundingBox(new AxisAlignedBB(
-            -(AltarTileEntity.RANGE-1), -AltarTileEntity.RANGE, -(AltarTileEntity.RANGE-1),
-            AltarTileEntity.RANGE+2, AltarTileEntity.RANGE, AltarTileEntity.RANGE+2));
+            -(range-1), -range, -(range-1),
+            range+2, range, range+2));
 
     public AltarChangeObserver(ResourceLocation providerRegistryName) {
         super(providerRegistryName);
@@ -67,7 +69,7 @@ public class AltarChangeObserver extends ChangeObserver {
                 AltarTileEntity altar = (AltarTileEntity)te;
 
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
-                    if (altar.posWithinRange(change.getAbsolutePosition(), AltarTileEntity.RANGE)) { // Change is relevant
+                    if (altar.posWithinRange(change.getAbsolutePosition(), range)) { // Change is relevant
                         if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
                             if(change.getNewState().getBlock() instanceof IAltarPowerConsumerProvider) {
                                 altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));

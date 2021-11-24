@@ -23,9 +23,7 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;

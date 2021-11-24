@@ -19,15 +19,37 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.api.altar;
 
-import com.favouriteless.enchanted.Enchanted;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+public class AltarPowerProvider<T> {
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
-public class CommonEvents {
+    private final T key;
+    private final int power;
+    private final int limit;
 
+    public AltarPowerProvider(T key, int power, int limit) {
+        this.key = key;
+        this.power = power;
+        this.limit = limit;
+    }
+
+    public boolean sameKey(AltarPowerProvider<?> powerProvider) {
+        return powerProvider.key.equals(this.key);
+    }
+
+    public boolean is(T key) {
+        return this.key == key;
+    }
+
+    public T getKey() {
+        return this.key;
+    }
+
+    public int getPower() {
+        return this.power;
+    }
+
+    public int getLimit() {
+        return this.limit;
+    }
 }

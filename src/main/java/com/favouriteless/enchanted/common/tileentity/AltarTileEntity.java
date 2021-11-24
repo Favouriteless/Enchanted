@@ -29,8 +29,8 @@ import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
-import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener;
-import com.favouriteless.enchanted.core.util.reloadlisteners.AltarPowerReloadListener.*;
+import com.favouriteless.enchanted.core.util.reloadlisteners.EnchantedData;
+import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
 import net.minecraft.block.Block;
@@ -200,7 +200,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
             for (int x = 0; x < xMax; x++) {
                 for (int z = 0; z < zMax; z++) {
-                    for (AltarUpgrade newUpgrade : AltarPowerReloadListener.INSTANCE.UPGRADES) {
+                    for (AltarUpgrade newUpgrade : EnchantedData.ALTAR_UPGRADES.get()) {
                         if (level.getBlockState(worldPosition.offset(x, 1, z)).getBlock().is(newUpgrade.getBlock())) { // If block is of upgrade
                             if(upgradesUsed.isEmpty()) {
                                 upgradesUsed.add(newUpgrade);
@@ -332,10 +332,10 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
         public HashMap<IOptionalNamedTag<Block>, Integer> tagsAmount = new HashMap<>();
 
         public AltarBlockData() {
-            for(AltarPowerReloadListener.AltarPowerProvider<Block> provider : AltarPowerReloadListener.INSTANCE.POWER_BLOCKS) {
+            for(AltarPowerProvider<Block> provider : EnchantedData.ALTAR_POWER_BLOCKS.get()) {
                 blocksAmount.put(provider.getKey(), 0);
             }
-            for(AltarPowerReloadListener.AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) {
+            for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) {
                 tagsAmount.put(provider.getKey(), 0);
             }
         }
@@ -344,7 +344,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) { // For all tag power providers
+                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
                     if(block.is(provider.getKey())) { // If block part of provider tag
                         amount = tagsAmount.get(provider.getKey());
                         tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) + 1);
@@ -357,7 +357,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 return 0;
             }
 
-            AltarPowerProvider<Block> provider = AltarPowerReloadListener.INSTANCE.providerOf(block);
+            AltarPowerProvider<Block> provider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
             blocksAmount.replace(block, amount + 1);
             return amount < provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
         }
@@ -366,7 +366,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : AltarPowerReloadListener.INSTANCE.POWER_TAGS) { // For all tag power providers
+                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
                     if(block.is(provider.getKey())) { // If block part of provider tag
                         amount = tagsAmount.get(provider.getKey());
                         tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) - 1);
@@ -379,7 +379,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 return 0;
             }
 
-            AltarPowerProvider<Block> provider = AltarPowerReloadListener.INSTANCE.providerOf(block);
+            AltarPowerProvider<Block> provider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
             blocksAmount.replace(block, amount - 1);
             return amount <= provider.getLimit() ? provider.getPower() * powerMultiplier : 0; // Return 0 if above limit
         }
@@ -388,11 +388,11 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             double newPower = 0.0D;
 
             for(Block block : blocksAmount.keySet()) {
-                AltarPowerProvider<Block> powerProvider = AltarPowerReloadListener.INSTANCE.providerOf(block);
+                AltarPowerProvider<Block> powerProvider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), blocksAmount.get(block))) * powerProvider.getPower() * powerMultiplier;
             }
             for(IOptionalNamedTag<Block> tag : tagsAmount.keySet()) {
-                AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = AltarPowerReloadListener.INSTANCE.providerOf(tag);
+                AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = EnchantedData.ALTAR_POWER_TAGS.providerOf(tag);
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), tagsAmount.get(tag))) * powerProvider.getPower() * powerMultiplier;
             }
 

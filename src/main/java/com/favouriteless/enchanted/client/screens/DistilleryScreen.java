@@ -104,10 +104,8 @@ public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
 
     @Override
     protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.renderLabels(matrixStack, mouseX, mouseY);
-        final int LABEL_XPOS = 62;
-        final int LABEL_YPOS = 5;
-        font.draw(matrixStack, title.getContents(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
+        this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
+        this.font.draw(matrixStack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
 
     // Returns true if the given x,y coordinates are within the given rectangle

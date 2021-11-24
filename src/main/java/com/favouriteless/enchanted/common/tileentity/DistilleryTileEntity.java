@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
 import com.favouriteless.enchanted.common.recipes.distillery.DistilleryRecipe;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -37,9 +38,10 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryTileEntity extends FurnaceTileEntityBase {
+public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAltarPowerConsumer {
 
     private DistilleryRecipe currentRecipe;
+    private final List<AltarTileEntity> potentialAltars = new ArrayList<>();
 
     public DistilleryTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(7, ItemStack.EMPTY));
@@ -48,7 +50,6 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase {
     public DistilleryTileEntity() {
         this(EnchantedTileEntities.DISTILLERY.get());
     }
-
 
     @Override
     protected ITextComponent getDefaultName() {
@@ -67,13 +68,18 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase {
 
         if (!this.level.isClientSide) {
             this.matchRecipe();
-            if(this.canDistill(this.currentRecipe)) {
-                this.burnTime = 1;
-                this.cookTime++;
+            if(this.canDistill(this.currentRecipe) && !potentialAltars.isEmpty()) {
+                AltarTileEntity altar = potentialAltars.get(0);
+                if(altar.currentPower > 10.0D) {
+                    altar.currentPower -= 10.0D;
+                    this.burnTime = 1;
+                    this.cookTime++;
 
-                if(this.cookTime == this.cookTimeTotal) {
-                    this.cookTime = 0;
-                    this.distill(this.currentRecipe);
+
+                    if (this.cookTime == this.cookTimeTotal) {
+                        this.cookTime = 0;
+                        this.distill(this.currentRecipe);
+                    }
                 }
             }
             else {
@@ -212,4 +218,37 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase {
         return this.inventoryContents.subList(0, 3);
     }
 
+    @Override
+    public List<AltarTileEntity> getAltars() {
+        return potentialAltars;
+    }
+
+    @Override
+    public void removeAltar(AltarTileEntity altar) {
+        potentialAltars.remove(altar);
+    }
+
+    /**
+     * Adds new altar to the power providers list, sorts by closest first
+     * @param altar
+     */
+    @Override
+    public void addAltar(AltarTileEntity altar) {
+        if(potentialAltars.isEmpty()) {
+            potentialAltars.add(altar);
+        }
+        else if(!potentialAltars.contains(altar)) {
+            for (int i = 0; i < potentialAltars.size(); i++) {
+                AltarTileEntity currentAltar = potentialAltars.get(i);
+
+                if (altar.distanceTo(worldPosition) < currentAltar.distanceTo(worldPosition)) {
+                    potentialAltars.add(i, altar);
+                    break;
+                } else if (i == potentialAltars.size() - 1) {
+                    potentialAltars.add(altar);
+                    break;
+                }
+            }
+        }
+    }
 }

@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.common.blocks.chalk.ChalkBlockBase;
+import com.favouriteless.enchanted.common.blocks.chalk.AbstractChalkBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
@@ -38,12 +38,12 @@ import java.util.Objects;
 
 public class ChalkItem extends Item {
 
-    private final ChalkBlockBase chalkBlock;
+    private final AbstractChalkBlock chalkBlock;
 
     public ChalkItem(Properties builder, Block block) {
         super(builder);
-        if(block instanceof ChalkBlockBase) {
-            chalkBlock = (ChalkBlockBase) block;
+        if(block instanceof AbstractChalkBlock) {
+            chalkBlock = (AbstractChalkBlock) block;
         } else {
             chalkBlock = null;
         }

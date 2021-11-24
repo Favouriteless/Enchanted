@@ -56,7 +56,7 @@
     "item.enchanted.wolfsbane_seeds": "Wolfsbane Seeds",
     "item.enchanted.wolfsbane_flower": "Wolfsbane Flower",
     "item.enchanted.garlic": "Garlic",
-    "item.enchanted.blood_poppy": "Blood Poppy",
+    "block.enchanted.blood_poppy": "Blood Poppy",
 
     "block.enchanted.witch_oven": "Witches Oven",
     "block.enchanted.fume_funnel": "Fume Funnel",
@@ -77,6 +77,7 @@
     "block.enchanted.demon_heart": "Demon Heart",
 
     "item.enchanted.mutandis": "Mutandis",
+    "item.enchanted.bone_needle": "Bone Needle",
     "item.enchanted.taglock": "Taglock Kit",
     "item.enchanted.taglock_filled": "Taglock",
 	"block.enchanted.altar": "Altar",

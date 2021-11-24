@@ -24,18 +24,15 @@ package com.favouriteless.enchanted.common.containers;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class AltarContainer extends Container {

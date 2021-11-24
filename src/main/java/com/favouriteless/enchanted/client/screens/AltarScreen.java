@@ -32,6 +32,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.awt.*;
+
 @OnlyIn(Dist.CLIENT)
 public class AltarScreen extends ContainerScreen<AltarContainer> {
 
@@ -61,7 +63,7 @@ public class AltarScreen extends ContainerScreen<AltarContainer> {
         String powerString = String.format("%s/%s (%sx)", container.getCurrentPower(), container.getMaxPower(), container.getRechargeMultiplier());
         int xOffset = this.font.width(powerString) / 2;
         int yOffset = this.font.lineHeight / 2;
-        this.font.draw(pMatrixStack, powerString, (float)this.imageWidth / 2 - xOffset, (float)this.imageHeight / 2 - yOffset, 0x404040);
+        this.font.draw(pMatrixStack, powerString, (float)this.imageWidth / 2 - xOffset, (float)this.imageHeight / 2 - yOffset, Color.darkGray.getRGB());
     }
 
 }

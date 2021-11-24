@@ -24,6 +24,10 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 
 import com.favouriteless.enchanted.common.blocks.*;
+import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
+import com.favouriteless.enchanted.common.blocks.altar.CandelabraBlock;
+import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlock;
+import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlockMilk;
 import com.favouriteless.enchanted.common.blocks.chalk.*;
 import com.favouriteless.enchanted.common.blocks.crops.*;
 import com.favouriteless.enchanted.common.world.features.*;
@@ -101,8 +105,8 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> SNOWBELL = BLOCKS.register("snowbell", () -> new SnowbellBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> ARTICHOKE = BLOCKS.register("artichoke", () -> new ArtichokeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT).sound(SoundType.LILY_PAD)));
     public static final RegistryObject<Block> MANDRAKE = BLOCKS.register("mandrake", () -> new MandrakeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
-    public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
-    public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
+    public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlockAbstract(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
+    public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlockAbstract(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
     public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> GARLIC = BLOCKS.register("garlic", () -> new GarlicBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));

@@ -21,9 +21,9 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.common.blocks.BloodPoppyBlock;
-import com.favouriteless.enchanted.common.capabilities.player.IPlayerCapability;
-import com.favouriteless.enchanted.common.capabilities.player.PlayerCapabilityManager;
+import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
+import com.favouriteless.enchanted.api.capabilities.bed.IBedPlayerCapability;
+import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
@@ -37,6 +37,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SPlaySoundEffectPacket;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -93,7 +94,7 @@ public class TaglockItem extends Item {
                     tileEntity = world.getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
                 }
                 if (tileEntity == null) return ActionResultType.FAIL;
-                IPlayerCapability playerCapability = tileEntity.getCapability(PlayerCapabilityManager.INSTANCE).orElse(null);
+                IBedPlayerCapability playerCapability = tileEntity.getCapability(BedPlayerCapabilityManager.INSTANCE).orElse(null);
 
                 if (playerCapability.getValue() != null) {
                     fillTaglockEntity(context.getPlayer(), context.getItemInHand(), world.getPlayerByUUID(playerCapability.getValue()));
@@ -127,23 +128,27 @@ public class TaglockItem extends Item {
         fillTaglock(player, stack, entity.getUUID(), entity.getDisplayName().getString());
     }
 
-    public void fillTaglock(PlayerEntity player, ItemStack stack, UUID uuid, String name) {
-        ItemStack newStack = new ItemStack(EnchantedItems.TAGLOCK_FILLED.get(), 1);
+    public void fillTaglock(PlayerEntity pPlayer, ItemStack stack, UUID uuid, String name) {
+        if(pPlayer instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity)pPlayer;
+            ItemStack newStack = new ItemStack(EnchantedItems.TAGLOCK_FILLED.get(), 1);
 
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putUUID("entity", uuid);
-        nbt.putString("entityName", name);
-        newStack.setTag(nbt);
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putUUID("entity", uuid);
+            nbt.putString("entityName", name);
+            newStack.setTag(nbt);
 
-        if(!player.inventory.add(newStack)) {
-            ItemEntity itemEntity = new ItemEntity(player.level, player.getX(), player.getY(0.5), player.getZ(), newStack);
-            itemEntity.setNoPickUpDelay();
-            itemEntity.setOwner(player.getUUID());
-            player.level.addFreshEntity(itemEntity);
+            if (!player.inventory.add(newStack)) {
+                ItemEntity itemEntity = new ItemEntity(player.level, player.getX(), player.getY(0.5), player.getZ(), newStack);
+                itemEntity.setNoPickUpDelay();
+                itemEntity.setOwner(player.getUUID());
+                player.level.addFreshEntity(itemEntity);
+            }
+
+            // Send sound packet to player
+            player.connection.send(new SPlaySoundEffectPacket(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F));
+            stack.shrink(1);
         }
-
-        if(player.level.isClientSide) player.level.playSound(player, player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0F, 1.0F);
-        stack.shrink(1);
     }
 
     private boolean facingAway(PlayerEntity source, PlayerEntity target){

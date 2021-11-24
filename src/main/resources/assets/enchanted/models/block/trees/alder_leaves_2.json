@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube_directional",
+  "textures": {
+    "down": "enchanted:block/trees/alder_leaves_0",
+    "up": "enchanted:block/trees/alder_leaves_3",
+    "north": "enchanted:block/trees/alder_leaves_2",
+    "south": "enchanted:block/trees/alder_leaves_0",
+    "east": "enchanted:block/trees/alder_leaves_1",
+    "west": "enchanted:block/trees/alder_leaves_0"
+  }
+}

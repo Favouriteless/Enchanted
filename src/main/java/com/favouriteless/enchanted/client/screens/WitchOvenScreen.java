@@ -43,15 +43,15 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/witch_oven.png");
 
     // some [x,y] coordinates of graphical elements
-    public static final int COOK_BAR_XPOS = 79;
-    public static final int COOK_BAR_YPOS = 16;
+    public static final int COOK_BAR_XPOS = 76;
+    public static final int COOK_BAR_YPOS = 19;
     public static final int COOK_BAR_ICON_U = 176;
     public static final int COOK_BAR_ICON_V = 14;
     public static final int COOK_BAR_WIDTH = 24;
     public static final int COOK_BAR_HEIGHT = 17;
 
-    public static final int FLAME_XPOS = 83;
-    public static final int FLAME_YPOS = 36;
+    public static final int FLAME_XPOS = 80;
+    public static final int FLAME_YPOS = 33;
     public static final int FLAME_ICON_U = 176;
     public static final int FLAME_ICON_V = 12;
     public static final int FLAME_SIZE = 14;
@@ -61,8 +61,8 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
         this.container = container;
 
         // Should match the size of the texture!
-        imageWidth = 176;
-        imageHeight = 166;
+        this.imageWidth = 176;
+        this.imageHeight = 166;
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
@@ -102,14 +102,7 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
 
     @Override
     protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.renderLabels(matrixStack, mouseX, mouseY);
-        final int LABEL_XPOS = 58;
-        final int LABEL_YPOS = 5;
-        font.draw(matrixStack, title.getContents(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
-    }
-
-    // Returns true if the given x,y coordinates are within the given rectangle
-    public static boolean isInRect(int x, int y, int xSize, int ySize, int mouseX, int mouseY){
-        return ((mouseX >= x && mouseX <= x+xSize) && (mouseY >= y && mouseY <= y+ySize));
+        this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
+        this.font.draw(matrixStack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
 }

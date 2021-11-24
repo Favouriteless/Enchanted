@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "enchanted:block/trees/alder_leaves"
+    "all": "enchanted:block/trees/alder_leaves_0"
   }
 }

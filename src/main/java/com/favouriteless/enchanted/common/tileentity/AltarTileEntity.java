@@ -29,7 +29,7 @@ import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
-import com.favouriteless.enchanted.core.util.reloadlisteners.EnchantedData;
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;

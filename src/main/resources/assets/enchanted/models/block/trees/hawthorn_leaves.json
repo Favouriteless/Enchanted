@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "enchanted:block/trees/hawthorn_leaves"
+    "all": "enchanted:block/trees/hawthorn_leaves_1"
   }
 }

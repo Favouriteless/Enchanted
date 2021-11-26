@@ -24,20 +24,24 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.common.blocks.WitchCauldronBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.recipes.distillery.DistilleryRecipe;
 import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronRecipe;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -64,8 +68,14 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private final IItemHandlerModifiable items = new InvWrapper(this);
     private final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
 
-    private static final int WARMING_MAX = 60;
+    private static final int WARMING_MAX = 80;
+    private static final int COOK_TIME = 160;
+
     private int warmingUp = 0;
+    private int cookProgress = 0;
+    private boolean isFailed;
+
+    private ItemStack result = ItemStack.EMPTY;
     private WitchCauldronRecipe currentRecipe;
 
     public WitchCauldronTileEntity() {
@@ -74,9 +84,63 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     @Override
     public void tick() {
-        if (level != null) {
-            BlockState state = level.getBlockState(worldPosition);
+        if (level != null && !level.isClientSide && !isFailed && result == ItemStack.EMPTY) { // Not failed and hasn't finished
+            BlockState stateBelow = level.getBlockState(worldPosition.below());
+
+            if(providesHeat(stateBelow)) {
+
+                if (warmingUp < WARMING_MAX) { // Cauldron is still warming up
+                    warmingUp = (tank.getFluidAmount() == tank.getCapacity()) ? warmingUp + 1 : 0;
+                }
+                if(currentRecipe != null) {
+                    if (cookProgress < COOK_TIME) { // Cauldron is currently cooking
+                        cookProgress++;
+                    } else { // Cauldron has finished cooking
+                        result = currentRecipe.getResultItem().copy();
+                        inventoryContents.clear();
+                    }
+                }
+            }
+            else if(cookProgress != 0) {
+                setFailed();
+            }
+            updateBlock();
         }
+    }
+
+    private void setFailed() {
+        isFailed = true;
+        cookProgress = 0;
+        result = ItemStack.EMPTY;
+    }
+
+    public void takeContents(PlayerEntity player) {
+        if(player != null && level != null && currentRecipe != null) {
+            ItemEntity itemEntity = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), result.copy());
+            itemEntity.setNoPickUpDelay();
+            level.addFreshEntity(itemEntity);
+            resetValues();
+        }
+    }
+
+    public void takeFailedContents(PlayerEntity player, ItemStack stack) {
+        if(player != null && level != null) {
+            resetValues();
+            stack.shrink(1);
+            ItemEntity itemEntity = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), new ItemStack(Items.WATER_BUCKET, 1));
+            itemEntity.setNoPickUpDelay();
+            level.addFreshEntity(itemEntity);
+        }
+    }
+
+    private void resetValues() {
+        inventoryContents.clear();
+        setWater(0);
+        isFailed = false;
+        result = ItemStack.EMPTY;
+        cookProgress = 0;
+        warmingUp = 0;
+        currentRecipe = null;
     }
 
     public void addItem(ItemEntity itemEntity) {
@@ -107,16 +171,17 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                     }
                 }
             }
+            matchRecipe();
         }
     }
 
-    public boolean checkInventoryEmpty() {
+    private boolean checkInventoryEmpty() {
         for(ItemStack stack : inventoryContents)
             if(stack != ItemStack.EMPTY) return false;
         return true;
     }
 
-    public boolean tryAddNewItem(ItemStack itemIn) {
+    private boolean tryAddNewItem(ItemStack itemIn) {
         for(int i = 0; i < inventoryContents.size(); i++) {
             if(inventoryContents.get(i) == ItemStack.EMPTY) {
                 inventoryContents.set(i, itemIn);
@@ -124,10 +189,6 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             }
         }
         return false;
-    }
-
-    private void clearItems() {
-        inventoryContents.clear();
     }
 
     public boolean addWater(int amount) {
@@ -149,15 +210,44 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private void updateBlock() {
         if(level != null && !level.isClientSide) {
             BlockState currentState = level.getBlockState(worldPosition);
+
+            int cookState = 0;
+            if(isFailed)
+                cookState = 3;
+            else if(result != ItemStack.EMPTY)
+                cookState = 2;
+            else if(cookProgress > 0)
+                cookState = 1;
+
+
             BlockState newState = EnchantedBlocks.WITCH_CAULDRON.get().defaultBlockState()
                     .setValue(WitchCauldronBlock.LEVEL, (int)Math.floor(tank.getFluidAmount() / 1000.0D))
-                    .setValue(WitchCauldronBlock.HOT, warmingUp == WARMING_MAX);
+                    .setValue(WitchCauldronBlock.HOT, warmingUp == WARMING_MAX)
+                    .setValue(WitchCauldronBlock.COOKSTATE, cookState);
 
             if(!currentState.equals(newState)) level.setBlockAndUpdate(worldPosition, newState);
         }
     }
 
-    public boolean providesHeat(BlockState state){
+    private void matchRecipe() {
+        if (level != null) {
+            WitchCauldronRecipe newRecipe = level.getRecipeManager()
+                    .getRecipes()
+                    .stream()
+                    .filter(recipe -> recipe instanceof WitchCauldronRecipe)
+                    .map(recipe -> (WitchCauldronRecipe)recipe)
+                    .filter(recipe -> recipe.matches(this, level))
+                    .findFirst()
+                    .orElse(null);
+
+            if(newRecipe != currentRecipe) {
+                currentRecipe = newRecipe;
+                cookProgress = 0;
+            }
+        }
+    }
+
+    public static boolean providesHeat(BlockState state){
         return  state.getBlock() == Blocks.FIRE ||
                 state.getBlock() == Blocks.SOUL_FIRE ||
                 state.getBlock() == Blocks.CAMPFIRE && state.getValue(CampfireBlock.LIT) ||
@@ -168,6 +258,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putInt("waterAmount", tank.getFluidAmount());
+        nbt.putInt("warmingUp", warmingUp);
         ItemStackHelper.saveAllItems(nbt, inventoryContents);
         return super.save(nbt);
     }
@@ -176,6 +267,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public void load(BlockState state, CompoundNBT nbt) {
         super.load(state, nbt);
         setWater(nbt.getInt("waterAmount"));
+        warmingUp = nbt.getInt("warmingUp");
         ItemStackHelper.loadAllItems(nbt, inventoryContents);
     }
 

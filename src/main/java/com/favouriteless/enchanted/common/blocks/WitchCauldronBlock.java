@@ -26,6 +26,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
@@ -47,7 +48,7 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
     public static final IntegerProperty LEVEL = CauldronBlock.LEVEL;
     public static final BooleanProperty HOT = BooleanProperty.create("hot");
-    public static final IntegerProperty COOKSTATE = IntegerProperty.create("cookstate", 0, 3); // 0 = empty, 1 = cooking, 2 = succeeded, 3 = no recipe
+    public static final IntegerProperty COOKSTATE = IntegerProperty.create("cookstate", 0, 3); // 0 = no recipe, 1 = cooking, 2 = succeeded, 3 = failed
 
     public WitchCauldronBlock(Properties properties) {
         super(properties);
@@ -56,15 +57,28 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if(player.getItemInHand(hand).getItem() == Items.WATER_BUCKET) {
-            TileEntity te = world.getBlockEntity(pos);
-            if(te instanceof WitchCauldronTileEntity && !world.isClientSide) {
-                if(((WitchCauldronTileEntity)te).addWater(FluidAttributes.BUCKET_VOLUME)) {
-                    world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    if(!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
-                }
+        TileEntity te = world.getBlockEntity(pos);
+        ItemStack stack = player.getItemInHand(hand);
+        if(te instanceof WitchCauldronTileEntity) {
+            WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
+
+            if(state.getValue(COOKSTATE) == 2) {
+                cauldron.takeContents(player);
+                return ActionResultType.SUCCESS;
             }
-            return ActionResultType.SUCCESS;
+            else if(state.getValue(COOKSTATE) == 3 && stack.getItem() == Items.BUCKET) {
+                cauldron.takeFailedContents(player, stack);
+                return ActionResultType.SUCCESS;
+            }
+            else if (stack.getItem() == Items.WATER_BUCKET) {
+                if (!world.isClientSide) {
+                    if (cauldron.addWater(FluidAttributes.BUCKET_VOLUME)) {
+                        world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        if (!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
+                    }
+                }
+                return ActionResultType.SUCCESS;
+            }
         }
         return ActionResultType.FAIL;
     }
@@ -77,12 +91,13 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL);
+        builder.add(LEVEL, HOT, COOKSTATE);
     }
 
     @Override
     public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(!world.isClientSide && entity instanceof ItemEntity) {
+        if(!world.isClientSide && entity instanceof ItemEntity // Valid item on server
+                && (state.getValue(COOKSTATE) == 0 || state.getValue(COOKSTATE) == 1)) { // Cauldron not finished
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof WitchCauldronTileEntity) {
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);

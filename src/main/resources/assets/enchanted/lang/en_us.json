@@ -1,9 +1,4 @@
 {
-    "item.enchanted.emerald_helmet": "Emerald Helmet",
-    "item.enchanted.emerald_chestplate": "Emerald Chestplate",
-    "item.enchanted.emerald_leggings": "Emerald Leggings",
-    "item.enchanted.emerald_boots": "Emerald Boots",
-
     "item.enchanted.chalk_gold": "Golden Chalk",
     "item.enchanted.chalk_white": "White Chalk",
     "item.enchanted.chalk_red": "Red Chalk",
@@ -58,10 +53,6 @@
     "item.enchanted.garlic": "Garlic",
     "block.enchanted.blood_poppy": "Blood Poppy",
 
-    "block.enchanted.witch_oven": "Witches Oven",
-    "block.enchanted.fume_funnel": "Fume Funnel",
-    "block.enchanted.fume_funnel_filtered": "Filtered Fume Funnel",
-    "block.enchanted.distillery": "Distillery",
     "block.enchanted.rowan_log": "Rowan Log",
     "block.enchanted.rowan_planks": "Rowan Planks",
     "block.enchanted.rowan_leaves": "Rowan Leaves",
@@ -77,11 +68,19 @@
     "block.enchanted.demon_heart": "Demon Heart",
 
     "item.enchanted.mutandis": "Mutandis",
+    "item.enchanted.mutandis_extremis": "Mutandis Extremis",
     "item.enchanted.bone_needle": "Bone Needle",
     "item.enchanted.taglock": "Taglock Kit",
     "item.enchanted.taglock_filled": "Taglock",
+    "item.enchanted.anointing_paste": "Anointing Paste",
+
 	"block.enchanted.altar": "Altar",
-    "container.witch_oven": "Witches Oven",
+    "block.enchanted.witch_oven": "Witch's Oven",
+    "block.enchanted.witch_cauldron": "Witch's Cauldron",
+    "block.enchanted.fume_funnel": "Fume Funnel",
+    "block.enchanted.fume_funnel_filtered": "Filtered Fume Funnel",
+    "block.enchanted.distillery": "Distillery",
+    "container.witch_oven": "Witch's Oven",
     "container.distillery": "Distillery",
 
     "block.enchanted.chalice": "Chalice",
@@ -89,7 +88,5 @@
     "block.enchanted.chalice_filled_milk": "Filled Chalice",
     "block.enchanted.candelabra": "Candelabra",
 
-    "itemGroup.enchanted.main": "Enchanted",
-    "itemGroup.enchanted.ingredients": "Enchanted Ingredients",
-    "itemGroup.enchanted.plants": "Enchanted Plants"
+    "itemGroup.enchanted.main": "Enchanted"
 }

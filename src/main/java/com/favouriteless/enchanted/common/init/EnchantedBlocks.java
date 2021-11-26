@@ -80,6 +80,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> FUME_FUNNEL = BLOCKS.register("fume_funnel", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
     public static final RegistryObject<Block> FUME_FUNNEL_FILTERED = BLOCKS.register("fume_funnel_filtered", () -> new FumeFunnelBlock(AbstractBlock.Properties.copy(FUME_FUNNEL.get())));
     public static final RegistryObject<Block> DISTILLERY = BLOCKS.register("distillery", () -> new DistilleryBlock(AbstractBlock.Properties.copy(WITCH_OVEN.get())));
+    public static final RegistryObject<Block> WITCH_CAULDRON = BLOCKS.register("witch_cauldron", () -> new WitchCauldronBlock(AbstractBlock.Properties.copy(Blocks.CAULDRON).noOcclusion()));
 
     public static final RegistryObject<Block> CHALICE = BLOCKS.register("chalice", () -> new ChaliceBlock(AbstractBlock.Properties.of(Material.STONE).strength(1.0F, 6.0F).noOcclusion(), false));
     public static final RegistryObject<Block> CHALICE_FILLED = BLOCKS.register("chalice_filled", () -> new ChaliceBlock(AbstractBlock.Properties.copy(CHALICE.get()), true));

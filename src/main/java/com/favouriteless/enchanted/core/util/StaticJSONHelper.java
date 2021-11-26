@@ -45,7 +45,7 @@ public class StaticJSONHelper {
         return nonnulllist;
     }
 
-    private static ItemStack stackElementDeserialize(@Nullable JsonElement json) {
+    public static ItemStack stackElementDeserialize(@Nullable JsonElement json) {
         if (json != null && !json.isJsonNull()) {
             if (json.isJsonObject()) {
                 JsonObject jsonObject = json.getAsJsonObject();
@@ -54,14 +54,19 @@ public class StaticJSONHelper {
                 throw new JsonSyntaxException("Expected 1 item");
             }
         } else {
-            throw new JsonSyntaxException("input cannot be null");
+            throw new JsonSyntaxException("JSON cannot be null");
         }
     }
 
     private static ItemStack deserializeItem(JsonObject json) {
         if (json.has("item")) {
             ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "item"))));
-            stack.setCount(Math.max(1, JSONUtils.getAsInt(json, "count")));
+            if(json.has("count")) {
+                stack.setCount(Math.max(1, JSONUtils.getAsInt(json, "count")));
+            }
+            else {
+                stack.setCount(1);
+            }
             return stack;
         } else {
             throw new JsonParseException("A Recipe entry needs an input");

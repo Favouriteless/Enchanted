@@ -48,4 +48,7 @@ public class EnchantedTileEntities {
 
     public static final RegistryObject<TileEntityType<BloodPoppyTileEntity>> BLOOD_POPPY = TILE_ENTITY_TYPES.register("blood_poppy",
             () -> TileEntityType.Builder.of(BloodPoppyTileEntity::new, EnchantedBlocks.BLOOD_POPPY.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<WitchCauldronTileEntity>> WITCH_CAULDRON = TILE_ENTITY_TYPES.register("witch_cauldron",
+            () -> TileEntityType.Builder.of(WitchCauldronTileEntity::new, EnchantedBlocks.WITCH_CAULDRON.get()).build(null));
 }

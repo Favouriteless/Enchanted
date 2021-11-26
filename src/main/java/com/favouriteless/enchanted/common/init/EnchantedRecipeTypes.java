@@ -23,6 +23,8 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.recipes.distillery.DistillerySerializer;
+import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronRecipe;
+import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronSerializer;
 import com.favouriteless.enchanted.common.recipes.witch_oven.WitchOvenRecipe;
 import com.favouriteless.enchanted.common.recipes.witch_oven.WitchOvenSerializer;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -41,10 +43,14 @@ public class EnchantedRecipeTypes {
     public static IRecipeType<WitchOvenRecipe> DISTILLERY;
     public static RegistryObject<DistillerySerializer> DISTILLERY_SERIALIZER = RECIPE_SERIALIZERS.register("distillery", DistillerySerializer::new);
 
+    public static IRecipeType<WitchCauldronRecipe> WITCH_CAULDRON;
+    public static RegistryObject<WitchCauldronSerializer> WITCH_CAULDRON_SERIALIZER = RECIPE_SERIALIZERS.register("witch_cauldron", WitchCauldronSerializer::new);
+
 
     public static void init() {
         WITCH_OVEN = IRecipeType.register("witch_oven");
         DISTILLERY = IRecipeType.register("distillery");
+        WITCH_CAULDRON = IRecipeType.register("witch_cauldron");
     }
 
 }

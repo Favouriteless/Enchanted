@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "enchanted:block/witch_cauldron"
+    },
+    "level=1": {
+      "model": "enchanted:block/chalice"
+    },
+    "level=2": {
+      "model": "enchanted:block/chalice_filled"
+    },
+    "level=3": {
+      "model": "enchanted:block/chalice_filled_milk"
+    }
+  }
+}

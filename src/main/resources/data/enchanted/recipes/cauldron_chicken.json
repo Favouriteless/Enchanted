@@ -1,0 +1,8 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "inputs": [
+    { "item": "minecraft:chicken", "count": 1 }
+  ],
+  "output": { "item": "minecraft:cooked_chicken", "count": 1 },
+  "power": 0
+}

@@ -50,7 +50,7 @@ import java.util.Random;
 
 public class WitchOvenTileEntity extends FurnaceTileEntityBase {
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public WitchOvenTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));
@@ -135,7 +135,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
             ItemStack itemstack1 = recipe.getResultItem();
             ItemStack itemstack2 = this.inventoryContents.get(2);
 
-            if(random.nextDouble() <= getByproductChance()) {
+            if(RANDOM.nextDouble() <= getByproductChance()) {
                 createByproduct();
             }
 
@@ -164,9 +164,9 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
 
         if(currentRecipe != null && !jarStack.isEmpty()) {
             if (outputStack.isEmpty()) {
-                this.inventoryContents.set(4, currentRecipe.getOutput().copy());
+                this.inventoryContents.set(4, currentRecipe.getResultItem().copy());
                 jarStack.shrink(currentRecipe.getJarsNeeded());
-            } else if (outputStack.getItem() == currentRecipe.getOutput().getItem() && outputStack.getCount() < outputStack.getMaxStackSize()) {
+            } else if (outputStack.getItem() == currentRecipe.getResultItem().getItem() && outputStack.getCount() < outputStack.getMaxStackSize()) {
                 outputStack.grow(1);
                 jarStack.shrink(currentRecipe.getJarsNeeded());
             }

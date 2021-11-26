@@ -58,7 +58,7 @@ public class WitchOvenSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>
     @Override
     public void toNetwork(PacketBuffer buffer, WitchOvenRecipe recipe) {
         buffer.writeItem(recipe.getInput());
-        buffer.writeItem(recipe.getOutput());
+        buffer.writeItem(recipe.getResultItem());
         buffer.writeInt(recipe.getJarsNeeded());
     }
 

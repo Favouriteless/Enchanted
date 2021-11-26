@@ -1,0 +1,9 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "inputs": [
+    { "item": "minecraft:nether_wart", "count": 1 },
+    { "item": "enchanted:mutandis", "count": 1 }
+  ],
+  "output": { "item": "enchanted:mutandis_extremis", "count": 1 },
+  "power": 7000
+}

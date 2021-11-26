@@ -23,7 +23,6 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.*;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,6 +37,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> FUME_FUNNEL = ITEMS.register("fume_funnel", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> FUME_FUNNEL_FILTERED = ITEMS.register("fume_funnel_filtered", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL_FILTERED.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> DISTILLERY = ITEMS.register("distillery", () -> new BlockItem(EnchantedBlocks.DISTILLERY.get(), new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WITCH_CAULDRON = ITEMS.register("witch_cauldron", () -> new BlockItem(EnchantedBlocks.WITCH_CAULDRON.get(), new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> CHALICE = ITEMS.register("chalice", () -> new BlockItem(EnchantedBlocks.CHALICE.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CHALICE_FILLED = ITEMS.register("chalice_filled", () -> new BlockItem(EnchantedBlocks.CHALICE_FILLED.get(), new Item.Properties().tab(Enchanted.TAB)));
@@ -78,7 +78,9 @@ public class EnchantedItems {
     public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> BLOOD_POPPY = ITEMS.register("blood_poppy", () -> new BlockItem(EnchantedBlocks.BLOOD_POPPY.get(), new Item.Properties().tab(Enchanted.TAB)));
 
+    public static final RegistryObject<Item> ANOINTING_PASTE = ITEMS.register("anointing_paste", () -> new AnointingPasteItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockItemFilled(new Item.Properties()));
 

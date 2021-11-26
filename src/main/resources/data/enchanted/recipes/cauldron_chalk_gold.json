@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "inputs": [
+    { "item": "enchanted:mandrake_root", "count": 1 },
+    { "item": "minecraft:gold_nugget", "count": 1 },
+    { "item": "enchanted:chalk_white", "count": 1 }
+  ],
+  "output": { "item": "enchanted:chalk_gold", "count": 1 },
+  "power": 3000
+}

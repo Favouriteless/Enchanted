@@ -1,0 +1,8 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "inputs": [
+    { "item": "minecraft:beef", "count": 1 }
+  ],
+  "output": { "item": "minecraft:cooked_beef", "count": 1 },
+  "power": 0
+}

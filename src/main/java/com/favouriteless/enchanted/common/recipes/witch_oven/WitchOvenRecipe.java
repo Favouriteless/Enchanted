@@ -32,12 +32,12 @@ import net.minecraft.world.World;
 
 public class WitchOvenRecipe implements IRecipe<IInventory> {
 
-    private IRecipeType<?> type;
-    private ResourceLocation id;
+    private final IRecipeType<?> type;
+    private final ResourceLocation id;
 
-    private ItemStack ingredient;
-    private ItemStack result;
-    private int jarsNeeded;
+    private final ItemStack ingredient;
+    private final ItemStack result;
+    private final int jarsNeeded;
 
     public WitchOvenRecipe(ResourceLocation id, ItemStack ingredient, ItemStack result, int jarsNeeded) {
         this.type = EnchantedRecipeTypes.WITCH_OVEN;
@@ -53,10 +53,6 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
 
     public ItemStack getInput() {
         return this.ingredient;
-    }
-
-    public ItemStack getOutput() {
-        return this.result;
     }
 
     @Override
@@ -80,7 +76,7 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getResultItem() {
-        return ItemStack.EMPTY;
+        return result;
     }
 
     @Override

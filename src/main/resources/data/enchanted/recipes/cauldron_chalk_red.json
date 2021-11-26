@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "inputs": [
+    { "item": "minecraft:nether_wart", "count": 1 },
+    { "item": "minecraft:blaze_powder", "count": 1 },
+    { "item": "enchanted:chalk_white", "count": 1 }
+  ],
+  "output": { "item": "enchanted:chalk_red", "count": 1 },
+  "power": 0
+}

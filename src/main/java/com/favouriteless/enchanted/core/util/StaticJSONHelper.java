@@ -22,19 +22,18 @@
 package com.favouriteless.enchanted.core.util;
 
 import com.google.gson.*;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
 public class StaticJSONHelper {
 
-    public static NonNullList<ItemStack> readItemList(JsonArray array) {
+    public static NonNullList<ItemStack> readItemStackList(JsonArray array) {
         NonNullList<ItemStack> nonnulllist = NonNullList.create();
 
         for (int i = 0; i < array.size(); ++i) {
@@ -49,7 +48,7 @@ public class StaticJSONHelper {
         if (json != null && !json.isJsonNull()) {
             if (json.isJsonObject()) {
                 JsonObject jsonObject = json.getAsJsonObject();
-                return deserializeItem(jsonObject);
+                return deserializeItemStack(jsonObject);
             } else {
                 throw new JsonSyntaxException("Expected 1 item");
             }
@@ -58,7 +57,7 @@ public class StaticJSONHelper {
         }
     }
 
-    private static ItemStack deserializeItem(JsonObject json) {
+    private static ItemStack deserializeItemStack(JsonObject json) {
         if (json.has("item")) {
             ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "item"))));
             if(json.has("count")) {
@@ -68,6 +67,39 @@ public class StaticJSONHelper {
                 stack.setCount(1);
             }
             return stack;
+        } else {
+            throw new JsonParseException("A Recipe entry needs an input");
+        }
+    }
+
+    public static NonNullList<Item> readItemList(JsonArray array) {
+        NonNullList<Item> nonnulllist = NonNullList.create();
+
+        for (int i = 0; i < array.size(); ++i) {
+            Item item = itemElementDeserialize(array.get(i));
+            nonnulllist.add(item);
+        }
+
+        return nonnulllist;
+    }
+
+    public static Item itemElementDeserialize(@Nullable JsonElement json) {
+        if (json != null && !json.isJsonNull()) {
+            if (json.isJsonObject()) {
+                JsonObject jsonObject = json.getAsJsonObject();
+                return deserializeItem(jsonObject);
+            } else {
+                throw new JsonSyntaxException("Expected 1 item");
+            }
+        } else {
+            throw new JsonSyntaxException("JSON cannot be null");
+        }
+    }
+
+
+    private static Item deserializeItem(JsonObject json) {
+        if (json.has("item")) {
+            return ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "item")));
         } else {
             throw new JsonParseException("A Recipe entry needs an input");
         }

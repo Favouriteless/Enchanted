@@ -1,12 +1,12 @@
 {
   "type": "enchanted:witch_cauldron",
   "inputs": [
-    { "item": "enchanted:mandrake_root", "count": 1 },
-    { "item": "enchanted:tear_of_the_goddess", "count": 1 },
-    { "item": "enchanted:diamond_vapour", "count": 1 },
-    { "item": "minecraft:ender_pearl", "count": 1 },
-    { "item": "minecraft:wheat", "count": 1 },
-    { "item": "enchanted:mutandis", "count": 1 }
+    { "item": "enchanted:mandrake_root" },
+    { "item": "enchanted:tear_of_the_goddess" },
+    { "item": "enchanted:diamond_vapour" },
+    { "item": "minecraft:ender_pearl" },
+    { "item": "minecraft:wheat" },
+    { "item": "enchanted:mutandis" }
   ],
   "output": { "item": "minecraft:nether_wart", "count": 1 },
   "power": 0

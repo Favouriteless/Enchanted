@@ -1,9 +1,9 @@
 {
   "type": "enchanted:witch_cauldron",
   "inputs": [
-    { "item": "enchanted:mandrake_root", "count": 1 },
-    { "item": "enchanted:exhale_of_the_horned_one", "count": 1 },
-    { "item": "minecraft:egg", "count": 1 }
+    { "item": "enchanted:mandrake_root" },
+    { "item": "enchanted:exhale_of_the_horned_one" },
+    { "item": "minecraft:egg" }
   ],
   "output": { "item": "enchanted:mutandis", "count": 6 },
   "power": 0

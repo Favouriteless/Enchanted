@@ -46,13 +46,8 @@ import javax.annotation.Nullable;
 
 public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
-    public static final IntegerProperty LEVEL = CauldronBlock.LEVEL;
-    public static final BooleanProperty HOT = BooleanProperty.create("hot");
-    public static final IntegerProperty COOKSTATE = IntegerProperty.create("cookstate", 0, 3); // 0 = no recipe, 1 = cooking, 2 = succeeded, 3 = failed
-
     public WitchCauldronBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(LEVEL, 0).setValue(HOT, false));
     }
 
     @Override
@@ -62,12 +57,12 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
         if(te instanceof WitchCauldronTileEntity) {
             WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
 
-            if(state.getValue(COOKSTATE) == 2) {
-                cauldron.takeContents(player);
+            if(cauldron.isComplete) {
+                cauldron.takeContents(stack);
                 return ActionResultType.SUCCESS;
             }
-            else if(state.getValue(COOKSTATE) == 3 && stack.getItem() == Items.BUCKET) {
-                cauldron.takeFailedContents(player, stack);
+            else if(stack.getItem() == Items.BUCKET && cauldron.isFailed) {
+                cauldron.takeContents(stack);
                 return ActionResultType.SUCCESS;
             }
             else if (stack.getItem() == Items.WATER_BUCKET) {
@@ -90,18 +85,15 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL, HOT, COOKSTATE);
-    }
-
-    @Override
     public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(!world.isClientSide && entity instanceof ItemEntity // Valid item on server
-                && (state.getValue(COOKSTATE) == 0 || state.getValue(COOKSTATE) == 1)) { // Cauldron not finished
+        if(!world.isClientSide && entity instanceof ItemEntity) {
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof WitchCauldronTileEntity) {
-                world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                ((WitchCauldronTileEntity)tileEntity).addItem((ItemEntity)entity);
+                WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)tileEntity;
+                if(!cauldron.isFailed && cauldron.isFull()) {
+                    world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    cauldron.addItem((ItemEntity) entity);
+                }
             }
         }
     }

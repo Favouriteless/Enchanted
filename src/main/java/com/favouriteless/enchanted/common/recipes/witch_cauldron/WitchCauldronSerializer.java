@@ -23,12 +23,14 @@ package com.favouriteless.enchanted.common.recipes.witch_cauldron;
 
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -38,7 +40,7 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
     @Override
     public WitchCauldronRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-        NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemList(JSONUtils.getAsJsonArray(json, "inputs"));
+        NonNullList<Item> itemsIn = StaticJSONHelper.readItemList(JSONUtils.getAsJsonArray(json, "inputs"));
         ItemStack itemOut = StaticJSONHelper.stackElementDeserialize(JSONUtils.getAsJsonObject(json, "output"));
         int power = JSONUtils.getAsInt(json, "power");
 
@@ -50,9 +52,9 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
     public WitchCauldronRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 
         int inSize = buffer.readInt();
-        NonNullList<ItemStack> itemsIn = NonNullList.create();
+        NonNullList<Item> itemsIn = NonNullList.create();
         for (int x = 0; x < inSize; ++x) {
-            itemsIn.add(buffer.readItem());
+            itemsIn.add(ForgeRegistries.ITEMS.getValue(buffer.readResourceLocation()));
         }
         ItemStack itemOut = buffer.readItem();
         int power = buffer.readInt();
@@ -64,8 +66,8 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
     public void toNetwork(PacketBuffer buffer, WitchCauldronRecipe recipe) {
 
         buffer.writeInt(recipe.getItemsIn().size());
-        for (ItemStack stack : recipe.getItemsIn()) {
-            buffer.writeItem(stack);
+        for (Item item : recipe.getItemsIn()) {
+            buffer.writeResourceLocation(item.getRegistryName());
         }
         buffer.writeItem(recipe.getResultItem());
         buffer.writeInt(recipe.getPower());

@@ -38,8 +38,8 @@ public class DistillerySerializer extends ForgeRegistryEntry<IRecipeSerializer<?
     @Override
     public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-        NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemList(JSONUtils.getAsJsonArray(json, "iteminputs"));
-        NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemList(JSONUtils.getAsJsonArray(json, "itemoutputs"));
+        NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "iteminputs"));
+        NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "itemoutputs"));
         int cookTime = JSONUtils.getAsInt(json, "cookTime", 200);
 
         return new DistilleryRecipe(recipeId, itemsIn, itemsOut, cookTime);

@@ -1,7 +1,7 @@
 {
   "type": "enchanted:witch_cauldron",
   "inputs": [
-    { "item": "minecraft:porkchop", "count": 1 }
+    { "item": "minecraft:porkchop" }
   ],
   "output": { "item": "minecraft:cooked_porkchop", "count": 1 },
   "power": 0

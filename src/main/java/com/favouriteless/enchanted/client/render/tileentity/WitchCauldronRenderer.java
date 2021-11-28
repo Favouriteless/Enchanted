@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.client.render.tileentity;
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -41,11 +42,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileEntity> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
-    private static final int FRAME_TIME = 3;
+    private static final int FRAME_TIME = 2;
+
     private float totalPartialTicks = 0F;
     private float currentFrame = 0;
 
-    private int currentColour = 0x3F76E4;
+    private long timeLastFrame = System.currentTimeMillis();
+
+    private static final float COLOUR_BLEND_MULTIPLIER = 3F;
 
 
     public WitchCauldronRenderer(TileEntityRendererDispatcher dispatcher) {
@@ -53,31 +57,39 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
     }
 
     @Override
-    public void render(WitchCauldronTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, int combinedLight, int combinedOverlay) {
-        totalPartialTicks += partialTicks;
-        if(totalPartialTicks > FRAME_TIME) {
-            totalPartialTicks -= FRAME_TIME;
-            currentFrame++;
-            if(currentFrame > 32) currentFrame = 0;
-        }
+    public void render(WitchCauldronTileEntity cauldron, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, int combinedLight, int combinedOverlay) {
 
-        int waterAmount = tileEntity.getWater();
+        long ticks = Minecraft.getInstance().player.level.getGameTime();
+        if(ticks % FRAME_TIME == 0) currentFrame++;
+        if(currentFrame > 32) currentFrame = 0;
+
+        int targetRed = (cauldron.targetRenderColour >> 16) & 0xFF;
+        int targetGreen = (cauldron.targetRenderColour >> 8) & 0xFF;
+        int targetBlue = (cauldron.targetRenderColour) & 0xFF;
+
+        long timeThisFrame = System.currentTimeMillis();
+        float timePassed = (timeThisFrame - timeLastFrame) / 1000F;
+        cauldron.currentRed += (targetRed - cauldron.currentRed) * COLOUR_BLEND_MULTIPLIER * timePassed;
+        cauldron.currentGreen += (targetGreen - cauldron.currentGreen) * COLOUR_BLEND_MULTIPLIER * timePassed;
+        cauldron.currentBlue += (targetBlue - cauldron.currentBlue) * COLOUR_BLEND_MULTIPLIER * timePassed;
+
+        int waterAmount = cauldron.getWater();
         if(waterAmount > 0) {
 
-            double waterQuadHeight = 0.1875 + (0.15625D * (tileEntity.getWater() / 1000D));
-            currentColour = tileEntity.getRenderColour();
+            double waterQuadHeight = 0.1875 + (0.15625D * (cauldron.getWater() / 1000D));
 
             matrixStack.pushPose();
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
             IVertexBuilder vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
             CauldronQuad.render(matrixStack.last(), vertexBuilder,
-                    (currentColour >> 16) & 0xFF, (currentColour >> 8) & 0xFF, (currentColour) & 0xFF, 160,
+                    cauldron.currentRed, cauldron.currentGreen, cauldron.currentBlue, 160,
                     0F, 1/32F * currentFrame,
                     combinedLight);
 
             matrixStack.popPose();
         }
+        timeLastFrame = timeThisFrame;
     }
 
     public static class CauldronQuad {

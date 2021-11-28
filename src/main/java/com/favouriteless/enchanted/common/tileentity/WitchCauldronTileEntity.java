@@ -23,7 +23,6 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronRecipe;
-import com.google.gson.JsonArray;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
@@ -84,7 +83,10 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private boolean justLoaded = false;
 
     // Only needed client side
-    private int renderColour = 0x3F76E4;
+    public int targetRenderColour = 0x3F76E4;
+    public int currentRed = (targetRenderColour >> 16) & 0xFF;
+    public int currentGreen = (targetRenderColour >> 8) & 0xFF;
+    public int currentBlue = (targetRenderColour) & 0xFF;
 
 
     public WitchCauldronTileEntity() {
@@ -93,31 +95,40 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     @Override
     public void tick() {
-        if(level != null && !level.isClientSide) {
-            if(justLoaded) {
-                matchRecipes();
-            }
-            if (!isFailed && !isComplete) {
-
-                BlockState stateBelow = level.getBlockState(worldPosition.below());
-
-                if (providesHeat(stateBelow) && tank.getFluidAmount() == tank.getCapacity()) { // On top of heat block, cauldron is full
-                    if (warmingUp < WARMING_MAX) {
-                        warmingUp++;
-                    } else if (potentialRecipes.size() == 1 && potentialRecipes.get(0).fullMatch(this, level)) { // Has final recipe
-                        if (cookProgress < COOK_TIME) {
-                            cookProgress++;
-                        } else {
-                            setComplete();
-                        }
-                    }
-                } else {
-                    if (cookProgress != 0)
-                        setFailed(); // Fail if heat or water is lost while cooking
-                    warmingUp = 0;
+        if(level != null) {
+            if (!level.isClientSide) {
+                if (justLoaded) {
+                    matchRecipes();
+                    justLoaded = false;
                 }
+                if (!isFailed && !isComplete) {
+
+                    BlockState stateBelow = level.getBlockState(worldPosition.below());
+
+                    if (providesHeat(stateBelow) && tank.getFluidAmount() == tank.getCapacity()) { // On top of heat block, cauldron is full
+                        if (warmingUp < WARMING_MAX) {
+                            warmingUp++;
+                        } else if (potentialRecipes.size() == 1 && potentialRecipes.get(0).fullMatch(this, level)) { // Has final recipe
+                            if (cookProgress < COOK_TIME) {
+                                cookProgress++;
+                            } else {
+                                setComplete();
+                            }
+                        }
+                    } else {
+                        if (cookProgress != 0)
+                            setFailed(); // Fail if heat or water is lost while cooking
+                        warmingUp = 0;
+                    }
+                }
+                updateBlock();
             }
-            updateBlock();
+            else if(justLoaded) {
+                justLoaded = false;
+                currentRed = (targetRenderColour >> 16) & 0xFF;
+                currentGreen = (targetRenderColour >> 8) & 0xFF;
+                currentBlue = (targetRenderColour) & 0xFF;
+            }
         }
     }
 
@@ -194,10 +205,6 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         return tank.getFluidAmount();
     }
 
-    public int getRenderColour() {
-        return renderColour;
-    }
-
     public boolean isFull() {
         return tank.getFluidAmount() == tank.getCapacity();
     }
@@ -222,28 +229,28 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                 state.getBlock() == Blocks.MAGMA_BLOCK;
     }
 
-    private void recalculateRenderColour() {
+    private void recalculateTargetColour() {
         int invSize = inventoryContents.size();
 
         if(invSize == 0) {
-            renderColour = 0x3F76E4;
+            targetRenderColour = 0x3F76E4;
         }
         else if(isComplete) {
-            renderColour = 0xFF00CC;
+            targetRenderColour = 0xFF00CC;
         }
         else if(isFailed) {
-            renderColour = 0x522609;
+            targetRenderColour = 0x522609;
         }
         else if(cookProgress > 0) {
-            renderColour = 0x6E0909;
+            targetRenderColour = 0x6E0909;
         }
         else {
-            renderColour = 0x2EFF2E;
+            targetRenderColour = 0x2EFF2E;
         }
     }
 
     private void updateBlock() {
-        recalculateRenderColour();
+        recalculateTargetColour();
         if(level != null && !level.isClientSide) {
             BlockState state = level.getBlockState(worldPosition);
             level.sendBlockUpdated(worldPosition, state, state, 2);
@@ -257,7 +264,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", renderColour);
+        nbt.putInt("renderColour", targetRenderColour);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -270,7 +277,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public void load(BlockState state, CompoundNBT nbt) {
         super.load(state, nbt);
         setWater(nbt.getInt("waterAmount"));
-        renderColour = nbt.getInt("renderColour");
+        targetRenderColour = nbt.getInt("renderColour");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
@@ -291,7 +298,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", renderColour);
+        nbt.putInt("renderColour", targetRenderColour);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -303,7 +310,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         CompoundNBT nbt = pkt.getTag();
         setWater(nbt.getInt("waterAmount"));
-        renderColour = nbt.getInt("renderColour");
+        targetRenderColour = nbt.getInt("renderColour");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");

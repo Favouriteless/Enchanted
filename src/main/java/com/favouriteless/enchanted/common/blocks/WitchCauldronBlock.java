@@ -65,6 +65,15 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
                 cauldron.takeContents(stack);
                 return ActionResultType.SUCCESS;
             }
+            else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {
+                if (!world.isClientSide) {
+                    if (cauldron.removeWater(FluidAttributes.BUCKET_VOLUME)) {
+                        world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        if (!player.isCreative()) player.setItemInHand(hand, Items.WATER_BUCKET.getDefaultInstance());
+                    }
+                }
+                return ActionResultType.SUCCESS;
+            }
             else if (stack.getItem() == Items.WATER_BUCKET) {
                 if (!world.isClientSide) {
                     if (cauldron.addWater(FluidAttributes.BUCKET_VOLUME)) {
@@ -90,7 +99,7 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof WitchCauldronTileEntity) {
                 WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)tileEntity;
-                if(!cauldron.isFailed && cauldron.isFull()) {
+                if(!cauldron.isFailed && cauldron.isFull() && cauldron.isHot()) {
                     world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     cauldron.addItem((ItemEntity) entity);
                 }
@@ -100,7 +109,7 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
     @Override
     public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
-        return VoxelShapes.box(0.1D, 0, 0.1D, 0.9D, 0.9D, 0.9D);
+        return VoxelShapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
     }
 }
 

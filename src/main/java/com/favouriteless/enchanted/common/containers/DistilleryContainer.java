@@ -75,7 +75,7 @@ public class DistilleryContainer extends FurnaceContainerBase {
             ItemStack slotItem = slot.getItem();
             itemstack = slotItem.copy();
 
-            if (index <= 4) { // If container slot
+            if (index <= 6) { // If container slot
                 if (!this.moveItemStackTo(slotItem, 5, 41, true)) {
                     return ItemStack.EMPTY;
                 }

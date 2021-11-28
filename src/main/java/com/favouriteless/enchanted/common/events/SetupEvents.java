@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
@@ -32,6 +33,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -54,6 +56,8 @@ public class SetupEvents {
         
         EnchantedBlocks.initRender();
         EnchantedEntityTypes.registerEntityRenderers();
+
+        ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
     }
 
     @SubscribeEvent

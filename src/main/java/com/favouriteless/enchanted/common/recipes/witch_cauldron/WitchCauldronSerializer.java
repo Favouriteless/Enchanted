@@ -43,8 +43,10 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         NonNullList<Item> itemsIn = StaticJSONHelper.readItemList(JSONUtils.getAsJsonArray(json, "inputs"));
         ItemStack itemOut = StaticJSONHelper.stackElementDeserialize(JSONUtils.getAsJsonObject(json, "output"));
         int power = JSONUtils.getAsInt(json, "power");
+        int cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
+        int finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
 
-        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power);
+        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
 
     @Nullable
@@ -58,8 +60,10 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         }
         ItemStack itemOut = buffer.readItem();
         int power = buffer.readInt();
+        int cookingColour = buffer.readInt();
+        int finalColour = buffer.readInt();
 
-        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power);
+        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
 
     @Override
@@ -71,6 +75,8 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         }
         buffer.writeItem(recipe.getResultItem());
         buffer.writeInt(recipe.getPower());
+        buffer.writeInt(recipe.getCookingColour());
+        buffer.writeInt(recipe.getFinalColour());
 
     }
 

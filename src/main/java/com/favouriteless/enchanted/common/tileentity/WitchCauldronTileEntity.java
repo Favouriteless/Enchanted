@@ -60,6 +60,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class WitchCauldronTileEntity extends LockableLootTileEntity implements ITickableTileEntity {
@@ -71,7 +72,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private final IItemHandlerModifiable items = new InvWrapper(this);
     private final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
 
-    private static final int WARMING_MAX = 80;
+    private static final int WARMING_MAX = 20;
     private static final int COOK_TIME = 160;
 
     private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
@@ -82,11 +83,13 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     private boolean justLoaded = false;
 
-    // Only needed client side
+    // Only needed client side (rendering)
+    private static final Random RANDOM = new Random();
     public int targetRenderColour = 0x3F76E4;
     public int currentRed = (targetRenderColour >> 16) & 0xFF;
     public int currentGreen = (targetRenderColour >> 8) & 0xFF;
     public int currentBlue = (targetRenderColour) & 0xFF;
+    public long timeLastFrame = System.currentTimeMillis();
 
 
     public WitchCauldronTileEntity() {
@@ -111,6 +114,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                         } else if (potentialRecipes.size() == 1 && potentialRecipes.get(0).fullMatch(this, level)) { // Has final recipe
                             if (cookProgress < COOK_TIME) {
                                 cookProgress++;
+                                recalculateTargetColour();
                             } else {
                                 setComplete();
                             }
@@ -135,11 +139,13 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private void setFailed() {
         resetValues();
         isFailed = true;
+        recalculateTargetColour();
     }
 
     private void setComplete() {
         resetValues();
         isComplete = true;
+        recalculateTargetColour();
     }
 
     public void takeContents(ItemStack stack) {
@@ -152,6 +158,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             potentialRecipes.clear();
             resetValues();
             setWater(0);
+            recalculateTargetColour();
             updateBlock();
         }
     }
@@ -170,6 +177,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             if(potentialRecipes.isEmpty()) {
                 setFailed();
             }
+            recalculateTargetColour();
             updateBlock();
         }
     }
@@ -230,27 +238,27 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     }
 
     private void recalculateTargetColour() {
-        int invSize = inventoryContents.size();
-
-        if(invSize == 0) {
+        if(inventoryContents.isEmpty()) {
             targetRenderColour = 0x3F76E4;
         }
-        else if(isComplete) {
-            targetRenderColour = 0xFF00CC;
+        else if(isComplete && !potentialRecipes.isEmpty()) {
+            targetRenderColour = potentialRecipes.get(0).getFinalColour();
         }
         else if(isFailed) {
-            targetRenderColour = 0x522609;
+            targetRenderColour = 0x96642F;
         }
-        else if(cookProgress > 0) {
-            targetRenderColour = 0x6E0909;
+        else if(cookProgress > 0 && !potentialRecipes.isEmpty()) {
+            targetRenderColour = potentialRecipes.get(0).getCookingColour();
         }
         else {
-            targetRenderColour = 0x2EFF2E;
+            int red = RANDOM.nextInt(80);
+            int green = RANDOM.nextInt(80);
+            int blue = RANDOM.nextInt(80);
+            targetRenderColour = 0xFF000000 | (red << 16) & 0x00FF0000 | (green << 8) & 0x0000FF00 | blue & 0x000000FF;
         }
     }
 
     private void updateBlock() {
-        recalculateTargetColour();
         if(level != null && !level.isClientSide) {
             BlockState state = level.getBlockState(worldPosition);
             level.sendBlockUpdated(worldPosition, state, state, 2);

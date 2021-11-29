@@ -6,5 +6,7 @@
     { "item": "minecraft:egg" }
   ],
   "output": { "item": "enchanted:mutandis", "count": 6 },
-  "power": 0
+  "power": 0,
+  "cookingColour": { "red": 26, "green": 71, "blue": 35 },
+  "finalColour": { "red": 62, "green": 128, "blue": 78 }
 }

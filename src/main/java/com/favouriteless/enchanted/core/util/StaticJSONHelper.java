@@ -30,6 +30,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 
 public class StaticJSONHelper {
 
@@ -102,6 +103,18 @@ public class StaticJSONHelper {
             return ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "item")));
         } else {
             throw new JsonParseException("A Recipe entry needs an input");
+        }
+    }
+
+    public static int deserializeColour(JsonObject json) {
+        if(json.has("red") && json.has("green") && json.has("blue")) {
+            int red = JSONUtils.getAsInt(json, "red");
+            int green = JSONUtils.getAsInt(json, "green");
+            int blue = JSONUtils.getAsInt(json, "blue");
+
+            return 0xFF000000 | (red << 16) & 0x00FF0000 | (green << 8) & 0x0000FF00 | blue & 0x000000FF;
+        } else {
+            throw new JsonParseException("Invalid colour in json");
         }
     }
 

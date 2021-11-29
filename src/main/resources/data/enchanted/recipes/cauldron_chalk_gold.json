@@ -6,5 +6,7 @@
     { "item": "enchanted:chalk_white" }
   ],
   "output": { "item": "enchanted:chalk_gold", "count": 1 },
-  "power": 3000
+  "power": 3000,
+  "cookingColour": { "red": 89, "green": 64, "blue": 0 },
+  "finalColour": { "red": 194, "green": 155, "blue": 0 }
 }

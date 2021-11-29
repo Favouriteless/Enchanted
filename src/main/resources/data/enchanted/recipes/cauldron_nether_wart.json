@@ -9,5 +9,7 @@
     { "item": "enchanted:mutandis" }
   ],
   "output": { "item": "minecraft:nether_wart", "count": 1 },
-  "power": 0
+  "power": 0,
+  "cookingColour": { "red": 92, "green": 35, "blue": 0 },
+  "finalColour": { "red": 153, "green": 52, "blue": 0 }
 }

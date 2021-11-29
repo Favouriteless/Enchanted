@@ -41,13 +41,19 @@ public class WitchCauldronRecipe implements IRecipe<IInventory> {
     private final ItemStack itemOut;
     private final int power;
 
-    public WitchCauldronRecipe(ResourceLocation id, NonNullList<Item> itemsIn, ItemStack itemOut, int power) {
+    private final int cookingColour;
+    private final int finalColour;
+
+    public WitchCauldronRecipe(ResourceLocation id, NonNullList<Item> itemsIn, ItemStack itemOut, int power, int cookingColour, int finalColour) {
         this.type = EnchantedRecipeTypes.WITCH_CAULDRON;
         this.id = id;
 
         this.itemsIn = itemsIn;
         this.itemOut = itemOut;
         this.power = power;
+
+        this.cookingColour = cookingColour;
+        this.finalColour = finalColour;
     }
 
     /**
@@ -92,6 +98,14 @@ public class WitchCauldronRecipe implements IRecipe<IInventory> {
 
     public int getPower() {
         return power;
+    }
+
+    public int getCookingColour() {
+        return cookingColour;
+    }
+
+    public int getFinalColour() {
+        return finalColour;
     }
 
     @Override

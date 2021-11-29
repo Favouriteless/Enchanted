@@ -4,5 +4,7 @@
     { "item": "minecraft:porkchop" }
   ],
   "output": { "item": "minecraft:cooked_porkchop", "count": 1 },
-  "power": 0
+  "power": 0,
+  "cookingColour": { "red": 61, "green": 69, "blue": 24 },
+  "finalColour": { "red": 98, "green": 110, "blue": 19 }
 }

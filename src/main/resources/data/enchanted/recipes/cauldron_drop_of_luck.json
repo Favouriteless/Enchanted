@@ -8,5 +8,7 @@
     { "item": "enchanted:mutandis_extremis" }
   ],
   "output": { "item": "enchanted:drop_of_luck", "count": 1 },
-  "power": 7000
+  "power": 7000,
+  "cookingColour": { "red": 0, "green": 69, "blue": 23 },
+  "finalColour": { "red": 0, "green": 117, "blue": 39 }
 }

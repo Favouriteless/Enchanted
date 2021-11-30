@@ -57,6 +57,7 @@ public class Enchanted
 
         EnchantedRecipeTypes.init();
         EnchantedRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
+        EnchantedParticles.PARTICLE_TYPES.register(modEventBus);
         EnchantedEntityTypes.ENTITY_TYPES.register(modEventBus);
         EnchantedBlocks.BLOCKS.register(modEventBus);
         EnchantedItems.ITEMS.register(modEventBus);

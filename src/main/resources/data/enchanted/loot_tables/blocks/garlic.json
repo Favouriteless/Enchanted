@@ -38,30 +38,6 @@
           }
         }
       ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.02
-            }
-          ],
-          "name": "minecraft:poisonous_potato"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "enchanted:garlic",
-          "properties": {
-            "age": "7"
-          }
-        }
-      ]
     }
   ],
   "functions": [

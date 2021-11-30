@@ -21,6 +21,8 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import com.favouriteless.enchanted.client.particles.BoilingParticleData;
+import com.favouriteless.enchanted.client.particles.CauldronBrewParticleData;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronRecipe;
 import net.minecraft.block.BlockState;
@@ -37,12 +39,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -72,7 +76,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private final IItemHandlerModifiable items = new InvWrapper(this);
     private final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
 
-    private static final int WARMING_MAX = 20;
+    private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 160;
 
     private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
@@ -85,6 +89,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     // Only needed client side (rendering)
     private static final Random RANDOM = new Random();
+    public boolean hasItems = false;
     public int targetRenderColour = 0x3F76E4;
     public int currentRed = (targetRenderColour >> 16) & 0xFF;
     public int currentGreen = (targetRenderColour >> 8) & 0xFF;
@@ -127,11 +132,31 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                 }
                 updateBlock();
             }
-            else if(justLoaded) {
-                justLoaded = false;
-                currentRed = (targetRenderColour >> 16) & 0xFF;
-                currentGreen = (targetRenderColour >> 8) & 0xFF;
-                currentBlue = (targetRenderColour) & 0xFF;
+            else {
+                if(justLoaded) {
+                    justLoaded = false;
+                    currentRed = (targetRenderColour >> 16) & 0xFF;
+                    currentGreen = (targetRenderColour >> 8) & 0xFF;
+                    currentBlue = (targetRenderColour) & 0xFF;
+                }
+
+                if(warmingUp == WARMING_MAX && RANDOM.nextInt(10) > 2) {
+                    double dx = worldPosition.getX() + 0.25D + (Math.random() * 0.5D);
+                    double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
+                    double dz = worldPosition.getZ() + 0.25D + (Math.random() * 0.5D);
+
+                    level.addParticle(new BoilingParticleData(currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
+                }
+                if(!isFailed && warmingUp == WARMING_MAX && hasItems && RANDOM.nextInt(10) > 6) {
+                    double xOffset = 0.25D + (Math.random() * 0.5D);
+                    double zOffset = 0.25D + (Math.random() * 0.5D);
+                    double dx = worldPosition.getX() + xOffset;
+                    double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
+                    double dz = worldPosition.getZ() + zOffset;
+                    Vector3d velocity = new Vector3d(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+
+                    level.addParticle(new CauldronBrewParticleData(currentRed, currentGreen, currentBlue), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+                }
             }
         }
     }
@@ -152,6 +177,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         if(level != null && !level.isClientSide) {
             ItemEntity itemEntity = new ItemEntity(level, worldPosition.getX()+0.5D, worldPosition.getY()+1, worldPosition.getZ()+0.5D,
                     isFailed ? new ItemStack(Items.WATER_BUCKET) : potentialRecipes.get(0).getResultItem());
+            stack.shrink(1);
             level.addFreshEntity(itemEntity);
             level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             inventoryContents.clear();
@@ -232,6 +258,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public static boolean providesHeat(BlockState state){
         return  state.getBlock() == Blocks.FIRE ||
                 state.getBlock() == Blocks.SOUL_FIRE ||
+                state.getBlock() == Blocks.LAVA ||
                 state.getBlock() == Blocks.CAMPFIRE && state.getValue(CampfireBlock.LIT) ||
                 state.getBlock() == Blocks.SOUL_CAMPFIRE && state.getValue(CampfireBlock.LIT) ||
                 state.getBlock() == Blocks.MAGMA_BLOCK;
@@ -311,6 +338,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
         nbt.putInt("cookProgress", cookProgress);
+        nbt.putBoolean("hasItems", !inventoryContents.isEmpty());
         return new SUpdateTileEntityPacket(worldPosition, -1, nbt);
     }
 
@@ -323,6 +351,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
         cookProgress = nbt.getInt("cookProgress");
+        hasItems = nbt.getBoolean("hasItems");
     }
 
     @Override

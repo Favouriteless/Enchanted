@@ -49,7 +49,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.ToIntFunction;
 
-@Mod.EventBusSubscriber(modid = Enchanted.MOD_ID)
 public class EnchantedBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Enchanted.MOD_ID);
@@ -121,13 +120,6 @@ public class EnchantedBlocks {
     //public static final RegistryObject<Block> DEMON_HEART = BLOCKS.register("demon_heart", DemonHeart::new);
 
     //-------------------------------------------------------- UTILITY FUNCTIONS FOR CREATING BLOCKS --------------------------------------------------------
-
-    private static Boolean ocelotOrParrot(BlockState state, IBlockReader reader, BlockPos pos, EntityType<?> entity) {
-        return entity == EntityType.OCELOT || entity == EntityType.PARROT;
-    }
-    private static boolean never(BlockState state, IBlockReader reader, BlockPos pos) {
-        return false;
-    }
 
     private static ToIntFunction<BlockState> getLightValueLit(int lightValue) {
         return (state) -> state.getValue(BlockStateProperties.LIT) ? lightValue : 0;

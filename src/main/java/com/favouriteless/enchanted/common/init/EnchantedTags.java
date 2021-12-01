@@ -19,10 +19,16 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.api.altar;
+package com.favouriteless.enchanted.common.init;
 
-/**
- * Use this interface to mark a block as having a power consuming tile entity, currently has no functionality.
- */
-public interface IAltarPowerConsumerProvider {
+import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.block.Block;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
+
+public class EnchantedTags {
+
+    public static final Tags.IOptionalNamedTag<Block> POWER_CONSUMER = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "power_consumer"));
+
 }

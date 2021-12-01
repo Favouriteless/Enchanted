@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.observerlib.altar;
 
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import hellfirepvp.observerlib.api.ChangeObserver;
@@ -71,7 +71,7 @@ public class AltarChangeObserver extends ChangeObserver {
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
                     if (altar.posWithinRange(change.getAbsolutePosition(), range)) { // Change is relevant
                         if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
-                            if(change.getNewState().getBlock() instanceof IAltarPowerConsumerProvider) {
+                            if(change.getNewState().getBlock().is(EnchantedTags.POWER_CONSUMER)) {
                                 altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));
                             }
                             altar.removePower(change.getOldState().getBlock());

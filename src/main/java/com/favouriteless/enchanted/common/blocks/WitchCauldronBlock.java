@@ -21,7 +21,6 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -42,7 +41,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nullable;
 
-public class WitchCauldronBlock extends Block implements ITileEntityProvider, IAltarPowerConsumerProvider {
+public class WitchCauldronBlock extends Block implements ITileEntityProvider {
 
     public WitchCauldronBlock(Properties properties) {
         super(properties);

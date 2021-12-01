@@ -9,7 +9,7 @@
   "key":
   {
     "b": { "item": "enchanted:breath_of_the_goddess" },
-    "w": { "item": "minecraft:potion", "nbt": "{Potion:'minecraft:water'}"},
+    "w": { "type":"forge:nbt", "item": "minecraft:potion", "nbt": "{Potion:'minecraft:water'}"},
     "e": { "item": "enchanted:exhale_of_the_horned_one" },
     "s": { "item": "minecraft:stone_bricks" },
     "r": { "item": "enchanted:rowan_log" }

@@ -19,11 +19,10 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.recipes.witch_cauldron;
+package com.favouriteless.enchanted.common.recipes.kettle;
 
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.network.PacketBuffer;
@@ -31,15 +30,14 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<WitchCauldronRecipe> {
+public class KettleSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<KettleRecipe> {
 
     @Override
-    public WitchCauldronRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public KettleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
         NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "inputs"));
         ItemStack itemOut = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
@@ -47,12 +45,12 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         int cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
         int finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
 
-        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
+        return new KettleRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
 
     @Nullable
     @Override
-    public WitchCauldronRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+    public KettleRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 
         int inSize = buffer.readInt();
         NonNullList<ItemStack> itemsIn = NonNullList.create();
@@ -64,11 +62,11 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         int cookingColour = buffer.readInt();
         int finalColour = buffer.readInt();
 
-        return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
+        return new KettleRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
 
     @Override
-    public void toNetwork(PacketBuffer buffer, WitchCauldronRecipe recipe) {
+    public void toNetwork(PacketBuffer buffer, KettleRecipe recipe) {
 
         buffer.writeInt(recipe.getItemsIn().size());
         for (ItemStack item : recipe.getItemsIn()) {

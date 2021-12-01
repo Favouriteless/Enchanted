@@ -21,7 +21,6 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.Block;
@@ -54,7 +53,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class DistilleryBlock extends ContainerBlock implements IAltarPowerConsumerProvider {
+public class DistilleryBlock extends ContainerBlock {
 
     // unfinished models but functionality done
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

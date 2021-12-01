@@ -19,11 +19,10 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.recipes.witch_cauldron;
+package com.favouriteless.enchanted.common.recipes.kettle;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -32,7 +31,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class WitchCauldronRecipe implements IRecipe<IInventory> {
+public class KettleRecipe implements IRecipe<IInventory> {
 
     protected final IRecipeType<?> type;
     protected final ResourceLocation id;
@@ -44,8 +43,8 @@ public class WitchCauldronRecipe implements IRecipe<IInventory> {
     private final int cookingColour;
     private final int finalColour;
 
-    public WitchCauldronRecipe(ResourceLocation id, NonNullList<ItemStack> itemsIn, ItemStack itemOut, int power, int cookingColour, int finalColour) {
-        this.type = EnchantedRecipeTypes.WITCH_CAULDRON;
+    public KettleRecipe(ResourceLocation id, NonNullList<ItemStack> itemsIn, ItemStack itemOut, int power, int cookingColour, int finalColour) {
+        this.type = EnchantedRecipeTypes.KETTLE;
         this.id = id;
 
         this.itemsIn = itemsIn;

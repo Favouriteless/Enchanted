@@ -38,6 +38,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> FUME_FUNNEL_FILTERED = ITEMS.register("fume_funnel_filtered", () -> new BlockItem(EnchantedBlocks.FUME_FUNNEL_FILTERED.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> DISTILLERY = ITEMS.register("distillery", () -> new BlockItem(EnchantedBlocks.DISTILLERY.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> WITCH_CAULDRON = ITEMS.register("witch_cauldron", () -> new BlockItem(EnchantedBlocks.WITCH_CAULDRON.get(), new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> KETTLE = ITEMS.register("kettle", () -> new BlockItem(EnchantedBlocks.KETTLE.get(), new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> CHALICE = ITEMS.register("chalice", () -> new BlockItem(EnchantedBlocks.CHALICE.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CHALICE_FILLED = ITEMS.register("chalice_filled", () -> new BlockItem(EnchantedBlocks.CHALICE_FILLED.get(), new Item.Properties().tab(Enchanted.TAB)));
@@ -122,6 +123,12 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ROWAN_BERRIES = ITEMS.register("rowan_berries", () -> new Item((new Item.Properties()).tab(Enchanted.TAB).food(new Food.Builder().nutrition(3).build())));
     public static final RegistryObject<Item> WOOD_ASH = ITEMS.register("wood_ash", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> FUME_FILTER = ITEMS.register("fume_filter", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WOOL_OF_BAT = ITEMS.register("wool_of_bat", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> TONGUE_OF_DOG = ITEMS.register("tongue_of_dog", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> CREEPER_HEART = ITEMS.register("creeper_heart", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new RedstoneSoupItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> FLYING_OINTMENT = ITEMS.register("flying_ointment", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> MYSTIC_UNGUENT = ITEMS.register("mystic_unguent", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> HAPPENSTANCE_OIL = ITEMS.register("happenstance_oil", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
 
 }

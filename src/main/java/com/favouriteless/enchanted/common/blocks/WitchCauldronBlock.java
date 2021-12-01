@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumerProvider;
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -28,9 +29,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +42,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nullable;
 
-public class WitchCauldronBlock extends Block implements ITileEntityProvider {
+public class WitchCauldronBlock extends Block implements ITileEntityProvider, IAltarPowerConsumerProvider {
 
     public WitchCauldronBlock(Properties properties) {
         super(properties);
@@ -58,11 +56,11 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
             WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
 
             if(cauldron.isComplete) {
-                cauldron.takeContents(stack);
+                cauldron.takeContents();
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.isFailed) {
-                cauldron.takeContents(stack);
+                cauldron.takeContents();
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {

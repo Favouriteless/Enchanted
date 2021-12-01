@@ -55,7 +55,7 @@ public class AltarContainer extends Container {
 
     private static AltarTileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
         Objects.requireNonNull(playerInventory, "Player inventory cannot be null");
-        Objects.requireNonNull(data, "Data cannot be null");
+        Objects.requireNonNull(data, "SimpleColouredData cannot be null");
 
         final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 

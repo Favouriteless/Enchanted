@@ -27,15 +27,18 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class CauldronBrewParticle extends SpriteTexturedParticle {
 
+    private static final Random RANDOM = new Random();
+
     protected CauldronBrewParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = red/255F;
-        this.gCol = green/255F;
-        this.bCol = blue/255F;
+        this.rCol = Math.min((red + RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.gCol = Math.min((green + RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.bCol = Math.min((blue + RANDOM.nextInt(20) - 10)/255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.4F);
         this.lifetime = 200;
@@ -75,7 +78,7 @@ public class CauldronBrewParticle extends SpriteTexturedParticle {
         return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<CauldronBrewParticleData> {
+    public static class Factory implements IParticleFactory<SimpleColouredParticleType.SimpleColouredData> {
 
         private final IAnimatedSprite sprites;
 
@@ -85,7 +88,7 @@ public class CauldronBrewParticle extends SpriteTexturedParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(CauldronBrewParticleData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             CauldronBrewParticle particle = new CauldronBrewParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;

@@ -23,9 +23,9 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
+import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.client.Minecraft;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -40,24 +40,15 @@ public class EnchantedParticles {
 
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<ParticleType<BoilingParticleData>> BOILING = PARTICLE_TYPES.register("boiling", () -> new ParticleType<BoilingParticleData>(false, BoilingParticleData.DESERIALIZER) {
-        @Override
-        public Codec<BoilingParticleData> codec() {
-            return BoilingParticleData.CODEC;
-        }
-    });
-
-    public static final RegistryObject<ParticleType<CauldronBrewParticleData>> CAULDRON_BREW = PARTICLE_TYPES.register("cauldron_brew", () -> new ParticleType<CauldronBrewParticleData>(false, CauldronBrewParticleData.DESERIALIZER) {
-        @Override
-        public Codec<CauldronBrewParticleData> codec() {
-            return CauldronBrewParticleData.CODEC;
-        }
-    });
+    public static final RegistryObject<ParticleType<SimpleColouredData>> BOILING = PARTICLE_TYPES.register("boiling", () -> new SimpleColouredParticleType(false));
+    public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_BREW = PARTICLE_TYPES.register("cauldron_brew", () -> new SimpleColouredParticleType(false));
+    public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_COOK = PARTICLE_TYPES.register("cauldron_cook", () -> new SimpleColouredParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
         Minecraft.getInstance().particleEngine.register(BOILING.get(), BoilingParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CAULDRON_BREW.get(), CauldronBrewParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
     }
 
 }

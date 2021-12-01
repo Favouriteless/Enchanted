@@ -62,7 +62,7 @@ public class BoilingParticle extends SpriteTexturedParticle {
         return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<BoilingParticleData> {
+    public static class Factory implements IParticleFactory<SimpleColouredParticleType.SimpleColouredData> {
 
         private final IAnimatedSprite sprites;
 
@@ -72,7 +72,7 @@ public class BoilingParticle extends SpriteTexturedParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(BoilingParticleData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new BoilingParticle(world, x, y, z, data.getRed(), data.getGreen(), data.getBlue(), sprites);
         }
     }

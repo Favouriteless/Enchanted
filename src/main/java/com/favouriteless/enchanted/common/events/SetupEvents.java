@@ -75,8 +75,4 @@ public class SetupEvents {
     @SubscribeEvent
     public static void createRegistries(RegistryEvent.NewRegistry event) {
     }
-
-    @SubscribeEvent
-    public static void registerParticles(ParticleFactoryRegisterEvent event) {
-    }
 }

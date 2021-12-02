@@ -8,7 +8,7 @@
     { "item": "minecraft:spider_eye" },
     { "item": "enchanted:mandrake_root" }
   ],
-  "output": { "item": "enchanted:happenstance_oil" },
+  "output": { "item": "enchanted:happenstance_oil", "count": 1 },
   "power": 2000,
   "cookingColour": { "red": 24, "green": 48, "blue": 22 },
   "finalColour": { "red": 28, "green": 94, "blue": 22 }

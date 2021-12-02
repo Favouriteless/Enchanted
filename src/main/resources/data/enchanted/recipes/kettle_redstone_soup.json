@@ -8,7 +8,7 @@
     { "item": "enchanted:belladonna_flower" },
     { "item": "enchanted:mandrake_root" }
   ],
-  "output": { "item": "enchanted:redstone_soup" },
+  "output": { "item": "enchanted:redstone_soup", "count": 1 },
   "power": 1000,
   "cookingColour": { "red": 24, "green": 48, "blue": 22 },
   "finalColour": { "red": 28, "green": 94, "blue": 22 }

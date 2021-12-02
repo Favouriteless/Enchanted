@@ -29,8 +29,14 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -49,6 +55,9 @@ import javax.annotation.Nullable;
 
 public class KettleBlock extends Block implements ITileEntityProvider {
 
+    public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
+
     public KettleBlock(Properties properties) {
         super(properties);
     }
@@ -60,7 +69,8 @@ public class KettleBlock extends Block implements ITileEntityProvider {
         if(te instanceof KettleTileEntity) {
             KettleTileEntity kettle = (KettleTileEntity)te;
 
-            if(kettle.isComplete) {
+            if(stack.getItem() == Items.GLASS_BOTTLE && kettle.isComplete) {
+                stack.shrink(1);
                 kettle.takeContents(player);
                 return ActionResultType.SUCCESS;
             }
@@ -114,6 +124,17 @@ public class KettleBlock extends Block implements ITileEntityProvider {
     @Override
     public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
         return VoxelShapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING, TYPE);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext pContext) {
+        return super.getStateForPlacement(pContext);
     }
 }
 

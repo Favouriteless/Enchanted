@@ -69,7 +69,8 @@ public class KettleRecipe implements IRecipe<IInventory> {
         for(int i = 0; i < itemsIn.size() && i < inventory.getContainerSize(); i++) {
             ItemStack itemIn = itemsIn.get(i);
             ItemStack inventoryItem = inventory.getItem(i);
-            if(!(itemIn.sameItem(inventoryItem) && itemIn.getTag().equals(inventoryItem.getTag())))
+
+            if(!ItemStack.matches(itemIn, inventoryItem))
                 return false;
         }
         return true;
@@ -88,7 +89,7 @@ public class KettleRecipe implements IRecipe<IInventory> {
         for(int i = 0; i < itemsIn.size(); i++) {
             ItemStack itemIn = itemsIn.get(i);
             ItemStack inventoryItem = inventory.getItem(i);
-            if(!(itemIn.sameItem(inventoryItem) && itemIn.getTag().equals(inventoryItem.getTag())))
+            if(!ItemStack.matches(itemIn, inventoryItem))
                 return false;
         }
 

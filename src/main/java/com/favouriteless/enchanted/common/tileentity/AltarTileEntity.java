@@ -26,6 +26,7 @@ import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.common.init.EnchantedData;
@@ -171,7 +172,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 for (int y = 0; y < (range+2)*2; y++) {
                     for (int z = 0; z < (range+2)*2; z++) {
                         BlockPos currentPos = startingPos.offset(x, y, z);
-                        if(level.getBlockState(currentPos).getBlock() instanceof IAltarPowerConsumerProvider) {
+                        if(level.getBlockState(currentPos).getBlock().is(EnchantedTags.POWER_CONSUMER)) {
                             addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
                         }
                         else if(posWithinRange(currentPos, range)) {

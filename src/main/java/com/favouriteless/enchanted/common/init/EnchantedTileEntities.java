@@ -51,4 +51,7 @@ public class EnchantedTileEntities {
 
     public static final RegistryObject<TileEntityType<WitchCauldronTileEntity>> WITCH_CAULDRON = TILE_ENTITY_TYPES.register("witch_cauldron",
             () -> TileEntityType.Builder.of(WitchCauldronTileEntity::new, EnchantedBlocks.WITCH_CAULDRON.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<KettleTileEntity>> KETTLE = TILE_ENTITY_TYPES.register("kettle",
+            () -> TileEntityType.Builder.of(KettleTileEntity::new, EnchantedBlocks.KETTLE.get()).build(null));
 }

@@ -70,7 +70,7 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
 
             for(ItemStack stack : getItemsIn()) {
                 for(ItemStack item : items) {
-                    if(item.getItem() == stack.getItem() && item.getCount() >= stack.getCount()) {
+                    if(ItemStack.matches(stack, item)) {
                         requiredItems--;
                         break;
                     }

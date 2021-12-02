@@ -26,7 +26,7 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
-import com.favouriteless.enchanted.common.recipes.witch_cauldron.WitchCauldronRecipe;
+import com.favouriteless.enchanted.common.recipes.kettle.KettleRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -35,14 +35,12 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -70,9 +68,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class WitchCauldronTileEntity extends LockableLootTileEntity implements ITickableTileEntity, IAltarPowerConsumer {
+public class KettleTileEntity extends LockableLootTileEntity implements ITickableTileEntity, IAltarPowerConsumer {
 
-    private final FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*3, (fluid) -> fluid.getFluid() == Fluids.WATER);
+    private final FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME, (fluid) -> fluid.getFluid() == Fluids.WATER);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> tank);
 
     private NonNullList<ItemStack> inventoryContents = NonNullList.create();
@@ -83,7 +81,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private static final int COOK_TIME = 200;
 
     private final List<AltarTileEntity> potentialAltars = new ArrayList<>();
-    private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
+    private List<KettleRecipe> potentialRecipes = new ArrayList<>();
 
     private ItemStack itemOut = ItemStack.EMPTY;
     private int cookProgress = 0;
@@ -103,8 +101,8 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public long timeLastFrame = System.currentTimeMillis();
 
 
-    public WitchCauldronTileEntity() {
-        super(EnchantedTileEntities.WITCH_CAULDRON.get());
+    public KettleTileEntity() {
+        super(EnchantedTileEntities.KETTLE.get());
     }
 
     @Override
@@ -127,7 +125,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                                 cookProgress++;
                                 recalculateTargetColour();
                             } else {
-                                WitchCauldronRecipe recipe = potentialRecipes.get(0);
+                                KettleRecipe recipe = potentialRecipes.get(0);
                                 if(recipe.getPower() <= 0) {
                                     setComplete();
                                 }
@@ -220,10 +218,11 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                 inventoryContents.clear();
                 potentialRecipes.clear();
 
+                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 resetValues();
                 recalculateTargetColour();
             }
-            level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            removeWater(tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount());
             updateBlock();
         }
     }
@@ -240,7 +239,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             matchRecipes();
 
             if (potentialRecipes.isEmpty()) {
-                if(EnchantedConfig.CAULDRON_ITEM_SPOIL.get()) {
+                if(EnchantedConfig.KETTLE_ITEM_SPOIL.get()) {
                     setFailed();
                 }
                 else {
@@ -296,8 +295,8 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             potentialRecipes = level.getRecipeManager()
                     .getRecipes()
                     .stream()
-                    .filter(recipe -> recipe instanceof WitchCauldronRecipe)
-                    .map(recipe -> (WitchCauldronRecipe)recipe)
+                    .filter(recipe -> recipe instanceof KettleRecipe)
+                    .map(recipe -> (KettleRecipe)recipe)
                     .filter(recipe -> recipe.matches(this, level))
                     .collect(Collectors.toList());
         }
@@ -426,7 +425,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.witch_cauldron");
+        return new TranslationTextComponent("container.kettle");
     }
 
     @Override

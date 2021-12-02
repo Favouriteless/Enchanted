@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
+import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -55,18 +56,20 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
             WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
 
             if(cauldron.isComplete) {
-                cauldron.takeContents();
+                cauldron.takeContents(player);
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.isFailed) {
-                cauldron.takeContents();
+                stack.shrink(1);
+                cauldron.takeContents(player);
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {
                 if (!world.isClientSide) {
                     if (cauldron.removeWater(FluidAttributes.BUCKET_VOLUME)) {
                         world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                        if (!player.isCreative()) player.setItemInHand(hand, Items.WATER_BUCKET.getDefaultInstance());
+                        stack.shrink(1);
+                        PlayerInventoryHelper.tryGiveItem(player, new ItemStack(Items.WATER_BUCKET));
                     }
                 }
                 return ActionResultType.SUCCESS;
@@ -97,7 +100,6 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
             if(tileEntity instanceof WitchCauldronTileEntity) {
                 WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)tileEntity;
                 if(!cauldron.isFailed && cauldron.isFull() && cauldron.isHot()) {
-                    world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     cauldron.addItem((ItemEntity) entity);
                 }
             }

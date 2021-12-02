@@ -35,10 +35,24 @@ public class EnchantedConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> ALTAR_RANGE;
     public static final ForgeConfigSpec.ConfigValue<Double> ALTAR_BASE_RECHARGE;
 
+    // Cauldron
+    public static final ForgeConfigSpec.ConfigValue<Boolean> CAULDRON_ITEM_SPOIL;
+
+    // Kettle
+    public static final ForgeConfigSpec.ConfigValue<Boolean> KETTLE_ITEM_SPOIL;
+
     static {
         BUILDER.push("Altar Options");
         ALTAR_RANGE = BUILDER.define("altar_range", 16);
         ALTAR_BASE_RECHARGE = BUILDER.define("altar_recharge_rate", 2.0D);
+        BUILDER.pop();
+
+        BUILDER.push("Cauldron Options");
+        CAULDRON_ITEM_SPOIL = BUILDER.comment("Allow incorrect items to spoil brew").define("cauldron_item_spoil", true);
+        BUILDER.pop();
+
+        BUILDER.push("Kettle Options");
+        KETTLE_ITEM_SPOIL = BUILDER.comment("Allow incorrect items to spoil brew").define("kettle_item_spoil", true);
         BUILDER.pop();
 
         SPEC = BUILDER.build();

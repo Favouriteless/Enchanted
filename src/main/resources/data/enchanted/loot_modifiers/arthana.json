@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance_with_looting",
+      "chance": 0.2,
+      "looting_multiplier": 0.2
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": { "type": "#enchanted:arthana_loot"}
+    }
+  ]
+}

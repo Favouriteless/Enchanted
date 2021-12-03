@@ -91,6 +91,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CHALK_WHITE = ITEMS.register("chalk_white", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_WHITE.get()));
     public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_RED.get()));
     public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_PURPLE.get()));
+    public static final RegistryObject<Item> ARTHANA = ITEMS.register("arthana", () -> new SwordItem(ItemTier.GOLD, 3, -2.4F, (new Item.Properties()).tab(Enchanted.TAB)));
 
 
 
@@ -126,6 +127,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> WOOL_OF_BAT = ITEMS.register("wool_of_bat", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TONGUE_OF_DOG = ITEMS.register("tongue_of_dog", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CREEPER_HEART = ITEMS.register("creeper_heart", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+
     public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new RedstoneSoupItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> FLYING_OINTMENT = ITEMS.register("flying_ointment", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> MYSTIC_UNGUENT = ITEMS.register("mystic_unguent", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));

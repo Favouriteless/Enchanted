@@ -52,7 +52,7 @@ import javax.annotation.Nullable;
 public class KettleBlock extends Block implements ITileEntityProvider {
 
     public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
+    public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 2);
 
     public KettleBlock(Properties properties) {
         super(properties);

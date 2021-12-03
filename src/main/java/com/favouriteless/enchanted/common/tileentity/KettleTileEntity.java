@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.common.blocks.KettleBlock;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.recipes.kettle.KettleRecipe;
@@ -78,7 +79,7 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     private final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
 
     private static final int WARMING_MAX = 80;
-    private static final int COOK_TIME = 200;
+    private static final int COOK_TIME = 160;
 
     private final List<AltarTileEntity> potentialAltars = new ArrayList<>();
     private List<KettleRecipe> potentialRecipes = new ArrayList<>();
@@ -154,27 +155,28 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
                     currentGreen = (targetRenderColour >> 8) & 0xFF;
                     currentBlue = (targetRenderColour) & 0xFF;
                 }
+                double yStart = (level.getBlockState(worldPosition).getValue(KettleBlock.TYPE) == 1) ? 0.1875D : 0.0625D;
 
                 if(warmingUp == WARMING_MAX && RANDOM.nextInt(10) > 2) {
-                    double dx = worldPosition.getX() + 0.25D + (Math.random() * 0.5D);
-                    double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
-                    double dz = worldPosition.getZ() + 0.25D + (Math.random() * 0.5D);
+                    double dx = worldPosition.getX() + 0.3125D + (Math.random() * 0.375D);
+                    double dy = worldPosition.getY() + yStart + (0.25D * (tank.getFluidAmount() / 1000D));
+                    double dz = worldPosition.getZ() + 0.3125D + (Math.random() * 0.375D);
 
                     level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
                 }
                 if(!isFailed) {
-                    if(!isComplete && cookProgress > 0 && cookProgress < COOK_TIME) {
-                        double dx = worldPosition.getX() + 0.5D;
-                        double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
-                        double dz = worldPosition.getZ() + 0.5D;
+                    if(!isComplete && cookProgress > 0 && cookProgress < COOK_TIME && RANDOM.nextInt(10) > 5) {
+                        double dx = worldPosition.getX() + Math.random();
+                        double dy = worldPosition.getY() + Math.random();
+                        double dz = worldPosition.getZ() + Math.random();
 
-                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_COOK.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0.0D, 0.0D, 0.0D);
+                        level.addParticle(new SimpleColouredData(EnchantedParticles.KETTLE_COOK.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
                     }
-                    else if (warmingUp == WARMING_MAX && hasItems && RANDOM.nextInt(10) > 6) {
-                        double xOffset = 0.25D + (Math.random() * 0.5D);
-                        double zOffset = 0.25D + (Math.random() * 0.5D);
+                    else if (warmingUp == WARMING_MAX && hasItems && RANDOM.nextInt(10) > 8) {
+                        double xOffset = 0.3125D + (Math.random() * 0.375D);
+                        double zOffset = 0.3125D + (Math.random() * 0.375D);
                         double dx = worldPosition.getX() + xOffset;
-                        double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
+                        double dy = worldPosition.getY() + yStart + (0.25D * (tank.getFluidAmount() / 1000D));
                         double dz = worldPosition.getZ() + zOffset;
                         Vector3d velocity = new Vector3d(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
 
@@ -222,7 +224,6 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
                 resetValues();
                 recalculateTargetColour();
             }
-            removeWater(tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount());
             updateBlock();
         }
     }
@@ -315,13 +316,13 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
         if(inventoryContents.isEmpty()) {
             targetRenderColour = 0x3F76E4;
         }
-        else if(isComplete && !potentialRecipes.isEmpty()) {
+        else if(isComplete) {
             targetRenderColour = potentialRecipes.get(0).getFinalColour();
         }
         else if(isFailed) {
             targetRenderColour = 0x96642F;
         }
-        else if(cookProgress > 0 && !potentialRecipes.isEmpty()) {
+        else if(!potentialRecipes.isEmpty()) {
             targetRenderColour = potentialRecipes.get(0).getCookingColour();
         }
         else {

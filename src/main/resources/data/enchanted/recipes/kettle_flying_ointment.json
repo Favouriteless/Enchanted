@@ -8,8 +8,8 @@
     { "item": "enchanted:wool_of_bat" },
     { "item": "enchanted:belladonna_flower" }
   ],
-  "output": { "item": "enchanted:redstone_soup", "count": 1 },
+  "output": { "item": "enchanted:flying_ointment", "count": 1 },
   "power": 3000,
-  "cookingColour": { "red": 24, "green": 48, "blue": 22 },
-  "finalColour": { "red": 28, "green": 94, "blue": 22 }
+  "cookingColour": { "red": 112, "green": 102, "blue": 21 },
+  "finalColour": { "red": 219, "green": 199, "blue": 42 }
 }

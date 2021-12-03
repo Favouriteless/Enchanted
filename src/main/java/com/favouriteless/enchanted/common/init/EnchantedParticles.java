@@ -24,7 +24,6 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.*;
-import com.mojang.serialization.Codec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,12 +42,14 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<SimpleColouredData>> BOILING = PARTICLE_TYPES.register("boiling", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_BREW = PARTICLE_TYPES.register("cauldron_brew", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_COOK = PARTICLE_TYPES.register("cauldron_cook", () -> new SimpleColouredParticleType(false));
+    public static final RegistryObject<ParticleType<SimpleColouredData>> KETTLE_COOK = PARTICLE_TYPES.register("kettle_cook", () -> new SimpleColouredParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
         Minecraft.getInstance().particleEngine.register(BOILING.get(), BoilingParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CAULDRON_BREW.get(), CauldronBrewParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(KETTLE_COOK.get(), KettleCookParticle.Factory::new);
     }
 
 }

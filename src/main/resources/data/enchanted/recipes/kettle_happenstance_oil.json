@@ -10,6 +10,6 @@
   ],
   "output": { "item": "enchanted:happenstance_oil", "count": 1 },
   "power": 2000,
-  "cookingColour": { "red": 24, "green": 48, "blue": 22 },
-  "finalColour": { "red": 28, "green": 94, "blue": 22 }
+  "cookingColour": { "red": 50, "green": 15, "blue": 110 },
+  "finalColour": { "red": 84, "green": 26, "blue": 184 }
 }

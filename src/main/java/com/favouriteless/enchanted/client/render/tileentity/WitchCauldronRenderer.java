@@ -72,7 +72,7 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
         int waterAmount = cauldron.getWater();
         if(waterAmount > 0) {
 
-            double waterQuadHeight = 0.1875 + (0.15625D * (cauldron.getWater() / 1000D));
+            double waterQuadHeight = 0.1875 + (0.46875D * (cauldron.getWater() / 3000D));
 
             matrixStack.pushPose();
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);

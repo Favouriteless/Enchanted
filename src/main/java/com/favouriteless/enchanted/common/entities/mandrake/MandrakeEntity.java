@@ -21,10 +21,9 @@
 
 package com.favouriteless.enchanted.common.entities.mandrake;
 
-import net.minecraft.entity.CreatureEntity;
+import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
@@ -41,7 +40,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.EnumSet;
 import java.util.List;
 
 public class MandrakeEntity extends MonsterEntity {
@@ -50,6 +48,10 @@ public class MandrakeEntity extends MonsterEntity {
 
     public MandrakeEntity(EntityType<? extends MonsterEntity> type, World world) {
         super(type, world);
+    }
+
+    public MandrakeEntity(World world) {
+        super(EnchantedEntityTypes.MANDRAKE.get(), world);
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {

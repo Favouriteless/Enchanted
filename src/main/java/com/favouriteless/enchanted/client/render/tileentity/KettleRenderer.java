@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.client.render.tileentity;
 
+import com.favouriteless.enchanted.common.blocks.KettleBlock;
 import com.favouriteless.enchanted.common.tileentity.KettleTileEntity;
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -72,8 +73,8 @@ public class KettleRenderer extends TileEntityRenderer<KettleTileEntity> {
 
         int waterAmount = kettle.getWater();
         if(waterAmount > 0) {
-
-            double waterQuadHeight = 0.1875 + (0.15625D * (kettle.getWater() / 1000D));
+            double startingHeight = (kettle.getLevel().getBlockState(kettle.getBlockPos()).getValue(KettleBlock.TYPE) == 1) ? 0.1875D : 0.0625D;
+            double waterQuadHeight = startingHeight + (0.25D * (kettle.getWater() / 1000D));
 
             matrixStack.pushPose();
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);

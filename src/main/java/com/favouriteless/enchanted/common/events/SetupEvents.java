@@ -22,14 +22,16 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
-import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
+import com.favouriteless.enchanted.client.render.tileentity.KettleRenderer;
+import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
+import com.favouriteless.enchanted.client.screens.AltarScreen;
+import com.favouriteless.enchanted.client.screens.DistilleryScreen;
+import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,6 +60,7 @@ public class SetupEvents {
         EnchantedEntityTypes.registerEntityRenderers();
 
         ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), KettleRenderer::new);
     }
 
     @SubscribeEvent

@@ -23,9 +23,7 @@ package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.tileentity.KettleTileEntity;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,12 +36,10 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -123,7 +119,7 @@ public class KettleBlock extends Block implements ITileEntityProvider {
 
     @Override
     public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
-        return VoxelShapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
+        return (pState.getValue(TYPE) == 1) ? VoxelShapes.box(0.1875, 0.125, 0.1875, 0.8125, 0.5, 0.8125) : VoxelShapes.box(0.1875, 0, 0.1875, 0.8125, 0.375, 0.8125);
     }
 
     @Override
@@ -131,10 +127,42 @@ public class KettleBlock extends Block implements ITileEntityProvider {
         builder.add(FACING, TYPE);
     }
 
+    @Override
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean pIsMoving) {
+        BlockState newState = getKettleState(world, pos, state.getValue(FACING));
+        if(state != newState)
+            world.setBlock(pos, newState, 2);
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext pContext) {
-        return super.getStateForPlacement(pContext);
+        return getKettleState(pContext.getLevel(), pContext.getClickedPos(), pContext.getHorizontalDirection().getOpposite());
     }
+
+    public BlockState getKettleState(World world, BlockPos pos, @Nullable Direction facing) {
+        if(facing == null) facing = Direction.NORTH;
+        int type = 0;
+        Direction left = facing.getCounterClockWise();
+        Direction right = facing.getClockWise();
+
+        if(world.getBlockState(pos.above()).isFaceSturdy(world, pos.above(), Direction.DOWN)) { // Face above is sturdy
+            type = 1;
+        }
+        else if((world.getBlockState(pos.relative(left)).isFaceSturdy(world, pos.relative(left), right, BlockVoxelShape.CENTER)
+                && world.getBlockState(pos.relative(right)).isFaceSturdy(world, pos.relative(right), left, BlockVoxelShape.CENTER))
+                || (world.getBlockState(pos.relative(left)).getBlock() instanceof WallBlock && world.getBlockState(pos.relative(right)).getBlock() instanceof WallBlock)) { // Horizontal perpendicular to place direction is sturdy
+            type = 2;
+        }
+        else if((world.getBlockState(pos.relative(facing)).isFaceSturdy(world, pos.relative(facing), facing.getOpposite(), BlockVoxelShape.CENTER)
+                && world.getBlockState(pos.relative(facing.getOpposite())).isFaceSturdy(world, pos.relative(facing.getOpposite()), facing, BlockVoxelShape.CENTER))
+                || (world.getBlockState(pos.relative(facing)).getBlock() instanceof WallBlock && world.getBlockState(pos.relative(facing.getOpposite())).getBlock() instanceof WallBlock)) { // Horizontal towards place direction is sturdy
+            type = 2;
+            facing = facing.getClockWise();
+        }
+
+        return defaultBlockState().setValue(FACING, facing).setValue(TYPE, type);
+    }
+
 }
 

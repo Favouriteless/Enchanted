@@ -19,13 +19,26 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.init;
+package com.favouriteless.enchanted.common.rites;
 
-public class EnchantedRituals {
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 
-//    public static final DeferredRegister<AbstractRitual> RITUAL_TYPES = DeferredRegister.create(AbstractRitual.class, Enchanted.MOD_ID);
-//
-//    public static final RegistryObject<AbstractRitual> RITE_OF_CHARGING_STONE = RITUAL_TYPES.register("rite_of_charging_stone", RiteOfChargingStone::new);
-//    public static final RegistryObject<AbstractRitual> RITE_OF_TOTAL_ECLIPSE = RITUAL_TYPES.register("rite_of_total_eclipse", RiteOfTotalEclipse::new);
+public abstract class AbstractCreateItemRite extends AbstractRite {
 
+    public AbstractCreateItemRite(int power, int powerTick) {
+        super(power, powerTick);
+    }
+
+    protected void spawnItem(ItemStack stack) {
+        if(world != null && !world.isClientSide) {
+            ItemEntity itemEntity = new ItemEntity(world, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
+            world.addFreshEntity(itemEntity);
+            world.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1.0F, 1.0F);
+
+            spawnParticles();
+        }
+    }
 }

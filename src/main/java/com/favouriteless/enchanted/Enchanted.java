@@ -52,6 +52,7 @@ public class Enchanted
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnchantedConfig.SPEC, "enchanted-common.toml");
         instance = this;
         MinecraftForge.EVENT_BUS.register(this);
+
     }
 
     private void registerAll() {
@@ -66,6 +67,7 @@ public class Enchanted
         EnchantedItems.ITEMS.register(modEventBus);
         EnchantedTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
         EnchantedContainers.CONTAINER_TYPES.register(modEventBus);
+        EnchantedRiteTypes.RITES.register(modEventBus);
     }
 
 

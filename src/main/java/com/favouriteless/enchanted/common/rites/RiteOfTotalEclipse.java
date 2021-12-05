@@ -19,28 +19,36 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rituals;
+package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock.ChalkColour;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.rites.util.CircleSize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 
-public class RitualTemplate extends AbstractRitual {
+public class RiteOfTotalEclipse extends AbstractRite {
 
-    public RitualTemplate() {
-        CIRCLES_REQUIRED = new ChalkColour[] { null, null, null }; // Small, medium, large
-        ITEMS_REQUIRED.put(Items.DIAMOND, 5); // Add item, count required for ritual
-        ENTITIES_REQUIRED.put(EntityType.PIG, 1);  // Add entity, count required for ritual
+    public RiteOfTotalEclipse() {
+        super(3000, 0); // Power, power per tick
+        CIRCLES_REQUIRED.put(CircleSize.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        ITEMS_REQUIRED.put(Items.STONE_AXE, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
     }
 
     @Override
     public void execute() {
         // Do ritual effects here
+        stopExecuting();
     }
 
     @Override
     public void onTick() {
-        // Do tick based ritual effects here
+        // Do tick based ritual stuff here
     }
 
+    @Override
+    public RiteOfTotalEclipse create() {
+        return new RiteOfTotalEclipse();
+    }
 }

@@ -46,15 +46,13 @@ public class GoldChalkBlock extends AbstractChalkBlock {
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
-    {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return EnchantedTileEntities.CHALK_GOLD.get().create();
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
-    {
-        ( (ChalkGoldTileEntity) world.getBlockEntity(pos)).Execute(state, world, pos, player, hand, hit);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ((ChalkGoldTileEntity) world.getBlockEntity(pos)).execute(state, world, pos, player, hand, hit);
         return ActionResultType.SUCCESS;
     }
 

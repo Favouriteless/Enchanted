@@ -30,7 +30,9 @@ import com.favouriteless.enchanted.client.screens.DistilleryScreen;
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
+import com.favouriteless.enchanted.common.rites.AbstractRite;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -40,6 +42,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegistryBuilder;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD)
 public class SetupEvents {
@@ -77,5 +80,12 @@ public class SetupEvents {
 
     @SubscribeEvent
     public static void createRegistries(RegistryEvent.NewRegistry event) {
+        new RegistryBuilder<AbstractRite>()
+                .setName(new ResourceLocation(Enchanted.MOD_ID, "rites"))
+                .setType(AbstractRite.class)
+                .setMaxID(Integer.MAX_VALUE - 1)
+                .disableSaving()
+                .onAdd(((owner, stage, id, obj, oldObj) -> Enchanted.LOGGER.info("Registered rite type: " + obj.getRegistryName())))
+                .create();
     }
 }

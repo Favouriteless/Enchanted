@@ -21,7 +21,9 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.rites.AbstractRite;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -33,11 +35,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEntity {
 
-    private boolean executing = false;
-    private int ticks = 0;
+    private AbstractRite currentRite = null;
 
     public ChalkGoldTileEntity(final TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
@@ -47,22 +49,33 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         this(EnchantedTileEntities.CHALK_GOLD.get());
     }
 
-    public void Execute(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(!executing && !world.isClientSide) {
-            executing = true;
+    public void execute(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if(!world.isClientSide) {
+            if (currentRite == null) {
 
-            world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
+                AbstractRite rite = EnchantedRiteTypes.riteFor(world, pos);
+
+                if (rite != null) {
+                    currentRite = rite.create();
+                    currentRite.setWorld(world);
+                    currentRite.setPos(pos);
+                    currentRite.setCaster(player);
+                    currentRite.start();
+                } else {
+                    world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
+                }
+            }
         }
+    }
+
+    public void clearRite() {
+        this.currentRite = null;
     }
 
     @Override
     public void tick() {
-        if(executing) {
-            ticks++;
-            if(ticks >= 40) {
-                ticks = 0;
-                executing = false;
-            }
+        if(currentRite != null) {
+            currentRite.tick();
         }
     }
 

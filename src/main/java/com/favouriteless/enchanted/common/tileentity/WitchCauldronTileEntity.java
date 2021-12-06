@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
@@ -47,7 +48,9 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -82,7 +85,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 200;
 
-    private final List<AltarTileEntity> potentialAltars = new ArrayList<>();
+    private final List<BlockPos> potentialAltars = new ArrayList<>();
     private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
 
     private ItemStack itemOut = ItemStack.EMPTY;
@@ -128,11 +131,12 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                                 recalculateTargetColour();
                             } else {
                                 WitchCauldronRecipe recipe = potentialRecipes.get(0);
+                                AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
                                 if(recipe.getPower() <= 0) {
                                     setComplete();
                                 }
-                                else if(!potentialAltars.isEmpty() && potentialAltars.get(0).currentPower > recipe.getPower()) {
-                                    potentialAltars.get(0).currentPower -= recipe.getPower();
+                                else if(altar != null && altar.currentPower > recipe.getPower()) {
+                                    altar.currentPower -= recipe.getPower();
                                     setComplete();
                                 }
                                 else {
@@ -359,13 +363,14 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             itemNbt.putInt("count", itemOut.getCount());
             nbt.put("itemOut", itemNbt);
         }
-
+        AltarPowerHelper.savePosTag(potentialAltars, nbt);
         return super.save(nbt);
     }
 
     @Override
     public void load(BlockState state, CompoundNBT nbt) {
         super.load(state, nbt);
+        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
         setWater(nbt.getInt("waterAmount"));
         targetRenderColour = nbt.getInt("renderColour");
         isFailed = nbt.getBoolean("isFailed");
@@ -450,17 +455,17 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     }
 
     @Override
-    public List<AltarTileEntity> getAltars() {
+    public List<BlockPos> getAltarPositions() {
         return potentialAltars;
     }
 
     @Override
-    public void removeAltar(AltarTileEntity altar) {
-        potentialAltars.remove(altar);
+    public void removeAltar(BlockPos altarPos) {
+        potentialAltars.remove(altarPos);
     }
 
     @Override
-    public void addAltar(AltarTileEntity altar) {
-        potentialAltars.add(altar);
+    public void addAltar(BlockPos altarPos) {
+        AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
     }
 }

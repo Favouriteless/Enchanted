@@ -179,7 +179,9 @@ public abstract class FurnaceTileEntityBase extends LockableLootTileEntity imple
         return nbt;
     }
 
-    protected void loadAdditional(CompoundNBT nbt) {}
+    protected void loadAdditional(CompoundNBT nbt) {
+
+    }
 
     protected CompoundNBT saveAdditional(CompoundNBT nbt) {
         return nbt;

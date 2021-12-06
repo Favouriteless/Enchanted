@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
 import com.favouriteless.enchanted.common.recipes.distillery.DistilleryRecipe;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
@@ -29,8 +30,11 @@ import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -41,7 +45,7 @@ import java.util.List;
 public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAltarPowerConsumer {
 
     private DistilleryRecipe currentRecipe;
-    private final List<AltarTileEntity> potentialAltars = new ArrayList<>();
+    private final List<BlockPos> potentialAltars = new ArrayList<>();
 
     public DistilleryTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(7, ItemStack.EMPTY));
@@ -66,17 +70,18 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
         boolean flag = this.isBurning();
         boolean flag1 = false;
 
-        if (!this.level.isClientSide) {
+        if (this.level != null && !this.level.isClientSide) {
             this.matchRecipe();
-            if(this.canDistill(this.currentRecipe) && !potentialAltars.isEmpty()) {
-                AltarTileEntity altar = potentialAltars.get(0);
+            AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+
+            if(this.canDistill(this.currentRecipe) && altar != null) {
                 if(altar.currentPower > 10.0D) {
                     altar.currentPower -= 10.0D;
                     this.burnTime = 1;
                     this.cookTime++;
 
 
-                    if (this.cookTime == this.cookTimeTotal) {
+                    if(this.cookTime == this.cookTimeTotal) {
                         this.cookTime = 0;
                         this.distill(this.currentRecipe);
                     }
@@ -219,36 +224,27 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
     }
 
     @Override
-    public List<AltarTileEntity> getAltars() {
+    protected CompoundNBT saveAdditional(CompoundNBT nbt) {
+        return AltarPowerHelper.savePosTag(potentialAltars, nbt);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundNBT nbt) {
+        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+    }
+
+    @Override
+    public List<BlockPos> getAltarPositions() {
         return potentialAltars;
     }
 
     @Override
-    public void removeAltar(AltarTileEntity altar) {
-        potentialAltars.remove(altar);
+    public void removeAltar(BlockPos altarPos) {
+        potentialAltars.remove(altarPos);
     }
 
-    /**
-     * Adds new altar to the power providers list, sorts by closest first
-     * @param altar
-     */
     @Override
-    public void addAltar(AltarTileEntity altar) {
-        if(potentialAltars.isEmpty()) {
-            potentialAltars.add(altar);
-        }
-        else if(!potentialAltars.contains(altar)) {
-            for (int i = 0; i < potentialAltars.size(); i++) {
-                AltarTileEntity currentAltar = potentialAltars.get(i);
-
-                if (altar.distanceTo(worldPosition) < currentAltar.distanceTo(worldPosition)) {
-                    potentialAltars.add(i, altar);
-                    break;
-                } else if (i == potentialAltars.size() - 1) {
-                    potentialAltars.add(altar);
-                    break;
-                }
-            }
-        }
+    public void addAltar(BlockPos altarPos) {
+        AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
     }
 }

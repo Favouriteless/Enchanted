@@ -256,12 +256,12 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
     public void addConsumer(IAltarPowerConsumer consumer) {
         powerConsumers.add(consumer);
-        consumer.addAltar(this);
+        consumer.addAltar(worldPosition);
     }
 
     public void removeConsumer(IAltarPowerConsumer consumer) {
         powerConsumers.remove(consumer);
-        consumer.removeAltar(this);
+        consumer.removeAltar(worldPosition);
     }
 
     /**
@@ -269,7 +269,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     public void clearConsumers() {
         for(IAltarPowerConsumer consumer : powerConsumers) {
-            consumer.removeAltar(this);
+            consumer.removeAltar(worldPosition);
         }
     }
 

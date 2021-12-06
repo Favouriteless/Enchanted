@@ -21,11 +21,15 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
-import com.favouriteless.enchanted.common.rites.AbstractRite;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.rites.util.RiteManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -35,10 +39,13 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
-public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEntity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEntity, IAltarPowerConsumer {
+
+    private final List<BlockPos> potentialAltars = new ArrayList<>();
     private AbstractRite currentRite = null;
 
     public ChalkGoldTileEntity(final TileEntityType<?> tileEntityTypeIn) {
@@ -60,6 +67,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                     currentRite.setWorld(world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);
+                    RiteManager.addRite(currentRite);
                     currentRite.start();
                 } else {
                     world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
@@ -74,9 +82,31 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void tick() {
-        if(currentRite != null) {
-            currentRite.tick();
-        }
     }
 
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        return AltarPowerHelper.savePosTag(potentialAltars, nbt);
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
+        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+    }
+
+    @Override
+    public List<BlockPos> getAltarPositions() {
+        return potentialAltars;
+    }
+
+    @Override
+    public void removeAltar(BlockPos altarPos) {
+        potentialAltars.remove(altarPos);
+    }
+
+    @Override
+    public void addAltar(BlockPos altarPos) {
+        AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
+    }
 }

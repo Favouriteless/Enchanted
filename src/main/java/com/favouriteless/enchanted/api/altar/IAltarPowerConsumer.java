@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.api.altar;
 
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
@@ -30,8 +30,8 @@ import java.util.List;
  */
 public interface IAltarPowerConsumer {
 
-    List<AltarTileEntity> getAltars();
-    void removeAltar(AltarTileEntity altar);
-    void addAltar(AltarTileEntity altar);
+    List<BlockPos> getAltarPositions();
+    void removeAltar(BlockPos altarPos);
+    void addAltar(BlockPos altarPos);
 
 }

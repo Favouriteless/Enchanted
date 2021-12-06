@@ -21,11 +21,14 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.server.ServerWorld;
 
 public class RiteOfTotalEclipse extends AbstractRite {
 
@@ -39,6 +42,10 @@ public class RiteOfTotalEclipse extends AbstractRite {
     @Override
     public void execute() {
         // Do ritual effects here
+        if(!world.isClientSide) {
+            ((ServerWorld) world).setDayTime(18000);
+            world.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1.0F, 1.0F);
+        }
         stopExecuting();
     }
 

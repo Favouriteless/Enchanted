@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;

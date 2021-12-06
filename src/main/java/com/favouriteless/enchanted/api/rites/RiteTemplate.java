@@ -22,7 +22,6 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.rites.AbstractRite;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;

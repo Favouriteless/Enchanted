@@ -19,13 +19,16 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites;
+package com.favouriteless.enchanted.api.rites;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 
+/**
+ * Simple AbstractRite implementation for creating a single item
+ */
 public abstract class AbstractCreateItemRite extends AbstractRite {
 
     public AbstractCreateItemRite(int power, int powerTick) {

@@ -19,9 +19,12 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites;
+package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.RiteManager;
+import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -30,13 +33,17 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -67,13 +74,85 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
     private boolean isExecuting = false;
     private int ticks = 0;
 
+    public boolean isRemoved = false;
+
     public AbstractRite(int power, int powerTick) {
         this.POWER = power;
         this.POWER_TICK = powerTick;
     }
 
+    public CompoundNBT save() {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("dimension", world.dimension().location().toString());
+        nbt.putInt("x", pos.getX());
+        nbt.putInt("y", pos.getY());
+        nbt.putInt("z", pos.getZ());
+        nbt.putUUID("caster", casterUUID);
+        nbt.putUUID("target", targetUUID);
+        nbt.putInt("ticks", ticks);
+
+        return saveAdditional(nbt);
+    }
+
+    public void load(CompoundNBT nbt, World world) {
+        setWorld(world.getServer().getLevel(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
+        setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
+        casterUUID = nbt.getUUID("caster");
+        targetUUID = nbt.getUUID("target");
+        ticks = nbt.getInt("ticks");
+
+        loadAdditional(nbt);
+    }
+
+    protected boolean tryConsumePower(int amount) {
+        if(amount > 0 && world != null) {
+            TileEntity te = world.getBlockEntity(pos);
+            if(te instanceof ChalkGoldTileEntity) {
+                List<BlockPos> potentialAltars = ((ChalkGoldTileEntity)te).getAltarPositions();
+                AltarTileEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
+
+                if(altar != null) {
+                    if(altar.currentPower >= amount) {
+                        altar.currentPower -= amount;
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Override this to save any additional info to the rite's nbt tag
+     * @param nbt
+     * @return Final nbt tag
+     */
+    protected CompoundNBT saveAdditional(CompoundNBT nbt) {
+        return nbt;
+    }
+
+    /**
+     * Override this to load any additional nbt info
+     * @param nbt
+     */
+    protected void loadAdditional(CompoundNBT nbt) {
+
+    }
+
+    /**
+     * Initial effects of the rite, for example spawning an item or playing a sound
+     */
     protected abstract void execute();
+
+    /**
+     * Run tick based rite effects unrelated to starting up
+     */
     protected abstract void onTick();
+
+    /**
+     * Create a new instance of a Rite
+     * @return A new rite instance
+     */
     public abstract AbstractRite create();
 
     public void tick() {
@@ -119,15 +198,26 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
                     }
                 }
             }
+            else if(isExecuting) {
+                onTick();
+            }
         }
     }
 
-    public void startExecuting() {
-        this.isStarting = false;
-        this.isExecuting = true;
-        execute();
+    protected void startExecuting() {
+        if(tryConsumePower(POWER)) {
+            this.isStarting = false;
+            this.isExecuting = true;
+            execute();
+        }
+        else {
+            cancel();
+        }
     }
 
+    /**
+     * Call this when the rite is finished
+     */
     public void stopExecuting() {
         this.isStarting = false;
         this.isExecuting = false;
@@ -135,6 +225,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         if(te instanceof ChalkGoldTileEntity) {
             ((ChalkGoldTileEntity)te).clearRite();
         }
+        RiteManager.removeRite(this);
     }
 
     public void cancel() {
@@ -166,7 +257,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         }
     }
 
-    public void consumeItem(ItemEntity entity) {
+    private void consumeItem(ItemEntity entity) {
         ItemStack stack = entity.getItem();
         Item item = stack.getItem();
         int amountNeeded = ITEMS_REQUIRED.get(stack.getItem());
@@ -194,7 +285,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         }
     }
 
-    public void consumeEntity(Entity entity) {
+    private void consumeEntity(Entity entity) {
         int newAmount = ENTITIES_REQUIRED.get(entity.getType())-1;
         if(newAmount > 0) {
             ENTITIES_REQUIRED.put(entity.getType(), newAmount);
@@ -292,7 +383,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         this.isStarting = true;
     }
 
-    public void spawnParticles() {
+    protected void spawnParticles() {
         for(int i = 0; i < 25; i++) {
             double dx = pos.getX() - 1.0D + Math.random() * 3.0D;
             double dy = pos.getY() + Math.random() * 2.0D;

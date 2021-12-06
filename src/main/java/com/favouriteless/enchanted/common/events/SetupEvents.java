@@ -30,7 +30,7 @@ import com.favouriteless.enchanted.client.screens.DistilleryScreen;
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
-import com.favouriteless.enchanted.common.rites.AbstractRite;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;

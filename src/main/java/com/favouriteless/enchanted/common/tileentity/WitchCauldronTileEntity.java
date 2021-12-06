@@ -51,6 +51,7 @@ import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -84,6 +85,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 200;
+    private static final long BLENDING_MILLISECONDS = 1000;
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
@@ -99,12 +101,14 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     // Only needed client side (rendering)
     private static final Random RANDOM = new Random();
     public boolean hasItems = false;
-    public int targetRenderColour = 0x3F76E4;
-    public int currentRed = (targetRenderColour >> 16) & 0xFF;
-    public int currentGreen = (targetRenderColour >> 8) & 0xFF;
-    public int currentBlue = (targetRenderColour) & 0xFF;
-    public long timeLastFrame = System.currentTimeMillis();
 
+    public int targetRed = 63;
+    public int targetGreen = 118;
+    public int targetBlue = 228;
+    public int startRed = targetRed;
+    public int startGreen = targetGreen;
+    public int startBlue = targetBlue;
+    public long startTime = System.currentTimeMillis();
 
     public WitchCauldronTileEntity() {
         super(EnchantedTileEntities.WITCH_CAULDRON.get());
@@ -156,17 +160,18 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
             else {
                 if(justLoaded) {
                     justLoaded = false;
-                    currentRed = (targetRenderColour >> 16) & 0xFF;
-                    currentGreen = (targetRenderColour >> 8) & 0xFF;
-                    currentBlue = (targetRenderColour) & 0xFF;
+                    startRed = targetRed;
+                    startGreen = targetGreen;
+                    startBlue = targetBlue;
                 }
+                long time = System.currentTimeMillis() - startTime;
 
                 if(warmingUp == WARMING_MAX && RANDOM.nextInt(10) > 2) {
                     double dx = worldPosition.getX() + 0.25D + (Math.random() * 0.5D);
                     double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
                     double dz = worldPosition.getZ() + 0.25D + (Math.random() * 0.5D);
 
-                    level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
+                    level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
                 }
                 if(!isFailed) {
                     if(!isComplete && cookProgress > 0 && cookProgress < COOK_TIME) {
@@ -174,7 +179,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                         double dy = worldPosition.getY() + 0.1875 + (0.15625D * (tank.getFluidAmount() / 1000D));
                         double dz = worldPosition.getZ() + 0.5D;
 
-                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_COOK.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0.0D, 0.0D, 0.0D);
+                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0.0D, 0.0D, 0.0D);
                     }
                     else if (warmingUp == WARMING_MAX && hasItems && RANDOM.nextInt(10) > 6) {
                         double xOffset = 0.25D + (Math.random() * 0.5D);
@@ -184,11 +189,23 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                         double dz = worldPosition.getZ() + zOffset;
                         Vector3d velocity = new Vector3d(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
 
-                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
                     }
                 }
             }
         }
+    }
+
+    public int getRed(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startRed, targetRed));
+    }
+
+    public int getGreen(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startGreen, targetGreen));
+    }
+
+    public int getBlue(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startBlue, targetBlue));
     }
 
     private void setFailed() {
@@ -228,6 +245,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                 recalculateTargetColour();
             }
             level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            recalculateTargetColour();
             updateBlock();
         }
     }
@@ -264,6 +282,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         if(!isComplete && !isFailed) {
             if (tank.getFluidAmount() < tank.getCapacity()) {
                 tank.fill(new FluidStack(Fluids.WATER, amount), IFluidHandler.FluidAction.EXECUTE);
+                recalculateTargetColour();
                 updateBlock();
                 return true;
             }
@@ -318,22 +337,29 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     private void recalculateTargetColour() {
         if(inventoryContents.isEmpty()) {
-            targetRenderColour = 0x3F76E4;
+            targetRed = 63;
+            targetGreen = 118;
+            targetBlue = 228;
         }
-        else if(isComplete && !potentialRecipes.isEmpty()) {
-            targetRenderColour = potentialRecipes.get(0).getFinalColour();
+        else if(isComplete) {
+            targetRed = potentialRecipes.get(0).getFinalRed();
+            targetGreen = potentialRecipes.get(0).getFinalGreen();
+            targetBlue = potentialRecipes.get(0).getFinalBlue();
         }
         else if(isFailed) {
-            targetRenderColour = 0x96642F;
+            targetRed = 150;
+            targetGreen = 100;
+            targetBlue = 47;
         }
-        else if(cookProgress > 0 && !potentialRecipes.isEmpty()) {
-            targetRenderColour = potentialRecipes.get(0).getCookingColour();
+        else if(!potentialRecipes.isEmpty() && cookProgress > 0) {
+            targetRed = potentialRecipes.get(0).getCookingRed();
+            targetGreen = potentialRecipes.get(0).getCookingGreen();
+            targetBlue = potentialRecipes.get(0).getCookingBlue();
         }
         else {
-            int red = RANDOM.nextInt(80);
-            int green = RANDOM.nextInt(80);
-            int blue = RANDOM.nextInt(80);
-            targetRenderColour = 0xFF000000 | (red << 16) & 0x00FF0000 | (green << 8) & 0x0000FF00 | blue & 0x000000FF;
+            targetRed = RANDOM.nextInt(80);
+            targetGreen = RANDOM.nextInt(80);
+            targetBlue = RANDOM.nextInt(80);
         }
     }
 
@@ -351,7 +377,9 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", targetRenderColour);
+        nbt.putInt("targetRed", targetRed);
+        nbt.putInt("targetGreen", targetGreen);
+        nbt.putInt("targetBlue", targetBlue);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -372,7 +400,9 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         super.load(state, nbt);
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
         setWater(nbt.getInt("waterAmount"));
-        targetRenderColour = nbt.getInt("renderColour");
+        targetRed = nbt.getInt("targetRed");
+        targetGreen = nbt.getInt("targetGreen");
+        targetBlue = nbt.getInt("targetBlue");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
@@ -398,7 +428,9 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", targetRenderColour);
+        nbt.putInt("targetRed", targetRed);
+        nbt.putInt("targetGreen", targetGreen);
+        nbt.putInt("targetBlue", targetBlue);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -411,12 +443,25 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         CompoundNBT nbt = pkt.getTag();
         setWater(nbt.getInt("waterAmount"));
-        targetRenderColour = nbt.getInt("renderColour");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
         cookProgress = nbt.getInt("cookProgress");
         hasItems = nbt.getBoolean("hasItems");
+
+        int tr = nbt.getInt("targetRed");
+        int tg = nbt.getInt("targetGreen");
+        int tb = nbt.getInt("targetBlue");
+
+        if(tr != targetRed && tg != targetGreen && tb != targetBlue) {
+            startTime = System.currentTimeMillis();
+            startRed = getRed(startTime);
+            startGreen = getGreen(startTime);
+            startBlue = getBlue(startTime);
+            targetRed = tr;
+            targetGreen = tg;
+            targetBlue = tb;
+        }
     }
 
     @Override

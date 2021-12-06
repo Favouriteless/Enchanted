@@ -23,7 +23,9 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.*;
+import com.favouriteless.enchanted.common.items.brews.*;
 import net.minecraft.item.*;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -128,9 +130,14 @@ public class EnchantedItems {
     public static final RegistryObject<Item> TONGUE_OF_DOG = ITEMS.register("tongue_of_dog", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CREEPER_HEART = ITEMS.register("creeper_heart", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
 
-    public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new RedstoneSoupItem(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> FLYING_OINTMENT = ITEMS.register("flying_ointment", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> MYSTIC_UNGUENT = ITEMS.register("mystic_unguent", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> HAPPENSTANCE_OIL = ITEMS.register("happenstance_oil", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new SimpleEffectBrewItem(Effects.ABSORPTION, 2400, 1, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> FLYING_OINTMENT = ITEMS.register("flying_ointment", () -> new SimpleEffectBrewItem(Effects.LEVITATION, 400, 0, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> MYSTIC_UNGUENT = ITEMS.register("mystic_unguent", () -> new SimpleEffectBrewItem(Effects.WEAKNESS, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> HAPPENSTANCE_OIL = ITEMS.register("happenstance_oil", () -> new SimpleEffectBrewItem(Effects.NIGHT_VISION, 1200, 0, new Item.Properties().tab(Enchanted.TAB)));
+
+    public static final RegistryObject<Item> GHOST_OF_THE_LIGHT = ITEMS.register("ghost_of_the_light", () -> new SimpleEffectBrewItem(Effects.POISON, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> SOUL_OF_THE_WORLD = ITEMS.register("soul_of_the_world", () -> new SimpleEffectBrewItem(Effects.POISON, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> SPIRIT_OF_OTHERWHERE = ITEMS.register("spirit_of_otherwhere", () -> new SimpleEffectBrewItem(Effects.POISON, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> INFERNAL_ANIMUS = ITEMS.register("infernal_animus", () -> new SimpleEffectBrewItem(Effects.WITHER, 1200, 2, new Item.Properties().tab(Enchanted.TAB)));
 
 }

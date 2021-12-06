@@ -19,13 +19,32 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.items;
+package com.favouriteless.enchanted.common.items.brews;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.DrinkHelper;
+import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 
-public class RedstoneSoupItem extends Item {
+public class ConsumableBrewItem extends Item {
 
-    public RedstoneSoupItem(Properties properties) {
-        super(properties);
-    }
+	public ConsumableBrewItem(Properties properties) {
+		super(properties);
+	}
+
+	public int getUseDuration(ItemStack pStack) {
+		return 32;
+	}
+
+	public UseAction getUseAnimation(ItemStack pStack) {
+		return UseAction.DRINK;
+	}
+
+	public ActionResult<ItemStack> use(World pLevel, PlayerEntity pPlayer, Hand pHand) {
+		return DrinkHelper.useDrink(pLevel, pPlayer, pHand);
+	}
 }

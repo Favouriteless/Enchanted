@@ -44,8 +44,8 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "inputs"));
         ItemStack itemOut = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
         int power = JSONUtils.getAsInt(json, "power");
-        int cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
-        int finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
+        int[] cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
+        int[] finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
 
         return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
@@ -61,8 +61,8 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         }
         ItemStack itemOut = buffer.readItem();
         int power = buffer.readInt();
-        int cookingColour = buffer.readInt();
-        int finalColour = buffer.readInt();
+        int[] cookingColour = new int[] {(int)buffer.readShort(), (int)buffer.readShort(), (int)buffer.readShort() };
+        int[] finalColour = new int[] {(int)buffer.readShort(), (int)buffer.readShort(), (int)buffer.readShort() };
 
         return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
     }
@@ -76,8 +76,12 @@ public class WitchCauldronSerializer extends ForgeRegistryEntry<IRecipeSerialize
         }
         buffer.writeItem(recipe.getResultItem());
         buffer.writeInt(recipe.getPower());
-        buffer.writeInt(recipe.getCookingColour());
-        buffer.writeInt(recipe.getFinalColour());
+        buffer.writeShort(recipe.getCookingRed());
+        buffer.writeShort(recipe.getCookingGreen());
+        buffer.writeShort(recipe.getCookingBlue());
+        buffer.writeShort(recipe.getFinalRed());
+        buffer.writeShort(recipe.getFinalGreen());
+        buffer.writeShort(recipe.getFinalBlue());
 
     }
 

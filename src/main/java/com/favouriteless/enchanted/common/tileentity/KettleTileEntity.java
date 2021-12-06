@@ -50,6 +50,7 @@ import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -83,6 +84,7 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
 
     private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 160;
+    private static final long BLENDING_MILLISECONDS = 1000;
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private List<KettleRecipe> potentialRecipes = new ArrayList<>();
@@ -98,12 +100,14 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     // Only needed client side (rendering)
     private static final Random RANDOM = new Random();
     public boolean hasItems = false;
-    public int targetRenderColour = 0x3F76E4;
-    public int currentRed = (targetRenderColour >> 16) & 0xFF;
-    public int currentGreen = (targetRenderColour >> 8) & 0xFF;
-    public int currentBlue = (targetRenderColour) & 0xFF;
-    public long timeLastFrame = System.currentTimeMillis();
 
+    public int targetRed = 63;
+    public int targetGreen = 118;
+    public int targetBlue = 228;
+    public int startRed = targetRed;
+    public int startGreen = targetGreen;
+    public int startBlue = targetBlue;
+    public long startTime = System.currentTimeMillis();
 
     public KettleTileEntity() {
         super(EnchantedTileEntities.KETTLE.get());
@@ -155,18 +159,19 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
             else {
                 if(justLoaded) {
                     justLoaded = false;
-                    currentRed = (targetRenderColour >> 16) & 0xFF;
-                    currentGreen = (targetRenderColour >> 8) & 0xFF;
-                    currentBlue = (targetRenderColour) & 0xFF;
+                    startRed = targetRed;
+                    startGreen = targetGreen;
+                    startBlue = targetBlue;
                 }
                 double yStart = (level.getBlockState(worldPosition).getValue(KettleBlock.TYPE) == 1) ? 0.1875D : 0.0625D;
+                long time = System.currentTimeMillis() - startTime;
 
                 if(warmingUp == WARMING_MAX && RANDOM.nextInt(10) > 2) {
                     double dx = worldPosition.getX() + 0.3125D + (Math.random() * 0.375D);
                     double dy = worldPosition.getY() + yStart + (0.25D * (tank.getFluidAmount() / 1000D));
                     double dz = worldPosition.getZ() + 0.3125D + (Math.random() * 0.375D);
 
-                    level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
+                    level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
                 }
                 if(!isFailed) {
                     if(!isComplete && cookProgress > 0 && cookProgress < COOK_TIME && RANDOM.nextInt(10) > 5) {
@@ -174,7 +179,7 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
                         double dy = worldPosition.getY() + Math.random();
                         double dz = worldPosition.getZ() + Math.random();
 
-                        level.addParticle(new SimpleColouredData(EnchantedParticles.KETTLE_COOK.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, 0D, 0D, 0D);
+                        level.addParticle(new SimpleColouredData(EnchantedParticles.KETTLE_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
                     }
                     else if (warmingUp == WARMING_MAX && hasItems && RANDOM.nextInt(10) > 8) {
                         double xOffset = 0.3125D + (Math.random() * 0.375D);
@@ -184,11 +189,23 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
                         double dz = worldPosition.getZ() + zOffset;
                         Vector3d velocity = new Vector3d(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
 
-                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), currentRed, currentGreen, currentBlue), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+                        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
                     }
                 }
             }
         }
+    }
+
+    public int getRed(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startRed, targetRed));
+    }
+
+    public int getGreen(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startGreen, targetGreen));
+    }
+
+    public int getBlue(long time) {
+        return (int)Math.round(MathHelper.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startBlue, targetBlue));
     }
 
     private void setFailed() {
@@ -318,22 +335,29 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
 
     private void recalculateTargetColour() {
         if(inventoryContents.isEmpty()) {
-            targetRenderColour = 0x3F76E4;
+            targetRed = 63;
+            targetGreen = 118;
+            targetBlue = 228;
         }
         else if(isComplete) {
-            targetRenderColour = potentialRecipes.get(0).getFinalColour();
+            targetRed = potentialRecipes.get(0).getFinalRed();
+            targetGreen = potentialRecipes.get(0).getFinalGreen();
+            targetBlue = potentialRecipes.get(0).getFinalBlue();
         }
         else if(isFailed) {
-            targetRenderColour = 0x96642F;
+            targetRed = 150;
+            targetGreen = 100;
+            targetBlue = 47;
         }
         else if(!potentialRecipes.isEmpty()) {
-            targetRenderColour = potentialRecipes.get(0).getCookingColour();
+            targetRed = potentialRecipes.get(0).getCookingRed();
+            targetGreen = potentialRecipes.get(0).getCookingGreen();
+            targetBlue = potentialRecipes.get(0).getCookingBlue();
         }
         else {
-            int red = RANDOM.nextInt(80);
-            int green = RANDOM.nextInt(80);
-            int blue = RANDOM.nextInt(80);
-            targetRenderColour = 0xFF000000 | (red << 16) & 0x00FF0000 | (green << 8) & 0x0000FF00 | blue & 0x000000FF;
+            targetRed = RANDOM.nextInt(80);
+            targetGreen = RANDOM.nextInt(80);
+            targetBlue = RANDOM.nextInt(80);
         }
     }
 
@@ -351,7 +375,9 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", targetRenderColour);
+        nbt.putInt("targetRed", targetRed);
+        nbt.putInt("targetGreen", targetGreen);
+        nbt.putInt("targetBlue", targetBlue);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -372,7 +398,9 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
         super.load(state, nbt);
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
         setWater(nbt.getInt("waterAmount"));
-        targetRenderColour = nbt.getInt("renderColour");
+        targetRed = nbt.getInt("targetRed");
+        targetGreen = nbt.getInt("targetGreen");
+        targetBlue = nbt.getInt("targetBlue");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
@@ -398,7 +426,9 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putInt("waterAmount", tank.getFluidAmount());
-        nbt.putInt("renderColour", targetRenderColour);
+        nbt.putInt("targetRed", targetRed);
+        nbt.putInt("targetGreen", targetGreen);
+        nbt.putInt("targetBlue", targetBlue);
         nbt.putBoolean("isFailed", isFailed);
         nbt.putBoolean("isComplete", isComplete);
         nbt.putInt("warmingUp", warmingUp);
@@ -411,12 +441,25 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         CompoundNBT nbt = pkt.getTag();
         setWater(nbt.getInt("waterAmount"));
-        targetRenderColour = nbt.getInt("renderColour");
         isFailed = nbt.getBoolean("isFailed");
         isComplete = nbt.getBoolean("isComplete");
         warmingUp = nbt.getInt("warmingUp");
         cookProgress = nbt.getInt("cookProgress");
         hasItems = nbt.getBoolean("hasItems");
+
+        int tr = nbt.getInt("targetRed");
+        int tg = nbt.getInt("targetGreen");
+        int tb = nbt.getInt("targetBlue");
+
+        if(tr != targetRed && tg != targetGreen && tb != targetBlue) {
+            startTime = System.currentTimeMillis();
+            startRed = getRed(startTime);
+            startGreen = getGreen(startTime);
+            startBlue = getBlue(startTime);
+            targetRed = tr;
+            targetGreen = tg;
+            targetBlue = tb;
+        }
     }
 
     @Override

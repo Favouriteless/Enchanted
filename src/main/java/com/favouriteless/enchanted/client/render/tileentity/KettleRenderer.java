@@ -46,10 +46,7 @@ import java.util.Random;
 public class KettleRenderer extends TileEntityRenderer<KettleTileEntity> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
-    private static final Random RANDOM = new Random();
     private static final int FRAME_TIME = 2;
-
-    private static final float COLOUR_BLEND_MULTIPLIER = 3F;
 
 
     public KettleRenderer(TileEntityRendererDispatcher dispatcher) {
@@ -61,16 +58,6 @@ public class KettleRenderer extends TileEntityRenderer<KettleTileEntity> {
 
         long ticks = Minecraft.getInstance().player.level.getGameTime(); // This frame count should be common across all TEs
 
-        int targetRed = (kettle.targetRenderColour >> 16) & 0xFF;
-        int targetGreen = (kettle.targetRenderColour >> 8) & 0xFF;
-        int targetBlue = (kettle.targetRenderColour) & 0xFF;
-
-        long timeThisFrame = System.currentTimeMillis();
-        float timePassed = (timeThisFrame - kettle.timeLastFrame) / 1000F;
-        kettle.currentRed += (targetRed - kettle.currentRed) * COLOUR_BLEND_MULTIPLIER * timePassed;
-        kettle.currentGreen += (targetGreen - kettle.currentGreen) * COLOUR_BLEND_MULTIPLIER * timePassed;
-        kettle.currentBlue += (targetBlue - kettle.currentBlue) * COLOUR_BLEND_MULTIPLIER * timePassed;
-
         int waterAmount = kettle.getWater();
         if(waterAmount > 0) {
             double startingHeight = (kettle.getLevel().getBlockState(kettle.getBlockPos()).getValue(KettleBlock.TYPE) == 1) ? 0.1875D : 0.0625D;
@@ -80,14 +67,14 @@ public class KettleRenderer extends TileEntityRenderer<KettleTileEntity> {
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
             IVertexBuilder vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
+            long time = System.currentTimeMillis() - kettle.startTime;
             KettleQuad.render(matrixStack.last(), vertexBuilder,
-                    kettle.currentRed, kettle.currentGreen, kettle.currentBlue, 160,
+                    kettle.getRed(time), kettle.getGreen(time), kettle.getBlue(time), 160,
                     0F, 1/32F * ( (float)(ticks/FRAME_TIME) % 32),
                     combinedLight);
 
             matrixStack.popPose();
         }
-        kettle.timeLastFrame = timeThisFrame;
     }
 
     public static class KettleQuad {

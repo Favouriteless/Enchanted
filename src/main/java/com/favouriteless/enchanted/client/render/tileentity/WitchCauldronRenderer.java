@@ -44,10 +44,7 @@ import java.util.Random;
 public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileEntity> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
-    private static final Random RANDOM = new Random();
     private static final int FRAME_TIME = 2;
-
-    private static final float COLOUR_BLEND_MULTIPLIER = 3F;
 
 
     public WitchCauldronRenderer(TileEntityRendererDispatcher dispatcher) {
@@ -59,16 +56,6 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
 
         long ticks = Minecraft.getInstance().player.level.getGameTime(); // This frame count should be common across all TEs
 
-        int targetRed = (cauldron.targetRenderColour >> 16) & 0xFF;
-        int targetGreen = (cauldron.targetRenderColour >> 8) & 0xFF;
-        int targetBlue = (cauldron.targetRenderColour) & 0xFF;
-
-        long timeThisFrame = System.currentTimeMillis();
-        float timePassed = (timeThisFrame - cauldron.timeLastFrame) / 1000F;
-        cauldron.currentRed += (targetRed - cauldron.currentRed) * COLOUR_BLEND_MULTIPLIER * timePassed;
-        cauldron.currentGreen += (targetGreen - cauldron.currentGreen) * COLOUR_BLEND_MULTIPLIER * timePassed;
-        cauldron.currentBlue += (targetBlue - cauldron.currentBlue) * COLOUR_BLEND_MULTIPLIER * timePassed;
-
         int waterAmount = cauldron.getWater();
         if(waterAmount > 0) {
 
@@ -78,14 +65,14 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
             IVertexBuilder vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
+            long time = System.currentTimeMillis() - cauldron.startTime;
             CauldronQuad.render(matrixStack.last(), vertexBuilder,
-                    cauldron.currentRed, cauldron.currentGreen, cauldron.currentBlue, 160,
+                    cauldron.getRed(time), cauldron.getGreen(time), cauldron.getBlue(time), 160,
                     0F, 1/32F * ( (float)(ticks/FRAME_TIME) % 32),
                     combinedLight);
 
             matrixStack.popPose();
         }
-        cauldron.timeLastFrame = timeThisFrame;
     }
 
     public static class CauldronQuad {

@@ -60,10 +60,10 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         if(!world.isClientSide) {
             if (currentRite == null) {
 
-                AbstractRite rite = EnchantedRiteTypes.riteFor(world, pos);
+                AbstractRite rite = EnchantedRiteTypes.riteAvailableAt(world, pos);
 
                 if (rite != null) {
-                    currentRite = rite.create();
+                    currentRite = rite;
                     currentRite.setWorld(world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);

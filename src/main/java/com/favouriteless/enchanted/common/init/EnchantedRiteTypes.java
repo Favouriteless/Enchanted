@@ -25,6 +25,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.rites.*;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -32,22 +33,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class EnchantedRiteTypes {
 
-    public static final DeferredRegister<AbstractRite> RITES = DeferredRegister.create(AbstractRite.class, Enchanted.MOD_ID);
+    public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(Generify.<RiteType<?>>from(RiteType.class), Enchanted.MOD_ID);
+    public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry("rite_types", RegistryBuilder::new);
 
-    public static final RegistryObject<AbstractRite> CHARGING_STONE = RITES.register("charging_stone", RiteOfChargingStone::new);
-    public static final RegistryObject<AbstractRite> TOTAL_ECLIPSE = RITES.register("total_eclipse", RiteOfTotalEclipse::new);
-    public static final RegistryObject<AbstractRite> TOTAL_ECLIPSE_CHARGED = RITES.register("total_eclipse_charged", RiteOfTotalEclipseCharged::new);
+    public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteOfChargingStone::new));
+    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
+    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
 
 
-
-    public static AbstractRite get(HashMap<CircleSize, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
-        for(RegistryObject<AbstractRite> registryObject : RITES.getEntries()) {
-            AbstractRite rite = registryObject.get();
+    public static AbstractRite getFromRequirements(HashMap<CircleSize, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
+        for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
+            RiteType<?> type = registryObject.get();
+            AbstractRite rite = type.create();
             if(rite.is(circles, entities, items)) {
                 return rite;
             }
@@ -55,12 +61,13 @@ public class EnchantedRiteTypes {
         return null;
     }
 
-    public static AbstractRite riteFor(World world, BlockPos pos) {
+    public static AbstractRite riteAvailableAt(World world, BlockPos pos) {
         AbstractRite currentRite = null;
         int currentDiff = Integer.MAX_VALUE;
 
-        for(RegistryObject<AbstractRite> registryObject : RITES.getEntries()) {
-            AbstractRite rite = registryObject.get();
+        for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
+            RiteType<?> type = registryObject.get();
+            AbstractRite rite = type.create();
             int diff = rite.differenceAt(world, pos);
             if(diff != -1 && diff < currentDiff) {
                 currentRite = rite;
@@ -69,4 +76,15 @@ public class EnchantedRiteTypes {
         }
         return currentRite;
     }
+
+    private static class Generify {
+
+        @SuppressWarnings("unchecked")
+        public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls)
+        {
+            return (Class<T>) cls;
+        }
+
+    }
+
 }

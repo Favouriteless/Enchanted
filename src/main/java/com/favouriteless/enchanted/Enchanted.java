@@ -67,7 +67,7 @@ public class Enchanted
         EnchantedItems.ITEMS.register(modEventBus);
         EnchantedTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
         EnchantedContainers.CONTAINER_TYPES.register(modEventBus);
-        EnchantedRiteTypes.RITES.register(modEventBus);
+        EnchantedRiteTypes.RITE_TYPES.register(modEventBus);
     }
 
 

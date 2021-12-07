@@ -24,7 +24,9 @@ package com.favouriteless.enchanted.common.rites;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -53,7 +55,8 @@ public class RiteOfChargingStone extends AbstractCreateItemRite {
     }
 
     @Override
-    public RiteOfChargingStone create() {
-        return new RiteOfChargingStone();
+    public RiteType<?> getType() {
+        return EnchantedRiteTypes.CHARGING_STONE.get();
     }
+
 }

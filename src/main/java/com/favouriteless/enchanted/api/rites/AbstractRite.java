@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.api.rites;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
 import com.favouriteless.enchanted.common.rites.util.RiteManager;
+import com.favouriteless.enchanted.common.rites.util.RiteType;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import net.minecraft.block.Block;
@@ -55,7 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
+public abstract class AbstractRite {
 
     public final HashMap<CircleSize, Block> CIRCLES_REQUIRED = new HashMap<>();
     public final HashMap<EntityType<?>, Integer> ENTITIES_REQUIRED = new HashMap<>();
@@ -71,7 +72,6 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
     public UUID targetUUID; // Target of the ritual
 
     private boolean isStarting = false;
-    private boolean isExecuting = false;
     private int ticks = 0;
 
     public boolean isRemoved = false;
@@ -83,12 +83,13 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
 
     public CompoundNBT save() {
         CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("type", getType().getRegistryName().toString());
         nbt.putString("dimension", world.dimension().location().toString());
         nbt.putInt("x", pos.getX());
         nbt.putInt("y", pos.getY());
         nbt.putInt("z", pos.getZ());
         nbt.putUUID("caster", casterUUID);
-        nbt.putUUID("target", targetUUID);
+        if(targetUUID != null) nbt.putUUID("target", targetUUID);
         nbt.putInt("ticks", ticks);
 
         return saveAdditional(nbt);
@@ -98,7 +99,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         setWorld(world.getServer().getLevel(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
         setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
         casterUUID = nbt.getUUID("caster");
-        targetUUID = nbt.getUUID("target");
+        if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
         ticks = nbt.getInt("ticks");
 
         loadAdditional(nbt);
@@ -149,56 +150,55 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
      */
     protected abstract void onTick();
 
-    /**
-     * Create a new instance of a Rite
-     * @return A new rite instance
-     */
-    public abstract AbstractRite create();
+    public abstract RiteType<?> getType();
 
     public void tick() {
         if(world != null && !world.isClientSide ) {
             ticks++;
-            if (isStarting && ticks % 20 == 0) {
-                List<Entity> allEntities = world.getEntities(null, new AxisAlignedBB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
+            if (isStarting) {
+                if(ticks % 20 == 0) {
+                    List<Entity> allEntities = world.getEntities(null, new AxisAlignedBB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
 
-                boolean hasItem = false;
-                for(Entity entity : allEntities) {
-                    if(entity instanceof ItemEntity) {
-                        ItemEntity itemEntity = (ItemEntity)entity;
-                        if(ITEMS_REQUIRED.containsKey(itemEntity.getItem().getItem())) {
-                            consumeItem(itemEntity);
-                            hasItem = true;
-                            break;
-                        }
-                    }
-                }
-
-                boolean hasEntity = false;
-                if(!hasItem) {
-                    if(ITEMS_REQUIRED.isEmpty()) {
-                        for(Entity entity : allEntities) {
-                            if(ENTITIES_REQUIRED.containsKey(entity.getType())) {
-                                hasEntity = true;
-                                consumeEntity(entity);
+                    boolean hasItem = false;
+                    for(Entity entity : allEntities) {
+                        if(entity instanceof ItemEntity) {
+                            ItemEntity itemEntity = (ItemEntity) entity;
+                            if(ITEMS_REQUIRED.containsKey(itemEntity.getItem().getItem())) {
+                                consumeItem(itemEntity);
+                                hasItem = true;
                                 break;
                             }
                         }
                     }
-                    else {
-                        cancel();
-                    }
 
-                    if(!hasEntity) {
-                        if(ENTITIES_REQUIRED.isEmpty()) {
-                            startExecuting();
+                    boolean hasEntity = false;
+                    if(!hasItem) {
+                        if(ITEMS_REQUIRED.isEmpty()) {
+                            for(Entity entity : allEntities) {
+                                if(ENTITIES_REQUIRED.containsKey(entity.getType())) {
+                                    hasEntity = true;
+                                    consumeEntity(entity);
+                                    break;
+                                }
+                            }
                         }
                         else {
                             cancel();
+                            return;
+                        }
+
+                        if(!hasEntity) {
+                            if(ENTITIES_REQUIRED.isEmpty()) {
+                                startExecuting();
+                            }
+                            else {
+                                cancel();
+                            }
                         }
                     }
                 }
             }
-            else if(isExecuting) {
+            else if(!isRemoved) {
                 onTick();
             }
         }
@@ -207,7 +207,6 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
     protected void startExecuting() {
         if(tryConsumePower(POWER)) {
             this.isStarting = false;
-            this.isExecuting = true;
             execute();
         }
         else {
@@ -215,12 +214,19 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
         }
     }
 
+    protected void detatchFromChalk() {
+        TileEntity te = world.getBlockEntity(pos);
+        if(te instanceof ChalkGoldTileEntity) {
+            ((ChalkGoldTileEntity)te).clearRite();
+        }
+    }
+
     /**
      * Call this when the rite is finished
      */
     public void stopExecuting() {
+        detatchFromChalk();
         this.isStarting = false;
-        this.isExecuting = false;
         TileEntity te = world.getBlockEntity(pos);
         if(te instanceof ChalkGoldTileEntity) {
             ((ChalkGoldTileEntity)te).clearRite();
@@ -230,7 +236,7 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
 
     public void cancel() {
         isStarting = false;
-        isExecuting = false;
+        RiteManager.removeRite(this);
 
         while(!itemsConsumed.isEmpty()) {
             ItemStack stack = itemsConsumed.get(0);
@@ -390,6 +396,10 @@ public abstract class AbstractRite extends ForgeRegistryEntry<AbstractRite> {
             double dz = pos.getZ() - 1.0D + Math.random() * 3.0D;
             ((ServerWorld)world).sendParticles(ParticleTypes.WITCH, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    public boolean getStarting() {
+        return isStarting;
     }
 
 }

@@ -24,7 +24,9 @@ package com.favouriteless.enchanted.common.rites;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -55,7 +57,8 @@ public class RiteOfTotalEclipse extends AbstractRite {
     }
 
     @Override
-    public RiteOfTotalEclipse create() {
-        return new RiteOfTotalEclipse();
+    public RiteType<?> getType() {
+        return EnchantedRiteTypes.TOTAL_ECLIPSE.get();
     }
+
 }

@@ -23,8 +23,10 @@ package com.favouriteless.enchanted.common.rites.util;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
+import net.minecraftforge.event.TickEvent.WorldTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -35,27 +37,33 @@ import java.util.List;
 @EventBusSubscriber(modid= Enchanted.MOD_ID, bus= Bus.FORGE)
 public class RiteManager {
 
-	private static final List<AbstractRite> ACTIVE_RITES = new ArrayList<>();
-
 	public static void addRite(AbstractRite rite) {
-		ACTIVE_RITES.add(rite);
+		if(rite.world != null) {
+			RiteWorldSavedData data = RiteWorldSavedData.get(rite.world);
+			data.ACTIVE_RITES.add(rite);
+			data.setDirty();
+		}
 	}
 
 	public static void removeRite(AbstractRite rite) {
 		rite.isRemoved = true;
 	}
 
-	public static void clearRites() {
-		ACTIVE_RITES.clear();
+	public static List<AbstractRite> getActiveRites(World world) {
+		RiteWorldSavedData data = RiteWorldSavedData.get(world);
+		return data.ACTIVE_RITES;
 	}
 
 	@SubscribeEvent
-	public static void onServerTick(ServerTickEvent event) {
-		if(event.phase == Phase.START) {
-			ACTIVE_RITES.removeIf(abstractRite -> abstractRite.isRemoved);
-			for(AbstractRite rite : ACTIVE_RITES) {
+	public static void onWorldTick(WorldTickEvent event) {
+		if(event.phase == Phase.START && event.world.dimension() == World.OVERWORLD) {
+			RiteWorldSavedData data = RiteWorldSavedData.get(event.world);
+
+			data.ACTIVE_RITES.removeIf(rite -> rite.isRemoved);
+			for(AbstractRite rite : data.ACTIVE_RITES) {
 				rite.tick();
 			}
+			data.setDirty();
 		}
 	}
 

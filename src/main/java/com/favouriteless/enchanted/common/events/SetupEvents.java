@@ -31,6 +31,7 @@ import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -78,14 +79,4 @@ public class SetupEvents {
         event.put(EnchantedEntityTypes.MANDRAKE.get(), MandrakeEntity.createAttributes().build());
     }
 
-    @SubscribeEvent
-    public static void createRegistries(RegistryEvent.NewRegistry event) {
-        new RegistryBuilder<AbstractRite>()
-                .setName(new ResourceLocation(Enchanted.MOD_ID, "rites"))
-                .setType(AbstractRite.class)
-                .setMaxID(Integer.MAX_VALUE - 1)
-                .disableSaving()
-                .onAdd(((owner, stage, id, obj, oldObj) -> Enchanted.LOGGER.info("Registered rite type: " + obj.getRegistryName())))
-                .create();
-    }
 }

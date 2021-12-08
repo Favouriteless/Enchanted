@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "enchanted:block/trees/rowan_log" },
-    "axis=z": { "model": "enchanted:block/trees/rowan_log", "x": 90},
-    "axis=x": { "model": "enchanted:block/trees/rowan_log", "x": 90, "y": 90}
-  }
-}

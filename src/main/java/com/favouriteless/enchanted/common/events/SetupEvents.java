@@ -33,6 +33,7 @@ import com.favouriteless.enchanted.common.init.*;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;

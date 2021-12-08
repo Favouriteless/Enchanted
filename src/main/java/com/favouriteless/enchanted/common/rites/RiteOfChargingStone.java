@@ -44,14 +44,12 @@ public class RiteOfChargingStone extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
-        // Do ritual effects here
         spawnItem(new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1));
         stopExecuting();
     }
 
     @Override
     public void onTick() {
-        // Do tick based ritual stuff here
     }
 
     @Override

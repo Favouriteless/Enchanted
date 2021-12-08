@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.common.rites.util;
 
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -90,5 +91,11 @@ public enum CircleSize {
             }
         }
         return true;
+    }
+
+    public void destroy(World world, BlockPos centerPos) {
+        for(BlockPos pos : circlePoints) {
+            world.setBlockAndUpdate(centerPos.offset(pos), Blocks.AIR.defaultBlockState());
+        }
     }
 }

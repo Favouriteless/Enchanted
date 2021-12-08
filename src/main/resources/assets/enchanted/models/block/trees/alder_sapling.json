@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "enchanted:block/trees/alder_sapling"
-  }
-}

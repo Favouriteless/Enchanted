@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 
 public class WitchOvenBlock extends ContainerBlock {
 
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     private static final VoxelShape SHAPE_NORTH = Stream.of(Block.box(2, 2, 2, 14, 3, 14), Block.box(14, 0, 1, 15, 2, 2), Block.box(14, 2, 1, 15, 3, 15), Block.box(1, 2, 1, 2, 3, 15), Block.box(1, 0, 1, 2, 2, 2), Block.box(14, 0, 14, 15, 2, 15), Block.box(1, 0, 14, 2, 2, 15), Block.box(1, 9, 1, 15, 10, 15), Block.box(2, 3, 2, 14, 9, 14), Block.box(3, 10, 3, 13, 11, 13), Block.box(6, 10, 9, 10, 16, 13), Block.box(5, 10, 8, 11, 12, 14)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();

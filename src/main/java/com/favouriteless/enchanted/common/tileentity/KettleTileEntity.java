@@ -84,7 +84,7 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
 
     private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 160;
-    private static final long BLENDING_MILLISECONDS = 1000;
+    private static final long BLENDING_MILLISECONDS = 500;
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private List<KettleRecipe> potentialRecipes = new ArrayList<>();
@@ -226,25 +226,29 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
         if(level != null && !level.isClientSide) {
             if(isFailed) {
                 setWater(0);
+                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
             else {
                 tank.drain(new FluidStack(Fluids.WATER, tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount()), IFluidHandler.FluidAction.EXECUTE);
             }
-            if(player != null) {
-                PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : new ItemStack(itemOut.getItem()));
-            }
-            else {
-                level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
+            if(!itemOut.isEmpty()) {
+                if(player != null) {
+                    PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : new ItemStack(itemOut.getItem()));
+                }
+                else {
+                    level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
+                }
+                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
             itemOut.shrink(1);
             if(itemOut.isEmpty()) {
                 inventoryContents.clear();
                 potentialRecipes.clear();
 
-                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 resetValues();
                 recalculateTargetColour();
             }
+            recalculateTargetColour();
             updateBlock();
         }
     }
@@ -415,7 +419,7 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
 
         if(nbt.contains("itemOut")) {
             CompoundNBT itemNbt = (CompoundNBT)nbt.get("itemOut");
-            itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), nbt.getInt("count"));
+            itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
         }
 
         justLoaded = true;

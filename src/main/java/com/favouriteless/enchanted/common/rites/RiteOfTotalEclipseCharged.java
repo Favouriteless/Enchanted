@@ -44,7 +44,6 @@ public class RiteOfTotalEclipseCharged extends AbstractRite {
 
     @Override
     public void execute() {
-        // Do ritual effects here
         if(!world.isClientSide) {
             ((ServerWorld) world).setDayTime(18000);
             world.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1.0F, 1.0F);
@@ -54,7 +53,6 @@ public class RiteOfTotalEclipseCharged extends AbstractRite {
 
     @Override
     public void onTick() {
-        // Do tick based ritual stuff here
     }
 
     @Override

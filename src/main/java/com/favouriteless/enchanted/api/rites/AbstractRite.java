@@ -64,7 +64,7 @@ public abstract class AbstractRite {
     public final int POWER;
     public final int POWER_TICK;
 
-    private final List<ItemStack> itemsConsumed = new ArrayList<>();
+    protected final List<ItemStack> itemsConsumed = new ArrayList<>();
 
     public World world; // World ritual started in
     public BlockPos pos; // Position ritual started at

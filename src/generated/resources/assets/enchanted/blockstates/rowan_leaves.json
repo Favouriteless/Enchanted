@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "enchanted:block/rowan_leaves_0"
+      },
+      {
+        "model": "enchanted:block/rowan_leaves_1"
+      },
+      {
+        "model": "enchanted:block/rowan_leaves_2"
+      },
+      {
+        "model": "enchanted:block/rowan_leaves_3"
+      }
+    ]
+  }
+}

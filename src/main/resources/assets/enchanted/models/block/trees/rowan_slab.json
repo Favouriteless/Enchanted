@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "enchanted:block/trees/rowan_planks",
-    "top": "enchanted:block/trees/rowan_planks",
-    "side": "enchanted:block/trees/rowan_planks"
-  }
-}

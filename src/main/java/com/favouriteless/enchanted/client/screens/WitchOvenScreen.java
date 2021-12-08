@@ -44,14 +44,14 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
 
     // some [x,y] coordinates of graphical elements
     public static final int COOK_BAR_XPOS = 76;
-    public static final int COOK_BAR_YPOS = 19;
+    public static final int COOK_BAR_YPOS = 16;
     public static final int COOK_BAR_ICON_U = 176;
     public static final int COOK_BAR_ICON_V = 14;
     public static final int COOK_BAR_WIDTH = 24;
     public static final int COOK_BAR_HEIGHT = 17;
 
     public static final int FLAME_XPOS = 80;
-    public static final int FLAME_YPOS = 33;
+    public static final int FLAME_YPOS = 36;
     public static final int FLAME_ICON_U = 176;
     public static final int FLAME_ICON_V = 12;
     public static final int FLAME_SIZE = 14;

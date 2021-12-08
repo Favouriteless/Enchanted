@@ -1,0 +1,6 @@
+{
+  "parent": "enchanted:block/glyph",
+  "textures": {
+    "top": "enchanted:block/glyph_7"
+  }
+}

@@ -23,8 +23,12 @@ package com.favouriteless.enchanted.common.blocks.chalk;
 
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -33,10 +37,16 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class GoldChalkBlock extends AbstractChalkBlock {
+
+    public static final IntegerProperty GLYPH = IntegerProperty.create("glyph", 0, 3);
+    public static final Random random = new Random();
 
     public GoldChalkBlock() {
         super();
+        this.registerDefaultState(getStateDefinition().any().setValue(GLYPH, 0));
     }
 
     @Override
@@ -48,6 +58,16 @@ public class GoldChalkBlock extends AbstractChalkBlock {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return EnchantedTileEntities.CHALK_GOLD.get().create();
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(GLYPH);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return defaultBlockState().setValue(GLYPH, random.nextInt(4));
     }
 
     @Override

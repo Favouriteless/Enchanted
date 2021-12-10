@@ -217,7 +217,7 @@ public enum CirclePart {
                 int rowEndIndex = rowStartIndex+row.length();
 
                 if(z+1 >= size) { // End of string
-                    aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 1, z+1 - offset);
+                    aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
                     removeShapeSub(xStart, zStart, x, z);
                     break;
                 }
@@ -225,7 +225,7 @@ public enum CirclePart {
                     String newRow = shape.substring(rowStartIndex, rowEndIndex);
 
                     if(!rowEquals(row, newRow)) { // Not same quad
-                        aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 1, z+1 - offset);
+                        aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
                         removeShapeSub(xStart, zStart, x, z);
                         break;
                     }

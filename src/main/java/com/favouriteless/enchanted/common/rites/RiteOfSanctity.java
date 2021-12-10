@@ -22,8 +22,10 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.client.particles.CircleMagicParticleType;
+import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
@@ -59,8 +61,18 @@ public class RiteOfSanctity extends AbstractRite {
             for(Entity entity : currentEntities) {
                 Vector3d opposingVector = entity.position().subtract(pos.getX(), pos.getY(), pos.getZ());
                 double distance = Math.sqrt(opposingVector.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()));
-                entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(distance*10).scale(REPULSE_FACTOR/1000D)));
+                entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(distance * 10).scale(REPULSE_FACTOR / 1000D)));
             }
+        }
+
+        if(this.ticks % 2 == 0) {
+            double cx = pos.getX() + 0.5D;
+            double cz = pos.getZ() + 0.5D;
+            double dy = pos.getY() + 0.1D;
+            double dz = pos.getZ() + 0.5D;
+
+            world.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), pos.getX() + 3.5D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
+            world.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), pos.getX() - 3.5D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
         }
     }
 

@@ -74,7 +74,7 @@ public abstract class AbstractRite {
     public Entity targetEntity;
 
     private boolean isStarting = false;
-    private int ticks = 0;
+    protected int ticks = 0;
     private boolean isAttached = true;
 
     private ChalkGoldTileEntity chalk = null;

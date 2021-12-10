@@ -122,7 +122,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 
 		for(int x = 1; x < 4; x++) {
 			builder.override().predicate(modLoc("large"), x * 0.299F).model(
-					withExistingParent(name + "_" + x + "_" + "0" + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+					withExistingParent(name + "_" + "0" + "_" + "0" + "_" + x, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
 							.texture("layer0", name)
 							.texture("layer1", name + "_large_" + x)).end();
 			builder.override().predicate(modLoc("medium"), x * 0.299F).model(
@@ -130,7 +130,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 							.texture("layer0", name)
 							.texture("layer1", name + "_medium_" + x)).end();
 			builder.override().predicate(modLoc("small"), x * 0.299F).model(
-					withExistingParent(name + "_" + "0" + "_" + "0" + "_" + x, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+					withExistingParent(name + "_" + x + "_" + "0" + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
 							.texture("layer0", name)
 							.texture("layer1", name + "_small_" + x)).end();
 		}
@@ -139,15 +139,20 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		for(int x = 1; x < 4; x++) {
 			for(int y = 1; y < 4; y++) {
 				builder.override().predicate(modLoc("medium"), y*0.299F).predicate(modLoc("large"), x*0.299F).model(
-						withExistingParent(name + "_" + x + "_" + y + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+						withExistingParent(name + "_" + "0" + "_" + y + "_" + x, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
 								.texture("layer0", name)
 								.texture("layer1", name + "_medium_" + y)
 								.texture("layer2", name + "_large_" + x)).end();
 				builder.override().predicate(modLoc("small"), y*0.299F).predicate(modLoc("large"), x*0.299F).model(
-						withExistingParent(name + "_" + x + "_" + "0" + "_" + y, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+						withExistingParent(name + "_" + y + "_" + "0" + "_" + x, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
 								.texture("layer0", name)
 								.texture("layer1", name + "_small_" + y)
 								.texture("layer2", name + "_large_" + x)).end();
+				builder.override().predicate(modLoc("small"), y*0.299F).predicate(modLoc("medium"), x*0.299F).model(
+						withExistingParent(name + "_" + y + "_" + x + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+								.texture("layer0", name)
+								.texture("layer1", name + "_small_" + y)
+								.texture("layer2", name + "_medium_" + x)).end();
 			}
 		}
 
@@ -155,7 +160,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 			for(int m = 1; m < 4; m++) {
 				for(int s = 1; s < 4; s++) {
 					builder.override().predicate(modLoc("small"), s*0.299F).predicate(modLoc("medium"), m*0.299F).predicate(modLoc("large"), l*0.299F).model(
-							withExistingParent(name + "_" + l + "_" + m + "_" + s, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+							withExistingParent(name + "_" + s + "_" + m + "_" + l, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
 									.texture("layer0", name)
 									.texture("layer1", name + "_small_" + s)
 									.texture("layer2", name + "_medium_" + m)

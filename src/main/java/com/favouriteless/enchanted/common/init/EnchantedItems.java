@@ -99,7 +99,10 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_RED.get()));
     public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_PURPLE.get()));
     public static final RegistryObject<Item> ARTHANA = ITEMS.register("arthana", () -> new SwordItem(ItemTier.GOLD, 3, -2.4F, (new Item.Properties()).tab(Enchanted.TAB)));
+
     public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WAYSTONE = ITEMS.register("waystone", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Item.Properties()));
 
 
 

@@ -54,9 +54,9 @@ public class AltarPowerHelper {
 
 		for(BlockPos pos : potentialAltars) {
 			CompoundNBT elementNbt = new CompoundNBT();
-			elementNbt.putInt("x", pos.getX());
-			elementNbt.putInt("y", pos.getY());
-			elementNbt.putInt("z", pos.getZ());
+			elementNbt.putInt("xPos", pos.getX());
+			elementNbt.putInt("yPos", pos.getY());
+			elementNbt.putInt("zPos", pos.getZ());
 			listNbt.add(elementNbt);
 		}
 
@@ -71,7 +71,7 @@ public class AltarPowerHelper {
 
 			for(INBT inbt : posList) {
 				CompoundNBT posNbt = (CompoundNBT)inbt;
-				potentialAltars.add(new BlockPos(posNbt.getInt("x"), posNbt.getInt("y"), posNbt.getInt("z")));
+				potentialAltars.add(new BlockPos(posNbt.getInt("xPos"), posNbt.getInt("yPos"), posNbt.getInt("zPos")));
 			}
 		}
 	}

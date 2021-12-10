@@ -25,33 +25,39 @@ import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 
 public class RiteOfBindingTalisman extends AbstractCreateItemRite {
 
+    protected RiteOfBindingTalisman(int power, int powerTick) {
+        super(power, powerTick);
+    }
+
     public RiteOfBindingTalisman() {
         super(1000, 0); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
+        ITEMS_REQUIRED.put(Items.REDSTONE, 1);
     }
 
     @Override
     public void execute() {
-        if(itemsConsumed.get(0).hasTag()) {
-            cancel();
-            stopExecuting();
-            return;
+        for(ItemStack item : itemsConsumed) {
+            if(item.getItem() == EnchantedItems.CIRCLE_TALISMAN.get() && item.hasTag()) {
+                cancel();
+                stopExecuting();
+                return;
+            }
         }
-        byte small = testForCircle(CircleSize.SMALL);
-        byte medium = testForCircle(CircleSize.MEDIUM);
-        byte large = testForCircle(CircleSize.LARGE);
+        byte small = testForCircle(CirclePart.SMALL);
+        byte medium = testForCircle(CirclePart.MEDIUM);
+        byte large = testForCircle(CirclePart.LARGE);
 
-        if(small == -1 && medium == -1 && large == -1) {
+        if(small == 0 && medium == 0 && large == 0) {
             cancel();
             stopExecuting();
             return;
@@ -63,22 +69,22 @@ public class RiteOfBindingTalisman extends AbstractCreateItemRite {
             nbt.putByte("large", large);
             ItemStack talisman = new ItemStack(EnchantedItems.CIRCLE_TALISMAN.get(), 1, nbt);
             talisman.setTag(nbt);
-            spawnItem(talisman);
+            spawnItems(talisman);
 
-            if(small != -1) CircleSize.SMALL.destroy(world, pos);
-            if(medium != -1) CircleSize.MEDIUM.destroy(world, pos);
-            if(large != -1) CircleSize.LARGE.destroy(world, pos);
+            if(small != 0) CirclePart.SMALL.destroy(world, pos);
+            if(medium != 0) CirclePart.MEDIUM.destroy(world, pos);
+            if(large != 0) CirclePart.LARGE.destroy(world, pos);
             world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
 
         stopExecuting();
     }
 
-    private byte testForCircle(CircleSize size) {
-        if(size.match(world, pos, EnchantedBlocks.CHALK_WHITE.get())) return 0;
-        if(size.match(world, pos, EnchantedBlocks.CHALK_RED.get())) return 1;
-        if(size.match(world, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 2;
-        return -1;
+    private byte testForCircle(CirclePart size) {
+        if(size.match(world, pos, EnchantedBlocks.CHALK_WHITE.get())) return 1;
+        if(size.match(world, pos, EnchantedBlocks.CHALK_RED.get())) return 2;
+        if(size.match(world, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 3;
+        return 0;
     }
 
     @Override

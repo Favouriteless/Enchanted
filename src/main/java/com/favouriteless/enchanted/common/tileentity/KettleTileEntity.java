@@ -509,10 +509,12 @@ public class KettleTileEntity extends LockableLootTileEntity implements ITickabl
     @Override
     public void removeAltar(BlockPos altarPos) {
         potentialAltars.remove(altarPos);
+        this.setChanged();
     }
 
     @Override
     public void addAltar(BlockPos altarPos) {
         AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
+        this.setChanged();
     }
 }

@@ -21,38 +21,24 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
 
-public class RiteOfTotalEclipseCharged extends AbstractRite {
+public class RiteOfTotalEclipseCharged extends RiteOfTotalEclipse {
 
     public RiteOfTotalEclipseCharged() {
         super(0, 0); // Power, power per tick
-        CIRCLES_REQUIRED.put(CircleSize.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(Items.STONE_AXE, 1);
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        ITEMS_REQUIRED.put(Items.IRON_AXE, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-    }
-
-    @Override
-    public void execute() {
-        if(!world.isClientSide) {
-            ((ServerWorld) world).setDayTime(18000);
-            world.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1.0F, 1.0F);
-        }
-        stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
     }
 
     @Override

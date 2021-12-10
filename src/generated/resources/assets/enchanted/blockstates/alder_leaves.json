@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "enchanted:block/alder_leaves_0"
+      },
+      {
+        "model": "enchanted:block/alder_leaves_1"
+      },
+      {
+        "model": "enchanted:block/alder_leaves_2"
+      },
+      {
+        "model": "enchanted:block/alder_leaves_3"
+      }
+    ]
+  }
+}

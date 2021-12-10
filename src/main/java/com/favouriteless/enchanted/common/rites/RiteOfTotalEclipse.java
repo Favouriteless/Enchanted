@@ -21,39 +21,43 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RiteOfTotalEclipse extends AbstractRite {
+
+    protected RiteOfTotalEclipse(int power, int powerTick) {
+        super(power, powerTick);
+    }
 
     public RiteOfTotalEclipse() {
         super(3000, 0); // Power, power per tick
-        CIRCLES_REQUIRED.put(CircleSize.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.STONE_AXE, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
     }
 
     @Override
     public void execute() {
-        // Do ritual effects here
-        if(!world.isClientSide) {
-            ((ServerWorld) world).setDayTime(18000);
-            world.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundCategory.MASTER, 1.0F, 1.0F);
-        }
-        stopExecuting();
+        world.setDayTime(18000);
+        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5F, 1.0F);
     }
 
     @Override
     public void onTick() {
-        // Do tick based ritual stuff here
     }
 
     @Override

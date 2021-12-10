@@ -3,12 +3,12 @@
 	"parent": "block/cube",
 	"textures": {
 		"0": "enchanted:block/oak_log_sideways",
-		"1": "enchanted:block/distillery/distillery",
+		"1": "enchanted:block/distillery",
 		"2": "enchanted:block/medium_metal",
 		"3": "minecraft:block/flower_pot",
 		"4": "enchanted:block/light_metal",
-		"5": "enchanted:block/distillery/distillery_cloth",
-		"6": "enchanted:block/distillery/distillery_logs",
+		"5": "enchanted:block/distillery_cloth",
+		"6": "enchanted:block/distillery_logs",
 		"particle": "enchanted:block/oak_log_sideways"
 	},
 	"elements": [

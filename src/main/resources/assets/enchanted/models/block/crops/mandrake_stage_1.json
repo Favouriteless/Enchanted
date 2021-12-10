@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/crop",
-  "textures": {
-    "crop": "enchanted:block/crops/mandrake_stage_1"
-  }
-}

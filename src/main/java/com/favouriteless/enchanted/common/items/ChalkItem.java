@@ -55,7 +55,7 @@ public class ChalkItem extends Item {
         if(context.getClickedFace() == Direction.UP) {
             BlockPos targetLocation = context.getClickedPos().above();
 
-            if (context.getLevel().getBlockState(targetLocation).is(Blocks.AIR)) {
+            if (context.getLevel().getBlockState(targetLocation).isAir()) {
                 if (chalkBlock.canSurvive(chalkBlock.defaultBlockState(),context.getLevel(), targetLocation)) {
 
                     if(!context.getLevel().isClientSide()) {

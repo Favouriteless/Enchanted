@@ -25,6 +25,7 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.function.Supplier;
@@ -41,20 +42,20 @@ public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteTyp
 		return this.supplier.get();
 	}
 
-	public AbstractRite create(World world) {
+	public AbstractRite create(ServerWorld world) {
 		AbstractRite rite = create();
 		rite.setWorld(world);
 		return rite;
 	}
 
-	public AbstractRite create(World world, BlockPos pos) {
+	public AbstractRite create(ServerWorld world, BlockPos pos) {
 		AbstractRite rite = create();
 		rite.setWorld(world);
 		rite.setPos(pos);
 		return rite;
 	}
 
-	public AbstractRite create(World world, BlockPos pos, PlayerEntity caster) {
+	public AbstractRite create(ServerWorld world, BlockPos pos, PlayerEntity caster) {
 		AbstractRite rite = create();
 		rite.setWorld(world);
 		rite.setPos(pos);

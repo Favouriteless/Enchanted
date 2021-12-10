@@ -25,7 +25,7 @@ import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,7 +34,8 @@ public class RiteOfChargingStone extends AbstractCreateItemRite {
 
     public RiteOfChargingStone() {
         super(2000, 0); // Power, power per tick
-        CIRCLES_REQUIRED.put(CircleSize.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE.get(), 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -44,14 +45,12 @@ public class RiteOfChargingStone extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
-        // Do ritual effects here
-        spawnItem(new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1));
+        spawnItems(new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1));
         stopExecuting();
     }
 
     @Override
     public void onTick() {
-        // Do tick based ritual stuff here
     }
 
     @Override

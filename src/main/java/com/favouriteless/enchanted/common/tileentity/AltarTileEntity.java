@@ -40,6 +40,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -50,8 +52,10 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,6 +106,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     private final List<IAltarPowerConsumer> powerConsumers = new ArrayList<>();
 
     private boolean loaded = false;
+    private boolean powerLoaded = false;
     private boolean facingX;
     private final double rechargeRate = EnchantedConfig.ALTAR_BASE_RECHARGE.get();
 
@@ -130,7 +135,8 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                     createChangeSubscriber();
                 }
                 recalculateUpgrades();
-                recalculateBlocks();
+                if(!powerLoaded)
+                    recalculateBlocks();
                 loaded = true;
             }
             else if (!level.isClientSide) {
@@ -149,12 +155,17 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putDouble("currentPower", currentPower);
+        nbt.put("blockData", altarBlockData.getSaveTag());
         return super.save(nbt);
     }
 
     @Override
     public void load(BlockState state, CompoundNBT nbt) {
         super.load(state, nbt);
+        if(nbt.contains("blockData")) {
+            altarBlockData.loadTag((CompoundNBT) nbt.get("blockData"));
+            powerLoaded = true;
+        }
         this.currentPower = nbt.getDouble("currentPower");
     }
 
@@ -338,6 +349,36 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) {
                 tagsAmount.put(provider.getKey(), 0);
             }
+        }
+
+        public CompoundNBT getSaveTag() {
+            CompoundNBT nbt = new CompoundNBT();
+            CompoundNBT blockNbt = new CompoundNBT();
+            CompoundNBT tagNbt = new CompoundNBT();
+
+            for(Block block : blocksAmount.keySet()) {
+                blockNbt.putInt(block.getRegistryName().toString(), blocksAmount.get(block));
+            }
+            for(IOptionalNamedTag<Block> tag : tagsAmount.keySet()) {
+                tagNbt.putInt(tag.getName().toString(), tagsAmount.get(tag));
+            }
+
+            nbt.put("blocksAmount", blockNbt);
+            nbt.put("tagsAmount", tagNbt);
+            return nbt;
+        }
+
+        public void loadTag(CompoundNBT nbt) {
+            CompoundNBT blockNbt = (CompoundNBT)nbt.get("blocksAmount");
+            CompoundNBT tagNbt = (CompoundNBT)nbt.get("tagsAmount");
+
+            for(String name : blockNbt.getAllKeys()) {
+                blocksAmount.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name)), blockNbt.getInt(name));
+            }
+            for(String name : tagNbt.getAllKeys()) {
+                tagsAmount.put(BlockTags.createOptional(new ResourceLocation(name)), tagNbt.getInt(name));
+            }
+
         }
 
         public double addBlock(Block block, double powerMultiplier) {

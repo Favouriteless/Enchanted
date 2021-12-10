@@ -56,6 +56,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -85,7 +86,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
     private static final int WARMING_MAX = 80;
     private static final int COOK_TIME = 200;
-    private static final long BLENDING_MILLISECONDS = 1000;
+    private static final long BLENDING_MILLISECONDS = 500;
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private List<WitchCauldronRecipe> potentialRecipes = new ArrayList<>();
@@ -226,15 +227,19 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
         if(level != null && !level.isClientSide) {
             if(isFailed) {
                 setWater(0);
+                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
             else {
                 tank.drain(new FluidStack(Fluids.WATER, tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount()), IFluidHandler.FluidAction.EXECUTE);
             }
-            if(player != null) {
-                PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : new ItemStack(itemOut.getItem()));
-            }
-            else {
-                level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
+            if(!itemOut.isEmpty()) {
+                if(player != null) {
+                    PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : new ItemStack(itemOut.getItem()));
+                }
+                else {
+                    level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
+                }
+                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
             itemOut.shrink(1);
             if(itemOut.isEmpty()) {
@@ -244,7 +249,6 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
                 resetValues();
                 recalculateTargetColour();
             }
-            level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
             recalculateTargetColour();
             updateBlock();
         }
@@ -417,7 +421,7 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
 
         if(nbt.contains("itemOut")) {
             CompoundNBT itemNbt = (CompoundNBT)nbt.get("itemOut");
-            itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), nbt.getInt("count"));
+            itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
         }
 
         justLoaded = true;
@@ -507,10 +511,12 @@ public class WitchCauldronTileEntity extends LockableLootTileEntity implements I
     @Override
     public void removeAltar(BlockPos altarPos) {
         potentialAltars.remove(altarPos);
+        this.setChanged();
     }
 
     @Override
     public void addAltar(BlockPos altarPos) {
         AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
+        this.setChanged();
     }
 }

@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.rites.*;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -46,11 +46,25 @@ public class EnchantedRiteTypes {
     public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry("rite_types", RegistryBuilder::new);
 
     public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteOfChargingStone::new));
+
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
 
+    public static final RegistryObject<RiteType<?>> BINDING_TALISMAN = RITE_TYPES.register("binding_talisman", () -> new RiteType<>(RiteOfBindingTalisman::new));
+    public static final RegistryObject<RiteType<?>> BINDING_TALISMAN_CHARGED = RITE_TYPES.register("binding_talisman_charged", () -> new RiteType<>(RiteOfBindingTalismanCharged::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE = RITE_TYPES.register("binding_waystone", () -> new RiteType<>(RiteOfBindingWaystone::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_CHARGED = RITE_TYPES.register("binding_waystone_charged", () -> new RiteType<>(RiteOfBindingWaystoneCharged::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE = RITE_TYPES.register("binding_waystone_duplicate", () -> new RiteType<>(RiteOfBindingWaystoneDuplicate::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE_CHARGED = RITE_TYPES.register("binding_waystone_duplicate_charged", () -> new RiteType<>(RiteOfBindingWaystoneDuplicateCharged::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY = RITE_TYPES.register("binding_waystone_entity", () -> new RiteType<>(RiteOfBindingWaystoneEntity::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY_CHARGED = RITE_TYPES.register("binding_waystone_entity_charged", () -> new RiteType<>(RiteOfBindingWaystoneEntityCharged::new));
 
-    public static AbstractRite getFromRequirements(HashMap<CircleSize, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
+    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
+
+    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummoningEntity::new));
+
+
+    public static AbstractRite getFromRequirements(HashMap<CirclePart, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
         for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
             RiteType<?> type = registryObject.get();
             AbstractRite rite = type.create();

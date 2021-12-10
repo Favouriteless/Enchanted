@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "enchanted:block/rowan_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "enchanted:block/rowan_log"
+    },
+    "axis=z": {
+      "model": "enchanted:block/rowan_log_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "enchanted:block/alder_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "enchanted:block/alder_log"
+    },
+    "axis=z": {
+      "model": "enchanted:block/alder_log_horizontal",
+      "x": 90
+    }
+  }
+}

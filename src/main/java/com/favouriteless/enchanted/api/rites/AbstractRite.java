@@ -22,7 +22,8 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.common.rites.util.CircleSize;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteManager;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
@@ -49,7 +50,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,18 +59,19 @@ import java.util.UUID;
 
 public abstract class AbstractRite {
 
-    public final HashMap<CircleSize, Block> CIRCLES_REQUIRED = new HashMap<>();
+    public final HashMap<CirclePart, Block> CIRCLES_REQUIRED = new HashMap<>();
     public final HashMap<EntityType<?>, Integer> ENTITIES_REQUIRED = new HashMap<>();
     public final HashMap<Item, Integer> ITEMS_REQUIRED = new HashMap<>();
     public final int POWER;
     public final int POWER_TICK;
 
-    private final List<ItemStack> itemsConsumed = new ArrayList<>();
+    protected final List<ItemStack> itemsConsumed = new ArrayList<>();
 
-    public World world; // World ritual started in
+    public ServerWorld world; // World ritual started in
     public BlockPos pos; // Position ritual started at
     public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
+    public Entity targetEntity;
 
     private boolean isStarting = false;
     private int ticks = 0;
@@ -106,18 +108,23 @@ public abstract class AbstractRite {
     }
 
     protected boolean tryConsumePower(int amount) {
-        if(amount > 0 && world != null) {
-            TileEntity te = world.getBlockEntity(pos);
-            if(te instanceof ChalkGoldTileEntity) {
-                List<BlockPos> potentialAltars = ((ChalkGoldTileEntity)te).getAltarPositions();
-                AltarTileEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
+        if(world != null) {
+            if(amount > 0) {
+                TileEntity te = world.getBlockEntity(pos);
+                if(te instanceof ChalkGoldTileEntity) {
+                    List<BlockPos> potentialAltars = ((ChalkGoldTileEntity) te).getAltarPositions();
+                    AltarTileEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
 
-                if(altar != null) {
-                    if(altar.currentPower >= amount) {
-                        altar.currentPower -= amount;
-                        return true;
+                    if(altar != null) {
+                        if(altar.currentPower >= amount) {
+                            altar.currentPower -= amount;
+                            return true;
+                        }
                     }
                 }
+            }
+            else {
+                return true;
             }
         }
         return false;
@@ -217,7 +224,9 @@ public abstract class AbstractRite {
     protected void detatchFromChalk() {
         TileEntity te = world.getBlockEntity(pos);
         if(te instanceof ChalkGoldTileEntity) {
-            ((ChalkGoldTileEntity)te).clearRite();
+            ChalkGoldTileEntity chalk = (ChalkGoldTileEntity)te;
+            if(chalk.getRite() == this)
+                chalk.clearRite();
         }
     }
 
@@ -281,14 +290,33 @@ public abstract class AbstractRite {
             stack.shrink(amountNeeded);
             entity.setItem(stack);
         }
+        if(item == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
+            UUID entityUuid = stack.getTag().getUUID("entity");
+            this.targetUUID = entityUuid;
+            targetEntity = getTargetEntity();
+        }
 
         world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundCategory.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 5; i++) {
             double dx = entity.position().x - 0.15D + (Math.random() * 0.3D);
             double dy = entity.position().y + (Math.random() * 0.3D);
             double dz = entity.position().z - 0.15D + (Math.random() * 0.3D);
-            ((ServerWorld)world).sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            world.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    protected Entity getTargetEntity() {
+        Entity target = world.getServer().getPlayerList().getPlayer(targetUUID);
+
+        if(target != null)
+            return target;
+        else {
+            for(ServerWorld serverWorld : world.getServer().getAllLevels()) {
+                target = serverWorld.getEntity(targetUUID);
+                if(target != null) return target;
+            }
+        }
+        return null;
     }
 
     private void consumeEntity(Entity entity) {
@@ -310,7 +338,7 @@ public abstract class AbstractRite {
         }
     }
 
-    public boolean is(HashMap<CircleSize, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
+    public boolean is(HashMap<CirclePart, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {
         return CIRCLES_REQUIRED.equals(circles) && ENTITIES_REQUIRED.equals(entities) && ITEMS_REQUIRED.equals(items);
     }
 
@@ -321,8 +349,8 @@ public abstract class AbstractRite {
      * @return No. of extra requirement entities, -1 if not valid.
      */
     public int differenceAt(World world, BlockPos pos) {
-        for(CircleSize circleSize : CIRCLES_REQUIRED.keySet()) {
-            if(!circleSize.match(world, pos, CIRCLES_REQUIRED.get(circleSize))) {
+        for(CirclePart circlePart : CIRCLES_REQUIRED.keySet()) {
+            if(!circlePart.match(world, pos, CIRCLES_REQUIRED.get(circlePart))) {
                 return -1;
             }
         }
@@ -373,7 +401,7 @@ public abstract class AbstractRite {
         return diff;
     }
 
-    public void setWorld(World world) {
+    public void setWorld(ServerWorld world) {
         this.world = world;
     }
 

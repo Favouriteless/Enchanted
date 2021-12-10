@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "enchanted:block/trees/alder_planks",
-    "top": "enchanted:block/trees/alder_planks",
-    "side": "enchanted:block/trees/alder_planks"
-  }
-}

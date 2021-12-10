@@ -3,7 +3,7 @@
 	"parent": "block/cube",
 	"textures": {
 		"0": "enchanted:block/dark_metal",
-		"1": "enchanted:block/witch_oven/witch_oven_fire_off",
+		"1": "enchanted:block/witch_oven_fire_off",
 		"particle": "enchanted:block/dark_metal"
 	},
 	"elements": [

@@ -82,7 +82,6 @@ public class EnchantedItems {
     public static final RegistryObject<Item> GARLIC = ITEMS.register("garlic", () -> new BlockNamedItem(EnchantedBlocks.GARLIC.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> GLINT_WEED = ITEMS.register("glint_weed", () -> new BlockItem(EnchantedBlocks.GLINT_WEED.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> ICY_NEEDLE = ITEMS.register("icy_needle", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> BONE_NEEDLE = ITEMS.register("bone_needle", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> SPANISH_MOSS = ITEMS.register("spanish_moss", () -> new BlockItem(EnchantedBlocks.SPANISH_MOSS.get(), new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> WOLFSBANE_FLOWER = ITEMS.register("wolfsbane_flower", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> BLOOD_POPPY = ITEMS.register("blood_poppy", () -> new BlockItem(EnchantedBlocks.BLOOD_POPPY.get(), new Item.Properties().tab(Enchanted.TAB)));
@@ -100,6 +99,10 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CHALK_RED = ITEMS.register("chalk_red", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_RED.get()));
     public static final RegistryObject<Item> CHALK_PURPLE = ITEMS.register("chalk_purple", () -> new ChalkItem(new Item.Properties().tab(Enchanted.TAB).stacksTo(1).durability(40), EnchantedBlocks.CHALK_PURPLE.get()));
     public static final RegistryObject<Item> ARTHANA = ITEMS.register("arthana", () -> new SwordItem(ItemTier.GOLD, 3, -2.4F, (new Item.Properties()).tab(Enchanted.TAB)));
+
+    public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WAYSTONE = ITEMS.register("waystone", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Item.Properties()));
 
 
 
@@ -135,6 +138,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> WOOL_OF_BAT = ITEMS.register("wool_of_bat", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TONGUE_OF_DOG = ITEMS.register("tongue_of_dog", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CREEPER_HEART = ITEMS.register("creeper_heart", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> BONE_NEEDLE = ITEMS.register("bone_needle", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> REDSTONE_SOUP = ITEMS.register("redstone_soup", () -> new SimpleEffectBrewItem(Effects.ABSORPTION, 2400, 1, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> FLYING_OINTMENT = ITEMS.register("flying_ointment", () -> new SimpleEffectBrewItem(Effects.LEVITATION, 400, 0, new Item.Properties().tab(Enchanted.TAB)));

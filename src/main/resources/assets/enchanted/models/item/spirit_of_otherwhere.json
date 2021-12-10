@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "enchanted:item/spirit_of_otherwhere"
-  }
-}

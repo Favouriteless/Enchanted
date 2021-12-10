@@ -39,6 +39,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
                 if (rite != null) {
                     currentRite = rite;
-                    currentRite.setWorld(world);
+                    currentRite.setWorld((ServerWorld)world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);
                     RiteManager.addRite(currentRite);
@@ -80,13 +81,18 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         this.currentRite = null;
     }
 
+    public AbstractRite getRite() {
+        return this.currentRite;
+    }
+
     @Override
     public void tick() {
     }
 
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
-        return AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        return super.save(nbt);
     }
 
     @Override
@@ -103,10 +109,12 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
     @Override
     public void removeAltar(BlockPos altarPos) {
         potentialAltars.remove(altarPos);
+        this.setChanged();
     }
 
     @Override
     public void addAltar(BlockPos altarPos) {
         AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
+        this.setChanged();
     }
 }

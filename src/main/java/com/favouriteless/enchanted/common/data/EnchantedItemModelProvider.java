@@ -100,6 +100,8 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.GARLIC.get());
 		simpleToolItem(EnchantedItems.ARTHANA.get());
 
+		talismanItem(EnchantedItems.CIRCLE_TALISMAN.get());
+
 	}
 
 	private void simpleItem(Item item) {
@@ -112,4 +114,58 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		withExistingParent(ModelProvider.ITEM_FOLDER + "/" + name, mcLoc(ModelProvider.ITEM_FOLDER + "/handheld")).texture("layer0", ModelProvider.ITEM_FOLDER + "/" + name);
 	}
 
+	private void talismanItem(Item item) {
+		String name = ModelProvider.ITEM_FOLDER + "/" + item.getRegistryName().getPath();
+
+		ItemModelBuilder builder = getBuilder(name);
+		builder.parent(ITEM_GENERATED).texture("layer0", name);
+
+		for(int x = 1; x < 4; x++) {
+			builder.override().predicate(modLoc("large"), x * 0.299F).model(
+					withExistingParent(name + "_" + x + "_" + "0" + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+							.texture("layer0", name)
+							.texture("layer1", name + "_large_" + x)).end();
+			builder.override().predicate(modLoc("medium"), x * 0.299F).model(
+					withExistingParent(name + "_" + "0" + "_" + x + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+							.texture("layer0", name)
+							.texture("layer1", name + "_medium_" + x)).end();
+			builder.override().predicate(modLoc("small"), x * 0.299F).model(
+					withExistingParent(name + "_" + "0" + "_" + "0" + "_" + x, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+							.texture("layer0", name)
+							.texture("layer1", name + "_small_" + x)).end();
+		}
+
+
+		for(int x = 1; x < 4; x++) {
+			for(int y = 1; y < 4; y++) {
+				builder.override().predicate(modLoc("medium"), y*0.299F).predicate(modLoc("large"), x*0.299F).model(
+						withExistingParent(name + "_" + x + "_" + y + "_" + "0", mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+								.texture("layer0", name)
+								.texture("layer1", name + "_medium_" + y)
+								.texture("layer2", name + "_large_" + x)).end();
+				builder.override().predicate(modLoc("small"), y*0.299F).predicate(modLoc("large"), x*0.299F).model(
+						withExistingParent(name + "_" + x + "_" + "0" + "_" + y, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+								.texture("layer0", name)
+								.texture("layer1", name + "_small_" + y)
+								.texture("layer2", name + "_large_" + x)).end();
+			}
+		}
+
+		for(int l = 1; l < 4; l++) {
+			for(int m = 1; m < 4; m++) {
+				for(int s = 1; s < 4; s++) {
+					builder.override().predicate(modLoc("small"), s*0.299F).predicate(modLoc("medium"), m*0.299F).predicate(modLoc("large"), l*0.299F).model(
+							withExistingParent(name + "_" + l + "_" + m + "_" + s, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+									.texture("layer0", name)
+									.texture("layer1", name + "_small_" + s)
+									.texture("layer2", name + "_medium_" + m)
+									.texture("layer3", name + "_large_" + l)).end();
+				}
+			}
+		}
+	}
+
 }
+
+
+

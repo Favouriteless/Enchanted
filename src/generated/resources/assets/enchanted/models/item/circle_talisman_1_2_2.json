@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "enchanted:item/circle_talisman",
+    "layer1": "enchanted:item/circle_talisman_small_2",
+    "layer2": "enchanted:item/circle_talisman_medium_2",
+    "layer3": "enchanted:item/circle_talisman_large_1"
+  }
+}

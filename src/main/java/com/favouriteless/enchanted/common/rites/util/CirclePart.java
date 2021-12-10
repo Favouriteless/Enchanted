@@ -146,6 +146,12 @@ public enum CirclePart {
         return outlist;
     }
 
+    public List<Entity> getEntitiesInside(World world, BlockPos centerPos, Predicate<Entity> predicate) {
+        List<Entity> outlist = getEntitiesInside(world, centerPos);
+        outlist.removeIf(entity -> !predicate.test(entity));
+        return outlist;
+    }
+
     public Entity getClosestEntity(World world, BlockPos centerPos) {
         return closest(getEntitiesInside(world, centerPos), centerPos);
     }

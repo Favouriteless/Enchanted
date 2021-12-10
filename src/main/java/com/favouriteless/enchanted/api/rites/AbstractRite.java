@@ -75,6 +75,9 @@ public abstract class AbstractRite {
 
     private boolean isStarting = false;
     private int ticks = 0;
+    private boolean isAttached = true;
+
+    private ChalkGoldTileEntity chalk = null;
 
     public boolean isRemoved = false;
 
@@ -93,6 +96,7 @@ public abstract class AbstractRite {
         nbt.putUUID("caster", casterUUID);
         if(targetUUID != null) nbt.putUUID("target", targetUUID);
         nbt.putInt("ticks", ticks);
+        nbt.putBoolean("isAttached", isAttached);
 
         return saveAdditional(nbt);
     }
@@ -103,6 +107,7 @@ public abstract class AbstractRite {
         casterUUID = nbt.getUUID("caster");
         if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
         ticks = nbt.getInt("ticks");
+        isAttached = nbt.getBoolean("isAttached");
 
         loadAdditional(nbt);
     }
@@ -161,6 +166,15 @@ public abstract class AbstractRite {
 
     public void tick() {
         if(world != null && !world.isClientSide ) {
+            if(isAttached && chalk == null) {
+                TileEntity te = world.getBlockEntity(pos);
+                if(te instanceof ChalkGoldTileEntity) {
+                    setChalk((ChalkGoldTileEntity)te);
+                    chalk.setRite(this);
+                }
+            }
+
+
             ticks++;
             if (isStarting) {
                 if(ticks % 20 == 0) {
@@ -206,7 +220,10 @@ public abstract class AbstractRite {
                 }
             }
             else if(!isRemoved) {
-                onTick();
+                if(tryConsumePower(POWER_TICK))
+                    onTick();
+                else
+                    stopExecuting();
             }
         }
     }
@@ -228,6 +245,7 @@ public abstract class AbstractRite {
             if(chalk.getRite() == this)
                 chalk.clearRite();
         }
+        isAttached = false;
     }
 
     /**
@@ -263,7 +281,7 @@ public abstract class AbstractRite {
             double dx = pos.getX() + Math.random();
             double dy = pos.getY() + Math.random();
             double dz = pos.getZ() + Math.random();
-            ((ServerWorld)world).sendParticles(new RedstoneParticleData(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+            world.sendParticles(new RedstoneParticleData(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
         }
 
         TileEntity te = world.getBlockEntity(pos);
@@ -428,6 +446,10 @@ public abstract class AbstractRite {
 
     public boolean getStarting() {
         return isStarting;
+    }
+
+    public void setChalk(ChalkGoldTileEntity chalk) {
+        this.chalk = chalk;
     }
 
 }

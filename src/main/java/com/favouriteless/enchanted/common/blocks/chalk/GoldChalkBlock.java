@@ -61,6 +61,15 @@ public class GoldChalkBlock extends AbstractChalkBlock {
     }
 
     @Override
+    public void onRemove(BlockState pState, World pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if(pState != pNewState) {
+            ChalkGoldTileEntity te = (ChalkGoldTileEntity)pLevel.getBlockEntity(pPos);
+            te.clearRite();
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(GLYPH);
     }

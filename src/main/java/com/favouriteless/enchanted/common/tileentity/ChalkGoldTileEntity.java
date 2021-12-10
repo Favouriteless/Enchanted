@@ -30,6 +30,8 @@ import com.favouriteless.enchanted.common.rites.util.RiteManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -68,17 +70,32 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
                     currentRite.setWorld((ServerWorld)world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);
+                    currentRite.setChalk(this);
                     RiteManager.addRite(currentRite);
                     currentRite.start();
                 } else {
                     world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
                 }
             }
+            else {
+                if(!currentRite.getStarting()) {
+                    currentRite.stopExecuting();
+                }
+            }
         }
     }
 
+    public void setRite(AbstractRite rite) {
+        currentRite = rite;;
+    }
+
     public void clearRite() {
-        this.currentRite = null;
+        currentRite = null;
+    }
+
+    public void stopRite() {
+        currentRite.stopExecuting();
+        clearRite();
     }
 
     public AbstractRite getRite() {
@@ -87,6 +104,12 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void tick() {
+        if(level != null && currentRite != null) {
+            double dx = worldPosition.getX() + Math.random();
+            double dy = worldPosition.getY() + Math.random() * 0.3D;
+            double dz = worldPosition.getZ() + Math.random();
+            ((ServerWorld)level).sendParticles(new RedstoneParticleData(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        }
     }
 
     @Override

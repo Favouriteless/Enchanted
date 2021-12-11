@@ -130,6 +130,7 @@ d444243d88832c6994a641fb7a04cf73575a5724 assets/enchanted/models/item/attuned_st
 23428b6d27562f7d0220144b736a71affdefbce4 assets/enchanted/models/item/belladonna_seeds.json
 9810a5ff5bb6a12e77f8a71c76243f4b7cd36e1d assets/enchanted/models/item/blood_poppy.json
 fd67fec8f24e429f056f13a315c9b04473b7dcd9 assets/enchanted/models/item/bone_needle.json
+50fbe899e8f51ee352826340e698311a2b219134 assets/enchanted/models/item/bound_waystone.json
 ffccf1c672185b66f33d305325d606fe51c3e720 assets/enchanted/models/item/breath_of_the_goddess.json
 17fbb7ee5007556fdc141147b79ecf1dd54bbb38 assets/enchanted/models/item/candelabra.json
 c2697b844d71be89a1c2aaff52c7e63da26b7614 assets/enchanted/models/item/chalice.json
@@ -263,6 +264,7 @@ dad03107e76140e46a3db3a49c62720779d1c291 assets/enchanted/models/item/soul_of_th
 42a118572f59780f1f09627c61a1f26e35599fe2 assets/enchanted/models/item/taglock_filled.json
 0d2603a4afa315e3d838502061b9561215173e0b assets/enchanted/models/item/tear_of_the_goddess.json
 e3483d4ff44fd9f949222ec69e0afadfe8b22051 assets/enchanted/models/item/tongue_of_dog.json
+3e46608ca97af9dd8cb7b38859931e900b7c86c8 assets/enchanted/models/item/waystone.json
 0f0e0289b1fe950e76926e0bfb9d2af571b15891 assets/enchanted/models/item/whiff_of_magic.json
 220fb56236d2853aef99f5b2257ddb1ac7099321 assets/enchanted/models/item/witch_cauldron.json
 249ee4af3cfcc9e722bbee85c8a2c6ee7f748ea5 assets/enchanted/models/item/witch_oven.json

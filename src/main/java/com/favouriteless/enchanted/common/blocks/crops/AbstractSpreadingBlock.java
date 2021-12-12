@@ -36,6 +36,8 @@ public abstract class AbstractSpreadingBlock extends Block {
 
     @Override
     public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
+        if(!canSpreadOn(pLevel.getBlockState(pPos.below()).getBlock()))
+            return;
         if (pRandom.nextInt(25) == 0) {
             int i = 5;
 
@@ -63,5 +65,9 @@ public abstract class AbstractSpreadingBlock extends Block {
             }
         }
 
+    }
+
+    public boolean canSpreadOn(Block block) {
+        return true;
     }
 }

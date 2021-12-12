@@ -36,14 +36,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.EntityType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -114,8 +110,8 @@ public class EnchantedBlocks {
     public static final RegistryObject<CropsBlockAgeFive> MANDRAKE = BLOCKS.register("mandrake", () -> new MandrakeBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<CropsBlockAgeFive> GARLIC = BLOCKS.register("garlic", () -> new GarlicBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<CropsBlockAgeFive> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
-    public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlockAbstract(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
-    public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlockAbstract(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
+    public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
+    public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
     public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> BLOOD_POPPY = BLOCKS.register("blood_poppy", () -> new BloodPoppyBlock(AbstractBlock.Properties.copy(Blocks.POPPY)));
 

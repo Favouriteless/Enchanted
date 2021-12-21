@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "header",
+      "text": "#rite_name",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "text",
+      "text": "#text",
+      "x": 0,
+      "y": 22
+    }
+  ]
+}

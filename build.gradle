@@ -90,7 +90,7 @@ dependencies {
     compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
     runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2:api")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
 }
 

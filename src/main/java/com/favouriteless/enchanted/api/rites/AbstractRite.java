@@ -440,7 +440,7 @@ public abstract class AbstractRite {
             double dx = pos.getX() - 1.0D + Math.random() * 3.0D;
             double dy = pos.getY() + Math.random() * 2.0D;
             double dz = pos.getZ() - 1.0D + Math.random() * 3.0D;
-            ((ServerWorld)world).sendParticles(ParticleTypes.WITCH, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            world.sendParticles(ParticleTypes.WITCH, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -450,6 +450,10 @@ public abstract class AbstractRite {
 
     public void setChalk(ChalkGoldTileEntity chalk) {
         this.chalk = chalk;
+    }
+
+    public boolean hasCircle(CirclePart part, Block block) {
+        return CIRCLES_REQUIRED.containsKey(part) && CIRCLES_REQUIRED.get(part) == block;
     }
 
 }

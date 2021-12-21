@@ -1,0 +1,9 @@
+{
+  "name": "Witchcraft: Extraction",
+  "landing_text": "$(bold)Introduction$()$(br)Many resources used in the art of Witchcraft or other magical practices requires the extraction of magical properties or materials from seemingly mundane objects. This book details the two main processes; fume collection and distilling,",
+  "version": 1,
+  "show_progress": false,
+  "creative_tab": "enchanted.main",
+  "model": "patchouli:book_purple",
+  "book_texture": "patchouli:textures/gui/book_purple.png"
+}

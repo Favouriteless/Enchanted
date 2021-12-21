@@ -1,0 +1,6 @@
+{
+  "name": "Charging Rites",
+  "description": "Using magicks to power an imbued object is known as charging. This works on players, creatures and inanimate objects.",
+  "icon": "enchanted:attuned_stone_charged",
+  "sortnum": 0
+}

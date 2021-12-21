@@ -1,0 +1,16 @@
+{
+  "name": "Foul Fume",
+  "icon": "enchanted:foul_fume",
+  "category": "enchanted:collecting_fumes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Foul fume."
+    },
+    {
+      "type": "enchanted:witch_oven_recipe",
+      "recipe": "enchanted:byproduct_foul_fume"
+    }
+  ],
+  "read_by_default": true
+}

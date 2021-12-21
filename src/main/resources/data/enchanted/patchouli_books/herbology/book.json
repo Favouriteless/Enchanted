@@ -1,6 +1,6 @@
 {
   "name": "Witchcraft: Herbology",
-  "landing_text": "The art of Witchcraft and other Occult or magical practices require the use of various common (or rare) plants for the preparation of magicks and brews. This book aims to detail some of rarer of these plants, which should not be known to common folk.",
+  "landing_text": "$(bold)Introduction$()$(br)The art of Witchcraft and other Occult or magical practices require the use of various common (or rare) plants for the preparation of magicks and brews. This book aims to detail some of rarer of these plants, which should not be known to common folk.",
   "version": 1,
   "show_progress": false,
   "subtitle": "One thousand magical herbs and fungi",

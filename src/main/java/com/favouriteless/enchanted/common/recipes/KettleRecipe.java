@@ -19,17 +19,25 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.recipes.kettle;
+package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.core.util.StaticJSONHelper;
+import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import javax.annotation.Nullable;
 
 public class KettleRecipe implements IRecipe<IInventory> {
 
@@ -172,4 +180,58 @@ public class KettleRecipe implements IRecipe<IInventory> {
     public boolean isSpecial() {
         return true;
     }
+
+
+
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<KettleRecipe> {
+
+        @Override
+        public KettleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "inputs"));
+            ItemStack itemOut = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
+            int power = JSONUtils.getAsInt(json, "power");
+            int[] cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
+            int[] finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
+
+            return new KettleRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
+        }
+
+        @Nullable
+        @Override
+        public KettleRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+
+            int inSize = buffer.readInt();
+            NonNullList<ItemStack> itemsIn = NonNullList.create();
+            for (int x = 0; x < inSize; ++x) {
+                itemsIn.add(buffer.readItem());
+            }
+            ItemStack itemOut = buffer.readItem();
+            int power = buffer.readInt();
+            int[] cookingColour = new int[] {(int)buffer.readShort(), (int)buffer.readShort(), (int)buffer.readShort() };
+            int[] finalColour = new int[] {(int)buffer.readShort(), (int)buffer.readShort(), (int)buffer.readShort() };
+
+            return new KettleRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
+        }
+
+        @Override
+        public void toNetwork(PacketBuffer buffer, KettleRecipe recipe) {
+
+            buffer.writeInt(recipe.getItemsIn().size());
+            for (ItemStack item : recipe.getItemsIn()) {
+                buffer.writeItem(item);
+            }
+            buffer.writeItem(recipe.getResultItem());
+            buffer.writeInt(recipe.getPower());
+            buffer.writeShort(recipe.getCookingRed());
+            buffer.writeShort(recipe.getCookingGreen());
+            buffer.writeShort(recipe.getCookingBlue());
+            buffer.writeShort(recipe.getFinalRed());
+            buffer.writeShort(recipe.getFinalGreen());
+            buffer.writeShort(recipe.getFinalBlue());
+
+        }
+
+    }
+
 }

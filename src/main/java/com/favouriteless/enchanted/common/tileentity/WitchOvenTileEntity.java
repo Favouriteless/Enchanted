@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
-import com.favouriteless.enchanted.common.recipes.witch_oven.WitchOvenRecipe;
+import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.AbstractFurnaceBlock;
@@ -33,17 +33,21 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -51,6 +55,7 @@ import java.util.Random;
 public class WitchOvenTileEntity extends FurnaceTileEntityBase {
 
     private static final Random RANDOM = new Random();
+    public static final IOptionalNamedTag<Item> ORE_TAG = ItemTags.createOptional(new ResourceLocation("forge", "ores"));
 
     public WitchOvenTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));
@@ -83,7 +88,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
             ItemStack fuelStack = this.inventoryContents.get(1);
             if (this.isBurning() || !fuelStack.isEmpty() && !this.inventoryContents.get(0).isEmpty()) {
                 IRecipe<?> irecipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, this.level).orElse(null);
-                if (!this.isBurning() && this.canSmelt(irecipe)) {
+                if (!this.isBurning() && this.canSmelt(irecipe) && !this.inventoryContents.get(0).getItem().is(ORE_TAG)) {
                     this.burnTime = this.getBurnTime(fuelStack);
                     this.recipesUsed = this.burnTime;
                     if (this.isBurning()) {
@@ -104,7 +109,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
                     ++this.cookTime;
                     if (this.cookTime == this.cookTimeTotal) {
                         this.cookTime = 0;
-                        this.cookTimeTotal = this.getCookTime();
+                        this.cookTimeTotal = (int)Math.round(this.getCookTime() * 0.8D);
                         this.smelt(irecipe);
                         flag1 = true;
                     }

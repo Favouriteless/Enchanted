@@ -61,7 +61,7 @@ public class WitchOvenContainer extends FurnaceContainerBase {
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemstack;
         Slot slot = this.slots.get(index);
 
         if (slot != null && slot.hasItem()) {
@@ -88,11 +88,11 @@ public class WitchOvenContainer extends FurnaceContainerBase {
                         return ItemStack.EMPTY;
                     }
                 } else if (index < 32) { // Item is in main player inventory or cannot be processed
-                    if (!this.moveItemStackTo(slotItem, 5, 32, false)) {
+                    if (!this.moveItemStackTo(slotItem, 32, 41, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (index < 41) { // Item is in player hotbar or cannot be processed
-                    if(!this.moveItemStackTo(slotItem, 32, 41, false)) {
+                    if(!this.moveItemStackTo(slotItem, 5, 32, false)) {
                         return ItemStack.EMPTY;
                     }
                 }

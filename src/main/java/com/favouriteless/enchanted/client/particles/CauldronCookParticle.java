@@ -32,7 +32,7 @@ import java.util.Random;
 public class CauldronCookParticle extends SpriteTexturedParticle {
 
     private static final Random RANDOM = new Random();
-    public static final double ANGLE = 5.0D;
+    public static final double ANGLE = 8.0D;
     public static final double RADIUS_INCREASE = 0.005D;
 
     private final int circleStart;

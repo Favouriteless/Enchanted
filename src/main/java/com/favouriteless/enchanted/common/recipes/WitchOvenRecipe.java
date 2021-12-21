@@ -19,27 +19,35 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.recipes.witch_oven;
+package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import javax.annotation.Nullable;
 
 public class WitchOvenRecipe implements IRecipe<IInventory> {
 
     private final IRecipeType<?> type;
     private final ResourceLocation id;
 
-    private final ItemStack ingredient;
+    private final Ingredient ingredient;
     private final ItemStack result;
     private final int jarsNeeded;
 
-    public WitchOvenRecipe(ResourceLocation id, ItemStack ingredient, ItemStack result, int jarsNeeded) {
+    public WitchOvenRecipe(ResourceLocation id, Ingredient ingredient, ItemStack result, int jarsNeeded) {
         this.type = EnchantedRecipeTypes.WITCH_OVEN;
         this.id = id;
         this.ingredient = ingredient;
@@ -51,17 +59,13 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
         return this.jarsNeeded;
     }
 
-    public ItemStack getInput() {
-        return this.ingredient;
-    }
-
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        return inv.getItem(0).sameItem(this.ingredient);
+        return this.ingredient.test(inv.getItem(0));
     }
 
     public boolean matches(ItemStack itemStack) {
-        return ingredient.sameItem(itemStack);
+        return ingredient.test(itemStack);
     }
 
     @Override
@@ -97,5 +101,37 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
     @Override
     public boolean isSpecial() {
         return true;
+    }
+
+
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<WitchOvenRecipe> {
+
+        @Override
+        public WitchOvenRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            Ingredient ingredientIn = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "ingredient"));
+            ItemStack itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "result"))));
+
+            int jarsNeeded = JSONUtils.getAsInt(json, "jarsneeded", 1);
+
+            return new WitchOvenRecipe(recipeId, ingredientIn, itemOut, jarsNeeded);
+        }
+
+        @Nullable
+        @Override
+        public WitchOvenRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+            Ingredient ingredientIn = Ingredient.fromNetwork(buffer);
+            ItemStack itemOut = buffer.readItem();
+            int jarsNeeded = buffer.readInt();
+
+            return new WitchOvenRecipe(recipeId, ingredientIn, itemOut, jarsNeeded);
+        }
+
+        @Override
+        public void toNetwork(PacketBuffer buffer, WitchOvenRecipe recipe) {
+            recipe.ingredient.toNetwork(buffer);
+            buffer.writeItem(recipe.getResultItem());
+            buffer.writeInt(recipe.getJarsNeeded());
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 {
   "type": "enchanted:witch_oven",
-  "ingredient": "minecraft:acacia_log",
+  "ingredient": {
+    "tag": "enchanted:raw_foods"
+  },
   "result": "enchanted:foul_fume",
   "jarsneeded": 1
 }

@@ -66,9 +66,6 @@ public class AltarBlock extends ContainerBlock {
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(!world.isClientSide()) {
             if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-                AltarTileEntity tileEntity = (AltarTileEntity)world.getBlockEntity(AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state));
-                tileEntity.clearConsumers();
-
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
         }

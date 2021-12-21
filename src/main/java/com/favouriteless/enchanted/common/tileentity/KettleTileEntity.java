@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.common.blocks.KettleBlock;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
-import com.favouriteless.enchanted.common.recipes.kettle.KettleRecipe;
+import com.favouriteless.enchanted.common.recipes.KettleRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -47,7 +47,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

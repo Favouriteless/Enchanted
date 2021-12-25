@@ -43,5 +43,6 @@
       "recipe": "enchanted:smelt_clay_jar"
     }
   ],
-  "read_by_default": true
+  "read_by_default": false,
+  "priority": true
 }

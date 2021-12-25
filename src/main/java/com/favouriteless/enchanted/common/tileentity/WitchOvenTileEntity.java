@@ -229,15 +229,11 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
                     .stream()
                     .filter(recipe -> recipe instanceof WitchOvenRecipe)
                     .map(recipe -> (WitchOvenRecipe) recipe)
-                    .filter(this::matchRecipe)
+                    .filter((recipe) -> recipe.matches(this, level))
                     .findFirst()
                     .orElse(null);
         }
         return currentRecipe;
-    }
-
-    private boolean matchRecipe(WitchOvenRecipe recipe) {
-        return recipe.matches(this.inventoryContents.get(0));
     }
 
 }

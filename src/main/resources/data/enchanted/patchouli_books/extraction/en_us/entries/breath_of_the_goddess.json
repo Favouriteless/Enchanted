@@ -1,0 +1,18 @@
+{
+  "name": "Breath of the Goddess",
+  "icon": "enchanted:breath_of_the_goddess",
+  "category": "enchanted:collecting_fumes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Birch is a tree of healing and protection. Due to it's silvery appearance, this tree is sometimes called \"The White Lady Of The Woods\" and is associated with the goddess Brigid."
+    },
+    {
+      "type": "enchanted:witch_oven_recipe_single",
+      "recipe": "enchanted:byproduct_breath_of_the_goddess",
+      "itemIn": "minecraft:birch_sapling",
+      "resultItem": "enchanted:wood_ash"
+    }
+  ],
+  "read_by_default": true
+}

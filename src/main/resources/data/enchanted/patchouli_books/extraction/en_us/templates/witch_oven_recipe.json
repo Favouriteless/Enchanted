@@ -1,34 +1,67 @@
 {
-  "recipe": "#recipe",
+  "processor": "com.favouriteless.enchanted.api.patchouli.processors.WitchOvenRecipeProcessor",
   "components": [
     {
-      "type": "header",
-      "text": "Oven Byproduct",
-      "centered": true,
-      "x": -1,
-      "y": -1
+      "guard": "#recipe->exists",
+      "type": "item",
+      "item":  "#input",
+      "framed": true,
+      "x": 26,
+      "y": 0
     },
     {
-      "type": "separator",
-      "x": -1,
-      "y": -1
-    },
-    {
-      "type": "image",
-      "image": "enchanted:textures/patchouli/arrow_down.png",
-      "width": 16,
-      "height": 22,
-      "texture_width": 32,
-      "texture_height": 32,
-      "x": 50,
-      "y": 50
-    },
-    {
+      "guard": "#recipe->exists",
       "type": "item",
       "item":  "#result",
       "framed": true,
+      "x": 74,
+      "y": 0
+    },
+    {
+      "guard": "#recipe->exists",
+      "type": "item",
+      "item":  "#jar",
+      "framed": true,
+      "x": 26,
+      "y": 28
+    },
+    {
+      "guard": "#recipe->exists",
+      "type": "item",
+      "item":  "#byproduct",
+      "framed": true,
+      "x": 74,
+      "y": 28
+    },
+    {
+      "guard": "#recipe->exists",
+      "type": "image",
+      "image": "enchanted:textures/patchouli/arrow_right.png",
+      "width": 22,
+      "height": 16,
+      "texture_width": 32,
+      "texture_height": 32,
+      "x": 47,
+      "y": 0
+    },
+    {
+      "guard": "#recipe->exists",
+      "type": "image",
+      "image": "enchanted:textures/patchouli/furnace_burn.png",
+      "width": 16,
+      "height": 16,
+      "texture_width": 16,
+      "texture_height": 16,
       "x": 50,
-      "y": 110
+      "y": 28
+    },
+    {
+      "guard": "#recipe->exists",
+      "type": "header",
+      "text": "#text",
+      "centered": true,
+      "x": -1,
+      "y": 52
     }
   ]
 }

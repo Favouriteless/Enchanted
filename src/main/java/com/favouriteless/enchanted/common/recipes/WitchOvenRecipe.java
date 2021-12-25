@@ -59,13 +59,13 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
         return this.jarsNeeded;
     }
 
+    public Ingredient getInput() {
+        return this.ingredient;
+    }
+
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         return this.ingredient.test(inv.getItem(0));
-    }
-
-    public boolean matches(ItemStack itemStack) {
-        return ingredient.test(itemStack);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return false;
+        return width * height >= 4;
     }
 
     @Override

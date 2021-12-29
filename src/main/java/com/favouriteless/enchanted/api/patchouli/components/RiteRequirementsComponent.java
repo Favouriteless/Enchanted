@@ -59,7 +59,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	public transient static final String FILE_END = ".png";
 	public transient static final int IMAGE_SIZE = 110;
 	public transient static final int TEXTURE_SIZE = 128;
-	public transient static final float IMAGE_OFFSET = 110/2F;
+	public transient static final float IMAGE_OFFSET = IMAGE_SIZE/2F;
 	public transient static final HashMap<Block, String> BLOCK_IMAGES = new HashMap<>();
 
 	static {

@@ -1,0 +1,16 @@
+{
+  "name": "Golden Chalk",
+  "icon": "enchanted:chalk_gold",
+  "category": "enchanted:performing_rites",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Golden chalk is used to create the heart glyph of a magic circle, which must be right clicked to be activated. No rite will function without a heart glyph."
+    },
+    {
+      "type": "enchanted:cauldron_recipe",
+      "recipe": "enchanted:cauldron_chalk_gold"
+    }
+  ],
+  "read_by_default": true
+}

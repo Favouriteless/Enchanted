@@ -30,24 +30,29 @@ import com.favouriteless.enchanted.client.screens.DistilleryScreen;
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.*;
-import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
+import net.minecraftforge.forgespi.language.IModInfo;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.api.PatchouliAPI.IPatchouliAPI;
+import vazkii.patchouli.common.book.BookRegistry;
+
+import java.nio.file.Files;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD)
 public class SetupEvents {
+
+    public static final String TEMPLATES_LOCATION = "patchouli_books/global_templates";
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
@@ -66,6 +71,37 @@ public class SetupEvents {
 
         ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
         ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), KettleRenderer::new);
+
+        registerPatchouliTemplates();
+    }
+
+    private static void registerPatchouliTemplates() {
+        IPatchouliAPI api = PatchouliAPI.get();
+
+        IModInfo info = ModLoadingContext.get().getActiveContainer().getModInfo();
+        ModInfo mod;
+
+        if(info instanceof ModInfo) {
+            mod = (ModInfo)info;
+        }
+        else {
+            return;
+        }
+
+        String id = mod.getModId();
+        BookRegistry.findFiles(mod, String.format("data/%s/%s", id, TEMPLATES_LOCATION), (path) -> Files.exists(path),
+                (path, file) -> {
+                    if (Files.isRegularFile(file) && file.getFileName().toString().endsWith(".json")) {
+                        String fileStr = file.toString().replaceAll("\\\\", "/");
+                        String relPath = fileStr
+                                .substring(fileStr.indexOf(TEMPLATES_LOCATION) + TEMPLATES_LOCATION.length() + 1);
+                        String name = relPath.substring(0, relPath.indexOf(".json"));
+
+                        api.registerTemplateAsBuiltin(new ResourceLocation(Enchanted.MOD_ID, name), () -> mod.getClass().getResourceAsStream(fileStr.substring(fileStr.indexOf("/data"))));
+
+                    }
+                    return true;
+                }, true, 1);
     }
 
     @SubscribeEvent

@@ -7,5 +7,5 @@
   "creative_tab": "enchanted.main",
   "model": "patchouli:book_purple",
   "book_texture": "patchouli:textures/gui/book_purple.png",
-  "filler_texture": "enchanted:textures/patchouli/herbology_filler.png"
+  "filler_texture": "enchanted:textures/patchouli/empty_128.png"
 }

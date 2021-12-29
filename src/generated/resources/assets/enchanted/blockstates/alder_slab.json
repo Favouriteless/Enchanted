@@ -7,7 +7,7 @@
       "model": "enchanted:block/alder_slab"
     },
     "type=double": {
-      "model": "enchanted:block/alder_slab"
+      "model": "enchanted:block/alder_planks"
     }
   }
 }

@@ -7,7 +7,7 @@
       "model": "enchanted:block/rowan_slab"
     },
     "type=double": {
-      "model": "enchanted:block/rowan_slab"
+      "model": "enchanted:block/rowan_planks"
     }
   }
 }

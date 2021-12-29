@@ -87,6 +87,16 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
         return false;
     }
 
+    public int getJarCount() {
+        int count = 0;
+
+        for(ItemStack stack : itemsOut) {
+            count += stack.getCount();
+        }
+
+        return count;
+    }
+
 
 
     @Override

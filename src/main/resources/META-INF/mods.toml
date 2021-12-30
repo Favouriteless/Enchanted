@@ -25,3 +25,9 @@ Enchanted is your mod for all things occult or witchcraft. A modernized attempt 
     versionRange="[1.16.5-1.5,]"
     ordering="NONE"
     side="BOTH"
+[[dependencies.enchanted]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.16.4-53.2,]"
+    ordering="NONE"
+    sides="BOTH"

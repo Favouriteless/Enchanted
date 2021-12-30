@@ -15,7 +15,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
+version = '1.0.1'
 group = 'com.favouriteless.enchanted' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'enchanted'
 
@@ -32,10 +32,11 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'REGISTRIES'
-
             property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 enchanted {
@@ -46,9 +47,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'REGISTRIES'
-
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -60,11 +59,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'REGISTRIES'
-
             property 'forge.logging.console.level', 'debug'
-
             args '--mod', 'enchanted', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
@@ -83,6 +79,9 @@ repositories {
         name 'hellfirepvp maven'
         url 'https://maven.hellfiredev.net/'
     }
+    maven {
+        url 'https://maven.blamejared.com'
+    }
 }
 
 dependencies {
@@ -90,6 +89,9 @@ dependencies {
 
     compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
     runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
 }
 
 jar {

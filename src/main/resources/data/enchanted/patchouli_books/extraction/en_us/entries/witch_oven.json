@@ -1,0 +1,48 @@
+{
+  "name": "Witch's Oven",
+  "icon": "enchanted:witch_oven",
+  "category": "enchanted:collecting_fumes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The witch's oven is a modified furnace used to collect byproducts in a clay jar. Unlike a furnace, this oven cannot process ores. $(br2)Fume funnels and filtered fume funnels may be placed on each side to increase byproduct yield."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "1": "enchanted:fume_funnel_filtered[facing=east,lit=true,type=0]",
+          "2": "enchanted:fume_funnel_filtered[facing=east,lit=true,type=1]",
+          "3": "enchanted:fume_funnel_filtered[facing=east,lit=true,type=2]",
+          "0": "enchanted:witch_oven[facing=east,lit=true]"
+        },
+        "pattern": [
+          [ "   ", " 2 ", "   " ],
+          [ "   ", "301", "   " ]
+        ]
+      },
+      "text": "A fully upgraded Oven"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_witch_oven",
+      "recipe2": "enchanted:craft_fume_filter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_fume_funnel",
+      "recipe2": "enchanted:craft_fume_funnel_filtered"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_clay_jar_soft"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "enchanted:smelt_clay_jar"
+    }
+  ],
+  "read_by_default": false,
+  "priority": true
+}

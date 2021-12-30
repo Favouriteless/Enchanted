@@ -103,7 +103,6 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     };
 
     private ChangeSubscriber<?> changeSubscriber;
-    private final List<IAltarPowerConsumer> powerConsumers = new ArrayList<>();
 
     private boolean loaded = false;
     private boolean powerLoaded = false;
@@ -266,22 +265,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     public void addConsumer(IAltarPowerConsumer consumer) {
-        powerConsumers.add(consumer);
         consumer.addAltar(worldPosition);
-    }
-
-    public void removeConsumer(IAltarPowerConsumer consumer) {
-        powerConsumers.remove(consumer);
-        consumer.removeAltar(worldPosition);
-    }
-
-    /**
-     * Destroys consumer references
-     */
-    public void clearConsumers() {
-        for(IAltarPowerConsumer consumer : powerConsumers) {
-            consumer.removeAltar(worldPosition);
-        }
     }
 
     public double distanceTo(BlockPos pos) {

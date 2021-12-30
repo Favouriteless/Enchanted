@@ -1,0 +1,25 @@
+{
+  "name": "Wolfsbane Flowers",
+  "icon": "enchanted:textures/item/wolfsbane_flower.png",
+  "category": "enchanted:common_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Aconitum, common name of Wolfsbane, refers to many flowering plants native to mountainous areas of Europe, North America and Asia.$(br2)Wolfsbane roots contain a substantial amount of aconitine, a potent neurotoxin and cardiotoxin.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:wolfsbane[age=4]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

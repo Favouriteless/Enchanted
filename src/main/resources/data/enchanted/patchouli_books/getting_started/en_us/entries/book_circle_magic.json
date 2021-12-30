@@ -1,0 +1,17 @@
+{
+  "name": "Witchcraft: Circle Magic",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Circle magic is a powerful process used to harness magical energy and focus it into a specific effect. This is detailed in Witchcraft: Circle Magic."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_book_circle_magic"
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 2
+}

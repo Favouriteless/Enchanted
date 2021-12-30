@@ -1,0 +1,25 @@
+{
+  "name": "Snowbells",
+  "icon": "minecraft:textures/item/snowball.png",
+  "category": "enchanted:common_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Snowbell, or Styrax, is a genus of large shrubs from the Styracaceae family. Despite the name, they are native to warm climates in Asia.$(br2)Their resin is used for purification, dispelling anger or soothing tension.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:snowbell[age=4]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

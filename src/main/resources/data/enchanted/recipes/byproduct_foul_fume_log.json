@@ -1,0 +1,8 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": {
+    "tag": "minecraft:logs"
+  },
+  "result": "enchanted:foul_fume",
+  "jarsneeded": 1
+}

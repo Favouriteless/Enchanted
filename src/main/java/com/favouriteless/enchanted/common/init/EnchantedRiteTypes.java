@@ -29,6 +29,7 @@ import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
@@ -59,8 +60,9 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY = RITE_TYPES.register("binding_waystone_entity", () -> new RiteType<>(RiteOfBindingWaystoneEntity::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY_CHARGED = RITE_TYPES.register("binding_waystone_entity_charged", () -> new RiteType<>(RiteOfBindingWaystoneEntityCharged::new));
 
-    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
+    public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
 
+    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
     public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummoningEntity::new));
 
 
@@ -89,6 +91,14 @@ public class EnchantedRiteTypes {
             }
         }
         return currentRite;
+    }
+
+    public static AbstractRite getByName(ResourceLocation loc) {
+        for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
+            if(registryObject.getId().equals(loc))
+                return registryObject.get().create();
+        }
+        return null;
     }
 
     private static class Generify {

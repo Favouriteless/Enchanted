@@ -1,0 +1,62 @@
+{
+  "name": "Waystone",
+  "icon": "enchanted:bound_waystone",
+  "category": "enchanted:binding",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Waystone",
+      "text": "Perform this rite to bind the location of the circle used to a waystone, to be used in other location based rites."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Waystone",
+      "text": "Perform this rite to bind the location of the circle used to a waystone, to be used in other location based rites."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone_charged"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Waystone Duplication",
+      "text": "Transfer the bound location of a waystone to another waystone, to create two identical waystones."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone_duplicate"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Waystone Duplication",
+      "text": "Transfer the bound location of a waystone to another waystone, to create two identical waystones."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone_duplicate_charged"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Blooded Waystone",
+      "text": "This rite binds a waystone to the location of an entity, which will move as the entity moves. $(br2)Note that a despawned or unloaded entity will become invalid."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone_entity"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Blooded Waystone",
+      "text": "This rite binds a waystone to the location of an entity, which will move as the entity moves. $(br2)Note that a despawned or unloaded entity will become invalid."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_waystone_entity_charged"
+    }
+  ],
+  "read_by_default": true
+}

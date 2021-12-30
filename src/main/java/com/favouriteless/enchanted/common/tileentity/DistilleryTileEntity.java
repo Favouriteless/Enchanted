@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
-import com.favouriteless.enchanted.common.recipes.distillery.DistilleryRecipe;
+import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import net.minecraft.block.AbstractFurnaceBlock;
@@ -31,7 +31,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;

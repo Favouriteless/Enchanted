@@ -101,6 +101,8 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleToolItem(EnchantedItems.ARTHANA.get());
 
 		talismanItem(EnchantedItems.CIRCLE_TALISMAN.get());
+		simpleItem(EnchantedItems.WAYSTONE.get());
+		simpleItem(EnchantedItems.BOUND_WAYSTONE.get());
 
 	}
 

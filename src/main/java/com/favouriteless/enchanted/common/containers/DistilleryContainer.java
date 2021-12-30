@@ -67,7 +67,7 @@ public class DistilleryContainer extends FurnaceContainerBase {
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemstack;
         Slot slot = this.slots.get(index);
 
         if (slot != null && slot.hasItem()) {
@@ -80,19 +80,18 @@ public class DistilleryContainer extends FurnaceContainerBase {
                     return ItemStack.EMPTY;
                 }
             } else { // If not a container slot
-
                 if (itemstack.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
                     if (!this.moveItemStackTo(slotItem, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (!this.moveItemStackTo(slotItem, 1, 3, false)) { // Item is in player inventory, attempt to fit
                     return ItemStack.EMPTY;
-                } else if (index < 32) { // Item is in main player inventory and cannot fit
-                    if (!this.moveItemStackTo(slotItem, 5, 34, false)) {
+                } else if (index < 35) { // Item is in main player inventory and cannot fit
+                    if (!this.moveItemStackTo(slotItem, 34, 43, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 41) { // Item is in player hotbar and cannot fit
-                    if(!this.moveItemStackTo(slotItem, 34, 43, false)) {
+                } else if (index < 43) { // Item is in player hotbar and cannot fit
+                    if(!this.moveItemStackTo(slotItem, 7, 34, false)) {
                         return ItemStack.EMPTY;
                     }
                 }

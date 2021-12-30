@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:book" },
+    { "item": "minecraft:feather" },
+    { "item": "enchanted:belladonna_seeds" }
+  ],
+  "result":
+  {
+    "item": "patchouli:guide_book",
+    "nbt": {
+      "patchouli:book": "enchanted:getting_started"
+    },
+    "count": 1
+  }
+}

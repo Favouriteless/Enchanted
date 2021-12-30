@@ -1,0 +1,26 @@
+{
+  "name": "Talisman",
+  "icon": "enchanted:circle_talisman",
+  "category": "enchanted:binding",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Talisman",
+      "text": "This rite of binding is used to bind chalk circles of the correct configuration to a Circle Talisman. These circles can be placed in another location using the talisman, and the bound circle is released into the world."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_talisman"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Talisman",
+      "text": "This rite of binding is used to bind chalk circles of the correct configuration to a Circle Talisman. These circles can be placed in another location using the talisman, and the bound circle is released into the world."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_talisman_charged"
+    }
+  ],
+  "read_by_default": true
+}

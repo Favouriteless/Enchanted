@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.client.particles;
 
+import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.vector.Vector3d;
@@ -31,14 +32,13 @@ import java.util.Random;
 public class CauldronCookParticle extends SpriteTexturedParticle {
 
     private static final Random RANDOM = new Random();
-    public static final double ANGLE = 10.0D;
-    public static final double RADIUS_INCREASE = 0.01D;
+    public static final double ANGLE = 8.0D;
+    public static final double RADIUS_INCREASE = 0.005D;
 
     private final int circleStart;
     private final double xStart;
     private final double zStart;
 
-    private double yStart;
     private double currentRadius;
 
     protected CauldronCookParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
@@ -75,7 +75,6 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
 
         if(age >= circleStart) {
             if(age == circleStart) { // Just started rotating
-                this.yStart = y;
                 this.xd = 0;
                 this.yd = 0;
                 this.zd = 0;
@@ -90,7 +89,7 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
             double sin = Math.sin(angle);
 
             Vector3d newPos = new Vector3d(
-                    (x - xStart) - sin * (z - zStart),
+                    cos * (x - xStart) - sin * (z - zStart),
                     0,
                     sin * (x - xStart) + cos * (z - zStart)
             ).normalize().scale(currentRadius).add(xStart, 0.0D, zStart);
@@ -106,7 +105,7 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
         return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<SimpleColouredParticleType.SimpleColouredData> {
+    public static class Factory implements IParticleFactory<SimpleColouredData> {
 
         private final IAnimatedSprite sprites;
 
@@ -116,7 +115,7 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             CauldronCookParticle particle = new CauldronCookParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;

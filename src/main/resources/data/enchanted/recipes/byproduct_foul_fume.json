@@ -1,0 +1,8 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": {
+    "item": "minecraft:jungle_sapling"
+  },
+  "result": "enchanted:foul_fume",
+  "jarsneeded": 1
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Refined Evil",
+  "icon": "enchanted:refined_evil",
+  "category": "enchanted:distillation",
+  "pages": [
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_diamond_vapour_ghast_tear"
+    },
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_demon_heart_diamond_vapour"
+    }
+  ],
+  "read_by_default": true
+}

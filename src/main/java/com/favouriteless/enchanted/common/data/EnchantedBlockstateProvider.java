@@ -152,9 +152,9 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 	}
 
 	private void slabBlockWithItem(SlabBlock block, Block parent) {
-		ResourceLocation path = blockTexture(block);
+		ResourceLocation path = blockTexture(parent);
 		slabBlock(block, path, blockTexture(parent));
-		simpleBlockItem(block, models().getExistingFile(path));
+		simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
 	}
 
 	private void stairsBlockWithItem(StairsBlock block, Block parent) {

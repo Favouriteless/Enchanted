@@ -7,7 +7,7 @@
       "model": "enchanted:block/hawthorn_slab"
     },
     "type=double": {
-      "model": "enchanted:block/hawthorn_slab"
+      "model": "enchanted:block/hawthorn_planks"
     }
   }
 }

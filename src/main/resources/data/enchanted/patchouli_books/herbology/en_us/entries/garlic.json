@@ -1,0 +1,25 @@
+{
+  "name": "Garlic",
+  "icon": "enchanted:textures/item/garlic.png",
+  "category": "enchanted:common_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Garlic, a species of bulbous flowering plant in the Allium genus, is a best known for it's use as seasoning in many cuisines. $(br2)A lesser known use of this plant is being a strong repellent for vampiric beings.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:garlic[age=4]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

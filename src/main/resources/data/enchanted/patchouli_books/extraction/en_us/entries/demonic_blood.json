@@ -1,0 +1,12 @@
+{
+  "name": "Demonic Blood",
+  "icon": "enchanted:demonic_blood",
+  "category": "enchanted:distillation",
+  "pages": [
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_demon_heart_diamond_vapour"
+    }
+  ],
+  "read_by_default": true
+}

@@ -39,7 +39,7 @@ public class Enchanted
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "enchanted";
     public static Enchanted instance;
-    public static final ItemGroup TAB = new ItemGroup(  "enchanted.main") {
+    public static final ItemGroup TAB = new ItemGroup("enchanted.main") {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(EnchantedBlocks.WITCH_OVEN.get());

@@ -1,6 +1,6 @@
 {
   "name": "The Art of Witchcraft",
-  "landing_text": "$(bold)Introduction$()$(br)Witchcraft is the art of using seemingly mundane objects and their magickal properties to achieve an intended effect. This book is to help understand the basics of the art.",
+  "landing_text": "$(bold)Introduction$()$(br)Witchcraft is the art of using seemingly mundane objects and their magical properties to achieve an intended effect. This book is to help understand the basics of the art.",
   "version": 1,
   "show_progress": false,
   "creative_tab": "enchanted.main",

@@ -106,7 +106,7 @@ public class EnchantedItems {
 
 
 
-    //public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart", () -> new BlockItem(EnchantedBlocks.DEMON_HEART.get(), new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart",  () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> CLAY_JAR_SOFT = ITEMS.register("clay_jar_soft", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> CLAY_JAR = ITEMS.register("clay_jar", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));

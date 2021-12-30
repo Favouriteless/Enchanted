@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:book" },
+    { "item": "minecraft:feather" },
+    { "item": "enchanted:belladonna_flower" },
+    { "item": "minecraft:coal" }
+  ],
+  "result":
+  {
+    "item": "patchouli:guide_book",
+    "nbt": {
+      "patchouli:book": "enchanted:extraction"
+    },
+    "count": 1
+  }
+}

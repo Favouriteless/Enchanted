@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:book" },
+    { "item": "minecraft:feather" },
+    { "item": "enchanted:belladonna_flower" },
+    { "item": "enchanted:whiff_of_magic" }
+  ],
+  "result":
+  {
+    "item": "patchouli:guide_book",
+    "nbt": {
+      "patchouli:book": "enchanted:circle_magic"
+    },
+    "count": 1
+  }
+}

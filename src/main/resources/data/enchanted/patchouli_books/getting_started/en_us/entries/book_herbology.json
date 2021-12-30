@@ -1,0 +1,17 @@
+{
+  "name": "Witchcraft: Herbology",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Witches and Warlocks will require the use of various magical and common plants, the methods of obtaining these as well as their properties are detailed in Witchcraft: Herbology"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_book_herbology"
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 0
+}

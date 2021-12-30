@@ -1,7 +1,7 @@
 {
   "name": "Mutandis",
   "icon": "enchanted:mutandis",
-  "category": "enchanted:mutated_plants",
+  "category": "enchanted:cauldron",
   "pages": [
     {
       "type": "patchouli:text",
@@ -12,6 +12,5 @@
       "recipe": "enchanted:cauldron_mutandis"
     }
   ],
-  "read_by_default": false,
-  "priority": true
+  "read_by_default": true
 }

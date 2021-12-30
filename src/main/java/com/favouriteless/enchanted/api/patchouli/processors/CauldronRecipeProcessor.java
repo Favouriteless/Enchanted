@@ -54,6 +54,8 @@ public class CauldronRecipeProcessor implements IComponentProcessor {
 			return IVariable.from(recipe.getResultItem());
 		else if(key.startsWith("itemList"))
 			return IVariable.from(getItemArray(recipe));
+		else if(key.startsWith("power"))
+			return IVariable.wrap(recipe.getPower() + " Altar Power");
 
 		return null;
 	}

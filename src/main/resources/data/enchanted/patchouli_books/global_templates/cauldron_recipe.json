@@ -35,6 +35,14 @@
       "y": 50
     },
     {
+      "type": "header",
+      "text": "#power",
+      "centered": true,
+      "x": -1,
+      "y": 55,
+      "scale": 0.8
+    },
+    {
       "type": "image",
       "image": "enchanted:textures/patchouli/cauldron.png",
       "width": 76,

@@ -1,0 +1,64 @@
+{
+  "processor": "com.favouriteless.enchanted.api.patchouli.processors.CauldronRecipeProcessor",
+  "recipe": "#recipe",
+  "components": [
+    {
+      "type": "header",
+      "text": "Cauldron Recipe",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "custom",
+      "class": "com.favouriteless.enchanted.api.patchouli.components.ItemListComponent",
+      "x": 58,
+      "y": 46,
+      "itemList": "#itemList",
+      "itemsPerRow": 5,
+      "centered": true,
+      "startBottom": true
+    },
+    {
+      "type": "image",
+      "image": "enchanted:textures/patchouli/arrow_down.png",
+      "width": 16,
+      "height": 22,
+      "texture_width": 32,
+      "texture_height": 32,
+      "x": 50,
+      "y": 50
+    },
+    {
+      "type": "header",
+      "text": "#power",
+      "centered": true,
+      "x": -1,
+      "y": 55,
+      "scale": 0.8
+    },
+    {
+      "type": "image",
+      "image": "enchanted:textures/patchouli/cauldron.png",
+      "width": 76,
+      "height": 88,
+      "texture_width": 128,
+      "texture_height": 128,
+      "scale": 1.0,
+      "x": 20,
+      "y": 73
+    },
+    {
+      "type": "item",
+      "item":  "#result",
+      "framed": true,
+      "x": 50,
+      "y": 110
+    }
+  ]
+}

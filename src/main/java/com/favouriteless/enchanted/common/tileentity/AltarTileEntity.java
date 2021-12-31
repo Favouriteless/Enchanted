@@ -40,7 +40,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -55,7 +54,6 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,7 +180,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                 for (int y = 0; y < (range+2)*2; y++) {
                     for (int z = 0; z < (range+2)*2; z++) {
                         BlockPos currentPos = startingPos.offset(x, y, z);
-                        if(level.getBlockState(currentPos).getBlock().is(EnchantedTags.POWER_CONSUMER)) {
+                        if(level.getBlockState(currentPos).getBlock().is(EnchantedTags.POWER_CONSUMERS)) {
                             addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
                         }
                         else if(posWithinRange(currentPos, range)) {

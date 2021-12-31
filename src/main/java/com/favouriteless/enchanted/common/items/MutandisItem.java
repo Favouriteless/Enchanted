@@ -21,71 +21,61 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Random;
 
 public class MutandisItem extends Item {
 
-    public static List<Block> SWAPPABLE_BLOCKS = Arrays.asList(
-            Blocks.GRASS,
-            Blocks.BROWN_MUSHROOM,
-            Blocks.RED_MUSHROOM,
-            Blocks.SUGAR_CANE,
-            Blocks.CACTUS,
-            Blocks.OAK_SAPLING,
-            Blocks.BIRCH_SAPLING,
-            Blocks.ACACIA_SAPLING,
-            Blocks.SPRUCE_SAPLING,
-            Blocks.JUNGLE_SAPLING,
-            Blocks.DARK_OAK_SAPLING,
-            Blocks.DANDELION,
-            Blocks.POPPY,
-            Blocks.BLUE_ORCHID,
-            Blocks.ALLIUM,
-            Blocks.AZURE_BLUET,
-            Blocks.ORANGE_TULIP,
-            Blocks.PINK_TULIP,
-            Blocks.RED_TULIP,
-            Blocks.WHITE_TULIP,
-            Blocks.OXEYE_DAISY,
-            Blocks.CORNFLOWER,
-            Blocks.LILY_OF_THE_VALLEY,
-            EnchantedBlocks.ALDER_SAPLING.get(),
-            EnchantedBlocks.HAWTHORN_SAPLING.get(),
-            EnchantedBlocks.ROWAN_SAPLING.get(),
-            EnchantedBlocks.EMBER_MOSS.get(),
-            EnchantedBlocks.GLINT_WEED.get(),
-            EnchantedBlocks.BELLADONNA.get(),
-            EnchantedBlocks.MANDRAKE.get(),
-            EnchantedBlocks.SPANISH_MOSS.get(),
-            EnchantedBlocks.SNOWBELL.get(),
-            EnchantedBlocks.ARTICHOKE.get()
-    );
+    private static final Random RANDOM = new Random();
+    private final IOptionalNamedTag<Block> validBlocks;
 
-    public MutandisItem(Properties properties) {
+    public MutandisItem(Properties properties, IOptionalNamedTag<Block> validBlocks) {
         super(properties);
+        this.validBlocks = validBlocks;
     }
 
     @Override
     public ActionResultType useOn(ItemUseContext context) {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 
-        if(!context.getLevel().isClientSide) {
-            if (SWAPPABLE_BLOCKS.contains(state.getBlock())) {
-                context.getLevel().setBlockAndUpdate(context.getClickedPos(), SWAPPABLE_BLOCKS.get(random.nextInt(SWAPPABLE_BLOCKS.size())).defaultBlockState());
+        if (!state.getBlock().is(EnchantedTags.MUTANDIS_BLACKLIST) && state.getBlock().is(validBlocks)) {
+            World world = context.getLevel();
+            if(!world.isClientSide) {
+
+                BlockState newState = null;
+                while(newState == null) {
+                    Block newBlock = validBlocks.getRandomElement(RANDOM);
+                    if(!newBlock.is(EnchantedTags.MUTANDIS_BLACKLIST)) {
+                        newState = newBlock.defaultBlockState();
+                    }
+                }
+
+                world.setBlockAndUpdate(context.getClickedPos(), newState);
+                world.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                if(!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
                 return ActionResultType.CONSUME;
             }
-            return ActionResultType.FAIL;
+            else {
+                for(int i = 0; i < 10; i++) {
+                    double dx = context.getClickedPos().getX() + Math.random();
+                    double dy = context.getClickedPos().getY() + Math.random();
+                    double dz = context.getClickedPos().getZ() + Math.random();
+                    world.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0.0D, 0.0D, 0.0D);
+                }
+                return ActionResultType.SUCCESS;
+            }
         }
-
-        return ActionResultType.SUCCESS;
+        return ActionResultType.FAIL;
     }
 }

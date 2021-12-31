@@ -71,7 +71,7 @@ public class AltarChangeObserver extends ChangeObserver {
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
                     if (altar.posWithinRange(change.getAbsolutePosition(), range)) { // Change is relevant
                         if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
-                            if(change.getNewState().getBlock().is(EnchantedTags.POWER_CONSUMER)) {
+                            if(change.getNewState().getBlock().is(EnchantedTags.POWER_CONSUMERS)) {
                                 altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));
                             }
                             altar.removePower(change.getOldState().getBlock());

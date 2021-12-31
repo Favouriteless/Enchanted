@@ -23,52 +23,22 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
-import com.favouriteless.enchanted.client.render.tileentity.KettleRenderer;
-import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
-import com.favouriteless.enchanted.client.screens.AltarScreen;
-import com.favouriteless.enchanted.client.screens.DistilleryScreen;
-import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
-import com.favouriteless.enchanted.common.init.*;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraftforge.client.event.ColorHandlerEvent;
+import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD)
-public class SetupEvents {
-
-    public static final String TEMPLATES_LOCATION = "patchouli_books/global_templates";
+public class CommonSetupEvents {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         EnchantedRecipeTypes.init();
         BedPlayerCapabilityManager.registerCapabilities();
-    }
-
-    @SubscribeEvent
-    public static void clientSetup(FMLClientSetupEvent event) {
-        ScreenManager.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
-        ScreenManager.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
-        ScreenManager.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
-        
-        EnchantedBlocks.initRender();
-        EnchantedEntityTypes.registerEntityRenderers();
-
-        ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), KettleRenderer::new);
-    }
-
-    @SubscribeEvent
-    public static void registerBlockColors(ColorHandlerEvent.Block event) {
-        event.getBlockColors().register((a, b, c, d) -> 0xF0F0F0, EnchantedBlocks.CHALK_WHITE.get());
-        event.getBlockColors().register((a, b, c, d) -> 0x801818, EnchantedBlocks.CHALK_RED.get());
-        event.getBlockColors().register((a, b, c, d) -> 0x4F2F78, EnchantedBlocks.CHALK_PURPLE.get());
     }
 
     @SubscribeEvent

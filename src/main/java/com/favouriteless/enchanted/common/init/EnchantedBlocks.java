@@ -81,7 +81,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> CHALICE = BLOCKS.register("chalice", () -> new ChaliceBlock(AbstractBlock.Properties.of(Material.STONE).strength(1.0F, 6.0F).noOcclusion(), false));
     public static final RegistryObject<Block> CHALICE_FILLED = BLOCKS.register("chalice_filled", () -> new ChaliceBlock(AbstractBlock.Properties.copy(CHALICE.get()), true));
     public static final RegistryObject<Block> CHALICE_FILLED_MILK = BLOCKS.register("chalice_filled_milk", () -> new ChaliceBlockMilk(AbstractBlock.Properties.copy(CHALICE.get())));
-    public static final RegistryObject<Block> CANDELABRA = BLOCKS.register("candelabra", () -> new CandelabraBlock(AbstractBlock.Properties.copy(CHALICE.get())));
+    public static final RegistryObject<Block> CANDELABRA = BLOCKS.register("candelabra", () -> new CandelabraBlock(AbstractBlock.Properties.copy(CHALICE.get()).lightLevel((state) -> 14)));
 
     public static final RegistryObject<Block> ROWAN_PLANKS = BLOCKS.register("rowan_planks", () -> new Block(AbstractBlock.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<StairsBlock> ROWAN_STAIRS = BLOCKS.register("rowan_stairs", () -> new StairsBlock(ROWAN_PLANKS.get().defaultBlockState(), AbstractBlock.Properties.copy(ROWAN_PLANKS.get())));
@@ -112,7 +112,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<CropsBlockAgeFive> WOLFSBANE = BLOCKS.register("wolfsbane", () -> new WolfsbaneBlock(AbstractBlock.Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<Block> GLINT_WEED = BLOCKS.register("glint_weed", () -> new GlintWeedBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
     public static final RegistryObject<Block> EMBER_MOSS = BLOCKS.register("ember_moss", () -> new EmberMossBlock(AbstractBlock.Properties.copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
-    public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new VineBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
+    public static final RegistryObject<Block> SPANISH_MOSS = BLOCKS.register("spanish_moss", () -> new SpanishMossBlock(AbstractBlock.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> BLOOD_POPPY = BLOCKS.register("blood_poppy", () -> new BloodPoppyBlock(AbstractBlock.Properties.copy(Blocks.POPPY)));
 
     public static final RegistryObject<Block> CHALK_GOLD = BLOCKS.register("chalk_gold", GoldChalkBlock::new);

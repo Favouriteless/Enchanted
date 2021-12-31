@@ -29,6 +29,9 @@ import net.minecraftforge.common.Tags;
 
 public class EnchantedTags {
 
-    public static final Tags.IOptionalNamedTag<Block> POWER_CONSUMER = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "power_consumer"));
+    public static final Tags.IOptionalNamedTag<Block> POWER_CONSUMERS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "power_consumers"));
+    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_plants"));
+    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
+    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_BLACKLIST = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
 
 }

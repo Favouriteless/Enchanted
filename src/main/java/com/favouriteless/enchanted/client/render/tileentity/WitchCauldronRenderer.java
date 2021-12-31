@@ -38,8 +38,6 @@ import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Random;
-
 @OnlyIn(Dist.CLIENT)
 public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileEntity> {
 

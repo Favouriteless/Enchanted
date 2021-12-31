@@ -87,8 +87,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> BLOOD_POPPY = ITEMS.register("blood_poppy", () -> new BlockItem(EnchantedBlocks.BLOOD_POPPY.get(), new Item.Properties().tab(Enchanted.TAB)));
 
     public static final RegistryObject<Item> ANOINTING_PASTE = ITEMS.register("anointing_paste", () -> new AnointingPasteItem(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB), EnchantedTags.MUTANDIS_PLANTS));
+    public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(new Item.Properties().tab(Enchanted.TAB), EnchantedTags.MUTANDIS_EXTREMIS_PLANTS));
     public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockItemFilled(new Item.Properties()));
 

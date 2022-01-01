@@ -104,6 +104,8 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.WAYSTONE.get());
 		simpleItem(EnchantedItems.BOUND_WAYSTONE.get());
 
+		simpleItem(EnchantedItems.EARMUFFS.get());
+
 	}
 
 	private void simpleItem(Item item) {

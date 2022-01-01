@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " i ",
+    "whw"
+  ],
+  "key":
+  {
+    "w": { "tag": "minecraft:wool" },
+    "h": { "item": "minecraft:leather_helmet" },
+    "i": { "item": "minecraft:iron_ingot" }
+  },
+  "result":
+  {
+    "item": "enchanted:earmuffs",
+    "count": 1
+  }
+}

@@ -22,8 +22,10 @@
 package com.favouriteless.enchanted.common.entities.mandrake;
 
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
@@ -31,6 +33,7 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
@@ -109,15 +112,17 @@ public class MandrakeEntity extends MonsterEntity {
         public void tick() {
             if(--this.ticksUntilNextAttack <= 0) {
 
-                List<Entity> playersInRange = mob.level.getEntities( (Entity)null,
+                List<Entity> playersInRange = mob.level.getEntities((Entity)null,
                         new AxisAlignedBB(
                                 this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
                                 this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8),
                         this::isPlayer);
 
                 for(Entity entity : playersInRange) {
-                    entity.hurt(DamageSource.mobAttack(this.mob), 1.0F);
-                    ((PlayerEntity) entity).addEffect(new EffectInstance(Effect.byId(9), 200, 1));
+                    if(((LivingEntity)entity).getItemBySlot(EquipmentSlotType.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {
+                        entity.hurt(DamageSource.mobAttack(this.mob), 1.0F);
+                        ((PlayerEntity) entity).addEffect(new EffectInstance(Effect.byId(9), 200, 1));
+                    }
                 }
                 this.mob.level.playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundCategory.HOSTILE, 10.0F,0.85F + random.nextFloat() * 0.1F);
 

@@ -35,7 +35,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -58,16 +57,19 @@ public class ArthanaModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        Entity entity = context.getParamOrNull(LootParameters.DAMAGE_SOURCE).getDirectEntity();
-        if(entity != null) {
-            EntityType<?> entityKilled = context.getParamOrNull(LootParameters.THIS_ENTITY).getType();
+        DamageSource source = context.getParamOrNull(LootParameters.DAMAGE_SOURCE);
+        if(source != null) {
+            Entity entity = source.getDirectEntity();
+            if(entity != null) {
+                EntityType<?> entityKilled = context.getParamOrNull(LootParameters.THIS_ENTITY).getType();
 
-            if (ENTITY_DROPS.containsKey(entityKilled) && entity instanceof LivingEntity) {
-                LivingEntity livingEntity = (LivingEntity) entity;
-                ItemStack item = livingEntity.getMainHandItem();
+                if(ENTITY_DROPS.containsKey(entityKilled) && entity instanceof LivingEntity) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    ItemStack item = livingEntity.getMainHandItem();
 
-                if (item.getItem() == EnchantedItems.ARTHANA.get()) {
-                    generatedLoot.add(new ItemStack(ENTITY_DROPS.get(entityKilled)));
+                    if(item.getItem() == EnchantedItems.ARTHANA.get()) {
+                        generatedLoot.add(new ItemStack(ENTITY_DROPS.get(entityKilled)));
+                    }
                 }
             }
         }

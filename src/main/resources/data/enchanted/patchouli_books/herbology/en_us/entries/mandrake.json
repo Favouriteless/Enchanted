@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Mandrakes are a group of perennial herbaceous plants with long, parsnip shaped roots.$(br2)The screams of this plant can cause injury or death. Wear earmuffs or harvest at night to reduce risk.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+      "text": "Mandrakes are a group of perennial herbaceous plants with long, parsnip shaped roots.$(br2)The screams of this plant can cause injury or death. Wear earmuffs and harvest at night to reduce risk.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
     },
     {
       "type": "patchouli:multiblock",
@@ -19,6 +19,11 @@
           [ " " ]
         ]
       }
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_earmuffs",
+      "text": "Wearing earmuffs will protect against the mandrake's screams."
     }
   ],
   "read_by_default": true

@@ -34,6 +34,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -41,7 +43,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import javax.annotation.Nullable;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
+@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class EarmuffsItem extends ArmorItem {
 
 	private static float previousGain = 1.0F;
@@ -52,6 +54,7 @@ public class EarmuffsItem extends ArmorItem {
 	}
 
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
 	public static void clientTick(ClientTickEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		PlayerEntity player = mc.player;
@@ -75,12 +78,14 @@ public class EarmuffsItem extends ArmorItem {
 
 	@Nullable
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
 		return (A)new EarmuffsModel();
 	}
 
 	@Nullable
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return EarmuffsModel.TEXTURE.toString();
 	}

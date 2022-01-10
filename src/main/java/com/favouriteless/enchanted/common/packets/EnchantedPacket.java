@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. Favouriteless
+ * Copyright (c) 2022. Favouriteless
  * Enchanted, a minecraft mod.
  * GNU GPLv3 License
  *
@@ -19,23 +19,14 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.entities.mandrake;
+package com.favouriteless.enchanted.common.packets;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.ChickenModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class MandrakeRenderer extends MobRenderer<MandrakeEntity, ChickenModel<MandrakeEntity>> {
+import java.util.function.Supplier;
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/entity/chicken.png");
-
-    public MandrakeRenderer(EntityRendererManager manager) {
-        super(manager, new ChickenModel(), 0.5f);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(MandrakeEntity entity) {
-        return TEXTURE;
-    }
+public interface EnchantedPacket {
+	void encode(PacketBuffer buffer);
+	void receiveMessage(Supplier<Context> context);
 }

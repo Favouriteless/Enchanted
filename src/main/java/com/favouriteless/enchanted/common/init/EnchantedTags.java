@@ -33,5 +33,6 @@ public class EnchantedTags {
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_plants"));
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_BLACKLIST = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
+    public static final Tags.IOptionalNamedTag<Block> CHALKS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
 
 }

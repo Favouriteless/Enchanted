@@ -22,26 +22,27 @@
 package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedPackets;
 import com.favouriteless.enchanted.common.packets.CBroomstickSteerPacket;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -71,27 +72,46 @@ public class BroomstickEntity extends Entity {
     private double lerpXRot = 0.0D;
     private double lerpYRot = 0.0D;
 
+    private static final DataParameter<Integer> DATA_ID_HURT = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> DATA_ID_HURTDIR = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.INT);
+    private static final DataParameter<Float> DATA_ID_DAMAGE = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.FLOAT);
+
     public BroomstickEntity(EntityType<BroomstickEntity> type, World world) {
         super(type, world);
+        this.blocksBuilding = true;
     }
 
     @Override
     protected void defineSynchedData() {
+        this.entityData.define(DATA_ID_HURT, 0);
+        this.entityData.define(DATA_ID_HURTDIR, 1);
+        this.entityData.define(DATA_ID_DAMAGE, 0.0F);
     }
 
     @Override
     public void tick() {
+        if (this.getHurtTime() > 0) {
+            this.setHurtTime(this.getHurtTime() - 1);
+        }
+
+        if (this.getDamage() > 0.0F) {
+            this.setDamage(this.getDamage() - 1.0F);
+        }
+
         super.tick();
 
         this.tickLerp();
         if(isControlledByLocalInstance()) {
             this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
 
-//            this.deltaRotX *= 0.9F;
-//            this.deltaRotY *= 0.9F;
             if(level.isClientSide) {
+                deltaRotX *= 0.8F;
+                deltaRotY *= 0.8F;
                 controlBroom();
                 EnchantedPackets.INSTANCE.sendToServer(new CBroomstickSteerPacket(inputUp, inputDown, inputLeft, inputRight));
+            }
+            else {
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.75D).add(0.0D, -0.05D, 0.0D));
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
@@ -101,12 +121,12 @@ public class BroomstickEntity extends Entity {
     }
 
     private void tickLerp() {
-        if (this.isControlledByLocalInstance()) {
+        if(this.isControlledByLocalInstance()) {
             this.lerpSteps = 0;
             this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
         }
 
-        if (this.lerpSteps > 0) {
+        if(this.lerpSteps > 0) {
             double x = this.getX() + (this.lerpX - this.getX()) / this.lerpSteps;
             double y = this.getY() + (this.lerpY - this.getY()) / this.lerpSteps;
             double z = this.getZ() + (this.lerpZ - this.getZ()) / this.lerpSteps;
@@ -114,8 +134,8 @@ public class BroomstickEntity extends Entity {
             double xRot = MathHelper.wrapDegrees(this.lerpXRot - this.xRot);
             double yRot = MathHelper.wrapDegrees(this.lerpYRot - this.yRot);
 
-            this.xRot = (float)(this.xRot + xRot / this.lerpSteps);
-            this.yRot = (float)(this.yRot + yRot / this.lerpSteps);
+            this.xRot = (float) (this.xRot + xRot / this.lerpSteps);
+            this.yRot = (float) (this.yRot + yRot / this.lerpSteps);
 
             --this.lerpSteps;
             this.setPos(x, y, z);
@@ -144,26 +164,26 @@ public class BroomstickEntity extends Entity {
 
             if(player.input.left) {
                 this.inputLeft = true;
-                this.deltaRotY -= 3;
+                this.deltaRotY--;
             }
             if(player.input.right) {
                 this.inputRight = true;
-                this.deltaRotY += 3;
+                this.deltaRotY++;
             }
             if(player.input.down) {
                 this.inputDown = true;
-                this.deltaRotX -= 3;
+                this.deltaRotX--;
             }
             if(player.input.up) {
                 this.inputUp = true;
-                this.deltaRotX += 3;
+                this.deltaRotX++;
             }
             if(player.input.jumping) {
                 this.inputJump = true;
             }
 
-            this.yRot = deltaRotY;
-            this.xRot = deltaRotX;
+            this.yRot += deltaRotY;
+            this.xRot = MathHelper.clamp(this.xRot + deltaRotX, -45.0F, 45.0F);
             this.setDeltaMovement(getNewDeltaMovement());
         }
     }
@@ -200,20 +220,6 @@ public class BroomstickEntity extends Entity {
         this.inputRight = right;
     }
 
-    public float lerpRotX(double value) {
-        return Math.round(MathHelper.lerp(value, xRotO, xRot));
-    }
-
-    public float lerpRotY(double value) {
-        return Math.round(MathHelper.lerp(value, yRotO, yRot));
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void onPassengerTurned(Entity pEntityToUpdate) {
-        this.clampRotation(pEntityToUpdate);
-    }
-
     @Override
     protected void readAdditionalSaveData(CompoundNBT pCompound) {
 
@@ -231,7 +237,7 @@ public class BroomstickEntity extends Entity {
 
     @Override
     public double getPassengersRidingOffset() {
-        return 0.7D;
+        return 0.2D;
     }
 
     @Override
@@ -241,9 +247,10 @@ public class BroomstickEntity extends Entity {
 
     @Override
     public ActionResultType interact(PlayerEntity pPlayer, Hand pHand) {
-        if (pPlayer.isSecondaryUseActive()) {
+        if(pPlayer.isSecondaryUseActive()) {
             return ActionResultType.SUCCESS;
-        } else {
+        }
+        else {
             if(!level.isClientSide) {
                 return pPlayer.startRiding(this) ? ActionResultType.CONSUME : ActionResultType.PASS;
             }
@@ -271,18 +278,16 @@ public class BroomstickEntity extends Entity {
     @Override
     public void positionRider(Entity pPassenger) {
         if(hasPassenger(pPassenger)) {
-            pPassenger.setPos(getX(), getY()+getPassengersRidingOffset(), getZ());
-            pPassenger.yRot += deltaRotY;
-            pPassenger.setYHeadRot(pPassenger.getYHeadRot() + deltaRotY);
-            clampRotation(pPassenger);
+            pPassenger.setPos(getX(), getY() + getPassengersRidingOffset(), getZ());
         }
     }
 
     public boolean isControlledByLocalInstance() {
         Entity entity = this.getControllingPassenger();
-        if (entity instanceof PlayerEntity) {
-            return ((PlayerEntity)entity).isLocalPlayer();
-        } else {
+        if(entity instanceof PlayerEntity) {
+            return ((PlayerEntity) entity).isLocalPlayer();
+        }
+        else {
             return !this.level.isClientSide;
         }
     }
@@ -298,40 +303,109 @@ public class BroomstickEntity extends Entity {
         return getPassengers().size() < 1;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public void onPassengerTurned(Entity pEntityToUpdate) {
+        this.clampRotation(pEntityToUpdate);
+    }
+
     protected void clampRotation(Entity pEntityToUpdate) {
-        pEntityToUpdate.setYBodyRot(yRot);
-        float f = MathHelper.wrapDegrees(pEntityToUpdate.yRot - yRot);
+        pEntityToUpdate.setYBodyRot(this.yRot);
+        float f = MathHelper.wrapDegrees(pEntityToUpdate.yRot - this.yRot);
         float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
         pEntityToUpdate.yRotO += f1 - f;
         pEntityToUpdate.yRot += f1 - f;
         pEntityToUpdate.setYHeadRot(pEntityToUpdate.yRot);
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        PlayerEntity player = event.getPlayer();
-        Entity vehicle = player.getVehicle();
-        if(vehicle instanceof BroomstickEntity) {
-            BroomstickEntity broomstick = (BroomstickEntity)vehicle;
-            MatrixStack matrixStack = event.getMatrixStack();
-            float partialTicks = event.getPartialRenderTick();
-
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(broomstick.lerpRotX(partialTicks)));
-            matrixStack.translate(0.0F, -0.55F, 0.0F);
-        }
-    }
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onCameraSetup(EntityViewRenderEvent.CameraSetup event) {
-        PlayerEntity player = Minecraft.getInstance().player;
-        if(player != null) {
-            Entity vehicle = player.getVehicle();
-            if(vehicle instanceof BroomstickEntity) {
-                BroomstickEntity broomstick = (BroomstickEntity)vehicle;
+    @Override
+    public void push(Entity pEntity) {
+        if(pEntity instanceof BroomstickEntity) {
+            if(pEntity.getBoundingBox().minY < this.getBoundingBox().maxY) {
+                super.push(pEntity);
             }
         }
+        else if(pEntity.getBoundingBox().minY <= this.getBoundingBox().minY) {
+            super.push(pEntity);
+        }
+
     }
 
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if(this.isInvulnerableTo(pSource)) {
+            return false;
+        }
+        else if(!this.level.isClientSide && !this.removed) {
+            this.setHurtDir(-this.getHurtDir());
+            this.setHurtTime(10);
+            this.setDamage(this.getDamage() + pAmount * 10.0F);
+            this.markHurt();
+            boolean isSurvivalPlayer = pSource.getEntity() instanceof PlayerEntity && ((PlayerEntity) pSource.getEntity()).abilities.instabuild;
+            if(isSurvivalPlayer || this.getDamage() > 40.0F) {
+                if(!isSurvivalPlayer && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                    this.spawnAtLocation(EnchantedItems.ENCHANTED_BROOMSTICK.get());
+                }
+
+                this.remove();
+            }
+
+            return true;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * Sets the forward direction of the entity.
+     */
+    public void setHurtDir(int pForwardDirection) {
+        this.entityData.set(DATA_ID_HURTDIR, pForwardDirection);
+    }
+
+    /**
+     * Gets the forward direction of the entity.
+     */
+    public int getHurtDir() {
+        return this.entityData.get(DATA_ID_HURTDIR);
+    }
+
+    /**
+     * Sets the time to count down from since the last time entity was hit.
+     */
+    public void setHurtTime(int pTimeSinceHit) {
+        this.entityData.set(DATA_ID_HURT, pTimeSinceHit);
+    }
+
+    /**
+     * Gets the time since the last hit.
+     */
+    public int getHurtTime() {
+        return this.entityData.get(DATA_ID_HURT);
+    }
+
+    /**
+     * Sets the damage taken from the last hit.
+     */
+    public void setDamage(float pDamageTaken) {
+        this.entityData.set(DATA_ID_DAMAGE, pDamageTaken);
+    }
+
+    /**
+     * Gets the damage taken from the last hit.
+     */
+    public float getDamage() {
+        return this.entityData.get(DATA_ID_DAMAGE);
+    }
+
+    /**
+     * Setups the entity to do the hurt animation. Only used by packets in multiplayer.
+     */
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateHurt() {
+        this.setHurtDir(-this.getHurtDir());
+        this.setHurtTime(10);
+        this.setDamage(this.getDamage() * 11.0F);
+    }
 }

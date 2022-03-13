@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.favouriteless.enchanted.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "enchanted.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}

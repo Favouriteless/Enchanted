@@ -132,6 +132,7 @@ d444243d88832c6994a641fb7a04cf73575a5724 assets/enchanted/models/item/attuned_st
 fd67fec8f24e429f056f13a315c9b04473b7dcd9 assets/enchanted/models/item/bone_needle.json
 50fbe899e8f51ee352826340e698311a2b219134 assets/enchanted/models/item/bound_waystone.json
 ffccf1c672185b66f33d305325d606fe51c3e720 assets/enchanted/models/item/breath_of_the_goddess.json
+8532773db1194e3c9659dd32201024fb7237c333 assets/enchanted/models/item/broom.json
 17fbb7ee5007556fdc141147b79ecf1dd54bbb38 assets/enchanted/models/item/candelabra.json
 c2697b844d71be89a1c2aaff52c7e63da26b7614 assets/enchanted/models/item/chalice.json
 7bcc88e0b641c675b162fb998250cad9d99144f5 assets/enchanted/models/item/chalice_filled.json
@@ -214,6 +215,7 @@ e50c5ab2b4b1608a1fc146704256cce14b7f5659 assets/enchanted/models/item/demonic_bl
 10d1ad59c3ed54acdd49d8cb7ce366d88fb61fe1 assets/enchanted/models/item/drop_of_luck.json
 2783e7b6210ad4c81e14ba67a9ee20e03b0805dc assets/enchanted/models/item/earmuffs.json
 a88555aae2bb2eec023d82beb4903eeaf2f6a8e3 assets/enchanted/models/item/ember_moss.json
+47039132928691db94484dc9193d5593022cb07c assets/enchanted/models/item/enchanted_broomstick.json
 70ac0f2795b69529ac0505e464fd64aeb51f14d8 assets/enchanted/models/item/ender_dew.json
 74d1cfde8a45e046b4e44defb01f94cb7677d7cf assets/enchanted/models/item/exhale_of_the_horned_one.json
 d067d01a2381c727522e26b124f4b9d83dc5a420 assets/enchanted/models/item/flying_ointment.json

@@ -32,6 +32,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -51,8 +52,17 @@ public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 		matrix.pushPose();
 
 		matrix.translate(0.0D, 0.7D, 0.0D);
-		matrix.mulPose(Vector3f.YP.rotationDegrees(entity.lerpRotY(partialTicks)));
-		matrix.mulPose(Vector3f.XP.rotationDegrees(entity.lerpRotX(partialTicks)));
+		matrix.mulPose(Vector3f.YP.rotationDegrees(180.0F - yaw));
+		matrix.mulPose(Vector3f.XP.rotationDegrees(180.0F - MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot)));
+
+		float f = entity.getHurtTime() - partialTicks;
+		float f1 = entity.getDamage() - partialTicks;
+		if (f1 < 0.0F) {
+			f1 = 0.0F;
+		}
+		if (f > 0.0F) {
+			matrix.mulPose(Vector3f.XP.rotationDegrees(MathHelper.sin(f) * f * f1 / 10.0F * (float)entity.getHurtDir()));
+		}
 
 		this.model.setupAnim(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
 		IVertexBuilder ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));

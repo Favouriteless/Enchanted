@@ -183,7 +183,7 @@ public class BroomstickEntity extends Entity {
             }
 
             this.yRot += deltaRotY;
-            this.xRot = MathHelper.clamp(this.xRot + deltaRotX, -45.0F, 45.0F);
+            this.xRot = MathHelper.clamp(this.xRot + deltaRotX, -30.0F, 30.0F);
             this.setDeltaMovement(getNewDeltaMovement());
         }
     }
@@ -237,7 +237,7 @@ public class BroomstickEntity extends Entity {
 
     @Override
     public double getPassengersRidingOffset() {
-        return 0.2D;
+        return 0.15D;
     }
 
     @Override

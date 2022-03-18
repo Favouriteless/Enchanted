@@ -60,6 +60,8 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY = RITE_TYPES.register("binding_waystone_entity", () -> new RiteType<>(RiteOfBindingWaystoneEntity::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY_CHARGED = RITE_TYPES.register("binding_waystone_entity_charged", () -> new RiteType<>(RiteOfBindingWaystoneEntityCharged::new));
 
+    public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteOfInfusionBroom::new));
+
     public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
 
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));

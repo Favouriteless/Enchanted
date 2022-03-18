@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
+import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;

@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
-import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
+import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;

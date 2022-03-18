@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. Favouriteless
+ * Copyright (c) 2022. Favouriteless
  * Enchanted, a minecraft mod.
  * GNU GPLv3 License
  *
@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.entities.mandrake;
+package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;

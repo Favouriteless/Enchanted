@@ -22,8 +22,10 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.mandrake.MandrakeEntity;
-import com.favouriteless.enchanted.common.entities.mandrake.MandrakeRenderer;
+import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
+import com.favouriteless.enchanted.client.render.entity.MandrakeRenderer;
+import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -35,7 +37,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EnchantedEntityTypes {
 
     public static void registerEntityRenderers() {
-        RenderingRegistry.registerEntityRenderingHandler(EnchantedEntityTypes.MANDRAKE.get(), MandrakeRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(MANDRAKE.get(), MandrakeRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(BROOMSTICK.get(), BroomstickRenderer::new);
     }
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Enchanted.MOD_ID);
@@ -43,5 +46,10 @@ public class EnchantedEntityTypes {
     public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> EntityType.Builder.<MandrakeEntity>of(MandrakeEntity::new, EntityClassification.MONSTER)
             .sized(0.4F, 0.7F)
             .build(new ResourceLocation(Enchanted.MOD_ID, "mandrake").toString()));
+
+    public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> EntityType.Builder.of(BroomstickEntity::new, EntityClassification.MISC)
+            .sized(1.0F, 1.0F)
+            .clientTrackingRange(10)
+            .build(new ResourceLocation(Enchanted.MOD_ID, "broomstick").toString()));
 
 }

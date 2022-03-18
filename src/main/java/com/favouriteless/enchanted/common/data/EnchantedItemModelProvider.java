@@ -106,6 +106,8 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 
 		simpleItem(EnchantedItems.EARMUFFS.get());
 
+		simpleItem(EnchantedItems.BROOM.get());
+		simpleItem(EnchantedItems.ENCHANTED_BROOMSTICK.get());
 	}
 
 	private void simpleItem(Item item) {

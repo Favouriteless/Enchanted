@@ -104,6 +104,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> WAYSTONE = ITEMS.register("waystone", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BROOM = ITEMS.register("broom", () -> new BroomItem(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> ENCHANTED_BROOMSTICK = ITEMS.register("enchanted_broomstick", () -> new BroomstickItem(new Item.Properties().tab(Enchanted.TAB)));
 
 
 

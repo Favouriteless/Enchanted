@@ -23,8 +23,6 @@ package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedPackets;
-import com.favouriteless.enchanted.common.packets.CBroomstickSteerPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.*;
@@ -108,7 +106,6 @@ public class BroomstickEntity extends Entity {
                 deltaRotX *= 0.8F;
                 deltaRotY *= 0.8F;
                 controlBroom();
-                EnchantedPackets.INSTANCE.sendToServer(new CBroomstickSteerPacket(inputUp, inputDown, inputLeft, inputRight));
             }
             else {
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.75D).add(0.0D, -0.05D, 0.0D));

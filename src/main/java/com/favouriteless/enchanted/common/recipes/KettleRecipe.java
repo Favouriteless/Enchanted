@@ -168,7 +168,7 @@ public class KettleRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return EnchantedRecipeTypes.KETTLE_SERIALIZER.get();
     }
 
     @Override

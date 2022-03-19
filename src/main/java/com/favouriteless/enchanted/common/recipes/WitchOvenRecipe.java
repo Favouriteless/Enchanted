@@ -90,7 +90,7 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return EnchantedRecipeTypes.WITCH_OVEN_SERIALIZER.get();
     }
 
     @Override

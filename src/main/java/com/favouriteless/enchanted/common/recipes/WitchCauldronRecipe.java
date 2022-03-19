@@ -166,8 +166,9 @@ public class WitchCauldronRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return EnchantedRecipeTypes.WITCH_CAULDRON_SERIALIZER.get();
     }
+
 
     @Override
     public IRecipeType<?> getType() {

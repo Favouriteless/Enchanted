@@ -126,7 +126,7 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return EnchantedRecipeTypes.DISTILLERY_SERIALIZER.get();
     }
 
     @Override

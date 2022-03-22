@@ -61,18 +61,19 @@ public class EarmuffsItem extends ArmorItem {
 
 		if(player != null) {
 			if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				if(!isMuted) {
-					isMuted = true;
-					SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
-					previousGain = soundHandler.soundEngine.listener.getGain();
-					soundHandler.soundEngine.listener.setGain(0.03F);
-				}
-			}
-			else if(isMuted) {
-				isMuted = false;
 				SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
-				soundHandler.soundEngine.listener.setGain(previousGain);
+				if(!isMuted) {
+					previousGain = soundHandler.soundEngine.listener.getGain();
+				}
+				soundHandler.soundEngine.listener.setGain(previousGain * 0.03F);
+				isMuted = true;
+				return;
 			}
+		}
+		if(isMuted) {
+			isMuted = false;
+			SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
+			soundHandler.soundEngine.listener.setGain(previousGain);
 		}
 	}
 

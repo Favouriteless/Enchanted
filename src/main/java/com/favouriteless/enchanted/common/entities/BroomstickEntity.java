@@ -57,10 +57,6 @@ public class BroomstickEntity extends Entity {
     private float deltaRotX = 0.0F;
     private float deltaRotY = 0.0F;
 
-    private boolean inputLeft = false;
-    private boolean inputRight = false;
-    private boolean inputUp = false;
-    private boolean inputDown = false;
     private boolean inputJump = false;
 
     private int lerpSteps = 0;
@@ -117,6 +113,11 @@ public class BroomstickEntity extends Entity {
         }
     }
 
+    @Override
+    public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
+        return false;
+    }
+
     private void tickLerp() {
         if(this.isControlledByLocalInstance()) {
             this.lerpSteps = 0;
@@ -153,26 +154,18 @@ public class BroomstickEntity extends Entity {
     private void controlBroom() {
         if(this.isVehicle()) {
             ClientPlayerEntity player = Minecraft.getInstance().player;
-            inputLeft = false;
-            inputRight = false;
-            inputUp = false;
-            inputDown = false;
             inputJump = false;
 
             if(player.input.left) {
-                this.inputLeft = true;
                 this.deltaRotY--;
             }
             if(player.input.right) {
-                this.inputRight = true;
                 this.deltaRotY++;
             }
             if(player.input.down) {
-                this.inputDown = true;
                 this.deltaRotX--;
             }
             if(player.input.up) {
-                this.inputUp = true;
                 this.deltaRotX++;
             }
             if(player.input.jumping) {
@@ -211,10 +204,6 @@ public class BroomstickEntity extends Entity {
     }
 
     public void setInput(boolean up, boolean down, boolean left, boolean right) {
-        this.inputUp = up;
-        this.inputDown = down;
-        this.inputLeft = left;
-        this.inputRight = right;
     }
 
     @Override

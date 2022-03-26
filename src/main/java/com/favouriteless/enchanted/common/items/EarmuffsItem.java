@@ -25,7 +25,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.entity.armor.EarmuffsModel;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.audio.LocatableSound;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -36,7 +36,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -46,34 +46,21 @@ import javax.annotation.Nullable;
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class EarmuffsItem extends ArmorItem {
 
-	private static float previousGain = 1.0F;
-	private static boolean isMuted = false;
-
 	public EarmuffsItem(Properties pProperties) {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, pProperties);
 	}
 
 	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void clientTick(ClientTickEvent event) {
+	public static void playSound(PlaySoundEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		PlayerEntity player = mc.player;
 
 		if(player != null) {
 			if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
-				if(!isMuted) {
-					previousGain = soundHandler.soundEngine.listener.getGain();
-				}
-				soundHandler.soundEngine.listener.setGain(previousGain * 0.03F);
-				isMuted = true;
-				return;
+				LocatableSound sound = (LocatableSound)event.getResultSound();
+				sound.volume *= 0.03F;
+				event.setResultSound(sound);
 			}
-		}
-		if(isMuted) {
-			isMuted = false;
-			SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
-			soundHandler.soundEngine.listener.setGain(previousGain);
 		}
 	}
 

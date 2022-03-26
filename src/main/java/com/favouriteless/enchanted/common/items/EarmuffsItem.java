@@ -51,6 +51,7 @@ public class EarmuffsItem extends ArmorItem {
 	}
 
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
 	public static void playSound(PlaySoundEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		PlayerEntity player = mc.player;

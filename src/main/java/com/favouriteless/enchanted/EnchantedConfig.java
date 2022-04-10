@@ -23,9 +23,6 @@ package com.favouriteless.enchanted;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class EnchantedConfig {
 
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -41,6 +38,8 @@ public class EnchantedConfig {
     // Kettle
     public static final ForgeConfigSpec.ConfigValue<Boolean> KETTLE_ITEM_SPOIL;
 
+    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_TOTEMS;
+
     static {
         BUILDER.push("Altar Options");
         ALTAR_RANGE = BUILDER.define("altar_range", 16);
@@ -53,6 +52,10 @@ public class EnchantedConfig {
 
         BUILDER.push("Kettle Options");
         KETTLE_ITEM_SPOIL = BUILDER.comment("Allow incorrect items to spoil brew").define("kettle_item_spoil", true);
+        BUILDER.pop();
+
+        BUILDER.push("Miscellaneous Options");
+        DISABLE_TOTEMS = BUILDER.comment("Disable totems of undying (to make poppets more useful)").define("disable_totems", false);
         BUILDER.pop();
 
         SPEC = BUILDER.build();

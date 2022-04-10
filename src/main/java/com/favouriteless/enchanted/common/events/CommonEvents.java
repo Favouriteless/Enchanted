@@ -22,10 +22,40 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.init.EnchantedEffects;
+import net.minecraft.item.Items;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class CommonEvents {
+
+	@SubscribeEvent
+	public static void effectsOnLivingEntityHurt(LivingHurtEvent event) {
+		if(event.getSource() == DamageSource.FALL) {
+			if(event.getEntityLiving().getEffect(EnchantedEffects.FALL_RESISTANCE.get()) != null) {
+				event.setCanceled(true);
+			}
+		}
+		else if(event.getSource() == DamageSource.DROWN) {
+			if(event.getEntityLiving().getEffect(EnchantedEffects.DROWN_RESISTANCE.get()) != null) {
+				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemTooltip(ItemTooltipEvent event) {
+		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && EnchantedConfig.DISABLE_TOTEMS.get()) {
+			event.getToolTip().add(new StringTextComponent("Totems are disabled (Enchanted config)").withStyle(TextFormatting.RED));
+		}
+	}
 
 }

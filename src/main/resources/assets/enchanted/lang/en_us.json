@@ -114,5 +114,13 @@
     "block.enchanted.chalice_filled_milk": "Filled Chalice",
     "block.enchanted.candelabra": "Candelabra",
 
+    "effect.enchanted.fall_resistance": "Fall Resistance",
+
+    "item.enchanted.hunger_poppet": "Hunger Protection Poppet",
+    "item.enchanted.earth_poppet": "Earth Protection Poppet",
+    "item.enchanted.fire_poppet": "Fire Protection Poppet",
+    "item.enchanted.water_poppet": "Water Protection Poppet",
+    "item.enchanted.earth_poppet_infused": "Infused Earth Protection Poppet",
+
     "itemGroup.enchanted.main": "Enchanted"
 }

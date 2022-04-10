@@ -19,30 +19,24 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.items.poppets;
+package com.favouriteless.enchanted.mixin;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import com.favouriteless.enchanted.EnchantedConfig;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.function.Predicate;
+@Mixin(LivingEntity.class)
+public class MixinLivingEntity {
 
-public class EarthPoppetInfusedItem extends AbstractPoppetItem {
-
-	public EarthPoppetInfusedItem(float failRate, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(properties, failRate, sourcePredicate);
+	@Inject(method="checkTotemDeathProtection", at=@At("HEAD"), cancellable=true)
+	private void checkTotemDeathProtection(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
+		if(EnchantedConfig.DISABLE_TOTEMS.get()) {
+			cir.setReturnValue(false);
+		}
 	}
 
-	@Override
-	public boolean canProtect(PlayerEntity player) {
-		return true;
-	}
-
-	@Override
-	public void protect(PlayerEntity player) {
-		player.setHealth(1.0F);
-		player.addEffect(new EffectInstance(Effects.REGENERATION, 60, 2));
-		player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 60, 1));
-	}
 }

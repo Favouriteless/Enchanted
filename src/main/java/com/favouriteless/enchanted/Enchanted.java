@@ -38,7 +38,7 @@ public class Enchanted
 {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "enchanted";
-    public static Enchanted instance;
+    public static Enchanted INSTANCE;
     public static final ItemGroup TAB = new ItemGroup("enchanted.main") {
         @Override
         public ItemStack makeIcon() {
@@ -50,7 +50,7 @@ public class Enchanted
         registerAll();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnchantedConfig.SPEC, "enchanted-common.toml");
-        instance = this;
+        INSTANCE = this;
         MinecraftForge.EVENT_BUS.register(this);
 
     }
@@ -61,6 +61,7 @@ public class Enchanted
 
         EnchantedRecipeTypes.init();
         EnchantedRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
+        EnchantedEffects.EFFECTS.register(modEventBus);
         EnchantedParticles.PARTICLE_TYPES.register(modEventBus);
         EnchantedEntityTypes.ENTITY_TYPES.register(modEventBus);
         EnchantedBlocks.BLOCKS.register(modEventBus);

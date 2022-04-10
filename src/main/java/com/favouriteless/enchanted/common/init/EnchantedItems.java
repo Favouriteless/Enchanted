@@ -25,8 +25,8 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.BasicPoppetItem;
-import com.favouriteless.enchanted.common.items.poppets.EarthPoppetInfusedItem;
 import com.favouriteless.enchanted.common.items.poppets.HungerPoppetItem;
+import com.favouriteless.enchanted.common.items.poppets.PoppetInfusedItem;
 import net.minecraft.item.*;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -159,9 +159,11 @@ public class EnchantedItems {
 
     public static final RegistryObject<Item> POPPET = ITEMS.register("poppet", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> EARTH_POPPET = ITEMS.register("earth_poppet", () -> new BasicPoppetItem(0.3F, source -> source == DamageSource.FALL, new Item.Properties().tab(Enchanted.TAB)));
-    public static final RegistryObject<Item> EARTH_POPPET_INFUSED = ITEMS.register("earth_poppet_infused", () -> new EarthPoppetInfusedItem(0.0F, source -> source == DamageSource.FALL, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> EARTH_POPPET_INFUSED = ITEMS.register("earth_poppet_infused", () -> new PoppetInfusedItem(EnchantedEffects.FALL_RESISTANCE, source -> source == DamageSource.FALL, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> FIRE_POPPET = ITEMS.register("fire_poppet", () -> new BasicPoppetItem(0.3F, DamageSource::isFire, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> FIRE_POPPET_INFUSED = ITEMS.register("fire_poppet_infused", () -> new PoppetInfusedItem(() -> Effects.FIRE_RESISTANCE, DamageSource::isFire, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> WATER_POPPET = ITEMS.register("water_poppet", () -> new BasicPoppetItem(0.3F, source -> source == DamageSource.DROWN, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WATER_POPPET_INFUSED = ITEMS.register("water_poppet_infused", () -> new PoppetInfusedItem(EnchantedEffects.DROWN_RESISTANCE, source -> source == DamageSource.DROWN, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> HUNGER_POPPET = ITEMS.register("hunger_poppet", () -> new HungerPoppetItem(0.3F, source -> source == DamageSource.STARVE, new Item.Properties().tab(Enchanted.TAB)));
 
 }

@@ -19,20 +19,27 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.items.poppets;
 
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
 
-public class VectorHelper {
+import java.util.function.Predicate;
 
-	public static Vector3d clampVector3d(Vector3d vector, double magnitude) {
- 		double m = Math.sqrt(vector.x*vector.x + vector.y*vector.y + vector.z*vector.z);
-		if(m >= magnitude) {
-			return vector.normalize().multiply(magnitude, magnitude, magnitude);
-		}
-		else {
-			return vector;
-		}
+public class BasicPoppetItem extends AbstractPoppetItem {
+
+	public BasicPoppetItem(float failRate, Predicate<DamageSource> sourcePredicate, Properties properties) {
+		super(properties, failRate, sourcePredicate);
+	}
+
+	@Override
+	public boolean canProtect(PlayerEntity player) {
+		return true;
+	}
+
+	@Override
+	public void protect(PlayerEntity player) {
+		player.setHealth(1);
 	}
 
 }

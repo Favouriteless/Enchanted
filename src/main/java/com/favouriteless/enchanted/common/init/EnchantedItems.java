@@ -23,9 +23,13 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.*;
-import com.favouriteless.enchanted.common.items.brews.*;
+import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
+import com.favouriteless.enchanted.common.items.poppets.BasicPoppetItem;
+import com.favouriteless.enchanted.common.items.poppets.EarthPoppetInfusedItem;
+import com.favouriteless.enchanted.common.items.poppets.HungerPoppetItem;
 import net.minecraft.item.*;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -152,5 +156,12 @@ public class EnchantedItems {
     public static final RegistryObject<Item> SOUL_OF_THE_WORLD = ITEMS.register("soul_of_the_world", () -> new SimpleEffectBrewItem(Effects.POISON, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> SPIRIT_OF_OTHERWHERE = ITEMS.register("spirit_of_otherwhere", () -> new SimpleEffectBrewItem(Effects.POISON, 1200, 1, new Item.Properties().tab(Enchanted.TAB)));
     public static final RegistryObject<Item> INFERNAL_ANIMUS = ITEMS.register("infernal_animus", () -> new SimpleEffectBrewItem(Effects.WITHER, 1200, 2, new Item.Properties().tab(Enchanted.TAB)));
+
+    public static final RegistryObject<Item> POPPET = ITEMS.register("poppet", () -> new Item(new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> EARTH_POPPET = ITEMS.register("earth_poppet", () -> new BasicPoppetItem(0.3F, source -> source == DamageSource.FALL, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> EARTH_POPPET_INFUSED = ITEMS.register("earth_poppet_infused", () -> new EarthPoppetInfusedItem(0.0F, source -> source == DamageSource.FALL, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> FIRE_POPPET = ITEMS.register("fire_poppet", () -> new BasicPoppetItem(0.3F, DamageSource::isFire, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> WATER_POPPET = ITEMS.register("water_poppet", () -> new BasicPoppetItem(0.3F, source -> source == DamageSource.DROWN, new Item.Properties().tab(Enchanted.TAB)));
+    public static final RegistryObject<Item> HUNGER_POPPET = ITEMS.register("hunger_poppet", () -> new HungerPoppetItem(0.3F, source -> source == DamageSource.STARVE, new Item.Properties().tab(Enchanted.TAB)));
 
 }

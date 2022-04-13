@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. Favouriteless
+ * Copyright (c) 2022. Favouriteless
  * Enchanted, a minecraft mod.
  * GNU GPLv3 License
  *
@@ -19,13 +19,30 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.items.poppets;
 
-import com.favouriteless.enchanted.Enchanted;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.vector.Vector3d;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
-public class CommonEvents {
+import java.util.function.Predicate;
+
+public class VoidPoppetItem extends AbstractDeathPoppetItem {
+
+	public VoidPoppetItem(float failRate, int durability, Predicate<DamageSource> sourcePredicate) {
+		super(failRate, durability, sourcePredicate);
+	}
+
+	@Override
+	public boolean canProtect(PlayerEntity player) {
+		return true;
+	}
+
+	@Override
+	public void protect(PlayerEntity player) {
+		player.setHealth(1);
+		Vector3d pos = player.position();
+		player.teleportTo(pos.x, 257.0D, pos.z);
+	}
 
 }

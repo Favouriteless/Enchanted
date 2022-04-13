@@ -116,11 +116,25 @@
 
     "effect.enchanted.fall_resistance": "Fall Resistance",
 
+    "item.enchanted.poppet": "Poppet",
     "item.enchanted.hunger_poppet": "Hunger Protection Poppet",
+    "item.enchanted.hunger_poppet_infused": "Infused Hunger Protection Poppet",
+    "item.enchanted.hunger_poppet_sturdy": "Sturdy Hunger Protection Poppet",
+    "item.enchanted.void_poppet": "Void Protection Poppet",
+    "item.enchanted.void_poppet_infused": "Infused Void Protection Poppet",
+    "item.enchanted.void_poppet_sturdy": "Sturdy Void Protection Poppet",
     "item.enchanted.earth_poppet": "Earth Protection Poppet",
-    "item.enchanted.fire_poppet": "Fire Protection Poppet",
-    "item.enchanted.water_poppet": "Water Protection Poppet",
     "item.enchanted.earth_poppet_infused": "Infused Earth Protection Poppet",
+    "item.enchanted.earth_poppet_sturdy": "Sturdy Earth Protection Poppet",
+    "item.enchanted.fire_poppet": "Fire Protection Poppet",
+    "item.enchanted.fire_poppet_infused": "Infused Fire Protection Poppet",
+    "item.enchanted.fire_poppet_sturdy": "Sturdy Fire Protection Poppet",
+    "item.enchanted.water_poppet": "Water Protection Poppet",
+    "item.enchanted.water_poppet_infused": "Infused Water Protection Poppet",
+    "item.enchanted.water_poppet_sturdy": "Sturdy Water Protection Poppet",
+    "item.enchanted.tool_poppet": "Tool Protection Poppet",
+    "item.enchanted.tool_poppet_infused": "Infused Tool Protection Poppet",
+    "item.enchanted.tool_poppet_sturdy": "Sturdy Tool Protection Poppet",
 
     "itemGroup.enchanted.main": "Enchanted"
 }

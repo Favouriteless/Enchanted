@@ -23,15 +23,18 @@ package com.favouriteless.enchanted.common.items.poppets;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
-public class HungerPoppetItem extends AbstractPoppetItem {
+public class DeathPoppetInfusedItem extends AbstractDeathPoppetItem {
 
-	public HungerPoppetItem(float failRate, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(properties, failRate, sourcePredicate);
+	protected Supplier<EffectInstance> deathEffect;
+
+	public DeathPoppetInfusedItem(Supplier<EffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate) {
+		super(0.0F, 1, sourcePredicate);
+		this.deathEffect = deathEffect;
 	}
 
 	@Override
@@ -41,8 +44,7 @@ public class HungerPoppetItem extends AbstractPoppetItem {
 
 	@Override
 	public void protect(PlayerEntity player) {
-		player.setHealth(1);
-		player.addEffect(new EffectInstance(Effects.SATURATION, 60, 0));
+		player.setHealth(1.0F);
+		player.addEffect(deathEffect.get());
 	}
-
 }

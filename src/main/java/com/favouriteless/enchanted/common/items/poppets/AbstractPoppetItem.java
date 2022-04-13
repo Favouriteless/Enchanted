@@ -21,11 +21,10 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
+import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -35,39 +34,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Predicate;
 
 public abstract class AbstractPoppetItem extends Item {
 
 	protected float failRate;
-	protected final Predicate<DamageSource> sourcePredicate;
 
-	public AbstractPoppetItem(Properties properties, float failRate, Predicate<DamageSource> sourcePredicate) {
-		super(properties);
+	public AbstractPoppetItem(float failRate, int durability) {
+		super(new Item.Properties().tab(Enchanted.TAB).durability(durability));
 		this.failRate = failRate;
-		this.sourcePredicate = sourcePredicate;
 	}
-
-	/**
-	 * True if this poppet can protect against the specified DamageSource
-	 * @param damageSource
-	 * @return
-	 */
-	public boolean protectsAgainst(DamageSource damageSource) {
-		return sourcePredicate.test(damageSource);
-	}
-
-	/**
-	 * True if extra requirements are met (for example, random chance)
-	 * @return
-	 */
-	public abstract boolean canProtect(PlayerEntity player);
-
-	/**
-	 * Apply protection effects to the given player
-	 * @param player
-	 */
-	public abstract void protect(PlayerEntity player);
 
 	public float getFailRate() {
 		return this.failRate;

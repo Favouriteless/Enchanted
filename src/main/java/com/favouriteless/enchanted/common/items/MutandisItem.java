@@ -40,7 +40,7 @@ public class MutandisItem extends Item {
     private static final Random RANDOM = new Random();
     private final IOptionalNamedTag<Block> validBlocks;
 
-    public MutandisItem(Properties properties, IOptionalNamedTag<Block> validBlocks) {
+    public MutandisItem(IOptionalNamedTag<Block> validBlocks, Properties properties) {
         super(properties);
         this.validBlocks = validBlocks;
     }

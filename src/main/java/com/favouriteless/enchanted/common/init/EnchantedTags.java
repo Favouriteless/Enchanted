@@ -23,7 +23,9 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
@@ -34,5 +36,7 @@ public class EnchantedTags {
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_BLACKLIST = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
     public static final Tags.IOptionalNamedTag<Block> CHALKS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
+
+    public static final Tags.IOptionalNamedTag<Item> TOOLS = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tools"));
 
 }

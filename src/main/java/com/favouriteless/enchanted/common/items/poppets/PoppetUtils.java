@@ -21,28 +21,23 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
-import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import java.util.Random;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class PoppetUtils {
 
 	public static final Random RANDOM = new Random();
 
 	/**
-	 * Returns true if the poppet is bound to a player.
+	 * Check if a poppet is bound to an entity.
 	 * @param item
-	 * @return
+	 * @return True if poppet has a UUID linked to it
 	 */
 	public static boolean isBound(ItemStack item) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
@@ -54,10 +49,10 @@ public class PoppetUtils {
 	}
 
 	/**
-	 * Returns true if the poppet is bound to the specified player
+	 * Check if poppet belongs to a specified player
 	 * @param item
 	 * @param player
-	 * @return
+	 * @return True if poppet UUID matches player UUID
 	 */
 	public static boolean belongsTo(ItemStack item, PlayerEntity player) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
@@ -106,21 +101,21 @@ public class PoppetUtils {
 	}
 
 	/**
-	 * Attempts to consume a poppet
+	 * Attempts to consume a death protection poppet
 	 * @param player
 	 * @param item
 	 * @param source
-	 * @return
+	 * @return Result of poppet use
 	 */
-	public static PoppetResult tryUsePoppet(PlayerEntity player, ItemStack item, DamageSource source) {
-		if(item.getItem() instanceof AbstractPoppetItem) {
-			AbstractPoppetItem poppet = (AbstractPoppetItem)item.getItem();
+	public static PoppetResult tryUseDeathPoppet(PlayerEntity player, ItemStack item, DamageSource source) {
+		if(item.getItem() instanceof AbstractDeathPoppetItem) {
+			AbstractDeathPoppetItem poppet = (AbstractDeathPoppetItem)item.getItem();
 			if(PoppetUtils.belongsTo(item, player)) {
 				if(poppet.protectsAgainst(source)) {
 					if(poppet.canProtect(player)) {
 						if(RANDOM.nextFloat() > poppet.getFailRate()) {
 							poppet.protect(player);
-							return poppet.getDamage(item) > 0 ? PoppetResult.SUCCESS : PoppetResult.SUCCESS_BREAK;
+							return tryDamagePoppet(item) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 						}
 						return PoppetResult.FAIL;
 					}
@@ -130,21 +125,41 @@ public class PoppetUtils {
 		return PoppetResult.PASS;
 	}
 
-	@SubscribeEvent
-	public static void onEntityHurt(LivingHurtEvent event) {
-		if(event.getEntity() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity)event.getEntity();
-			if(event.getAmount() >= player.getHealth()) { // Player would be killed by damage
-
-				for(ItemStack item : player.inventory.items) {
-					PoppetResult result = tryUsePoppet(player, item, event.getSource());
-					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
-						event.setCanceled(true);
-						break;
+	/**
+	 * Attempts to consume a death protection poppet
+	 * @param player
+	 * @param poppetStack
+	 * @param toolStack
+	 * @return Result of poppet use
+	 */
+	public static PoppetResult tryUseToolPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack) {
+		if(poppetStack.getItem() instanceof ToolPoppetItem) {
+			ToolPoppetItem poppet = (ToolPoppetItem)poppetStack.getItem();
+			if(PoppetUtils.belongsTo(poppetStack, player)) {
+				if(toolStack.getItem().is(EnchantedTags.TOOLS)) {
+					if(RANDOM.nextFloat() > poppet.getFailRate()) {
+						poppet.protect(toolStack);
+						return tryDamagePoppet(poppetStack) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
+					return PoppetResult.FAIL;
 				}
 			}
 		}
+		return PoppetResult.PASS;
+	}
+
+	/**
+	 * Attempts to damage poppet
+	 * @param item
+	 * @return True if poppet is destroyed
+	 */
+	public static boolean tryDamagePoppet(ItemStack item) {
+		item.setDamageValue(item.getDamageValue()+1);
+		if(item.getDamageValue() >= item.getMaxDamage()) {
+			item.shrink(1);
+			return true;
+		}
+		return false;
 	}
 
 	public enum PoppetResult {

@@ -21,25 +21,19 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.item.ItemStack;
 
-import java.util.function.Predicate;
+public class ToolPoppetItem extends AbstractPoppetItem {
 
-public class BasicPoppetItem extends AbstractPoppetItem {
+	public float damageMultiplier;
 
-	public BasicPoppetItem(float failRate, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(properties, failRate, sourcePredicate);
+	public ToolPoppetItem(float failRate, int durability, float damageMultiplier) {
+		super(failRate, durability);
+		this.damageMultiplier = damageMultiplier;
 	}
 
-	@Override
-	public boolean canProtect(PlayerEntity player) {
-		return true;
-	}
-
-	@Override
-	public void protect(PlayerEntity player) {
-		player.setHealth(1);
+	public void protect(ItemStack item) {
+		item.setDamageValue(Math.round(item.getMaxDamage() * damageMultiplier));
 	}
 
 }

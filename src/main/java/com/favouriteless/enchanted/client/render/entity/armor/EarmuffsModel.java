@@ -34,7 +34,7 @@ public class EarmuffsModel extends BipedModel<LivingEntity> {
 
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		head.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 

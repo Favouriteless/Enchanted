@@ -22,10 +22,32 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.EnchantedEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
-public class CommonEvents {
+public class EffectEvents {
+
+	@SubscribeEvent
+	public static void effectsOnLivingEntityHurt(LivingHurtEvent event) {
+		DamageSource source = event.getSource();
+		LivingEntity entity = event.getEntityLiving();
+
+		if(entity.hasEffect(EnchantedEffects.FALL_RESISTANCE.get())) {
+			if(source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
+				event.setCanceled(true);
+			}
+		}
+		if(entity.hasEffect(EnchantedEffects.DROWN_RESISTANCE.get())) {
+			if(source == DamageSource.DROWN) {
+				event.setCanceled(true);
+			}
+		}
+	}
 
 }

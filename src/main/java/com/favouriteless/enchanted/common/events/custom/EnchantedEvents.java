@@ -19,23 +19,16 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.events.custom;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraftforge.common.MinecraftForge;
 
-public class PlayerInventoryHelper {
+public class EnchantedEvents {
 
-    /**
-     * Attempts to put an item into the given player's inventory, spawns it on the floor if the item does not fit
-     * @param player
-     * @param item
-     */
-    public static void tryGiveItem(PlayerEntity player, ItemStack item) {
-        if(player != null && !player.inventory.add(item)) {
-            player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
-        }
-    }
+	public static void livingEntityBreak(LivingEntity entity, EquipmentSlotType slot) {
+		MinecraftForge.EVENT_BUS.post(new LivingEntityBreakEvent(entity, slot));
+	}
 
 }

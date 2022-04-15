@@ -171,6 +171,9 @@ public class EnchantedItems {
     public static final RegistryObject<Item> TOOL_POPPET = ITEMS.register("tool_poppet", () -> new ToolPoppetItem(0.3F, 1, 0.9F));
     public static final RegistryObject<Item> TOOL_POPPET_INFUSED = ITEMS.register("tool_poppet_infused", () -> new ToolPoppetItem(0.0F, 1, 0.0F));
     public static final RegistryObject<Item> TOOL_POPPET_STURDY = ITEMS.register("tool_poppet_sturdy", () -> new ToolPoppetItem(0.0F, 2, 0.9F));
+    public static final RegistryObject<Item> ARMOUR_POPPET = ITEMS.register("armour_poppet", () -> new ArmourPoppetItem(0.3F, 1, 0.9F));
+    public static final RegistryObject<Item> ARMOUR_POPPET_INFUSED = ITEMS.register("armour_poppet_infused", () -> new ArmourPoppetItem(0.0F, 1, 0.0F));
+    public static final RegistryObject<Item> ARMOUR_POPPET_STURDY = ITEMS.register("armour_poppet_sturdy", () -> new ArmourPoppetItem(0.0F, 2, 0.9F));
     
     public static Supplier<Item> simpleItem() {
         return () -> new Item(simpleProperties());

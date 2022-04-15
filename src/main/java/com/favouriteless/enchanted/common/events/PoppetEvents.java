@@ -23,9 +23,11 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.events.custom.LivingEntityBreakEvent;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
@@ -37,7 +39,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(modid= Enchanted.MOD_ID, bus= Bus.FORGE)
+@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class PoppetEvents {
 
 	@SubscribeEvent
@@ -50,6 +52,9 @@ public class PoppetEvents {
 					PoppetResult result = PoppetUtils.tryUseDeathPoppet(player, item, event.getSource());
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						event.setCanceled(true);
+						return;
+					}
+					else if(result != PoppetResult.PASS) {
 						return;
 					}
 				}
@@ -65,6 +70,29 @@ public class PoppetEvents {
 			if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
 				return;
+			}
+			else if(result != PoppetResult.PASS) {
+				return;
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingEntityBreak(LivingEntityBreakEvent event) {
+		if(event.getEntity() instanceof PlayerEntity) {
+			if(event.getItemStack().getItem() instanceof ArmorItem) {
+				PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+				ItemStack armour = event.getItemStack();
+				for(ItemStack item : player.inventory.items) {
+					PoppetResult result = PoppetUtils.tryUseArmourPoppet(player, item, armour);
+					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
+						player.setItemSlot(event.getSlot(), armour);
+						return;
+					}
+					else if(result != PoppetResult.PASS) {
+						return;
+					}
+				}
 			}
 		}
 	}

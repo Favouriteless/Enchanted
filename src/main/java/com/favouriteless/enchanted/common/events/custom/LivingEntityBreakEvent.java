@@ -19,23 +19,33 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.events.custom;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
-public class PlayerInventoryHelper {
+/**
+ * Called from LivingEntity#broadcastBreakEvent whenever an Item in the entity's armour or hand slots is broken
+ */
+public class LivingEntityBreakEvent extends LivingEvent {
 
-    /**
-     * Attempts to put an item into the given player's inventory, spawns it on the floor if the item does not fit
-     * @param player
-     * @param item
-     */
-    public static void tryGiveItem(PlayerEntity player, ItemStack item) {
-        if(player != null && !player.inventory.add(item)) {
-            player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
-        }
-    }
+	private final EquipmentSlotType slot;
+	private final ItemStack itemStack;
+
+	public LivingEntityBreakEvent(LivingEntity entity, EquipmentSlotType slot) {
+		super(entity);
+		this.slot = slot;
+		this.itemStack = entity.getItemBySlot(slot).copy();
+	}
+
+	public EquipmentSlotType getSlot() {
+		return slot;
+	}
+
+	public ItemStack getItemStack() {
+		return itemStack;
+	}
 
 }

@@ -117,6 +117,7 @@ mixin {
     add sourceSets.main, "enchanted.refmap.json"
 
     config "enchanted.mixins.json"
+    debug.export = true
 }
 
 jar.finalizedBy('reobfJar')

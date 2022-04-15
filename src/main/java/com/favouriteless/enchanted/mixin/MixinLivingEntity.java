@@ -22,11 +22,14 @@
 package com.favouriteless.enchanted.mixin;
 
 import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.events.custom.EnchantedEvents;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -37,6 +40,11 @@ public class MixinLivingEntity {
 		if(EnchantedConfig.DISABLE_TOTEMS.get()) {
 			cir.setReturnValue(false);
 		}
+	}
+
+	@Inject(method="broadcastBreakEvent(Lnet/minecraft/inventory/EquipmentSlotType;)V", at=@At("HEAD"))
+	private void broadcastBreakEvent(EquipmentSlotType slot, CallbackInfo ci) {
+		EnchantedEvents.livingEntityBreak((LivingEntity)(Object)this, slot);
 	}
 
 }

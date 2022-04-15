@@ -37,6 +37,9 @@ public class EnchantedTags {
     public static final Tags.IOptionalNamedTag<Block> MUTANDIS_BLACKLIST = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
     public static final Tags.IOptionalNamedTag<Block> CHALKS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
 
-    public static final Tags.IOptionalNamedTag<Item> TOOLS = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tools"));
+    public static final Tags.IOptionalNamedTag<Item> TOOL_POPPET_WHITELIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_whitelist"));
+    public static final Tags.IOptionalNamedTag<Item> ARMOUR_POPPET_WHITELIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_whitelist"));
+    public static final Tags.IOptionalNamedTag<Item> TOOL_POPPET_BLACKLIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_blacklist"));
+    public static final Tags.IOptionalNamedTag<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_blacklist"));
 
 }

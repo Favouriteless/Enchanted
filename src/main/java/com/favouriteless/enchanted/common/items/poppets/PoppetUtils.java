@@ -21,8 +21,10 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
+import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -126,7 +128,7 @@ public class PoppetUtils {
 	}
 
 	/**
-	 * Attempts to consume a death protection poppet
+	 * Attempts to consume a tool protection poppet
 	 * @param player
 	 * @param poppetStack
 	 * @param toolStack
@@ -136,9 +138,35 @@ public class PoppetUtils {
 		if(poppetStack.getItem() instanceof ToolPoppetItem) {
 			ToolPoppetItem poppet = (ToolPoppetItem)poppetStack.getItem();
 			if(PoppetUtils.belongsTo(poppetStack, player)) {
-				if(toolStack.getItem().is(EnchantedTags.TOOLS)) {
+				if(toolStack.isDamageableItem()) {
+					if(!toolStack.getItem().is(EnchantedTags.TOOL_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !toolStack.getItem().is(EnchantedTags.TOOL_POPPET_WHITELIST))) {
+						if(RANDOM.nextFloat() > poppet.getFailRate()) {
+							poppet.protect(toolStack);
+							return tryDamagePoppet(poppetStack) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
+						}
+						return PoppetResult.FAIL;
+					}
+				}
+			}
+		}
+		return PoppetResult.PASS;
+	}
+
+	/**
+	 * Attempts to consume an armour protection poppet
+	 * @param player
+	 * @param poppetStack
+	 * @param armourStack
+	 * @return Result of poppet use
+	 */
+	public static PoppetResult tryUseArmourPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack armourStack) {
+		if(poppetStack.getItem() instanceof ArmourPoppetItem) {
+			ArmourPoppetItem poppet = (ArmourPoppetItem) poppetStack.getItem();
+			if(PoppetUtils.belongsTo(poppetStack, player)) {
+				Item item = armourStack.getItem();
+				if(!item.is(EnchantedTags.ARMOUR_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !item.is(EnchantedTags.ARMOUR_POPPET_WHITELIST))) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
-						poppet.protect(toolStack);
+						poppet.protect(armourStack);
 						return tryDamagePoppet(poppetStack) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
 					return PoppetResult.FAIL;

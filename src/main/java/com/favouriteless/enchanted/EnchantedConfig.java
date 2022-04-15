@@ -39,6 +39,8 @@ public class EnchantedConfig {
     public static final ForgeConfigSpec.ConfigValue<Boolean> KETTLE_ITEM_SPOIL;
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_TOTEMS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_TOOL_POPPET;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_ARMOUR_POPPET;
 
     static {
         BUILDER.push("Altar Options");
@@ -52,6 +54,11 @@ public class EnchantedConfig {
 
         BUILDER.push("Kettle Options");
         KETTLE_ITEM_SPOIL = BUILDER.comment("Allow incorrect items to spoil brew").define("kettle_item_spoil", true);
+        BUILDER.pop();
+
+        BUILDER.push("Poppet Options");
+        WHITELIST_TOOL_POPPET = BUILDER.comment("Enable the #enchanted:tool_poppet_whitelist tag").define("tool_poppet_whitelist", false);
+        WHITELIST_ARMOUR_POPPET = BUILDER.comment("Enable the #enchanted:armour_poppet_whitelist tag").define("armour_poppet_whitelist", false);
         BUILDER.pop();
 
         BUILDER.push("Miscellaneous Options");

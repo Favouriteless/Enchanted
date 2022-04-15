@@ -19,23 +19,21 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.items.poppets;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class PlayerInventoryHelper {
+public class ArmourPoppetItem extends AbstractPoppetItem {
 
-    /**
-     * Attempts to put an item into the given player's inventory, spawns it on the floor if the item does not fit
-     * @param player
-     * @param item
-     */
-    public static void tryGiveItem(PlayerEntity player, ItemStack item) {
-        if(player != null && !player.inventory.add(item)) {
-            player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
-        }
-    }
+	public float damageMultiplier;
+
+	public ArmourPoppetItem(float failRate, int durability, float damageMultiplier) {
+		super(failRate, durability);
+		this.damageMultiplier = damageMultiplier;
+	}
+
+	public void protect(ItemStack item) {
+		item.setDamageValue(Math.round(item.getMaxDamage() * damageMultiplier));
+	}
 
 }

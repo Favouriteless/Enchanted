@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "enchanted:chalk_gold",
+    "enchanted:chalk_white",
+    "enchanted:chalk_red",
+    "enchanted:chalk_purple"
+  ]
+}

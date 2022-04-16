@@ -19,33 +19,14 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events.custom;
+package com.favouriteless.enchanted.common.network;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-/**
- * Called from LivingEntity#broadcastBreakEvent whenever an Item in the entity's armour or hand slots is broken
- */
-public class LivingEntityBreakEvent extends LivingEvent {
+import java.util.function.Supplier;
 
-	private final EquipmentSlotType slot;
-	private final ItemStack itemStack;
-
-	public LivingEntityBreakEvent(LivingEntity entity, EquipmentSlotType slot) {
-		super(entity);
-		this.slot = slot;
-		this.itemStack = entity.getItemBySlot(slot).copy();
-	}
-
-	public EquipmentSlotType getSlot() {
-		return slot;
-	}
-
-	public ItemStack getItemStack() {
-		return itemStack;
-	}
-
+public interface EnchantedPacket {
+	void encode(PacketBuffer buffer);
+	void handle(Supplier<Context> context);
 }

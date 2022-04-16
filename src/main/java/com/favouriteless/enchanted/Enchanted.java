@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.common.init.*;
+import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -69,6 +70,7 @@ public class Enchanted
         EnchantedTileEntities.TILE_ENTITY_TYPES.register(modEventBus);
         EnchantedContainers.CONTAINER_TYPES.register(modEventBus);
         EnchantedRiteTypes.RITE_TYPES.register(modEventBus);
+        EnchantedPackets.registerPackets();
     }
 
 

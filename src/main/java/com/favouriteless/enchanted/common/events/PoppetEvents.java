@@ -23,10 +23,13 @@ package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.common.events.custom.LivingEntityBreakEvent;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
+import com.favouriteless.enchanted.common.network.EnchantedPackets;
+import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -48,13 +51,13 @@ public class PoppetEvents {
 			PlayerEntity player = (PlayerEntity)event.getEntity();
 			if(event.getAmount() >= player.getHealth()) { // Player would be killed by damage
 
-				for(ItemStack item : player.inventory.items) {
-					PoppetResult result = PoppetUtils.tryUseDeathPoppet(player, item, event.getSource());
+				for(ItemStack poppetItem : player.inventory.items) {
+					PoppetResult result = PoppetUtils.tryUseDeathPoppet(player, poppetItem, event.getSource());
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						event.setCanceled(true);
-						return;
 					}
-					else if(result != PoppetResult.PASS) {
+					if(result != PoppetResult.PASS) {
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
 						return;
 					}
 				}
@@ -65,31 +68,30 @@ public class PoppetEvents {
 	@SubscribeEvent
 	public static void onItemBreak(PlayerDestroyItemEvent event) {
 		ItemStack tool = event.getOriginal();
-		for(ItemStack item : event.getPlayer().inventory.items) {
-			PoppetResult result = PoppetUtils.tryUseToolPoppet(event.getPlayer(), item, tool);
+		for(ItemStack poppetItem : event.getPlayer().inventory.items) {
+			PoppetResult result = PoppetUtils.tryUseToolPoppet(event.getPlayer(), poppetItem, tool);
 			if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
-				return;
 			}
-			else if(result != PoppetResult.PASS) {
+			if(result != PoppetResult.PASS) {
+				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
 				return;
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public static void onLivingEntityBreak(LivingEntityBreakEvent event) {
-		if(event.getEntity() instanceof PlayerEntity) {
-			if(event.getItemStack().getItem() instanceof ArmorItem) {
-				PlayerEntity player = (PlayerEntity)event.getEntityLiving();
-				ItemStack armour = event.getItemStack();
-				for(ItemStack item : player.inventory.items) {
-					PoppetResult result = PoppetUtils.tryUseArmourPoppet(player, item, armour);
+	public static void onLivingEntityBreak(LivingEntity entity, EquipmentSlotType slot) {
+		if(entity instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity)entity;
+			ItemStack armourItem = entity.getItemBySlot(slot).copy();
+			if(armourItem.getItem() instanceof ArmorItem) {
+				for(ItemStack poppetItem : player.inventory.items) {
+					PoppetResult result = PoppetUtils.tryUseArmourPoppet(player, poppetItem, armourItem);
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
-						player.setItemSlot(event.getSlot(), armour);
-						return;
+						player.setItemSlot(slot, armourItem);
 					}
-					else if(result != PoppetResult.PASS) {
+					if(result != PoppetResult.PASS) {
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
 						return;
 					}
 				}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. Favouriteless
+ * Copyright (c) 2022. Favouriteless
  * Enchanted, a minecraft mod.
  * GNU GPLv3 License
  *
@@ -22,11 +22,25 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value= Dist.CLIENT)
+@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class ClientEvents {
+
+	@SubscribeEvent
+	public static void onRenderOverlayPost(RenderGameOverlayEvent.Post event) {
+		PoppetAnimationManager.render(event.getMatrixStack(), event.getPartialTicks(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+	}
+
+	@SubscribeEvent
+	public static void clientTick(ClientTickEvent event) {
+		PoppetAnimationManager.tick();
+	}
 
 }

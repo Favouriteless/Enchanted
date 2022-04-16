@@ -19,8 +19,33 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.events.custom;
+package com.favouriteless.enchanted.client.render.poppet;
 
-public class EnchantedEvents {
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.item.ItemStack;
+
+public abstract class AbstractPoppetAnimation {
+
+	private final ItemStack itemStack;
+	protected int ticks;
+
+	public AbstractPoppetAnimation(ItemStack itemStack, int ticks) {
+		this.itemStack = itemStack;
+		this.ticks = ticks;
+	}
+
+	public ItemStack getItem() {
+		return itemStack;
+	}
+
+	public int getTicks() {
+		return ticks;
+	}
+
+	public void tick() {
+		ticks--;
+	}
+
+	public abstract void render(MatrixStack matrixStack, float partialTicks, int widthScaled, int heightScaled);
 
 }

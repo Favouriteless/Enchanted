@@ -52,12 +52,13 @@ public class PoppetEvents {
 			if(event.getAmount() >= player.getHealth()) { // Player would be killed by damage
 
 				for(ItemStack poppetItem : player.inventory.items) {
+					ItemStack poppetItemOriginal = poppetItem.copy();
 					PoppetResult result = PoppetUtils.tryUseDeathPoppet(player, poppetItem, event.getSource());
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						event.setCanceled(true);
 					}
 					if(result != PoppetResult.PASS) {
-						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
 						return;
 					}
 				}
@@ -69,12 +70,13 @@ public class PoppetEvents {
 	public static void onItemBreak(PlayerDestroyItemEvent event) {
 		ItemStack tool = event.getOriginal();
 		for(ItemStack poppetItem : event.getPlayer().inventory.items) {
+			ItemStack poppetItemOriginal = poppetItem.copy();
 			PoppetResult result = PoppetUtils.tryUseToolPoppet(event.getPlayer(), poppetItem, tool);
 			if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
 			}
 			if(result != PoppetResult.PASS) {
-				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
+				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
 				return;
 			}
 		}
@@ -86,12 +88,13 @@ public class PoppetEvents {
 			ItemStack armourItem = entity.getItemBySlot(slot).copy();
 			if(armourItem.getItem() instanceof ArmorItem) {
 				for(ItemStack poppetItem : player.inventory.items) {
+					ItemStack poppetItemOriginal = poppetItem.copy();
 					PoppetResult result = PoppetUtils.tryUseArmourPoppet(player, poppetItem, armourItem);
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						player.setItemSlot(slot, armourItem);
 					}
 					if(result != PoppetResult.PASS) {
-						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItem));
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
 						return;
 					}
 				}

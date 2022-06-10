@@ -64,7 +64,7 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
 
             IVertexBuilder vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
             long time = System.currentTimeMillis() - cauldron.startTime;
-            CauldronQuad.render(matrixStack.last(), vertexBuilder,
+            Quad.render(matrixStack.last(), vertexBuilder,
                     cauldron.getRed(time), cauldron.getGreen(time), cauldron.getBlue(time), 160,
                     0F, 1/32F * ( (float)(ticks/FRAME_TIME) % 32),
                     combinedLight);
@@ -73,7 +73,7 @@ public class WitchCauldronRenderer extends TileEntityRenderer<WitchCauldronTileE
         }
     }
 
-    public static class CauldronQuad {
+    public static class Quad {
 
         private static final Vector3f[] positions  =new Vector3f[] {new Vector3f(4.99F, 0.0F, -4.99F), new Vector3f(-4.99F, 0.0F, -4.99F), new Vector3f(-4.99F, 0.0F, 4.99F), new Vector3f(4.99F, 0.0F, 4.99F)};
         private static final Vector2f[] uvs = new Vector2f[] {new Vector2f(1F, 0F), new Vector2f(0F, 0F), new Vector2f(0F, 1/32F), new Vector2f(1F, 1/32F) };

@@ -37,7 +37,7 @@ import java.awt.*;
 @OnlyIn(Dist.CLIENT)
 public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
 
-    private WitchOvenContainer container;
+    private final WitchOvenContainer container;
 
     // This is the resource location for the background image
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/witch_oven.png");

@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.PoppetAnimationParticleType.PoppetAnimationData;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.particles.ParticleType;
@@ -45,6 +46,7 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_COOK = PARTICLE_TYPES.register("cauldron_cook", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<SimpleColouredData>> KETTLE_COOK = PARTICLE_TYPES.register("kettle_cook", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<CircleMagicData>> CIRCLE_MAGIC = PARTICLE_TYPES.register("circle_magic", () -> new CircleMagicParticleType(false));
+    public static final RegistryObject<ParticleType<PoppetAnimationData>> POPPET_ANIMATION = PARTICLE_TYPES.register("poppet_animation", () -> new PoppetAnimationParticleType(true));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -53,6 +55,7 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(KETTLE_COOK.get(), KettleCookParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(POPPET_ANIMATION.get(), PoppetAnimationParticle.Factory::new);
     }
 
 }

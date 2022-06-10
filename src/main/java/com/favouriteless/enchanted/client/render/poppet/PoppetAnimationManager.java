@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.client.render.poppet;
 
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class PoppetAnimationManager {
 
-	private static final List<AbstractPoppetAnimation> ACTIVE_ANIMATIONS = new ArrayList<>();
+	private static final List<PoppetAnimation> ACTIVE_ANIMATIONS = new ArrayList<>();
 
 	/**
 	 * Starts the corresponding animation for result with the given item
@@ -40,31 +41,41 @@ public class PoppetAnimationManager {
 	public static void startAnimation(PoppetResult result, ItemStack itemStack) {
 		switch(result) {
 			case SUCCESS:
-				startAnimation(new PoppetAnimationSuccess(itemStack));
+				startAnimation(new PoppetAnimation(itemStack, 120, true));
 				break;
 			case SUCCESS_BREAK:
-				startAnimation(new PoppetAnimationSuccess(itemStack));
+				startAnimation(new PoppetAnimation(itemStack, 120, true));
 				break;
 			case FAIL:
+				startAnimation(new PoppetAnimation(itemStack, 120, false));
 				break;
 		}
 	}
 
-	public static void startAnimation(AbstractPoppetAnimation animation) {
+	public static void startAnimation(PoppetAnimation animation) {
 		ACTIVE_ANIMATIONS.add(animation);
 	}
 
 	public static void tick() {
-		for(AbstractPoppetAnimation animation : ACTIVE_ANIMATIONS) {
+		for(PoppetAnimation animation : ACTIVE_ANIMATIONS) {
 			animation.tick();
 		}
 		ACTIVE_ANIMATIONS.removeIf((anim) -> anim.ticks <= 0);
 	}
 
 	public static void render(MatrixStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
-		for(AbstractPoppetAnimation animation : ACTIVE_ANIMATIONS) {
+		RenderSystem.enableAlphaTest();
+		RenderSystem.pushMatrix();
+		RenderSystem.pushLightingAttributes();
+		RenderSystem.enableDepthTest();
+		RenderSystem.disableCull();
+		for(PoppetAnimation animation : ACTIVE_ANIMATIONS) {
 			animation.render(matrixStack, partialTicks, widthScaled, heightScaled);
 		}
+		RenderSystem.popAttributes();
+		RenderSystem.popMatrix();
+		RenderSystem.enableCull();
+		RenderSystem.disableDepthTest();
 	}
 
 }

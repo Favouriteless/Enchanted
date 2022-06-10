@@ -33,12 +33,12 @@ import java.util.Random;
 
 public class RowanTree extends Tree {
 
-    public static final BaseTreeFeatureConfig ROWAN_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(
+    public static final BaseTreeFeatureConfig ROWAN_TREE_CONFIG = new BaseTreeFeatureConfig.Builder(
             new SimpleBlockStateProvider(EnchantedBlocks.ROWAN_LOG.get().defaultBlockState()),
             new SimpleBlockStateProvider(EnchantedBlocks.ROWAN_LEAVES.get().defaultBlockState()),
             new BlobFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0), 3),
             new StraightTrunkPlacer(4, 2, 0),
-            new TwoLayerFeature(1, 0, 1)))
+            new TwoLayerFeature(1, 0, 1))
             .ignoreVines()
             .build();
 

@@ -25,6 +25,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -35,7 +36,9 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public static void onRenderOverlayPost(RenderGameOverlayEvent.Post event) {
-		PoppetAnimationManager.render(event.getMatrixStack(), event.getPartialTicks(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+		if(event.getType() == ElementType.ALL) {
+			PoppetAnimationManager.render(event.getMatrixStack(), event.getPartialTicks(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+		}
 	}
 
 	@SubscribeEvent

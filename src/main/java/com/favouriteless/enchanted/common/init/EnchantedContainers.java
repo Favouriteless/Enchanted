@@ -39,4 +39,6 @@ public class EnchantedContainers {
             () -> IForgeContainerType.create(DistilleryContainer::new));
     public static final RegistryObject<ContainerType<AltarContainer>> ALTAR = CONTAINER_TYPES.register("altar",
             () -> IForgeContainerType.create(AltarContainer::new));
+    public static final RegistryObject<ContainerType<SpinningWheelContainer>> SPINNING_WHEEL = CONTAINER_TYPES.register("spinning_wheel",
+            () -> IForgeContainerType.create(SpinningWheelContainer::new));
 }

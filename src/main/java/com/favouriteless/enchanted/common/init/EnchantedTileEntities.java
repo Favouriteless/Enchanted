@@ -54,4 +54,7 @@ public class EnchantedTileEntities {
 
     public static final RegistryObject<TileEntityType<KettleTileEntity>> KETTLE = TILE_ENTITY_TYPES.register("kettle",
             () -> TileEntityType.Builder.of(KettleTileEntity::new, EnchantedBlocks.KETTLE.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<SpinningWheelTileEntity>> SPINNING_WHEEL = TILE_ENTITY_TYPES.register("spinning_wheel",
+            () -> TileEntityType.Builder.of(SpinningWheelTileEntity::new, EnchantedBlocks.SPINNING_WHEEL.get()).build(null));
 }

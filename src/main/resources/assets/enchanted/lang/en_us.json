@@ -106,8 +106,10 @@
     "block.enchanted.fume_funnel": "Fume Funnel",
     "block.enchanted.fume_funnel_filtered": "Filtered Fume Funnel",
     "block.enchanted.distillery": "Distillery",
-    "container.witch_oven": "Witch's Oven",
-    "container.distillery": "Distillery",
+    "container.enchanted.witch_oven": "Witch's Oven",
+    "container.enchanted.distillery": "Distillery",
+    "block.enchanted.spinning_wheel": "Spinning Wheel",
+    "container.enchanted.spinning_wheel": "Spinning Wheel",
 
     "block.enchanted.chalice": "Chalice",
     "block.enchanted.chalice_filled": "Filled Chalice",
@@ -115,8 +117,11 @@
     "block.enchanted.candelabra": "Candelabra",
 
     "effect.enchanted.fall_resistance": "Fall Resistance",
+    "effect.enchanted.drown_resistance": "Drown Resistance",
 
     "item.enchanted.poppet": "Poppet",
+    "item.enchanted.poppet_infused": "Infused Poppet",
+    "item.enchanted.poppet_sturdy": "Sturdy Poppet",
     "item.enchanted.hunger_poppet": "Hunger Protection Poppet",
     "item.enchanted.hunger_poppet_infused": "Infused Hunger Protection Poppet",
     "item.enchanted.hunger_poppet_sturdy": "Sturdy Hunger Protection Poppet",
@@ -135,6 +140,9 @@
     "item.enchanted.tool_poppet": "Tool Protection Poppet",
     "item.enchanted.tool_poppet_infused": "Infused Tool Protection Poppet",
     "item.enchanted.tool_poppet_sturdy": "Sturdy Tool Protection Poppet",
+    "item.enchanted.armour_poppet": "Armour Protection Poppet",
+    "item.enchanted.armour_poppet_infused": "Infused Armour Protection Poppet",
+    "item.enchanted.armour_poppet_sturdy": "Sturdy Armour Protection Poppet",
 
     "itemGroup.enchanted.main": "Enchanted"
 }

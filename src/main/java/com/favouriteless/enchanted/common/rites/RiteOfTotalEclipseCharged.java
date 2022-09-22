@@ -27,9 +27,6 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
 import net.minecraft.item.Items;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
 
 public class RiteOfTotalEclipseCharged extends RiteOfTotalEclipse {
 

@@ -60,7 +60,6 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.isFailed) {
-                stack.shrink(1);
                 cauldron.takeContents(player);
                 return ActionResultType.SUCCESS;
             }

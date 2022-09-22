@@ -26,6 +26,7 @@ import com.favouriteless.enchanted.client.render.tileentity.KettleRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
 import com.favouriteless.enchanted.client.screens.AltarScreen;
 import com.favouriteless.enchanted.client.screens.DistilleryScreen;
+import com.favouriteless.enchanted.client.screens.SpinningWheelScreen;
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
@@ -48,6 +49,7 @@ public class ClientSetupEvents {
 		ScreenManager.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
 		ScreenManager.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
 		ScreenManager.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
+		ScreenManager.register(EnchantedContainers.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
 
 		EnchantedBlocks.initRender();
 		EnchantedEntityTypes.registerEntityRenderers();

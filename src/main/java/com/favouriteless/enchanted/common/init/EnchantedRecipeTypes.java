@@ -22,10 +22,7 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
-import com.favouriteless.enchanted.common.recipes.KettleRecipe;
-import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
-import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
+import com.favouriteless.enchanted.common.recipes.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.fml.RegistryObject;
@@ -48,12 +45,16 @@ public class EnchantedRecipeTypes {
     public static IRecipeType<KettleRecipe> KETTLE;
     public static RegistryObject<KettleRecipe.Serializer> KETTLE_SERIALIZER = RECIPE_SERIALIZERS.register("kettle", KettleRecipe.Serializer::new);
 
+    public static IRecipeType<KettleRecipe> SPINNING_WHEEL;
+    public static RegistryObject<SpinningWheelRecipe.Serializer> SPINNING_WHEEL_SERIALIZER = RECIPE_SERIALIZERS.register("spinning_wheel", SpinningWheelRecipe.Serializer::new);
+
 
     public static void init() {
         WITCH_OVEN = IRecipeType.register("witch_oven");
         DISTILLERY = IRecipeType.register("distillery");
         WITCH_CAULDRON = IRecipeType.register("witch_cauldron");
         KETTLE = IRecipeType.register("kettle");
+        SPINNING_WHEEL = IRecipeType.register("spinning_wheel");
     }
 
 }

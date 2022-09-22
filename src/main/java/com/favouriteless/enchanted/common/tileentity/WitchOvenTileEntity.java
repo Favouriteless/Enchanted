@@ -68,7 +68,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.witch_oven");
+        return new TranslationTextComponent("container.enchanted.witch_oven");
     }
 
     @Override

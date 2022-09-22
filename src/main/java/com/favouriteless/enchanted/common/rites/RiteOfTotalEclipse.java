@@ -21,21 +21,15 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.rites.util.CirclePart;
 import com.favouriteless.enchanted.common.rites.util.RiteType;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RiteOfTotalEclipse extends AbstractRite {
 
@@ -54,6 +48,7 @@ public class RiteOfTotalEclipse extends AbstractRite {
     public void execute() {
         world.setDayTime(18000);
         world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5F, 1.0F);
+        stopExecuting();
     }
 
     @Override

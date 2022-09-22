@@ -92,7 +92,6 @@ public class TaglockItemFilled extends Item {
                     if(!PoppetUtils.isBound(itemStack)) {
                         PoppetUtils.bind(entity.getOffhandItem(), player);
                         itemStack.shrink(1);
-                        player.displayClientMessage(new StringTextComponent("bound"), false);
                     }
                 }
 

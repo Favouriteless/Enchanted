@@ -1,0 +1,5 @@
+{
+  "items": ["enchanted:hunger_poppet", "enchanted:hunger_poppet_infused", "enchanted:hunger_poppet_sturdy"],
+  "primary": [113, 184, 59],
+  "secondary": [78, 128, 65]
+}

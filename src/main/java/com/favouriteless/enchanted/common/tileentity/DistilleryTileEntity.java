@@ -56,7 +56,7 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.distillery");
+        return new TranslationTextComponent("container.enchanted.distillery");
     }
 
     @Override
@@ -66,7 +66,7 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
 
     @Override
     public void tick() {
-        boolean flag = this.isBurning();
+        boolean isBurning = this.isBurning();
         boolean flag1 = false;
 
         if (this.level != null && !this.level.isClientSide) {
@@ -92,7 +92,7 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
             }
 
 
-            if (flag != this.isBurning()) {
+            if (isBurning != this.isBurning()) {
                 flag1 = true;
                 this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
             }
@@ -215,8 +215,6 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
     private boolean matchRecipe(DistilleryRecipe recipe, List<ItemStack> list) {
         return recipe.matches(list);
     }
-
-    public DistilleryRecipe getCurrentRecipe() { return this.currentRecipe; }
 
     public List<ItemStack> getItemsIn() {
         return this.inventoryContents.subList(0, 3);

@@ -21,9 +21,14 @@
 
 package com.favouriteless.enchanted.common.network.packets;
 
+import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
+import com.favouriteless.enchanted.common.init.EnchantedData;
+import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
+import com.favouriteless.enchanted.core.util.reloadlisteners.PoppetColourManager.PoppetColour;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -52,6 +57,12 @@ public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 
 	@Override
 	public void handle(Supplier<Context> context) {
+		Minecraft mc = Minecraft.getInstance();
+		PoppetColour poppetColour = EnchantedData.POPPET_COLOURS.get().get(item.getItem().getRegistryName().toString());
+		if(poppetColour != null)
+			mc.particleEngine.createTrackingEmitter(mc.player, new TwoToneColouredData(EnchantedParticles.POPPET.get(),
+					poppetColour.red, poppetColour.green, poppetColour.blue,
+					poppetColour.red1, poppetColour.green1, poppetColour.blue1), 40);
 		PoppetAnimationManager.startAnimation(result, item);
 		context.get().setPacketHandled(true);
 	}

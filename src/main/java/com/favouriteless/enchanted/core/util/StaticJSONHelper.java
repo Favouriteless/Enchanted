@@ -26,6 +26,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -37,6 +38,17 @@ public class StaticJSONHelper {
 
         for (int i = 0; i < array.size(); ++i) {
             ItemStack stack = CraftingHelper.getItemStack(array.get(i).getAsJsonObject(), true);
+            nonnulllist.add(stack);
+        }
+
+        return nonnulllist;
+    }
+
+    public static NonNullList<Ingredient> readIngredientList(JsonArray array) {
+        NonNullList<Ingredient> nonnulllist = NonNullList.create();
+
+        for (int i = 0; i < array.size(); ++i) {
+            Ingredient stack = Ingredient.fromJson(array.get(i));
             nonnulllist.add(stack);
         }
 

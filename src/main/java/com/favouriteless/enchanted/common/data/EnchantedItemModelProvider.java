@@ -108,6 +108,31 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 
 		simpleItem(EnchantedItems.BROOM.get());
 		simpleItem(EnchantedItems.ENCHANTED_BROOMSTICK.get());
+
+		simpleItem(EnchantedItems.POPPET.get());
+		simpleItem(EnchantedItems.POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.POPPET_STURDY.get());
+		simpleItem(EnchantedItems.EARTH_POPPET.get());
+		simpleItem(EnchantedItems.EARTH_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.EARTH_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.FIRE_POPPET.get());
+		simpleItem(EnchantedItems.FIRE_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.FIRE_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.WATER_POPPET.get());
+		simpleItem(EnchantedItems.WATER_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.WATER_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.HUNGER_POPPET.get());
+		simpleItem(EnchantedItems.HUNGER_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.HUNGER_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.VOID_POPPET.get());
+		simpleItem(EnchantedItems.VOID_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.VOID_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.TOOL_POPPET.get());
+		simpleItem(EnchantedItems.TOOL_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.TOOL_POPPET_STURDY.get());
+		simpleItem(EnchantedItems.ARMOUR_POPPET.get());
+		simpleItem(EnchantedItems.ARMOUR_POPPET_INFUSED.get());
+		simpleItem(EnchantedItems.ARMOUR_POPPET_STURDY.get());
 	}
 
 	private void simpleItem(Item item) {

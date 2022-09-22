@@ -26,12 +26,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
@@ -64,11 +62,6 @@ public class PoppetAnimation {
 		matrixStack.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
 
-		if(work > 0.55F) { // Glow
-			float glowScale = 2.5F * (MathHelper.sin((float)Math.pow(2.05F * work - 0.9F, 7) + 0.5F) - 0.5F);
-			this.renderGlow(matrixStack, success ? SUCCESS_GLOW_TEXTURE : FAIL_GLOW_TEXTURE, glowScale, widthScaled, heightScaled);
-		}
-
 		// Random shake
 		if(work > 0.2F && work < 0.55F) {
 			int maxOffset = widthScaled > heightScaled ? widthScaled / 80 : heightScaled / 80;
@@ -94,7 +87,7 @@ public class PoppetAnimation {
 		IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 		minecraft.getItemRenderer().blitOffset += 50;
 		RenderSystem.translatef(0.0F, 0.0F, 100.0F + minecraft.getItemRenderer().blitOffset);
-		minecraft.getItemRenderer().renderStatic(new ItemStack(Items.DIAMOND), ItemCameraTransforms.TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
+		minecraft.getItemRenderer().renderStatic(itemStack, ItemCameraTransforms.TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
 		minecraft.getItemRenderer().blitOffset -= 50;
 
 		matrixStack.popPose();
@@ -102,15 +95,6 @@ public class PoppetAnimation {
 
 		RenderSystem.disableAlphaTest();
 		RenderSystem.disableRescaleNormal();
-	}
-
-	public void renderGlow(MatrixStack matrixStack, ResourceLocation texture, float scale, int widthScaled, int heightScaled) {
-		RenderSystem.enableBlend();
-		int x = widthScaled/2 - (int)(GLOW_WIDTH*scale)/2;
-		int y = heightScaled/2 - (int)(GLOW_WIDTH*scale)/2;
-		Minecraft.getInstance().getTextureManager().bind(texture);
-		Screen.blit(matrixStack, x, y, 0, 0, (int)(GLOW_WIDTH*scale), (int)(GLOW_WIDTH*scale), (int)(GLOW_WIDTH*scale), (int)(GLOW_WIDTH*scale));
-		RenderSystem.disableBlend();
 	}
 
 

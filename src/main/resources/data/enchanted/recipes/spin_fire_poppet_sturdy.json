@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:spinning_wheel",
+  "inputs": [
+    { "item": "enchanted:poppet_sturdy" },
+    { "item": "enchanted:ember_moss" },
+    { "type":"forge:nbt", "item": "minecraft:potion", "nbt": "{Potion:'minecraft:long_fire_resistance'}"}
+  ],
+  "result": { "item": "enchanted:fire_poppet_sturdy" },
+  "power": 1000
+}

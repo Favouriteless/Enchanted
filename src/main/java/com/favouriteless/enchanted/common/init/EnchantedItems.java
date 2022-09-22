@@ -47,6 +47,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> DISTILLERY = ITEMS.register("distillery", simpleBlockItem(EnchantedBlocks.DISTILLERY));
     public static final RegistryObject<Item> WITCH_CAULDRON = ITEMS.register("witch_cauldron", simpleBlockItem(EnchantedBlocks.WITCH_CAULDRON));
     public static final RegistryObject<Item> KETTLE = ITEMS.register("kettle", simpleBlockItem(EnchantedBlocks.KETTLE));
+    public static final RegistryObject<Item> SPINNING_WHEEL = ITEMS.register("spinning_wheel", simpleBlockItem(EnchantedBlocks.SPINNING_WHEEL));
 
     public static final RegistryObject<Item> CHALICE = ITEMS.register("chalice", simpleBlockItem(EnchantedBlocks.CHALICE));
     public static final RegistryObject<Item> CHALICE_FILLED = ITEMS.register("chalice_filled", simpleBlockItem(EnchantedBlocks.CHALICE_FILLED));
@@ -153,20 +154,22 @@ public class EnchantedItems {
     public static final RegistryObject<Item> INFERNAL_ANIMUS = ITEMS.register("infernal_animus", () -> new SimpleEffectBrewItem(Effects.WITHER, 1200, 2, simpleProperties()));
 
     public static final RegistryObject<Item> POPPET = ITEMS.register("poppet", simpleItem());
+    public static final RegistryObject<Item> POPPET_INFUSED = ITEMS.register("poppet_infused", simpleItem());
+    public static final RegistryObject<Item> POPPET_STURDY = ITEMS.register("poppet_sturdy", simpleItem());
     public static final RegistryObject<Item> EARTH_POPPET = ITEMS.register("earth_poppet", () -> new DeathPoppetItem(0.3F, 1, source -> source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL));
-    public static final RegistryObject<Item> EARTH_POPPET_INFUSED = ITEMS.register("earth_poppet_infused", () -> new DeathPoppetInfusedItem(() -> new EffectInstance(EnchantedEffects.FALL_RESISTANCE.get(), 100, 0), source -> source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL));
+    public static final RegistryObject<Item> EARTH_POPPET_INFUSED = ITEMS.register("earth_poppet_infused", () -> new DeathPoppetEffectItem(() -> new EffectInstance(EnchantedEffects.FALL_RESISTANCE.get(), 100, 0), source -> source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL));
     public static final RegistryObject<Item> EARTH_POPPET_STURDY = ITEMS.register("earth_poppet_sturdy", () -> new DeathPoppetItem(0.0F, 2, source -> source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL));
-    public static final RegistryObject<Item> FIRE_POPPET = ITEMS.register("fire_poppet", () -> new DeathPoppetItem(0.3F, 1, DamageSource::isFire));
-    public static final RegistryObject<Item> FIRE_POPPET_INFUSED = ITEMS.register("fire_poppet_infused", () -> new DeathPoppetInfusedItem(() -> new EffectInstance(Effects.FIRE_RESISTANCE), DamageSource::isFire));
-    public static final RegistryObject<Item> FIRE_POPPET_STURDY = ITEMS.register("fire_poppet_sturdy", () -> new DeathPoppetItem(0.0F, 2, DamageSource::isFire));
-    public static final RegistryObject<Item> WATER_POPPET = ITEMS.register("water_poppet", () -> new DeathPoppetItem(0.3F, 1, source -> source == DamageSource.DROWN));
-    public static final RegistryObject<Item> WATER_POPPET_INFUSED = ITEMS.register("water_poppet_infused", () -> new DeathPoppetInfusedItem(() -> new EffectInstance(EnchantedEffects.DROWN_RESISTANCE.get(), 100, 0), source -> source == DamageSource.DROWN));
-    public static final RegistryObject<Item> WATER_POPPET_STURDY = ITEMS.register("water_poppet_sturdy", () -> new DeathPoppetItem(0.0F, 2, source -> source == DamageSource.DROWN));
+    public static final RegistryObject<Item> FIRE_POPPET = ITEMS.register("fire_poppet", () -> new FirePoppetItem(0.3F, 1, DamageSource::isFire));
+    public static final RegistryObject<Item> FIRE_POPPET_INFUSED = ITEMS.register("fire_poppet_infused", () -> new FirePoppetEffectItem(() -> new EffectInstance(Effects.FIRE_RESISTANCE, 100, 0), DamageSource::isFire));
+    public static final RegistryObject<Item> FIRE_POPPET_STURDY = ITEMS.register("fire_poppet_sturdy", () -> new FirePoppetItem(0.0F, 2, DamageSource::isFire));
+    public static final RegistryObject<Item> WATER_POPPET = ITEMS.register("water_poppet", () -> new DeathPoppetEffectItem(() -> new EffectInstance(EnchantedEffects.DROWN_RESISTANCE.get(), 100, 0), source -> source == DamageSource.DROWN));
+    public static final RegistryObject<Item> WATER_POPPET_INFUSED = ITEMS.register("water_poppet_infused", () -> new DeathPoppetEffectItem(() -> new EffectInstance(Effects.WATER_BREATHING, 200, 0), source -> source == DamageSource.DROWN));
+    public static final RegistryObject<Item> WATER_POPPET_STURDY = ITEMS.register("water_poppet_sturdy", () -> new DeathPoppetEffectItem(() -> new EffectInstance(EnchantedEffects.DROWN_RESISTANCE.get(), 100, 0), source -> source == DamageSource.DROWN));;
     public static final RegistryObject<Item> HUNGER_POPPET = ITEMS.register("hunger_poppet", () -> new DeathPoppetItem(0.3F, 1, source -> source == DamageSource.STARVE));
-    public static final RegistryObject<Item> HUNGER_POPPET_INFUSED = ITEMS.register("hunger_poppet_infused", () -> new DeathPoppetInfusedItem(() -> new EffectInstance(Effects.SATURATION, 100, 0), source -> source == DamageSource.STARVE));
+    public static final RegistryObject<Item> HUNGER_POPPET_INFUSED = ITEMS.register("hunger_poppet_infused", () -> new DeathPoppetEffectItem(() -> new EffectInstance(Effects.SATURATION, 100, 0), source -> source == DamageSource.STARVE));
     public static final RegistryObject<Item> HUNGER_POPPET_STURDY = ITEMS.register("hunger_poppet_sturdy", () -> new DeathPoppetItem(0.0F, 2, source -> source == DamageSource.STARVE));
     public static final RegistryObject<Item> VOID_POPPET = ITEMS.register("void_poppet", () -> new VoidPoppetItem(0.3F, 1, source -> source == DamageSource.OUT_OF_WORLD));
-    public static final RegistryObject<Item> VOID_POPPET_INFUSED = ITEMS.register("void_poppet_infused", () -> new VoidPoppetInfusedItem(() -> new EffectInstance(EnchantedEffects.FALL_RESISTANCE.get(), 100, 0), source -> source == DamageSource.OUT_OF_WORLD));
+    public static final RegistryObject<Item> VOID_POPPET_INFUSED = ITEMS.register("void_poppet_infused", () -> new VoidPoppetEffectItem(() -> new EffectInstance(EnchantedEffects.FALL_RESISTANCE.get(), 100, 0), source -> source == DamageSource.OUT_OF_WORLD));
     public static final RegistryObject<Item> VOID_POPPET_STURDY = ITEMS.register("void_poppet_sturdy", () -> new VoidPoppetItem(0.0F, 2, source -> source == DamageSource.OUT_OF_WORLD));
     public static final RegistryObject<Item> TOOL_POPPET = ITEMS.register("tool_poppet", () -> new ToolPoppetItem(0.3F, 1, 0.9F));
     public static final RegistryObject<Item> TOOL_POPPET_INFUSED = ITEMS.register("tool_poppet_infused", () -> new ToolPoppetItem(0.0F, 1, 0.0F));

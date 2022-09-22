@@ -69,7 +69,6 @@ public class KettleBlock extends Block implements ITileEntityProvider {
                 return ActionResultType.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && kettle.isFailed) {
-                stack.shrink(1);
                 kettle.takeContents(player);
                 return ActionResultType.SUCCESS;
             }

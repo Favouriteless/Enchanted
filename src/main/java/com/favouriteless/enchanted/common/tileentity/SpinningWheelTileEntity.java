@@ -65,7 +65,7 @@ public class SpinningWheelTileEntity extends FurnaceTileEntityBase implements IA
 
 	@Override
 	public void tick() {
-		cookTimeTotal = 100;
+		cookTimeTotal = 400;
 		boolean isBurning = this.isBurning();
 		boolean flag1 = false;
 

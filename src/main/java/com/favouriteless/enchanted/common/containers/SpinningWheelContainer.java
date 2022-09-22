@@ -26,6 +26,7 @@ import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
@@ -62,6 +63,37 @@ public class SpinningWheelContainer extends FurnaceContainerBase {
 
 	@Override
 	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+		ItemStack itemStack;
+		Slot slot = this.slots.get(index);
+
+		if (slot != null && slot.hasItem()) {
+
+			ItemStack slotItem = slot.getItem();
+			itemStack = slotItem.copy();
+
+			if (index <= 3) { // If container slot
+				if (!this.moveItemStackTo(slotItem, 4, 40, true)) {
+					return ItemStack.EMPTY;
+				}
+			}
+			else{ // If in player inventory
+				if(!this.moveItemStackTo(slotItem, 0, 4, false)) {
+					return ItemStack.EMPTY;
+				}
+			}
+
+			if (slotItem.isEmpty()) {
+				slot.set(ItemStack.EMPTY);
+			} else {
+				slot.setChanged();
+			}
+
+			if (slotItem.getCount() == itemStack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			slot.onTake(playerIn, slotItem);
+		}
 		return super.quickMoveStack(playerIn, index);
 	}
 

@@ -22,7 +22,6 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
@@ -32,11 +31,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -58,7 +53,7 @@ public class PoppetEvents {
 						event.setCanceled(true);
 					}
 					if(result != PoppetResult.PASS) {
-						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, player.getId()));
 						return;
 					}
 				}
@@ -76,7 +71,7 @@ public class PoppetEvents {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
 			}
 			if(result != PoppetResult.PASS) {
-				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
+				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, event.getPlayer().getId()));
 				return;
 			}
 		}
@@ -94,18 +89,11 @@ public class PoppetEvents {
 						player.setItemSlot(slot, armourItem);
 					}
 					if(result != PoppetResult.PASS) {
-						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal));
+						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, player.getId()));
 						return;
 					}
 				}
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onItemTooltip(ItemTooltipEvent event) {
-		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && EnchantedConfig.DISABLE_TOTEMS.get()) {
-			event.getToolTip().add(new StringTextComponent("Totems are disabled (Enchanted config)").withStyle(TextFormatting.RED));
 		}
 	}
 

@@ -119,7 +119,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
     @Override
     public void tick() {
-        if(level != null) {
+        if(level != null && !level.isClientSide) {
 
             if (!loaded) {
                 facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
@@ -136,7 +136,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
                     recalculateBlocks();
                 loaded = true;
             }
-            else if (!level.isClientSide) {
+            else {
                 if(ticksAlive % 10 == 0) {
                     changeSubscriber.isValid(level);
                 }

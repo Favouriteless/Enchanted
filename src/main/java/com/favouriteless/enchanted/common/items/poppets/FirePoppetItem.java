@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
+import com.favouriteless.enchanted.common.init.PoppetColour;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 
@@ -28,8 +29,8 @@ import java.util.function.Predicate;
 
 public class FirePoppetItem extends DeathPoppetItem {
 
-	public FirePoppetItem(float failRate, int durability, Predicate<DamageSource> sourcePredicate) {
-		super(failRate, durability, sourcePredicate);
+	public FirePoppetItem(float failRate, int durability, PoppetColour colour, Predicate<DamageSource> sourcePredicate) {
+		super(failRate, durability, colour, sourcePredicate);
 	}
 
 	@Override

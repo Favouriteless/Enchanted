@@ -51,6 +51,8 @@ public class KettleBlock extends Block implements ITileEntityProvider {
 
     public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 2);
+    public static final VoxelShape TYPE_1_SHAPE = VoxelShapes.box(0.1875, 0.125, 0.1875, 0.8125, 0.5, 0.8125);
+    public static final VoxelShape TYPE_2_SHAPE = VoxelShapes.box(0.1875, 0, 0.1875, 0.8125, 0.375, 0.8125);
 
     public KettleBlock(Properties properties) {
         super(properties);
@@ -116,7 +118,7 @@ public class KettleBlock extends Block implements ITileEntityProvider {
 
     @Override
     public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
-        return (pState.getValue(TYPE) == 1) ? VoxelShapes.box(0.1875, 0.125, 0.1875, 0.8125, 0.5, 0.8125) : VoxelShapes.box(0.1875, 0, 0.1875, 0.8125, 0.375, 0.8125);
+        return (pState.getValue(TYPE) == 1) ? TYPE_1_SHAPE : TYPE_2_SHAPE;
     }
 
     @Override

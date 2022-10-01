@@ -21,14 +21,15 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
+import com.favouriteless.enchanted.common.init.PoppetColour;
 import net.minecraft.item.ItemStack;
 
 public class ArmourPoppetItem extends AbstractPoppetItem {
 
 	public float damageMultiplier;
 
-	public ArmourPoppetItem(float failRate, int durability, float damageMultiplier) {
-		super(failRate, durability);
+	public ArmourPoppetItem(float failRate, int durability, float damageMultiplier, PoppetColour colour) {
+		super(failRate, durability, colour);
 		this.damageMultiplier = damageMultiplier;
 	}
 

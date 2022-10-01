@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.PoppetColour;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,11 +38,13 @@ import java.util.List;
 
 public abstract class AbstractPoppetItem extends Item {
 
-	protected float failRate;
+	public final float failRate;
+	public final PoppetColour colour;
 
-	public AbstractPoppetItem(float failRate, int durability) {
+	public AbstractPoppetItem(float failRate, int durability, PoppetColour colour) {
 		super(new Item.Properties().tab(Enchanted.TAB).durability(durability));
 		this.failRate = failRate;
+		this.colour = colour;
 	}
 
 	public float getFailRate() {
@@ -56,4 +59,8 @@ public abstract class AbstractPoppetItem extends Item {
 		}
 	}
 
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
 }

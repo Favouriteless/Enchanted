@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "enchanted:block/spinning_wheel" },
+    "facing=south": { "model": "enchanted:block/spinning_wheel" },
+    "facing=east": { "model": "enchanted:block/spinning_wheel" },
+    "facing=west": { "model": "enchanted:block/spinning_wheel" }
+    }
+}

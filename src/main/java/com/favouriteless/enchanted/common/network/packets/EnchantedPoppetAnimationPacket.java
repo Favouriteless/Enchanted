@@ -23,12 +23,13 @@ package com.favouriteless.enchanted.common.network.packets;
 
 import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
-import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.PoppetColour;
+import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
-import com.favouriteless.enchanted.core.util.reloadlisteners.PoppetColourManager.PoppetColour;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -39,31 +40,42 @@ public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 
 	private final PoppetResult result;
 	private final ItemStack item;
+	private final int entityId;
 
-	public EnchantedPoppetAnimationPacket(PoppetResult result, ItemStack itemStack) {
+	public EnchantedPoppetAnimationPacket(PoppetResult result, ItemStack itemStack, int entityId) {
 		this.result = result;
 		this.item = itemStack;
+		this.entityId = entityId;
 	}
 
 	@Override
 	public void encode(PacketBuffer buffer) {
 		buffer.writeEnum(result);
 		buffer.writeItem(item);
+		buffer.writeInt(entityId);
 	}
 
 	public static EnchantedPoppetAnimationPacket decode(PacketBuffer buffer) {
-		return new EnchantedPoppetAnimationPacket(buffer.readEnum(PoppetResult.class), buffer.readItem());
+		return new EnchantedPoppetAnimationPacket(buffer.readEnum(PoppetResult.class), buffer.readItem(), buffer.readInt());
 	}
 
 	@Override
 	public void handle(Supplier<Context> context) {
 		Minecraft mc = Minecraft.getInstance();
-		PoppetColour poppetColour = EnchantedData.POPPET_COLOURS.get().get(item.getItem().getRegistryName().toString());
-		if(poppetColour != null)
-			mc.particleEngine.createTrackingEmitter(mc.player, new TwoToneColouredData(EnchantedParticles.POPPET.get(),
-					poppetColour.red, poppetColour.green, poppetColour.blue,
-					poppetColour.red1, poppetColour.green1, poppetColour.blue1), 40);
-		PoppetAnimationManager.startAnimation(result, item);
+
+		Entity entity = mc.level.getEntity(entityId);
+		if(mc.level.isClientSide) {
+			if(item.getItem() instanceof AbstractPoppetItem) {
+				PoppetColour poppetColour = ((AbstractPoppetItem)item.getItem()).colour;
+				mc.particleEngine.createTrackingEmitter(entity, new TwoToneColouredData(EnchantedParticles.POPPET.get(),
+						poppetColour.rPrimary, poppetColour.gPrimary, poppetColour.gSecondary,
+						poppetColour.rSecondary, poppetColour.gSecondary, poppetColour.bSecondary), 40);
+
+				if(entity == mc.player) {
+					PoppetAnimationManager.startAnimation(result, item);
+				}
+			}
+		}
 		context.get().setPacketHandled(true);
 	}
 

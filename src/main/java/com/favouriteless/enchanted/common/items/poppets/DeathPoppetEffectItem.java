@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
+import com.favouriteless.enchanted.common.init.PoppetColour;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
@@ -32,8 +33,8 @@ public class DeathPoppetEffectItem extends AbstractDeathPoppetItem {
 
 	protected Supplier<EffectInstance> deathEffect;
 
-	public DeathPoppetEffectItem(Supplier<EffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate) {
-		super(0.0F, 1, sourcePredicate);
+	public DeathPoppetEffectItem(float failRate, int durability, PoppetColour colour, Predicate<DamageSource> sourcePredicate, Supplier<EffectInstance> deathEffect) {
+		super(failRate, durability, colour, sourcePredicate);
 		this.deathEffect = deathEffect;
 	}
 

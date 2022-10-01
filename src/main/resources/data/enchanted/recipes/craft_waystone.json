@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "enchanted:bone_needle"
+    }
+  ],
+  "result":
+  {
+    "item": "enchanted:waystone",
+    "count": 1
+  }
+}

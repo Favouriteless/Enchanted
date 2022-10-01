@@ -115,7 +115,7 @@ public class WitchOvenBlock extends ContainerBlock {
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
         if (state.getValue(LIT)) {
             double d0 = (double) pos.getX() + 0.5D;
-            double d1 = (double) pos.getY();
+            double d1 = pos.getY();
             double d2 = (double) pos.getZ() + 0.5D;
             if (rand.nextDouble() < 0.1D) {
                 world.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
@@ -123,7 +123,6 @@ public class WitchOvenBlock extends ContainerBlock {
 
             Direction direction = state.getValue(FACING);
             Direction.Axis direction$axis = direction.getAxis();
-            double d3 = 0.52D;
             double d4 = rand.nextDouble() * 0.6D - 0.3D;
             double d5 = direction$axis == Direction.Axis.X ? (double) direction.getStepX() * 0.49D : d4;
             double d6 = rand.nextDouble() * 6.0D / 16.0D;
@@ -167,4 +166,5 @@ public class WitchOvenBlock extends ContainerBlock {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
+
 }

@@ -91,7 +91,8 @@ public class TaglockItemFilled extends Item {
                 if(player.getOffhandItem().getItem() instanceof AbstractPoppetItem) {
                     if(!PoppetUtils.isBound(itemStack)) {
                         PoppetUtils.bind(entity.getOffhandItem(), player);
-                        itemStack.shrink(1);
+                        if(!player.isCreative())
+                            itemStack.shrink(1);
                     }
                 }
 

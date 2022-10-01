@@ -23,20 +23,23 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
 import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +47,7 @@ public class SpinningWheelTileEntity extends FurnaceTileEntityBase implements IA
 
 	private SpinningWheelRecipe currentRecipe;
 	private final List<BlockPos> potentialAltars = new ArrayList<>();
+	private boolean isSpinning = false;
 
 	public SpinningWheelTileEntity(TileEntityType<?> typeIn) {
 		super(typeIn, NonNullList.withSize(4, ItemStack.EMPTY));
@@ -69,39 +73,50 @@ public class SpinningWheelTileEntity extends FurnaceTileEntityBase implements IA
 		boolean isBurning = this.isBurning();
 		boolean flag1 = false;
 
-		if (this.level != null && !this.level.isClientSide) {
-			this.matchRecipe();
-			AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+		if (this.level != null) {
+			if(!this.level.isClientSide) {
+				this.matchRecipe();
+				AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
 
-			if(this.canSpin(this.currentRecipe) && currentRecipe.getPower() > 0 && altar != null) {
-				double powerThisTick = (double)currentRecipe.getPower() / cookTimeTotal;
-				if(altar.currentPower > powerThisTick) {
-					altar.currentPower -= powerThisTick;
-					this.burnTime = 1;
-					this.cookTime++;
+				if(this.canSpin(this.currentRecipe) && currentRecipe.getPower() > 0 && altar != null) {
+					double powerThisTick = (double) currentRecipe.getPower() / cookTimeTotal;
+					if(altar.currentPower > powerThisTick) {
+						altar.currentPower -= powerThisTick;
+						this.burnTime = 1;
+						this.cookTime++;
 
-					if(cookTime == cookTimeTotal) {
-						cookTime = 0;
-						spin();
+						if(cookTime == cookTimeTotal) {
+							cookTime = 0;
+							spin();
+						}
 					}
 				}
+				else {
+					burnTime = 0;
+					cookTime = 0;
+				}
+
+
+				if(isBurning != this.isBurning()) {
+					flag1 = true;
+				}
+				updateBlock();
 			}
 			else {
-				burnTime = 0;
-				cookTime = 0;
+				if(isSpinning)
+					cookTime++;
+				else
+					cookTime = 0;
 			}
 
-
-			if (isBurning != this.isBurning()) {
-				flag1 = true;
-				this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(SpinningWheelBlock.LIT, this.isBurning()), 3);
+			if(flag1) {
+				this.setChanged();
 			}
 		}
+	}
 
-		if (flag1) {
-			this.setChanged();
-		}
-
+	public boolean isSpinning() {
+		return this.isSpinning;
 	}
 
 	protected void spin() {
@@ -174,5 +189,26 @@ public class SpinningWheelTileEntity extends FurnaceTileEntityBase implements IA
 	public void addAltar(BlockPos altarPos) {
 		AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
 		this.setChanged();
+	}
+
+	@Nullable
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putBoolean("isSpinning", cookTime > 0);
+		return new SUpdateTileEntityPacket(worldPosition, -1, nbt);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		CompoundNBT nbt = pkt.getTag();
+		isSpinning = nbt.getBoolean("isSpinning");
+	}
+
+	private void updateBlock() {
+		if(level != null && !level.isClientSide) {
+			BlockState state = level.getBlockState(worldPosition);
+			level.sendBlockUpdated(worldPosition, state, state, 2);
+		}
 	}
 }

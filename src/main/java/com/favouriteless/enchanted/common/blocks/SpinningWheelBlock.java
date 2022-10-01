@@ -31,15 +31,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -49,7 +52,8 @@ import javax.annotation.Nullable;
 public class SpinningWheelBlock extends ContainerBlock {
 
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final BooleanProperty LIT = BlockStateProperties.LIT;
+	public static final VoxelShape X_SHAPE = VoxelShapes.box(0.0625, 0, 0.3125, 0.9375, 0.8125, 0.6875);
+	public static final VoxelShape Z_SHAPE = VoxelShapes.box(0.3125, 0, 0.0625, 0.6875, 0.8125, 0.9375);
 
 	public SpinningWheelBlock(Properties properties) {
 		super(properties);
@@ -109,6 +113,11 @@ public class SpinningWheelBlock extends ContainerBlock {
 
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, LIT);
+		builder.add(FACING);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
+		return (pState.getValue(FACING).getAxis() == Axis.X) ? Z_SHAPE : X_SHAPE;
 	}
 }

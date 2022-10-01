@@ -41,14 +41,21 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/spinning_wheel.png");
 
-    public static final int BAR0_XPOS = 1;
-    public static final int BAR0_YPOS = 1;
-    public static final int BAR1_XPOS = 1;
-    public static final int BAR1_YPOS = 1;
-    public static final int BAR_ICON_U = 176;
+    public static final int ICONS_U = 176;
+
+    public static final int BAR0_XPOS = 27;
+    public static final int BAR1_XPOS = 64;
+    public static final int BAR_YPOS = 25;
     public static final int BAR0_ICON_V = 0;
     public static final int BAR1_ICON_V = 20;
     public static final int BAR_HEIGHT = 20;
+    public static final int BAR_WIDTH = 15;
+
+    public static final int WHEEL_XPOS = 86;
+    public static final int WHEEL_YPOS = 25;
+    public static final int WHEEL_FRAME1_V = 40;
+    public static final int WHEEL_FRAME2_V = 74;
+    public static final int WHEEL_SIZE = 34;
 
     public SpinningWheelScreen(SpinningWheelContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
@@ -78,8 +85,26 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
         int edgeSpacingY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
 
+        double progression = (double)container.getCookProgression() / container.getCookTotal();
 
-//        this.blit(matrixStack, this.leftPos + COOK_BAR_XPOS, this.topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
+        int barSize = (int)Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
+        if(container.getSlot(1).hasItem())
+            this.blit(matrixStack, this.leftPos + BAR0_XPOS, this.topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR0_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
+        if(container.getSlot(2).hasItem())
+            this.blit(matrixStack, this.leftPos + BAR1_XPOS, this.topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR1_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
+
+        if(progression > 0.1D) { // If over 10%, spin wheel
+
+            int frame = (int)Math.round((progression - 0.1D) * 200) % 3;
+
+            if(frame == 0) {
+                this.blit(matrixStack, this.leftPos + WHEEL_XPOS, this.topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME2_V, WHEEL_SIZE, WHEEL_SIZE);
+            }
+            else if(frame == 2) {
+                this.blit(matrixStack, this.leftPos + WHEEL_XPOS, this.topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME1_V, WHEEL_SIZE, WHEEL_SIZE);
+            }
+        }
+
     }
 
     @Override

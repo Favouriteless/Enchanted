@@ -21,7 +21,7 @@
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:binomial_with_bonus_count",
               "parameters": {
-                "extra": 3,
+                "extra": 2,
                 "probability": 0.5714286
               }
             }
@@ -34,7 +34,7 @@
           "condition": "minecraft:block_state_property",
           "block": "enchanted:garlic",
           "properties": {
-            "age": "7"
+            "age": "4"
           }
         }
       ]

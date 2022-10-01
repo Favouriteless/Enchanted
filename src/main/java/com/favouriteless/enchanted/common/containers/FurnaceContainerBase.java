@@ -21,8 +21,8 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -34,8 +34,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -92,19 +90,20 @@ public abstract class FurnaceContainerBase extends Container {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getCookProgressionScaled(int size) {
         int cookTime = this.furnaceData.get(2);
         int cookTimeTotal = this.furnaceData.get(3);
         return cookTimeTotal != 0 && cookTime != 0 ? cookTime * size / cookTimeTotal : 0;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getCookProgression() {
         return this.furnaceData.get(2);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    public int getCookTotal() {
+        return this.furnaceData.get(3);
+    }
+
     public int getBurnLeftScaled() {
         int recipesUsed = this.furnaceData.get(1);
         int burnTime = this.furnaceData.get(0);
@@ -115,7 +114,6 @@ public abstract class FurnaceContainerBase extends Container {
         return burnTime * 13 / recipesUsed;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean isBurning() {
         return this.furnaceData.get(0) > 0;
     }

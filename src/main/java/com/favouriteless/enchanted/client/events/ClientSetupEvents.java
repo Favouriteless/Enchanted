@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.tileentity.KettleRenderer;
+import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
 import com.favouriteless.enchanted.client.screens.AltarScreen;
 import com.favouriteless.enchanted.client.screens.DistilleryScreen;
@@ -56,6 +57,7 @@ public class ClientSetupEvents {
 
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), KettleRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
 	}
 
 	@SubscribeEvent

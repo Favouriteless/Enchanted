@@ -1,15 +1,15 @@
 {
-  "name": "Witchcraft: Circle Magic",
+  "name": "Witchcraft: Poppetry",
   "icon": "patchouli:textures/items/book_purple.png",
   "category": "enchanted:additional_resources",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Circle magic is a powerful process used to harness magical energy and focus it into a specific effect. This is detailed in Witchcraft: Circle Magic."
+      "text": "Poppetry is the art of creating poppets which act as a substitute for the target to perform magic with, this knowledge is described in Witchcraft: Poppetry."
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_book_circle_magic"
+      "recipe": "enchanted:craft_book_poppetry"
     }
   ],
   "read_by_default": false,

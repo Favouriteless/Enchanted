@@ -4,14 +4,14 @@
     { "item": "minecraft:ink_sac" },
     { "item": "minecraft:book" },
     { "item": "minecraft:feather" },
-    { "item": "enchanted:rowan_berries" },
-    { "item": "enchanted:whiff_of_magic" }
+    { "item": "enchanted:alder_sapling" },
+    { "item": "enchanted:breath_of_the_goddess" }
   ],
   "result":
   {
     "item": "patchouli:guide_book",
     "nbt": {
-      "patchouli:book": "enchanted:circle_magic"
+      "patchouli:book": "enchanted:poppetry"
     },
     "count": 1
   }

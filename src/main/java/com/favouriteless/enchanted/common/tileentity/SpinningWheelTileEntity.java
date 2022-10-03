@@ -141,8 +141,7 @@ public class SpinningWheelTileEntity extends FurnaceTileEntityBase implements IA
 
 			if(recipeIn.getResultItem().sameItem(itemStack))
 				if(itemStack.getOrCreateTag().equals(recipeIn.getResultItem().getOrCreateTag()))
-					if(itemStack.getCount() < itemStack.getMaxStackSize())
-						return true;
+					return itemStack.getCount() < itemStack.getMaxStackSize();
 		}
 		return false;
 	}

@@ -52,7 +52,7 @@ public class PoppetEvents {
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						event.setCanceled(true);
 					}
-					if(result != PoppetResult.PASS) {
+					if(result != PoppetResult.PASS && result != PoppetResult.FAIL) {
 						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, player.getId()));
 						return;
 					}
@@ -70,7 +70,7 @@ public class PoppetEvents {
 			if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
 			}
-			if(result != PoppetResult.PASS) {
+			if(result != PoppetResult.PASS && result != PoppetResult.FAIL) {
 				if(!event.getPlayer().level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, event.getPlayer().getId()));
 				return;
 			}
@@ -88,7 +88,7 @@ public class PoppetEvents {
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						player.setItemSlot(slot, armourItem);
 					}
-					if(result != PoppetResult.PASS) {
+					if(result != PoppetResult.PASS && result != PoppetResult.FAIL) {
 						if(!player.level.isClientSide) EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, player.getId()));
 						return;
 					}

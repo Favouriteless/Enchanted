@@ -164,7 +164,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> EARTH_POPPET_INFUSED = registerDeathPoppetEffect("earth_poppet_infused", 0.0F, 1, PoppetColour.EARTH, EnchantedEffects.FALL_RESISTANCE, 200, 0, DamageSource.FALL, DamageSource.FLY_INTO_WALL);
     public static final RegistryObject<Item> EARTH_POPPET_STURDY = registerDeathPoppet("earth_poppet_sturdy", 0.0F, 2, PoppetColour.EARTH, DamageSource.FALL, DamageSource.FLY_INTO_WALL);
     public static final RegistryObject<Item> FIRE_POPPET = registerFirePoppet("fire_poppet", 0.3F, 1, PoppetColour.FIRE, DamageSource::isFire);
-    public static final RegistryObject<Item> FIRE_POPPET_INFUSED = registerFirePoppetEffect("fire_poppet_infused", 0.0F, 1, PoppetColour.FIRE, Effects.FIRE_RESISTANCE, 100, 0, DamageSource::isFire);
+    public static final RegistryObject<Item> FIRE_POPPET_INFUSED = registerFirePoppetEffect("fire_poppet_infused", 0.0F, 1, PoppetColour.FIRE, Effects.FIRE_RESISTANCE, 200, 0, DamageSource::isFire);
     public static final RegistryObject<Item> FIRE_POPPET_STURDY = registerFirePoppet("fire_poppet_sturdy", 0.0F, 2, PoppetColour.FIRE, DamageSource::isFire);
     public static final RegistryObject<Item> WATER_POPPET = registerDeathPoppetEffect("water_poppet", 0.3F, 1, PoppetColour.WATER, EnchantedEffects.DROWN_RESISTANCE, 100, 0, DamageSource.DROWN);
     public static final RegistryObject<Item> WATER_POPPET_INFUSED = registerDeathPoppetEffect("water_poppet_infused", 0.0F, 1, PoppetColour.WATER, Effects.WATER_BREATHING, 200, 0, DamageSource.DROWN);

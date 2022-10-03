@@ -1,0 +1,16 @@
+{
+  "name": "Taglocks",
+  "icon": "enchanted:taglock_filled",
+  "category": "enchanted:crafting_materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A taglock kit is used to gather some kind of link to another creature, this could be anything from blood to hair. Can be used on entities or used beds."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:craft_taglock"
+    }
+  ],
+  "read_by_default": true
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Earth",
+  "icon": "enchanted:earth_poppet",
+  "category": "enchanted:infusing_poppets",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Earth poppets protect the beneficiary from death by falling.$(br2)$(bold)Sturdy$() One extra use.$(br)$(bold)Infused$() Grants 10 seconds of fall resistance."
+    },
+    {
+      "type": "enchanted:spinning_wheel_recipe",
+      "recipe": "enchanted:spin_earth_poppet"
+    }
+  ],
+  "read_by_default": true,
+  "priority": false
+}

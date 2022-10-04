@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The sturdy poppet is an upgraded version of a poppet which will allow the doll to be used twice and have no chance to fail. They can be used in place of a normal poppet in a spinning wheel."
+      "text": "The sturdy poppet is an upgraded version of a poppet which will allow the doll to be used twice. They can be used in place of a normal poppet in a spinning wheel.$(br2)Sturdy poppets have no failure chance."
     },
     {
       "type": "enchanted:spinning_wheel_recipe",

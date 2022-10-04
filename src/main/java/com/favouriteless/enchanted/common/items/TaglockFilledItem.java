@@ -22,19 +22,13 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
-import com.favouriteless.enchanted.common.items.poppets.PoppetUtils;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -44,9 +38,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class TaglockItemFilled extends Item {
+public class TaglockFilledItem extends Item {
 
-    public TaglockItemFilled(Properties properties) {
+    public TaglockFilledItem(Properties properties) {
         super(properties);
     }
 
@@ -80,35 +74,6 @@ public class TaglockItemFilled extends Item {
             return NBTUtil.loadUUID(stack.getTag().get("entity"));
         }
         return null;
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
-        if(entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)entity;
-            if(player.getMainHandItem().getItem() instanceof TaglockItemFilled) {
-
-                if(player.getOffhandItem().getItem() instanceof AbstractPoppetItem) {
-                    if(!PoppetUtils.isBound(itemStack)) {
-                        PoppetUtils.bind(entity.getOffhandItem(), player);
-                        if(!player.isCreative())
-                            itemStack.shrink(1);
-                    }
-                }
-
-            }
-        }
-        return itemStack;
-    }
-
-    @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if(hand == Hand.MAIN_HAND) {
-            if(player.getOffhandItem().getItem() instanceof AbstractPoppetItem && !PoppetUtils.isBound(player.getOffhandItem())) {
-                player.startUsingItem(hand);
-            }
-        }
-        return super.use(world, player, hand);
     }
 
     @Override

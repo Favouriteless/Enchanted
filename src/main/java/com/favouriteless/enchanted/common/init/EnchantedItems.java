@@ -98,7 +98,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(EnchantedTags.MUTANDIS_PLANTS, defaultProperties()));
     public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(EnchantedTags.MUTANDIS_EXTREMIS_PLANTS, defaultProperties()));
     public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(defaultProperties()));
-    public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockItemFilled(new Properties()));
+    public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockFilledItem(new Properties()));
 
     public static final RegistryObject<Item> CHALK_GOLD = registerChalkItem("chalk_gold", EnchantedBlocks.CHALK_GOLD, 3);
     public static final RegistryObject<Item> CHALK_WHITE = registerChalkItem("chalk_white", EnchantedBlocks.CHALK_WHITE, 40);

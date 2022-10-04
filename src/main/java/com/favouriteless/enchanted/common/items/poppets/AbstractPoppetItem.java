@@ -23,9 +23,16 @@ package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.PoppetColour;
+import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -60,7 +67,54 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@Override
+	public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
+		if(entity instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity)entity;
+			ItemStack taglockStack = player.getOffhandItem();
+
+			if(taglockStack.getItem() instanceof TaglockFilledItem) {
+				CompoundNBT nbt = taglockStack.getOrCreateTag();
+				PlayerEntity target = world.getPlayerByUUID(nbt.getUUID("entity"));
+
+				if(target != null) {
+					PoppetUtils.bind(itemStack, target);
+					if(!player.isCreative())
+						taglockStack.shrink(1);
+				}
+			}
+		}
+		return itemStack;
+	}
+
+	@Override
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if(hand == Hand.MAIN_HAND) {
+			if(!PoppetUtils.isBound(player.getMainHandItem())) {
+				ItemStack taglockStack = player.getOffhandItem();
+				if(taglockStack.getItem() instanceof TaglockFilledItem) {
+					CompoundNBT nbt = taglockStack.getOrCreateTag();
+					PlayerEntity target = world.getPlayerByUUID(nbt.getUUID("entity"));
+
+					if(target != null)
+						player.startUsingItem(hand);
+				}
+			}
+		}
+		return super.use(world, player, hand);
+	}
+
+	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
+	}
+
+	@Override
+	public UseAction getUseAnimation(ItemStack pStack) {
+		return UseAction.BOW;
+	}
+
+	@Override
+	public int getUseDuration(ItemStack item) {
+		return 32;
 	}
 }

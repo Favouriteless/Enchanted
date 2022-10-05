@@ -84,7 +84,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> SNOWBELL_SEEDS = registerBlockNamedItem("snowbell_seeds", EnchantedBlocks.SNOWBELL);
     public static final RegistryObject<Item> WOLFSBANE_SEEDS = registerBlockNamedItem("wolfsbane_seeds", EnchantedBlocks.WOLFSBANE);
 
-    public static final RegistryObject<Item> ARTICHOKE = registerItem("artichoke");
+    public static final RegistryObject<Item> ARTICHOKE = registerFoodItem("artichoke", 3, Effects.HUNGER, 100, 0, 1.0F);
     public static final RegistryObject<Item> BELLADONNA_FLOWER = registerItem("belladonna_flower");
     public static final RegistryObject<Item> EMBER_MOSS = registerBlockItem("ember_moss", EnchantedBlocks.EMBER_MOSS);
     public static final RegistryObject<Item> GARLIC = registerBlockNamedItem("garlic", EnchantedBlocks.GARLIC);
@@ -213,6 +213,10 @@ public class EnchantedItems {
 
     private static RegistryObject<Item> registerFoodItem(String name, int nutrition) {
         return ITEMS.register(name, () -> new Item(defaultProperties().food(new Food.Builder().nutrition(nutrition).build())));
+    }
+
+    private static RegistryObject<Item> registerFoodItem(String name, int nutrition, Effect effect, int duration, int amplification, float chance) {
+        return ITEMS.register(name, () -> new Item(defaultProperties().food(new Food.Builder().nutrition(nutrition).effect(() -> new EffectInstance(effect, duration, amplification), chance).build())));
     }
 
     private static RegistryObject<Item> registerChalkItem(String name, Supplier<? extends Block> block, int durability) {

@@ -22,9 +22,8 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.tileentity.KettleRenderer;
+import com.favouriteless.enchanted.client.render.tileentity.CauldronWaterRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
-import com.favouriteless.enchanted.client.render.tileentity.WitchCauldronRenderer;
 import com.favouriteless.enchanted.client.screens.AltarScreen;
 import com.favouriteless.enchanted.client.screens.DistilleryScreen;
 import com.favouriteless.enchanted.client.screens.SpinningWheelScreen;
@@ -55,8 +54,8 @@ public class ClientSetupEvents {
 		EnchantedBlocks.initRender();
 		EnchantedEntityTypes.registerEntityRenderers();
 
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), WitchCauldronRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), KettleRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
 	}
 

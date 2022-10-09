@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. Favouriteless
+ * Copyright (c) 2022. Favouriteless
  * Enchanted, a minecraft mod.
  * GNU GPLv3 License
  *
@@ -81,6 +81,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> WITCH_CAULDRON = BLOCKS.register("witch_cauldron", () -> new WitchCauldronBlock(Properties.copy(Blocks.CAULDRON).noOcclusion()));
     public static final RegistryObject<Block> KETTLE = BLOCKS.register("kettle", () -> new KettleBlock(Properties.copy(Blocks.CAULDRON).noOcclusion()));
     public static final RegistryObject<Block> SPINNING_WHEEL = BLOCKS.register("spinning_wheel", () -> new SpinningWheelBlock(Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> POPPET_SHELF = BLOCKS.register("poppet_shelf", () -> new PoppetShelfBlock(Properties.copy(Blocks.ENCHANTING_TABLE).noOcclusion()));
 
     public static final RegistryObject<Block> CHALICE = BLOCKS.register("chalice", () -> new ChaliceBlock(Properties.of(Material.STONE).strength(1.0F, 6.0F).noOcclusion(), false));
     public static final RegistryObject<Block> CHALICE_FILLED = BLOCKS.register("chalice_filled", () -> new ChaliceBlock(Properties.copy(CHALICE.get()), true));

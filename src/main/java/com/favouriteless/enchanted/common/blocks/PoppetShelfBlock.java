@@ -19,14 +19,30 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.api.capabilities.bed;
+package com.favouriteless.enchanted.common.blocks;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockReader;
 
-import java.util.UUID;
+import javax.annotation.Nullable;
 
-public interface IBedPlayerCapability extends INBTSerializable<CompoundNBT> {
-    UUID getValue();
-    void setValue(UUID uuid);
+public class PoppetShelfBlock extends ContainerBlock {
+
+	public PoppetShelfBlock(Properties properties) {
+		super(properties);
+	}
+
+	@Nullable
+	@Override
+	public TileEntity newBlockEntity(IBlockReader reader) {
+		return null;
+	}
+
+	@Override
+	public BlockRenderType getRenderShape(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
 }

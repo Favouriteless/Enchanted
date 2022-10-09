@@ -37,12 +37,10 @@ import java.awt.*;
 @OnlyIn(Dist.CLIENT)
 public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
 
-    private DistilleryContainer container;
+    private final DistilleryContainer container;
 
-    // This is the resource location for the background image
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/distillery.png");
 
-    // some [x,y] coordinates of graphical elements
     public static final int COOK_BAR_XPOS = 69;
     public static final int COOK_BAR_YPOS = 12;
     public static final int COOK_BAR_ICON_U = 176;
@@ -54,8 +52,6 @@ public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
     public static final int BUBBLES_YPOS = 56;
     public static final int BUBBLES_ICON_U = 176;
     public static final int BUBBLES_ICON_V = 28;
-    public static final int BUBBLES_WIDTH = 12;
-    public static final int BUBBLES_HEIGHT = 29;
 
     private static final int[] BUBBLELENGTHS = new int[]{0, 6, 11, 16, 20, 24, 29};
 
@@ -63,20 +59,18 @@ public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
         super(container, playerInventory, title);
         this.container = container;
 
-        // Set the width and height of the gui.  Should match the size of the texture!
         imageWidth = 176;
         imageHeight = 166;
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
+        renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
-    // Draw the Tool tip text if hovering over something of interest on the screen
     protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
-        if (!this.minecraft.player.inventory.getCarried().isEmpty()) return;  // no tooltip if the player is dragging something
+        if (!minecraft.player.inventory.getCarried().isEmpty()) return;  // no tooltip if the player is dragging something
             super.renderTooltip(matrixStack, x, y);
     }
 
@@ -84,32 +78,31 @@ public class DistilleryScreen extends ContainerScreen<DistilleryContainer> {
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(TEXTURE);
+        minecraft.getTextureManager().bind(TEXTURE);
 
-        int edgeSpacingX = (this.width - this.imageWidth) / 2;
-        int edgeSpacingY = (this.height - this.imageHeight) / 2;
-        this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+        int edgeSpacingX = (width - imageWidth) / 2;
+        int edgeSpacingY = (height - imageHeight) / 2;
+        blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
         // Draw cook progress bar
-        int cookProgressionScaled = this.container.getCookProgressionScaled(COOK_BAR_WIDTH);
-        this.blit(matrixStack, this.leftPos + COOK_BAR_XPOS, this.topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
+        int cookTime = container.getData().get(0);
+        int cookTimeTotal = container.getData().get(1);
+        int cookProgressionScaled = cookTimeTotal != 0 && cookTime != 0 ? cookTime * COOK_BAR_WIDTH / cookTimeTotal : 0;
 
-        int cookProgression = this.container.getCookProgression();
-        int bubbleOffset = BUBBLELENGTHS[cookProgression / 2 % 7];
+
+        blit(matrixStack, leftPos + COOK_BAR_XPOS, topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
+
+        int bubbleOffset = BUBBLELENGTHS[cookTime / 2 % 7];
         if (bubbleOffset > 0) {
-            this.blit(matrixStack, this.leftPos + BUBBLES_XPOS, this.topPos + BUBBLES_YPOS - bubbleOffset, BUBBLES_ICON_U, BUBBLES_ICON_V - bubbleOffset, 12, bubbleOffset);
+            blit(matrixStack, leftPos + BUBBLES_XPOS, topPos + BUBBLES_YPOS - bubbleOffset, BUBBLES_ICON_U, BUBBLES_ICON_V - bubbleOffset, 12, bubbleOffset);
         }
 
     }
 
     @Override
     protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
-        this.font.draw(matrixStack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(matrixStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(matrixStack, inventory.getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
 
-    // Returns true if the given x,y coordinates are within the given rectangle
-    public static boolean isInRect(int x, int y, int xSize, int ySize, int mouseX, int mouseY){
-        return ((mouseX >= x && mouseX <= x+xSize) && (mouseY >= y && mouseY <= y+ySize));
-    }
 }

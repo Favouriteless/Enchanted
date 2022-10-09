@@ -24,9 +24,9 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
-import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -36,11 +36,14 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -52,10 +55,52 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class WitchOvenTileEntity extends FurnaceTileEntityBase {
+public class WitchOvenTileEntity extends ProcessingTileEntityBase {
 
     private static final Random RANDOM = new Random();
     public static final IOptionalNamedTag<Item> ORE_TAG = ItemTags.createOptional(new ResourceLocation("forge", "ores"));
+
+    private int burnTime = 0;
+    private int burnTimeTotal = 0;
+    private int cookTime = 0;
+    private int cookTimeTotal = 200;
+    private final IIntArray data = new IIntArray() {
+        @Override
+        public int get(int index) {
+            switch(index) {
+                case 0:
+                    return burnTime;
+                case 1:
+                    return burnTimeTotal;
+                case 2:
+                    return cookTime;
+                case 3:
+                    return cookTimeTotal;
+                default:
+                    return 0;
+            }
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch(index) {
+                case 0:
+                    burnTime = value;
+                case 1:
+                    burnTimeTotal = value;
+                case 2:
+                    cookTime = value;
+                case 3:
+                    cookTimeTotal = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+    };
+
 
     public WitchOvenTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));
@@ -65,75 +110,105 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
         this(EnchantedTileEntities.WITCH_OVEN.get());
     }
 
-
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.enchanted.witch_oven");
+    protected void loadAdditional(CompoundNBT nbt) {
+        burnTime = nbt.getInt("burnTime");
+        burnTimeTotal = nbt.getInt("burnTimeTotal");
+        cookTime = nbt.getInt("cookTime");
+        cookTimeTotal = nbt.getInt("cookTimeTotal");
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-        return new WitchOvenContainer(id, player, this, this.furnaceData);
+    protected void saveAdditional(CompoundNBT nbt) {
+        nbt.putInt("burnTime", burnTime);
+        nbt.putInt("burnTimeTotal", burnTimeTotal);
+        nbt.putInt("cookTime", cookTime);
+        nbt.putInt("cookTimeTotal", cookTimeTotal);
     }
 
     @Override
     public void tick() {
-        boolean flag = this.isBurning();
+        boolean flag = isBurning();
         boolean flag1 = false;
-        if (this.isBurning()) {
-            --this.burnTime;
-        }
 
-        if (!this.level.isClientSide) {
-            ItemStack fuelStack = this.inventoryContents.get(1);
-            if (this.isBurning() || !fuelStack.isEmpty() && !this.inventoryContents.get(0).isEmpty()) {
-                IRecipe<?> irecipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, this.level).orElse(null);
-                if (!this.isBurning() && this.canSmelt(irecipe) && !this.inventoryContents.get(0).getItem().is(ORE_TAG)) {
-                    this.burnTime = this.getBurnTime(fuelStack);
-                    this.recipesUsed = this.burnTime;
-                    if (this.isBurning()) {
+        if (!level.isClientSide) {
+            ItemStack fuelStack = inventoryContents.get(1);
+            if (isBurning()) {
+                burnTime--;
+            }
+
+
+            if (this.isBurning() || !fuelStack.isEmpty() && !inventoryContents.get(0).isEmpty()) {
+                IRecipe<?> recipe = level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, level).orElse(null);
+                if (!isBurning() && canSmelt(recipe) && !inventoryContents.get(0).getItem().is(ORE_TAG)) {
+                    burnTime = getBurnTime(fuelStack);
+                    burnTimeTotal = getBurnTime(fuelStack);
+                    if (isBurning()) {
                         flag1 = true;
                         if (fuelStack.hasContainerItem())
-                            this.inventoryContents.set(1, fuelStack.getContainerItem());
+                            inventoryContents.set(1, fuelStack.getContainerItem());
                         else
                         if (!fuelStack.isEmpty()) {
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
-                                this.inventoryContents.set(1, fuelStack.getContainerItem());
+                                inventoryContents.set(1, fuelStack.getContainerItem());
                             }
                         }
                     }
                 }
 
-                if (this.isBurning() && this.canSmelt(irecipe)) {
-                    ++this.cookTime;
-                    if (this.cookTime == this.cookTimeTotal) {
-                        this.cookTime = 0;
-                        this.cookTimeTotal = (int)Math.round(this.getCookTime() * 0.8D);
-                        this.smelt(irecipe);
+                if (isBurning() && canSmelt(recipe)) {
+                    cookTime++;
+                    if (cookTime == cookTimeTotal) {
+                        cookTime = 0;
+                        cookTimeTotal = (int)Math.round(getCookTime() * 0.8D);
+                        smelt(recipe);
                         flag1 = true;
                     }
                 } else {
-                    this.cookTime = 0;
+                    cookTime = 0;
                 }
-            } else if (!this.isBurning() && this.cookTime > 0) {
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+            } else if (!isBurning() && cookTime > 0) {
+                cookTime = MathHelper.clamp(cookTime - 2, 0, cookTimeTotal);
             }
 
             if (flag != this.isBurning()) {
                 flag1 = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(WitchOvenBlock.LIT, this.isBurning()), 3);
-                this.updateFumeFunnels();
+                level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(WitchOvenBlock.LIT, isBurning()), 3);
+                updateFumeFunnels();
             }
         }
 
         if (flag1) {
-            this.setChanged();
+            setChanged();
         }
 
     }
 
-    @Override
+    protected boolean canSmelt(@Nullable IRecipe<?> recipeIn) {
+        if (!this.inventoryContents.get(0).isEmpty() && recipeIn != null) { // If item in input & recipe not null
+
+            ItemStack resultStack = recipeIn.getResultItem();
+
+            if (resultStack.isEmpty()) { // If recipe makes nothing
+                return false;
+            } else {
+                ItemStack outputStack = this.inventoryContents.get(2);
+                if (outputStack.isEmpty()) { // If output is empty
+                    return true;
+                } else if (!outputStack.sameItem(resultStack)) { // If output is a different item
+                    return false;
+                } else if (outputStack.getCount() + resultStack.getCount() <= this.getMaxStackSize() && outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize()) {
+                    return true;
+                } else {
+                    return outputStack.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize();
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
     protected void smelt(@Nullable IRecipe<?> recipe) {
         if (recipe != null && this.canSmelt(recipe)) {
             ItemStack itemstack = this.inventoryContents.get(0);
@@ -150,10 +225,6 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
                 itemstack2.grow(itemstack1.getCount());
             }
 
-            if (!this.level.isClientSide) {
-                this.setRecipeUsed(recipe);
-            }
-
             if (itemstack.getItem() == Blocks.WET_SPONGE.asItem() && !this.inventoryContents.get(1).isEmpty() && this.inventoryContents.get(1).getItem() == Items.BUCKET) {
                 this.inventoryContents.set(1, new ItemStack(Items.WATER_BUCKET));
             }
@@ -167,7 +238,7 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
         ItemStack outputStack = this.inventoryContents.get(4);
         ItemStack jarStack = this.inventoryContents.get(3);
 
-        if(currentRecipe != null && !jarStack.isEmpty()) {
+        if(currentRecipe != null && jarStack.getCount() >= currentRecipe.getJarsNeeded()) {
             if (outputStack.isEmpty()) {
                 this.inventoryContents.set(4, currentRecipe.getResultItem().copy());
                 jarStack.shrink(currentRecipe.getJarsNeeded());
@@ -234,6 +305,29 @@ public class WitchOvenTileEntity extends FurnaceTileEntityBase {
                     .orElse(null);
         }
         return currentRecipe;
+    }
+
+    @Override
+    public IIntArray getData() {
+        return data;
+    }
+
+    @Override
+    protected ITextComponent getDefaultName() {
+        return new TranslationTextComponent("container.enchanted.witch_oven");
+    }
+
+    @Override
+    protected Container createMenu(int id, PlayerInventory player) {
+        return new WitchOvenContainer(id, player, this, this.data);
+    }
+
+    private boolean isBurning() {
+        return this.burnTime > 0;
+    }
+
+    protected int getCookTime() {
+        return level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
 
 }

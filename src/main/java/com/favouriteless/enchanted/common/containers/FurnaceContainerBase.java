@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -40,38 +40,38 @@ import java.util.Objects;
 
 public abstract class FurnaceContainerBase extends Container {
 
-    public final FurnaceTileEntityBase tileEntity;
+    public final ProcessingTileEntityBase tileEntity;
     protected final IWorldPosCallable canInteractWithCallable;
     protected final int numberOfSlots;
-    protected final IIntArray furnaceData;
+    protected final IIntArray data;
 
-    protected FurnaceContainerBase(@Nullable ContainerType<?> type, int windowId, FurnaceTileEntityBase tileEntityIn, IWorldPosCallable canInteractWithCallableIn, int numberOfSlotsIn, IIntArray furnaceDataIn) {
+    protected FurnaceContainerBase(@Nullable ContainerType<?> type, int windowId, ProcessingTileEntityBase tileEntityIn, IWorldPosCallable canInteractWithCallableIn, int numberOfSlotsIn, IIntArray furnaceDataIn) {
         super(type, windowId);
         this.tileEntity = tileEntityIn;
         this.canInteractWithCallable = canInteractWithCallableIn;
         this.numberOfSlots = numberOfSlotsIn;
-        this.furnaceData = furnaceDataIn;
+        this.data = furnaceDataIn;
 
         if(furnaceDataIn != null) {
             this.addDataSlots(furnaceDataIn);
         }
     }
 
-    protected static FurnaceTileEntityBase getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
+    protected static ProcessingTileEntityBase getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
         Objects.requireNonNull(playerInventory, "Player inventory cannot be null");
         Objects.requireNonNull(data, "Data cannot be null");
 
         final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
-        if(tileEntity instanceof FurnaceTileEntityBase) {
-            return (FurnaceTileEntityBase)tileEntity;
+        if(tileEntity instanceof ProcessingTileEntityBase) {
+            return (ProcessingTileEntityBase)tileEntity;
         }
         throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
     }
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return this.tileEntity.stillValid(player);
+        return tileEntity.stillValid(player);
     }
 
     @Override
@@ -82,50 +82,23 @@ public abstract class FurnaceContainerBase extends Container {
     protected void AddInventorySlots(PlayerInventory playerInventory) {
         for (int y = 0; y < 3; y++) { // Main Inventory
             for (int x = 0; x < 9; x++) {
-                this.addSlot(new Slot(playerInventory, x + (y * 9) + 9,  8 + (x * 18), 84 + (y * 18)));
+                addSlot(new Slot(playerInventory, x + (y * 9) + 9,  8 + (x * 18), 84 + (y * 18)));
             }
         }
         for (int x = 0; x < 9; x++) { // Hotbar
-            this.addSlot(new Slot(playerInventory, x, 8 + (18 * x), 142));
+            addSlot(new Slot(playerInventory, x, 8 + (18 * x), 142));
         }
     }
 
-    public int getCookProgressionScaled(int size) {
-        int cookTime = this.furnaceData.get(2);
-        int cookTimeTotal = this.furnaceData.get(3);
-        return cookTimeTotal != 0 && cookTime != 0 ? cookTime * size / cookTimeTotal : 0;
+    public IIntArray getData() {
+        return data;
     }
-
-    public int getCookProgression() {
-        return this.furnaceData.get(2);
-    }
-
-    public int getCookTotal() {
-        return this.furnaceData.get(3);
-    }
-
-    public int getBurnLeftScaled() {
-        int recipesUsed = this.furnaceData.get(1);
-        int burnTime = this.furnaceData.get(0);
-        if (recipesUsed == 0) {
-            recipesUsed = 200;
-        }
-
-        return burnTime * 13 / recipesUsed;
-    }
-
-    public boolean isBurning() {
-        return this.furnaceData.get(0) > 0;
-    }
-
-
 
     public class SlotFuel extends Slot {
         public SlotFuel(IInventory inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
-        // if this function returns false, the player won't be able to insert the given item into this slot
         @Override
         public boolean mayPlace(ItemStack stack) {
             return (net.minecraftforge.common.ForgeHooks.getBurnTime(stack) > 0);
@@ -137,7 +110,6 @@ public abstract class FurnaceContainerBase extends Container {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
-        // if this function returns false, the player won't be able to insert the given item into this slot
         @Override
         public boolean mayPlace(ItemStack stack) {
             return !(stack.getItem() == EnchantedItems.CLAY_JAR.get());
@@ -149,7 +121,6 @@ public abstract class FurnaceContainerBase extends Container {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
-        // if this function returns false, the player won't be able to insert the given item into this slot
         @Override
         public boolean mayPlace(ItemStack stack) {
             return false;
@@ -161,7 +132,6 @@ public abstract class FurnaceContainerBase extends Container {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
-        // if this function returns false, the player won't be able to insert the given item into this slot
         @Override
         public boolean mayPlace(ItemStack stack) {
             return (stack.getItem() == EnchantedItems.CLAY_JAR.get());

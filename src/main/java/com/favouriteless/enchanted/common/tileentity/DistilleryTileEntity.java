@@ -22,16 +22,17 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.common.containers.DistilleryContainer;
-import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.common.containers.DistilleryContainer;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -41,10 +42,42 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAltarPowerConsumer {
+public class DistilleryTileEntity extends ProcessingTileEntityBase implements IAltarPowerConsumer {
 
     private DistilleryRecipe currentRecipe;
     private final List<BlockPos> potentialAltars = new ArrayList<>();
+
+    private int burnTime = 0;
+    private int cookTime = 0;
+    private int cookTimeTotal = 200;
+    private final IIntArray data = new IIntArray() {
+        @Override
+        public int get(int index) {
+            switch(index) {
+                case 0:
+                    return cookTime;
+                case 1:
+                    return cookTimeTotal;
+                default:
+                    return 0;
+            }
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch(index) {
+                case 0:
+                    cookTime = value;
+                case 1:
+                    cookTimeTotal = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     public DistilleryTileEntity(TileEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(7, ItemStack.EMPTY));
@@ -55,51 +88,57 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.enchanted.distillery");
+    protected void saveAdditional(CompoundNBT nbt) {
+        AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        nbt.putInt("burnTime", burnTime);
+        nbt.putInt("cookTime", cookTime);
+        nbt.putInt("cookTimeTotal", cookTimeTotal);
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-        return new DistilleryContainer(id, player, this, this.furnaceData);
+    protected void loadAdditional(CompoundNBT nbt) {
+        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+        burnTime = nbt.getInt("burnTime");
+        cookTime = nbt.getInt("cookTime");
+        cookTimeTotal = nbt.getInt("cookTimeTotal");
     }
 
     @Override
     public void tick() {
-        boolean isBurning = this.isBurning();
-        boolean flag1 = false;
+        boolean isBurning = isBurning();
+        boolean shouldSave = false;
 
-        if (this.level != null && !this.level.isClientSide) {
-            this.matchRecipe();
+        if (level != null && !level.isClientSide) {
+            matchRecipe();
             AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
 
-            if(this.canDistill(this.currentRecipe) && altar != null) {
+            if(canDistill(currentRecipe) && altar != null) {
                 if(altar.currentPower > 10.0D) {
                     altar.currentPower -= 10.0D;
-                    this.burnTime = 1;
-                    this.cookTime++;
+                    burnTime = 1;
+                    cookTime++;
 
 
-                    if(this.cookTime == this.cookTimeTotal) {
-                        this.cookTime = 0;
-                        this.distill(this.currentRecipe);
+                    if(cookTime == cookTimeTotal) {
+                        cookTime = 0;
+                        distill(currentRecipe);
                     }
                 }
             }
             else {
-                this.burnTime = 0;
-                this.cookTime = 0;
+                burnTime = 0;
+                cookTime = 0;
             }
 
 
-            if (isBurning != this.isBurning()) {
-                flag1 = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
+            if (isBurning != isBurning()) {
+                shouldSave = true;
+                level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(AbstractFurnaceBlock.LIT, isBurning()), 3);
             }
         }
 
-        if (flag1) {
-            this.setChanged();
+        if (shouldSave) {
+            setChanged();
         }
 
     }
@@ -221,16 +260,6 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
     }
 
     @Override
-    protected CompoundNBT saveAdditional(CompoundNBT nbt) {
-        return AltarPowerHelper.savePosTag(potentialAltars, nbt);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundNBT nbt) {
-        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
-    }
-
-    @Override
     public List<BlockPos> getAltarPositions() {
         return potentialAltars;
     }
@@ -246,4 +275,24 @@ public class DistilleryTileEntity extends FurnaceTileEntityBase implements IAlta
         AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
         this.setChanged();
     }
+
+    private boolean isBurning() {
+        return this.burnTime > 0;
+    }
+
+    @Override
+    public IIntArray getData() {
+        return data;
+    }
+
+    @Override
+    protected ITextComponent getDefaultName() {
+        return new TranslationTextComponent("container.enchanted.distillery");
+    }
+
+    @Override
+    protected Container createMenu(int id, PlayerInventory player) {
+        return new DistilleryContainer(id, player, this, this.data);
+    }
+
 }

@@ -85,7 +85,7 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
         int edgeSpacingY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
 
-        double progression = (double)container.getCookProgression() / container.getCookTotal();
+        double progression = (double)container.getData().get(0) / container.getData().get(1);
 
         int barSize = (int)Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
         if(container.getSlot(1).hasItem())

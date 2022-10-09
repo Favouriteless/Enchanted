@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
@@ -37,13 +37,8 @@ import net.minecraft.util.IntArray;
 
 public class WitchOvenContainer extends FurnaceContainerBase {
 
-    public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final FurnaceTileEntityBase tileEntity, final IIntArray furnaceDataIn) {
-        super(EnchantedContainers.WITCH_OVEN.get(),
-                windowId,
-                tileEntity,
-                IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
-                5,
-                furnaceDataIn);
+    public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final ProcessingTileEntityBase tileEntity, final IIntArray data) {
+        super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), 5, data);
 
         // Container Inventory
         this.addSlot(new SlotInput(tileEntity, 0, 53, 17)); // Ingredient input
@@ -79,7 +74,7 @@ public class WitchOvenContainer extends FurnaceContainerBase {
                     if (!this.moveItemStackTo(slotItem, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (FurnaceTileEntityBase.isFuel(slotItem)) { // Item is fuel
+                } else if (ProcessingTileEntityBase.isFuel(slotItem)) { // Item is fuel
                     if (!this.moveItemStackTo(slotItem, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }

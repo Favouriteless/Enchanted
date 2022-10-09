@@ -111,7 +111,7 @@ public class SpinningWheelRenderer extends TileEntityRenderer<SpinningWheelTileE
         matrixStack.translate(0.5F, 0.0F, 0.5F);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotationYDegrees));
 
-        IIntArray furnaceData = te.getFurnaceData();
+        IIntArray furnaceData = te.getData();
         float cookTime = furnaceData.get(2) >= 1 ? furnaceData.get(2) + partialTicks - 1 : 0;
         float turnFactor = 25;
         float rotationDegreesWheel = cookTime % turnFactor * 360 / turnFactor;

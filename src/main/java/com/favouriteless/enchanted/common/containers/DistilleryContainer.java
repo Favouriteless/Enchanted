@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.FurnaceTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -36,13 +36,8 @@ import net.minecraft.util.IntArray;
 
 public class DistilleryContainer extends FurnaceContainerBase {
 
-    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final FurnaceTileEntityBase tileEntity, final IIntArray furnaceDataIn) {
-        super(EnchantedContainers.DISTILLERY.get(),
-                windowId,
-                tileEntity,
-                IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
-                7,
-                furnaceDataIn);
+    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final ProcessingTileEntityBase tileEntity, final IIntArray data) {
+        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), 7, data);
 
         // Container Inventory
         this.addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input

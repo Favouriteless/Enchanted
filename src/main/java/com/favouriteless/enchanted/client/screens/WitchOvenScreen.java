@@ -39,10 +39,8 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
 
     private final WitchOvenContainer container;
 
-    // This is the resource location for the background image
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/witch_oven.png");
 
-    // some [x,y] coordinates of graphical elements
     public static final int COOK_BAR_XPOS = 76;
     public static final int COOK_BAR_YPOS = 16;
     public static final int COOK_BAR_ICON_U = 176;
@@ -60,7 +58,6 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
         super(container, playerInventory, title);
         this.container = container;
 
-        // Should match the size of the texture!
         this.imageWidth = 176;
         this.imageHeight = 166;
     }
@@ -71,9 +68,9 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
-    // Draw the Tool tip text if hovering over something of interest on the screen
+
     protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
-        if (!this.minecraft.player.inventory.getCarried().isEmpty()) return;  // no tooltip if the player is dragging something
+        if (!minecraft.player.inventory.getCarried().isEmpty()) return;
         super.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
@@ -83,26 +80,42 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
 
-        int edgeSpacingX = (this.width - this.imageWidth) / 2;
-        int edgeSpacingY = (this.height - this.imageHeight) / 2;
-        this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+        int edgeSpacingX = (width - imageWidth) / 2;
+        int edgeSpacingY = (height - imageHeight) / 2;
+        blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
-        // Draw cook progress bar
-        int cookProgressionScaled = this.container.getCookProgressionScaled(COOK_BAR_WIDTH);
-        this.blit(matrixStack, this.leftPos + COOK_BAR_XPOS, this.topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
+        int cookProgressionScaled = getCookProgressionScaled();
+        blit(matrixStack, leftPos + COOK_BAR_XPOS, topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
 
 
         // Draw fuel remaining bar
-        if (this.container.isBurning()) {
-            int burnLeftScaled = this.container.getBurnLeftScaled();
-            this.blit(matrixStack, this.leftPos + FLAME_XPOS, this.topPos + FLAME_YPOS + 12 - burnLeftScaled, FLAME_ICON_U, FLAME_ICON_V - burnLeftScaled, FLAME_SIZE, burnLeftScaled + 1);
+        if (this.container.getData().get(0) > 0) {
+            int burnLeftScaled = getBurnLeftScaled();
+            blit(matrixStack, leftPos + FLAME_XPOS, topPos + FLAME_YPOS + 12 - burnLeftScaled, FLAME_ICON_U, FLAME_ICON_V - burnLeftScaled, FLAME_SIZE, burnLeftScaled + 1);
         }
 
     }
 
     @Override
     protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
-        this.font.draw(matrixStack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(matrixStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(matrixStack, inventory.getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
+
+    public int getBurnLeftScaled() {
+        int maxBurnTime = container.getData().get(1);
+        int burnTime = container.getData().get(0);
+        if (maxBurnTime == 0) {
+            maxBurnTime = 200;
+        }
+
+        return burnTime * 13 / maxBurnTime;
+    }
+
+    public int getCookProgressionScaled() {
+        int cookTime = container.getData().get(2);
+        int cookTimeTotal = container.getData().get(3);
+        return cookTimeTotal != 0 && cookTime != 0 ? cookTime * COOK_BAR_WIDTH / cookTimeTotal : 0;
+    }
+
 }

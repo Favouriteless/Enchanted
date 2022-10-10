@@ -23,7 +23,8 @@ package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
-import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -33,32 +34,22 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 
-public class SpinningWheelContainer extends FurnaceContainerBase {
+public class SpinningWheelContainer extends ProcessingContainerBase {
 
-	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final ProcessingTileEntityBase tileEntity, final IIntArray furnaceDataIn) {
-		super(EnchantedContainers.SPINNING_WHEEL.get(),
-				windowId,
-				tileEntity,
-				IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
-				4,
-				furnaceDataIn);
+	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final InventoryTileEntityBase tileEntity, final IIntArray data) {
+		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 
 		// Container Inventory
-		this.addSlot(new SlotInput(tileEntity, 0, 45, 23)); // Main input
-		this.addSlot(new SlotInput(tileEntity, 1, 33, 47)); // Ingredient input
-		this.addSlot(new SlotInput(tileEntity, 2, 57, 47)); // Ingredient input
-		this.addSlot(new SlotOutput(tileEntity, 3, 130, 35)); // Spinning wheel output
+		addSlot(new SlotInput(tileEntity, 0, 45, 23)); // Main input
+		addSlot(new SlotInput(tileEntity, 1, 33, 47)); // Ingredient input
+		addSlot(new SlotInput(tileEntity, 2, 57, 47)); // Ingredient input
+		addSlot(new SlotOutput(tileEntity, 3, 130, 35)); // Spinning wheel output
 
-		this.AddInventorySlots(playerInventory);
+		addInventorySlots(playerInventory, 8, 84);
 	}
 
 	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-		this(windowId, playerInventory, getTileEntity(playerInventory, data), new IntArray(4));
-	}
-
-	@Override
-	public boolean stillValid(PlayerEntity player) {
-		return stillValid(canInteractWithCallable, player, EnchantedBlocks.SPINNING_WHEEL.get());
+		this(windowId, playerInventory, getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new IntArray(2));
 	}
 
 	@Override

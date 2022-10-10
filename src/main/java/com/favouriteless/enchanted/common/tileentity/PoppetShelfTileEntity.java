@@ -21,42 +21,40 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-public class PoppetShelfTileEntity extends LockableLootTileEntity {
+public class PoppetShelfTileEntity extends InventoryTileEntityBase {
 
 	public PoppetShelfTileEntity() {
-		super(EnchantedTileEntities.POPPET_SHELF.get());
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return null;
-	}
-
-	@Override
-	protected void setItems(NonNullList<ItemStack> pItems) {
-
+		super(EnchantedTileEntityTypes.POPPET_SHELF.get(), NonNullList.withSize(4, ItemStack.EMPTY));
 	}
 
 	@Override
 	protected ITextComponent getDefaultName() {
-		return null;
+		return new TranslationTextComponent("container.enchanted.poppet_shelf");
 	}
 
 	@Override
-	protected Container createMenu(int pId, PlayerInventory pPlayer) {
-		return null;
+	protected Container createMenu(int id, PlayerInventory playerInventory) {
+		return new PoppetShelfContainer(id, playerInventory, this);
 	}
 
 	@Override
-	public int getContainerSize() {
-		return 0;
+	protected void loadAdditional(CompoundNBT nbt) {
+
 	}
+
+	@Override
+	protected void saveAdditional(CompoundNBT nbt) {
+
+	}
+
 }

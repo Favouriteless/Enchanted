@@ -27,7 +27,7 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
@@ -114,7 +114,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     public AltarTileEntity() {
-        this(EnchantedTileEntities.ALTAR.get());
+        this(EnchantedTileEntityTypes.ALTAR.get());
     }
 
     @Override
@@ -317,7 +317,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     @Nullable
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-        return new AltarContainer(id, playerInventory, this, this.fields);
+        return new AltarContainer(id, this, this.fields);
     }
 
     public static class AltarBlockData {

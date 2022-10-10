@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
-import com.favouriteless.enchanted.core.StaticItemStackHelper;
+import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;

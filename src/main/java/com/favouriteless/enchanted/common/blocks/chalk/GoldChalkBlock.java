@@ -21,8 +21,8 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,7 +57,7 @@ public class GoldChalkBlock extends AbstractChalkBlock {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return EnchantedTileEntities.CHALK_GOLD.get().create();
+        return EnchantedTileEntityTypes.CHALK_GOLD.get().create();
     }
 
     @Override

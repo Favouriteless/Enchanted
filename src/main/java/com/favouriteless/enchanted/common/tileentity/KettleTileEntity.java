@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.KettleBlock;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 public class KettleTileEntity extends CauldronTileEntity<KettleRecipe> {
 
     public KettleTileEntity() {
-        super(EnchantedTileEntities.KETTLE.get(), 1, 160);
+        super(EnchantedTileEntityTypes.KETTLE.get(), 1, 160);
     }
 
     @Override

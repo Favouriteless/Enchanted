@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class WitchCauldronTileEntity extends CauldronTileEntity<WitchCauldronRecipe> {
 
     public WitchCauldronTileEntity() {
-        super(EnchantedTileEntities.WITCH_CAULDRON.get(), 3, 200);
+        super(EnchantedTileEntityTypes.WITCH_CAULDRON.get(), 3, 200);
     }
 
     @Override

@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +34,7 @@ public class BloodPoppyTileEntity extends TileEntity {
     private String name = null;
 
     public BloodPoppyTileEntity() {
-        super(EnchantedTileEntities.BLOOD_POPPY.get());
+        super(EnchantedTileEntityTypes.BLOOD_POPPY.get());
     }
 
     public UUID getUUID() {

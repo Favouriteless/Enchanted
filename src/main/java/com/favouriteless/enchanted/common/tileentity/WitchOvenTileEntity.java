@@ -25,7 +25,7 @@ import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
@@ -107,7 +107,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     public WitchOvenTileEntity() {
-        this(EnchantedTileEntities.WITCH_OVEN.get());
+        this(EnchantedTileEntityTypes.WITCH_OVEN.get());
     }
 
     @Override

@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -81,7 +81,7 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 	}
 
 	public SpinningWheelTileEntity() {
-		this(EnchantedTileEntities.SPINNING_WHEEL.get());
+		this(EnchantedTileEntityTypes.SPINNING_WHEEL.get());
 	}
 
 	@Override

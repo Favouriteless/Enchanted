@@ -33,30 +33,25 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 
-import java.util.Objects;
-
 public class AltarContainer extends Container {
 
     public final AltarTileEntity tileEntity;
     private final IWorldPosCallable canInteractWithCallable;
-    private final IIntArray fields;
+    private final IIntArray data;
 
-    public AltarContainer(final int windowId, final PlayerInventory playerInventory, final AltarTileEntity tileEntity, IIntArray fields) {
+    public AltarContainer(final int windowId, final AltarTileEntity tileEntity, IIntArray data) {
         super(EnchantedContainers.ALTAR.get(), windowId);
         this.tileEntity = tileEntity;
         this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
-        this.fields = fields;
-        addDataSlots(this.fields);
+        this.data = data;
+        addDataSlots(this.data);
     }
 
     public AltarContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data), new IntArray(3));
+        this(windowId, getTileEntity(playerInventory, data), new IntArray(3));
     }
 
     private static AltarTileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
-        Objects.requireNonNull(playerInventory, "Player inventory cannot be null");
-        Objects.requireNonNull(data, "SimpleColouredData cannot be null");
-
         final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
         if(tileEntity instanceof AltarTileEntity) {
@@ -66,15 +61,15 @@ public class AltarContainer extends Container {
     }
 
     public int getCurrentPower() {
-        return fields.get(0);
+        return data.get(0);
     }
 
     public int getMaxPower() {
-        return fields.get(1);
+        return data.get(1);
     }
 
     public int getRechargeMultiplier() {
-        return fields.get(2);
+        return data.get(2);
     }
 
     @Override

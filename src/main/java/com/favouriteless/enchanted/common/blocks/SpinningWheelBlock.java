@@ -21,35 +21,24 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
-import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
 import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelBlock extends ContainerBlock {
+public class SpinningWheelBlock extends SimpleContainerBlockBase<SpinningWheelTileEntity> {
 
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final VoxelShape X_SHAPE = VoxelShapes.box(0.0625, 0, 0.3125, 0.9375, 0.8125, 0.6875);
@@ -59,52 +48,11 @@ public class SpinningWheelBlock extends ContainerBlock {
 		super(properties);
 	}
 
-	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return EnchantedTileEntities.SPINNING_WHEEL.get().create();
-	}
-
 	@Nullable
 	@Override
 	public TileEntity newBlockEntity(IBlockReader worldIn) {
-		return new DistilleryTileEntity();
+		return new SpinningWheelTileEntity();
 	}
-
-	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-		if(!worldIn.isClientSide) {
-			TileEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof SpinningWheelTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity)player, (SpinningWheelTileEntity)tileEntity, pos);
-				return ActionResultType.SUCCESS;
-			}
-		}
-		return ActionResultType.SUCCESS;
-	}
-
-	@Override
-	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = world.getBlockEntity(blockPos);
-			if (tileentity instanceof SpinningWheelTileEntity) {
-				SpinningWheelTileEntity tileEntity = (SpinningWheelTileEntity)tileentity;
-				InventoryHelper.dropContents(world, blockPos, tileEntity);
-			}
-			super.onRemove(state, world, blockPos, newState, isMoving);  // call it last, because it removes the TileEntity
-		}
-	}
-
-
-	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {

@@ -22,11 +22,9 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.tileentity.WitchOvenTileEntity;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
@@ -36,7 +34,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -45,12 +42,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class WitchOvenBlock extends ContainerBlock {
+public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -60,22 +56,9 @@ public class WitchOvenBlock extends ContainerBlock {
     public static final VoxelShape SHAPE_WEST = Stream.of(Block.box(2, 2, 2, 14, 3, 14), Block.box(1, 0, 1, 2, 2, 2), Block.box(1, 2, 1, 15, 3, 2), Block.box(1, 2, 14, 15, 3, 15), Block.box(1, 0, 14, 2, 2, 15), Block.box(14, 0, 1, 15, 2, 2), Block.box(14, 0, 14, 15, 2, 15), Block.box(1, 9, 1, 15, 10, 15), Block.box(2, 3, 2, 14, 9, 14), Block.box(3, 10, 3, 13, 11, 13), Block.box(9, 10, 6, 13, 16, 10), Block.box(8, 10, 5, 14, 12, 11)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
     public static final VoxelShape SHAPE_EAST = Stream.of(Block.box(2, 2, 2, 14, 3, 14), Block.box(14, 0, 14, 15, 2, 15), Block.box(1, 2, 14, 15, 3, 15), Block.box(1, 2, 1, 15, 3, 2), Block.box(14, 0, 1, 15, 2, 2), Block.box(1, 0, 14, 2, 2, 15), Block.box(1, 0, 1, 2, 2, 2), Block.box(1, 9, 1, 15, 10, 15), Block.box(2, 3, 2, 14, 9, 14), Block.box(3, 10, 3, 13, 11, 13), Block.box(3, 10, 6, 7, 16, 10), Block.box(2, 10, 5, 8, 12, 11)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
 
-
     public WitchOvenBlock(Properties builder) {
         super(builder);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-    }
-
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if (world.isClientSide()) {
-            return ActionResultType.SUCCESS;
-        } else {
-            this.openContainer(world, pos, player);
-            return ActionResultType.CONSUME;
-        }
     }
 
     @Override
@@ -91,24 +74,6 @@ public class WitchOvenBlock extends ContainerBlock {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING, LIT);
-    }
-
-    protected void openContainer(World world, BlockPos pos, PlayerEntity player) {
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof WitchOvenTileEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider)tileEntity, tileEntity.getBlockPos());
-        }
-    }
-
-    @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean p_196243_5_) {
-        if (!state.is(newState.getBlock())) {
-            TileEntity tileentity = world.getBlockEntity(pos);
-            if (tileentity instanceof WitchOvenTileEntity) {
-                InventoryHelper.dropContents(world, pos, (WitchOvenTileEntity)tileentity);
-            }
-            super.onRemove(state, world, pos, newState, p_196243_5_);
-        }
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -144,16 +109,6 @@ public class WitchOvenBlock extends ContainerBlock {
             case EAST:
                 return SHAPE_EAST;
         }
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @OnlyIn(Dist.CLIENT)

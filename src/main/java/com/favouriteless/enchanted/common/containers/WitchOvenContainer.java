@@ -21,10 +21,13 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.WitchOvenTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -35,10 +38,10 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 
-public class WitchOvenContainer extends FurnaceContainerBase {
+public class WitchOvenContainer extends ProcessingContainerBase {
 
-    public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final ProcessingTileEntityBase tileEntity, final IIntArray data) {
-        super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), 5, data);
+    public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final InventoryTileEntityBase tileEntity, final IIntArray data) {
+        super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
 
         // Container Inventory
         this.addSlot(new SlotInput(tileEntity, 0, 53, 17)); // Ingredient input
@@ -47,11 +50,11 @@ public class WitchOvenContainer extends FurnaceContainerBase {
         this.addSlot(new SlotJarInput(tileEntity, 3, 53, 53)); // Jar input
         this.addSlot(new SlotOutput(tileEntity, 4, 107, 53)); // Jar output
 
-        this.AddInventorySlots(playerInventory); // Player inventory starts at 5
+        this.addInventorySlots(playerInventory, 8, 84);
     }
 
     public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data), new IntArray(4));
+        this(windowId, playerInventory, getTileEntity(playerInventory, data, WitchOvenTileEntity.class), new IntArray(4));
     }
 
     @Override
@@ -112,8 +115,8 @@ public class WitchOvenContainer extends FurnaceContainerBase {
     }
 
     public boolean hasByproduct(ItemStack item) {
-        if(this.tileEntity.getLevel() != null) {
-            return this.tileEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new Inventory(item), this.tileEntity.getLevel()).isPresent();
+        if(tileEntity.getLevel() != null) {
+            return tileEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new Inventory(item), this.tileEntity.getLevel()).isPresent();
         }
         return false;
     }

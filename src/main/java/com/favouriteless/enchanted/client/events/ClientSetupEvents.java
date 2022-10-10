@@ -24,14 +24,11 @@ package com.favouriteless.enchanted.client.events;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.tileentity.CauldronWaterRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
-import com.favouriteless.enchanted.client.screens.AltarScreen;
-import com.favouriteless.enchanted.client.screens.DistilleryScreen;
-import com.favouriteless.enchanted.client.screens.SpinningWheelScreen;
-import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
+import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -50,13 +47,14 @@ public class ClientSetupEvents {
 		ScreenManager.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
 		ScreenManager.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
 		ScreenManager.register(EnchantedContainers.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+		ScreenManager.register(EnchantedContainers.POPPET_SHELF.get(), PoppetShelfScreen::new);
 
 		EnchantedBlocks.initRender();
 		EnchantedEntityTypes.registerEntityRenderers();
 
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntities.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
 	}
 
 	@SubscribeEvent

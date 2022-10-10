@@ -22,71 +22,27 @@
 package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
+import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
-public abstract class FurnaceContainerBase extends Container {
+public abstract class ProcessingContainerBase extends ContainerBase {
 
-    public final ProcessingTileEntityBase tileEntity;
-    protected final IWorldPosCallable canInteractWithCallable;
-    protected final int numberOfSlots;
     protected final IIntArray data;
 
-    protected FurnaceContainerBase(@Nullable ContainerType<?> type, int windowId, ProcessingTileEntityBase tileEntityIn, IWorldPosCallable canInteractWithCallableIn, int numberOfSlotsIn, IIntArray furnaceDataIn) {
-        super(type, windowId);
-        this.tileEntity = tileEntityIn;
-        this.canInteractWithCallable = canInteractWithCallableIn;
-        this.numberOfSlots = numberOfSlotsIn;
-        this.data = furnaceDataIn;
+    protected ProcessingContainerBase(@Nullable ContainerType<?> type, int id, InventoryTileEntityBase tileEntity, IWorldPosCallable canInteractWithCallable, Block block, IIntArray data) {
+        super(type, id, tileEntity, canInteractWithCallable, block);
+        this.data = data;
 
-        if(furnaceDataIn != null) {
-            this.addDataSlots(furnaceDataIn);
-        }
-    }
-
-    protected static ProcessingTileEntityBase getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
-        Objects.requireNonNull(playerInventory, "Player inventory cannot be null");
-        Objects.requireNonNull(data, "Data cannot be null");
-
-        final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
-
-        if(tileEntity instanceof ProcessingTileEntityBase) {
-            return (ProcessingTileEntityBase)tileEntity;
-        }
-        throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
-    }
-
-    @Override
-    public boolean stillValid(PlayerEntity player) {
-        return tileEntity.stillValid(player);
-    }
-
-    @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
-        return ItemStack.EMPTY;
-    }
-
-    protected void AddInventorySlots(PlayerInventory playerInventory) {
-        for (int y = 0; y < 3; y++) { // Main Inventory
-            for (int x = 0; x < 9; x++) {
-                addSlot(new Slot(playerInventory, x + (y * 9) + 9,  8 + (x * 18), 84 + (y * 18)));
-            }
-        }
-        for (int x = 0; x < 9; x++) { // Hotbar
-            addSlot(new Slot(playerInventory, x, 8 + (18 * x), 142));
+        if(data != null) {
+            addDataSlots(data);
         }
     }
 

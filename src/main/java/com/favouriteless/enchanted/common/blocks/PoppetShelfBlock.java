@@ -21,15 +21,21 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-public class PoppetShelfBlock extends ContainerBlock {
+public class PoppetShelfBlock extends SimpleContainerBlockBase<PoppetShelfTileEntity> {
+
+	public  static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
 	public PoppetShelfBlock(Properties properties) {
 		super(properties);
@@ -38,11 +44,16 @@ public class PoppetShelfBlock extends ContainerBlock {
 	@Nullable
 	@Override
 	public TileEntity newBlockEntity(IBlockReader reader) {
-		return null;
+		return new PoppetShelfTileEntity();
 	}
 
 	@Override
 	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader level, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
 	}
 }

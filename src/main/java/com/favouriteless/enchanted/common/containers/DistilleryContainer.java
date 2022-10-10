@@ -21,10 +21,11 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
+import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -34,30 +35,25 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 
-public class DistilleryContainer extends FurnaceContainerBase {
+public class DistilleryContainer extends ProcessingContainerBase {
 
-    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final ProcessingTileEntityBase tileEntity, final IIntArray data) {
-        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), 7, data);
+    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final InventoryTileEntityBase tileEntity, final IIntArray data) {
+        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
 
         // Container Inventory
-        this.addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input
-        this.addSlot(new SlotInput(tileEntity, 1, 54, 25)); // Ingredient input
-        this.addSlot(new SlotInput(tileEntity, 2, 54, 45)); // Ingredient input
-        this.addSlot(new SlotOutput(tileEntity, 3, 127, 7)); // Distillery output
-        this.addSlot(new SlotOutput(tileEntity, 4, 127, 26)); // Distillery output
-        this.addSlot(new SlotOutput(tileEntity, 5, 127, 45)); // Distillery output
-        this.addSlot(new SlotOutput(tileEntity, 6, 127, 64)); // Distillery output
+        addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input
+        addSlot(new SlotInput(tileEntity, 1, 54, 25)); // Ingredient input
+        addSlot(new SlotInput(tileEntity, 2, 54, 45)); // Ingredient input
+        addSlot(new SlotOutput(tileEntity, 3, 127, 7)); // Distillery output
+        addSlot(new SlotOutput(tileEntity, 4, 127, 26)); // Distillery output
+        addSlot(new SlotOutput(tileEntity, 5, 127, 45)); // Distillery output
+        addSlot(new SlotOutput(tileEntity, 6, 127, 64)); // Distillery output
 
-        this.AddInventorySlots(playerInventory);
+        addInventorySlots(playerInventory, 8, 84);
     }
 
     public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data), new IntArray(4));
-    }
-
-    @Override
-    public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, EnchantedBlocks.DISTILLERY.get());
+        this(windowId, playerInventory, getTileEntity(playerInventory, data, DistilleryTileEntity.class), new IntArray(3));
     }
 
     @Override

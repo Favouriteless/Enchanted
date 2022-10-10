@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntities;
+import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.entity.player.PlayerInventory;
@@ -84,7 +84,7 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     }
 
     public DistilleryTileEntity() {
-        this(EnchantedTileEntities.DISTILLERY.get());
+        this(EnchantedTileEntityTypes.DISTILLERY.get());
     }
 
     @Override

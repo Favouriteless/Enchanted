@@ -32,7 +32,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class PoppetUtils {
+public class PoppetHelper {
 
 	public static final Random RANDOM = new Random();
 
@@ -112,7 +112,7 @@ public class PoppetUtils {
 	public static PoppetResult tryUseDeathPoppet(PlayerEntity player, ItemStack item, DamageSource source) {
 		if(item.getItem() instanceof AbstractDeathPoppetItem) {
 			AbstractDeathPoppetItem poppet = (AbstractDeathPoppetItem)item.getItem();
-			if(PoppetUtils.belongsTo(item, player)) {
+			if(PoppetHelper.belongsTo(item, player)) {
 				if(poppet.protectsAgainst(source)) {
 					if(poppet.canProtect(player)) {
 						if(RANDOM.nextFloat() > poppet.getFailRate()) {
@@ -137,7 +137,7 @@ public class PoppetUtils {
 	public static PoppetResult tryUseToolPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack) {
 		if(poppetStack.getItem() instanceof ToolPoppetItem) {
 			ToolPoppetItem poppet = (ToolPoppetItem)poppetStack.getItem();
-			if(PoppetUtils.belongsTo(poppetStack, player)) {
+			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(toolStack.isDamageableItem()) {
 					if(!toolStack.getItem().is(EnchantedTags.TOOL_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !toolStack.getItem().is(EnchantedTags.TOOL_POPPET_WHITELIST))) {
 						if(RANDOM.nextFloat() > poppet.getFailRate()) {
@@ -162,7 +162,7 @@ public class PoppetUtils {
 	public static PoppetResult tryUseArmourPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack armourStack) {
 		if(poppetStack.getItem() instanceof ArmourPoppetItem) {
 			ArmourPoppetItem poppet = (ArmourPoppetItem) poppetStack.getItem();
-			if(PoppetUtils.belongsTo(poppetStack, player)) {
+			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				Item item = armourStack.getItem();
 				if(!item.is(EnchantedTags.ARMOUR_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !item.is(EnchantedTags.ARMOUR_POPPET_WHITELIST))) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {

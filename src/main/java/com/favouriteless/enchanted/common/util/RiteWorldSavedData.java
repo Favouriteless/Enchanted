@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites.util;
+package com.favouriteless.enchanted.common.util;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
@@ -27,22 +27,17 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RiteWorldSavedData extends WorldSavedData {
 
-	private static final String NAME = "enchantedRites";
+	private static final String NAME = "enchanted_rites";
 	public final List<AbstractRite> ACTIVE_RITES = new ArrayList<>();
 	public final ServerWorld world;
 	
@@ -51,8 +46,7 @@ public class RiteWorldSavedData extends WorldSavedData {
 		this.world = world;
 	}
 
-	public static RiteWorldSavedData get(World world)
-	{
+	public static RiteWorldSavedData get(World world) {
 		if (world instanceof ServerWorld) {
 			ServerWorld overworld = world.getServer().getLevel(World.OVERWORLD);
 

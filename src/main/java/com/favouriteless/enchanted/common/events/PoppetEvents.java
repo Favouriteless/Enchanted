@@ -22,8 +22,8 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.items.poppets.PoppetUtils;
-import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
+import com.favouriteless.enchanted.common.items.poppets.PoppetHelper;
+import com.favouriteless.enchanted.common.items.poppets.PoppetHelper.PoppetResult;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import net.minecraft.entity.LivingEntity;
@@ -48,7 +48,7 @@ public class PoppetEvents {
 
 				for(ItemStack poppetItem : player.inventory.items) {
 					ItemStack poppetItemOriginal = poppetItem.copy();
-					PoppetResult result = PoppetUtils.tryUseDeathPoppet(player, poppetItem, event.getSource());
+					PoppetResult result = PoppetHelper.tryUseDeathPoppet(player, poppetItem, event.getSource());
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						event.setCanceled(true);
 					}
@@ -66,7 +66,7 @@ public class PoppetEvents {
 		ItemStack tool = event.getOriginal();
 		for(ItemStack poppetItem : event.getPlayer().inventory.items) {
 			ItemStack poppetItemOriginal = poppetItem.copy();
-			PoppetResult result = PoppetUtils.tryUseToolPoppet(event.getPlayer(), poppetItem, tool);
+			PoppetResult result = PoppetHelper.tryUseToolPoppet(event.getPlayer(), poppetItem, tool);
 			if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 				event.getPlayer().setItemInHand(event.getHand(), tool);
 			}
@@ -84,7 +84,7 @@ public class PoppetEvents {
 			if(armourItem.getItem() instanceof ArmorItem) {
 				for(ItemStack poppetItem : player.inventory.items) {
 					ItemStack poppetItemOriginal = poppetItem.copy();
-					PoppetResult result = PoppetUtils.tryUseArmourPoppet(player, poppetItem, armourItem);
+					PoppetResult result = PoppetHelper.tryUseArmourPoppet(player, poppetItem, armourItem);
 					if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 						player.setItemSlot(slot, armourItem);
 					}

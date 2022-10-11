@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.util.PoppetShelfManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
@@ -57,4 +58,29 @@ public class PoppetShelfTileEntity extends InventoryTileEntityBase {
 
 	}
 
+	@Override
+	public void setItem(int index, ItemStack stack) {
+		if(!level.isClientSide) {
+			PoppetShelfManager.removePoppet(inventoryContents.get(index), this);
+			PoppetShelfManager.addPoppet(stack, this);
+		}
+		inventoryContents.set(index, stack);
+
+		if (stack.getCount() > getMaxStackSize()) {
+			stack.setCount(getMaxStackSize());
+		}
+	}
+
+	@Override
+	public ItemStack removeItem(int index, int count) {
+		PoppetShelfManager.removePoppet(inventoryContents.get(index), this);
+		return super.removeItem(index, count);
+	}
+
+
+
+	@Override
+	public void setItems(NonNullList<ItemStack> itemsIn) {
+		inventoryContents = itemsIn;
+	}
 }

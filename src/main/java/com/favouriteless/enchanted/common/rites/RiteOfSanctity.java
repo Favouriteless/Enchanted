@@ -22,13 +22,12 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType;
 import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CirclePart;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
+import com.favouriteless.enchanted.common.util.CirclePart;
+import com.favouriteless.enchanted.common.util.RiteType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.Items;

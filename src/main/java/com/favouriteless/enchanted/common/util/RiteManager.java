@@ -19,19 +19,17 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites.util;
+package com.favouriteless.enchanted.common.util;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.TickEvent.WorldTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @EventBusSubscriber(modid= Enchanted.MOD_ID, bus= Bus.FORGE)

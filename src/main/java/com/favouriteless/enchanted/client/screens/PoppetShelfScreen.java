@@ -48,6 +48,13 @@ public class PoppetShelfScreen extends ContainerScreen<PoppetShelfContainer> {
     }
 
     @Override
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
+    }
+
+    @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int pX, int pY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);

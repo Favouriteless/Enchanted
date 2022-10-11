@@ -19,12 +19,11 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites.util;
+package com.favouriteless.enchanted.common.util;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 

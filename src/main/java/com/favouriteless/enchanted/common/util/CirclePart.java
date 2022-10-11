@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.rites.util;
+package com.favouriteless.enchanted.common.util;
 
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;

@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
+import com.favouriteless.enchanted.common.util.RiteType;
 import net.minecraft.item.Items;
 
 public class RiteOfBindingTalismanCharged extends RiteOfBindingTalisman {

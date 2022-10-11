@@ -23,9 +23,9 @@ package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.rites.util.CirclePart;
-import com.favouriteless.enchanted.common.rites.util.RiteManager;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
+import com.favouriteless.enchanted.common.util.CirclePart;
+import com.favouriteless.enchanted.common.util.RiteManager;
+import com.favouriteless.enchanted.common.util.RiteType;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import net.minecraft.block.Block;
@@ -50,7 +50,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
 import java.util.HashMap;

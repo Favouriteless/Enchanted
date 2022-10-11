@@ -25,8 +25,8 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CirclePart;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
+import com.favouriteless.enchanted.common.util.CirclePart;
+import com.favouriteless.enchanted.common.util.RiteType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -35,11 +35,9 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.core.jmx.Server;
 
 public class RiteOfTranspositionPlayer extends AbstractRite {
 

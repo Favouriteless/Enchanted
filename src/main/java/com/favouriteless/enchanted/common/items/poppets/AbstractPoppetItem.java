@@ -61,8 +61,8 @@ public abstract class AbstractPoppetItem extends Item {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag flag) {
 		toolTip.add(new StringTextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(TextFormatting.RED));
-		if(PoppetUtils.isBound(stack)) {
-			toolTip.add(new StringTextComponent(PoppetUtils.getBoundPlayer(stack, world).getDisplayName().getString()).withStyle(TextFormatting.GRAY));
+		if(PoppetHelper.isBound(stack)) {
+			toolTip.add(new StringTextComponent(PoppetHelper.getBoundPlayer(stack, world).getDisplayName().getString()).withStyle(TextFormatting.GRAY));
 		}
 	}
 
@@ -77,7 +77,7 @@ public abstract class AbstractPoppetItem extends Item {
 				PlayerEntity target = world.getPlayerByUUID(nbt.getUUID("entity"));
 
 				if(target != null) {
-					PoppetUtils.bind(itemStack, target);
+					PoppetHelper.bind(itemStack, target);
 					if(!player.isCreative())
 						taglockStack.shrink(1);
 				}
@@ -89,7 +89,7 @@ public abstract class AbstractPoppetItem extends Item {
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		if(hand == Hand.MAIN_HAND) {
-			if(!PoppetUtils.isBound(player.getMainHandItem())) {
+			if(!PoppetHelper.isBound(player.getMainHandItem())) {
 				ItemStack taglockStack = player.getOffhandItem();
 				if(taglockStack.getItem() instanceof TaglockFilledItem) {
 					CompoundNBT nbt = taglockStack.getOrCreateTag();

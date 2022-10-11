@@ -26,7 +26,7 @@ import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
-import com.favouriteless.enchanted.common.items.poppets.PoppetUtils.PoppetResult;
+import com.favouriteless.enchanted.common.items.poppets.PoppetHelper.PoppetResult;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

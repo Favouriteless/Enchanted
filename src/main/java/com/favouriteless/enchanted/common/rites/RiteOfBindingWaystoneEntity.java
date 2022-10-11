@@ -25,16 +25,14 @@ import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.rites.util.CirclePart;
-import com.favouriteless.enchanted.common.rites.util.RiteType;
+import com.favouriteless.enchanted.common.util.CirclePart;
+import com.favouriteless.enchanted.common.util.RiteType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-
-import java.util.List;
 
 public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
 

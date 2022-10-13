@@ -77,10 +77,9 @@ public class PoppetShelfTileEntity extends InventoryTileEntityBase {
 		return super.removeItem(index, count);
 	}
 
-
-
 	@Override
 	public void setItems(NonNullList<ItemStack> itemsIn) {
 		inventoryContents = itemsIn;
 	}
+
 }

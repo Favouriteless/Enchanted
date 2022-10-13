@@ -24,6 +24,7 @@ package com.favouriteless.enchanted.common.items.poppets;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
+import com.favouriteless.enchanted.common.util.PoppetHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

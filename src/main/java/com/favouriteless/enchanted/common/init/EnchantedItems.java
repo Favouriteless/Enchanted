@@ -176,12 +176,12 @@ public class EnchantedItems {
     public static final RegistryObject<Item> VOID_POPPET = registerVoidPoppet("void_poppet", 0.3F, 1, PoppetColour.VOID, DamageSource.OUT_OF_WORLD);
     public static final RegistryObject<Item> VOID_POPPET_INFUSED = registerVoidPoppetEffect("void_poppet_infused", 0.0F, 1, PoppetColour.VOID, EnchantedEffects.FALL_RESISTANCE, 150, 0, DamageSource.OUT_OF_WORLD);
     public static final RegistryObject<Item> VOID_POPPET_STURDY = registerVoidPoppet("void_poppet_sturdy", 0.0F, 2, PoppetColour.VOID, DamageSource.OUT_OF_WORLD);
-    public static final RegistryObject<Item> TOOL_POPPET = registerToolPoppet("tool_poppet", 0.3F, 1, 0.9F, PoppetColour.EQUIPMENT);
-    public static final RegistryObject<Item> TOOL_POPPET_INFUSED = registerToolPoppet("tool_poppet_infused", 0.0F, 1, 0.0F, PoppetColour.EQUIPMENT);
-    public static final RegistryObject<Item> TOOL_POPPET_STURDY = registerToolPoppet("tool_poppet_sturdy", 0.0F, 2, 0.9F, PoppetColour.EQUIPMENT);
-    public static final RegistryObject<Item> ARMOUR_POPPET = registerArmourPoppet("armour_poppet", 0.3F, 1, 0.9F, PoppetColour.EQUIPMENT);
-    public static final RegistryObject<Item> ARMOUR_POPPET_INFUSED = registerArmourPoppet("armour_poppet_infused", 0.0F, 1, 0.0F, PoppetColour.EQUIPMENT);
-    public static final RegistryObject<Item> ARMOUR_POPPET_STURDY = registerArmourPoppet("armour_poppet_sturdy", 0.0F, 2, 0.9F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> TOOL_POPPET = registerItemProtectionPoppet("tool_poppet", 0.3F, 1, 0.9F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> TOOL_POPPET_INFUSED = registerItemProtectionPoppet("tool_poppet_infused", 0.0F, 1, 0.0F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> TOOL_POPPET_STURDY = registerItemProtectionPoppet("tool_poppet_sturdy", 0.0F, 2, 0.9F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> ARMOUR_POPPET = registerItemProtectionPoppet("armour_poppet", 0.3F, 1, 0.9F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> ARMOUR_POPPET_INFUSED = registerItemProtectionPoppet("armour_poppet_infused", 0.0F, 1, 0.0F, PoppetColour.EQUIPMENT);
+    public static final RegistryObject<Item> ARMOUR_POPPET_STURDY = registerItemProtectionPoppet("armour_poppet_sturdy", 0.0F, 2, 0.9F, PoppetColour.EQUIPMENT);
 
 
 
@@ -232,12 +232,8 @@ public class EnchantedItems {
         return ITEMS.register(name, () -> new SimpleEffectBrewItem(effect, duration, amplifier, defaultProperties()));
     }
 
-    private static RegistryObject<Item> registerToolPoppet(String name, float failRate, int durability, float damageMultiplier, PoppetColour colour) {
-        return ITEMS.register(name, () -> new ToolPoppetItem(failRate, durability, damageMultiplier, colour));
-    }
-
-    private static RegistryObject<Item> registerArmourPoppet(String name, float failRate, int durability, float damageMultiplier, PoppetColour colour) {
-        return ITEMS.register(name, () -> new ArmourPoppetItem(failRate, durability, damageMultiplier, colour));
+    private static RegistryObject<Item> registerItemProtectionPoppet(String name, float failRate, int durability, float damageMultiplier, PoppetColour colour) {
+        return ITEMS.register(name, () -> new ItemProtectionPoppetItem(failRate, durability, damageMultiplier, colour));
     }
 
     private static RegistryObject<Item> registerDeathPoppet(String name, float failRate, int durability, PoppetColour colour, DamageSource... damageSources) {
@@ -274,6 +270,14 @@ public class EnchantedItems {
                 return true;
         }
         return false;
+    }
+
+    public static boolean isToolPoppet(Item item) {
+        return item == TOOL_POPPET.get() || item == TOOL_POPPET_INFUSED.get() || item == TOOL_POPPET_STURDY.get();
+    }
+
+    public static  boolean isArmourPoppet(Item item) {
+        return item == ARMOUR_POPPET.get() || item == ARMOUR_POPPET_INFUSED.get() || item == ARMOUR_POPPET_STURDY.get();
     }
 
 }

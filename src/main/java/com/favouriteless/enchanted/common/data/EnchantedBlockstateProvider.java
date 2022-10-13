@@ -30,8 +30,10 @@ import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.*;
-import net.minecraft.data.BlockStateVariantBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
@@ -84,6 +86,7 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 		complexBlockWithItem(EnchantedBlocks.CHALICE_FILLED_MILK.get());
 		complexBlockWithItem(EnchantedBlocks.CANDELABRA.get());
 		kettleBlockWithItem(EnchantedBlocks.KETTLE.get());
+		complexBlockWithItem(EnchantedBlocks.POPPET_SHELF.get());
 
 		cropsBlockWithItem(EnchantedBlocks.BELLADONNA.get(), "crop");
 		cropsBlockWithItem(EnchantedBlocks.SNOWBELL.get(), "cross");

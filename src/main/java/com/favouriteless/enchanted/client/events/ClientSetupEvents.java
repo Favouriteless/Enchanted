@@ -23,6 +23,7 @@ package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.tileentity.CauldronWaterRenderer;
+import com.favouriteless.enchanted.client.render.tileentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
@@ -55,6 +56,7 @@ public class ClientSetupEvents {
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
 		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
 	}
 
 	@SubscribeEvent

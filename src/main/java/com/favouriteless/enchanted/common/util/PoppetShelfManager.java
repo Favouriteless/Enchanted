@@ -21,9 +21,10 @@
 
 package com.favouriteless.enchanted.common.util;
 
-import com.favouriteless.enchanted.common.items.poppets.PoppetHelper;
+import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
 import com.favouriteless.enchanted.common.util.PoppetShelfWorldSavedData.PoppetEntry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.server.ServerWorld;
 
@@ -37,7 +38,7 @@ public class PoppetShelfManager {
 		if(tileEntity.getLevel() != null && tileEntity.getLevel() instanceof ServerWorld) {
 			if(PoppetHelper.isBound(itemStack)) {
 				UUID uuid = itemStack.getTag().getUUID("boundPlayer");
-				PoppetEntry entry = new PoppetEntry(itemStack, (ServerWorld)tileEntity.getLevel(), tileEntity.getBlockPos());
+				PoppetEntry entry = new PoppetEntry((AbstractPoppetItem)itemStack.getItem(), uuid, (ServerWorld)tileEntity.getLevel(), tileEntity.getBlockPos());
 
 				PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(tileEntity.getLevel());
 				if(!data.PLAYER_POPPETS.containsKey(uuid))
@@ -68,6 +69,18 @@ public class PoppetShelfManager {
 				}
 			}
 		}
+	}
+
+	public static List<PoppetEntry> getEntriesFor(PlayerEntity player) {
+		if(!player.level.isClientSide) {
+			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(player.level);
+			if(data.PLAYER_POPPETS.containsKey(player.getUUID())) {
+				List<PoppetEntry> list = data.PLAYER_POPPETS.get(player.getUUID());
+				if(list != null)
+					return list;
+			}
+		}
+		return new ArrayList<>();
 	}
 
 }

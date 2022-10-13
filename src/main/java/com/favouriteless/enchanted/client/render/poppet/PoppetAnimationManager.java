@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.client.render.poppet;
 
-import com.favouriteless.enchanted.common.items.poppets.PoppetHelper.PoppetResult;
+import com.favouriteless.enchanted.common.util.PoppetHelper.PoppetResult;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.item.ItemStack;

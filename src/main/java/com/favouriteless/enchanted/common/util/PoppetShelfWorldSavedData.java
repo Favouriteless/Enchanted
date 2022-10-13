@@ -22,11 +22,14 @@
 package com.favouriteless.enchanted.common.util;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -77,8 +81,9 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 							CompoundNBT poppetTag = (CompoundNBT)poppetInbt;
 							BlockPos pos = new BlockPos(poppetTag.getInt("xPos"), poppetTag.getInt("yPos"), poppetTag.getInt("zPos"));
 							ServerWorld level = this.level.getServer().getLevel(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(poppetTag.getString("dimension"))));
-							ItemStack stack = ItemStack.of(poppetTag);
-							poppetEntries.add(new PoppetEntry(stack, level, pos));
+							Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(poppetTag.getString("item")));
+							if(level != null && item instanceof AbstractPoppetItem)
+								poppetEntries.add(new PoppetEntry((AbstractPoppetItem)item, uuid, level, pos));
 						}
 					}
 					if(!poppetEntries.isEmpty())
@@ -100,7 +105,7 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 			ListNBT poppetsNbt = new ListNBT();
 			for(PoppetEntry poppetEntry : poppetEntryList) {
 				CompoundNBT itemNbt = new CompoundNBT();
-				poppetEntry.getItem().save(itemNbt);
+				itemNbt.putString("item", poppetEntry.getItem().getRegistryName().toString());
 				itemNbt.putString("dimension", poppetEntry.getLevel().dimension().location().toString());
 				itemNbt.putInt("xPos", poppetEntry.getPos().getX());
 				itemNbt.putInt("yPos", poppetEntry.getPos().getY());
@@ -120,18 +125,20 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 
 	public static class PoppetEntry {
 
-		private final ItemStack itemStack;
+		private final AbstractPoppetItem item;
+		private final UUID uuid;
 		private final ServerWorld level;
 		private final BlockPos shelfPos;
 
-		public PoppetEntry(ItemStack itemStack, ServerWorld level, BlockPos shelfPos) {
-			this.itemStack = itemStack;
+		public PoppetEntry(AbstractPoppetItem item, UUID uuid, ServerWorld level, BlockPos shelfPos) {
+			this.item = item;
+			this.uuid = uuid;
 			this.shelfPos = shelfPos;
 			this.level = level;
 		}
 
-		public ItemStack getItem() {
-			return itemStack;
+		public AbstractPoppetItem getItem() {
+			return item;
 		}
 
 		public BlockPos getPos() {
@@ -142,11 +149,32 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 			return level;
 		}
 
+		public UUID getUUID() {
+			return uuid;
+		}
+
 		public boolean matches(ItemStack stack, PoppetShelfTileEntity tileEntity) {
-			if(ItemStack.matches(itemStack, stack))
+			if(stack.getItem() == item)
 				if(tileEntity.getLevel().dimension() == level.dimension())
-					return tileEntity.getBlockPos().equals(shelfPos);
+					if(PoppetHelper.belongsTo(stack, uuid))
+						return tileEntity.getBlockPos().equals(shelfPos);
 			return false;
+		}
+
+		public boolean matches(ItemStack stack) {
+			return stack.getItem() == item && PoppetHelper.belongsTo(stack, uuid);
+		}
+
+		public ItemStack getItemStack() {
+			TileEntity tileEntity = level.getBlockEntity(shelfPos);
+			if(tileEntity instanceof PoppetShelfTileEntity) {
+				PoppetShelfTileEntity shelf = (PoppetShelfTileEntity)tileEntity;
+				for(ItemStack itemStack : shelf.getItems()) {
+					if(matches(itemStack))
+						return itemStack;
+				}
+			}
+			return ItemStack.EMPTY;
 		}
 
 	}

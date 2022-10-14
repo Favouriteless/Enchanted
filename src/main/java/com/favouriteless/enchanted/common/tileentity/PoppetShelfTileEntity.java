@@ -23,63 +23,45 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
-import com.favouriteless.enchanted.common.util.PoppetShelfManager;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class PoppetShelfTileEntity extends InventoryTileEntityBase {
+import javax.annotation.Nullable;
+
+public class PoppetShelfTileEntity extends TileEntity implements INamedContainerProvider {
+
+	public PoppetShelfInventory inventory = null;
 
 	public PoppetShelfTileEntity() {
-		super(EnchantedTileEntityTypes.POPPET_SHELF.get(), NonNullList.withSize(4, ItemStack.EMPTY));
+		super(EnchantedTileEntityTypes.POPPET_SHELF.get());
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() {
+	public ITextComponent getDisplayName() {
 		return new TranslationTextComponent("container.enchanted.poppet_shelf");
 	}
 
+	@Nullable
 	@Override
-	protected Container createMenu(int id, PlayerInventory playerInventory) {
+	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		return new PoppetShelfContainer(id, playerInventory, this);
 	}
 
-	@Override
-	protected void loadAdditional(CompoundNBT nbt) {
-
-	}
-
-	@Override
-	protected void saveAdditional(CompoundNBT nbt) {
-
-	}
-
-	@Override
-	public void setItem(int index, ItemStack stack) {
-		if(!level.isClientSide) {
-			PoppetShelfManager.removePoppet(inventoryContents.get(index), this);
-			PoppetShelfManager.addPoppet(stack, this);
+	public PoppetShelfInventory getInventory() {
+		if(inventory == null) {
+			if(level.isClientSide)
+				inventory = new PoppetShelfInventory(level, worldPosition);
+			else
+				inventory = PoppetShelfManager.getInventoryFor(this);
 		}
-		inventoryContents.set(index, stack);
-
-		if (stack.getCount() > getMaxStackSize()) {
-			stack.setCount(getMaxStackSize());
-		}
-	}
-
-	@Override
-	public ItemStack removeItem(int index, int count) {
-		PoppetShelfManager.removePoppet(inventoryContents.get(index), this);
-		return super.removeItem(index, count);
-	}
-
-	@Override
-	public void setItems(NonNullList<ItemStack> itemsIn) {
-		inventoryContents = itemsIn;
+		return inventory;
 	}
 
 }

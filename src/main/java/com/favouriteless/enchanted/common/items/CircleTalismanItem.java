@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.items;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.util.CirclePart;
+import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;

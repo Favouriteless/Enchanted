@@ -49,7 +49,7 @@ public class SpinningWheelContainer extends ProcessingContainerBase {
 	}
 
 	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-		this(windowId, playerInventory, getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new IntArray(2));
+		this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new IntArray(2));
 	}
 
 	@Override

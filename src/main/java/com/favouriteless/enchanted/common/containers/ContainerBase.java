@@ -21,7 +21,6 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -36,11 +35,11 @@ import javax.annotation.Nullable;
 
 public class ContainerBase extends Container {
 
-	protected InventoryTileEntityBase tileEntity;
+	protected TileEntity tileEntity;
 	protected final IWorldPosCallable canInteractWithCallable;
 	protected final Block block;
 
-	protected ContainerBase(@Nullable ContainerType<?> type, int id, InventoryTileEntityBase tileEntity, IWorldPosCallable canInteractWithCallable, Block block) {
+	protected ContainerBase(@Nullable ContainerType<?> type, int id, TileEntity tileEntity, IWorldPosCallable canInteractWithCallable, Block block) {
 		super(type, id);
 		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;
@@ -63,11 +62,11 @@ public class ContainerBase extends Container {
 		}
 	}
 
-	protected static InventoryTileEntityBase getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data, Class<? extends InventoryTileEntityBase> type) {
+	protected static TileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data, Class<? extends TileEntity> type) {
 		final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
 		if(tileEntity != null && tileEntity.getClass() == type) {
-			return (InventoryTileEntityBase)tileEntity;
+			return tileEntity;
 		}
 		throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
 	}

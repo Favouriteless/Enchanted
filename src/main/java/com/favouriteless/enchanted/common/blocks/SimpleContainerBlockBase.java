@@ -21,12 +21,12 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class SimpleContainerBlockBase<T extends InventoryTileEntityBase> extends ContainerBlock {
+public abstract class SimpleContainerBlockBase<T extends LockableLootTileEntity> extends ContainerBlock {
 
 	public SimpleContainerBlockBase(Properties properties) {
 		super(properties);
@@ -45,8 +45,8 @@ public abstract class SimpleContainerBlockBase<T extends InventoryTileEntityBase
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
 		if(!worldIn.isClientSide) {
 			TileEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof InventoryTileEntityBase) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (InventoryTileEntityBase)tileEntity, pos);
+			if(tileEntity instanceof LockableLootTileEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, (LockableLootTileEntity)tileEntity, pos);
 				return ActionResultType.SUCCESS;
 			}
 		}
@@ -57,8 +57,8 @@ public abstract class SimpleContainerBlockBase<T extends InventoryTileEntityBase
 	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
 			TileEntity tileEntity = world.getBlockEntity(blockPos);
-			if (tileEntity instanceof InventoryTileEntityBase) {
-				InventoryHelper.dropContents(world, blockPos, (InventoryTileEntityBase)tileEntity);
+			if (tileEntity instanceof LockableLootTileEntity) {
+				InventoryHelper.dropContents(world, blockPos, (LockableLootTileEntity)tileEntity);
 			}
 			super.onRemove(state, world, blockPos, newState, isMoving);
 		}

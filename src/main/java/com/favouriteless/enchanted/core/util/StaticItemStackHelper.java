@@ -21,9 +21,17 @@
 
 package com.favouriteless.enchanted.core.util;
 
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class StaticItemStackHelper {
+
+	public static final Random RANDOM = new Random();
 
 	public static boolean canStack(ItemStack original, ItemStack other) {
 		if(original.isStackable())
@@ -32,6 +40,35 @@ public class StaticItemStackHelper {
 					return original.getOrCreateTag().equals(other.getOrCreateTag());
 
 		return false;
+	}
+
+	/**
+	 * Similar to InventoryHelper#dropContents but works with copies of the itemstacks instead.
+	 * @param level
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param inventory
+	 */
+	public static void dropContentsNoChange(World level, double x, double y, double z, IInventory inventory) {
+		for(int i = 0; i < inventory.getContainerSize(); ++i) {
+			ItemStack item = inventory.getItem(i).copy();
+
+			double d0 = EntityType.ITEM.getWidth();
+			double d1 = 1.0D - d0;
+			double d2 = d0 / 2.0D;
+			double d3 = Math.floor(x) + RANDOM.nextDouble() * d1 + d2;
+			double d4 = Math.floor(y) + RANDOM.nextDouble() * d1;
+			double d5 = Math.floor(z) + RANDOM.nextDouble() * d1 + d2;
+
+			while(!item.isEmpty()) {
+				ItemEntity itementity = new ItemEntity(level, d3, d4, d5, item.split(RANDOM.nextInt(21) + 10));
+				float f = 0.05F;
+				itementity.setDeltaMovement(RANDOM.nextGaussian() * (double)0.05F, RANDOM.nextGaussian() * (double)0.05F + (double)0.2F, RANDOM.nextGaussian() * (double)0.05F);
+				level.addFreshEntity(itementity);
+			}
+		}
+
 	}
 
 }

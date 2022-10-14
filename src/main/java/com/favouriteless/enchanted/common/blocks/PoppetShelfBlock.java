@@ -22,18 +22,28 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class PoppetShelfBlock extends SimpleContainerBlockBase<PoppetShelfTileEntity> {
+public class PoppetShelfBlock extends ContainerBlock {
 
 	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
@@ -55,5 +65,31 @@ public class PoppetShelfBlock extends SimpleContainerBlockBase<PoppetShelfTileEn
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader level, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
+	}
+
+	@Override
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+		if(!worldIn.isClientSide) {
+			TileEntity tileEntity = worldIn.getBlockEntity(pos);
+			if(tileEntity instanceof PoppetShelfTileEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, (PoppetShelfTileEntity)tileEntity, pos);
+				return ActionResultType.SUCCESS;
+			}
+		}
+		return ActionResultType.SUCCESS;
+	}
+
+	@Override
+	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+		if(state.getBlock() != newState.getBlock()) {
+			TileEntity tileEntity = world.getBlockEntity(blockPos);
+			if(tileEntity instanceof PoppetShelfTileEntity) {
+				PoppetShelfTileEntity shelf = (PoppetShelfTileEntity) tileEntity;
+				if(!world.isClientSide)
+					StaticItemStackHelper.dropContentsNoChange(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), shelf.getInventory());
+				PoppetShelfManager.removeShelf(shelf);
+			}
+			super.onRemove(state, world, blockPos, newState, isMoving);
+		}
 	}
 }

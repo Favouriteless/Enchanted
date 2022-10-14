@@ -19,19 +19,19 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.util;
+package com.favouriteless.enchanted.common.util.poppet;
 
 import com.favouriteless.enchanted.common.items.poppets.AbstractDeathPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
-import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
-import com.favouriteless.enchanted.common.util.PoppetShelfWorldSavedData.PoppetEntry;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Queue;
 import java.util.Random;
@@ -42,10 +42,8 @@ public class PoppetHelper {
 	public static final Random RANDOM = new Random();
 
 	public static boolean isBound(ItemStack item) {
-		if(item.getItem() instanceof AbstractPoppetItem) {
-			if(item.hasTag()) {
-				return item.getTag().hasUUID("boundPlayer");
-			}
+		if(item.hasTag()) {
+			return item.getTag().hasUUID("boundPlayer");
 		}
 		return false;
 	}
@@ -99,15 +97,14 @@ public class PoppetHelper {
 		}
 	}
 
-	public static PoppetResult tryUseDeathPoppet(PlayerEntity player, ItemStack poppetStack, PoppetShelfTileEntity poppetShelf) {
+	public static PoppetResult tryUseDeathPoppet(PlayerEntity player, ItemStack poppetStack, ServerWorld level, String shelfIdentifier) {
 		if(poppetStack.getItem() instanceof AbstractDeathPoppetItem) {
 			AbstractDeathPoppetItem poppet = (AbstractDeathPoppetItem)poppetStack.getItem();
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(poppet.canProtect(player)) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
 						poppet.protect(player);
-						return handleTryDamagePoppet(poppetStack, poppetShelf);
-
+						return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
 					return PoppetResult.FAIL;
 				}
@@ -128,27 +125,25 @@ public class PoppetHelper {
 	public static boolean tryUseDeathPoppetEntryQueue(Queue<PoppetEntry> queue, PlayerEntity player) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
-			ItemStack poppetItem = entry.getItemStack();
-			PoppetShelfTileEntity shelf = (PoppetShelfTileEntity)entry.getLevel().getBlockEntity(entry.getPos());
-			if(handleTryUseDeathPoppet(player, poppetItem, shelf))
+			if(handleTryUseDeathPoppet(player, entry.getItem(), entry.getShelfIdentifier()))
 				return true;
 		}
 		return false;
 	}
 
-	public static boolean handleTryUseDeathPoppet(PlayerEntity player, ItemStack item, PoppetShelfTileEntity shelf) {
+	public static boolean handleTryUseDeathPoppet(PlayerEntity player, ItemStack item, String shelfIdentifier) {
 		ItemStack poppetItemOriginal = item.copy();
-		PoppetResult result = PoppetHelper.tryUseDeathPoppet(player, item, shelf);
+		PoppetResult result = PoppetHelper.tryUseDeathPoppet(player, item, (ServerWorld)player.level, shelfIdentifier);
 		return handlePoppetResult(result, poppetItemOriginal, player);
 	}
 
-	public static PoppetResult tryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, PoppetShelfTileEntity poppetShelf) {
+	public static PoppetResult tryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, ServerWorld level, String shelfIdentifier) {
 		if(poppetStack.getItem() instanceof ItemProtectionPoppetItem) {
 			ItemProtectionPoppetItem poppet = (ItemProtectionPoppetItem)poppetStack.getItem();
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(RANDOM.nextFloat() > poppet.getFailRate()) {
 					poppet.protect(toolStack);
-					return handleTryDamagePoppet(poppetStack, poppetShelf);
+					return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 				}
 				return PoppetResult.FAIL;
 			}
@@ -168,17 +163,15 @@ public class PoppetHelper {
 	public static boolean tryUseItemProtectionPoppetEntryQueue(Queue<PoppetEntry> queue, PlayerEntity player, ItemStack toolStack) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
-			ItemStack poppetItem = entry.getItemStack();
-			PoppetShelfTileEntity shelf = (PoppetShelfTileEntity)entry.getLevel().getBlockEntity(entry.getPos());
-			if(handleTryUseItemProtectionPoppet(player, poppetItem, toolStack, shelf))
+			if(handleTryUseItemProtectionPoppet(player, entry.getItem(), toolStack, entry.getShelfIdentifier()))
 				return true;
 		}
 		return false;
 	}
 
-	public static boolean handleTryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, PoppetShelfTileEntity shelf) {
+	public static boolean handleTryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, String shelfIdentifier) {
 		ItemStack poppetItemOriginal = poppetStack.copy();
-		PoppetResult result = PoppetHelper.tryUseItemProtectionPoppet(player, poppetStack, toolStack, shelf);
+		PoppetResult result = PoppetHelper.tryUseItemProtectionPoppet(player, poppetStack, toolStack, (ServerWorld)player.level, shelfIdentifier);
 		return handlePoppetResult(result, poppetItemOriginal, player);
 	}
 
@@ -188,42 +181,20 @@ public class PoppetHelper {
 	 * @param item
 	 * @return True if poppet is destroyed
 	 */
-	public static boolean tryDamagePoppet(ItemStack item) {
+	public static boolean tryDamagePoppet(ItemStack item, ServerWorld level, String shelfIdentifier) {
 		item.setDamageValue(item.getDamageValue()+1);
 		if(item.getDamageValue() >= item.getMaxDamage()) {
 			item.shrink(1);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Attempts to damage poppet inside poppet shelf
-	 * @param item
-	 * @return True if poppet is destroyed
-	 */
-	public static boolean tryDamagePoppet(ItemStack item, PoppetShelfTileEntity shelf) {
-		int slot = -1;
-		for(int i = 0; i < shelf.getContainerSize(); i++) {
-			if(shelf.getItem(i).equals(item)) {
-				slot = i;
-				break;
+			if(shelfIdentifier != null && item.getCount() <= 0) {
+				PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(level);
+				PoppetShelfInventory inventory = data.SHELF_STORAGE.get(shelfIdentifier);
+				for(int i = 0; i < inventory.getContainerSize(); i++)
+					if(inventory.get(i).equals(item))
+						inventory.set(i, ItemStack.EMPTY);
 			}
-		}
-
-		item.setDamageValue(item.getDamageValue()+1);
-		if(item.getDamageValue() >= item.getMaxDamage()) {
-			shelf.removeItem(slot, 1);
 			return true;
 		}
 		return false;
-	}
-
-	public static PoppetResult handleTryDamagePoppet(ItemStack poppetStack, PoppetShelfTileEntity shelf) {
-		if(shelf == null)
-			return tryDamagePoppet(poppetStack) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
-		else
-			return tryDamagePoppet(poppetStack, shelf) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 	}
 
 	private static boolean handlePoppetResult(PoppetResult result, ItemStack poppetItemOriginal, PlayerEntity player) {

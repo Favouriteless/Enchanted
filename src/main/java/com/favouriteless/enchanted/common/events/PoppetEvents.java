@@ -28,9 +28,9 @@ import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.items.poppets.AbstractDeathPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
-import com.favouriteless.enchanted.common.util.PoppetHelper;
-import com.favouriteless.enchanted.common.util.PoppetShelfManager;
-import com.favouriteless.enchanted.common.util.PoppetShelfWorldSavedData.PoppetEntry;
+import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -67,8 +67,8 @@ public class PoppetEvents {
 				if(!cancel) {
 					Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 					for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-						if(entry.getItem() instanceof AbstractDeathPoppetItem)
-							if(((AbstractDeathPoppetItem)entry.getItem()).protectsAgainst(source))
+						if(entry.getItem().getItem() instanceof AbstractDeathPoppetItem)
+							if(((AbstractDeathPoppetItem)entry.getItem().getItem()).protectsAgainst(source))
 								poppetEntryQueue.add(entry);
 					cancel = PoppetHelper.tryUseDeathPoppetEntryQueue(poppetEntryQueue, player);
 				}
@@ -94,7 +94,7 @@ public class PoppetEvents {
 			if(!canceled) {
 				Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 				for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-					if(EnchantedItems.isToolPoppet(entry.getItem()))
+					if(EnchantedItems.isToolPoppet(entry.getItem().getItem()))
 						poppetEntryQueue.add(entry);
 				canceled = PoppetHelper.tryUseItemProtectionPoppetEntryQueue(poppetEntryQueue, player, tool);
 			}
@@ -120,9 +120,8 @@ public class PoppetEvents {
 				if(!canceled) {
 					Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 					for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-						if(entry.getItem() instanceof ItemProtectionPoppetItem)
-							if(EnchantedItems.isArmourPoppet(armourStack.getItem()))
-								poppetEntryQueue.add(entry);
+						if(EnchantedItems.isArmourPoppet(armourStack.getItem().getItem()))
+							poppetEntryQueue.add(entry);
 					canceled = PoppetHelper.tryUseItemProtectionPoppetEntryQueue(poppetEntryQueue, player, armourStack);
 				}
 
@@ -144,7 +143,7 @@ public class PoppetEvents {
 	private static class PoppetEntryComparator implements Comparator<PoppetEntry> {
 		@Override
 		public int compare(PoppetEntry o1, PoppetEntry o2) {
-			return Math.round(Math.signum(o1.getItem().failRate - o2.getItem().failRate));
+			return Math.round(Math.signum(((AbstractPoppetItem)o1.getItem().getItem()).failRate - ((AbstractPoppetItem)o2.getItem().getItem()).failRate));
 		}
 	}
 

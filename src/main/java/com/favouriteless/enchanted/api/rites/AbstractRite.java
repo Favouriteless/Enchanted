@@ -23,9 +23,9 @@ package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.util.CirclePart;
-import com.favouriteless.enchanted.common.util.RiteManager;
-import com.favouriteless.enchanted.common.util.RiteType;
+import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.util.rite.RiteManager;
+import com.favouriteless.enchanted.common.util.rite.RiteType;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
 import net.minecraft.block.Block;

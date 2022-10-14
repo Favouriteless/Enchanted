@@ -53,7 +53,7 @@ public class DistilleryContainer extends ProcessingContainerBase {
     }
 
     public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data, DistilleryTileEntity.class), new IntArray(3));
+        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, DistilleryTileEntity.class), new IntArray(3));
     }
 
     @Override

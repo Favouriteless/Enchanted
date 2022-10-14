@@ -26,7 +26,7 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.util.RiteManager;
+import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;

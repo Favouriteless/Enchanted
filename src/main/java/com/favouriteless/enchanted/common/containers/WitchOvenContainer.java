@@ -54,7 +54,7 @@ public class WitchOvenContainer extends ProcessingContainerBase {
     }
 
     public WitchOvenContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data, WitchOvenTileEntity.class), new IntArray(4));
+        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, WitchOvenTileEntity.class), new IntArray(4));
     }
 
     @Override

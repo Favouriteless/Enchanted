@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.client.render.tileentity;
 
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -30,8 +31,6 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -52,15 +51,15 @@ public class PoppetShelfRenderer extends TileEntityRenderer<PoppetShelfTileEntit
 
     @Override
     public void render(PoppetShelfTileEntity blockEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        NonNullList<ItemStack> items = blockEntity.getItems();
-        for(int i = 0; i < items.size(); i++) {
+        PoppetShelfInventory inventory = blockEntity.getInventory();
+        for(int i = 0; i < inventory.size(); i++) {
             ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
             matrixStack.pushPose();
             matrixStack.translate(ITEM_POS[i].x(), ITEM_POS[i].y(), ITEM_POS[i].z());
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(90));
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90 * i));
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            renderer.renderStatic(items.get(i), TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, buffer);
+            renderer.renderStatic(inventory.get(i), TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, buffer);
             matrixStack.popPose();
         }
     }

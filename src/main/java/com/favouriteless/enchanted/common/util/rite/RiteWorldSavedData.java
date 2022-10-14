@@ -19,7 +19,7 @@
  *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.favouriteless.enchanted.common.util;
+package com.favouriteless.enchanted.common.util.rite;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;

@@ -191,6 +191,7 @@ public class PoppetHelper {
 				for(int i = 0; i < inventory.getContainerSize(); i++)
 					if(inventory.get(i).equals(item))
 						inventory.set(i, ItemStack.EMPTY);
+				data.updateShelf(shelfIdentifier);
 			}
 			return true;
 		}

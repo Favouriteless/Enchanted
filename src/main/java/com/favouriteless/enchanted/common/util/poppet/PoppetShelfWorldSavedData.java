@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.util.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -84,6 +85,14 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 		}
 		Enchanted.LOGGER.info("Saved poppet shelves successfully");
 		return nbt;
+	}
+
+	public void updateShelf(String identifier) {
+		World level = getLevelFromShelfIdentifier(identifier);
+		BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
+		TileEntity tileEntity = level.getBlockEntity(pos);
+		if(tileEntity instanceof PoppetShelfTileEntity)
+			((PoppetShelfTileEntity)tileEntity).updateBlock();
 	}
 
 	public void setupPoppetUUIDs(String identifier, PoppetShelfInventory inventory) {

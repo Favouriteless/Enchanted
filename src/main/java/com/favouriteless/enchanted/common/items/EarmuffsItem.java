@@ -36,14 +36,14 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.world.item.Item.Properties;
+import java.util.function.Consumer;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class EarmuffsItem extends ArmorItem {
@@ -60,19 +60,25 @@ public class EarmuffsItem extends ArmorItem {
 
 		if(player != null) {
 			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				AbstractSoundInstance sound = (AbstractSoundInstance)event.getResultSound();
+				AbstractSoundInstance sound = (AbstractSoundInstance)event.getSound();
 				sound.volume *= 0.03F;
-				event.setResultSound(sound);
+				event.setSound(sound);
 			}
 		}
 	}
 
-	@Nullable
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-		return (A)new EarmuffsModel();
+	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+		consumer.accept(new IItemRenderProperties() {
+			@Nullable
+			@Override
+			public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+				return new EarmuffsModel();
+			}
+		});
 	}
+
+
 
 	@Nullable
 	@Override

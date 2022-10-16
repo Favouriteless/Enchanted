@@ -23,8 +23,8 @@ package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
-import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
+import com.favouriteless.enchanted.common.tileentity.InventoryBlockEntityBase;
+import com.favouriteless.enchanted.common.tileentity.SpinningWheelBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -36,7 +36,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 
 public class SpinningWheelContainer extends ProcessingContainerBase {
 
-	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final InventoryTileEntityBase tileEntity, final ContainerData data) {
+	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
 		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 
 		// Container Inventory
@@ -49,7 +49,7 @@ public class SpinningWheelContainer extends ProcessingContainerBase {
 	}
 
 	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new SimpleContainerData(2));
+		this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
 	}
 
 	@Override

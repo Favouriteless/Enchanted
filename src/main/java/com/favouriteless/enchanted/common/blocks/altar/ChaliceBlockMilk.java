@@ -35,7 +35,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class ChaliceBlockMilk extends ChaliceBlock{
+public class ChaliceBlockMilk extends ChaliceBlock {
 
     public ChaliceBlockMilk(Properties properties) {
         super(properties, false);

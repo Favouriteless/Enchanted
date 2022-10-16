@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.core.util.reloadlisteners.altar;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity.AltarUpgrade;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity.AltarUpgrade;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

@@ -47,6 +47,6 @@ public class ConsumableBrewItem extends Item {
 	}
 
 	public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
-		return ItemUtils.useDrink(pLevel, pPlayer, pHand);
+		return ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand);
 	}
 }

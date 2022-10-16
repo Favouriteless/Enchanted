@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
+import com.favouriteless.enchanted.common.tileentity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
@@ -40,7 +40,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelRecipe implements Recipe<SpinningWheelTileEntity> {
+public class SpinningWheelRecipe implements Recipe<SpinningWheelBlockEntity> {
 
     private final RecipeType<?> type;
     private final ResourceLocation id;
@@ -58,7 +58,7 @@ public class SpinningWheelRecipe implements Recipe<SpinningWheelTileEntity> {
     }
 
     @Override
-    public boolean matches(SpinningWheelTileEntity inv, Level worldIn) {
+    public boolean matches(SpinningWheelBlockEntity inv, Level worldIn) {
         ItemStack mainIn = inv.getItem(0);
         if(!mainIn.sameItem(itemsIn.get(0)) || mainIn.getCount() < itemsIn.get(0).getCount()) // If "main" input does not match
             return false;
@@ -79,7 +79,7 @@ public class SpinningWheelRecipe implements Recipe<SpinningWheelTileEntity> {
     }
 
     @Override
-    public ItemStack assemble(SpinningWheelTileEntity inv) {
+    public ItemStack assemble(SpinningWheelBlockEntity inv) {
         ItemStack stack = inv.getItem(inv.getContainerSize()-1);
 
         if(StaticItemStackHelper.canStack(stack, result)) {

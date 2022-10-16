@@ -22,6 +22,7 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.Item;
@@ -31,18 +32,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class MutandisItem extends Item {
 
     private static final Random RANDOM = new Random();
-    private final IOptionalNamedTag<Block> validBlocks;
+    private final TagKey<Block> validBlocks;
 
-    public MutandisItem(IOptionalNamedTag<Block> validBlocks, Properties properties) {
+    public MutandisItem(TagKey<Block> validBlocks, Properties properties) {
         super(properties);
         this.validBlocks = validBlocks;
     }
@@ -50,15 +49,14 @@ public class MutandisItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-
-        if (!state.getBlock().is(EnchantedTags.MUTANDIS_BLACKLIST) && state.getBlock().is(validBlocks)) {
+        if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(state.getBlock()) && ForgeRegistries.BLOCKS.tags().getTag(validBlocks).contains(state.getBlock())) {
             Level world = context.getLevel();
             if(!world.isClientSide) {
 
                 BlockState newState = null;
                 while(newState == null) {
-                    Block newBlock = validBlocks.getRandomElement(RANDOM);
-                    if(!newBlock.is(EnchantedTags.MUTANDIS_BLACKLIST)) {
+                    Block newBlock = ForgeRegistries.BLOCKS.tags().getTag(validBlocks).getRandomElement(RANDOM).get();
+                    if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(newState.getBlock())) {
                         newState = newBlock.defaultBlockState();
                     }
                 }

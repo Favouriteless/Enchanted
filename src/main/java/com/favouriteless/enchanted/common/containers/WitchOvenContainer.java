@@ -25,9 +25,9 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
-import com.favouriteless.enchanted.common.tileentity.ProcessingTileEntityBase;
-import com.favouriteless.enchanted.common.tileentity.WitchOvenTileEntity;
+import com.favouriteless.enchanted.common.tileentity.InventoryBlockEntityBase;
+import com.favouriteless.enchanted.common.tileentity.ProcessingBlockEntityBase;
+import com.favouriteless.enchanted.common.tileentity.WitchOvenBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.SimpleContainer;
@@ -40,7 +40,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 
 public class WitchOvenContainer extends ProcessingContainerBase {
 
-    public WitchOvenContainer(final int windowId, final Inventory playerInventory, final InventoryTileEntityBase tileEntity, final ContainerData data) {
+    public WitchOvenContainer(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
         super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
 
         // Container Inventory
@@ -54,7 +54,7 @@ public class WitchOvenContainer extends ProcessingContainerBase {
     }
 
     public WitchOvenContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, WitchOvenTileEntity.class), new SimpleContainerData(4));
+        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class WitchOvenContainer extends ProcessingContainerBase {
                     if (!this.moveItemStackTo(slotItem, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ProcessingTileEntityBase.isFuel(slotItem)) { // Item is fuel
+                } else if (ProcessingBlockEntityBase.isFuel(slotItem)) { // Item is fuel
                     if (!this.moveItemStackTo(slotItem, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }

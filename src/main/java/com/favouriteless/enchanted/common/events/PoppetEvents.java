@@ -31,6 +31,7 @@ import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -41,6 +42,7 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -51,14 +53,13 @@ public class PoppetEvents {
 
 	@SubscribeEvent
 	public static void onEntityHurt(LivingHurtEvent event) {
-		if(event.getEntity() instanceof Player) {
-			Player player = (Player)event.getEntity();
+		if(event.getEntity() instanceof Player player) {
 			if(event.getAmount() >= player.getHealth()) { // Player would be killed by damage
 
 				DamageSource source = event.getSource();
 
 				Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
-				for(ItemStack itemStack : player.inventory.items)
+				for(ItemStack itemStack : player.getInventory().items)
 					if(itemStack.getItem() instanceof AbstractDeathPoppetItem)
 						if(((AbstractDeathPoppetItem)itemStack.getItem()).protectsAgainst(source))
 							poppetQueue.add(itemStack);
@@ -82,11 +83,12 @@ public class PoppetEvents {
 	@SubscribeEvent
 	public static void onItemBreak(PlayerDestroyItemEvent event) {
 		ItemStack tool = event.getOriginal();
-		if(!tool.getItem().is(EnchantedTags.TOOL_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !tool.getItem().is(EnchantedTags.TOOL_POPPET_WHITELIST))) {
+		if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.TOOL_POPPET_BLACKLIST).contains(tool.getItem())
+				&& !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.TOOL_POPPET_WHITELIST).contains(tool.getItem()))) {
 			Player player = event.getPlayer();
 
 			Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
-			for(ItemStack itemStack : player.inventory.items)
+			for(ItemStack itemStack : player.getInventory().items)
 				if(EnchantedItems.isToolPoppet(itemStack.getItem()))
 					poppetQueue.add(itemStack);
 
@@ -105,13 +107,13 @@ public class PoppetEvents {
 	}
 
 	public static void onLivingEntityBreak(LivingEntity entity, EquipmentSlot slot) {
-		if(entity instanceof Player) {
-			Player player = (Player)entity;
+		if(entity instanceof Player player) {
 			ItemStack armourStack = entity.getItemBySlot(slot).copy();
-			if(!armourStack.getItem().is(EnchantedTags.ARMOUR_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !armourStack.getItem().is(EnchantedTags.ARMOUR_POPPET_WHITELIST))) {
+			if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.ARMOUR_POPPET_BLACKLIST).contains(armourStack.getItem())
+					&& !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.ARMOUR_POPPET_WHITELIST).contains(armourStack.getItem()))) {
 
 				Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
-				for(ItemStack itemStack : player.inventory.items)
+				for(ItemStack itemStack : player.getInventory().items)
 					if(itemStack.getItem() instanceof ItemProtectionPoppetItem)
 						if(EnchantedItems.isArmourPoppet(itemStack.getItem()))
 							poppetQueue.add(itemStack);
@@ -120,7 +122,7 @@ public class PoppetEvents {
 				if(!canceled) {
 					Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 					for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-						if(EnchantedItems.isArmourPoppet(armourStack.getItem().getItem()))
+						if(EnchantedItems.isArmourPoppet(armourStack.getItem()))
 							poppetEntryQueue.add(entry);
 					canceled = PoppetHelper.tryUseItemProtectionPoppetEntryQueue(poppetEntryQueue, player, armourStack);
 				}

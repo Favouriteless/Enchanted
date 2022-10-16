@@ -24,34 +24,26 @@ package com.favouriteless.enchanted.common.blocks.altar;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.util.*;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.level.Level;
-
-import java.util.Random;
-
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.Random;
 
 public class ChaliceBlock extends Block {
 
@@ -100,7 +92,7 @@ public class ChaliceBlock extends Block {
             double x = pos.getX() + 0.4D + random.nextDouble() * 0.2D;
             double y = pos.getY() + 0.5D;
             double z = pos.getZ() + 0.4D + random.nextDouble() * 0.2D;
-            world.addParticle(new DustParticleOptions(3.6F, 0.2F, 0.0F, 0.6F), x, y, z, 0.0D, 0.0D, 0.0D);
+            world.addParticle(new DustParticleOptions(new Vector3f(3.6F, 0.2F, 0.0F), 0.6F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
 }

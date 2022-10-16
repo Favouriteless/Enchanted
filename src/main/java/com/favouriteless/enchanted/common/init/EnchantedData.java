@@ -24,9 +24,9 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarPowerProviderManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarUpgradeManager;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.tags.BlockTags;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EnchantedData {
 
     public static final AltarPowerProviderManager<Block> ALTAR_POWER_BLOCKS = new AltarPowerProviderManager<>("altar/blocks", ForgeRegistries.BLOCKS::getValue);
-    public static final AltarPowerProviderManager<IOptionalNamedTag<Block>> ALTAR_POWER_TAGS = new AltarPowerProviderManager<>("altar/tags", BlockTags::createOptional);
+    public static final AltarPowerProviderManager<TagKey<Block>> ALTAR_POWER_TAGS = new AltarPowerProviderManager<>("altar/tags", BlockTags::create);
     public static final AltarUpgradeManager ALTAR_UPGRADES = new AltarUpgradeManager("altar/upgrades");
 
     @SubscribeEvent

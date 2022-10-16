@@ -23,10 +23,10 @@ package com.favouriteless.enchanted.common.blocks.chalk;
 
 import com.favouriteless.enchanted.common.init.EnchantedMaterials;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.core.Direction;
-import net.minecraft.block.*;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,22 +36,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public abstract class AbstractChalkBlock extends Block {
+public abstract class AbstractChalkBlock extends Block implements EntityBlock {
 
-    // BASE CLASS FOR CHALK STUFF, DONT CHANGE
     public AbstractChalkBlock() {
-        super(BlockBehaviour.Properties.of(EnchantedMaterials.CHALK)
-                .noCollission()
-                .strength(0.5f, 0f)
-                .sound(SoundType.STONE)
-        );
+        super(Properties.of(EnchantedMaterials.CHALK).noCollission().strength(0.5f, 0f).sound(SoundType.STONE));
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
-    {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return Shapes.create(new AABB(0.0, 0.0, 0.0, 1.0, 0.0625, 1.0));
     }
 

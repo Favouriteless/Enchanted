@@ -21,16 +21,18 @@
 
 package com.favouriteless.enchanted.common.blocks.altar;
 
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
-import net.minecraft.block.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -39,17 +41,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
 
-import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 public class AltarBlock extends BaseEntityBlock {
 
@@ -69,13 +70,13 @@ public class AltarBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean pIsMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if(!world.isClientSide()) {
             if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
             }
         }
-        super.onRemove(state, world, pos, newState, pIsMoving);
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class AltarBlock extends BaseEntityBlock {
 
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
                     BlockEntity tileEntity = world.getBlockEntity(cornerPos);
-                    if (tileEntity instanceof AltarTileEntity) {
+                    if (tileEntity instanceof AltarBlockEntity) {
                         NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)tileEntity, tileEntity.getBlockPos());
                     }
                 }
@@ -101,39 +102,24 @@ public class AltarBlock extends BaseEntityBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockGetter blockReader) {
-        return new AltarTileEntity();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AltarBlockEntity(pos, state);
     }
 
-    @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if(fromPos == pos.above() && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-            BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
-
-            BlockEntity tileEntity = world.getBlockEntity(cornerPos);
-            if(tileEntity instanceof AltarTileEntity) {
-                AltarTileEntity altar = (AltarTileEntity)tileEntity;
-
-//                if(world.getBlockState(fromPos).getBlock()) {
-//
-//                }
-            }
-        }
-        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-    }
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return state.getValue(FORMED) == AltarPartIndex.P000;
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return type == EnchantedBlockEntityTypes.ALTAR.get() ? AltarBlockEntity::tick : null;
     }
 }

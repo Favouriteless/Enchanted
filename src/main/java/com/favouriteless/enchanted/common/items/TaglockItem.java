@@ -26,7 +26,7 @@ import com.favouriteless.enchanted.api.capabilities.bed.IBedPlayerCapability;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
+import com.favouriteless.enchanted.common.tileentity.BloodPoppyBlockEntity;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
@@ -50,11 +50,12 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 
+import java.util.Random;
 import java.util.UUID;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class TaglockItem extends Item {
+
+    public static final Random RANDOM = new Random();
 
     public TaglockItem(Properties properties) {
         super(properties);
@@ -70,7 +71,7 @@ public class TaglockItem extends Item {
             if(!facingAway(player, (Player) target)) {
                 failChance += 4;
             }
-            if (random.nextInt(10) >= failChance) {
+            if (RANDOM.nextInt(10) >= failChance) {
                 if(!player.level.isClientSide) {
                     player.displayClientMessage(new TextComponent("Taglock attempt failed").withStyle(ChatFormatting.RED), false);
                     ((ServerPlayer) target).displayClientMessage(new TextComponent(player.getDisplayName() + " has tried to taglock you").withStyle(ChatFormatting.RED), false);
@@ -106,12 +107,12 @@ public class TaglockItem extends Item {
             }
             return InteractionResult.SUCCESS;
         }
-        else if(state.getBlock().is(EnchantedBlocks.BLOOD_POPPY.get())) {
+        else if(state.getBlock() == EnchantedBlocks.BLOOD_POPPY.get()) {
             if(!world.isClientSide) {
                 if (state.getValue(BloodPoppyBlock.FILLED)) {
                     BlockEntity tileEntity = world.getBlockEntity(context.getClickedPos());
                     if (tileEntity != null) {
-                        BloodPoppyTileEntity poppyTileEntity = (BloodPoppyTileEntity)tileEntity;
+                        BloodPoppyBlockEntity poppyTileEntity = (BloodPoppyBlockEntity)tileEntity;
                         fillTaglock(context.getPlayer(), context.getItemInHand(), poppyTileEntity.getUUID(), poppyTileEntity.getName());
                         BloodPoppyBlock.reset(world, context.getClickedPos());
                     }
@@ -140,7 +141,7 @@ public class TaglockItem extends Item {
             nbt.putString("entityName", name);
             newStack.setTag(nbt);
 
-            if (!player.inventory.add(newStack)) {
+            if (!player.getInventory().add(newStack)) {
                 ItemEntity itemEntity = new ItemEntity(player.level, player.getX(), player.getY(0.5), player.getZ(), newStack);
                 itemEntity.setNoPickUpDelay();
                 itemEntity.setOwner(player.getUUID());

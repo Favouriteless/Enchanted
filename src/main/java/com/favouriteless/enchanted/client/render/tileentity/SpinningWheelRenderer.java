@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.client.render.tileentity;
 
 import com.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
-import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
+import com.favouriteless.enchanted.common.tileentity.SpinningWheelBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SpinningWheelRenderer extends BlockEntityRenderer<SpinningWheelTileEntity> {
+public class SpinningWheelRenderer extends BlockEntityRenderer<SpinningWheelBlockEntity> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation("enchanted:textures/block/spinning_wheel.png");
 
@@ -104,7 +104,7 @@ public class SpinningWheelRenderer extends BlockEntityRenderer<SpinningWheelTile
     }
 
     @Override
-    public void render(SpinningWheelTileEntity te, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void render(SpinningWheelBlockEntity te, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         matrixStack.pushPose();
         float rotationYDegrees = (te.getLevel() != null ? te.getBlockState().getValue(SpinningWheelBlock.FACING).getOpposite().toYRot() : 0);
 

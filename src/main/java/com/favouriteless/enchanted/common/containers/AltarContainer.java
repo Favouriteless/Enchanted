@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,11 +35,11 @@ import net.minecraft.world.inventory.SimpleContainerData;
 
 public class AltarContainer extends AbstractContainerMenu {
 
-    public final AltarTileEntity tileEntity;
+    public final AltarBlockEntity tileEntity;
     private final ContainerLevelAccess canInteractWithCallable;
     private final ContainerData data;
 
-    public AltarContainer(final int windowId, final AltarTileEntity tileEntity, ContainerData data) {
+    public AltarContainer(final int windowId, final AltarBlockEntity tileEntity, ContainerData data) {
         super(EnchantedContainers.ALTAR.get(), windowId);
         this.tileEntity = tileEntity;
         this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
@@ -51,11 +51,11 @@ public class AltarContainer extends AbstractContainerMenu {
         this(windowId, getTileEntity(playerInventory, data), new SimpleContainerData(3));
     }
 
-    private static AltarTileEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+    private static AltarBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
         final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
-        if(tileEntity instanceof AltarTileEntity) {
-            return (AltarTileEntity)tileEntity;
+        if(tileEntity instanceof AltarBlockEntity) {
+            return (AltarBlockEntity)tileEntity;
         }
         throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
     }

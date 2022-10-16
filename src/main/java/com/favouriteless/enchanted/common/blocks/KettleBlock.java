@@ -21,21 +21,23 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.tileentity.KettleTileEntity;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.tileentity.CauldronBlockEntity;
+import com.favouriteless.enchanted.common.tileentity.KettleBlockEntity;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.block.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -44,8 +46,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidAttributes;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -56,8 +56,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class KettleBlock extends Block implements EntityBlock {
 
@@ -74,8 +74,8 @@ public class KettleBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
-        if(te instanceof KettleTileEntity) {
-            KettleTileEntity kettle = (KettleTileEntity)te;
+        if(te instanceof KettleBlockEntity) {
+            KettleBlockEntity kettle = (KettleBlockEntity)te;
 
             if(stack.getItem() == Items.GLASS_BOTTLE && kettle.isComplete) {
                 stack.shrink(1);
@@ -111,16 +111,16 @@ public class KettleBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockGetter blockReader) {
-        return new KettleTileEntity();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new KettleBlockEntity(pos, state);
     }
 
     @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof ItemEntity) {
             BlockEntity tileEntity = world.getBlockEntity(pos);
-            if(tileEntity instanceof KettleTileEntity) {
-                KettleTileEntity kettle = (KettleTileEntity)tileEntity;
+            if(tileEntity instanceof KettleBlockEntity) {
+                KettleBlockEntity kettle = (KettleBlockEntity)tileEntity;
                 if(!kettle.isFailed && kettle.isFull() && kettle.isHot()) {
                     kettle.addItem((ItemEntity)entity);
                 }
@@ -175,5 +175,10 @@ public class KettleBlock extends Block implements EntityBlock {
         return defaultBlockState().setValue(FACING, facing).setValue(TYPE, type);
     }
 
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return type == EnchantedBlockEntityTypes.KETTLE.get() ? CauldronBlockEntity::tick : null;
+    }
 }
 

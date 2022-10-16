@@ -21,18 +21,18 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 
-public abstract class ProcessingTileEntityBase extends InventoryTileEntityBase implements TickableBlockEntity {
+public abstract class ProcessingBlockEntityBase extends InventoryBlockEntityBase {
 
-    public ProcessingTileEntityBase(BlockEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
-        super(typeIn, inventoryContents);
+    public ProcessingBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, NonNullList<ItemStack> inventoryContents) {
+        super(type, pos, state, inventoryContents);
     }
 
     public abstract ContainerData getData();

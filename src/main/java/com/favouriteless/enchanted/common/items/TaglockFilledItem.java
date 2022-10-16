@@ -38,8 +38,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class TaglockFilledItem extends Item {
 
     public TaglockFilledItem(Properties properties) {
@@ -57,18 +55,6 @@ public class TaglockFilledItem extends Item {
     @Override
     public Rarity getRarity(ItemStack pStack) {
         return Rarity.EPIC;
-    }
-
-    @Override
-    public boolean verifyTagAfterLoad(CompoundTag nbt) {
-        if (nbt.contains("entity") && nbt.contains("entityName")) {
-            UUID id = NbtUtils.loadUUID(nbt.get("entity"));
-            nbt.putUUID("entity", id);
-            String entityName = nbt.getString("entityName");
-            nbt.putString("entityName", entityName);
-            return true;
-        }
-        return false;
     }
 
     public UUID getUUID(ItemStack stack) {

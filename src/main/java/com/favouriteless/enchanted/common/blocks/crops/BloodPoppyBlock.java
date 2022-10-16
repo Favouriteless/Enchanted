@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
+import com.favouriteless.enchanted.common.tileentity.BloodPoppyBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.EntityBlock;
@@ -35,10 +35,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import org.jetbrains.annotations.Nullable;
 
 public class BloodPoppyBlock extends Block implements EntityBlock {
 
@@ -59,8 +56,7 @@ public class BloodPoppyBlock extends Block implements EntityBlock {
         if(!world.isClientSide && entity instanceof LivingEntity) {
             if(!state.getValue(FILLED)) {
                 BlockEntity tileEntity = world.getBlockEntity(pos);
-                if(tileEntity instanceof BloodPoppyTileEntity) {
-                    BloodPoppyTileEntity bloodPoppyTileEntity = (BloodPoppyTileEntity)tileEntity;
+                if(tileEntity instanceof BloodPoppyBlockEntity bloodPoppyTileEntity) {
                     bloodPoppyTileEntity.setUUID(entity.getUUID());
                     bloodPoppyTileEntity.setName(entity.getDisplayName().getString());
                     world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
@@ -76,19 +72,20 @@ public class BloodPoppyBlock extends Block implements EntityBlock {
         return Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
     }
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockGetter blockReader) {
-        return new BloodPoppyTileEntity();
-    }
-
     public static void reset(Level world, BlockPos pos) {
         if(!world.isClientSide) {
-            BloodPoppyTileEntity tileEntity = (BloodPoppyTileEntity)world.getBlockEntity(pos);
+            BloodPoppyBlockEntity tileEntity = (BloodPoppyBlockEntity)world.getBlockEntity(pos);
             BlockState state = world.getBlockState(pos);
 
             world.setBlockAndUpdate(pos, state.setValue(FILLED, false));
             tileEntity.reset();
         }
     }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BloodPoppyBlockEntity(pos, state);
+    }
+
 }

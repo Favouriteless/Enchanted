@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.InventoryBlockEntityBase;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.MenuType;
@@ -37,7 +37,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
 
     protected final ContainerData data;
 
-    protected ProcessingContainerBase(@Nullable MenuType<?> type, int id, InventoryTileEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
+    protected ProcessingContainerBase(@Nullable MenuType<?> type, int id, InventoryBlockEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
         super(type, id, tileEntity, canInteractWithCallable, block);
         this.data = data;
 

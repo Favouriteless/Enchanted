@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.api.altar;
 
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
@@ -33,13 +33,13 @@ import java.util.List;
 
 public class AltarPowerHelper {
 
-	public static AltarTileEntity tryGetAltar(Level world, List<BlockPos> potentialAltars) {
+	public static AltarBlockEntity tryGetAltar(Level world, List<BlockPos> potentialAltars) {
 		while(!potentialAltars.isEmpty()) {
 			if(world != null) {
 				BlockPos altarPos = potentialAltars.get(0);
 				BlockEntity te = world.getBlockEntity(altarPos);
-				if(te instanceof AltarTileEntity) {
-					return (AltarTileEntity) te;
+				if(te instanceof AltarBlockEntity) {
+					return (AltarBlockEntity) te;
 				}
 				else {
 					potentialAltars.remove(altarPos);
@@ -79,8 +79,8 @@ public class AltarPowerHelper {
 	public static void addAltarByClosest(List<BlockPos> potentialAltars, Level world, BlockPos pos, BlockPos altarPos) {
 		if(world != null) {
 			BlockEntity te = world.getBlockEntity(altarPos);
-			if(te instanceof AltarTileEntity) {
-				AltarTileEntity altar = (AltarTileEntity) te;
+			if(te instanceof AltarBlockEntity) {
+				AltarBlockEntity altar = (AltarBlockEntity) te;
 				if(potentialAltars.isEmpty()) {
 					potentialAltars.add(altarPos);
 				}
@@ -89,8 +89,8 @@ public class AltarPowerHelper {
 
 						BlockEntity te1 = world.getBlockEntity(potentialAltars.get(i));
 
-						if(te1 instanceof AltarTileEntity) {
-							AltarTileEntity currentAltar = (AltarTileEntity) te1;
+						if(te1 instanceof AltarBlockEntity) {
+							AltarBlockEntity currentAltar = (AltarBlockEntity) te1;
 
 							if(altar.distanceTo(pos) < currentAltar.distanceTo(pos)) {
 								potentialAltars.add(i, altarPos);

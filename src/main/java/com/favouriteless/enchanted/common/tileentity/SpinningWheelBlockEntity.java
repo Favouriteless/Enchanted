@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -32,35 +32,34 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements IAltarPowerConsumer {
+public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer {
 
 	private SpinningWheelRecipe currentRecipe;
 	private final List<BlockPos> potentialAltars = new ArrayList<>();
 	private boolean isSpinning = false;
 
-	public final int COOK_TIME_TOTAL = 400;
+	public static final int COOK_TIME_TOTAL = 400;
 	private int cookTime = 0;
 	public ContainerData data = new ContainerData() {
 		public int get(int index) {
-			switch(index) {
-				case 0:
-					return cookTime;
-				case 1:
-					return COOK_TIME_TOTAL;
-				default:
-					return 0;
-			}
+			return switch(index) {
+				case 0 -> cookTime;
+				case 1 -> COOK_TIME_TOTAL;
+				default -> 0;
+			};
 		}
 
 		public void set(int index, int value) {
@@ -76,56 +75,56 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 
 	};
 
-	public SpinningWheelTileEntity(BlockEntityType<?> typeIn) {
-		super(typeIn, NonNullList.withSize(4, ItemStack.EMPTY));
-	}
-
-	public SpinningWheelTileEntity() {
-		this(EnchantedTileEntityTypes.SPINNING_WHEEL.get());
+	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
+		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state, NonNullList.withSize(4, ItemStack.EMPTY));
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
 		AltarPowerHelper.savePosTag(potentialAltars, nbt);
 		nbt.putInt("cookTime", cookTime);
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
 		cookTime = nbt.getInt("cookTime");
 	}
 
-	@Override
-	public void tick() {
-		if (level != null) {
-			if(!level.isClientSide) {
-				matchRecipe();
-				AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+		if(t instanceof SpinningWheelBlockEntity blockEntity) {
 
-				if(canSpin(currentRecipe) && currentRecipe.getPower() > 0 && altar != null) {
-					double powerThisTick = (double) currentRecipe.getPower() / COOK_TIME_TOTAL;
-					if(altar.currentPower > powerThisTick) {
-						altar.currentPower -= powerThisTick;
-						cookTime++;
+			if(level != null) {
+				if(!level.isClientSide) {
+					blockEntity.matchRecipe();
+					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.potentialAltars);
 
-						if(cookTime == COOK_TIME_TOTAL) {
-							cookTime = 0;
-							spin();
+					if(blockEntity.canSpin(blockEntity.currentRecipe) && blockEntity.currentRecipe.getPower() > 0 && altar != null) {
+						double powerThisTick = (double)blockEntity.currentRecipe.getPower() / COOK_TIME_TOTAL;
+						if(altar.currentPower > powerThisTick) {
+							altar.currentPower -= powerThisTick;
+							blockEntity.cookTime++;
+
+							if(blockEntity.cookTime == COOK_TIME_TOTAL) {
+								blockEntity.cookTime = 0;
+								blockEntity.spin();
+							}
 						}
 					}
+					else {
+						blockEntity.cookTime = 0;
+					}
+
+					blockEntity.updateBlock();
 				}
 				else {
-					cookTime = 0;
+					if(blockEntity.isSpinning)
+						blockEntity.cookTime++;
+					else
+						blockEntity.cookTime = 0;
 				}
-
-				updateBlock();
-			}
-			else {
-				if(isSpinning)
-					cookTime++;
-				else
-					cookTime = 0;
 			}
 		}
 	}
@@ -194,15 +193,20 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag nbt = new CompoundTag();
-		nbt.putBoolean("isSpinning", cookTime > 0);
-		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		CompoundTag nbt = pkt.getTag();
 		isSpinning = nbt.getBoolean("isSpinning");
+	}
+
+	@Override
+	public CompoundTag getUpdateTag() {
+		CompoundTag nbt = super.getUpdateTag();
+		nbt.putBoolean("isSpinning", cookTime > 0);
+		return nbt;
 	}
 
 	@Override
@@ -219,5 +223,4 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 	protected AbstractContainerMenu createMenu(int id, Inventory player) {
 		return new SpinningWheelContainer(id, player, this, data);
 	}
-
 }

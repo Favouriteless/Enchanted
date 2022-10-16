@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.multiblock.observerlib.altar;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import hellfirepvp.observerlib.api.ChangeObserver;
 import hellfirepvp.observerlib.api.ObservableArea;
@@ -37,6 +37,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -65,13 +66,13 @@ public class AltarChangeObserver extends ChangeObserver {
     public boolean notifyChange(Level world, BlockPos center, BlockChangeSet changeSet) {
         if(!world.isClientSide) {
             BlockEntity te = world.getBlockEntity(center);
-            if (te instanceof AltarTileEntity) {
-                AltarTileEntity altar = (AltarTileEntity)te;
+            if (te instanceof AltarBlockEntity) {
+                AltarBlockEntity altar = (AltarBlockEntity)te;
 
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
                     if (altar.posWithinRange(change.getAbsolutePosition(), range)) { // Change is relevant
                         if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
-                            if(change.getNewState().getBlock().is(EnchantedTags.POWER_CONSUMERS)) {
+                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.POWER_CONSUMERS).contains(change.getNewState().getBlock())) {
                                 altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));
                             }
                             altar.removePower(change.getOldState().getBlock());

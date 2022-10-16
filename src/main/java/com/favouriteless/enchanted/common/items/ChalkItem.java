@@ -31,11 +31,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.Objects;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ChalkItem extends Item {
 
@@ -60,7 +57,7 @@ public class ChalkItem extends Item {
                 if (chalkBlock.canSurvive(chalkBlock.defaultBlockState(),context.getLevel(), targetLocation)) {
 
                     if(!context.getLevel().isClientSide()) {
-                        context.getLevel().setBlock(context.getClickedPos().offset(0, 1, 0), Objects.requireNonNull(chalkBlock.getStateForPlacement(new BlockPlaceContext(context))), Constants.BlockFlags.DEFAULT);
+                        context.getLevel().setBlockAndUpdate(context.getClickedPos().offset(0, 1, 0), chalkBlock.getStateForPlacement(new BlockPlaceContext(context)));
                     }
                     context.getLevel().playSound(context.getPlayer(), context.getClickedPos().offset(0, 1, 0), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1f, 1f);
                     Objects.requireNonNull(context.getPlayer()).getItemInHand(context.getHand()).hurtAndBreak(1, context.getPlayer(), (p_220038_0_) -> { });

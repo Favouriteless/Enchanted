@@ -33,7 +33,6 @@ import com.favouriteless.enchanted.common.blocks.crops.*;
 import com.favouriteless.enchanted.common.world.features.AlderTree;
 import com.favouriteless.enchanted.common.world.features.HawthornTree;
 import com.favouriteless.enchanted.common.world.features.RowanTree;
-import net.minecraft.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -42,7 +41,6 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -57,6 +55,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.RegistryObject;
 
 public class EnchantedBlocks {
 

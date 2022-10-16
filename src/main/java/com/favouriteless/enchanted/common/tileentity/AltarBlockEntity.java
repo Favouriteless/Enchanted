@@ -27,12 +27,14 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -41,16 +43,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -58,7 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AltarTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public class AltarBlockEntity extends BlockEntity implements MenuProvider {
 
     public double maxPower;
     public double currentPower;
@@ -70,16 +69,12 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
     private final ContainerData fields = new ContainerData() {
         @Override
         public int get(int pIndex) {
-            switch(pIndex) {
-                case 0:
-                    return (int)Math.round(currentPower);
-                case 1:
-                    return (int)Math.round(maxPower);
-                case 2:
-                    return (int)Math.round(rechargeMultiplier);
-                default:
-                    return 0;
-            }
+            return switch(pIndex) {
+                case 0 -> (int) Math.round(currentPower);
+                case 1 -> (int) Math.round(maxPower);
+                case 2 -> (int) Math.round(rechargeMultiplier);
+                default -> 0;
+            };
         }
 
         @Override
@@ -109,56 +104,53 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
 
     private int ticksAlive = 0;
 
-    public AltarTileEntity(BlockEntityType<?> type) {
-        super(type);
+    public AltarBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.ALTAR.get(), pos, state);
     }
 
-    public AltarTileEntity() {
-        this(EnchantedTileEntityTypes.ALTAR.get());
-    }
+    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+        if(t instanceof AltarBlockEntity blockEntity) {
+            if(level != null && !level.isClientSide) {
 
-    @Override
-    public void tick() {
-        if(level != null && !level.isClientSide) {
+                if(!blockEntity.loaded) {
+                    blockEntity.facingX = level.getBlockState(blockEntity.worldPosition).getValue(AltarBlock.FACING_X);
+                    blockEntity.centerPos = blockEntity.facingX ?
+                            Vec3.atLowerCornerOf(blockEntity.worldPosition).add(1.0D, 0.0D, 0.5D) :
+                            Vec3.atLowerCornerOf(blockEntity.worldPosition).add(0.5D, 0.0D, 1.0D);
 
-            if (!loaded) {
-                facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
-                centerPos = facingX ?
-                        Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
-                        Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
-
-                changeSubscriber = ObserverHelper.getHelper().getSubscriber(level, worldPosition);
-                if (changeSubscriber == null) {
-                    createChangeSubscriber();
+                    blockEntity.changeSubscriber = ObserverHelper.getHelper().getSubscriber(level, blockEntity.worldPosition);
+                    if(blockEntity.changeSubscriber == null) {
+                        blockEntity.createChangeSubscriber();
+                    }
+                    blockEntity.recalculateUpgrades();
+                    if(!blockEntity.powerLoaded)
+                        blockEntity.recalculateBlocks();
+                    blockEntity.loaded = true;
                 }
-                recalculateUpgrades();
-                if(!powerLoaded)
-                    recalculateBlocks();
-                loaded = true;
-            }
-            else {
-                if(ticksAlive % 10 == 0) {
-                    changeSubscriber.isValid(level);
+                else {
+                    if(blockEntity.ticksAlive % 10 == 0) {
+                        blockEntity.changeSubscriber.isValid(level);
+                    }
+                    if(blockEntity.currentPower <= blockEntity.maxPower)
+                        blockEntity.currentPower += blockEntity.rechargeRate * blockEntity.rechargeMultiplier;
+                    if(blockEntity.currentPower > blockEntity.maxPower)
+                        blockEntity.currentPower = blockEntity.maxPower;
                 }
-                if(currentPower <= maxPower)
-                    currentPower += rechargeRate * rechargeMultiplier;
-                if(currentPower > maxPower)
-                    currentPower = maxPower;
+                blockEntity.ticksAlive++;
             }
-            ticksAlive++;
         }
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putDouble("currentPower", currentPower);
         nbt.put("blockData", altarBlockData.getSaveTag());
-        return super.save(nbt);
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt) {
-        super.load(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         if(nbt.contains("blockData")) {
             altarBlockData.loadTag((CompoundTag) nbt.get("blockData"));
             powerLoaded = true;
@@ -180,7 +172,7 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
                 for (int y = 0; y < (range+2)*2; y++) {
                     for (int z = 0; z < (range+2)*2; z++) {
                         BlockPos currentPos = startingPos.offset(x, y, z);
-                        if(level.getBlockState(currentPos).getBlock().is(EnchantedTags.POWER_CONSUMERS)) {
+                        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.POWER_CONSUMERS).contains(level.getBlockState(currentPos).getBlock())) {
                             addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
                         }
                         else if(posWithinRange(currentPos, range)) {
@@ -209,19 +201,19 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
             for (int x = 0; x < xMax; x++) {
                 for (int z = 0; z < zMax; z++) {
                     for (AltarUpgrade newUpgrade : EnchantedData.ALTAR_UPGRADES.get()) {
-                        if (level.getBlockState(worldPosition.offset(x, 1, z)).getBlock().is(newUpgrade.getBlock())) { // If block is of upgrade
+                        if (level.getBlockState(worldPosition.offset(x, 1, z)).getBlock() == newUpgrade.block()) { // If block is of upgrade
                             if(upgradesUsed.isEmpty()) {
                                 upgradesUsed.add(newUpgrade);
                             }
                             else {
                                 AltarUpgrade match = null;
                                 for(AltarUpgrade upgrade : upgradesUsed) {
-                                    if(newUpgrade.getType().equals(upgrade.getType())) { // If same type
+                                    if(newUpgrade.type().equals(upgrade.type())) { // If same type
                                         match = upgrade;
                                     }
                                 }
                                 if(match != null) {
-                                    if(newUpgrade.getPriority() > match.getPriority()) {
+                                    if(newUpgrade.priority() > match.priority()) {
                                         upgradesUsed.remove(match);
                                         upgradesUsed.add(newUpgrade);
                                     }
@@ -238,8 +230,8 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
             double newPowerMultiplier = 1.0D;
             double newRechargeMultiplier = 1.0D;
             for(AltarUpgrade upgrade : upgradesUsed) {
-                newPowerMultiplier += upgrade.getPowerMultiplier();
-                newRechargeMultiplier += upgrade.getRechargeMultiplier();
+                newPowerMultiplier += upgrade.powerMultiplier();
+                newRechargeMultiplier += upgrade.rechargeMultiplier();
             }
 
             if(this.powerMultiplier != newPowerMultiplier) {
@@ -322,13 +314,13 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
 
     public static class AltarBlockData {
         public HashMap<Block, Integer> blocksAmount = new HashMap<>();
-        public HashMap<IOptionalNamedTag<Block>, Integer> tagsAmount = new HashMap<>();
+        public HashMap<TagKey<Block>, Integer> tagsAmount = new HashMap<>();
 
         public AltarBlockData() {
             for(AltarPowerProvider<Block> provider : EnchantedData.ALTAR_POWER_BLOCKS.get()) {
                 blocksAmount.put(provider.getKey(), 0);
             }
-            for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) {
+            for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) {
                 tagsAmount.put(provider.getKey(), 0);
             }
         }
@@ -341,8 +333,8 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
             for(Block block : blocksAmount.keySet()) {
                 blockNbt.putInt(block.getRegistryName().toString(), blocksAmount.get(block));
             }
-            for(IOptionalNamedTag<Block> tag : tagsAmount.keySet()) {
-                tagNbt.putInt(tag.getName().toString(), tagsAmount.get(tag));
+            for(TagKey<Block> tag : tagsAmount.keySet()) {
+                tagNbt.putInt(tag.location().toString(), tagsAmount.get(tag));
             }
 
             nbt.put("blocksAmount", blockNbt);
@@ -358,7 +350,7 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
                 blocksAmount.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name)), blockNbt.getInt(name));
             }
             for(String name : tagNbt.getAllKeys()) {
-                tagsAmount.put(BlockTags.createOptional(new ResourceLocation(name)), tagNbt.getInt(name));
+                tagsAmount.put(BlockTags.create(new ResourceLocation(name)), tagNbt.getInt(name));
             }
 
         }
@@ -367,8 +359,8 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
-                    if(block.is(provider.getKey())) { // If block part of provider tag
+                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
+                    if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
                         amount = tagsAmount.get(provider.getKey());
                         tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) + 1);
 
@@ -389,8 +381,8 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
             Integer amount = blocksAmount.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<IOptionalNamedTag<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
-                    if(block.is(provider.getKey())) { // If block part of provider tag
+                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
+                    if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
                         amount = tagsAmount.get(provider.getKey());
                         tagsAmount.replace(provider.getKey(), tagsAmount.get(provider.getKey()) - 1);
 
@@ -414,8 +406,8 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
                 AltarPowerProvider<Block> powerProvider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), blocksAmount.get(block))) * powerProvider.getPower() * powerMultiplier;
             }
-            for(IOptionalNamedTag<Block> tag : tagsAmount.keySet()) {
-                AltarPowerProvider<IOptionalNamedTag<Block>> powerProvider = EnchantedData.ALTAR_POWER_TAGS.providerOf(tag);
+            for(TagKey<Block> tag : tagsAmount.keySet()) {
+                AltarPowerProvider<TagKey<Block>> powerProvider = EnchantedData.ALTAR_POWER_TAGS.providerOf(tag);
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), tagsAmount.get(tag))) * powerProvider.getPower() * powerMultiplier;
             }
 
@@ -429,40 +421,6 @@ public class AltarTileEntity extends BlockEntity implements TickableBlockEntity,
 
     }
 
-    public static class AltarUpgrade {
+    public record AltarUpgrade(ResourceLocation type, Block block, double rechargeMultiplier, double powerMultiplier, int priority) { }
 
-        private final ResourceLocation type;
-        private final Block block;
-        private final double powerMultiplier;
-        private final double rechargeMultiplier;
-        private final int priority;
-
-        public AltarUpgrade(ResourceLocation type, Block block, double rechargeMultiplier, double powerMultiplier, int priority) {
-            this.type = type;
-            this.block = block;
-            this.powerMultiplier = powerMultiplier;
-            this.rechargeMultiplier = rechargeMultiplier;
-            this.priority = priority;
-        }
-
-        public ResourceLocation getType() {
-            return type;
-        }
-
-        public Block getBlock() {
-            return block;
-        }
-
-        public double getPowerMultiplier() {
-            return powerMultiplier;
-        }
-
-        public double getRechargeMultiplier() {
-            return rechargeMultiplier;
-        }
-
-        public int getPriority() {
-            return priority;
-        }
-    }
 }

@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.containers;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
-import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -35,7 +35,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class PoppetShelfContainer extends ContainerBase {
 
-	public PoppetShelfContainer(int id, Inventory playerInventory, PoppetShelfTileEntity tileEntity) {
+	public PoppetShelfContainer(int id, Inventory playerInventory, PoppetShelfBlockEntity tileEntity) {
 		super(EnchantedContainers.POPPET_SHELF.get(), id, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
 
 		for(int i = 0; i < tileEntity.getInventory().getContainerSize(); i++)
@@ -45,7 +45,7 @@ public class PoppetShelfContainer extends ContainerBase {
 	}
 
 	public PoppetShelfContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (PoppetShelfTileEntity)getTileEntity(playerInventory, data, PoppetShelfTileEntity.class));
+		this(windowId, playerInventory, (PoppetShelfBlockEntity)getTileEntity(playerInventory, data, PoppetShelfBlockEntity.class));
 	}
 
 	@Override

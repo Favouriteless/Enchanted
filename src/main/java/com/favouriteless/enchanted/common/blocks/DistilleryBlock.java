@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
+import com.favouriteless.enchanted.common.tileentity.DistilleryBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,14 +41,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class DistilleryBlock extends SimpleContainerBlockBase<DistilleryTileEntity> {
+public class DistilleryBlock extends SimpleContainerBlockBase<DistilleryBlockEntity> {
 
-    // unfinished models but functionality done
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
@@ -64,22 +63,18 @@ public class DistilleryBlock extends SimpleContainerBlockBase<DistilleryTileEnti
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockGetter worldIn) {
-        return new DistilleryTileEntity();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new DistilleryBlockEntity(pos, state);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        switch(state.getValue(FACING)) {
-            default:
-                return SHAPE_NORTH;
-            case SOUTH:
-                return SHAPE_SOUTH;
-            case WEST:
-                return SHAPE_WEST;
-            case EAST:
-                return SHAPE_EAST;
-        }
+        return switch(state.getValue(FACING)) {
+            default -> SHAPE_NORTH;
+            case SOUTH -> SHAPE_SOUTH;
+            case WEST -> SHAPE_WEST;
+            case EAST -> SHAPE_EAST;
+        };
     }
 
     @OnlyIn(Dist.CLIENT)

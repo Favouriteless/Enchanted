@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.client.render.tileentity;
 
-import com.favouriteless.enchanted.common.tileentity.CauldronTileEntity;
+import com.favouriteless.enchanted.common.tileentity.CauldronBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -39,7 +39,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CauldronWaterRenderer<T extends CauldronTileEntity<?>> extends BlockEntityRenderer<T> {
+public class CauldronWaterRenderer<T extends CauldronBlockEntity<?>> extends BlockEntityRenderer<T> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
     private static final int FRAME_TIME = 2;

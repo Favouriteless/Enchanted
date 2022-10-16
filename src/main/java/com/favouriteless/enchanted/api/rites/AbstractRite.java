@@ -23,11 +23,11 @@ package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.tileentity.AltarBlockEntity;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
+import com.favouriteless.enchanted.common.tileentity.ChalkGoldBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -76,7 +76,7 @@ public abstract class AbstractRite {
     protected int ticks = 0;
     private boolean isAttached = true;
 
-    private ChalkGoldTileEntity chalk = null;
+    private ChalkGoldBlockEntity chalk = null;
 
     public boolean isRemoved = false;
 
@@ -115,9 +115,9 @@ public abstract class AbstractRite {
         if(world != null) {
             if(amount > 0) {
                 BlockEntity te = world.getBlockEntity(pos);
-                if(te instanceof ChalkGoldTileEntity) {
-                    List<BlockPos> potentialAltars = ((ChalkGoldTileEntity) te).getAltarPositions();
-                    AltarTileEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
+                if(te instanceof ChalkGoldBlockEntity) {
+                    List<BlockPos> potentialAltars = ((ChalkGoldBlockEntity) te).getAltarPositions();
+                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
 
                     if(altar != null) {
                         if(altar.currentPower >= amount) {
@@ -167,8 +167,8 @@ public abstract class AbstractRite {
         if(world != null && !world.isClientSide ) {
             if(isAttached && chalk == null) {
                 BlockEntity te = world.getBlockEntity(pos);
-                if(te instanceof ChalkGoldTileEntity) {
-                    setChalk((ChalkGoldTileEntity)te);
+                if(te instanceof ChalkGoldBlockEntity) {
+                    setChalk((ChalkGoldBlockEntity)te);
                     chalk.setRite(this);
                 }
             }
@@ -239,8 +239,8 @@ public abstract class AbstractRite {
 
     protected void detatchFromChalk() {
         BlockEntity te = world.getBlockEntity(pos);
-        if(te instanceof ChalkGoldTileEntity) {
-            ChalkGoldTileEntity chalk = (ChalkGoldTileEntity)te;
+        if(te instanceof ChalkGoldBlockEntity) {
+            ChalkGoldBlockEntity chalk = (ChalkGoldBlockEntity)te;
             if(chalk.getRite() == this)
                 chalk.clearRite();
         }
@@ -254,8 +254,8 @@ public abstract class AbstractRite {
         detatchFromChalk();
         this.isStarting = false;
         BlockEntity te = world.getBlockEntity(pos);
-        if(te instanceof ChalkGoldTileEntity) {
-            ((ChalkGoldTileEntity)te).clearRite();
+        if(te instanceof ChalkGoldBlockEntity) {
+            ((ChalkGoldBlockEntity)te).clearRite();
         }
         RiteManager.removeRite(this);
     }
@@ -284,8 +284,8 @@ public abstract class AbstractRite {
         }
 
         BlockEntity te = world.getBlockEntity(pos);
-        if(te instanceof ChalkGoldTileEntity) {
-            ((ChalkGoldTileEntity)te).clearRite();
+        if(te instanceof ChalkGoldBlockEntity) {
+            ((ChalkGoldBlockEntity)te).clearRite();
         }
     }
 
@@ -447,7 +447,7 @@ public abstract class AbstractRite {
         return isStarting;
     }
 
-    public void setChalk(ChalkGoldTileEntity chalk) {
+    public void setChalk(ChalkGoldBlockEntity chalk) {
         this.chalk = chalk;
     }
 

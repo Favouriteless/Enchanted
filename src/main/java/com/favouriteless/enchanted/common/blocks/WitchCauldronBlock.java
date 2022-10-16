@@ -21,17 +21,19 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.tileentity.CauldronBlockEntity;
+import com.favouriteless.enchanted.common.tileentity.WitchCauldronBlockEntity;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.block.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -40,16 +42,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidAttributes;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class WitchCauldronBlock extends Block implements EntityBlock {
 
@@ -61,8 +61,8 @@ public class WitchCauldronBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
-        if(te instanceof WitchCauldronTileEntity) {
-            WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
+        if(te instanceof WitchCauldronBlockEntity) {
+            WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity)te;
 
             if(cauldron.isComplete) {
                 cauldron.takeContents(player);
@@ -97,16 +97,16 @@ public class WitchCauldronBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockGetter blockReader) {
-        return new WitchCauldronTileEntity();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WitchCauldronBlockEntity(pos, state);
     }
 
     @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof ItemEntity) {
             BlockEntity tileEntity = world.getBlockEntity(pos);
-            if(tileEntity instanceof WitchCauldronTileEntity) {
-                WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)tileEntity;
+            if(tileEntity instanceof WitchCauldronBlockEntity) {
+                WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity)tileEntity;
                 if(!cauldron.isFailed && cauldron.isFull() && cauldron.isHot()) {
                     cauldron.addItem((ItemEntity) entity);
                 }
@@ -117,6 +117,12 @@ public class WitchCauldronBlock extends Block implements EntityBlock {
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Shapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return type == EnchantedBlockEntityTypes.WITCH_CAULDRON.get() ? CauldronBlockEntity::tick : null;
     }
 }
 

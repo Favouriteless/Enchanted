@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.util.poppet;
 
-import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfBlockEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class PoppetShelfManager {
 
-	public static PoppetShelfInventory getInventoryFor(PoppetShelfTileEntity shelf) {
+	public static PoppetShelfInventory getInventoryFor(PoppetShelfBlockEntity shelf) {
 		if(shelf.getLevel() instanceof ServerLevel) {
 			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(shelf.getLevel());
 			resolveAbsentShelf(data, shelf);
@@ -40,7 +40,7 @@ public class PoppetShelfManager {
 		return null;
 	}
 
-	public static void removeShelf(PoppetShelfTileEntity shelf) {
+	public static void removeShelf(PoppetShelfBlockEntity shelf) {
 		if(shelf.getLevel() instanceof ServerLevel) {
 			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(shelf.getLevel());
 			String identifier = PoppetShelfWorldSavedData.getShelfIdentifier(shelf);
@@ -49,7 +49,7 @@ public class PoppetShelfManager {
 		}
 	}
 
-	public static void resolveAbsentShelf(PoppetShelfWorldSavedData data, PoppetShelfTileEntity shelf) {
+	public static void resolveAbsentShelf(PoppetShelfWorldSavedData data, PoppetShelfBlockEntity shelf) {
 		String identifier = PoppetShelfWorldSavedData.getShelfIdentifier(shelf);
 		if(!data.SHELF_STORAGE.containsKey(identifier)) {
 			data.SHELF_STORAGE.put(identifier, new PoppetShelfInventory(shelf.getLevel(), shelf.getBlockPos()));

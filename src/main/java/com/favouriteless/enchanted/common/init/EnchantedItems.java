@@ -27,13 +27,11 @@ import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.*;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -48,6 +46,7 @@ import net.minecraft.world.item.SimpleFoiledItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import net.minecraftforge.registries.RegistryObject;
 
 public class EnchantedItems {
 

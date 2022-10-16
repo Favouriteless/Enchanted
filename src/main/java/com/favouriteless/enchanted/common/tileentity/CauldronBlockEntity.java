@@ -28,6 +28,8 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
@@ -43,12 +45,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -74,7 +74,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 
-public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements TickableBlockEntity, IAltarPowerConsumer {
+public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IAltarPowerConsumer {
 
 	private final FluidTank tank;
 	private final LazyOptional<IFluidHandler> fluidHandler;
@@ -110,86 +110,91 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends R
 	private int startBlue = targetBlue;
 	public long startTime = System.currentTimeMillis();
 
-	public CauldronTileEntity(BlockEntityType<?> type, int bucketCapacity, int cookTime) {
-		super(type);
+	public CauldronBlockEntity(BlockEntityType<? extends CauldronBlockEntity<?>> type, BlockPos pos, BlockState state, int bucketCapacity, int cookTime) {
+		super(type, pos, state);
 		tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
 		fluidHandler = LazyOptional.of(() -> tank);
 		this.cookTime = cookTime;
 	}
 
-	@Override
-	public void tick() {
-		if(level != null) {
-			if (!level.isClientSide) {
-				if (justLoaded) {
-					matchRecipes();
-					justLoaded = false;
-				}
-				if (!isFailed && !isComplete) {
 
-					BlockState stateBelow = level.getBlockState(worldPosition.below());
+	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+		if(t instanceof CauldronBlockEntity<?> blockEntity) {
+			if(level != null) {
+				if(!level.isClientSide) {
+					if(blockEntity.justLoaded) {
+						blockEntity.matchRecipes();
+						blockEntity.justLoaded = false;
+					}
+					if(!blockEntity.isFailed && !blockEntity.isComplete) {
 
-					if (providesHeat(stateBelow) && tank.getFluidAmount() == tank.getCapacity()) { // On top of heat block, cauldron is full
-						if (warmingUp < warmingMax) {
-							warmingUp++;
-						} else if (potentialRecipes.size() == 1 && potentialRecipes.get(0).fullMatch(this, level)) { // Has final recipe
-							if (cookProgress < cookTime) {
-								cookProgress++;
-								recalculateTargetColour();
-							} else {
-								T recipe = potentialRecipes.get(0);
-								AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
-								if(recipe.getPower() <= 0) {
-									setComplete();
-								}
-								else if(altar != null && altar.currentPower > recipe.getPower()) {
-									altar.currentPower -= recipe.getPower();
-									setComplete();
+						BlockState stateBelow = level.getBlockState(blockEntity.worldPosition.below());
+
+						if(providesHeat(stateBelow) && blockEntity.tank.getFluidAmount() == blockEntity.tank.getCapacity()) { // On top of heat block, cauldron is full
+							if(blockEntity.warmingUp < blockEntity.warmingMax) {
+								blockEntity.warmingUp++;
+							}
+							else if(blockEntity.potentialRecipes.size() == 1 && blockEntity.potentialRecipes.get(0).fullMatch(blockEntity, level)) { // Has final recipe
+								if(blockEntity.cookProgress < blockEntity.cookTime) {
+									blockEntity.cookProgress++;
+									blockEntity.recalculateTargetColour();
 								}
 								else {
-									setFailed(); // Fail if not enough power
+									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
+									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.potentialAltars);
+									if(recipe.getPower() <= 0) {
+										blockEntity.setComplete();
+									}
+									else if(altar != null && altar.currentPower > recipe.getPower()) {
+										altar.currentPower -= recipe.getPower();
+										blockEntity.setComplete();
+									}
+									else {
+										blockEntity.setFailed(); // Fail if not enough power
+									}
 								}
 							}
 						}
-					} else {
-						if (hasItems)
-							setFailed(); // Fail if heat or water is lost while cooking
-						warmingUp = 0;
+						else {
+							if(blockEntity.hasItems)
+								blockEntity.setFailed(); // Fail if heat or water is lost while cooking
+							blockEntity.warmingUp = 0;
+						}
 					}
+					blockEntity.updateBlock();
 				}
-				updateBlock();
-			}
-			// ------------------------ CLIENT STUFF ------------------------
-			else {
-				if(justLoaded) {
-					justLoaded = false;
-					startRed = targetRed;
-					startGreen = targetGreen;
-					startBlue = targetBlue;
-				}
-				long time = System.currentTimeMillis() - startTime;
-				double waterY = getWaterY();
-
-				if(isHot() && RANDOM.nextInt(10) > 2) {
-					double dx = worldPosition.getX() + 0.5D + (Math.random() - 0.5D) * getWaterWidth();
-					double dy = worldPosition.getY() + waterY + 0.02D;
-					double dz = worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * getWaterWidth();
-
-					level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
-				}
-				if(!isFailed) {
-					if(!isComplete && cookProgress > 0 && cookProgress < cookTime) {
-						handleCookParticles(time);
+				// ------------------------ CLIENT STUFF ------------------------
+				else {
+					if(blockEntity.justLoaded) {
+						blockEntity.justLoaded = false;
+						blockEntity.startRed = blockEntity.targetRed;
+						blockEntity.startGreen = blockEntity.targetGreen;
+						blockEntity.startBlue = blockEntity.targetBlue;
 					}
-					else if (warmingUp == warmingMax && hasItems && RANDOM.nextInt(10) > 6) {
-						double xOffset = 0.5D + (Math.random() - 0.5D) * getWaterWidth();
-						double zOffset = 0.5D + (Math.random() - 0.5D) * getWaterWidth();
-						double dx = worldPosition.getX() + xOffset;
-						double dy = worldPosition.getY() + waterY;
-						double dz = worldPosition.getZ() + zOffset;
-						Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+					long time = System.currentTimeMillis() - blockEntity.startTime;
+					double waterY = blockEntity.getWaterY();
 
-						level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+					if(blockEntity.isHot() && RANDOM.nextInt(10) > 2) {
+						double dx = blockEntity.worldPosition.getX() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+						double dy = blockEntity.worldPosition.getY() + waterY + 0.02D;
+						double dz = blockEntity.worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+
+						level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
+					}
+					if(!blockEntity.isFailed) {
+						if(!blockEntity.isComplete && blockEntity.cookProgress > 0 && blockEntity.cookProgress < blockEntity.cookTime) {
+							blockEntity.handleCookParticles(time);
+						}
+						else if(blockEntity.warmingUp == blockEntity.warmingMax && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
+							double xOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+							double zOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+							double dx = blockEntity.worldPosition.getX() + xOffset;
+							double dy = blockEntity.worldPosition.getY() + waterY;
+							double dz = blockEntity.worldPosition.getZ() + zOffset;
+							Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+
+							level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+						}
 					}
 				}
 			}
@@ -384,7 +389,8 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends R
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
 		nbt.putInt("waterAmount", tank.getFluidAmount());
 		nbt.putInt("targetRed", targetRed);
 		nbt.putInt("targetGreen", targetGreen);
@@ -401,12 +407,11 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends R
 			nbt.put("itemOut", itemNbt);
 		}
 		AltarPowerHelper.savePosTag(potentialAltars, nbt);
-		return super.save(nbt);
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag nbt) {
-		super.load(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
 		setWater(nbt.getInt("waterAmount"));
 		targetRed = nbt.getInt("targetRed");
@@ -435,6 +440,17 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends R
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
+
+	@Override
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		CompoundTag nbt = pkt.getTag();
+		handleUpdateTag(nbt);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag() {
 		CompoundTag nbt = new CompoundTag();
 		nbt.putInt("waterAmount", tank.getFluidAmount());
 		nbt.putInt("targetRed", targetRed);
@@ -445,12 +461,12 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends R
 		nbt.putInt("warmingUp", warmingUp);
 		nbt.putInt("cookProgress", cookProgress);
 		nbt.putBoolean("hasItems", !inventoryContents.isEmpty());
-		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
+		return nbt;
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		CompoundTag nbt = pkt.getTag();
+	public void handleUpdateTag(CompoundTag nbt) {
+		super.handleUpdateTag(nbt);
 		setWater(nbt.getInt("waterAmount"));
 		isFailed = nbt.getBoolean("isFailed");
 		isComplete = nbt.getBoolean("isComplete");

@@ -22,45 +22,44 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
-import com.favouriteless.enchanted.common.blocks.KettleBlock;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
-import com.favouriteless.enchanted.common.recipes.KettleRecipe;
+import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.stream.Collectors;
 
-public class KettleTileEntity extends CauldronTileEntity<KettleRecipe> {
+public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronRecipe> {
 
-    public KettleTileEntity() {
-        super(EnchantedTileEntityTypes.KETTLE.get(), 1, 160);
+    public WitchCauldronBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.WITCH_CAULDRON.get(), pos, state, 3, 200);
     }
 
     @Override
     public double getWaterStartY() {
-        return level.getBlockState(worldPosition).getValue(KettleBlock.TYPE) == 1 ? 0.1875D : 0.0625D;
+        return 0.1875D;
     }
 
     @Override
     public double getWaterMaxHeight() {
-        return 0.25D;
+        return 0.4375D;
     }
 
     @Override
     public double getWaterWidth() {
-        return 0.375D;
+        return 0.625D;
     }
 
     @Override
     public void handleCookParticles(long time) {
-        if(Math.random() > 0.5D) {
-            double dx = worldPosition.getX() + Math.random();
-            double dy = worldPosition.getY() + Math.random();
-            double dz = worldPosition.getZ() + Math.random();
+        double dx = worldPosition.getX() + 0.5D;
+        double dy = worldPosition.getY() + getWaterY();
+        double dz = worldPosition.getZ() + 0.5D;
 
-            level.addParticle(new SimpleColouredData(EnchantedParticles.KETTLE_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
-        }
+        level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0.0D, 0.0D, 0.0D);
     }
 
     @Override
@@ -69,8 +68,8 @@ public class KettleTileEntity extends CauldronTileEntity<KettleRecipe> {
             setPotentialRecipes(level.getRecipeManager()
                     .getRecipes()
                     .stream()
-                    .filter(recipe -> recipe instanceof KettleRecipe)
-                    .map(recipe -> (KettleRecipe)recipe)
+                    .filter(recipe -> recipe instanceof WitchCauldronRecipe)
+                    .map(recipe -> (WitchCauldronRecipe)recipe)
                     .filter(recipe -> recipe.matches(this, level))
                     .collect(Collectors.toList()));
         }
@@ -78,6 +77,6 @@ public class KettleTileEntity extends CauldronTileEntity<KettleRecipe> {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.enchanted.kettle");
+        return new TranslatableComponent("container.witch_cauldron");
     }
 }

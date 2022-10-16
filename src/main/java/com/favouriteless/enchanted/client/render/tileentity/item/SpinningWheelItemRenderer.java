@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.client.render.tileentity.item;
 
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
-import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
+import com.favouriteless.enchanted.common.tileentity.SpinningWheelBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
@@ -32,13 +32,13 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-	private static SpinningWheelTileEntity dummyTe = null;
+	private static SpinningWheelBlockEntity dummyTe = null;
 	private static SpinningWheelRenderer dummyRenderer = null;
 
 	@Override
 	public void renderByItem(ItemStack stack, TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
 		if(dummyTe == null)
-			dummyTe = new SpinningWheelTileEntity();
+			dummyTe = new SpinningWheelBlockEntity();
 		if(dummyRenderer == null)
 			dummyRenderer = new SpinningWheelRenderer(BlockEntityRenderDispatcher.instance);
 

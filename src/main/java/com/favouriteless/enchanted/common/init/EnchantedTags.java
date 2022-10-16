@@ -22,24 +22,28 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class EnchantedTags {
 
-    public static final Tags.IOptionalNamedTag<Block> POWER_CONSUMERS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "power_consumers"));
-    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_plants"));
-    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
-    public static final Tags.IOptionalNamedTag<Block> MUTANDIS_BLACKLIST = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
-    public static final Tags.IOptionalNamedTag<Block> CHALKS = BlockTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
+    public static final TagKey<Block> POWER_CONSUMERS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "power_consumers"));
+    public static final TagKey<Block> MUTANDIS_PLANTS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_plants"));
+    public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
+    public static final TagKey<Block> MUTANDIS_BLACKLIST = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
+    public static final TagKey<Block> CHALKS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
 
-    public static final Tags.IOptionalNamedTag<Item> TOOL_POPPET_WHITELIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_whitelist"));
-    public static final Tags.IOptionalNamedTag<Item> ARMOUR_POPPET_WHITELIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_whitelist"));
-    public static final Tags.IOptionalNamedTag<Item> TOOL_POPPET_BLACKLIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_blacklist"));
-    public static final Tags.IOptionalNamedTag<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.createOptional(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_blacklist"));
+    public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_whitelist"));
+    public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_whitelist"));
+    public static final TagKey<Item> TOOL_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_blacklist"));
+    public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_blacklist"));
 
 }

@@ -25,10 +25,15 @@ import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,8 +45,6 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.core.NonNullList;
@@ -50,15 +53,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class WitchOvenTileEntity extends ProcessingTileEntityBase {
+public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
     private static final Random RANDOM = new Random();
-    public static final IOptionalNamedTag<Item> ORE_TAG = ItemTags.createOptional(new ResourceLocation("forge", "ores"));
 
     private int burnTime = 0;
     private int burnTimeTotal = 0;
@@ -67,18 +70,13 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
-            switch(index) {
-                case 0:
-                    return burnTime;
-                case 1:
-                    return burnTimeTotal;
-                case 2:
-                    return cookTime;
-                case 3:
-                    return cookTimeTotal;
-                default:
-                    return 0;
-            }
+            return switch(index) {
+                case 0 -> burnTime;
+                case 1 -> burnTimeTotal;
+                case 2 -> cookTime;
+                case 3 -> cookTimeTotal;
+                default -> 0;
+            };
         }
 
         @Override
@@ -101,17 +99,13 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
         }
     };
 
-
-    public WitchOvenTileEntity(BlockEntityType<?> typeIn) {
-        super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));
-    }
-
-    public WitchOvenTileEntity() {
-        this(EnchantedTileEntityTypes.WITCH_OVEN.get());
+    public WitchOvenBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, NonNullList.withSize(5, ItemStack.EMPTY));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt) {
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         burnTime = nbt.getInt("burnTime");
         burnTimeTotal = nbt.getInt("burnTimeTotal");
         cookTime = nbt.getInt("cookTime");
@@ -119,70 +113,72 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putInt("burnTime", burnTime);
         nbt.putInt("burnTimeTotal", burnTimeTotal);
         nbt.putInt("cookTime", cookTime);
         nbt.putInt("cookTimeTotal", cookTimeTotal);
     }
 
-    @Override
-    public void tick() {
-        boolean flag = isBurning();
-        boolean flag1 = false;
+    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+        if(t instanceof WitchOvenBlockEntity blockEntity) {
+            boolean flag = blockEntity.isBurning();
+            boolean flag1 = false;
 
-        if (!level.isClientSide) {
-            ItemStack fuelStack = inventoryContents.get(1);
-            if (isBurning()) {
-                burnTime--;
-            }
+            if(!level.isClientSide) {
+                ItemStack fuelStack = blockEntity.inventoryContents.get(1);
+                if(blockEntity.isBurning()) {
+                    blockEntity.burnTime--;
+                }
 
 
-            if (this.isBurning() || !fuelStack.isEmpty() && !inventoryContents.get(0).isEmpty()) {
-                Recipe<?> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).orElse(null);
-                if (!isBurning() && canSmelt(recipe) && !inventoryContents.get(0).getItem().is(ORE_TAG)) {
-                    burnTime = getBurnTime(fuelStack);
-                    burnTimeTotal = getBurnTime(fuelStack);
-                    if (isBurning()) {
-                        flag1 = true;
-                        if (fuelStack.hasContainerItem())
-                            inventoryContents.set(1, fuelStack.getContainerItem());
-                        else
-                        if (!fuelStack.isEmpty()) {
-                            fuelStack.shrink(1);
-                            if (fuelStack.isEmpty()) {
-                                inventoryContents.set(1, fuelStack.getContainerItem());
+                if(blockEntity.isBurning() || !fuelStack.isEmpty() && !blockEntity.inventoryContents.get(0).isEmpty()) {
+                    Recipe<?> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, blockEntity, level).orElse(null);
+                    if(!blockEntity.isBurning() && blockEntity.canSmelt(recipe) && !ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(blockEntity.inventoryContents.get(0).getItem())) {
+                        blockEntity.burnTime = blockEntity.getBurnTime(fuelStack);
+                        blockEntity.burnTimeTotal = blockEntity.getBurnTime(fuelStack);
+                        if(blockEntity.isBurning()) {
+                            flag1 = true;
+                            if(fuelStack.hasContainerItem())
+                                blockEntity.inventoryContents.set(1, fuelStack.getContainerItem());
+                            else if(!fuelStack.isEmpty()) {
+                                fuelStack.shrink(1);
+                                if(fuelStack.isEmpty()) {
+                                    blockEntity.inventoryContents.set(1, fuelStack.getContainerItem());
+                                }
                             }
                         }
                     }
-                }
 
-                if (isBurning() && canSmelt(recipe)) {
-                    cookTime++;
-                    if (cookTime == cookTimeTotal) {
-                        cookTime = 0;
-                        cookTimeTotal = (int)Math.round(getCookTime() * 0.8D);
-                        smelt(recipe);
-                        flag1 = true;
+                    if(blockEntity.isBurning() && blockEntity.canSmelt(recipe)) {
+                        blockEntity.cookTime++;
+                        if(blockEntity.cookTime == blockEntity.cookTimeTotal) {
+                            blockEntity.cookTime = 0;
+                            blockEntity.cookTimeTotal = (int) Math.round(blockEntity.getCookTime() * 0.8D);
+                            blockEntity.smelt(recipe);
+                            flag1 = true;
+                        }
                     }
-                } else {
-                    cookTime = 0;
+                    else {
+                        blockEntity.cookTime = 0;
+                    }
                 }
-            } else if (!isBurning() && cookTime > 0) {
-                cookTime = Mth.clamp(cookTime - 2, 0, cookTimeTotal);
+                else if(!blockEntity.isBurning() && blockEntity.cookTime > 0) {
+                    blockEntity.cookTime = Mth.clamp(blockEntity.cookTime - 2, 0, blockEntity.cookTimeTotal);
+                }
+
+                if(flag != blockEntity.isBurning()) {
+                    flag1 = true;
+                    level.setBlock(blockEntity.worldPosition, level.getBlockState(blockEntity.worldPosition).setValue(WitchOvenBlock.LIT, blockEntity.isBurning()), 3);
+                    blockEntity.updateFumeFunnels();
+                }
             }
 
-            if (flag != this.isBurning()) {
-                flag1 = true;
-                level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(WitchOvenBlock.LIT, isBurning()), 3);
-                updateFumeFunnels();
+            if(flag1) {
+                blockEntity.setChanged();
             }
         }
-
-        if (flag1) {
-            setChanged();
-        }
-
     }
 
     protected boolean canSmelt(@Nullable Recipe<?> recipeIn) {
@@ -329,5 +325,4 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     protected int getCookTime() {
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
-
 }

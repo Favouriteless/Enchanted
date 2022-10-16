@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfBlockEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import net.minecraft.world.level.block.Block;
@@ -39,11 +39,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.network.NetworkHooks;
 
 public class PoppetShelfBlock extends BaseEntityBlock {
 
@@ -55,8 +54,8 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter reader) {
-		return new PoppetShelfTileEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new PoppetShelfBlockEntity(pos, state);
 	}
 
 	@Override
@@ -73,8 +72,8 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
 		if(!worldIn.isClientSide) {
 			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof PoppetShelfTileEntity) {
-				NetworkHooks.openGui((ServerPlayer) player, (PoppetShelfTileEntity)tileEntity, pos);
+			if(tileEntity instanceof PoppetShelfBlockEntity) {
+				NetworkHooks.openGui((ServerPlayer) player, (PoppetShelfBlockEntity)tileEntity, pos);
 				return InteractionResult.SUCCESS;
 			}
 		}
@@ -85,8 +84,8 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if(state.getBlock() != newState.getBlock()) {
 			BlockEntity tileEntity = world.getBlockEntity(blockPos);
-			if(tileEntity instanceof PoppetShelfTileEntity) {
-				PoppetShelfTileEntity shelf = (PoppetShelfTileEntity) tileEntity;
+			if(tileEntity instanceof PoppetShelfBlockEntity) {
+				PoppetShelfBlockEntity shelf = (PoppetShelfBlockEntity) tileEntity;
 				if(!world.isClientSide)
 					StaticItemStackHelper.dropContentsNoChange(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), shelf.getInventory());
 				PoppetShelfManager.removeShelf(shelf);

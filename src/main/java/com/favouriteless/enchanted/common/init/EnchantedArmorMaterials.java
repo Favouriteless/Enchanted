@@ -36,9 +36,7 @@ import java.util.function.Supplier;
 
 public enum EnchantedArmorMaterials implements ArmorMaterial
 {
-    EMERALD(Enchanted.MOD_ID + ":emerald", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0F, 0.0F, () -> {
-    return Ingredient.of(Items.EMERALD);
-    });
+    EMERALD(Enchanted.MOD_ID + ":emerald", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0F, 0.0F, () -> Ingredient.of(Items.EMERALD));
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     private final String name;

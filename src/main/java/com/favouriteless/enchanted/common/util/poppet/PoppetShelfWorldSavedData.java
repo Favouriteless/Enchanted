@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.util.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
+import com.favouriteless.enchanted.common.tileentity.PoppetShelfBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -91,8 +91,8 @@ public class PoppetShelfWorldSavedData extends SavedData {
 		Level level = getLevelFromShelfIdentifier(identifier);
 		BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
 		BlockEntity tileEntity = level.getBlockEntity(pos);
-		if(tileEntity instanceof PoppetShelfTileEntity)
-			((PoppetShelfTileEntity)tileEntity).updateBlock();
+		if(tileEntity instanceof PoppetShelfBlockEntity)
+			((PoppetShelfBlockEntity)tileEntity).updateBlock();
 	}
 
 	public void setupPoppetUUIDs(String identifier, PoppetShelfInventory inventory) {

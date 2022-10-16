@@ -23,42 +23,37 @@ package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.RiteManager;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.Level;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChalkGoldTileEntity extends BlockEntity implements TickableBlockEntity, IAltarPowerConsumer {
+public class ChalkGoldBlockEntity extends BlockEntity implements IAltarPowerConsumer {
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private AbstractRite currentRite = null;
 
-    public ChalkGoldTileEntity(final BlockEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public ChalkGoldBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.CHALK_GOLD.get(), pos, state);
     }
 
-    public ChalkGoldTileEntity() {
-        this(EnchantedTileEntityTypes.CHALK_GOLD.get());
-    }
-
-    public void execute(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    public void execute(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(!world.isClientSide) {
             if (currentRite == null) {
 
@@ -84,6 +79,17 @@ public class ChalkGoldTileEntity extends BlockEntity implements TickableBlockEnt
         }
     }
 
+    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+        if(t instanceof ChalkGoldBlockEntity blockEntity) {
+            if(level != null && blockEntity.currentRite != null) {
+                double dx = blockEntity.worldPosition.getX() + Math.random();
+                double dy = blockEntity.worldPosition.getY() + Math.random() * 0.3D;
+                double dz = blockEntity.worldPosition.getZ() + Math.random();
+                ((ServerLevel) level).sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            }
+        }
+    }
+
     public void setRite(AbstractRite rite) {
         currentRite = rite;;
     }
@@ -102,24 +108,14 @@ public class ChalkGoldTileEntity extends BlockEntity implements TickableBlockEnt
     }
 
     @Override
-    public void tick() {
-        if(level != null && currentRite != null) {
-            double dx = worldPosition.getX() + Math.random();
-            double dy = worldPosition.getY() + Math.random() * 0.3D;
-            double dz = worldPosition.getZ() + Math.random();
-            ((ServerLevel)level).sendParticles(new DustParticleOptions(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-        }
-    }
-
-    @Override
-    public CompoundTag save(CompoundTag nbt) {
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         AltarPowerHelper.savePosTag(potentialAltars, nbt);
-        return super.save(nbt);
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt) {
-        super.load(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
     }
 

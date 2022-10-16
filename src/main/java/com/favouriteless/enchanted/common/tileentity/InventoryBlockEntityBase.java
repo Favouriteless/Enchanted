@@ -21,6 +21,7 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +41,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryTileEntityBase extends RandomizableContainerBlockEntity {
+public abstract class InventoryBlockEntityBase extends RandomizableContainerBlockEntity {
 
 	protected NonNullList<ItemStack> inventoryContents;
 	protected IItemHandlerModifiable items = new InvWrapper(this);
@@ -48,8 +49,8 @@ public abstract class InventoryTileEntityBase extends RandomizableContainerBlock
 
 	protected int numPlayersUsing;
 
-	public InventoryTileEntityBase(BlockEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
-		super(typeIn);
+	public InventoryBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, NonNullList<ItemStack> inventoryContents) {
+		super(type, pos, state);
 		this.inventoryContents = inventoryContents;
 	}
 
@@ -117,15 +118,6 @@ public abstract class InventoryTileEntityBase extends RandomizableContainerBlock
 		Block block = getBlockState().getBlock();
 		level.blockEvent(worldPosition, block, 1, numPlayersUsing);
 		level.updateNeighborsAt(worldPosition, block);
-	}
-
-	@Override
-	public void clearCache() {
-		super.clearCache();
-		if(itemHandler != null) {
-			itemHandler.invalidate();
-			itemHandler = null;
-		}
 	}
 
 	@Override

@@ -24,8 +24,8 @@ package com.favouriteless.enchanted.common.containers;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
-import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
+import com.favouriteless.enchanted.common.tileentity.DistilleryBlockEntity;
+import com.favouriteless.enchanted.common.tileentity.InventoryBlockEntityBase;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -37,7 +37,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 
 public class DistilleryContainer extends ProcessingContainerBase {
 
-    public DistilleryContainer(final int windowId, final Inventory playerInventory, final InventoryTileEntityBase tileEntity, final ContainerData data) {
+    public DistilleryContainer(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
         super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
 
         // Container Inventory
@@ -53,7 +53,7 @@ public class DistilleryContainer extends ProcessingContainerBase {
     }
 
     public DistilleryContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, DistilleryTileEntity.class), new SimpleContainerData(3));
+        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
     }
 
     @Override

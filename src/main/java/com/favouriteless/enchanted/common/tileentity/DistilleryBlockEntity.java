@@ -24,25 +24,25 @@ package com.favouriteless.enchanted.common.tileentity;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryTileEntity extends ProcessingTileEntityBase implements IAltarPowerConsumer {
+public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer {
 
     private DistilleryRecipe currentRecipe;
     private final List<BlockPos> potentialAltars = new ArrayList<>();
@@ -53,14 +53,11 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
-            switch(index) {
-                case 0:
-                    return cookTime;
-                case 1:
-                    return cookTimeTotal;
-                default:
-                    return 0;
-            }
+            return switch(index) {
+                case 0 -> cookTime;
+                case 1 -> cookTimeTotal;
+                default -> 0;
+            };
         }
 
         @Override
@@ -79,16 +76,13 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
         }
     };
 
-    public DistilleryTileEntity(BlockEntityType<?> typeIn) {
-        super(typeIn, NonNullList.withSize(7, ItemStack.EMPTY));
-    }
-
-    public DistilleryTileEntity() {
-        this(EnchantedTileEntityTypes.DISTILLERY.get());
+    public DistilleryBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state, NonNullList.withSize(7, ItemStack.EMPTY));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         AltarPowerHelper.savePosTag(potentialAltars, nbt);
         nbt.putInt("burnTime", burnTime);
         nbt.putInt("cookTime", cookTime);
@@ -96,21 +90,21 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt) {
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
         burnTime = nbt.getInt("burnTime");
         cookTime = nbt.getInt("cookTime");
         cookTimeTotal = nbt.getInt("cookTimeTotal");
     }
 
-    @Override
     public void tick() {
         boolean isBurning = isBurning();
         boolean shouldSave = false;
 
         if (level != null && !level.isClientSide) {
             matchRecipe();
-            AltarTileEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+            AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
 
             if(canDistill(currentRecipe) && altar != null) {
                 if(altar.currentPower > 10.0D) {

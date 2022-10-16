@@ -21,20 +21,21 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.UUID;
 
-public class BloodPoppyTileEntity extends BlockEntity {
+public class BloodPoppyBlockEntity extends BlockEntity {
 
     private UUID uuid = null;
     private String name = null;
 
-    public BloodPoppyTileEntity() {
-        super(EnchantedTileEntityTypes.BLOOD_POPPY.get());
+    public BloodPoppyBlockEntity(BlockPos pos, BlockState state) {
+        super(EnchantedBlockEntityTypes.BLOOD_POPPY.get(), pos, state);
     }
 
     public UUID getUUID() {
@@ -59,14 +60,16 @@ public class BloodPoppyTileEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
-        if(uuid != null) nbt.putUUID("uuid", uuid);
-        return super.save(nbt);
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        if(uuid != null)
+            nbt.putUUID("uuid", uuid);
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt) {
-        super.load(state, nbt);
-        if(nbt.contains("uuid")) this.uuid = nbt.getUUID("uuid");
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        if(nbt.contains("uuid"))
+            this.uuid = nbt.getUUID("uuid");
     }
 }

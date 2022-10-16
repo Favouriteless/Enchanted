@@ -26,10 +26,10 @@ import com.favouriteless.enchanted.client.render.tileentity.CauldronWaterRendere
 import com.favouriteless.enchanted.client.render.tileentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.screens.*;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -53,10 +53,10 @@ public class ClientSetupEvents {
 		EnchantedBlocks.initRender();
 		EnchantedEntityTypes.registerEntityRenderers();
 
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(EnchantedTileEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedBlockEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 10));
+		ClientRegistry.bindTileEntityRenderer(EnchantedBlockEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(dispatcher, 8));
+		ClientRegistry.bindTileEntityRenderer(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(EnchantedBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
 	}
 
 	@SubscribeEvent

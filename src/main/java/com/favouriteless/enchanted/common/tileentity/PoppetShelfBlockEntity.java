@@ -22,9 +22,10 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
-import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,12 +40,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
-public class PoppetShelfTileEntity extends BlockEntity implements MenuProvider {
+public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider {
 
 	public PoppetShelfInventory inventory = null;
 
-	public PoppetShelfTileEntity() {
-		super(EnchantedTileEntityTypes.POPPET_SHELF.get());
+	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
+		super(EnchantedBlockEntityTypes.POPPET_SHELF.get(), pos, state);
 	}
 
 	@Override
@@ -68,9 +69,7 @@ public class PoppetShelfTileEntity extends BlockEntity implements MenuProvider {
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag nbt = new CompoundTag();
-		getInventory().save(nbt);
-		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
@@ -86,8 +85,8 @@ public class PoppetShelfTileEntity extends BlockEntity implements MenuProvider {
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag tag) {
-		super.handleUpdateTag(state, tag);
+	public void handleUpdateTag( CompoundTag tag) {
+		super.handleUpdateTag(tag);
 		getInventory().load(tag);
 	}
 
@@ -101,9 +100,4 @@ public class PoppetShelfTileEntity extends BlockEntity implements MenuProvider {
 		return inventory;
 	}
 
-	@Override
-	public void load(BlockState state, CompoundTag nbt) {
-		super.load(state, nbt);
-		setChanged();
-	}
 }

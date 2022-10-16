@@ -23,18 +23,19 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.recipes.*;
+import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe.Serializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class EnchantedRecipeTypes {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Enchanted.MOD_ID);
 
     public static RecipeType<WitchOvenRecipe> WITCH_OVEN;
-    public static RegistryObject<WitchOvenRecipe.Serializer> WITCH_OVEN_SERIALIZER = RECIPE_SERIALIZERS.register("witch_oven", WitchOvenRecipe.Serializer::new);
+    public static RegistryObject<Serializer> WITCH_OVEN_SERIALIZER = RECIPE_SERIALIZERS.register("witch_oven", WitchOvenRecipe.Serializer::new);
 
     public static RecipeType<DistilleryRecipe> DISTILLERY;
     public static RegistryObject<DistilleryRecipe.Serializer> DISTILLERY_SERIALIZER = RECIPE_SERIALIZERS.register("distillery", DistilleryRecipe.Serializer::new);

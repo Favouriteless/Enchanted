@@ -57,10 +57,10 @@ public class BroomstickItem extends Item {
 			broom.xo = pos.getX()+0.5D;
 			broom.yo = pos.getY();
 			broom.zo = pos.getZ()+0.5D;
-			broom.yRot = context.getPlayer().yRot;
+			broom.setYRot(context.getPlayer().getYRot());;
 			context.getLevel().addFreshEntity(broom);
 
-			if(!context.getPlayer().abilities.instabuild) // Player not in creative
+			if(!context.getPlayer().getAbilities().instabuild) // Player not in creative
 				context.getItemInHand().shrink(1);
 		}
 		return InteractionResult.PASS;

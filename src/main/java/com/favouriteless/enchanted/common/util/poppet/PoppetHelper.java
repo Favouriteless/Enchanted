@@ -30,6 +30,8 @@ import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -104,6 +106,7 @@ public class PoppetHelper {
 				if(poppet.canProtect(player)) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
 						poppet.protect(player);
+						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundCategory.PLAYERS, 1.0F, 0.5F);
 						return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
 					return PoppetResult.FAIL;

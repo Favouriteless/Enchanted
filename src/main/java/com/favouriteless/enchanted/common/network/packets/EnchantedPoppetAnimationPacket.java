@@ -32,8 +32,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
@@ -72,7 +70,6 @@ public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 				mc.particleEngine.createTrackingEmitter(entity, new TwoToneColouredData(EnchantedParticles.POPPET.get(),
 						poppetColour.rPrimary, poppetColour.gPrimary, poppetColour.gSecondary,
 						poppetColour.rSecondary, poppetColour.gSecondary, poppetColour.bSecondary), 40);
-				entity.level.playSound(null, entity.blockPosition(), SoundEvents.TOTEM_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if(entity == mc.player) {
 					PoppetAnimationManager.startAnimation(result, item);

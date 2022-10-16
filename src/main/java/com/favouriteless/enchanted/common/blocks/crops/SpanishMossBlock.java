@@ -21,15 +21,17 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.VineBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SpanishMossBlock extends VineBlock {
 
@@ -40,7 +42,7 @@ public class SpanishMossBlock extends VineBlock {
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext pContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockState blockstate = pContext.getLevel().getBlockState(pContext.getClickedPos());
         boolean flag = blockstate.is(this);
         BlockState blockstate1 = flag ? blockstate : this.defaultBlockState().setValue(SOUTH, false);
@@ -58,7 +60,7 @@ public class SpanishMossBlock extends VineBlock {
         return flag ? blockstate1 : null;
     }
 
-    private boolean canSupportAtFace(IBlockReader pLevel, BlockPos pPos, Direction pDirection) {
+    private boolean canSupportAtFace(BlockGetter pLevel, BlockPos pPos, Direction pDirection) {
         if (pDirection == Direction.DOWN) {
             return false;
         } else {

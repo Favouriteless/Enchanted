@@ -21,44 +21,46 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class SimpleContainerBlockBase<T extends LockableLootTileEntity> extends ContainerBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public abstract class SimpleContainerBlockBase<T extends RandomizableContainerBlockEntity> extends BaseEntityBlock {
 
 	public SimpleContainerBlockBase(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
 		if(!worldIn.isClientSide) {
-			TileEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof LockableLootTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (LockableLootTileEntity)tileEntity, pos);
-				return ActionResultType.SUCCESS;
+			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+			if(tileEntity instanceof RandomizableContainerBlockEntity) {
+				NetworkHooks.openGui((ServerPlayer) player, (RandomizableContainerBlockEntity)tileEntity, pos);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileEntity = world.getBlockEntity(blockPos);
-			if (tileEntity instanceof LockableLootTileEntity) {
-				InventoryHelper.dropContents(world, blockPos, (LockableLootTileEntity)tileEntity);
+			BlockEntity tileEntity = world.getBlockEntity(blockPos);
+			if (tileEntity instanceof RandomizableContainerBlockEntity) {
+				Containers.dropContents(world, blockPos, (RandomizableContainerBlockEntity)tileEntity);
 			}
 			super.onRemove(state, world, blockPos, newState, isMoving);
 		}

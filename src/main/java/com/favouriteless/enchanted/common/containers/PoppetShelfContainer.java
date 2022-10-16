@@ -25,18 +25,18 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class PoppetShelfContainer extends ContainerBase {
 
-	public PoppetShelfContainer(int id, PlayerInventory playerInventory, PoppetShelfTileEntity tileEntity) {
-		super(EnchantedContainers.POPPET_SHELF.get(), id, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
+	public PoppetShelfContainer(int id, Inventory playerInventory, PoppetShelfTileEntity tileEntity) {
+		super(EnchantedContainers.POPPET_SHELF.get(), id, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
 
 		for(int i = 0; i < tileEntity.getInventory().getContainerSize(); i++)
 			addSlot(new PoppetSlot(tileEntity.getInventory(), i, 47 + i*22, 18));
@@ -44,12 +44,12 @@ public class PoppetShelfContainer extends ContainerBase {
 		addInventorySlots(playerInventory, 8, 49);
 	}
 
-	public PoppetShelfContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public PoppetShelfContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
 		this(windowId, playerInventory, (PoppetShelfTileEntity)getTileEntity(playerInventory, data, PoppetShelfTileEntity.class));
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack;
 		Slot slot = this.slots.get(index);
 
@@ -84,7 +84,7 @@ public class PoppetShelfContainer extends ContainerBase {
 
 	public static class PoppetSlot extends Slot {
 
-		public PoppetSlot(IInventory container, int index, int x, int y) {
+		public PoppetSlot(Container container, int index, int x, int y) {
 			super(container, index, x, y);
 		}
 

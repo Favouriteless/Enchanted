@@ -25,15 +25,15 @@ package com.favouriteless.enchanted.client.render.entity;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.common.entities.BroomstickEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -43,17 +43,17 @@ public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/entity/broomstick.png");
 	protected final BroomstickModel model = new BroomstickModel();
 
-	public BroomstickRenderer(EntityRendererManager manager) {
+	public BroomstickRenderer(EntityRenderDispatcher manager) {
 		super(manager);
 	}
 
 	@Override
-	public void render(BroomstickEntity entity, float yaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
+	public void render(BroomstickEntity entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 
 		matrix.translate(0.0D, 0.7D, 0.0D);
 		matrix.mulPose(Vector3f.YP.rotationDegrees(180.0F - yaw));
-		matrix.mulPose(Vector3f.XP.rotationDegrees(180.0F - MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot)));
+		matrix.mulPose(Vector3f.XP.rotationDegrees(180.0F - Mth.lerp(partialTicks, entity.xRotO, entity.xRot)));
 
 		float f = entity.getHurtTime() - partialTicks;
 		float f1 = entity.getDamage() - partialTicks;
@@ -61,11 +61,11 @@ public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 			f1 = 0.0F;
 		}
 		if (f > 0.0F) {
-			matrix.mulPose(Vector3f.XP.rotationDegrees(MathHelper.sin(f) * f * f1 / 10.0F * (float)entity.getHurtDir()));
+			matrix.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)entity.getHurtDir()));
 		}
 
 		this.model.setupAnim(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-		IVertexBuilder ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
+		VertexConsumer ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
 		this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		matrix.popPose();
 

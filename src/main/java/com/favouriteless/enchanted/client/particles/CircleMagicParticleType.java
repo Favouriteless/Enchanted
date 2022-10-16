@@ -25,10 +25,10 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -55,9 +55,9 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 		return CODEC;
 	}
 
-	public static class CircleMagicData implements IParticleData {
+	public static class CircleMagicData implements ParticleOptions {
 
-		public static final IParticleData.IDeserializer<CircleMagicData> DESERIALIZER = new IParticleData.IDeserializer<CircleMagicData>() {
+		public static final ParticleOptions.Deserializer<CircleMagicData> DESERIALIZER = new ParticleOptions.Deserializer<CircleMagicData>() {
 			public CircleMagicData fromCommand(ParticleType<CircleMagicData> particleType, StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
 				int red = reader.readInt();
@@ -75,7 +75,7 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 				return new CircleMagicData(particleType, red, green, blue, centerX, centerZ, radius);
 			}
 
-			public CircleMagicData fromNetwork(ParticleType<CircleMagicData> particleType, PacketBuffer buffer) {
+			public CircleMagicData fromNetwork(ParticleType<CircleMagicData> particleType, FriendlyByteBuf buffer) {
 				return new CircleMagicData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
 			}
 		};
@@ -105,7 +105,7 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 		}
 
 		@Override
-		public void writeToNetwork(PacketBuffer buffer) {
+		public void writeToNetwork(FriendlyByteBuf buffer) {
 			buffer.writeInt(red);
 			buffer.writeInt(green);
 			buffer.writeInt(blue);

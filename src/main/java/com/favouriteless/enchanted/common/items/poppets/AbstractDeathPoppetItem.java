@@ -22,8 +22,8 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.common.init.PoppetColour;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.function.Predicate;
 
@@ -50,12 +50,12 @@ public abstract class AbstractDeathPoppetItem extends AbstractPoppetItem {
 	 * True if extra requirements are met (for example, random chance)
 	 * @return
 	 */
-	public abstract boolean canProtect(PlayerEntity player);
+	public abstract boolean canProtect(Player player);
 
 	/**
 	 * Apply protection effects to the given player
 	 * @param player
 	 */
-	public abstract void protect(PlayerEntity player);
+	public abstract void protect(Player player);
 
 }

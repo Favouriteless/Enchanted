@@ -21,17 +21,17 @@
 
 package com.favouriteless.enchanted.common.recipes;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
+public abstract class CauldronTypeRecipe implements Recipe<Container> {
 
-    protected final IRecipeType<?> type;
+    protected final RecipeType<?> type;
     protected final ResourceLocation id;
 
     private final NonNullList<ItemStack> itemsIn;
@@ -45,7 +45,7 @@ public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
     private final int finalGreen;
     private final int finalBlue;
 
-    public CauldronTypeRecipe(IRecipeType<?> type, ResourceLocation id, NonNullList<ItemStack> itemsIn, ItemStack itemOut, int power, int[] cookingColour, int[] finalColour) {
+    public CauldronTypeRecipe(RecipeType<?> type, ResourceLocation id, NonNullList<ItemStack> itemsIn, ItemStack itemOut, int power, int[] cookingColour, int[] finalColour) {
         this.type = type;
         this.id = id;
 
@@ -68,7 +68,7 @@ public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
      * @return isMatch
      */
     @Override
-    public boolean matches(IInventory inventory, World world) {
+    public boolean matches(Container inventory, Level world) {
         if(inventory.isEmpty() || inventory.getContainerSize() > itemsIn.size())
             return false; // Too many items
 
@@ -88,7 +88,7 @@ public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
      * @param world
      * @return isMatch
      */
-    public boolean fullMatch(IInventory inventory, World world) {
+    public boolean fullMatch(Container inventory, Level world) {
         if(inventory.getContainerSize() != itemsIn.size()) // Same number of items
             return false;
 
@@ -140,7 +140,7 @@ public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         return null;
     }
 
@@ -155,7 +155,7 @@ public abstract class CauldronTypeRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return type;
     }
 

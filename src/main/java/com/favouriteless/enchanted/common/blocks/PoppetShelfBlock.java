@@ -24,26 +24,28 @@ package com.favouriteless.enchanted.common.blocks;
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class PoppetShelfBlock extends ContainerBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class PoppetShelfBlock extends BaseEntityBlock {
 
 	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
@@ -53,36 +55,36 @@ public class PoppetShelfBlock extends ContainerBlock {
 
 	@Nullable
 	@Override
-	public TileEntity newBlockEntity(IBlockReader reader) {
+	public BlockEntity newBlockEntity(BlockGetter reader) {
 		return new PoppetShelfTileEntity();
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader level, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
 		if(!worldIn.isClientSide) {
-			TileEntity tileEntity = worldIn.getBlockEntity(pos);
+			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 			if(tileEntity instanceof PoppetShelfTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (PoppetShelfTileEntity)tileEntity, pos);
-				return ActionResultType.SUCCESS;
+				NetworkHooks.openGui((ServerPlayer) player, (PoppetShelfTileEntity)tileEntity, pos);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if(state.getBlock() != newState.getBlock()) {
-			TileEntity tileEntity = world.getBlockEntity(blockPos);
+			BlockEntity tileEntity = world.getBlockEntity(blockPos);
 			if(tileEntity instanceof PoppetShelfTileEntity) {
 				PoppetShelfTileEntity shelf = (PoppetShelfTileEntity) tileEntity;
 				if(!world.isClientSide)

@@ -27,13 +27,13 @@ import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Queue;
 import java.util.Random;
@@ -50,10 +50,10 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static boolean belongsTo(ItemStack item, PlayerEntity player) {
+	public static boolean belongsTo(ItemStack item, Player player) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
 			if(item.hasTag()) {
-				CompoundNBT tag = item.getTag();
+				CompoundTag tag = item.getTag();
 				if(tag.hasUUID("boundPlayer")) {
 					return tag.getUUID("boundPlayer").equals(player.getUUID());
 				}
@@ -65,7 +65,7 @@ public class PoppetHelper {
 	public static boolean belongsTo(ItemStack item, UUID uuid) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
 			if(item.hasTag()) {
-				CompoundNBT tag = item.getTag();
+				CompoundTag tag = item.getTag();
 				if(tag.hasUUID("boundPlayer")) {
 					return tag.getUUID("boundPlayer").equals(uuid);
 				}
@@ -74,16 +74,16 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static PlayerEntity getBoundPlayer(ItemStack item, World world) {
+	public static Player getBoundPlayer(ItemStack item, Level world) {
 		if(isBound(item)) {
 			return world.getPlayerByUUID(item.getTag().getUUID("boundPlayer"));
 		}
 		return null;
 	}
 
-	public static void bind(ItemStack item, PlayerEntity player) {
+	public static void bind(ItemStack item, Player player) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
-			CompoundNBT tag = item.getOrCreateTag();
+			CompoundTag tag = item.getOrCreateTag();
 			tag.putUUID("boundPlayer", player.getUUID());
 			item.setTag(tag);
 		}
@@ -92,21 +92,21 @@ public class PoppetHelper {
 	public static void unbind(ItemStack item) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
 			if(item.hasTag()) {
-				CompoundNBT tag = item.getTag();
+				CompoundTag tag = item.getTag();
 				tag.remove("boundPlayer");
 				item.setTag(tag);
 			}
 		}
 	}
 
-	public static PoppetResult tryUseDeathPoppet(PlayerEntity player, ItemStack poppetStack, ServerWorld level, String shelfIdentifier) {
+	public static PoppetResult tryUseDeathPoppet(Player player, ItemStack poppetStack, ServerLevel level, String shelfIdentifier) {
 		if(poppetStack.getItem() instanceof AbstractDeathPoppetItem) {
 			AbstractDeathPoppetItem poppet = (AbstractDeathPoppetItem)poppetStack.getItem();
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(poppet.canProtect(player)) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
 						poppet.protect(player);
-						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundCategory.PLAYERS, 1.0F, 0.5F);
+						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 0.5F);
 						return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
 					return PoppetResult.FAIL;
@@ -116,7 +116,7 @@ public class PoppetHelper {
 		return PoppetResult.PASS;
 	}
 
-	public static boolean tryUseDeathPoppetQueue(Queue<ItemStack> queue, PlayerEntity player) {
+	public static boolean tryUseDeathPoppetQueue(Queue<ItemStack> queue, Player player) {
 		while(!queue.isEmpty()) {
 			ItemStack poppetItem = queue.remove();
 			if(handleTryUseDeathPoppet(player, poppetItem, null))
@@ -125,7 +125,7 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static boolean tryUseDeathPoppetEntryQueue(Queue<PoppetEntry> queue, PlayerEntity player) {
+	public static boolean tryUseDeathPoppetEntryQueue(Queue<PoppetEntry> queue, Player player) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
 			if(handleTryUseDeathPoppet(player, entry.getItem(), entry.getShelfIdentifier()))
@@ -134,13 +134,13 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static boolean handleTryUseDeathPoppet(PlayerEntity player, ItemStack item, String shelfIdentifier) {
+	public static boolean handleTryUseDeathPoppet(Player player, ItemStack item, String shelfIdentifier) {
 		ItemStack poppetItemOriginal = item.copy();
-		PoppetResult result = PoppetHelper.tryUseDeathPoppet(player, item, (ServerWorld)player.level, shelfIdentifier);
+		PoppetResult result = PoppetHelper.tryUseDeathPoppet(player, item, (ServerLevel)player.level, shelfIdentifier);
 		return handlePoppetResult(result, poppetItemOriginal, player);
 	}
 
-	public static PoppetResult tryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, ServerWorld level, String shelfIdentifier) {
+	public static PoppetResult tryUseItemProtectionPoppet(Player player, ItemStack poppetStack, ItemStack toolStack, ServerLevel level, String shelfIdentifier) {
 		if(poppetStack.getItem() instanceof ItemProtectionPoppetItem) {
 			ItemProtectionPoppetItem poppet = (ItemProtectionPoppetItem)poppetStack.getItem();
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
@@ -154,7 +154,7 @@ public class PoppetHelper {
 		return PoppetResult.PASS;
 	}
 
-	public static boolean tryUseItemProtectionPoppetQueue(Queue<ItemStack> queue, PlayerEntity player, ItemStack toolStack) {
+	public static boolean tryUseItemProtectionPoppetQueue(Queue<ItemStack> queue, Player player, ItemStack toolStack) {
 		while(!queue.isEmpty()) {
 			ItemStack poppetItem = queue.remove();
 			if(handleTryUseItemProtectionPoppet(player, poppetItem, toolStack, null))
@@ -163,7 +163,7 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static boolean tryUseItemProtectionPoppetEntryQueue(Queue<PoppetEntry> queue, PlayerEntity player, ItemStack toolStack) {
+	public static boolean tryUseItemProtectionPoppetEntryQueue(Queue<PoppetEntry> queue, Player player, ItemStack toolStack) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
 			if(handleTryUseItemProtectionPoppet(player, entry.getItem(), toolStack, entry.getShelfIdentifier()))
@@ -172,9 +172,9 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static boolean handleTryUseItemProtectionPoppet(PlayerEntity player, ItemStack poppetStack, ItemStack toolStack, String shelfIdentifier) {
+	public static boolean handleTryUseItemProtectionPoppet(Player player, ItemStack poppetStack, ItemStack toolStack, String shelfIdentifier) {
 		ItemStack poppetItemOriginal = poppetStack.copy();
-		PoppetResult result = PoppetHelper.tryUseItemProtectionPoppet(player, poppetStack, toolStack, (ServerWorld)player.level, shelfIdentifier);
+		PoppetResult result = PoppetHelper.tryUseItemProtectionPoppet(player, poppetStack, toolStack, (ServerLevel)player.level, shelfIdentifier);
 		return handlePoppetResult(result, poppetItemOriginal, player);
 	}
 
@@ -184,7 +184,7 @@ public class PoppetHelper {
 	 * @param item
 	 * @return True if poppet is destroyed
 	 */
-	public static boolean tryDamagePoppet(ItemStack item, ServerWorld level, String shelfIdentifier) {
+	public static boolean tryDamagePoppet(ItemStack item, ServerLevel level, String shelfIdentifier) {
 		item.setDamageValue(item.getDamageValue()+1);
 		if(item.getDamageValue() >= item.getMaxDamage()) {
 			item.shrink(1);
@@ -201,7 +201,7 @@ public class PoppetHelper {
 		return false;
 	}
 
-	private static boolean handlePoppetResult(PoppetResult result, ItemStack poppetItemOriginal, PlayerEntity player) {
+	private static boolean handlePoppetResult(PoppetResult result, ItemStack poppetItemOriginal, Player player) {
 		if(result == PoppetResult.SUCCESS || result == PoppetResult.SUCCESS_BREAK) {
 			if(!player.level.isClientSide)
 				EnchantedPackets.sendToAllPlayers(new EnchantedPoppetAnimationPacket(result, poppetItemOriginal, player.getId()));

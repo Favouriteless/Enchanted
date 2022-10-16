@@ -21,26 +21,26 @@
 
 package com.favouriteless.enchanted.common.util.poppet;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.AbstractList;
 
-public class PoppetShelfInventory extends AbstractList<ItemStack> implements IInventory {
+public class PoppetShelfInventory extends AbstractList<ItemStack> implements Container {
 
-	private final World level;
+	private final Level level;
 	private final BlockPos pos;
 	private final String identifier;
 	public NonNullList<ItemStack> inventoryContents = NonNullList.withSize(4, ItemStack.EMPTY);
 
-	public PoppetShelfInventory(World level, BlockPos pos) {
+	public PoppetShelfInventory(Level level, BlockPos pos) {
 		this.level = level;
 		this.pos = pos;
 		identifier = PoppetShelfWorldSavedData.getShelfIdentifier(level, pos);
@@ -63,12 +63,12 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements IIn
 
 	@Override
 	public ItemStack removeItem(int index, int count) {
-		return ItemStackHelper.removeItem(this, index, count);
+		return ContainerHelper.removeItem(this, index, count);
 	}
 
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {;
-		return ItemStackHelper.takeItem(this, index);
+		return ContainerHelper.takeItem(this, index);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements IIn
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return false;
 	}
 
@@ -92,25 +92,25 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements IIn
 		inventoryContents.clear();
 	}
 
-	public void save(CompoundNBT nbt) {
-		ListNBT list = new ListNBT();
+	public void save(CompoundTag nbt) {
+		ListTag list = new ListTag();
 		for(ItemStack itemStack : inventoryContents) {
-			CompoundNBT itemTag = new CompoundNBT();
+			CompoundTag itemTag = new CompoundTag();
 			itemStack.save(itemTag);
 			list.add(itemTag);
 		}
 		nbt.put("items", list);
 	}
 
-	public void load(CompoundNBT nbt) {
-		ListNBT list = nbt.getList("items", 10);
+	public void load(CompoundTag nbt) {
+		ListTag list = nbt.getList("items", 10);
 		for(int i = 0; i < list.size(); i++) {
-			CompoundNBT tag = (CompoundNBT)list.get(i);
+			CompoundTag tag = (CompoundTag)list.get(i);
 			inventoryContents.set(i, ItemStack.of(tag));
 		}
 	}
 
-	public World getLevel() {
+	public Level getLevel() {
 		return level;
 	}
 

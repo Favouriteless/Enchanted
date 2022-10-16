@@ -27,17 +27,17 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 public class RiteOfTranspositionPlayer extends AbstractRite {
 
@@ -50,11 +50,11 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
     @Override
     public void execute() {
         ItemStack waystone = itemsConsumed.get(0);
-        PlayerEntity caster = world.getPlayerByUUID(casterUUID);
+        Player caster = world.getPlayerByUUID(casterUUID);
 
         if(caster != null && waystone.hasTag()) {
-            CompoundNBT nbt = waystone.getTag();
-            ServerWorld targetWorld;
+            CompoundTag nbt = waystone.getTag();
+            ServerLevel targetWorld;
             double x;
             double y;
             double z;
@@ -68,13 +68,13 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
                     return;
                 }
 
-                targetWorld = (ServerWorld)targetEntity.level;
+                targetWorld = (ServerLevel)targetEntity.level;
                 x = targetEntity.getX();
                 y = targetEntity.getY();
                 z = targetEntity.getZ();
             }
             else {
-                RegistryKey<World> dimensionKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")));
+                ResourceKey<Level> dimensionKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")));
                 targetWorld = caster.getServer().getLevel(dimensionKey);
                 x = nbt.getInt("xPos");
                 y = nbt.getInt("yPos");
@@ -82,13 +82,13 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
             }
 
             if(targetWorld != null) {
-                spawnParticles((ServerWorld) caster.level, caster.getX(), caster.getY(), caster.getZ());
-                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundCategory.MASTER, 1.0F, 1.0F);
+                spawnParticles((ServerLevel) caster.level, caster.getX(), caster.getY(), caster.getZ());
+                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
                 if(caster.level != targetWorld) {
                     caster.changeDimension(targetWorld);
                 }
                 caster.teleportTo(x + 0.5D, y + 0.5D, z + 0.5D);
-                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
                 spawnParticles(targetWorld, x + 0.5D, y, z + 0.5D);
             }
             else {
@@ -102,7 +102,7 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
         stopExecuting();
     }
 
-    protected void spawnParticles(ServerWorld world, double x, double y, double z) {
+    protected void spawnParticles(ServerLevel world, double x, double y, double z) {
         for(int i = 0; i < 25; i++) {
             double dx = x - 0.5D + (Math.random() * 1.5D);
             double dy = y + (Math.random() * 2.0D);

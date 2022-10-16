@@ -21,9 +21,9 @@
 
 package com.favouriteless.enchanted.common.multiblock.altar;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum AltarPartIndex implements IStringSerializable {
+public enum AltarPartIndex implements StringRepresentable {
 
     UNFORMED("unformed", 0, 0, 0),
     P000("p000", 0, 0, 0),

@@ -26,23 +26,23 @@ import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
 import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelRecipe implements IRecipe<SpinningWheelTileEntity> {
+public class SpinningWheelRecipe implements Recipe<SpinningWheelTileEntity> {
 
-    private final IRecipeType<?> type;
+    private final RecipeType<?> type;
     private final ResourceLocation id;
 
     private final NonNullList<ItemStack> itemsIn;
@@ -58,7 +58,7 @@ public class SpinningWheelRecipe implements IRecipe<SpinningWheelTileEntity> {
     }
 
     @Override
-    public boolean matches(SpinningWheelTileEntity inv, World worldIn) {
+    public boolean matches(SpinningWheelTileEntity inv, Level worldIn) {
         ItemStack mainIn = inv.getItem(0);
         if(!mainIn.sameItem(itemsIn.get(0)) || mainIn.getCount() < itemsIn.get(0).getCount()) // If "main" input does not match
             return false;
@@ -108,12 +108,12 @@ public class SpinningWheelRecipe implements IRecipe<SpinningWheelTileEntity> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return EnchantedRecipeTypes.SPINNING_WHEEL_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return type;
     }
 
@@ -131,20 +131,20 @@ public class SpinningWheelRecipe implements IRecipe<SpinningWheelTileEntity> {
         return power;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SpinningWheelRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SpinningWheelRecipe> {
 
         @Override
         public SpinningWheelRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "inputs"));
-            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
-            int power = JSONUtils.getAsInt(json, "power", 0);
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "inputs"));
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
+            int power = GsonHelper.getAsInt(json, "power", 0);
 
             return new SpinningWheelRecipe(recipeId, itemsIn, result, power);
         }
 
         @Nullable
         @Override
-        public SpinningWheelRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public SpinningWheelRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             int ingredientSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
             for(int i = 0; i < ingredientSize; i++) {
@@ -158,7 +158,7 @@ public class SpinningWheelRecipe implements IRecipe<SpinningWheelTileEntity> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, SpinningWheelRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, SpinningWheelRecipe recipe) {
             NonNullList<ItemStack> items = recipe.getItemsIn();
             buffer.writeInt(items.size());
             items.forEach(buffer::writeItem);

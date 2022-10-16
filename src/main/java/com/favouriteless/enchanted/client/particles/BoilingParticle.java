@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,12 +30,12 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
-public class BoilingParticle extends SpriteTexturedParticle {
+public class BoilingParticle extends TextureSheetParticle {
 
     private static final Random RANDOM = new Random();
-    private final IAnimatedSprite sprites;
+    private final SpriteSet sprites;
 
-    protected BoilingParticle(ClientWorld world, double x, double y, double z, int red, int green, int blue, IAnimatedSprite pSprites) {
+    protected BoilingParticle(ClientLevel world, double x, double y, double z, int red, int green, int blue, SpriteSet pSprites) {
         super(world, x, y, z);
         this.rCol = red/255F;
         this.gCol = green/255F;
@@ -58,21 +58,21 @@ public class BoilingParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<SimpleColouredParticleType.SimpleColouredData> {
+    public static class Factory implements ParticleProvider<SimpleColouredParticleType.SimpleColouredData> {
 
-        private final IAnimatedSprite sprites;
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite pSprites) {
+        public Factory(SpriteSet pSprites) {
             this.sprites = pSprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new BoilingParticle(world, x, y, z, data.getRed(), data.getGreen(), data.getBlue(), sprites);
         }
     }

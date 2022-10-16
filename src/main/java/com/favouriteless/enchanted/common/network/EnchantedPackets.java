@@ -23,8 +23,8 @@ package com.favouriteless.enchanted.common.network;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -44,7 +44,7 @@ public class EnchantedPackets {
 		INSTANCE.registerMessage(id++, EnchantedPoppetAnimationPacket.class, EnchantedPoppetAnimationPacket::encode, EnchantedPoppetAnimationPacket::decode, EnchantedPoppetAnimationPacket::handle);
 	}
 
-	public static void sendToPlayer(EnchantedPacket packet, ServerPlayerEntity player) {
+	public static void sendToPlayer(EnchantedPacket packet, ServerPlayer player) {
 		if (player.connection != null)
 			INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}

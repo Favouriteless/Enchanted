@@ -31,11 +31,11 @@ import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,8 +51,8 @@ public class PoppetEvents {
 
 	@SubscribeEvent
 	public static void onEntityHurt(LivingHurtEvent event) {
-		if(event.getEntity() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity)event.getEntity();
+		if(event.getEntity() instanceof Player) {
+			Player player = (Player)event.getEntity();
 			if(event.getAmount() >= player.getHealth()) { // Player would be killed by damage
 
 				DamageSource source = event.getSource();
@@ -83,7 +83,7 @@ public class PoppetEvents {
 	public static void onItemBreak(PlayerDestroyItemEvent event) {
 		ItemStack tool = event.getOriginal();
 		if(!tool.getItem().is(EnchantedTags.TOOL_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !tool.getItem().is(EnchantedTags.TOOL_POPPET_WHITELIST))) {
-			PlayerEntity player = event.getPlayer();
+			Player player = event.getPlayer();
 
 			Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
 			for(ItemStack itemStack : player.inventory.items)
@@ -104,9 +104,9 @@ public class PoppetEvents {
 		}
 	}
 
-	public static void onLivingEntityBreak(LivingEntity entity, EquipmentSlotType slot) {
-		if(entity instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity)entity;
+	public static void onLivingEntityBreak(LivingEntity entity, EquipmentSlot slot) {
+		if(entity instanceof Player) {
+			Player player = (Player)entity;
 			ItemStack armourStack = entity.getItemBySlot(slot).copy();
 			if(!armourStack.getItem().is(EnchantedTags.ARMOUR_POPPET_BLACKLIST) && !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !armourStack.getItem().is(EnchantedTags.ARMOUR_POPPET_WHITELIST))) {
 

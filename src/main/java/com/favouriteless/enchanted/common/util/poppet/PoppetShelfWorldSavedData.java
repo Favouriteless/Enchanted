@@ -23,37 +23,37 @@ package com.favouriteless.enchanted.common.util.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DimensionSavedDataManager;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.*;
 
-public class PoppetShelfWorldSavedData extends WorldSavedData {
+public class PoppetShelfWorldSavedData extends SavedData {
 
 	private static final String NAME = "enchanted_poppets";
 	public final Map<UUID, List<PoppetEntry>> PLAYER_POPPETS = new HashMap<>();
 	public final Map<String, PoppetShelfInventory> SHELF_STORAGE = new HashMap<>();
-	public final ServerWorld level;
+	public final ServerLevel level;
 
-	public PoppetShelfWorldSavedData(ServerWorld world) {
+	public PoppetShelfWorldSavedData(ServerLevel world) {
 		super(NAME);
 		this.level = world;
 	}
 
-	public static PoppetShelfWorldSavedData get(World world) {
-		if (world instanceof ServerWorld) {
-			ServerWorld overworld = world.getServer().getLevel(World.OVERWORLD);
+	public static PoppetShelfWorldSavedData get(Level world) {
+		if (world instanceof ServerLevel) {
+			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
-			DimensionSavedDataManager storage = overworld.getDataStorage();
+			DimensionDataStorage storage = overworld.getDataStorage();
 			return storage.computeIfAbsent(() -> new PoppetShelfWorldSavedData(overworld), NAME);
 		}
 		else {
@@ -62,13 +62,13 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 	}
 
 	@Override
-	public void load(CompoundNBT nbt) {
+	public void load(CompoundTag nbt) {
 		for(String identifier : nbt.getAllKeys()) {
-			ServerWorld world = getLevelFromShelfIdentifier(identifier);
+			ServerLevel world = getLevelFromShelfIdentifier(identifier);
 			BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
 			PoppetShelfInventory inventory = new PoppetShelfInventory(world, pos);
 
-			inventory.load((CompoundNBT)nbt.get(identifier));
+			inventory.load((CompoundTag)nbt.get(identifier));
 			SHELF_STORAGE.put(identifier, inventory);
 			setupPoppetUUIDs(identifier, inventory);
 		}
@@ -76,9 +76,9 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		for(String identifier : SHELF_STORAGE.keySet()) {
-			CompoundNBT tag = new CompoundNBT();
+			CompoundTag tag = new CompoundTag();
 			PoppetShelfInventory inventory = SHELF_STORAGE.get(identifier);
 			inventory.save(tag);
 			nbt.put(identifier, tag);
@@ -88,9 +88,9 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 	}
 
 	public void updateShelf(String identifier) {
-		World level = getLevelFromShelfIdentifier(identifier);
+		Level level = getLevelFromShelfIdentifier(identifier);
 		BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
-		TileEntity tileEntity = level.getBlockEntity(pos);
+		BlockEntity tileEntity = level.getBlockEntity(pos);
 		if(tileEntity instanceof PoppetShelfTileEntity)
 			((PoppetShelfTileEntity)tileEntity).updateBlock();
 	}
@@ -122,18 +122,18 @@ public class PoppetShelfWorldSavedData extends WorldSavedData {
 		}
 	}
 
-	public static String getShelfIdentifier(TileEntity tileEntity) {
+	public static String getShelfIdentifier(BlockEntity tileEntity) {
 		BlockPos pos = tileEntity.getBlockPos();
 		return String.format("%s+%s+%s+%s", tileEntity.getLevel().dimension().location(), pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public static String getShelfIdentifier(World level, BlockPos pos) {
+	public static String getShelfIdentifier(Level level, BlockPos pos) {
 		return String.format("%s+%s+%s+%s", level.dimension().location(), pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public ServerWorld getLevelFromShelfIdentifier(String shelfIdentifier) {
+	public ServerLevel getLevelFromShelfIdentifier(String shelfIdentifier) {
 		String levelString = shelfIdentifier.substring(0, shelfIdentifier.indexOf("+"));
-		return level.getServer().getLevel(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(levelString)));
+		return level.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(levelString)));
 	}
 
 	public BlockPos getBlockPosFromShelfIdentifier(String shelfIdentifier) {

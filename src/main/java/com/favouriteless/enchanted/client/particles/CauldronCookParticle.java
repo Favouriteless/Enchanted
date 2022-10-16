@@ -23,13 +23,13 @@ package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class CauldronCookParticle extends SpriteTexturedParticle {
+public class CauldronCookParticle extends TextureSheetParticle {
 
     private static final Random RANDOM = new Random();
     public static final double ANGLE = 8.0D;
@@ -41,7 +41,7 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
 
     private double currentRadius;
 
-    protected CauldronCookParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
+    protected CauldronCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = Math.min((red + RANDOM.nextInt(40) - 20)/255F, 1.0F);
         this.gCol = Math.min((green + RANDOM.nextInt(40) - 20)/255F, 1.0F);
@@ -88,7 +88,7 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
             double cos = Math.cos(angle);
             double sin = Math.sin(angle);
 
-            Vector3d newPos = new Vector3d(
+            Vec3 newPos = new Vec3(
                     cos * (x - xStart) - sin * (z - zStart),
                     0,
                     sin * (x - xStart) + cos * (z - zStart)
@@ -101,21 +101,21 @@ public class CauldronCookParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<SimpleColouredData> {
+    public static class Factory implements ParticleProvider<SimpleColouredData> {
 
-        private final IAnimatedSprite sprites;
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite pSprites) {
+        public Factory(SpriteSet pSprites) {
             this.sprites = pSprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             CauldronCookParticle particle = new CauldronCookParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;

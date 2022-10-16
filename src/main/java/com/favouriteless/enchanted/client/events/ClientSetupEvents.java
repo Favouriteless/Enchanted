@@ -30,7 +30,7 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,11 +44,11 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		ScreenManager.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
-		ScreenManager.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
-		ScreenManager.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
-		ScreenManager.register(EnchantedContainers.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
-		ScreenManager.register(EnchantedContainers.POPPET_SHELF.get(), PoppetShelfScreen::new);
+		MenuScreens.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
+		MenuScreens.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
+		MenuScreens.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
+		MenuScreens.register(EnchantedContainers.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+		MenuScreens.register(EnchantedContainers.POPPET_SHELF.get(), PoppetShelfScreen::new);
 
 		EnchantedBlocks.initRender();
 		EnchantedEntityTypes.registerEntityRenderers();

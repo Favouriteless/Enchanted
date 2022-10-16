@@ -22,25 +22,27 @@
 package com.favouriteless.enchanted.common.blocks.chalk;
 
 import com.favouriteless.enchanted.common.init.EnchantedMaterials;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.core.Direction;
 import net.minecraft.block.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public abstract class AbstractChalkBlock extends Block {
 
     // BASE CLASS FOR CHALK STUFF, DONT CHANGE
     public AbstractChalkBlock() {
-        super(AbstractBlock.Properties.of(EnchantedMaterials.CHALK)
+        super(BlockBehaviour.Properties.of(EnchantedMaterials.CHALK)
                 .noCollission()
                 .strength(0.5f, 0f)
                 .sound(SoundType.STONE)
@@ -48,13 +50,13 @@ public abstract class AbstractChalkBlock extends Block {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
-        return VoxelShapes.create(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.0625, 1.0));
+        return Shapes.create(new AABB(0.0, 0.0, 0.0, 1.0, 0.0625, 1.0));
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         if (!worldIn.isClientSide()) {
             if (!state.canSurvive(worldIn, pos)) {
                 worldIn.removeBlock(pos, false);
@@ -63,7 +65,7 @@ public abstract class AbstractChalkBlock extends Block {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockPos blockpos = pos.below();
         BlockState blockstate = worldIn.getBlockState(blockpos);
         return blockstate.isFaceSturdy(worldIn, blockpos, Direction.UP);

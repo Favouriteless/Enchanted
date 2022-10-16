@@ -26,17 +26,24 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD)
 public class CircleTalismanItem extends Item {
@@ -46,14 +53,14 @@ public class CircleTalismanItem extends Item {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
-		World world = context.getLevel();
+	public InteractionResult useOn(UseOnContext context) {
+		Level world = context.getLevel();
 		BlockPos pos = context.getClickedPos().above();
 		ItemStack stack = context.getItemInHand();
 
 
 		if(stack.hasTag()) {
-			CompoundNBT nbt = stack.getTag();
+			CompoundTag nbt = stack.getTag();
 			byte small = nbt.contains("small") ? nbt.getByte("small") : 0;
 			byte medium = nbt.contains("medium") ? nbt.getByte("medium") : 0;
 			byte large = nbt.contains("large") ? nbt.getByte("large") : 0;
@@ -68,7 +75,7 @@ public class CircleTalismanItem extends Item {
 
 				if(validPlace) {
 					if(!world.isClientSide) {
-						world.setBlockAndUpdate(pos, EnchantedBlocks.CHALK_GOLD.get().getStateForPlacement(new BlockItemUseContext(context)));
+						world.setBlockAndUpdate(pos, EnchantedBlocks.CHALK_GOLD.get().getStateForPlacement(new BlockPlaceContext(context)));
 						if(small != 0)
 							CirclePart.SMALL.place(world, pos, small == 1 ? EnchantedBlocks.CHALK_WHITE.get() : small == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
 						if(medium != 0)
@@ -76,29 +83,29 @@ public class CircleTalismanItem extends Item {
 						if(large != 0)
 							CirclePart.LARGE.place(world, pos, large == 1 ? EnchantedBlocks.CHALK_WHITE.get() : large == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
 
-						stack.setTag(new CompoundNBT());
+						stack.setTag(new CompoundTag());
 					}
 
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 				else {
 					if(context.getPlayer() != null) {
-						context.getPlayer().displayClientMessage(new StringTextComponent("All blocks must be valid spots.").withStyle(TextFormatting.RED), true);
+						context.getPlayer().displayClientMessage(new TextComponent("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
 					}
 				}
 			}
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		event.enqueueWork(() ->
 		{
-			ItemModelsProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "small"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("small")*0.3F : 0F);
-			ItemModelsProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "medium"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("medium")*0.3F : 0F);
-			ItemModelsProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "large"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("large")*0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "small"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("small")*0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "medium"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("medium")*0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "large"), (stack, world, living) -> stack.hasTag() ? stack.getTag().getByte("large")*0.3F : 0F);
 		});
 	}
 }

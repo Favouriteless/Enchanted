@@ -24,9 +24,9 @@ package com.favouriteless.enchanted.client.events;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
-import net.minecraft.item.Items;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -54,7 +54,7 @@ public class ClientEvents {
 	@SubscribeEvent
 	public static void onItemTooltip(ItemTooltipEvent event) {
 		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && EnchantedConfig.DISABLE_TOTEMS.get()) {
-			event.getToolTip().add(new StringTextComponent("Totems are disabled (Enchanted config)").withStyle(TextFormatting.RED));
+			event.getToolTip().add(new TextComponent("Totems are disabled (Enchanted config)").withStyle(ChatFormatting.RED));
 		}
 	}
 }

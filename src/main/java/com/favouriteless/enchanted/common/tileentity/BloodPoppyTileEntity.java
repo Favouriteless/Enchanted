@@ -22,13 +22,13 @@
 package com.favouriteless.enchanted.common.tileentity;
 
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.UUID;
 
-public class BloodPoppyTileEntity extends TileEntity {
+public class BloodPoppyTileEntity extends BlockEntity {
 
     private UUID uuid = null;
     private String name = null;
@@ -59,13 +59,13 @@ public class BloodPoppyTileEntity extends TileEntity {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         if(uuid != null) nbt.putUUID("uuid", uuid);
         return super.save(nbt);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundTag nbt) {
         super.load(state, nbt);
         if(nbt.contains("uuid")) this.uuid = nbt.getUUID("uuid");
     }

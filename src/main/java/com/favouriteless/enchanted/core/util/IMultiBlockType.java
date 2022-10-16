@@ -21,9 +21,9 @@
 
 package com.favouriteless.enchanted.core.util;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
@@ -37,44 +37,44 @@ public interface IMultiBlockType {
      * @return anchor position or null in case this is not a valid (formed) multiblock
      */
     @Nullable
-    BlockPos getBottomLowerLeft(World world, BlockPos pos, BlockState state);
+    BlockPos getBottomLowerLeft(Level world, BlockPos pos, BlockState state);
 
     /**
      * Return a given block in the world to its unformed state.
      * This function can assume the given position refers to a valid multiblock part
      */
-    void unformBlock(World world, BlockPos pos);
+    void unformBlock(Level world, BlockPos pos);
 
     /**
      * Convert a given block in the world to its formed state for the given
      * relative position in the multiblock.
      * This function can assume the given position refers to a valid multiblock part
      */
-    void formBlock(World world, BlockPos pos, int dx, int dy, int dz);
+    void formBlock(Level world, BlockPos pos, int dx, int dy, int dz);
 
     /**
      * Return true if the given position is the bottom/lower/left position
      * of an unformed multiblock. i.e. it is possible to form a multiblock here
      */
-    boolean isValidUnformedMultiBlock(World world, BlockPos pos);
+    boolean isValidUnformedMultiBlock(Level world, BlockPos pos);
 
     /**
      * Return true if the given position is the bottom/lower/left position
      * of a formed multiblock
      */
-    boolean isValidFormedMultiBlock(World world, BlockPos pos);
+    boolean isValidFormedMultiBlock(Level world, BlockPos pos);
 
     /**
      * Returns true if the block in pos + dxdyxz is valid as formed for that position
      */
-    boolean isValidFormedBlock(World world, BlockPos pos, int dx, int dy, int dz);
+    boolean isValidFormedBlock(Level world, BlockPos pos, int dx, int dy, int dz);
 
     /**
      * Returns true if the block in pos + dxdyxz is valid as unformed for that position
      */
-    boolean isValidUnformedBlock(World world, BlockPos pos, int dx, int dy, int dz);
+    boolean isValidUnformedBlock(Level world, BlockPos pos, int dx, int dy, int dz);
 
-    void create(World world, BlockPos pos);
+    void create(Level world, BlockPos pos);
 
     /// The dimension of this multiblock type on the X axis
     int getWidth();

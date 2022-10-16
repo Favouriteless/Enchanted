@@ -21,11 +21,11 @@
 
 package com.favouriteless.enchanted.core.util;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.Random;
 
@@ -50,7 +50,7 @@ public class StaticItemStackHelper {
 	 * @param z
 	 * @param inventory
 	 */
-	public static void dropContentsNoChange(World level, double x, double y, double z, IInventory inventory) {
+	public static void dropContentsNoChange(Level level, double x, double y, double z, Container inventory) {
 		for(int i = 0; i < inventory.getContainerSize(); ++i) {
 			ItemStack item = inventory.getItem(i).copy();
 

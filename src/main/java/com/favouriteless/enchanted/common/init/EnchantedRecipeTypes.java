@@ -23,38 +23,38 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.recipes.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantedRecipeTypes {
 
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Enchanted.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Enchanted.MOD_ID);
 
-    public static IRecipeType<WitchOvenRecipe> WITCH_OVEN;
+    public static RecipeType<WitchOvenRecipe> WITCH_OVEN;
     public static RegistryObject<WitchOvenRecipe.Serializer> WITCH_OVEN_SERIALIZER = RECIPE_SERIALIZERS.register("witch_oven", WitchOvenRecipe.Serializer::new);
 
-    public static IRecipeType<DistilleryRecipe> DISTILLERY;
+    public static RecipeType<DistilleryRecipe> DISTILLERY;
     public static RegistryObject<DistilleryRecipe.Serializer> DISTILLERY_SERIALIZER = RECIPE_SERIALIZERS.register("distillery", DistilleryRecipe.Serializer::new);
 
-    public static IRecipeType<WitchCauldronRecipe> WITCH_CAULDRON;
+    public static RecipeType<WitchCauldronRecipe> WITCH_CAULDRON;
     public static RegistryObject<WitchCauldronRecipe.Serializer> WITCH_CAULDRON_SERIALIZER = RECIPE_SERIALIZERS.register("witch_cauldron", WitchCauldronRecipe.Serializer::new);
 
-    public static IRecipeType<KettleRecipe> KETTLE;
+    public static RecipeType<KettleRecipe> KETTLE;
     public static RegistryObject<KettleRecipe.Serializer> KETTLE_SERIALIZER = RECIPE_SERIALIZERS.register("kettle", KettleRecipe.Serializer::new);
 
-    public static IRecipeType<KettleRecipe> SPINNING_WHEEL;
+    public static RecipeType<KettleRecipe> SPINNING_WHEEL;
     public static RegistryObject<SpinningWheelRecipe.Serializer> SPINNING_WHEEL_SERIALIZER = RECIPE_SERIALIZERS.register("spinning_wheel", SpinningWheelRecipe.Serializer::new);
 
 
     public static void init() {
-        WITCH_OVEN = IRecipeType.register("witch_oven");
-        DISTILLERY = IRecipeType.register("distillery");
-        WITCH_CAULDRON = IRecipeType.register("witch_cauldron");
-        KETTLE = IRecipeType.register("kettle");
-        SPINNING_WHEEL = IRecipeType.register("spinning_wheel");
+        WITCH_OVEN = RecipeType.register("witch_oven");
+        DISTILLERY = RecipeType.register("distillery");
+        WITCH_CAULDRON = RecipeType.register("witch_cauldron");
+        KETTLE = RecipeType.register("kettle");
+        SPINNING_WHEEL = RecipeType.register("spinning_wheel");
     }
 
 }

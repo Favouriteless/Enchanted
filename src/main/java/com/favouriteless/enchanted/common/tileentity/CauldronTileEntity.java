@@ -28,28 +28,28 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -68,7 +68,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends LockableLootTileEntity implements ITickableTileEntity, IAltarPowerConsumer {
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+
+public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements TickableBlockEntity, IAltarPowerConsumer {
 
 	private final FluidTank tank;
 	private final LazyOptional<IFluidHandler> fluidHandler;
@@ -104,7 +110,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 	private int startBlue = targetBlue;
 	public long startTime = System.currentTimeMillis();
 
-	public CauldronTileEntity(TileEntityType<?> type, int bucketCapacity, int cookTime) {
+	public CauldronTileEntity(BlockEntityType<?> type, int bucketCapacity, int cookTime) {
 		super(type);
 		tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
 		fluidHandler = LazyOptional.of(() -> tank);
@@ -181,7 +187,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 						double dx = worldPosition.getX() + xOffset;
 						double dy = worldPosition.getY() + waterY;
 						double dz = worldPosition.getZ() + zOffset;
-						Vector3d velocity = new Vector3d(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+						Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
 
 						level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
 					}
@@ -203,15 +209,15 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 	public abstract void handleCookParticles(long time);
 
 	public int getRed(long time) {
-		return (int)Math.round(MathHelper.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startRed, targetRed));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startRed, targetRed));
 	}
 
 	public int getGreen(long time) {
-		return (int)Math.round(MathHelper.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startGreen, targetGreen));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startGreen, targetGreen));
 	}
 
 	public int getBlue(long time) {
-		return (int)Math.round(MathHelper.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startBlue, targetBlue));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startBlue, targetBlue));
 	}
 
 	private void setFailed() {
@@ -228,11 +234,11 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 		recalculateTargetColour();
 	}
 
-	public void takeContents(PlayerEntity player) {
+	public void takeContents(Player player) {
 		if(level != null && !level.isClientSide) {
 			if(isFailed) {
 				setWater(0);
-				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
 			else {
 				tank.drain(new FluidStack(Fluids.WATER, tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount()), IFluidHandler.FluidAction.EXECUTE);
@@ -244,7 +250,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 				else {
 					level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
 				}
-				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
 			itemOut.shrink(1);
 			if(itemOut.isEmpty()) {
@@ -280,7 +286,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 				}
 			}
 
-			if(level != null) level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			if(level != null) level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			itemEntity.kill();
 			recalculateTargetColour();
 			updateBlock();
@@ -378,7 +384,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		nbt.putInt("waterAmount", tank.getFluidAmount());
 		nbt.putInt("targetRed", targetRed);
 		nbt.putInt("targetGreen", targetGreen);
@@ -387,9 +393,9 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 		nbt.putBoolean("isComplete", isComplete);
 		nbt.putInt("warmingUp", warmingUp);
 		nbt.putInt("cookProgress", cookProgress);
-		ItemStackHelper.saveAllItems(nbt, inventoryContents);
+		ContainerHelper.saveAllItems(nbt, inventoryContents);
 		if(itemOut != ItemStack.EMPTY) {
-			CompoundNBT itemNbt = new CompoundNBT();
+			CompoundTag itemNbt = new CompoundTag();
 			itemNbt.putString("item", itemOut.getItem().getRegistryName().toString());
 			itemNbt.putInt("count", itemOut.getCount());
 			nbt.put("itemOut", itemNbt);
@@ -399,7 +405,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
+	public void load(BlockState state, CompoundTag nbt) {
 		super.load(state, nbt);
 		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
 		setWater(nbt.getInt("waterAmount"));
@@ -412,14 +418,14 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 		cookProgress = nbt.getInt("cookProgress");
 
 		// Have to load nbt weirdly because inventory is not a fixed size
-		ListNBT listnbt = nbt.getList("Items", 10);
+		ListTag listnbt = nbt.getList("Items", 10);
 		for(int i = 0; i < listnbt.size(); ++i) {
-			CompoundNBT compoundnbt = listnbt.getCompound(i);
+			CompoundTag compoundnbt = listnbt.getCompound(i);
 			inventoryContents.add(ItemStack.of(compoundnbt));
 		}
 
 		if(nbt.contains("itemOut")) {
-			CompoundNBT itemNbt = (CompoundNBT)nbt.get("itemOut");
+			CompoundTag itemNbt = (CompoundTag)nbt.get("itemOut");
 			itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
 		}
 
@@ -428,8 +434,8 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag nbt = new CompoundTag();
 		nbt.putInt("waterAmount", tank.getFluidAmount());
 		nbt.putInt("targetRed", targetRed);
 		nbt.putInt("targetGreen", targetGreen);
@@ -439,12 +445,12 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 		nbt.putInt("warmingUp", warmingUp);
 		nbt.putInt("cookProgress", cookProgress);
 		nbt.putBoolean("hasItems", !inventoryContents.isEmpty());
-		return new SUpdateTileEntityPacket(worldPosition, -1, nbt);
+		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		CompoundNBT nbt = pkt.getTag();
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		CompoundTag nbt = pkt.getTag();
 		setWater(nbt.getInt("waterAmount"));
 		isFailed = nbt.getBoolean("isFailed");
 		isComplete = nbt.getBoolean("isComplete");
@@ -488,7 +494,7 @@ public abstract class CauldronTileEntity<T extends CauldronTypeRecipe> extends L
 	}
 
 	@Override
-	protected Container createMenu(int pId, PlayerInventory pPlayer) {
+	protected AbstractContainerMenu createMenu(int pId, Inventory pPlayer) {
 		return null;
 	}
 

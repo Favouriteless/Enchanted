@@ -26,19 +26,19 @@ import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.tileentity.DistilleryTileEntity;
 import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 
 public class DistilleryContainer extends ProcessingContainerBase {
 
-    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final InventoryTileEntityBase tileEntity, final IIntArray data) {
-        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
+    public DistilleryContainer(final int windowId, final Inventory playerInventory, final InventoryTileEntityBase tileEntity, final ContainerData data) {
+        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
 
         // Container Inventory
         addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input
@@ -52,12 +52,12 @@ public class DistilleryContainer extends ProcessingContainerBase {
         addInventorySlots(playerInventory, 8, 84);
     }
 
-    public DistilleryContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, DistilleryTileEntity.class), new IntArray(3));
+    public DistilleryContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, DistilleryTileEntity.class), new SimpleContainerData(3));
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack;
         Slot slot = this.slots.get(index);
 

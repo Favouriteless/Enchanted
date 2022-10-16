@@ -26,9 +26,9 @@ import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
 import com.favouriteless.enchanted.client.render.entity.MandrakeRenderer;
 import com.favouriteless.enchanted.common.entities.BroomstickEntity;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.registries.DeferredRegister;
@@ -43,11 +43,11 @@ public class EnchantedEntityTypes {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> EntityType.Builder.<MandrakeEntity>of(MandrakeEntity::new, EntityClassification.MONSTER)
+    public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> EntityType.Builder.<MandrakeEntity>of(MandrakeEntity::new, MobCategory.MONSTER)
             .sized(0.4F, 0.7F)
             .build(new ResourceLocation(Enchanted.MOD_ID, "mandrake").toString()));
 
-    public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> EntityType.Builder.of(BroomstickEntity::new, EntityClassification.MISC)
+    public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> EntityType.Builder.of(BroomstickEntity::new, MobCategory.MISC)
             .sized(1.0F, 1.0F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(Enchanted.MOD_ID, "broomstick").toString()));

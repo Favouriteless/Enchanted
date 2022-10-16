@@ -22,10 +22,10 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.common.init.PoppetColour;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.function.Predicate;
 
@@ -36,14 +36,14 @@ public class DeathPoppetItem extends AbstractDeathPoppetItem {
 	}
 
 	@Override
-	public boolean canProtect(PlayerEntity player) {
+	public boolean canProtect(Player player) {
 		return true;
 	}
 
 	@Override
-	public void protect(PlayerEntity player) {
+	public void protect(Player player) {
 		player.setHealth(1);
-		player.addEffect(new EffectInstance(Effects.REGENERATION, 100, 1));
+		player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
 	}
 
 }

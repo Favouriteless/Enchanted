@@ -27,12 +27,12 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
 
 public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
 
@@ -51,10 +51,10 @@ public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
-        Entity closestEntity = CirclePart.SMALL.getClosestEntity(world, pos, entity -> !(entity instanceof PlayerEntity) && entity instanceof LivingEntity);
+        Entity closestEntity = CirclePart.SMALL.getClosestEntity(world, pos, entity -> !(entity instanceof Player) && entity instanceof LivingEntity);
 
         if(closestEntity != null) {
-            CompoundNBT nbt = new CompoundNBT();
+            CompoundTag nbt = new CompoundTag();
             nbt.putUUID("uuid", closestEntity.getUUID());
             ItemStack item = new ItemStack(EnchantedItems.BOUND_WAYSTONE.get(), 1);
             item.setTag(nbt);

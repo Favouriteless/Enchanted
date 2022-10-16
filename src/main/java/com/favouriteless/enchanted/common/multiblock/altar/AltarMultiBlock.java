@@ -24,9 +24,9 @@ package com.favouriteless.enchanted.common.multiblock.altar;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.core.util.IMultiBlockType;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +34,7 @@ public class AltarMultiBlock implements IMultiBlockType {
 
     public static AltarMultiBlock INSTANCE = new AltarMultiBlock();
 
-    public boolean isValidFormedBlock(World world, BlockPos pos, int dx, int dy, int dz) {
+    public boolean isValidFormedBlock(Level world, BlockPos pos, int dx, int dy, int dz) {
         BlockPos p = pos.offset(dx, dy, dz);
         BlockState state = world.getBlockState(p);
         if (isFormedAltar(state)) {
@@ -44,14 +44,14 @@ public class AltarMultiBlock implements IMultiBlockType {
         return false;
     }
 
-    public boolean isValidUnformedBlock(World world, BlockPos pos, int dx, int dy, int dz) {
+    public boolean isValidUnformedBlock(Level world, BlockPos pos, int dx, int dy, int dz) {
         BlockPos p = pos.offset(dx, dy, dz);
         BlockState state = world.getBlockState(p);
         return isUnformedAltar(state);
     }
 
     @Override
-    public void create(World world, BlockPos pos) {
+    public void create(Level world, BlockPos pos) {
         if(isValidUnformedMultiBlockX(world, pos)) {
             for (int dx = 0; dx < 3; dx++) {
                 for (int dz = 0; dz < 2; dz++) {
@@ -74,7 +74,7 @@ public class AltarMultiBlock implements IMultiBlockType {
 
     @Nullable
     @Override
-    public BlockPos getBottomLowerLeft(World world, BlockPos pos, BlockState state) {
+    public BlockPos getBottomLowerLeft(Level world, BlockPos pos, BlockState state) {
         if(isFormedAltar(state)) {
             AltarPartIndex index = state.getValue(AltarBlock.FORMED);
             return pos.offset(-index.getDx(), -index.getDy(), -index.getDz());
@@ -85,7 +85,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     @Override
-    public void unformBlock(World world, BlockPos pos) {
+    public void unformBlock(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if(state.is(EnchantedBlocks.ALTAR.get())) {
             world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState());
@@ -93,20 +93,20 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     @Override
-    public void formBlock(World world, BlockPos pos, int dx, int dy, int dz) {
+    public void formBlock(Level world, BlockPos pos, int dx, int dy, int dz) {
         formBlock(world, pos, dx, dy, dz, false);
     }
 
-    public void formBlock(World world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {
+    public void formBlock(Level world, BlockPos pos, int dx, int dy, int dz, boolean facingX) {
         world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState().setValue(AltarBlock.FORMED, AltarPartIndex.getIndex(dx, dz)).setValue(AltarBlock.FACING_X, facingX));
     }
 
     @Override
-    public boolean isValidUnformedMultiBlock(World world, BlockPos pos) {
+    public boolean isValidUnformedMultiBlock(Level world, BlockPos pos) {
         return isValidUnformedMultiBlockX(world, pos) || isValidUnformedMultiBlockZ(world, pos);
     }
 
-    private boolean isValidUnformedMultiBlockX(World world, BlockPos pos) {
+    private boolean isValidUnformedMultiBlockX(Level world, BlockPos pos) {
         if(!isValidUnformedBlock(world, pos, 0, 0, 0)) {
             return false;
         }
@@ -122,7 +122,7 @@ public class AltarMultiBlock implements IMultiBlockType {
         return validCount == 6;
     }
 
-    private boolean isValidUnformedMultiBlockZ(World world, BlockPos pos) {
+    private boolean isValidUnformedMultiBlockZ(Level world, BlockPos pos) {
         if(!isValidUnformedBlock(world, pos, 0, 0, 0)) {
             return false;
         }
@@ -139,7 +139,7 @@ public class AltarMultiBlock implements IMultiBlockType {
     }
 
     @Override
-    public boolean isValidFormedMultiBlock(World world, BlockPos pos) {
+    public boolean isValidFormedMultiBlock(Level world, BlockPos pos) {
         if(!isValidFormedBlock(world, pos, 0, 0, 0)) {
             return false;
         }

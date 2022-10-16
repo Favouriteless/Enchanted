@@ -26,8 +26,8 @@ import com.favouriteless.enchanted.common.blocks.KettleBlock;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.KettleRecipe;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.stream.Collectors;
 
@@ -77,7 +77,7 @@ public class KettleTileEntity extends CauldronTileEntity<KettleRecipe> {
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.enchanted.kettle");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.enchanted.kettle");
     }
 }

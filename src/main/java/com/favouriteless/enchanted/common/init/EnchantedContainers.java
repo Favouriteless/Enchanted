@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.containers.*;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -31,16 +31,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantedContainers {
 
-    public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Enchanted.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Enchanted.MOD_ID);
 
-    public static final RegistryObject<ContainerType<WitchOvenContainer>> WITCH_OVEN = CONTAINER_TYPES.register("witch_oven",
+    public static final RegistryObject<MenuType<WitchOvenContainer>> WITCH_OVEN = CONTAINER_TYPES.register("witch_oven",
             () -> IForgeContainerType.create(WitchOvenContainer::new));
-    public static final RegistryObject<ContainerType<DistilleryContainer>> DISTILLERY = CONTAINER_TYPES.register("distillery",
+    public static final RegistryObject<MenuType<DistilleryContainer>> DISTILLERY = CONTAINER_TYPES.register("distillery",
             () -> IForgeContainerType.create(DistilleryContainer::new));
-    public static final RegistryObject<ContainerType<AltarContainer>> ALTAR = CONTAINER_TYPES.register("altar",
+    public static final RegistryObject<MenuType<AltarContainer>> ALTAR = CONTAINER_TYPES.register("altar",
             () -> IForgeContainerType.create(AltarContainer::new));
-    public static final RegistryObject<ContainerType<SpinningWheelContainer>> SPINNING_WHEEL = CONTAINER_TYPES.register("spinning_wheel",
+    public static final RegistryObject<MenuType<SpinningWheelContainer>> SPINNING_WHEEL = CONTAINER_TYPES.register("spinning_wheel",
             () -> IForgeContainerType.create(SpinningWheelContainer::new));
-    public static final RegistryObject<ContainerType<PoppetShelfContainer>> POPPET_SHELF = CONTAINER_TYPES.register("poppet_shelf",
+    public static final RegistryObject<MenuType<PoppetShelfContainer>> POPPET_SHELF = CONTAINER_TYPES.register("poppet_shelf",
             () -> IForgeContainerType.create(PoppetShelfContainer::new));
 }

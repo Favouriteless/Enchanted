@@ -22,7 +22,9 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.ItemLike;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SnowbellBlock extends CropsBlockAgeFive {
 
@@ -30,7 +32,7 @@ public class SnowbellBlock extends CropsBlockAgeFive {
         super(properties);
     }
 
-    protected IItemProvider getBaseSeedId() {
+    protected ItemLike getBaseSeedId() {
         return EnchantedItems.SNOWBELL_SEEDS.get();
     }
 

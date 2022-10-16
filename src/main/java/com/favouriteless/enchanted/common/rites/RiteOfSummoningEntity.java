@@ -27,11 +27,11 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 
 public class RiteOfSummoningEntity extends AbstractRite {
 
@@ -49,9 +49,9 @@ public class RiteOfSummoningEntity extends AbstractRite {
         if(targetEntity == null) targetEntity = getTargetEntity();
         if(world != null && pos != null && targetEntity != null) {
             spawnParticles(world, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
-            spawnParticles((ServerWorld)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
-            world.playSound(null, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundCategory.MASTER, 1.0F, 1.0F);
-            targetEntity.level.playSound(null, targetEntity.getX(), targetEntity.getX(), targetEntity.getY(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.MASTER, 1.0F, 1.0F);
+            spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
+            world.playSound(null, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
+            targetEntity.level.playSound(null, targetEntity.getX(), targetEntity.getX(), targetEntity.getY(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
 
             if(world != targetEntity.level) {
                 targetEntity.changeDimension(world);
@@ -64,7 +64,7 @@ public class RiteOfSummoningEntity extends AbstractRite {
         stopExecuting();
     }
 
-    protected void spawnParticles(ServerWorld world, double x, double y, double z) {
+    protected void spawnParticles(ServerLevel world, double x, double y, double z) {
         for(int i = 0; i < 25; i++) {
             double dx = x - 0.5D + (Math.random() * 1.5D);
             double dy = y + (Math.random() * 2.0D);

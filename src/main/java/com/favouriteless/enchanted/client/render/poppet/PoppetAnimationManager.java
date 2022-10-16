@@ -22,9 +22,9 @@
 package com.favouriteless.enchanted.client.render.poppet;
 
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper.PoppetResult;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class PoppetAnimationManager {
 		ACTIVE_ANIMATIONS.removeIf((anim) -> anim.ticks <= 0);
 	}
 
-	public static void render(MatrixStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
+	public static void render(PoseStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
 		RenderSystem.enableAlphaTest();
 		RenderSystem.pushMatrix();
 		RenderSystem.pushLightingAttributes();

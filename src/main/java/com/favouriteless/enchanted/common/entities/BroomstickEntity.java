@@ -24,21 +24,21 @@ package com.favouriteless.enchanted.common.entities;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -47,6 +47,12 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.Pose;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class BroomstickEntity extends Entity {
@@ -66,11 +72,11 @@ public class BroomstickEntity extends Entity {
     private double lerpXRot = 0.0D;
     private double lerpYRot = 0.0D;
 
-    private static final DataParameter<Integer> DATA_ID_HURT = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.INT);
-    private static final DataParameter<Integer> DATA_ID_HURTDIR = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.INT);
-    private static final DataParameter<Float> DATA_ID_DAMAGE = EntityDataManager.defineId(BroomstickEntity.class, DataSerializers.FLOAT);
+    private static final EntityDataAccessor<Integer> DATA_ID_HURT = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_ID_HURTDIR = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.FLOAT);
 
-    public BroomstickEntity(EntityType<BroomstickEntity> type, World world) {
+    public BroomstickEntity(EntityType<BroomstickEntity> type, Level world) {
         super(type, world);
         this.blocksBuilding = true;
     }
@@ -109,7 +115,7 @@ public class BroomstickEntity extends Entity {
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
         else {
-            this.setDeltaMovement(Vector3d.ZERO);
+            this.setDeltaMovement(Vec3.ZERO);
         }
     }
 
@@ -129,8 +135,8 @@ public class BroomstickEntity extends Entity {
             double y = this.getY() + (this.lerpY - this.getY()) / this.lerpSteps;
             double z = this.getZ() + (this.lerpZ - this.getZ()) / this.lerpSteps;
 
-            double xRot = MathHelper.wrapDegrees(this.lerpXRot - this.xRot);
-            double yRot = MathHelper.wrapDegrees(this.lerpYRot - this.yRot);
+            double xRot = Mth.wrapDegrees(this.lerpXRot - this.xRot);
+            double yRot = Mth.wrapDegrees(this.lerpYRot - this.yRot);
 
             this.xRot = (float) (this.xRot + xRot / this.lerpSteps);
             this.yRot = (float) (this.yRot + yRot / this.lerpSteps);
@@ -153,7 +159,7 @@ public class BroomstickEntity extends Entity {
 
     private void controlBroom() {
         if(this.isVehicle()) {
-            ClientPlayerEntity player = Minecraft.getInstance().player;
+            LocalPlayer player = Minecraft.getInstance().player;
             inputJump = false;
 
             if(player.input.left) {
@@ -173,21 +179,21 @@ public class BroomstickEntity extends Entity {
             }
 
             this.yRot += deltaRotY;
-            this.xRot = MathHelper.clamp(this.xRot + deltaRotX, -30.0F, 30.0F);
+            this.xRot = Mth.clamp(this.xRot + deltaRotX, -30.0F, 30.0F);
             this.setDeltaMovement(getNewDeltaMovement());
         }
     }
 
-    public Vector3d getNewDeltaMovement() {
-        Vector3d delta = getDeltaMovement();
-        Vector3d targetDir = getLookAngle();
+    public Vec3 getNewDeltaMovement() {
+        Vec3 delta = getDeltaMovement();
+        Vec3 targetDir = getLookAngle();
         double speed = delta.length();
 
-        Vector3d dir;
+        Vec3 dir;
         if(speed > 0.001D) {
             dir = delta.normalize();
             double f = Math.abs(dir.subtract(targetDir).length()) / 4.0D;
-            dir = new Vector3d(MathHelper.lerp(f, dir.x, targetDir.x), MathHelper.lerp(f, dir.y, targetDir.y), MathHelper.lerp(f, dir.z, targetDir.z));
+            dir = new Vec3(Mth.lerp(f, dir.x, targetDir.x), Mth.lerp(f, dir.y, targetDir.y), Mth.lerp(f, dir.z, targetDir.z));
         }
         else {
             dir = targetDir;
@@ -207,17 +213,17 @@ public class BroomstickEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT pCompound) {
+    protected void readAdditionalSaveData(CompoundTag pCompound) {
 
     }
 
     @Override
-    protected float getEyeHeight(Pose pPose, EntitySize pSize) {
+    protected float getEyeHeight(Pose pPose, EntityDimensions pSize) {
         return 0.7F;
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT pCompound) {
+    protected void addAdditionalSaveData(CompoundTag pCompound) {
 
     }
 
@@ -232,16 +238,16 @@ public class BroomstickEntity extends Entity {
     }
 
     @Override
-    public ActionResultType interact(PlayerEntity pPlayer, Hand pHand) {
+    public InteractionResult interact(Player pPlayer, InteractionHand pHand) {
         if(pPlayer.isSecondaryUseActive()) {
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         else {
             if(!level.isClientSide) {
-                return pPlayer.startRiding(this) ? ActionResultType.CONSUME : ActionResultType.PASS;
+                return pPlayer.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
             }
             else {
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
     }
@@ -257,7 +263,7 @@ public class BroomstickEntity extends Entity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -270,8 +276,8 @@ public class BroomstickEntity extends Entity {
 
     public boolean isControlledByLocalInstance() {
         Entity entity = this.getControllingPassenger();
-        if(entity instanceof PlayerEntity) {
-            return ((PlayerEntity) entity).isLocalPlayer();
+        if(entity instanceof Player) {
+            return ((Player) entity).isLocalPlayer();
         }
         else {
             return !this.level.isClientSide;
@@ -296,8 +302,8 @@ public class BroomstickEntity extends Entity {
 
     protected void clampRotation(Entity pEntityToUpdate) {
         pEntityToUpdate.setYBodyRot(this.yRot);
-        float f = MathHelper.wrapDegrees(pEntityToUpdate.yRot - this.yRot);
-        float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
+        float f = Mth.wrapDegrees(pEntityToUpdate.yRot - this.yRot);
+        float f1 = Mth.clamp(f, -105.0F, 105.0F);
         pEntityToUpdate.yRotO += f1 - f;
         pEntityToUpdate.yRot += f1 - f;
         pEntityToUpdate.setYHeadRot(pEntityToUpdate.yRot);
@@ -326,7 +332,7 @@ public class BroomstickEntity extends Entity {
             this.setHurtTime(10);
             this.setDamage(this.getDamage() + pAmount * 10.0F);
             this.markHurt();
-            boolean isSurvivalPlayer = pSource.getEntity() instanceof PlayerEntity && ((PlayerEntity) pSource.getEntity()).abilities.instabuild;
+            boolean isSurvivalPlayer = pSource.getEntity() instanceof Player && ((Player) pSource.getEntity()).abilities.instabuild;
             if(isSurvivalPlayer || this.getDamage() > 40.0F) {
                 if(!isSurvivalPlayer && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                     this.spawnAtLocation(EnchantedItems.ENCHANTED_BROOMSTICK.get());

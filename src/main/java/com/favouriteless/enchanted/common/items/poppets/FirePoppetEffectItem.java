@@ -22,26 +22,26 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.common.init.PoppetColour;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class FirePoppetEffectItem extends DeathPoppetEffectItem {
 
-	public FirePoppetEffectItem(float failRate, int durability, PoppetColour colour, Predicate<DamageSource> sourcePredicate, Supplier<EffectInstance> deathEffect) {
+	public FirePoppetEffectItem(float failRate, int durability, PoppetColour colour, Predicate<DamageSource> sourcePredicate, Supplier<MobEffectInstance> deathEffect) {
 		super(failRate, durability, colour, sourcePredicate, deathEffect);
 	}
 
 	@Override
-	public boolean canProtect(PlayerEntity player) {
+	public boolean canProtect(Player player) {
 		return true;
 	}
 
 	@Override
-	public void protect(PlayerEntity player) {
+	public void protect(Player player) {
 		player.setHealth(1);
 		player.clearFire();
 		player.addEffect(deathEffect.get());

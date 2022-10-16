@@ -25,8 +25,8 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.stream.Collectors;
 
@@ -74,7 +74,7 @@ public class WitchCauldronTileEntity extends CauldronTileEntity<WitchCauldronRec
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.witch_cauldron");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.witch_cauldron");
     }
 }

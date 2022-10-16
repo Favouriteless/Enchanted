@@ -22,7 +22,9 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.ItemLike;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GarlicBlock extends CropsBlockAgeFive {
 
@@ -30,7 +32,7 @@ public class GarlicBlock extends CropsBlockAgeFive {
         super(properties);
     }
 
-    protected IItemProvider getBaseSeedId() {
+    protected ItemLike getBaseSeedId() {
         return EnchantedItems.GARLIC.get();
     }
 

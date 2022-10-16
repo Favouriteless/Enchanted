@@ -23,13 +23,13 @@ package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 
 import javax.annotation.Nullable;
 
 public class PoppetParticle extends SimpleAnimatedParticle {
 
-    protected PoppetParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite pSprites, int red, int green, int blue, int red1, int green1, int blue1) {
+    protected PoppetParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet pSprites, int red, int green, int blue, int red1, int green1, int blue1) {
         super(world, x, y, z, pSprites, -0.05F);
         this.xd = xSpeed;
         this.yd = ySpeed;
@@ -48,21 +48,21 @@ public class PoppetParticle extends SimpleAnimatedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<TwoToneColouredData> {
+    public static class Factory implements ParticleProvider<TwoToneColouredData> {
 
-        private final IAnimatedSprite sprites;
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite pSprites) {
+        public Factory(SpriteSet pSprites) {
             this.sprites = pSprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(TwoToneColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(TwoToneColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new PoppetParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, sprites, data.getRed(), data.getGreen(), data.getBlue(), data.getRed1(), data.getGreen1(), data.getBlue1());
         }
     }

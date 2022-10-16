@@ -25,21 +25,21 @@ import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
-public class PoppetShelfTileEntity extends TileEntity implements INamedContainerProvider {
+public class PoppetShelfTileEntity extends BlockEntity implements MenuProvider {
 
 	public PoppetShelfInventory inventory = null;
 
@@ -48,13 +48,13 @@ public class PoppetShelfTileEntity extends TileEntity implements INamedContainer
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("container.enchanted.poppet_shelf");
+	public Component getDisplayName() {
+		return new TranslatableComponent("container.enchanted.poppet_shelf");
 	}
 
 	@Nullable
 	@Override
-	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player playerEntity) {
 		return new PoppetShelfContainer(id, playerInventory, this);
 	}
 
@@ -67,26 +67,26 @@ public class PoppetShelfTileEntity extends TileEntity implements INamedContainer
 
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag nbt = new CompoundTag();
 		getInventory().save(nbt);
-		return new SUpdateTileEntityPacket(worldPosition, -1, nbt);
+		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		getInventory().load(pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT nbt = super.getUpdateTag();
+	public CompoundTag getUpdateTag() {
+		CompoundTag nbt = super.getUpdateTag();
 		getInventory().save(nbt);
 		return nbt;
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+	public void handleUpdateTag(BlockState state, CompoundTag tag) {
 		super.handleUpdateTag(state, tag);
 		getInventory().load(tag);
 	}
@@ -102,7 +102,7 @@ public class PoppetShelfTileEntity extends TileEntity implements INamedContainer
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
+	public void load(BlockState state, CompoundTag nbt) {
 		super.load(state, nbt);
 		setChanged();
 	}

@@ -22,18 +22,20 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.Random;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AnointingPasteItem extends Item {
 
@@ -44,21 +46,21 @@ public class AnointingPasteItem extends Item {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext pContext) {
+    public InteractionResult useOn(UseOnContext pContext) {
         BlockPos pos = pContext.getClickedPos();
         BlockState state = pContext.getLevel().getBlockState(pos);
         if(state.is(Blocks.CAULDRON)) {
             pContext.getLevel().setBlockAndUpdate(pos, EnchantedBlocks.WITCH_CAULDRON.get().defaultBlockState());
             pContext.getItemInHand().shrink(1);
 
-            pContext.getLevel().playSound(pContext.getPlayer(), pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            pContext.getLevel().playSound(pContext.getPlayer(), pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
             spawnParticles(pContext.getLevel(), pos);
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
-    public static void spawnParticles(World world, BlockPos pos) {
+    public static void spawnParticles(Level world, BlockPos pos) {
         for(int i = 0; i < 20; i++) {
             double x = RANDOM.nextDouble() * 2;
             double y = RANDOM.nextDouble() * 1.5D;

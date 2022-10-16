@@ -28,17 +28,17 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.core.util.Vector2i;
 import com.google.gson.annotations.SerializedName;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.TextComponent;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
@@ -90,7 +90,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IComponentRenderContext context, float partialticks, int mouseX, int mouseY) {
+	public void render(PoseStack matrix, IComponentRenderContext context, float partialticks, int mouseX, int mouseY) {
 		if(rite != null && context.getGui() instanceof GuiBook) {
 			GuiBook gui = (GuiBook)context.getGui();
 
@@ -110,8 +110,8 @@ public class RiteRequirementsComponent implements ICustomComponent {
 		Screen gui = context.getGui();
 		if(gui instanceof GuiBookEntry) {
 			GuiBookEntry entry = (GuiBookEntry)gui;
-			StringTextComponent text = new StringTextComponent(rite.POWER + " Power Required");
-			this.powerTextRenderer = new BookTextRenderer(entry, new StringTextComponent(rite.POWER + " Power Required"), 2, 140, 116, 9, 0x000000);
+			TextComponent text = new TextComponent(rite.POWER + " Power Required");
+			this.powerTextRenderer = new BookTextRenderer(entry, new TextComponent(rite.POWER + " Power Required"), 2, 140, 116, 9, 0x000000);
 		}
 	}
 
@@ -137,13 +137,13 @@ public class RiteRequirementsComponent implements ICustomComponent {
 		return null;
 	}
 
-	private void renderCircle(MatrixStack matrix, ResourceLocation resourceLocation) {
+	private void renderCircle(PoseStack matrix, ResourceLocation resourceLocation) {
 		Minecraft.getInstance().getTextureManager().bind(resourceLocation);
 		matrix.pushPose();
 		matrix.translate(x-IMAGE_OFFSET, y-IMAGE_OFFSET, 0);
 		RenderSystem.color4f(1F, 1F, 1F, 1F);
 		RenderSystem.enableBlend();
-		AbstractGui.blit(matrix, 0, 0, 0, 0, IMAGE_SIZE, IMAGE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
+		GuiComponent.blit(matrix, 0, 0, 0, 0, IMAGE_SIZE, IMAGE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
 		matrix.popPose();
 	}
 
@@ -219,7 +219,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 						(int)Math.round(xLocal*scale + x - (8*scale)),
 						(int)Math.round(yLocal*scale + y - (8*scale)));
 
-				Vector3d newLocalPos = new Vector3d(
+				Vec3 newLocalPos = new Vec3(
 						cos * xLocal - sin * yLocal,
 						sin * xLocal + cos * yLocal, 0);
 				xLocal = newLocalPos.x;
@@ -227,7 +227,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 			}
 		}
 
-		private void render(MatrixStack matrix, GuiBook gui, int mouseX, int mouseY) {
+		private void render(PoseStack matrix, GuiBook gui, int mouseX, int mouseY) {
 			matrix.pushPose();
 			matrix.scale(scale, scale, scale);
 			for(int i = 0; i < items.size(); i++) {

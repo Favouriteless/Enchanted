@@ -24,12 +24,12 @@ package com.favouriteless.enchanted.common.recipes;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -42,27 +42,27 @@ public class KettleRecipe extends CauldronTypeRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return EnchantedRecipeTypes.KETTLE_SERIALIZER.get();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<KettleRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<KettleRecipe> {
 
         @Override
         public KettleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "inputs"));
-            ItemStack itemOut = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
-            int power = JSONUtils.getAsInt(json, "power");
-            int[] cookingColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "cookingColour"));
-            int[] finalColour = StaticJSONHelper.deserializeColour(JSONUtils.getAsJsonObject(json, "finalColour"));
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "inputs"));
+            ItemStack itemOut = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
+            int power = GsonHelper.getAsInt(json, "power");
+            int[] cookingColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "cookingColour"));
+            int[] finalColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "finalColour"));
 
             return new KettleRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
         }
 
         @Nullable
         @Override
-        public KettleRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public KettleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 
             int inSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
@@ -78,7 +78,7 @@ public class KettleRecipe extends CauldronTypeRecipe {
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, KettleRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, KettleRecipe recipe) {
 
             buffer.writeInt(recipe.getItemsIn().size());
             for (ItemStack item : recipe.getItemsIn()) {

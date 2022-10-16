@@ -25,15 +25,15 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.entity.armor.EarmuffsModel;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.LocatableSound;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.sounds.AbstractSoundInstance;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -43,22 +43,24 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.item.Item.Properties;
+
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class EarmuffsItem extends ArmorItem {
 
 	public EarmuffsItem(Properties pProperties) {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, pProperties);
+		super(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, pProperties);
 	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public static void playSound(PlaySoundEvent event) {
 		Minecraft mc = Minecraft.getInstance();
-		PlayerEntity player = mc.player;
+		Player player = mc.player;
 
 		if(player != null) {
-			if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				LocatableSound sound = (LocatableSound)event.getResultSound();
+			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
+				AbstractSoundInstance sound = (AbstractSoundInstance)event.getResultSound();
 				sound.volume *= 0.03F;
 				event.setResultSound(sound);
 			}
@@ -68,14 +70,14 @@ public class EarmuffsItem extends ArmorItem {
 	@Nullable
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
+	public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
 		return (A)new EarmuffsModel();
 	}
 
 	@Nullable
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return EarmuffsModel.TEXTURE.toString();
 	}
 }

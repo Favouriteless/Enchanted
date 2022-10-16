@@ -24,11 +24,11 @@ package com.favouriteless.enchanted.core.util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 public class StaticJSONHelper {
@@ -68,9 +68,9 @@ public class StaticJSONHelper {
 
     public static int[] deserializeColour(JsonObject json) {
         if(json.has("red") && json.has("green") && json.has("blue")) {
-            int red = JSONUtils.getAsInt(json, "red");
-            int green = JSONUtils.getAsInt(json, "green");
-            int blue = JSONUtils.getAsInt(json, "blue");
+            int red = GsonHelper.getAsInt(json, "red");
+            int green = GsonHelper.getAsInt(json, "green");
+            int blue = GsonHelper.getAsInt(json, "blue");
 
             return new int[] { red, green, blue };
         } else {

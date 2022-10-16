@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.common.init.PoppetColour;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemProtectionPoppetItem extends AbstractPoppetItem {
 

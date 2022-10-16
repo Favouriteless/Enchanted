@@ -23,24 +23,24 @@ package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class WitchOvenRecipe implements IRecipe<IInventory> {
+public class WitchOvenRecipe implements Recipe<Container> {
 
-    private final IRecipeType<?> type;
+    private final RecipeType<?> type;
     private final ResourceLocation id;
 
     private final Ingredient ingredient;
@@ -64,12 +64,12 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
+    public boolean matches(Container inv, Level worldIn) {
         return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         return null;
     }
 
@@ -89,12 +89,12 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return EnchantedRecipeTypes.WITCH_OVEN_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return type;
     }
 
@@ -104,21 +104,21 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
     }
 
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<WitchOvenRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<WitchOvenRecipe> {
 
         @Override
         public WitchOvenRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            Ingredient ingredientIn = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "ingredient"));
-            ItemStack itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(json, "result"))));
+            Ingredient ingredientIn = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
+            ItemStack itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(json, "result"))));
 
-            int jarsNeeded = JSONUtils.getAsInt(json, "jarsneeded", 1);
+            int jarsNeeded = GsonHelper.getAsInt(json, "jarsneeded", 1);
 
             return new WitchOvenRecipe(recipeId, ingredientIn, itemOut, jarsNeeded);
         }
 
         @Nullable
         @Override
-        public WitchOvenRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public WitchOvenRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             Ingredient ingredientIn = Ingredient.fromNetwork(buffer);
             ItemStack itemOut = buffer.readItem();
             int jarsNeeded = buffer.readInt();
@@ -127,7 +127,7 @@ public class WitchOvenRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, WitchOvenRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, WitchOvenRecipe recipe) {
             recipe.ingredient.toNetwork(buffer);
             buffer.writeItem(recipe.getResultItem());
             buffer.writeInt(recipe.getJarsNeeded());

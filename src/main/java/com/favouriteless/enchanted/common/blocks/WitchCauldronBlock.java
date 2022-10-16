@@ -24,78 +24,87 @@ package com.favouriteless.enchanted.common.blocks;
 import com.favouriteless.enchanted.common.tileentity.WitchCauldronTileEntity;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nullable;
 
-public class WitchCauldronBlock extends Block implements ITileEntityProvider {
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class WitchCauldronBlock extends Block implements EntityBlock {
 
     public WitchCauldronBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        TileEntity te = world.getBlockEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
         if(te instanceof WitchCauldronTileEntity) {
             WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)te;
 
             if(cauldron.isComplete) {
                 cauldron.takeContents(player);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.isFailed) {
                 cauldron.takeContents(player);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {
                 if (!world.isClientSide) {
                     if (cauldron.removeWater(FluidAttributes.BUCKET_VOLUME)) {
-                        world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                         stack.shrink(1);
                         PlayerInventoryHelper.tryGiveItem(player, new ItemStack(Items.WATER_BUCKET));
                     }
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if (stack.getItem() == Items.WATER_BUCKET) {
                 if (!world.isClientSide) {
                     if (cauldron.addWater(FluidAttributes.BUCKET_VOLUME)) {
-                        world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                         if (!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
                     }
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Nullable
     @Override
-    public TileEntity newBlockEntity(IBlockReader blockReader) {
+    public BlockEntity newBlockEntity(BlockGetter blockReader) {
         return new WitchCauldronTileEntity();
     }
 
     @Override
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof ItemEntity) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
+            BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof WitchCauldronTileEntity) {
                 WitchCauldronTileEntity cauldron = (WitchCauldronTileEntity)tileEntity;
                 if(!cauldron.isFailed && cauldron.isFull() && cauldron.isHot()) {
@@ -106,8 +115,8 @@ public class WitchCauldronBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
-        return VoxelShapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return Shapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
     }
 }
 

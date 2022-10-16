@@ -21,20 +21,20 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
-public class CropsBlockAgeFive extends CropsBlock {
+public class CropsBlockAgeFive extends CropBlock {
 
     public static final IntegerProperty AGE_FIVE = IntegerProperty.create("age", 0, 4);
 
-    public CropsBlockAgeFive(AbstractBlock.Properties properties) {
+    public CropsBlockAgeFive(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
@@ -49,12 +49,12 @@ public class CropsBlockAgeFive extends CropsBlock {
     }
 
     @Override
-    protected int getBonemealAgeIncrease(World pWorldIn) {
-        return MathHelper.nextInt(pWorldIn.random, 1, 3);
+    protected int getBonemealAgeIncrease(Level pWorldIn) {
+        return Mth.nextInt(pWorldIn.random, 1, 3);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> pBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(AGE_FIVE);
     }
 }

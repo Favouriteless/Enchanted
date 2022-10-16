@@ -28,28 +28,28 @@ import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.common.tileentity.ChalkGoldTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +66,7 @@ public abstract class AbstractRite {
 
     protected final List<ItemStack> itemsConsumed = new ArrayList<>();
 
-    public ServerWorld world; // World ritual started in
+    public ServerLevel world; // World ritual started in
     public BlockPos pos; // Position ritual started at
     public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
@@ -85,8 +85,8 @@ public abstract class AbstractRite {
         this.POWER_TICK = powerTick;
     }
 
-    public CompoundNBT save() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag save() {
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("type", getType().getRegistryName().toString());
         nbt.putString("dimension", world.dimension().location().toString());
         nbt.putInt("x", pos.getX());
@@ -100,8 +100,8 @@ public abstract class AbstractRite {
         return saveAdditional(nbt);
     }
 
-    public void load(CompoundNBT nbt, World world) {
-        setWorld(world.getServer().getLevel(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
+    public void load(CompoundTag nbt, Level world) {
+        setWorld(world.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
         setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
         casterUUID = nbt.getUUID("caster");
         if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
@@ -114,7 +114,7 @@ public abstract class AbstractRite {
     protected boolean tryConsumePower(int amount) {
         if(world != null) {
             if(amount > 0) {
-                TileEntity te = world.getBlockEntity(pos);
+                BlockEntity te = world.getBlockEntity(pos);
                 if(te instanceof ChalkGoldTileEntity) {
                     List<BlockPos> potentialAltars = ((ChalkGoldTileEntity) te).getAltarPositions();
                     AltarTileEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
@@ -139,7 +139,7 @@ public abstract class AbstractRite {
      * @param nbt
      * @return Final nbt tag
      */
-    protected CompoundNBT saveAdditional(CompoundNBT nbt) {
+    protected CompoundTag saveAdditional(CompoundTag nbt) {
         return nbt;
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractRite {
      * Override this to load any additional nbt info
      * @param nbt
      */
-    protected void loadAdditional(CompoundNBT nbt) {
+    protected void loadAdditional(CompoundTag nbt) {
 
     }
 
@@ -166,7 +166,7 @@ public abstract class AbstractRite {
     public void tick() {
         if(world != null && !world.isClientSide ) {
             if(isAttached && chalk == null) {
-                TileEntity te = world.getBlockEntity(pos);
+                BlockEntity te = world.getBlockEntity(pos);
                 if(te instanceof ChalkGoldTileEntity) {
                     setChalk((ChalkGoldTileEntity)te);
                     chalk.setRite(this);
@@ -177,7 +177,7 @@ public abstract class AbstractRite {
             ticks++;
             if (isStarting) {
                 if(ticks % 20 == 0) {
-                    List<Entity> allEntities = world.getEntities(null, new AxisAlignedBB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
+                    List<Entity> allEntities = world.getEntities(null, new AABB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
 
                     boolean hasItem = false;
                     for(Entity entity : allEntities) {
@@ -238,7 +238,7 @@ public abstract class AbstractRite {
     }
 
     protected void detatchFromChalk() {
-        TileEntity te = world.getBlockEntity(pos);
+        BlockEntity te = world.getBlockEntity(pos);
         if(te instanceof ChalkGoldTileEntity) {
             ChalkGoldTileEntity chalk = (ChalkGoldTileEntity)te;
             if(chalk.getRite() == this)
@@ -253,7 +253,7 @@ public abstract class AbstractRite {
     public void stopExecuting() {
         detatchFromChalk();
         this.isStarting = false;
-        TileEntity te = world.getBlockEntity(pos);
+        BlockEntity te = world.getBlockEntity(pos);
         if(te instanceof ChalkGoldTileEntity) {
             ((ChalkGoldTileEntity)te).clearRite();
         }
@@ -271,19 +271,19 @@ public abstract class AbstractRite {
             itemsConsumed.remove(stack);
         }
 
-        world.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 1.0F, 1.0F);
+        world.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
 
-        PlayerEntity player = world.getPlayerByUUID(casterUUID);
-        if(player != null) player.displayClientMessage(new StringTextComponent("Rite failed.").withStyle(TextFormatting.RED), false);
+        Player player = world.getPlayerByUUID(casterUUID);
+        if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
 
         for(int i = 0; i < 25; i++) {
             double dx = pos.getX() + Math.random();
             double dy = pos.getY() + Math.random();
             double dz = pos.getZ() + Math.random();
-            world.sendParticles(new RedstoneParticleData(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+            world.sendParticles(new DustParticleOptions(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
         }
 
-        TileEntity te = world.getBlockEntity(pos);
+        BlockEntity te = world.getBlockEntity(pos);
         if(te instanceof ChalkGoldTileEntity) {
             ((ChalkGoldTileEntity)te).clearRite();
         }
@@ -313,7 +313,7 @@ public abstract class AbstractRite {
             targetEntity = getTargetEntity();
         }
 
-        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundCategory.MASTER, 1.0F, 1.0F);
+        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 5; i++) {
             double dx = entity.position().x - 0.15D + (Math.random() * 0.3D);
             double dy = entity.position().y + (Math.random() * 0.3D);
@@ -328,7 +328,7 @@ public abstract class AbstractRite {
         if(target != null)
             return target;
         else {
-            for(ServerWorld serverWorld : world.getServer().getAllLevels()) {
+            for(ServerLevel serverWorld : world.getServer().getAllLevels()) {
                 target = serverWorld.getEntity(targetUUID);
                 if(target != null) return target;
             }
@@ -346,12 +346,12 @@ public abstract class AbstractRite {
         }
         entity.remove();
 
-        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundCategory.MASTER, 1.0F, 1.0F);
+        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 10; i++) {
             double dx = entity.position().x - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
             double dy = entity.position().y + (Math.random() * entity.getBbHeight());
             double dz = entity.position().z - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
-            ((ServerWorld)world).sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            ((ServerLevel)world).sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -365,13 +365,13 @@ public abstract class AbstractRite {
      * @param pos
      * @return No. of extra requirement entities, -1 if not valid.
      */
-    public int differenceAt(World world, BlockPos pos) {
+    public int differenceAt(Level world, BlockPos pos) {
         for(CirclePart circlePart : CIRCLES_REQUIRED.keySet()) {
             if(!circlePart.match(world, pos, CIRCLES_REQUIRED.get(circlePart))) {
                 return -1;
             }
         }
-        List<Entity> allEntities = world.getEntities(null, new AxisAlignedBB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
+        List<Entity> allEntities = world.getEntities(null, new AABB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
         HashMap<Item, Integer> items = new HashMap<>();
         HashMap<EntityType<?>, Integer> entities = new HashMap<>();
 
@@ -418,7 +418,7 @@ public abstract class AbstractRite {
         return diff;
     }
 
-    public void setWorld(ServerWorld world) {
+    public void setWorld(ServerLevel world) {
         this.world = world;
     }
 
@@ -426,7 +426,7 @@ public abstract class AbstractRite {
         this.pos = pos;
     }
 
-    public void setCaster(PlayerEntity player) {
+    public void setCaster(Player player) {
         this.casterUUID = player.getUUID();
     }
 

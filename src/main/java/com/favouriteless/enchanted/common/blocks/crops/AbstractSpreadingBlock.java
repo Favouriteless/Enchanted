@@ -21,12 +21,14 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class AbstractSpreadingBlock extends Block {
 
@@ -35,7 +37,7 @@ public abstract class AbstractSpreadingBlock extends Block {
     }
 
     @Override
-    public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         if(!canSpreadOn(pLevel.getBlockState(pPos.below()).getBlock()))
             return;
         if (pRandom.nextInt(25) == 0) {

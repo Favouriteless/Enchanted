@@ -21,10 +21,10 @@
 
 package com.favouriteless.enchanted.api.rites;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 
 /**
  * Simple AbstractRite implementation for creating a single item
@@ -41,7 +41,7 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
                 ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
                 world.addFreshEntity(itemEntity);
             }
-            world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5F, 1.0F);
+            world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
 
             spawnParticles();
         }

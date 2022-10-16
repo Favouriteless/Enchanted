@@ -25,10 +25,10 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,9 +52,9 @@ public class SimpleColouredParticleType extends ParticleType<SimpleColouredParti
         return CODEC;
     }
 
-    public static class SimpleColouredData implements IParticleData {
+    public static class SimpleColouredData implements ParticleOptions {
 
-        public static final IParticleData.IDeserializer<SimpleColouredData> DESERIALIZER = new IParticleData.IDeserializer<SimpleColouredData>() {
+        public static final ParticleOptions.Deserializer<SimpleColouredData> DESERIALIZER = new ParticleOptions.Deserializer<SimpleColouredData>() {
             public SimpleColouredData fromCommand(ParticleType<SimpleColouredData> particleType, StringReader reader) throws CommandSyntaxException {
                 reader.expect(' ');
                 int red = reader.readInt();
@@ -66,7 +66,7 @@ public class SimpleColouredParticleType extends ParticleType<SimpleColouredParti
                 return new SimpleColouredData(particleType, red, green, blue);
             }
 
-            public SimpleColouredData fromNetwork(ParticleType<SimpleColouredData> particleType, PacketBuffer buffer) {
+            public SimpleColouredData fromNetwork(ParticleType<SimpleColouredData> particleType, FriendlyByteBuf buffer) {
                 return new SimpleColouredData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt());
             }
         };
@@ -90,7 +90,7 @@ public class SimpleColouredParticleType extends ParticleType<SimpleColouredParti
         }
 
         @Override
-        public void writeToNetwork(PacketBuffer buffer) {
+        public void writeToNetwork(FriendlyByteBuf buffer) {
             buffer.writeInt(red);
             buffer.writeInt(green);
             buffer.writeInt(blue);

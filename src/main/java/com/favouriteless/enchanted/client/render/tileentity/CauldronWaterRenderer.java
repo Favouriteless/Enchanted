@@ -22,37 +22,37 @@
 package com.favouriteless.enchanted.client.render.tileentity;
 
 import com.favouriteless.enchanted.common.tileentity.CauldronTileEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector4f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec2;
+import com.mojang.math.Vector3f;
+import com.mojang.math.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CauldronWaterRenderer<T extends CauldronTileEntity<?>> extends TileEntityRenderer<T> {
+public class CauldronWaterRenderer<T extends CauldronTileEntity<?>> extends BlockEntityRenderer<T> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
     private static final int FRAME_TIME = 2;
     private final CauldronQuad quad;
 
 
-    public CauldronWaterRenderer(TileEntityRendererDispatcher dispatcher, int waterWidth) {
+    public CauldronWaterRenderer(BlockEntityRenderDispatcher dispatcher, int waterWidth) {
         super(dispatcher);
         this.quad = new CauldronQuad((float)waterWidth / 2 - 0.01F);
     }
 
     @Override
-    public void render(T tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, int combinedLight, int combinedOverlay) {
+    public void render(T tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource renderBuffer, int combinedLight, int combinedOverlay) {
         long ticks = Minecraft.getInstance().player.level.getGameTime(); // This frame count should be common across all TEs
 
         int waterAmount = tileEntity.getWater();
@@ -63,7 +63,7 @@ public class CauldronWaterRenderer<T extends CauldronTileEntity<?>> extends Tile
             matrixStack.pushPose();
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
-            IVertexBuilder vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
+            VertexConsumer vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
             long time = System.currentTimeMillis() - tileEntity.startTime;
             quad.render(matrixStack.last(), vertexBuilder,
                     tileEntity.getRed(time), tileEntity.getGreen(time), tileEntity.getBlue(time), 160,
@@ -76,18 +76,18 @@ public class CauldronWaterRenderer<T extends CauldronTileEntity<?>> extends Tile
 
     public static class CauldronQuad {
 
-        private static final Vector2f[] uvs = new Vector2f[] {new Vector2f(1F, 0F), new Vector2f(0F, 0F), new Vector2f(0F, 1/32F), new Vector2f(1F, 1/32F) };
+        private static final Vec2[] uvs = new Vec2[] {new Vec2(1F, 0F), new Vec2(0F, 0F), new Vec2(0F, 1/32F), new Vec2(1F, 1/32F) };
         private final Vector3f[] positions;
 
         public CauldronQuad(float apothem) {
             positions = new Vector3f[] { new Vector3f(apothem, 0.0F, -apothem), new Vector3f(-apothem, 0.0F, -apothem), new Vector3f(-apothem, 0.0F, apothem), new Vector3f(apothem, 0.0F, apothem) };
         }
 
-        public void render(MatrixStack.Entry pose, IVertexBuilder vertexBuilder, int red, int green, int blue, int alpha, float uOffset, float vOffset, int combinedLight) {
+        public void render(PoseStack.Pose pose, VertexConsumer vertexBuilder, int red, int green, int blue, int alpha, float uOffset, float vOffset, int combinedLight) {
             Matrix4f poseMatrix = pose.pose();
             for(int i = 0; i < 4; i++) {
                 Vector3f localPos = positions[i];
-                Vector2f quadUvs = uvs[i];
+                Vec2 quadUvs = uvs[i];
 
                 Vector4f posVector = new Vector4f(localPos.x()/16.0F, localPos.y()/16.0F, localPos.z()/16.0F, 1.0F);
                 posVector.transform(poseMatrix);

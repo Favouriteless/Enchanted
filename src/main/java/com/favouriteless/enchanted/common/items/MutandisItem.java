@@ -22,18 +22,20 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 import java.util.Random;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class MutandisItem extends Item {
 
@@ -46,11 +48,11 @@ public class MutandisItem extends Item {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 
         if (!state.getBlock().is(EnchantedTags.MUTANDIS_BLACKLIST) && state.getBlock().is(validBlocks)) {
-            World world = context.getLevel();
+            Level world = context.getLevel();
             if(!world.isClientSide) {
 
                 BlockState newState = null;
@@ -62,9 +64,9 @@ public class MutandisItem extends Item {
                 }
 
                 world.setBlockAndUpdate(context.getClickedPos(), newState);
-                world.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                world.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
                 if(!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
-                return ActionResultType.CONSUME;
+                return InteractionResult.CONSUME;
             }
             else {
                 for(int i = 0; i < 10; i++) {
@@ -73,9 +75,9 @@ public class MutandisItem extends Item {
                     double dz = context.getClickedPos().getZ() + Math.random();
                     world.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0.0D, 0.0D, 0.0D);
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 }

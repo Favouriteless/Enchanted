@@ -21,14 +21,14 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,26 +39,26 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
     // Regular chalk types - white red purple
     public static final IntegerProperty GLYPH = IntegerProperty.create("glyph", 0, 47);
     public static final Random random = new Random();
-    private final BasicParticleType particleType;
+    private final SimpleParticleType particleType;
 
-    public ChalkCircleBlock(BasicParticleType particleType) {
+    public ChalkCircleBlock(SimpleParticleType particleType) {
         super();
         this.particleType = particleType;
         this.registerDefaultState(getStateDefinition().any().setValue(GLYPH, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(GLYPH);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(GLYPH, random.nextInt(48));
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
 
         if(this.particleType != null) {
             if(random.nextInt(6) == 1) {

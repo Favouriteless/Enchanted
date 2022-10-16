@@ -23,24 +23,24 @@ package com.favouriteless.enchanted.client.render.tileentity.item;
 
 import com.favouriteless.enchanted.client.render.tileentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemStack;
 
-public class SpinningWheelItemRenderer extends ItemStackTileEntityRenderer {
+public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 
 	private static SpinningWheelTileEntity dummyTe = null;
 	private static SpinningWheelRenderer dummyRenderer = null;
 
 	@Override
-	public void renderByItem(ItemStack stack, TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+	public void renderByItem(ItemStack stack, TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
 		if(dummyTe == null)
 			dummyTe = new SpinningWheelTileEntity();
 		if(dummyRenderer == null)
-			dummyRenderer = new SpinningWheelRenderer(TileEntityRendererDispatcher.instance);
+			dummyRenderer = new SpinningWheelRenderer(BlockEntityRenderDispatcher.instance);
 
 		matrixStack.pushPose();
 		dummyRenderer.render(dummyTe, 0.0F, matrixStack, buffer, combinedLight, combinedOverlay);

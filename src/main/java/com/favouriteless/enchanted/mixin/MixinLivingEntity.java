@@ -23,9 +23,9 @@ package com.favouriteless.enchanted.mixin;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.events.PoppetEvents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.damagesource.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,7 +43,7 @@ public class MixinLivingEntity {
 	}
 
 	@Inject(method="broadcastBreakEvent(Lnet/minecraft/inventory/EquipmentSlotType;)V", at=@At("HEAD"))
-	private void broadcastBreakEvent(EquipmentSlotType slot, CallbackInfo ci) {
+	private void broadcastBreakEvent(EquipmentSlot slot, CallbackInfo ci) {
 		PoppetEvents.onLivingEntityBreak((LivingEntity)(Object)this, slot);
 	}
 

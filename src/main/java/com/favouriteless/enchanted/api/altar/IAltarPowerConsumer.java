@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.api.altar;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import java.util.List;
 

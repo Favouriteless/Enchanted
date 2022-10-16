@@ -23,20 +23,20 @@ package com.favouriteless.enchanted.client.render.tileentity;
 
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PoppetShelfRenderer extends TileEntityRenderer<PoppetShelfTileEntity> {
+public class PoppetShelfRenderer extends BlockEntityRenderer<PoppetShelfTileEntity> {
 
     private static final Vector3f[] ITEM_POS = new Vector3f[] {
             new Vector3f(0.3125F, 0.515F, 0.3125F),
@@ -45,12 +45,12 @@ public class PoppetShelfRenderer extends TileEntityRenderer<PoppetShelfTileEntit
             new Vector3f(0.3125F, 0.515F, 0.6875F)
     };
 
-    public PoppetShelfRenderer(TileEntityRendererDispatcher dispatcher) {
+    public PoppetShelfRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(PoppetShelfTileEntity blockEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(PoppetShelfTileEntity blockEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         PoppetShelfInventory inventory = blockEntity.getInventory();
         for(int i = 0; i < inventory.size(); i++) {
             ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();

@@ -27,9 +27,9 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
 
 public class RiteOfBindingWaystone extends AbstractCreateItemRite {
 
@@ -47,7 +47,7 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
-        CompoundNBT nbt = new CompoundNBT();
+        CompoundTag nbt = new CompoundTag();
         nbt.putString("dimension", world.dimension().location().toString());
         nbt.putInt("xPos", pos.getX());
         nbt.putInt("yPos", pos.getY());

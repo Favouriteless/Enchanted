@@ -21,8 +21,8 @@
 
 package com.favouriteless.enchanted.api.capabilities;
 
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -32,7 +32,7 @@ import net.minecraftforge.common.util.NonNullSupplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SimplePersistentCapabilityProvider<C, S extends INBT> implements ICapabilityProvider, INBTSerializable<S> {
+public class SimplePersistentCapabilityProvider<C, S extends Tag> implements ICapabilityProvider, INBTSerializable<S> {
     private final Capability<C> capability;
     private final LazyOptional<C> implementation;
     private final Direction direction;
@@ -44,12 +44,12 @@ public class SimplePersistentCapabilityProvider<C, S extends INBT> implements IC
     }
 
     @Nonnull
-    public static <C> SimplePersistentCapabilityProvider<C, INBT> from(@Nonnull final Capability<C> cap, @Nonnull final NonNullSupplier<C> impl) {
+    public static <C> SimplePersistentCapabilityProvider<C, Tag> from(@Nonnull final Capability<C> cap, @Nonnull final NonNullSupplier<C> impl) {
         return from(cap, null, impl);
     }
 
     @Nonnull
-    public static <C> SimplePersistentCapabilityProvider<C, INBT> from(@Nonnull final Capability<C> cap, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
+    public static <C> SimplePersistentCapabilityProvider<C, Tag> from(@Nonnull final Capability<C> cap, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
         return new SimplePersistentCapabilityProvider<>(cap, LazyOptional.of(impl), direction);
     }
 

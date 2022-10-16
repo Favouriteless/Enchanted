@@ -27,9 +27,9 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.item.Items;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.item.Items;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 
 public class RiteOfTotalEclipse extends AbstractRite {
 
@@ -47,7 +47,7 @@ public class RiteOfTotalEclipse extends AbstractRite {
     @Override
     public void execute() {
         world.setDayTime(18000);
-        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5F, 1.0F);
+        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
         stopExecuting();
     }
 

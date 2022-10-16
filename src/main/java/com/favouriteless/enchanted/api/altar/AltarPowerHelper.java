@@ -22,22 +22,22 @@
 package com.favouriteless.enchanted.api.altar;
 
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public class AltarPowerHelper {
 
-	public static AltarTileEntity tryGetAltar(World world, List<BlockPos> potentialAltars) {
+	public static AltarTileEntity tryGetAltar(Level world, List<BlockPos> potentialAltars) {
 		while(!potentialAltars.isEmpty()) {
 			if(world != null) {
 				BlockPos altarPos = potentialAltars.get(0);
-				TileEntity te = world.getBlockEntity(altarPos);
+				BlockEntity te = world.getBlockEntity(altarPos);
 				if(te instanceof AltarTileEntity) {
 					return (AltarTileEntity) te;
 				}
@@ -49,11 +49,11 @@ public class AltarPowerHelper {
 		return null;
 	}
 
-	public static CompoundNBT savePosTag(List<BlockPos> potentialAltars, CompoundNBT nbt) {
-		ListNBT listNbt = new ListNBT();
+	public static CompoundTag savePosTag(List<BlockPos> potentialAltars, CompoundTag nbt) {
+		ListTag listNbt = new ListTag();
 
 		for(BlockPos pos : potentialAltars) {
-			CompoundNBT elementNbt = new CompoundNBT();
+			CompoundTag elementNbt = new CompoundTag();
 			elementNbt.putInt("xPos", pos.getX());
 			elementNbt.putInt("yPos", pos.getY());
 			elementNbt.putInt("zPos", pos.getZ());
@@ -64,21 +64,21 @@ public class AltarPowerHelper {
 		return nbt;
 	}
 
-	public static void loadPosTag(List<BlockPos> potentialAltars, CompoundNBT nbt) {
+	public static void loadPosTag(List<BlockPos> potentialAltars, CompoundTag nbt) {
 		if(nbt.contains("altarPos")) {
 			potentialAltars.clear();
-			ListNBT posList = (ListNBT)nbt.get("altarPos");
+			ListTag posList = (ListTag)nbt.get("altarPos");
 
-			for(INBT inbt : posList) {
-				CompoundNBT posNbt = (CompoundNBT)inbt;
+			for(Tag inbt : posList) {
+				CompoundTag posNbt = (CompoundTag)inbt;
 				potentialAltars.add(new BlockPos(posNbt.getInt("xPos"), posNbt.getInt("yPos"), posNbt.getInt("zPos")));
 			}
 		}
 	}
 
-	public static void addAltarByClosest(List<BlockPos> potentialAltars, World world, BlockPos pos, BlockPos altarPos) {
+	public static void addAltarByClosest(List<BlockPos> potentialAltars, Level world, BlockPos pos, BlockPos altarPos) {
 		if(world != null) {
-			TileEntity te = world.getBlockEntity(altarPos);
+			BlockEntity te = world.getBlockEntity(altarPos);
 			if(te instanceof AltarTileEntity) {
 				AltarTileEntity altar = (AltarTileEntity) te;
 				if(potentialAltars.isEmpty()) {
@@ -87,7 +87,7 @@ public class AltarPowerHelper {
 				else if(!potentialAltars.contains(altarPos)) {
 					for(int i = 0; i < potentialAltars.size(); i++) {
 
-						TileEntity te1 = world.getBlockEntity(potentialAltars.get(i));
+						BlockEntity te1 = world.getBlockEntity(potentialAltars.get(i));
 
 						if(te1 instanceof AltarTileEntity) {
 							AltarTileEntity currentAltar = (AltarTileEntity) te1;

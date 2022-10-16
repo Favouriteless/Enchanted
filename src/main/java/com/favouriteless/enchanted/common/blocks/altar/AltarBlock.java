@@ -26,44 +26,50 @@ import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
 import com.favouriteless.enchanted.core.util.MultiBlockTools;
 import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class AltarBlock extends ContainerBlock {
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class AltarBlock extends BaseEntityBlock {
 
     public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.create("formed", AltarPartIndex.class);
     public static final BooleanProperty FACING_X = BooleanProperty.create("facing_x");
 
-    public AltarBlock(AbstractBlock.Properties properties) {
+    public AltarBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED).setValue(FACING_X, true));
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if(!world.isClientSide()) {
             MultiBlockTools.formMultiblock(AltarMultiBlock.INSTANCE, world, pos);
         }
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean pIsMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(!world.isClientSide()) {
             if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
@@ -73,43 +79,43 @@ public class AltarBlock extends ContainerBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FORMED);
         builder.add(FACING_X);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
             if (!world.isClientSide) {
                 BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
                 BlockState cornerState = world.getBlockState(cornerPos);
 
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
-                    TileEntity tileEntity = world.getBlockEntity(cornerPos);
+                    BlockEntity tileEntity = world.getBlockEntity(cornerPos);
                     if (tileEntity instanceof AltarTileEntity) {
-                        NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)tileEntity, tileEntity.getBlockPos());
+                        NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)tileEntity, tileEntity.getBlockPos());
                     }
                 }
-                return ActionResultType.CONSUME;
+                return InteractionResult.CONSUME;
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Nullable
     @Override
-    public TileEntity newBlockEntity(IBlockReader blockReader) {
+    public BlockEntity newBlockEntity(BlockGetter blockReader) {
         return new AltarTileEntity();
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if(fromPos == pos.above() && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
             BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
 
-            TileEntity tileEntity = world.getBlockEntity(cornerPos);
+            BlockEntity tileEntity = world.getBlockEntity(cornerPos);
             if(tileEntity instanceof AltarTileEntity) {
                 AltarTileEntity altar = (AltarTileEntity)tileEntity;
 
@@ -122,8 +128,8 @@ public class AltarBlock extends ContainerBlock {
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override

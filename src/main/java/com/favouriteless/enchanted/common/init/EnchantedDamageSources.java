@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.common.init;
 
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 
 public class EnchantedDamageSources {
 

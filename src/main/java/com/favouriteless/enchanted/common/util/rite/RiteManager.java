@@ -23,7 +23,7 @@ package com.favouriteless.enchanted.common.util.rite;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.WorldTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,14 +47,14 @@ public class RiteManager {
 		rite.isRemoved = true;
 	}
 
-	public static List<AbstractRite> getActiveRites(World world) {
+	public static List<AbstractRite> getActiveRites(Level world) {
 		RiteWorldSavedData data = RiteWorldSavedData.get(world);
 		return data.ACTIVE_RITES;
 	}
 
 	@SubscribeEvent
 	public static void onWorldTick(WorldTickEvent event) {
-		if(event.phase == Phase.START && event.world.dimension() == World.OVERWORLD) {
+		if(event.phase == Phase.START && event.world.dimension() == Level.OVERWORLD) {
 			RiteWorldSavedData data = RiteWorldSavedData.get(event.world);
 
 			data.ACTIVE_RITES.removeIf(rite -> rite.isRemoved);

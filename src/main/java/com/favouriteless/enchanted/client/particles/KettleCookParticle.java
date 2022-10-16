@@ -22,7 +22,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,11 +30,11 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
-public class KettleCookParticle extends SpriteTexturedParticle {
+public class KettleCookParticle extends TextureSheetParticle {
 
     private static final Random RANDOM = new Random();
 
-    protected KettleCookParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
+    protected KettleCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = Math.min((red + RANDOM.nextInt(20) - 10)/255F, 1.0F);
         this.gCol = Math.min((green + RANDOM.nextInt(20) - 10)/255F, 1.0F);
@@ -68,21 +68,21 @@ public class KettleCookParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<SimpleColouredParticleType.SimpleColouredData> {
+    public static class Factory implements ParticleProvider<SimpleColouredParticleType.SimpleColouredData> {
 
-        private final IAnimatedSprite sprites;
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite pSprites) {
+        public Factory(SpriteSet pSprites) {
             this.sprites = pSprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             KettleCookParticle particle = new KettleCookParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;

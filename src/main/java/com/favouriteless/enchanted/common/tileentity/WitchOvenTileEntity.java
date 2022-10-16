@@ -27,29 +27,29 @@ import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 import javax.annotation.Nullable;
@@ -64,7 +64,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     private int burnTimeTotal = 0;
     private int cookTime = 0;
     private int cookTimeTotal = 200;
-    private final IIntArray data = new IIntArray() {
+    private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
             switch(index) {
@@ -102,7 +102,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     };
 
 
-    public WitchOvenTileEntity(TileEntityType<?> typeIn) {
+    public WitchOvenTileEntity(BlockEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(5, ItemStack.EMPTY));
     }
 
@@ -111,7 +111,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     @Override
-    protected void loadAdditional(CompoundNBT nbt) {
+    protected void loadAdditional(CompoundTag nbt) {
         burnTime = nbt.getInt("burnTime");
         burnTimeTotal = nbt.getInt("burnTimeTotal");
         cookTime = nbt.getInt("cookTime");
@@ -119,7 +119,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     @Override
-    protected void saveAdditional(CompoundNBT nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
         nbt.putInt("burnTime", burnTime);
         nbt.putInt("burnTimeTotal", burnTimeTotal);
         nbt.putInt("cookTime", cookTime);
@@ -139,7 +139,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
 
 
             if (this.isBurning() || !fuelStack.isEmpty() && !inventoryContents.get(0).isEmpty()) {
-                IRecipe<?> recipe = level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, level).orElse(null);
+                Recipe<?> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).orElse(null);
                 if (!isBurning() && canSmelt(recipe) && !inventoryContents.get(0).getItem().is(ORE_TAG)) {
                     burnTime = getBurnTime(fuelStack);
                     burnTimeTotal = getBurnTime(fuelStack);
@@ -169,7 +169,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
                     cookTime = 0;
                 }
             } else if (!isBurning() && cookTime > 0) {
-                cookTime = MathHelper.clamp(cookTime - 2, 0, cookTimeTotal);
+                cookTime = Mth.clamp(cookTime - 2, 0, cookTimeTotal);
             }
 
             if (flag != this.isBurning()) {
@@ -185,7 +185,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
 
     }
 
-    protected boolean canSmelt(@Nullable IRecipe<?> recipeIn) {
+    protected boolean canSmelt(@Nullable Recipe<?> recipeIn) {
         if (!this.inventoryContents.get(0).isEmpty() && recipeIn != null) { // If item in input & recipe not null
 
             ItemStack resultStack = recipeIn.getResultItem();
@@ -209,7 +209,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
         }
     }
 
-    protected void smelt(@Nullable IRecipe<?> recipe) {
+    protected void smelt(@Nullable Recipe<?> recipe) {
         if (recipe != null && this.canSmelt(recipe)) {
             ItemStack itemstack = this.inventoryContents.get(0);
             ItemStack itemstack1 = recipe.getResultItem();
@@ -308,17 +308,17 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     @Override
-    public IIntArray getData() {
+    public ContainerData getData() {
         return data;
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.enchanted.witch_oven");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.enchanted.witch_oven");
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
+    protected AbstractContainerMenu createMenu(int id, Inventory player) {
         return new WitchOvenContainer(id, player, this, this.data);
     }
 
@@ -327,7 +327,7 @@ public class WitchOvenTileEntity extends ProcessingTileEntityBase {
     }
 
     protected int getCookTime() {
-        return level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
 
 }

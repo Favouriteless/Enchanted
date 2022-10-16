@@ -22,11 +22,13 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class BroomItem extends Item {
 
@@ -35,13 +37,13 @@ public class BroomItem extends Item {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if(!context.getLevel().isClientSide) {
 			BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 			if(state.is(EnchantedTags.CHALKS)) {
 				context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.AIR.defaultBlockState());
 			}
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

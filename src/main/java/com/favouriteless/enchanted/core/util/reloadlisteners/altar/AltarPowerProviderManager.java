@@ -27,18 +27,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AltarPowerProviderManager<T> extends JsonReloadListener implements Supplier<List<AltarPowerProvider<T>>> {
+public class AltarPowerProviderManager<T> extends SimpleJsonResourceReloadListener implements Supplier<List<AltarPowerProvider<T>>> {
 
     private static final Gson GSON = new Gson();
     private List<AltarPowerProvider<T>> powerProviders = new ArrayList<>();
@@ -57,17 +57,17 @@ public class AltarPowerProviderManager<T> extends JsonReloadListener implements 
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, IResourceManager resourceManager, IProfiler profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
         List<AltarPowerProvider<T>> outputList = new ArrayList<>();
         List<T> removeList = new ArrayList<>();
 
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             try {
-                JsonObject jsonObject = JSONUtils.convertToJsonObject(jsonElement, "powerprovider");
+                JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonElement, "powerprovider");
 
                 T key = keySupplier.get(resourceLocation);
-                int power = JSONUtils.getAsInt(jsonObject, "power");
-                int limit = JSONUtils.getAsInt(jsonObject, "limit");
+                int power = GsonHelper.getAsInt(jsonObject, "power");
+                int limit = GsonHelper.getAsInt(jsonObject, "limit");
 
                 if(key != null) {
                     if (power != 0 && limit > 0) {

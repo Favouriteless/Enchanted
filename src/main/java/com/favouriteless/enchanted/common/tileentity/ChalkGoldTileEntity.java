@@ -27,30 +27,30 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.util.rite.RiteManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEntity, IAltarPowerConsumer {
+public class ChalkGoldTileEntity extends BlockEntity implements TickableBlockEntity, IAltarPowerConsumer {
 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
     private AbstractRite currentRite = null;
 
-    public ChalkGoldTileEntity(final TileEntityType<?> tileEntityTypeIn) {
+    public ChalkGoldTileEntity(final BlockEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
 
@@ -58,7 +58,7 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
         this(EnchantedTileEntityTypes.CHALK_GOLD.get());
     }
 
-    public void execute(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public void execute(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if(!world.isClientSide) {
             if (currentRite == null) {
 
@@ -66,14 +66,14 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
 
                 if (rite != null) {
                     currentRite = rite;
-                    currentRite.setWorld((ServerWorld)world);
+                    currentRite.setWorld((ServerLevel)world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);
                     currentRite.setChalk(this);
                     RiteManager.addRite(currentRite);
                     currentRite.start();
                 } else {
-                    world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundCategory.MASTER, 2f, 1f);
+                    world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 2f, 1f);
                 }
             }
             else {
@@ -107,18 +107,18 @@ public class ChalkGoldTileEntity extends TileEntity implements ITickableTileEnti
             double dx = worldPosition.getX() + Math.random();
             double dy = worldPosition.getY() + Math.random() * 0.3D;
             double dz = worldPosition.getZ() + Math.random();
-            ((ServerWorld)level).sendParticles(new RedstoneParticleData(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            ((ServerLevel)level).sendParticles(new DustParticleOptions(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         AltarPowerHelper.savePosTag(potentialAltars, nbt);
         return super.save(nbt);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundTag nbt) {
         super.load(state, nbt);
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
     }

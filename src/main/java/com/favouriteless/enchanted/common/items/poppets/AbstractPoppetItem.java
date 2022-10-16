@@ -25,19 +25,19 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -60,22 +60,22 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag flag) {
-		toolTip.add(new StringTextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(TextFormatting.RED));
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> toolTip, TooltipFlag flag) {
+		toolTip.add(new TextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(ChatFormatting.RED));
 		if(PoppetHelper.isBound(stack)) {
-			toolTip.add(new StringTextComponent(PoppetHelper.getBoundPlayer(stack, world).getDisplayName().getString()).withStyle(TextFormatting.GRAY));
+			toolTip.add(new TextComponent(PoppetHelper.getBoundPlayer(stack, world).getDisplayName().getString()).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
-		if(entity instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity)entity;
+	public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity entity) {
+		if(entity instanceof Player) {
+			Player player = (Player)entity;
 			ItemStack taglockStack = player.getOffhandItem();
 
 			if(taglockStack.getItem() instanceof TaglockFilledItem) {
-				CompoundNBT nbt = taglockStack.getOrCreateTag();
-				PlayerEntity target = world.getPlayerByUUID(nbt.getUUID("entity"));
+				CompoundTag nbt = taglockStack.getOrCreateTag();
+				Player target = world.getPlayerByUUID(nbt.getUUID("entity"));
 
 				if(target != null) {
 					PoppetHelper.bind(itemStack, target);
@@ -88,13 +88,13 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-		if(hand == Hand.MAIN_HAND) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+		if(hand == InteractionHand.MAIN_HAND) {
 			if(!PoppetHelper.isBound(player.getMainHandItem())) {
 				ItemStack taglockStack = player.getOffhandItem();
 				if(taglockStack.getItem() instanceof TaglockFilledItem) {
-					CompoundNBT nbt = taglockStack.getOrCreateTag();
-					PlayerEntity target = world.getPlayerByUUID(nbt.getUUID("entity"));
+					CompoundTag nbt = taglockStack.getOrCreateTag();
+					Player target = world.getPlayerByUUID(nbt.getUUID("entity"));
 
 					if(target != null)
 						player.startUsingItem(hand);
@@ -110,8 +110,8 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack pStack) {
-		return UseAction.BOW;
+	public UseAnim getUseAnimation(ItemStack pStack) {
+		return UseAnim.BOW;
 	}
 
 	@Override

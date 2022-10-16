@@ -24,35 +24,35 @@ package com.favouriteless.enchanted.common.containers;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-public class AltarContainer extends Container {
+public class AltarContainer extends AbstractContainerMenu {
 
     public final AltarTileEntity tileEntity;
-    private final IWorldPosCallable canInteractWithCallable;
-    private final IIntArray data;
+    private final ContainerLevelAccess canInteractWithCallable;
+    private final ContainerData data;
 
-    public AltarContainer(final int windowId, final AltarTileEntity tileEntity, IIntArray data) {
+    public AltarContainer(final int windowId, final AltarTileEntity tileEntity, ContainerData data) {
         super(EnchantedContainers.ALTAR.get(), windowId);
         this.tileEntity = tileEntity;
-        this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
+        this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
         this.data = data;
         addDataSlots(this.data);
     }
 
-    public AltarContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, getTileEntity(playerInventory, data), new IntArray(3));
+    public AltarContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, getTileEntity(playerInventory, data), new SimpleContainerData(3));
     }
 
-    private static AltarTileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data) {
-        final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+    private static AltarTileEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+        final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
         if(tileEntity instanceof AltarTileEntity) {
             return (AltarTileEntity)tileEntity;
@@ -73,7 +73,7 @@ public class AltarContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return stillValid(canInteractWithCallable, player, EnchantedBlocks.ALTAR.get());
     }
 }

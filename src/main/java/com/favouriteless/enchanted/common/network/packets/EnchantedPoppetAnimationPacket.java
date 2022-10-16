@@ -29,9 +29,9 @@ import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper.PoppetResult;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
@@ -49,13 +49,13 @@ public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeEnum(result);
 		buffer.writeItem(item);
 		buffer.writeInt(entityId);
 	}
 
-	public static EnchantedPoppetAnimationPacket decode(PacketBuffer buffer) {
+	public static EnchantedPoppetAnimationPacket decode(FriendlyByteBuf buffer) {
 		return new EnchantedPoppetAnimationPacket(buffer.readEnum(PoppetResult.class), buffer.readItem(), buffer.readInt());
 	}
 

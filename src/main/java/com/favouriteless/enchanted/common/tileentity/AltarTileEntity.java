@@ -33,23 +33,23 @@ import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import hellfirepvp.observerlib.api.ChangeSubscriber;
 import hellfirepvp.observerlib.api.ObserverHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -58,16 +58,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AltarTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class AltarTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public double maxPower;
     public double currentPower;
     public double rechargeMultiplier = 1.0D;
     public double powerMultiplier = 1.0D;
-    public Vector3d centerPos;
+    public Vec3 centerPos;
     public final AltarBlockData altarBlockData = new AltarBlockData();
 
-    private final IIntArray fields = new IIntArray() {
+    private final ContainerData fields = new ContainerData() {
         @Override
         public int get(int pIndex) {
             switch(pIndex) {
@@ -109,7 +109,7 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
 
     private int ticksAlive = 0;
 
-    public AltarTileEntity(TileEntityType<?> type) {
+    public AltarTileEntity(BlockEntityType<?> type) {
         super(type);
     }
 
@@ -124,8 +124,8 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             if (!loaded) {
                 facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
                 centerPos = facingX ?
-                        Vector3d.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
-                        Vector3d.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
+                        Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
+                        Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
 
                 changeSubscriber = ObserverHelper.getHelper().getSubscriber(level, worldPosition);
                 if (changeSubscriber == null) {
@@ -150,17 +150,17 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         nbt.putDouble("currentPower", currentPower);
         nbt.put("blockData", altarBlockData.getSaveTag());
         return super.save(nbt);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundTag nbt) {
         super.load(state, nbt);
         if(nbt.contains("blockData")) {
-            altarBlockData.loadTag((CompoundNBT) nbt.get("blockData"));
+            altarBlockData.loadTag((CompoundTag) nbt.get("blockData"));
             powerLoaded = true;
         }
         this.currentPower = nbt.getDouble("currentPower");
@@ -310,13 +310,13 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.enchanted.altar");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.enchanted.altar");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new AltarContainer(id, this, this.fields);
     }
 
@@ -333,10 +333,10 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             }
         }
 
-        public CompoundNBT getSaveTag() {
-            CompoundNBT nbt = new CompoundNBT();
-            CompoundNBT blockNbt = new CompoundNBT();
-            CompoundNBT tagNbt = new CompoundNBT();
+        public CompoundTag getSaveTag() {
+            CompoundTag nbt = new CompoundTag();
+            CompoundTag blockNbt = new CompoundTag();
+            CompoundTag tagNbt = new CompoundTag();
 
             for(Block block : blocksAmount.keySet()) {
                 blockNbt.putInt(block.getRegistryName().toString(), blocksAmount.get(block));
@@ -350,9 +350,9 @@ public class AltarTileEntity extends TileEntity implements ITickableTileEntity, 
             return nbt;
         }
 
-        public void loadTag(CompoundNBT nbt) {
-            CompoundNBT blockNbt = (CompoundNBT)nbt.get("blocksAmount");
-            CompoundNBT tagNbt = (CompoundNBT)nbt.get("tagsAmount");
+        public void loadTag(CompoundTag nbt) {
+            CompoundTag blockNbt = (CompoundTag)nbt.get("blocksAmount");
+            CompoundTag tagNbt = (CompoundTag)nbt.get("tagsAmount");
 
             for(String name : blockNbt.getAllKeys()) {
                 blocksAmount.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name)), blockNbt.getInt(name));

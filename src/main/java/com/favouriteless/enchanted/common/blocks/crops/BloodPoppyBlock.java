@@ -22,23 +22,25 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.common.tileentity.BloodPoppyTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public class BloodPoppyBlock extends Block implements ITileEntityProvider {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class BloodPoppyBlock extends Block implements EntityBlock {
 
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
 
@@ -48,15 +50,15 @@ public class BloodPoppyBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> pBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(FILLED);
     }
 
     @Override
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof LivingEntity) {
             if(!state.getValue(FILLED)) {
-                TileEntity tileEntity = world.getBlockEntity(pos);
+                BlockEntity tileEntity = world.getBlockEntity(pos);
                 if(tileEntity instanceof BloodPoppyTileEntity) {
                     BloodPoppyTileEntity bloodPoppyTileEntity = (BloodPoppyTileEntity)tileEntity;
                     bloodPoppyTileEntity.setUUID(entity.getUUID());
@@ -70,17 +72,17 @@ public class BloodPoppyBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
     }
 
     @Nullable
     @Override
-    public TileEntity newBlockEntity(IBlockReader blockReader) {
+    public BlockEntity newBlockEntity(BlockGetter blockReader) {
         return new BloodPoppyTileEntity();
     }
 
-    public static void reset(World world, BlockPos pos) {
+    public static void reset(Level world, BlockPos pos) {
         if(!world.isClientSide) {
             BloodPoppyTileEntity tileEntity = (BloodPoppyTileEntity)world.getBlockEntity(pos);
             BlockState state = world.getBlockState(pos);

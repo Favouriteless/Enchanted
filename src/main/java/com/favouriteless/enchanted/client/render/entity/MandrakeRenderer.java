@@ -24,15 +24,15 @@ package com.favouriteless.enchanted.client.render.entity;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.MandrakeModel;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class MandrakeRenderer extends MobRenderer<MandrakeEntity, MandrakeModel> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/entity/mandrake.png");
 
-    public MandrakeRenderer(EntityRendererManager manager) {
+    public MandrakeRenderer(EntityRenderDispatcher manager) {
         super(manager, new MandrakeModel(), 0.3f);
     }
 

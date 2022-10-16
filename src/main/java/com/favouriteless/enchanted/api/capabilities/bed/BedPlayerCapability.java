@@ -21,7 +21,7 @@
 
 package com.favouriteless.enchanted.api.capabilities.bed;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.UUID;
 
@@ -41,14 +41,14 @@ public class BedPlayerCapability implements IBedPlayerCapability {
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         if(value != null) nbt.putUUID(KEY_NAME, value);
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         if(nbt.contains(KEY_NAME)) this.setValue(nbt.getUUID(KEY_NAME));
     }
 

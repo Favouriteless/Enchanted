@@ -21,25 +21,25 @@
 
 package com.favouriteless.enchanted.common.containers;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import javax.annotation.Nullable;
 
-public class ContainerBase extends Container {
+public class ContainerBase extends AbstractContainerMenu {
 
-	protected TileEntity tileEntity;
-	protected final IWorldPosCallable canInteractWithCallable;
+	protected BlockEntity tileEntity;
+	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
-	protected ContainerBase(@Nullable ContainerType<?> type, int id, TileEntity tileEntity, IWorldPosCallable canInteractWithCallable, Block block) {
+	protected ContainerBase(@Nullable MenuType<?> type, int id, BlockEntity tileEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
 		super(type, id);
 		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;
@@ -47,11 +47,11 @@ public class ContainerBase extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return stillValid(canInteractWithCallable, player, block);
 	}
 
-	protected void addInventorySlots(PlayerInventory playerInventory, int startX, int startY) {
+	protected void addInventorySlots(Inventory playerInventory, int startX, int startY) {
 		for (int y = 0; y < 3; y++) { // Main Inventory
 			for (int x = 0; x < 9; x++) {
 				addSlot(new Slot(playerInventory, x + (y * 9) + 9, startX + (x * 18), startY + (y * 18)));
@@ -62,8 +62,8 @@ public class ContainerBase extends Container {
 		}
 	}
 
-	protected static TileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data, Class<? extends TileEntity> type) {
-		final TileEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+	protected static BlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data, Class<? extends BlockEntity> type) {
+		final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
 		if(tileEntity != null && tileEntity.getClass() == type) {
 			return tileEntity;

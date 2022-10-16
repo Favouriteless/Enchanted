@@ -25,19 +25,19 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
 import com.favouriteless.enchanted.common.tileentity.SpinningWheelTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 
 public class SpinningWheelContainer extends ProcessingContainerBase {
 
-	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final InventoryTileEntityBase tileEntity, final IIntArray data) {
-		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
+	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final InventoryTileEntityBase tileEntity, final ContainerData data) {
+		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 
 		// Container Inventory
 		addSlot(new SlotInput(tileEntity, 0, 45, 23)); // Main input
@@ -48,12 +48,12 @@ public class SpinningWheelContainer extends ProcessingContainerBase {
 		addInventorySlots(playerInventory, 8, 84);
 	}
 
-	public SpinningWheelContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-		this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new IntArray(2));
+	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+		this(windowId, playerInventory, (InventoryTileEntityBase)getTileEntity(playerInventory, data, SpinningWheelTileEntity.class), new SimpleContainerData(2));
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemStack;
 		Slot slot = this.slots.get(index);
 

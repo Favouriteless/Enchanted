@@ -24,7 +24,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarPowerProviderManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarUpgradeManager;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.event.AddReloadListenerEvent;

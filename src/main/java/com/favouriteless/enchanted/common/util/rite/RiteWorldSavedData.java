@@ -24,33 +24,33 @@ package com.favouriteless.enchanted.common.util.rite;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DimensionSavedDataManager;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RiteWorldSavedData extends WorldSavedData {
+public class RiteWorldSavedData extends SavedData {
 
 	private static final String NAME = "enchanted_rites";
 	public final List<AbstractRite> ACTIVE_RITES = new ArrayList<>();
-	public final ServerWorld world;
+	public final ServerLevel world;
 	
-	public RiteWorldSavedData(ServerWorld world) {
+	public RiteWorldSavedData(ServerLevel world) {
 		super(NAME);
 		this.world = world;
 	}
 
-	public static RiteWorldSavedData get(World world) {
-		if (world instanceof ServerWorld) {
-			ServerWorld overworld = world.getServer().getLevel(World.OVERWORLD);
+	public static RiteWorldSavedData get(Level world) {
+		if (world instanceof ServerLevel) {
+			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
-			DimensionSavedDataManager storage = overworld.getDataStorage();
+			DimensionDataStorage storage = overworld.getDataStorage();
 			return storage.computeIfAbsent(() -> new RiteWorldSavedData(overworld), NAME);
 		}
 		else {
@@ -59,11 +59,11 @@ public class RiteWorldSavedData extends WorldSavedData {
 	}
 
 	@Override
-	public void load(CompoundNBT nbt) {
-		ListNBT riteList = nbt.getList("riteList", 10);
+	public void load(CompoundTag nbt) {
+		ListTag riteList = nbt.getList("riteList", 10);
 
 		for(int i = 0; i < riteList.size(); i++) {
-			CompoundNBT riteNbt = riteList.getCompound(i);
+			CompoundTag riteNbt = riteList.getCompound(i);
 			RiteType<?> type = EnchantedRiteTypes.REGISTRY.get().getValue(new ResourceLocation(riteNbt.getString("type")));
 
 			if(type != null) {
@@ -79,8 +79,8 @@ public class RiteWorldSavedData extends WorldSavedData {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
-		ListNBT riteList = new ListNBT();
+	public CompoundTag save(CompoundTag nbt) {
+		ListTag riteList = new ListTag();
 
 		for(AbstractRite rite : ACTIVE_RITES) {
 			if(!rite.isRemoved && !rite.getStarting()) {

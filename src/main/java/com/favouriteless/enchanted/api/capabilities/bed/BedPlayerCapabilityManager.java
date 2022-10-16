@@ -24,11 +24,11 @@ package com.favouriteless.enchanted.api.capabilities.bed;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.SimpleCapabilityStorage;
 import com.favouriteless.enchanted.api.capabilities.SimplePersistentCapabilityProvider;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.BedTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BedBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -59,9 +59,9 @@ public class BedPlayerCapabilityManager {
     }
 
     @SubscribeEvent
-    public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<TileEntity> event) {
-        final TileEntity obj = event.getObject();
-        if(obj instanceof BedTileEntity) {
+    public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<BlockEntity> event) {
+        final BlockEntity obj = event.getObject();
+        if(obj instanceof BedBlockEntity) {
             event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, () -> new BedPlayerCapability()));
         }
     }
@@ -69,7 +69,7 @@ public class BedPlayerCapabilityManager {
     @SubscribeEvent
     public static void onPlayerSleeping(PlayerSleepInBedEvent event){
         BlockPos pos = event.getPos();
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         if(pos != null){
             event.getPlayer().level.getBlockEntity(pos).getCapability(INSTANCE).ifPresent(source -> source.setValue(player.getUUID()));
         }

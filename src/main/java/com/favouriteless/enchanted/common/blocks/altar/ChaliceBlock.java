@@ -24,28 +24,34 @@ package com.favouriteless.enchanted.common.blocks.altar;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Random;
+
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class ChaliceBlock extends Block {
 
@@ -57,44 +63,44 @@ public class ChaliceBlock extends Block {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(state.is(EnchantedBlocks.CHALICE.get())) {
 
             if(player.getItemInHand(hand).getItem() == EnchantedItems.REDSTONE_SOUP.get()) {
                 if (!world.isClientSide) {
-                    world.playSound(null, pos, SoundEvents.FISHING_BOBBER_SPLASH, SoundCategory.BLOCKS, 0.4F, 1.0F);
+                    world.playSound(null, pos, SoundEvents.FISHING_BOBBER_SPLASH, SoundSource.BLOCKS, 0.4F, 1.0F);
                     world.setBlockAndUpdate(pos, EnchantedBlocks.CHALICE_FILLED.get().defaultBlockState());
                     player.getItemInHand(hand).shrink(1);
-                    return ActionResultType.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
 
             else if(player.getItemInHand(hand).getItem() == Items.MILK_BUCKET) {
                 if (!world.isClientSide) {
-                    world.playSound(null, pos, SoundEvents.FISHING_BOBBER_SPLASH, SoundCategory.BLOCKS, 0.4F, 1.0F);
+                    world.playSound(null, pos, SoundEvents.FISHING_BOBBER_SPLASH, SoundSource.BLOCKS, 0.4F, 1.0F);
                     world.setBlockAndUpdate(pos, EnchantedBlocks.CHALICE_FILLED_MILK.get().defaultBlockState());
                     player.setItemInHand(hand, new ItemStack(Items.BUCKET, 1));
-                    return ActionResultType.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.box(0.34375, 0, 0.34375, 0.65625, 0.4375, 0.65625);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.box(0.34375, 0, 0.34375, 0.65625, 0.4375, 0.65625);
     }
 
     @Override
-    public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
         if(isFilled) {
             double x = pos.getX() + 0.4D + random.nextDouble() * 0.2D;
             double y = pos.getY() + 0.5D;
             double z = pos.getZ() + 0.4D + random.nextDouble() * 0.2D;
-            world.addParticle(new RedstoneParticleData(3.6F, 0.2F, 0.0F, 0.6F), x, y, z, 0.0D, 0.0D, 0.0D);
+            world.addParticle(new DustParticleOptions(3.6F, 0.2F, 0.0F, 0.6F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
 }

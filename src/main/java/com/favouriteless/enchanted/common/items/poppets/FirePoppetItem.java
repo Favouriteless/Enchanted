@@ -22,8 +22,8 @@
 package com.favouriteless.enchanted.common.items.poppets;
 
 import com.favouriteless.enchanted.common.init.PoppetColour;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.function.Predicate;
 
@@ -34,12 +34,12 @@ public class FirePoppetItem extends DeathPoppetItem {
 	}
 
 	@Override
-	public boolean canProtect(PlayerEntity player) {
+	public boolean canProtect(Player player) {
 		return true;
 	}
 
 	@Override
-	public void protect(PlayerEntity player) {
+	public void protect(Player player) {
 		player.setHealth(1);
 		player.clearFire();
 	}

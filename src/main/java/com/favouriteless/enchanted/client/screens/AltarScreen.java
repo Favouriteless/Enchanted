@@ -23,24 +23,24 @@ package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.containers.AltarContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class AltarScreen extends ContainerScreen<AltarContainer> {
+public class AltarScreen extends AbstractContainerScreen<AltarContainer> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/altar.png");
     private AltarContainer container;
 
-    public AltarScreen(AltarContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public AltarScreen(AltarContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 
@@ -49,7 +49,7 @@ public class AltarScreen extends ContainerScreen<AltarContainer> {
     }
 
     @Override
-    protected void renderBg(MatrixStack pMatrixStack, float pPartialTicks, int pX, int pY) {
+    protected void renderBg(PoseStack pMatrixStack, float pPartialTicks, int pX, int pY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
 
@@ -59,7 +59,7 @@ public class AltarScreen extends ContainerScreen<AltarContainer> {
     }
 
     @Override
-    protected void renderLabels(MatrixStack pMatrixStack, int pX, int pY) {
+    protected void renderLabels(PoseStack pMatrixStack, int pX, int pY) {
         String powerString = String.format("%s/%s (%sx)", container.getCurrentPower(), container.getMaxPower(), container.getRechargeMultiplier());
         int xOffset = this.font.width(powerString) / 2;
         int yOffset = this.font.lineHeight / 2;

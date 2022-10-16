@@ -23,19 +23,19 @@ package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
+public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenContainer> {
 
     private final WitchOvenContainer container;
 
@@ -54,7 +54,7 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
     public static final int FLAME_ICON_V = 12;
     public static final int FLAME_SIZE = 14;
 
-    public WitchOvenScreen(WitchOvenContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public WitchOvenScreen(WitchOvenContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 
@@ -62,21 +62,21 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
         this.imageHeight = 166;
     }
 
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
 
-    protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderHoveredTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
         if (!minecraft.player.inventory.getCarried().isEmpty()) return;
         super.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
 
@@ -97,7 +97,7 @@ public class WitchOvenScreen extends ContainerScreen<WitchOvenContainer> {
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         font.draw(matrixStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
         font.draw(matrixStack, inventory.getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
     }

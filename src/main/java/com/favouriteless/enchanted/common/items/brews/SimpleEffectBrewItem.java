@@ -21,19 +21,21 @@
 
 package com.favouriteless.enchanted.common.items.brews;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SimpleEffectBrewItem extends ConsumableBrewItem {
 
-	private final Effect effect;
+	private final MobEffect effect;
 	private final int duration;
 	private final int amplifier;
 
-	public SimpleEffectBrewItem(Effect effect, int duration, int amplifier, Properties properties) {
+	public SimpleEffectBrewItem(MobEffect effect, int duration, int amplifier, Properties properties) {
 		super(properties);
 		this.effect = effect;
 		this.duration = duration;
@@ -41,9 +43,9 @@ public class SimpleEffectBrewItem extends ConsumableBrewItem {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		stack.shrink(1);
-		entity.addEffect(new EffectInstance(effect, duration, amplifier));
+		entity.addEffect(new MobEffectInstance(effect, duration, amplifier));
 		return super.finishUsingItem(stack, world, entity);
 	}
 }

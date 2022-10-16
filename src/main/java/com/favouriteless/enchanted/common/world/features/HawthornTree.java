@@ -22,32 +22,38 @@
 package com.favouriteless.enchanted.common.world.features;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.trees.Tree;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
-import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 
 import javax.annotation.Nullable;
 import java.util.OptionalInt;
 import java.util.Random;
 
-public class HawthornTree extends Tree {
+import net.minecraft.util.UniformInt;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 
-    public static final BaseTreeFeatureConfig HAWTHORN_TREE_CONFIG = new BaseTreeFeatureConfig.Builder(
-            new SimpleBlockStateProvider(EnchantedBlocks.HAWTHORN_LOG.get().defaultBlockState()),
-            new SimpleBlockStateProvider(EnchantedBlocks.HAWTHORN_LEAVES.get().defaultBlockState()),
-            new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
+public class HawthornTree extends AbstractTreeGrower {
+
+    public static final TreeConfiguration HAWTHORN_TREE_CONFIG = new TreeConfiguration.TreeConfigurationBuilder(
+            new SimpleStateProvider(EnchantedBlocks.HAWTHORN_LOG.get().defaultBlockState()),
+            new SimpleStateProvider(EnchantedBlocks.HAWTHORN_LEAVES.get().defaultBlockState()),
+            new FancyFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(4), 4),
             new FancyTrunkPlacer(3, 11, 0),
-            new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)))
+            new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))
             .ignoreVines()
-            .heightmap(Heightmap.Type.MOTION_BLOCKING)
+            .heightmap(Heightmap.Types.MOTION_BLOCKING)
             .build();
 
 
     @Nullable
-    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {
+    protected ConfiguredFeature<TreeConfiguration, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {
         return Feature.TREE.configured(HAWTHORN_TREE_CONFIG);
     }
 

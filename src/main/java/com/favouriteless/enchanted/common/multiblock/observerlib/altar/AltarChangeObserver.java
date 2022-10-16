@@ -30,20 +30,20 @@ import hellfirepvp.observerlib.api.ObservableArea;
 import hellfirepvp.observerlib.api.ObservableAreaBoundingBox;
 import hellfirepvp.observerlib.api.block.BlockChangeSet;
 import hellfirepvp.observerlib.common.change.BlockStateChangeSet;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
 public class AltarChangeObserver extends ChangeObserver {
 
     private final int range = EnchantedConfig.ALTAR_RANGE.get();
-    private final ObservableArea observableArea = new ObservableAreaBoundingBox(new AxisAlignedBB(
+    private final ObservableArea observableArea = new ObservableAreaBoundingBox(new AABB(
             -(range-1), -range, -(range-1),
             range+2, range, range+2));
 
@@ -52,7 +52,7 @@ public class AltarChangeObserver extends ChangeObserver {
     }
 
     @Override
-    public void initialize(IWorld world, BlockPos center) {
+    public void initialize(LevelAccessor world, BlockPos center) {
     }
 
     @Nonnull
@@ -62,9 +62,9 @@ public class AltarChangeObserver extends ChangeObserver {
     }
 
     @Override
-    public boolean notifyChange(World world, BlockPos center, BlockChangeSet changeSet) {
+    public boolean notifyChange(Level world, BlockPos center, BlockChangeSet changeSet) {
         if(!world.isClientSide) {
-            TileEntity te = world.getBlockEntity(center);
+            BlockEntity te = world.getBlockEntity(center);
             if (te instanceof AltarTileEntity) {
                 AltarTileEntity altar = (AltarTileEntity)te;
 
@@ -88,12 +88,12 @@ public class AltarChangeObserver extends ChangeObserver {
     }
 
     @Override
-    public void readFromNBT(CompoundNBT tag) {
+    public void readFromNBT(CompoundTag tag) {
 
     }
 
     @Override
-    public void writeToNBT(CompoundNBT tag) {
+    public void writeToNBT(CompoundTag tag) {
 
     }
 }

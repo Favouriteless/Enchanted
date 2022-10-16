@@ -34,43 +34,53 @@ import com.favouriteless.enchanted.common.world.features.AlderTree;
 import com.favouriteless.enchanted.common.world.features.HawthornTree;
 import com.favouriteless.enchanted.common.world.features.RowanTree;
 import net.minecraft.block.*;
-import net.minecraft.block.AbstractBlock.Properties;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.ToIntFunction;
 
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
 public class EnchantedBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Enchanted.MOD_ID);
 
     public static void initRender() {
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.CHALK_GOLD.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.CHALK_WHITE.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.CHALK_RED.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.CHALK_PURPLE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_GOLD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_WHITE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_RED.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_PURPLE.get(), RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.ROWAN_SAPLING.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.HAWTHORN_SAPLING.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.ALDER_SAPLING.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.BELLADONNA.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.ARTICHOKE.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.MANDRAKE.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.GLINT_WEED.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.EMBER_MOSS.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.SPANISH_MOSS.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.WOLFSBANE.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.GARLIC.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.SNOWBELL.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(EnchantedBlocks.BLOOD_POPPY.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ROWAN_SAPLING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.HAWTHORN_SAPLING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ALDER_SAPLING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.BELLADONNA.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ARTICHOKE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.MANDRAKE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.GLINT_WEED.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.EMBER_MOSS.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.SPANISH_MOSS.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.WOLFSBANE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.GARLIC.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.SNOWBELL.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.BLOOD_POPPY.get(), RenderType.cutout());
     }
 
     public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new AltarBlock(Properties.of(EnchantedMaterials.ALTAR).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
@@ -89,21 +99,21 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> CANDELABRA = BLOCKS.register("candelabra", () -> new CandelabraBlock(Properties.copy(CHALICE.get()).lightLevel((state) -> 14)));
 
     public static final RegistryObject<Block> ROWAN_PLANKS = BLOCKS.register("rowan_planks", () -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final RegistryObject<StairsBlock> ROWAN_STAIRS = BLOCKS.register("rowan_stairs", () -> new StairsBlock(ROWAN_PLANKS.get().defaultBlockState(), Properties.copy(ROWAN_PLANKS.get())));
+    public static final RegistryObject<StairBlock> ROWAN_STAIRS = BLOCKS.register("rowan_stairs", () -> new StairBlock(ROWAN_PLANKS.get().defaultBlockState(), Properties.copy(ROWAN_PLANKS.get())));
     public static final RegistryObject<SlabBlock> ROWAN_SLAB = BLOCKS.register("rowan_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> ROWAN_LOG = BLOCKS.register("rowan_log", () -> log(MaterialColor.WOOD, MaterialColor.PODZOL));
     public static final RegistryObject<Block> ROWAN_LEAVES = BLOCKS.register("rowan_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<SaplingBlock> ROWAN_SAPLING = BLOCKS.register("rowan_sapling", () -> new SaplingBlock(new RowanTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> HAWTHORN_PLANKS = BLOCKS.register("hawthorn_planks", () -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final RegistryObject<StairsBlock> HAWTHORN_STAIRS = BLOCKS.register("hawthorn_stairs", () -> new StairsBlock(HAWTHORN_PLANKS.get().defaultBlockState(), Properties.copy(HAWTHORN_PLANKS.get())));
+    public static final RegistryObject<StairBlock> HAWTHORN_STAIRS = BLOCKS.register("hawthorn_stairs", () -> new StairBlock(HAWTHORN_PLANKS.get().defaultBlockState(), Properties.copy(HAWTHORN_PLANKS.get())));
     public static final RegistryObject<SlabBlock> HAWTHORN_SLAB = BLOCKS.register("hawthorn_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> HAWTHORN_LOG = BLOCKS.register("hawthorn_log", () -> log(MaterialColor.CLAY, MaterialColor.CLAY));
     public static final RegistryObject<Block> HAWTHORN_LEAVES = BLOCKS.register("hawthorn_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<SaplingBlock> HAWTHORN_SAPLING = BLOCKS.register("hawthorn_sapling", () -> new SaplingBlock(new HawthornTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> ALDER_PLANKS = BLOCKS.register("alder_planks", () -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final RegistryObject<StairsBlock> ALDER_STAIRS = BLOCKS.register("alder_stairs", () -> new StairsBlock(ALDER_PLANKS.get().defaultBlockState(), Properties.copy(ALDER_PLANKS.get())));
+    public static final RegistryObject<StairBlock> ALDER_STAIRS = BLOCKS.register("alder_stairs", () -> new StairBlock(ALDER_PLANKS.get().defaultBlockState(), Properties.copy(ALDER_PLANKS.get())));
     public static final RegistryObject<SlabBlock> ALDER_SLAB = BLOCKS.register("alder_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> ALDER_LOG = BLOCKS.register("alder_log", () -> log(MaterialColor.WOOD, MaterialColor.CLAY));
     public static final RegistryObject<Block> ALDER_LEAVES = BLOCKS.register("alder_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));

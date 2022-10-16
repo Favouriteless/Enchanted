@@ -1,6 +1,6 @@
 modLoader="javafml" #mandatory
 
-loaderVersion="[36,)"
+loaderVersion="[40,)"
 
 license="GNU GPLv3"
 
@@ -22,12 +22,12 @@ Enchanted is your mod for all things occult or witchcraft. A modernized attempt 
 [[dependencies.enchanted]]
     modId="observerlib"
     mandatory=true
-    versionRange="[1.16.5-1.5,]"
+    versionRange="[1.18.2-1.6.0,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.enchanted]]
     modId="patchouli"
     mandatory=true
-    versionRange="[1.16.4-53.2,]"
+    versionRange="[1.18.2-71.1,]"
     ordering="NONE"
     sides="BOTH"

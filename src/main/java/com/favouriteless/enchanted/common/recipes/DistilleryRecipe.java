@@ -24,24 +24,24 @@ package com.favouriteless.enchanted.common.recipes;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DistilleryRecipe implements IRecipe<IInventory> {
+public class DistilleryRecipe implements Recipe<Container> {
 
-    protected final IRecipeType<?> type;
+    protected final RecipeType<?> type;
     protected final ResourceLocation id;
 
     private final NonNullList<ItemStack> itemsIn;
@@ -100,12 +100,12 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
 
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
+    public boolean matches(Container inv, Level worldIn) {
         return false;
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         return null;
     }
 
@@ -125,12 +125,12 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return EnchantedRecipeTypes.DISTILLERY_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return type;
     }
 
@@ -141,21 +141,21 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
 
 
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<DistilleryRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DistilleryRecipe> {
 
         @Override
         public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "iteminputs"));
-            NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(JSONUtils.getAsJsonArray(json, "itemoutputs"));
-            int cookTime = JSONUtils.getAsInt(json, "cookTime", 200);
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "iteminputs"));
+            NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "itemoutputs"));
+            int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
 
             return new DistilleryRecipe(recipeId, itemsIn, itemsOut, cookTime);
         }
 
         @Nullable
         @Override
-        public DistilleryRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public DistilleryRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 
             int inSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
@@ -175,7 +175,7 @@ public class DistilleryRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, DistilleryRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, DistilleryRecipe recipe) {
 
             buffer.writeInt(recipe.getItemsIn().size());
             for (ItemStack stack : recipe.getItemsIn()) {

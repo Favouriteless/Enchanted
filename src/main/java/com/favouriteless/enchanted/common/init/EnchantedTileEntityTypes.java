@@ -25,39 +25,39 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.tileentity.*;
 
 import com.favouriteless.enchanted.common.tileentity.AltarTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantedTileEntityTypes {
 
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Enchanted.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<TileEntityType<ChalkGoldTileEntity>> CHALK_GOLD = TILE_ENTITY_TYPES.register("chalk_gold",
-            () -> TileEntityType.Builder.of(ChalkGoldTileEntity::new, EnchantedBlocks.CHALK_GOLD.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ChalkGoldTileEntity>> CHALK_GOLD = TILE_ENTITY_TYPES.register("chalk_gold",
+            () -> BlockEntityType.Builder.of(ChalkGoldTileEntity::new, EnchantedBlocks.CHALK_GOLD.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<WitchOvenTileEntity>> WITCH_OVEN = TILE_ENTITY_TYPES.register("witch_oven",
-            () -> TileEntityType.Builder.of(WitchOvenTileEntity::new, EnchantedBlocks.WITCH_OVEN.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WitchOvenTileEntity>> WITCH_OVEN = TILE_ENTITY_TYPES.register("witch_oven",
+            () -> BlockEntityType.Builder.of(WitchOvenTileEntity::new, EnchantedBlocks.WITCH_OVEN.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<DistilleryTileEntity>> DISTILLERY = TILE_ENTITY_TYPES.register("distillery",
-            () -> TileEntityType.Builder.of(DistilleryTileEntity::new, EnchantedBlocks.DISTILLERY.get()).build(null));
+    public static final RegistryObject<BlockEntityType<DistilleryTileEntity>> DISTILLERY = TILE_ENTITY_TYPES.register("distillery",
+            () -> BlockEntityType.Builder.of(DistilleryTileEntity::new, EnchantedBlocks.DISTILLERY.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<AltarTileEntity>> ALTAR = TILE_ENTITY_TYPES.register("altar",
-            () -> TileEntityType.Builder.of(AltarTileEntity::new, EnchantedBlocks.ALTAR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<AltarTileEntity>> ALTAR = TILE_ENTITY_TYPES.register("altar",
+            () -> BlockEntityType.Builder.of(AltarTileEntity::new, EnchantedBlocks.ALTAR.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<BloodPoppyTileEntity>> BLOOD_POPPY = TILE_ENTITY_TYPES.register("blood_poppy",
-            () -> TileEntityType.Builder.of(BloodPoppyTileEntity::new, EnchantedBlocks.BLOOD_POPPY.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BloodPoppyTileEntity>> BLOOD_POPPY = TILE_ENTITY_TYPES.register("blood_poppy",
+            () -> BlockEntityType.Builder.of(BloodPoppyTileEntity::new, EnchantedBlocks.BLOOD_POPPY.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<WitchCauldronTileEntity>> WITCH_CAULDRON = TILE_ENTITY_TYPES.register("witch_cauldron",
-            () -> TileEntityType.Builder.of(WitchCauldronTileEntity::new, EnchantedBlocks.WITCH_CAULDRON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WitchCauldronTileEntity>> WITCH_CAULDRON = TILE_ENTITY_TYPES.register("witch_cauldron",
+            () -> BlockEntityType.Builder.of(WitchCauldronTileEntity::new, EnchantedBlocks.WITCH_CAULDRON.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<KettleTileEntity>> KETTLE = TILE_ENTITY_TYPES.register("kettle",
-            () -> TileEntityType.Builder.of(KettleTileEntity::new, EnchantedBlocks.KETTLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<KettleTileEntity>> KETTLE = TILE_ENTITY_TYPES.register("kettle",
+            () -> BlockEntityType.Builder.of(KettleTileEntity::new, EnchantedBlocks.KETTLE.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<SpinningWheelTileEntity>> SPINNING_WHEEL = TILE_ENTITY_TYPES.register("spinning_wheel",
-            () -> TileEntityType.Builder.of(SpinningWheelTileEntity::new, EnchantedBlocks.SPINNING_WHEEL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SpinningWheelTileEntity>> SPINNING_WHEEL = TILE_ENTITY_TYPES.register("spinning_wheel",
+            () -> BlockEntityType.Builder.of(SpinningWheelTileEntity::new, EnchantedBlocks.SPINNING_WHEEL.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<PoppetShelfTileEntity>> POPPET_SHELF = TILE_ENTITY_TYPES.register("poppet_shelf",
-            () -> TileEntityType.Builder.of(PoppetShelfTileEntity::new, EnchantedBlocks.POPPET_SHELF.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PoppetShelfTileEntity>> POPPET_SHELF = TILE_ENTITY_TYPES.register("poppet_shelf",
+            () -> BlockEntityType.Builder.of(PoppetShelfTileEntity::new, EnchantedBlocks.POPPET_SHELF.get()).build(null));
 }

@@ -21,9 +21,9 @@
 
 package com.favouriteless.enchanted.core.util;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 public class PlayerInventoryHelper {
 
@@ -32,7 +32,7 @@ public class PlayerInventoryHelper {
      * @param player
      * @param item
      */
-    public static void tryGiveItem(PlayerEntity player, ItemStack item) {
+    public static void tryGiveItem(Player player, ItemStack item) {
         if(player != null && !player.inventory.add(item)) {
             player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
         }

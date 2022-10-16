@@ -28,12 +28,12 @@ import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.item.Items;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.Items;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -50,15 +50,15 @@ public class RiteOfSanctity extends AbstractRite {
 
     @Override
     public void execute() {
-        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5F, 1.0F);
+        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
     }
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(world, pos, entity -> entity instanceof MonsterEntity);
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(world, pos, entity -> entity instanceof Monster);
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
-                Vector3d opposingVector = entity.position().subtract(pos.getX(), pos.getY(), pos.getZ());
+                Vec3 opposingVector = entity.position().subtract(pos.getX(), pos.getY(), pos.getZ());
                 double distance = Math.sqrt(opposingVector.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()));
                 entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(distance * 10).scale(REPULSE_FACTOR / 1000D)));
             }

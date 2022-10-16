@@ -22,21 +22,23 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class TaglockFilledItem extends Item {
 
@@ -45,9 +47,9 @@ public class TaglockFilledItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag flag) {
         if(stack.hasTag()) {
-            tooltip.add(new StringTextComponent(stack.getTag().getString("entityName")).withStyle(TextFormatting.GRAY));
+            tooltip.add(new TextComponent(stack.getTag().getString("entityName")).withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, pLevel, tooltip, flag);
     }
@@ -58,9 +60,9 @@ public class TaglockFilledItem extends Item {
     }
 
     @Override
-    public boolean verifyTagAfterLoad(CompoundNBT nbt) {
+    public boolean verifyTagAfterLoad(CompoundTag nbt) {
         if (nbt.contains("entity") && nbt.contains("entityName")) {
-            UUID id = NBTUtil.loadUUID(nbt.get("entity"));
+            UUID id = NbtUtils.loadUUID(nbt.get("entity"));
             nbt.putUUID("entity", id);
             String entityName = nbt.getString("entityName");
             nbt.putString("entityName", entityName);
@@ -71,7 +73,7 @@ public class TaglockFilledItem extends Item {
 
     public UUID getUUID(ItemStack stack) {
         if(stack.getItem() == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
-            return NBTUtil.loadUUID(stack.getTag().get("entity"));
+            return NbtUtils.loadUUID(stack.getTag().get("entity"));
         }
         return null;
     }
@@ -82,7 +84,7 @@ public class TaglockFilledItem extends Item {
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack item) {
-        return UseAction.DRINK;
+    public UseAnim getUseAnimation(ItemStack item) {
+        return UseAnim.DRINK;
     }
 }

@@ -24,43 +24,55 @@ package com.favouriteless.enchanted.common.blocks;
 import com.favouriteless.enchanted.common.tileentity.KettleTileEntity;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nullable;
 
-public class KettleBlock extends Block implements ITileEntityProvider {
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SupportType;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class KettleBlock extends Block implements EntityBlock {
 
     public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 2);
-    public static final VoxelShape TYPE_1_SHAPE = VoxelShapes.box(0.1875, 0.125, 0.1875, 0.8125, 0.5, 0.8125);
-    public static final VoxelShape TYPE_2_SHAPE = VoxelShapes.box(0.1875, 0, 0.1875, 0.8125, 0.375, 0.8125);
+    public static final VoxelShape TYPE_1_SHAPE = Shapes.box(0.1875, 0.125, 0.1875, 0.8125, 0.5, 0.8125);
+    public static final VoxelShape TYPE_2_SHAPE = Shapes.box(0.1875, 0, 0.1875, 0.8125, 0.375, 0.8125);
 
     public KettleBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        TileEntity te = world.getBlockEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
         if(te instanceof KettleTileEntity) {
             KettleTileEntity kettle = (KettleTileEntity)te;
@@ -68,45 +80,45 @@ public class KettleBlock extends Block implements ITileEntityProvider {
             if(stack.getItem() == Items.GLASS_BOTTLE && kettle.isComplete) {
                 stack.shrink(1);
                 kettle.takeContents(player);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && kettle.isFailed) {
                 kettle.takeContents(player);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if(stack.getItem() == Items.BUCKET && kettle.getWater() >= 1000) {
                 if (!world.isClientSide) {
                     if (kettle.removeWater(FluidAttributes.BUCKET_VOLUME)) {
-                        world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                         stack.shrink(1);
                         PlayerInventoryHelper.tryGiveItem(player, new ItemStack(Items.WATER_BUCKET));
                     }
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if (stack.getItem() == Items.WATER_BUCKET) {
                 if (!world.isClientSide) {
                     if (kettle.addWater(FluidAttributes.BUCKET_VOLUME)) {
-                        world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                         if (!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
                     }
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Nullable
     @Override
-    public TileEntity newBlockEntity(IBlockReader blockReader) {
+    public BlockEntity newBlockEntity(BlockGetter blockReader) {
         return new KettleTileEntity();
     }
 
     @Override
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof ItemEntity) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
+            BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof KettleTileEntity) {
                 KettleTileEntity kettle = (KettleTileEntity)tileEntity;
                 if(!kettle.isFailed && kettle.isFull() && kettle.isHot()) {
@@ -117,17 +129,17 @@ public class KettleBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return (pState.getValue(TYPE) == 1) ? TYPE_1_SHAPE : TYPE_2_SHAPE;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, TYPE);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean pIsMoving) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean pIsMoving) {
         BlockState newState = getKettleState(world, pos, state.getValue(FACING));
         if(state != newState)
             world.setBlock(pos, newState, 2);
@@ -135,11 +147,11 @@ public class KettleBlock extends Block implements ITileEntityProvider {
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext pContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return getKettleState(pContext.getLevel(), pContext.getClickedPos(), pContext.getHorizontalDirection().getOpposite());
     }
 
-    public BlockState getKettleState(World world, BlockPos pos, @Nullable Direction facing) {
+    public BlockState getKettleState(Level world, BlockPos pos, @Nullable Direction facing) {
         if(facing == null) facing = Direction.NORTH;
         int type = 0;
         Direction left = facing.getCounterClockWise();
@@ -148,13 +160,13 @@ public class KettleBlock extends Block implements ITileEntityProvider {
         if(world.getBlockState(pos.above()).isFaceSturdy(world, pos.above(), Direction.DOWN)) { // Face above is sturdy
             type = 1;
         }
-        else if((world.getBlockState(pos.relative(left)).isFaceSturdy(world, pos.relative(left), right, BlockVoxelShape.CENTER)
-                && world.getBlockState(pos.relative(right)).isFaceSturdy(world, pos.relative(right), left, BlockVoxelShape.CENTER))
+        else if((world.getBlockState(pos.relative(left)).isFaceSturdy(world, pos.relative(left), right, SupportType.CENTER)
+                && world.getBlockState(pos.relative(right)).isFaceSturdy(world, pos.relative(right), left, SupportType.CENTER))
                 || (world.getBlockState(pos.relative(left)).getBlock() instanceof WallBlock && world.getBlockState(pos.relative(right)).getBlock() instanceof WallBlock)) { // Horizontal perpendicular to place direction is sturdy
             type = 2;
         }
-        else if((world.getBlockState(pos.relative(facing)).isFaceSturdy(world, pos.relative(facing), facing.getOpposite(), BlockVoxelShape.CENTER)
-                && world.getBlockState(pos.relative(facing.getOpposite())).isFaceSturdy(world, pos.relative(facing.getOpposite()), facing, BlockVoxelShape.CENTER))
+        else if((world.getBlockState(pos.relative(facing)).isFaceSturdy(world, pos.relative(facing), facing.getOpposite(), SupportType.CENTER)
+                && world.getBlockState(pos.relative(facing.getOpposite())).isFaceSturdy(world, pos.relative(facing.getOpposite()), facing, SupportType.CENTER))
                 || (world.getBlockState(pos.relative(facing)).getBlock() instanceof WallBlock && world.getBlockState(pos.relative(facing.getOpposite())).getBlock() instanceof WallBlock)) { // Horizontal towards place direction is sturdy
             type = 2;
             facing = facing.getClockWise();

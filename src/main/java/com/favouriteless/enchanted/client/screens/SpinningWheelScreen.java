@@ -23,19 +23,19 @@ package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer> {
+public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelContainer> {
 
     private SpinningWheelContainer container;
 
@@ -57,7 +57,7 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
     public static final int WHEEL_FRAME2_V = 74;
     public static final int WHEEL_SIZE = 34;
 
-    public SpinningWheelScreen(SpinningWheelContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public SpinningWheelScreen(SpinningWheelContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 
@@ -65,19 +65,19 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
         imageHeight = 166;
     }
 
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
-    protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
+    protected void renderHoveredTooltip(PoseStack matrixStack, int x, int y) {
         if (!this.minecraft.player.inventory.getCarried().isEmpty()) return;  // no tooltip if the player is dragging something
             super.renderTooltip(matrixStack, x, y);
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
 
@@ -108,7 +108,7 @@ public class SpinningWheelScreen extends ContainerScreen<SpinningWheelContainer>
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
         this.font.draw(matrixStack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
     }

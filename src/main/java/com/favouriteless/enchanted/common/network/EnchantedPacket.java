@@ -21,12 +21,12 @@
 
 package com.favouriteless.enchanted.common.network;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
 public interface EnchantedPacket {
-	void encode(PacketBuffer buffer);
+	void encode(FriendlyByteBuf buffer);
 	void handle(Supplier<Context> context);
 }

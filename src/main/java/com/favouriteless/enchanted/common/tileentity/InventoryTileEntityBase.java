@@ -21,17 +21,17 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -40,7 +40,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
+public abstract class InventoryTileEntityBase extends RandomizableContainerBlockEntity {
 
 	protected NonNullList<ItemStack> inventoryContents;
 	protected IItemHandlerModifiable items = new InvWrapper(this);
@@ -48,7 +48,7 @@ public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
 
 	protected int numPlayersUsing;
 
-	public InventoryTileEntityBase(TileEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
+	public InventoryTileEntityBase(BlockEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
 		super(typeIn);
 		this.inventoryContents = inventoryContents;
 	}
@@ -69,27 +69,20 @@ public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
 	}
 
 	@Override
-	protected abstract ITextComponent getDefaultName();
+	protected abstract Component getDefaultName();
 
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
-		super.load(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		inventoryContents = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(nbt, inventoryContents);
-		loadAdditional(nbt);
+		ContainerHelper.loadAllItems(nbt, inventoryContents);
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
-		super.save(nbt);
-		ItemStackHelper.saveAllItems(nbt, inventoryContents);
-		saveAdditional(nbt);
-		return nbt;
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
+		ContainerHelper.saveAllItems(nbt, inventoryContents);
 	}
-
-	protected abstract void loadAdditional(CompoundNBT nbt);
-
-	protected abstract void saveAdditional(CompoundNBT nbt);
 
 	@Override
 	public boolean triggerEvent(int id, int type) {
@@ -102,7 +95,7 @@ public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
 	}
 
 	@Override
-	public void startOpen(PlayerEntity player) {
+	public void startOpen(Player player) {
 		if(!player.isSpectator()) {
 			if(numPlayersUsing < 0 ) {
 				numPlayersUsing = 0;
@@ -113,7 +106,7 @@ public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
 	}
 
 	@Override
-	public void stopOpen(PlayerEntity player) {
+	public void stopOpen(Player player) {
 		if(!player.isSpectator()) {
 			numPlayersUsing--;
 			onOpenOrClose();

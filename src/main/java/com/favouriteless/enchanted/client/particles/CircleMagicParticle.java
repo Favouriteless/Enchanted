@@ -23,13 +23,13 @@ package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class CircleMagicParticle extends SpriteTexturedParticle {
+public class CircleMagicParticle extends TextureSheetParticle {
 
     public static final double ANGLE = 2.0D;
     private final double radius;
@@ -37,7 +37,7 @@ public class CircleMagicParticle extends SpriteTexturedParticle {
     private final double xStart;
     private final double zStart;
 
-    protected CircleMagicParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue, double xStart, double zStart, double radius) {
+    protected CircleMagicParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue, double xStart, double zStart, double radius) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = red/255F;
         this.gCol = green/255F;
@@ -74,7 +74,7 @@ public class CircleMagicParticle extends SpriteTexturedParticle {
         double cos = Math.cos(angle);
         double sin = Math.sin(angle);
 
-        Vector3d newPos = new Vector3d(
+        Vec3 newPos = new Vec3(
                 cos * (x - xStart) - sin * (z - zStart),
                 0,
                 sin * (x - xStart) + cos * (z - zStart)
@@ -87,21 +87,21 @@ public class CircleMagicParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<CircleMagicData> {
+    public static class Factory implements ParticleProvider<CircleMagicData> {
 
-        private final IAnimatedSprite sprites;
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite pSprites) {
+        public Factory(SpriteSet pSprites) {
             this.sprites = pSprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(CircleMagicData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(CircleMagicData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             CircleMagicParticle particle = new CircleMagicParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue(), data.getCenterX(), data.getCenterZ(), data.getRadius());
             particle.pickSprite(sprites);
             return particle;

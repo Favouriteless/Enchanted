@@ -27,7 +27,7 @@ import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.Circ
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -21,12 +21,14 @@
 
 package com.favouriteless.enchanted.common.blocks.altar;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class AltarDecorationBlock extends Block {
 
@@ -35,7 +37,7 @@ public abstract class AltarDecorationBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!world.isClientSide()) {
             if (!state.canSurvive(world, pos)) {
                 world.destroyBlock(pos,true, null);
@@ -44,7 +46,7 @@ public abstract class AltarDecorationBlock extends Block {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         BlockPos blockpos = pos.below();
         return world.getBlockState(blockpos).isFaceSturdy(world, blockpos, Direction.UP);
     }

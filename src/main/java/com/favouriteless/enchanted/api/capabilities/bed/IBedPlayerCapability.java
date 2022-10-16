@@ -21,12 +21,12 @@
 
 package com.favouriteless.enchanted.api.capabilities.bed;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.UUID;
 
-public interface IBedPlayerCapability extends INBTSerializable<CompoundNBT> {
+public interface IBedPlayerCapability extends INBTSerializable<CompoundTag> {
     UUID getValue();
     void setValue(UUID uuid);
 }

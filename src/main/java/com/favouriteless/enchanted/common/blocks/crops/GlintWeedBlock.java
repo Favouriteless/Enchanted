@@ -21,13 +21,15 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GlintWeedBlock extends AbstractSpreadingBlock {
 
@@ -36,7 +38,7 @@ public class GlintWeedBlock extends AbstractSpreadingBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState pState, IWorldReader pLevel, BlockPos pPos) {
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         BlockState state1 = pLevel.getBlockState(pPos.below());
         BlockState state2 = pLevel.getBlockState(pPos.above());
 

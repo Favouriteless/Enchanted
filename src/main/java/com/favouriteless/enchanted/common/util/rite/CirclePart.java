@@ -23,15 +23,15 @@ package com.favouriteless.enchanted.common.util.rite;
 
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public enum CirclePart {
             "    XXXXXXX    ");
 
     private final List<BlockPos> circlePoints = new ArrayList<>();
-    private final List<AxisAlignedBB> insideBoxes = new ArrayList<>();
+    private final List<AABB> insideBoxes = new ArrayList<>();
     private final int size;
 
     CirclePart(String shape) {
@@ -106,7 +106,7 @@ public enum CirclePart {
         }
     }
 
-    public boolean match(World world, BlockPos centerPos, Block block) {
+    public boolean match(Level world, BlockPos centerPos, Block block) {
         for(BlockPos pos : circlePoints) {
             if(!world.getBlockState(centerPos.offset(pos)).is(block)) {
                 return false;
@@ -115,13 +115,13 @@ public enum CirclePart {
         return true;
     }
 
-    public void destroy(World world, BlockPos centerPos) {
+    public void destroy(Level world, BlockPos centerPos) {
         for(BlockPos pos : circlePoints) {
             world.setBlockAndUpdate(centerPos.offset(pos), Blocks.AIR.defaultBlockState());
         }
     }
 
-    public boolean canPlace(World world, BlockPos centerPos) {
+    public boolean canPlace(Level world, BlockPos centerPos) {
         for(BlockPos pos : circlePoints) {
             if(!world.getBlockState(centerPos.offset(pos)).getMaterial().isReplaceable() || EnchantedBlocks.CHALK_WHITE.get().canSurvive(null, world, pos)) { // Not air or chalk can't survive
                 return false;
@@ -130,34 +130,34 @@ public enum CirclePart {
         return true;
     }
 
-    public void place(World world, BlockPos centerPos, Block block, ItemUseContext context) {
+    public void place(Level world, BlockPos centerPos, Block block, UseOnContext context) {
         for(BlockPos pos : circlePoints) {
-            world.setBlockAndUpdate(centerPos.offset(pos), block.getStateForPlacement(new BlockItemUseContext(context)));
+            world.setBlockAndUpdate(centerPos.offset(pos), block.getStateForPlacement(new BlockPlaceContext(context)));
         }
     }
 
-    public List<Entity> getEntitiesInside(World world, BlockPos centerPos) {
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos) {
         List<Entity> outlist = new ArrayList<>();
 
-        for(AxisAlignedBB aabb : insideBoxes) {
+        for(AABB aabb : insideBoxes) {
             outlist.addAll(world.getEntities((Entity)null, aabb.move(centerPos), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
         }
 
         return outlist;
     }
 
-    public List<Entity> getEntitiesInside(World world, BlockPos centerPos, Predicate<Entity> predicate) {
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
         List<Entity> outlist = getEntitiesInside(world, centerPos);
         outlist.removeIf(entity -> !predicate.test(entity));
         return outlist;
     }
 
-    public Entity getClosestEntity(World world, BlockPos centerPos) {
+    public Entity getClosestEntity(Level world, BlockPos centerPos) {
         return closest(getEntitiesInside(world, centerPos), centerPos);
     }
 
     public Entity closest(List<Entity> entities, BlockPos pos) {
-        Vector3d center = new Vector3d(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D);
+        Vec3 center = new Vec3(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D);
         double closest = Double.MAX_VALUE;
         Entity entity = null;
 
@@ -171,7 +171,7 @@ public enum CirclePart {
         return entity;
     }
 
-    public Entity getClosestEntity(World world, BlockPos centerPos, Predicate<Entity> predicate) {
+    public Entity getClosestEntity(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
         List<Entity> entities = getEntitiesInside(world, centerPos);
         entities.removeIf(entity -> !predicate.test(entity));
 
@@ -184,7 +184,7 @@ public enum CirclePart {
         private final int zStart;
         private final int size;
 
-        private AxisAlignedBB aabb = null;
+        private AABB aabb = null;
 
         private AABBBuilder(String shape, int xStart, int zStart, int size) {
             this.shape = shape;
@@ -217,7 +217,7 @@ public enum CirclePart {
                 int rowEndIndex = rowStartIndex+row.length();
 
                 if(z+1 >= size) { // End of string
-                    aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
+                    aabb = new AABB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
                     removeShapeSub(xStart, zStart, x, z);
                     break;
                 }
@@ -225,7 +225,7 @@ public enum CirclePart {
                     String newRow = shape.substring(rowStartIndex, rowEndIndex);
 
                     if(!rowEquals(row, newRow)) { // Not same quad
-                        aabb = new AxisAlignedBB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
+                        aabb = new AABB(xStart - offset, 0, zStart - offset, x+1 - offset, 5, z+1 - offset);
                         removeShapeSub(xStart, zStart, x, z);
                         break;
                     }
@@ -253,7 +253,7 @@ public enum CirclePart {
             shape = String.valueOf(shapeChars);
         }
 
-        private AxisAlignedBB get() {
+        private AABB get() {
             return aabb;
         }
     }

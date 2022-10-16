@@ -30,15 +30,15 @@ import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Plane;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Plane;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -160,7 +160,7 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 		simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
 	}
 
-	private void stairsBlockWithItem(StairsBlock block, Block parent) {
+	private void stairsBlockWithItem(StairBlock block, Block parent) {
 		stairsBlock(block, blockTexture(parent));
 		simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
 	}

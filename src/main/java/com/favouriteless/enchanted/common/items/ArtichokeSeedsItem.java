@@ -21,30 +21,35 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 
-public class ArtichokeSeedsItem extends BlockNamedItem {
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+
+public class ArtichokeSeedsItem extends ItemNameBlockItem {
     
     public ArtichokeSeedsItem(Block block, Item.Properties properties) {
         super(block, properties);
     }
 
-    public ActionResultType useOn(ItemUseContext pContext) {
-        return ActionResultType.PASS;
+    public InteractionResult useOn(UseOnContext pContext) {
+        return InteractionResult.PASS;
     }
 
-    public ActionResult<ItemStack> use(World pWorldIn, PlayerEntity pPlayerIn, Hand pHandIn) {
-        BlockRayTraceResult blockraytraceresult = getPlayerPOVHitResult(pWorldIn, pPlayerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-        BlockRayTraceResult blockraytraceresult1 = blockraytraceresult.withPosition(blockraytraceresult.getBlockPos().above());
-        ActionResultType actionresulttype = super.useOn(new ItemUseContext(pPlayerIn, pHandIn, blockraytraceresult1));
-        return new ActionResult<>(actionresulttype, pPlayerIn.getItemInHand(pHandIn));
+    public InteractionResultHolder<ItemStack> use(Level pWorldIn, Player pPlayerIn, InteractionHand pHandIn) {
+        BlockHitResult blockraytraceresult = getPlayerPOVHitResult(pWorldIn, pPlayerIn, ClipContext.Fluid.SOURCE_ONLY);
+        BlockHitResult blockraytraceresult1 = blockraytraceresult.withPosition(blockraytraceresult.getBlockPos().above());
+        InteractionResult actionresulttype = super.useOn(new UseOnContext(pPlayerIn, pHandIn, blockraytraceresult1));
+        return new InteractionResultHolder<>(actionresulttype, pPlayerIn.getItemInHand(pHandIn));
     }
 }

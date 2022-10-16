@@ -23,8 +23,8 @@ package com.favouriteless.enchanted.common.util.poppet;
 
 import com.favouriteless.enchanted.common.tileentity.PoppetShelfTileEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
 public class PoppetShelfManager {
 
 	public static PoppetShelfInventory getInventoryFor(PoppetShelfTileEntity shelf) {
-		if(shelf.getLevel() instanceof ServerWorld) {
+		if(shelf.getLevel() instanceof ServerLevel) {
 			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(shelf.getLevel());
 			resolveAbsentShelf(data, shelf);
 			return data.SHELF_STORAGE.get(PoppetShelfWorldSavedData.getShelfIdentifier(shelf));
@@ -41,7 +41,7 @@ public class PoppetShelfManager {
 	}
 
 	public static void removeShelf(PoppetShelfTileEntity shelf) {
-		if(shelf.getLevel() instanceof ServerWorld) {
+		if(shelf.getLevel() instanceof ServerLevel) {
 			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(shelf.getLevel());
 			String identifier = PoppetShelfWorldSavedData.getShelfIdentifier(shelf);
 			data.removePoppetUUIDs(identifier, data.SHELF_STORAGE.get(identifier));
@@ -56,7 +56,7 @@ public class PoppetShelfManager {
 		}
 	}
 
-	public static List<PoppetEntry> getEntriesFor(PlayerEntity player) {
+	public static List<PoppetEntry> getEntriesFor(Player player) {
 		if(!player.level.isClientSide) {
 			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(player.level);
 			if(data.PLAYER_POPPETS.containsKey(player.getUUID())) {

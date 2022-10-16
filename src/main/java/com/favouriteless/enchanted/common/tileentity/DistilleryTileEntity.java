@@ -26,17 +26,17 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.DistilleryContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     private int burnTime = 0;
     private int cookTime = 0;
     private int cookTimeTotal = 200;
-    private final IIntArray data = new IIntArray() {
+    private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
             switch(index) {
@@ -79,7 +79,7 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
         }
     };
 
-    public DistilleryTileEntity(TileEntityType<?> typeIn) {
+    public DistilleryTileEntity(BlockEntityType<?> typeIn) {
         super(typeIn, NonNullList.withSize(7, ItemStack.EMPTY));
     }
 
@@ -88,7 +88,7 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     }
 
     @Override
-    protected void saveAdditional(CompoundNBT nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
         AltarPowerHelper.savePosTag(potentialAltars, nbt);
         nbt.putInt("burnTime", burnTime);
         nbt.putInt("cookTime", cookTime);
@@ -96,7 +96,7 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     }
 
     @Override
-    protected void loadAdditional(CompoundNBT nbt) {
+    protected void loadAdditional(CompoundTag nbt) {
         AltarPowerHelper.loadPosTag(potentialAltars, nbt);
         burnTime = nbt.getInt("burnTime");
         cookTime = nbt.getInt("cookTime");
@@ -281,17 +281,17 @@ public class DistilleryTileEntity extends ProcessingTileEntityBase implements IA
     }
 
     @Override
-    public IIntArray getData() {
+    public ContainerData getData() {
         return data;
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.enchanted.distillery");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.enchanted.distillery");
     }
 
     @Override
-    protected Container createMenu(int id, PlayerInventory player) {
+    protected AbstractContainerMenu createMenu(int id, Inventory player) {
         return new DistilleryContainer(id, player, this, this.data);
     }
 

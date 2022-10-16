@@ -23,23 +23,23 @@ package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class PoppetShelfScreen extends ContainerScreen<PoppetShelfContainer> {
+public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfContainer> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/poppet_shelf.png");
 
-    public PoppetShelfScreen(PoppetShelfContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public PoppetShelfScreen(PoppetShelfContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 176;
@@ -48,14 +48,14 @@ public class PoppetShelfScreen extends ContainerScreen<PoppetShelfContainer> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int pX, int pY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int pX, int pY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(TEXTURE);
 
@@ -65,7 +65,7 @@ public class PoppetShelfScreen extends ContainerScreen<PoppetShelfContainer> {
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int pX, int pY) {
+    protected void renderLabels(PoseStack matrixStack, int pX, int pY) {
         font.draw(matrixStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
     }
 

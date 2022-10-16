@@ -23,12 +23,12 @@ package com.favouriteless.enchanted.common.loot;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -51,7 +51,7 @@ public class GrassSeedModifier extends LootModifier {
             EnchantedItems.GARLIC.get()
     );
 
-    protected GrassSeedModifier(ILootCondition[] conditionsIn) {
+    protected GrassSeedModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
@@ -81,7 +81,7 @@ public class GrassSeedModifier extends LootModifier {
     public static class Serializer extends GlobalLootModifierSerializer<GrassSeedModifier> {
 
         @Override
-        public GrassSeedModifier read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
+        public GrassSeedModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
             return new GrassSeedModifier(conditionsIn);
         }
 

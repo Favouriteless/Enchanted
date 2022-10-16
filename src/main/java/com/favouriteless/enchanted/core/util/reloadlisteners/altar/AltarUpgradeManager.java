@@ -27,12 +27,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.block.Block;
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AltarUpgradeManager extends JsonReloadListener implements Supplier<List<AltarUpgrade>> {
+public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implements Supplier<List<AltarUpgrade>> {
 
     private static final Gson GSON = new Gson();
     private List<AltarUpgrade> upgrades = new ArrayList<>();
@@ -50,21 +50,21 @@ public class AltarUpgradeManager extends JsonReloadListener implements Supplier<
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, IResourceManager resourceManager, IProfiler profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
         List<AltarUpgrade> outputList = new ArrayList<>();
 
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             try {
-                JsonObject jsonObject = JSONUtils.convertToJsonObject(jsonElement, "altarupgrade");
+                JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonElement, "altarupgrade");
 
-                for(JsonElement element : JSONUtils.getAsJsonArray(jsonObject, "values")) {
+                for(JsonElement element : GsonHelper.getAsJsonArray(jsonObject, "values")) {
                     if(element.isJsonObject()) {
                         JsonObject upgradeObject = (JsonObject)element;
 
-                        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(JSONUtils.getAsString(upgradeObject, "block")));
-                        float rechargeMultiplier = JSONUtils.getAsFloat(upgradeObject, "rechargeMultiplier");
-                        float powerMultiplier = JSONUtils.getAsFloat(upgradeObject, "powerMultiplier");
-                        int priority = JSONUtils.getAsInt(upgradeObject, "priority");
+                        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(GsonHelper.getAsString(upgradeObject, "block")));
+                        float rechargeMultiplier = GsonHelper.getAsFloat(upgradeObject, "rechargeMultiplier");
+                        float powerMultiplier = GsonHelper.getAsFloat(upgradeObject, "powerMultiplier");
+                        int priority = GsonHelper.getAsInt(upgradeObject, "priority");
 
                         if(block != null) {
                             if(powerMultiplier > 0 || rechargeMultiplier > 0) {

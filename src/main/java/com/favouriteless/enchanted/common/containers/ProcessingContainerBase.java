@@ -23,21 +23,21 @@ package com.favouriteless.enchanted.common.containers;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.tileentity.InventoryTileEntityBase;
-import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import javax.annotation.Nullable;
 
 public abstract class ProcessingContainerBase extends ContainerBase {
 
-    protected final IIntArray data;
+    protected final ContainerData data;
 
-    protected ProcessingContainerBase(@Nullable ContainerType<?> type, int id, InventoryTileEntityBase tileEntity, IWorldPosCallable canInteractWithCallable, Block block, IIntArray data) {
+    protected ProcessingContainerBase(@Nullable MenuType<?> type, int id, InventoryTileEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
         super(type, id, tileEntity, canInteractWithCallable, block);
         this.data = data;
 
@@ -46,12 +46,12 @@ public abstract class ProcessingContainerBase extends ContainerBase {
         }
     }
 
-    public IIntArray getData() {
+    public ContainerData getData() {
         return data;
     }
 
     public class SlotFuel extends Slot {
-        public SlotFuel(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+        public SlotFuel(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
@@ -62,7 +62,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
     }
 
     public class SlotInput extends Slot {
-        public SlotInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+        public SlotInput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
@@ -73,7 +73,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
     }
 
     public class SlotOutput extends Slot {
-        public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+        public SlotOutput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
@@ -84,7 +84,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
     }
 
     public class SlotJarInput extends Slot {
-        public SlotJarInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+        public SlotJarInput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 

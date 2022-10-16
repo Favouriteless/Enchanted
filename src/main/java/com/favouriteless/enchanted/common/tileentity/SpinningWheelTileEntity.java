@@ -26,18 +26,18 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
 import com.favouriteless.enchanted.common.init.EnchantedTileEntityTypes;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 
 	public final int COOK_TIME_TOTAL = 400;
 	private int cookTime = 0;
-	public IIntArray data = new IIntArray() {
+	public ContainerData data = new ContainerData() {
 		public int get(int index) {
 			switch(index) {
 				case 0:
@@ -76,7 +76,7 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 
 	};
 
-	public SpinningWheelTileEntity(TileEntityType<?> typeIn) {
+	public SpinningWheelTileEntity(BlockEntityType<?> typeIn) {
 		super(typeIn, NonNullList.withSize(4, ItemStack.EMPTY));
 	}
 
@@ -85,13 +85,13 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 	}
 
 	@Override
-	protected void saveAdditional(CompoundNBT nbt) {
+	protected void saveAdditional(CompoundTag nbt) {
 		AltarPowerHelper.savePosTag(potentialAltars, nbt);
 		nbt.putInt("cookTime", cookTime);
 	}
 
 	@Override
-	protected void loadAdditional(CompoundNBT nbt) {
+	protected void loadAdditional(CompoundTag nbt) {
 		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
 		cookTime = nbt.getInt("cookTime");
 	}
@@ -193,30 +193,30 @@ public class SpinningWheelTileEntity extends ProcessingTileEntityBase implements
 
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag nbt = new CompoundTag();
 		nbt.putBoolean("isSpinning", cookTime > 0);
-		return new SUpdateTileEntityPacket(worldPosition, -1, nbt);
+		return new ClientboundBlockEntityDataPacket(worldPosition, -1, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		CompoundNBT nbt = pkt.getTag();
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		CompoundTag nbt = pkt.getTag();
 		isSpinning = nbt.getBoolean("isSpinning");
 	}
 
 	@Override
-	public IIntArray getData() {
+	public ContainerData getData() {
 		return data;
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container.enchanted.spinning_wheel");
+	protected Component getDefaultName() {
+		return new TranslatableComponent("container.enchanted.spinning_wheel");
 	}
 
 	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
+	protected AbstractContainerMenu createMenu(int id, Inventory player) {
 		return new SpinningWheelContainer(id, player, this, data);
 	}
 

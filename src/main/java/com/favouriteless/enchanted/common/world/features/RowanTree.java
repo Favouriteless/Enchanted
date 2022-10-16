@@ -22,28 +22,34 @@
 package com.favouriteless.enchanted.common.world.features;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.block.trees.Tree;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
-import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class RowanTree extends Tree {
+import net.minecraft.util.UniformInt;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 
-    public static final BaseTreeFeatureConfig ROWAN_TREE_CONFIG = new BaseTreeFeatureConfig.Builder(
-            new SimpleBlockStateProvider(EnchantedBlocks.ROWAN_LOG.get().defaultBlockState()),
-            new SimpleBlockStateProvider(EnchantedBlocks.ROWAN_LEAVES.get().defaultBlockState()),
-            new BlobFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0), 3),
+public class RowanTree extends AbstractTreeGrower {
+
+    public static final TreeConfiguration ROWAN_TREE_CONFIG = new TreeConfiguration.TreeConfigurationBuilder(
+            new SimpleStateProvider(EnchantedBlocks.ROWAN_LOG.get().defaultBlockState()),
+            new SimpleStateProvider(EnchantedBlocks.ROWAN_LEAVES.get().defaultBlockState()),
+            new BlobFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(0), 3),
             new StraightTrunkPlacer(4, 2, 0),
-            new TwoLayerFeature(1, 0, 1))
+            new TwoLayersFeatureSize(1, 0, 1))
             .ignoreVines()
             .build();
 
     @Nullable
-    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {
+    protected ConfiguredFeature<TreeConfiguration, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {
         return Feature.TREE.configured(ROWAN_TREE_CONFIG);
     }
 

@@ -23,12 +23,14 @@ package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.entities.BroomstickEntity;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class BroomstickItem extends Item {
 
@@ -42,16 +44,16 @@ public class BroomstickItem extends Item {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if(context.getLevel().isClientSide) {
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else {
 			BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
 
 			BroomstickEntity broom = EnchantedEntityTypes.BROOMSTICK.get().create(context.getLevel());
 			broom.setPos(pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D);
-			broom.setDeltaMovement(Vector3d.ZERO);
+			broom.setDeltaMovement(Vec3.ZERO);
 			broom.xo = pos.getX()+0.5D;
 			broom.yo = pos.getY();
 			broom.zo = pos.getZ()+0.5D;
@@ -61,6 +63,6 @@ public class BroomstickItem extends Item {
 			if(!context.getPlayer().abilities.instabuild) // Player not in creative
 				context.getItemInHand().shrink(1);
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 }

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "enchanted:item/void_poppet_sturdy"
-  }
-}

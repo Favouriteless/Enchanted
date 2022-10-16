@@ -11,24 +11,25 @@ buildscript {
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+}
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
-version = '1.2.4'
+version = '1.3.0'
 group = 'com.favouriteless.enchanted'
-archivesBaseName = 'enchanted-1.16.5'
+archivesBaseName = 'enchanted-1.18.2'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'parchment', version: '2022.03.06-1.16.5'
-    
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'official', version: '1.18.2'
 
     runs {
         client {
@@ -86,13 +87,13 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.84'
 
-    compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
-    runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.16.5-1.5.2.v77") { transitive = false })
+    compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.18.2-1.6.0.v4") { transitive = false })
+    runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.18.2-1.6.0.v4") { transitive = false })
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.2")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
@@ -100,13 +101,13 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "enchanted",
-            "Specification-Vendor": "favouriteless",
-            "Specification-Version": project.version,
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"favouriteless",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Specification-Title": "enchanted",
+                "Specification-Vendor": "favouriteless",
+                "Specification-Version": project.version,
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor" :"favouriteless",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
@@ -119,7 +120,6 @@ mixin {
 }
 
 jar.finalizedBy('reobfJar')
-//publish.dependsOn('reobfJar')
 
 publishing {
     publications {
@@ -129,7 +129,11 @@ publishing {
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

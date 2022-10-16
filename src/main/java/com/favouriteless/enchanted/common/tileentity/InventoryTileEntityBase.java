@@ -21,13 +21,17 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -36,7 +40,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryTileEntityBase extends BaseContainerBlockEntity {
+public abstract class InventoryTileEntityBase extends LockableLootTileEntity {
 
 	protected NonNullList<ItemStack> inventoryContents;
 	protected IItemHandlerModifiable items = new InvWrapper(this);
@@ -44,7 +48,7 @@ public abstract class InventoryTileEntityBase extends BaseContainerBlockEntity {
 
 	protected int numPlayersUsing;
 
-	public InventoryTileEntityBase(BlockEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
+	public InventoryTileEntityBase(TileEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
 		super(typeIn);
 		this.inventoryContents = inventoryContents;
 	}

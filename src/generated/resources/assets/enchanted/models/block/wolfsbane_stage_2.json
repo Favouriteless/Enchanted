@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "enchanted:block/wolfsbane_stage_2"
+  }
+}

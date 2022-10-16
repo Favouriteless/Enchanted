@@ -21,20 +21,21 @@
 
 package com.favouriteless.enchanted.common.tileentity;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 
-public abstract class ProcessingTileEntityBase extends InventoryTileEntityBase {
+public abstract class ProcessingTileEntityBase extends InventoryTileEntityBase implements ITickableTileEntity {
 
-    public ProcessingTileEntityBase(BlockEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
+    public ProcessingTileEntityBase(TileEntityType<?> typeIn, NonNullList<ItemStack> inventoryContents) {
         super(typeIn, inventoryContents);
     }
 
-    public abstract ContainerData getData();
+    public abstract IIntArray getData();
 
     public static boolean isFuel(ItemStack stack) {
         return ForgeHooks.getBurnTime(stack, null) > 0;

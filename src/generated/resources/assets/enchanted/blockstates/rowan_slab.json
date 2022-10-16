@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "enchanted:block/rowan_slab_top"
+    },
+    "type=bottom": {
+      "model": "enchanted:block/rowan_slab"
+    },
+    "type=double": {
+      "model": "enchanted:block/rowan_planks"
+    }
+  }
+}

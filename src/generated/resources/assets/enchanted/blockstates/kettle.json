@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,type=0": {
+      "model": "enchanted:block/kettle",
+      "y": 180
+    },
+    "facing=south,type=0": {
+      "model": "enchanted:block/kettle"
+    },
+    "facing=west,type=0": {
+      "model": "enchanted:block/kettle",
+      "y": 90
+    },
+    "facing=east,type=0": {
+      "model": "enchanted:block/kettle",
+      "y": 270
+    },
+    "facing=north,type=1": {
+      "model": "enchanted:block/kettle_hanging",
+      "y": 180
+    },
+    "facing=south,type=1": {
+      "model": "enchanted:block/kettle_hanging"
+    },
+    "facing=west,type=1": {
+      "model": "enchanted:block/kettle_hanging",
+      "y": 90
+    },
+    "facing=east,type=1": {
+      "model": "enchanted:block/kettle_hanging",
+      "y": 270
+    },
+    "facing=north,type=2": {
+      "model": "enchanted:block/kettle_hanging_beam",
+      "y": 180
+    },
+    "facing=south,type=2": {
+      "model": "enchanted:block/kettle_hanging_beam"
+    },
+    "facing=west,type=2": {
+      "model": "enchanted:block/kettle_hanging_beam",
+      "y": 90
+    },
+    "facing=east,type=2": {
+      "model": "enchanted:block/kettle_hanging_beam",
+      "y": 270
+    }
+  }
+}

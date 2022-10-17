@@ -39,15 +39,14 @@ public class PoppetParticle extends SimpleAnimatedParticle {
         this.zd = zSpeed;
         this.quadSize *= 0.75F;
         this.lifetime = 60 + this.random.nextInt(12);
+        this.friction = 0.6F;
         this.setSpriteFromAge(pSprites);
 
         if (this.random.nextInt(4) == 0) {
             this.setColor(red1/255F, green1/255F, blue1/255F);
         } else {
-            this.setColor(red/255F, green/255F, blue/255F);
+            this.setColor(red / 255F, green / 255F, blue / 255F);
         }
-
-        this.setBaseAirFriction(0.6F);
     }
 
     @Override

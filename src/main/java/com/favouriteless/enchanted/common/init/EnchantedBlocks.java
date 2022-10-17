@@ -33,9 +33,7 @@ import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlockMilk;
 import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.*;
-import com.favouriteless.enchanted.common.world.features.AlderTree;
-import com.favouriteless.enchanted.common.world.features.HawthornTree;
-import com.favouriteless.enchanted.common.world.features.RowanTree;
+import com.favouriteless.enchanted.common.world.features.EnchantedTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -105,21 +103,21 @@ public class EnchantedBlocks {
     public static final RegistryObject<SlabBlock> ROWAN_SLAB = BLOCKS.register("rowan_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> ROWAN_LOG = BLOCKS.register("rowan_log", () -> log(MaterialColor.WOOD, MaterialColor.PODZOL));
     public static final RegistryObject<Block> ROWAN_LEAVES = BLOCKS.register("rowan_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<SaplingBlock> ROWAN_SAPLING = BLOCKS.register("rowan_sapling", () -> new SaplingBlock(new RowanTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<SaplingBlock> ROWAN_SAPLING = BLOCKS.register("rowan_sapling", () -> new SaplingBlock(new EnchantedTreeGrower("rowan_tree"), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> HAWTHORN_PLANKS = BLOCKS.register("hawthorn_planks", () -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<StairBlock> HAWTHORN_STAIRS = BLOCKS.register("hawthorn_stairs", () -> new StairBlock(HAWTHORN_PLANKS.get().defaultBlockState(), Properties.copy(HAWTHORN_PLANKS.get())));
     public static final RegistryObject<SlabBlock> HAWTHORN_SLAB = BLOCKS.register("hawthorn_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> HAWTHORN_LOG = BLOCKS.register("hawthorn_log", () -> log(MaterialColor.CLAY, MaterialColor.CLAY));
     public static final RegistryObject<Block> HAWTHORN_LEAVES = BLOCKS.register("hawthorn_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<SaplingBlock> HAWTHORN_SAPLING = BLOCKS.register("hawthorn_sapling", () -> new SaplingBlock(new HawthornTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<SaplingBlock> HAWTHORN_SAPLING = BLOCKS.register("hawthorn_sapling", () -> new SaplingBlock(new EnchantedTreeGrower("hawthorn_tree"), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> ALDER_PLANKS = BLOCKS.register("alder_planks", () -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<StairBlock> ALDER_STAIRS = BLOCKS.register("alder_stairs", () -> new StairBlock(ALDER_PLANKS.get().defaultBlockState(), Properties.copy(ALDER_PLANKS.get())));
     public static final RegistryObject<SlabBlock> ALDER_SLAB = BLOCKS.register("alder_slab", () -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<RotatedPillarBlock> ALDER_LOG = BLOCKS.register("alder_log", () -> log(MaterialColor.WOOD, MaterialColor.CLAY));
     public static final RegistryObject<Block> ALDER_LEAVES = BLOCKS.register("alder_leaves", () -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<SaplingBlock> ALDER_SAPLING = BLOCKS.register("alder_sapling", () -> new SaplingBlock(new AlderTree(), Block.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<SaplingBlock> ALDER_SAPLING = BLOCKS.register("alder_sapling", () -> new SaplingBlock(new EnchantedTreeGrower("alder_tree"), Block.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<CropsBlockAgeFive> BELLADONNA = BLOCKS.register("belladonna", () -> new BelladonnaBlock(Properties.copy(Blocks.WHEAT)));
     public static final RegistryObject<CropsBlockAgeFive> SNOWBELL = BLOCKS.register("snowbell", () -> new SnowbellBlock(Properties.copy(Blocks.WHEAT)));

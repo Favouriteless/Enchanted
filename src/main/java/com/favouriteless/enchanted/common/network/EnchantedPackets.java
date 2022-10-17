@@ -28,9 +28,9 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class EnchantedPackets {
 
@@ -48,8 +48,7 @@ public class EnchantedPackets {
 	}
 
 	public static void sendToPlayer(EnchantedPacket packet, ServerPlayer player) {
-		if (player.connection != null)
-			INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}
 
 	public static void sendToAllPlayers(EnchantedPacket packet) {

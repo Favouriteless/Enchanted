@@ -76,7 +76,7 @@ public class EarmuffsItem extends ArmorItem {
 			@Nullable
 			@Override
 			public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-				return new EarmuffsModel();
+				return new EarmuffsModel(_default.getHead());
 			}
 		});
 	}

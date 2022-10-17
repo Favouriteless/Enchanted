@@ -33,6 +33,7 @@ import com.favouriteless.enchanted.client.render.model.MandrakeModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
 import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
+import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
@@ -86,6 +87,7 @@ public class ClientSetupEvents {
 		event.registerLayerDefinition(ModelLayerLocations.BROOMSTICK, BroomstickModel::createLayerDefinition);
 		event.registerLayerDefinition(ModelLayerLocations.MANDRAKE, MandrakeModel::createLayerDefinition);
 		event.registerLayerDefinition(ModelLayerLocations.SPINNING_WHEEL, SpinningWheelRenderer::createLayerDefinition);
+		event.registerLayerDefinition(ModelLayerLocations.EARMUFFS, EarmuffsModel::createLayerDefinition);
 	}
 
 }

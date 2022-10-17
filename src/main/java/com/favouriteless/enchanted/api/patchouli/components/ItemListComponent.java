@@ -45,7 +45,7 @@ public class ItemListComponent implements ICustomComponent {
 	private transient int x;
 	private transient int y;
 
-	private transient List<ItemRow> itemRows = new ArrayList<>();
+	private final transient List<ItemRow> itemRows = new ArrayList<>();
 
 	@Override
 	public void build(int componentX, int componentY, int pageNum) {

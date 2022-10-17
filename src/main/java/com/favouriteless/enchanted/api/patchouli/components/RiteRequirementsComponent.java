@@ -141,10 +141,9 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	}
 
 	private void renderCircle(PoseStack matrix, ResourceLocation resourceLocation) {
-		Minecraft.getInstance().getTextureManager().bind(resourceLocation);
+		Minecraft.getInstance().getTextureManager().bindForSetup(resourceLocation);
 		matrix.pushPose();
 		matrix.translate(x-IMAGE_OFFSET, y-IMAGE_OFFSET, 0);
-		RenderSystem.color4f(1F, 1F, 1F, 1F);
 		RenderSystem.enableBlend();
 		GuiComponent.blit(matrix, 0, 0, 0, 0, IMAGE_SIZE, IMAGE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
 		matrix.popPose();

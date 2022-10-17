@@ -31,6 +31,7 @@ import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
+import com.mojang.math.Vector3f;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -283,7 +284,7 @@ public abstract class AbstractRite {
             double dx = pos.getX() + Math.random();
             double dy = pos.getY() + Math.random();
             double dz = pos.getZ() + Math.random();
-            world.sendParticles(new DustParticleOptions(254/255F,94/255F,94/255F, 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+            world.sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
         }
 
         BlockEntity te = world.getBlockEntity(pos);
@@ -302,7 +303,7 @@ public abstract class AbstractRite {
             if(ITEMS_REQUIRED.get(item) <= 0) ITEMS_REQUIRED.remove(item); // Remove if all consumed
             itemsConsumed.add(stack);
             entity.setNeverPickUp();
-            entity.remove();
+            entity.discard();
         }
         else { // Too much
             ITEMS_REQUIRED.remove(item);
@@ -347,14 +348,14 @@ public abstract class AbstractRite {
         else {
             ENTITIES_REQUIRED.remove(entity.getType());
         }
-        entity.remove();
+        entity.discard();
 
         world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 10; i++) {
             double dx = entity.position().x - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
             double dy = entity.position().y + (Math.random() * entity.getBbHeight());
             double dz = entity.position().z - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
-            ((ServerLevel)world).sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            world.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 

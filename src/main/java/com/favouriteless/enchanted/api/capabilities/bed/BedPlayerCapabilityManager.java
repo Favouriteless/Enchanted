@@ -25,47 +25,43 @@
 package com.favouriteless.enchanted.api.capabilities.bed;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.capabilities.SimpleCapabilityStorage;
-import com.favouriteless.enchanted.api.capabilities.SimplePersistentCapabilityProvider;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BedBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(modid=Enchanted.MOD_ID)
 public class BedPlayerCapabilityManager {
 
-    @CapabilityInject(IBedPlayerCapability.class)
-    public static Capability<IBedPlayerCapability> INSTANCE = null;
+    public static Capability<IBedPlayerCapability> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {});
     public static final ResourceLocation NAME = new ResourceLocation(Enchanted.MOD_ID, "player_bed");
 
     public BedPlayerCapabilityManager() {}
 
-    public static void registerCapabilities() {
-        CapabilityManager.INSTANCE.register(
-                IBedPlayerCapability.class,
-                SimpleCapabilityStorage.create(() -> INSTANCE, Constants.NBT.TAG_COMPOUND),
-                BedPlayerCapability::new
-        );
+    @SubscribeEvent
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(BedPlayerCapability.class);
     }
 
     @SubscribeEvent
     public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<BlockEntity> event) {
         final BlockEntity obj = event.getObject();
         if(obj instanceof BedBlockEntity) {
-            event.addCapability(NAME, SimplePersistentCapabilityProvider.from(INSTANCE, () -> new BedPlayerCapability()));
+            event.addCapability(NAME, new BedPlayerCapabilityProvider());
         }
     }
 
@@ -77,4 +73,28 @@ public class BedPlayerCapabilityManager {
             event.getPlayer().level.getBlockEntity(pos).getCapability(INSTANCE).ifPresent(source -> source.setValue(player.getUUID()));
         }
     }
+
+    public static class BedPlayerCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+
+        private final IBedPlayerCapability backend = new BedPlayerCapability();
+        private final LazyOptional<IBedPlayerCapability> optionalData = LazyOptional.of(() -> backend);
+
+        @NotNull
+        @Override
+        public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+            return BedPlayerCapabilityManager.INSTANCE.orEmpty(cap, optionalData);
+        }
+
+        @Override
+        public CompoundTag serializeNBT() {
+            return backend.serializeNBT();
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag nbt) {
+            backend.deserializeNBT(nbt);
+        }
+
+    }
+
 }

@@ -27,14 +27,12 @@ package com.favouriteless.enchanted.api.patchouli.processors;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.item.crafting.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
-
-import net.minecraft.world.item.crafting.RecipeManager;
 
 public class WitchOvenRecipeProcessor implements IComponentProcessor {
 

@@ -30,7 +30,7 @@ import java.util.UUID;
 
 public class BedPlayerCapability implements IBedPlayerCapability {
 
-    private static final String KEY_NAME = "playeruuid";
+    private static final String KEY_NAME = "player_uuid";
     private UUID value;
 
     @Override

@@ -60,16 +60,11 @@ public class PoppetAnimationManager {
 	}
 
 	public static void render(PoseStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
-		RenderSystem.enableAlphaTest();
-		RenderSystem.pushMatrix();
-		RenderSystem.pushLightingAttributes();
 		RenderSystem.enableDepthTest();
 		RenderSystem.disableCull();
 		for(PoppetAnimation animation : ACTIVE_ANIMATIONS) {
 			animation.render(matrixStack, partialTicks, widthScaled, heightScaled);
 		}
-		RenderSystem.popAttributes();
-		RenderSystem.popMatrix();
 		RenderSystem.enableCull();
 		RenderSystem.disableDepthTest();
 	}

@@ -42,9 +42,6 @@ import java.util.Random;
 public class PoppetAnimation {
 
 	private static final Random RANDOM = new Random();
-	protected static final ResourceLocation SUCCESS_GLOW_TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/poppet_success.png");
-	protected static final ResourceLocation FAIL_GLOW_TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/poppet_fail.png");
-	protected static final int GLOW_WIDTH = 256;
 
 	private final ItemStack itemStack;
 	protected int ticks;
@@ -79,23 +76,11 @@ public class PoppetAnimation {
 		matrixStack.mulPose(Vector3f.XP.rotationDegrees(6.0F * Mth.cos(work * 8.0F)));
 		matrixStack.mulPose(Vector3f.ZP.rotationDegrees(6.0F * Mth.cos(work * 8.0F)));
 
-		RenderSystem.enableRescaleNormal();
-		RenderSystem.enableAlphaTest();
-		RenderSystem.defaultAlphaFunc();
-		RenderSystem.enableBlend();
-		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
 		MultiBufferSource.BufferSource renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
-		minecraft.getItemRenderer().blitOffset += 50;
-		RenderSystem.translatef(0.0F, 0.0F, 100.0F + minecraft.getItemRenderer().blitOffset);
 		minecraft.getItemRenderer().renderStatic(itemStack, TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer, 0);
-		minecraft.getItemRenderer().blitOffset -= 50;
 
 		matrixStack.popPose();
 		renderTypeBuffer.endBatch();
-
-		RenderSystem.disableAlphaTest();
-		RenderSystem.disableRescaleNormal();
 	}
 
 

@@ -22,41 +22,35 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
+import com.favouriteless.enchanted.common.blockentities.ProcessingBlockEntityBase;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.SimpleContainerData;
 
-public class DistilleryContainer extends ProcessingContainerBase {
+public class WitchOvenMenu extends ProcessingMenuBase {
 
-    public DistilleryContainer(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
-        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
+    public WitchOvenMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
+        super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
 
         // Container Inventory
-        addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input
-        addSlot(new SlotInput(tileEntity, 1, 54, 25)); // Ingredient input
-        addSlot(new SlotInput(tileEntity, 2, 54, 45)); // Ingredient input
-        addSlot(new SlotOutput(tileEntity, 3, 127, 7)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 4, 127, 26)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 5, 127, 45)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 6, 127, 64)); // Distillery output
+        this.addSlot(new SlotInput(tileEntity, 0, 53, 17)); // Ingredient input
+        this.addSlot(new SlotFuel(tileEntity, 1, 80, 53)); // Fuel Slot
+        this.addSlot(new SlotOutput(tileEntity, 2, 107, 17)); // Smelting output
+        this.addSlot(new SlotJarInput(tileEntity, 3, 53, 53)); // Jar input
+        this.addSlot(new SlotOutput(tileEntity, 4, 107, 53)); // Jar output
 
-        addInventorySlots(playerInventory, 8, 84);
-    }
-
-    public DistilleryContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
+        this.addInventorySlots(playerInventory, 8, 84);
     }
 
     @Override
@@ -64,30 +58,40 @@ public class DistilleryContainer extends ProcessingContainerBase {
         ItemStack itemstack;
         Slot slot = this.slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
 
             ItemStack slotItem = slot.getItem();
             itemstack = slotItem.copy();
 
-            if (index <= 6) { // If container slot
+            if (index <= 4) { // If container slot
                 if (!this.moveItemStackTo(slotItem, 5, 41, true)) {
                     return ItemStack.EMPTY;
                 }
             } else { // If not a container slot
-                if (itemstack.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
+
+                if (hasByproduct(slotItem)) { // Item has byproduct
                     if (!this.moveItemStackTo(slotItem, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.moveItemStackTo(slotItem, 1, 3, false)) { // Item is in player inventory, attempt to fit
+                } else if (ProcessingBlockEntityBase.isFuel(slotItem)) { // Item is fuel
+                    if (!this.moveItemStackTo(slotItem, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if(itemstack.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
+                    if (!this.moveItemStackTo(slotItem, 3, 4, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index < 32) { // Item is in main player inventory or cannot be processed
+                    if (!this.moveItemStackTo(slotItem, 32, 41, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index < 41) { // Item is in player hotbar or cannot be processed
+                    if(!this.moveItemStackTo(slotItem, 5, 32, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (!this.moveItemStackTo(slotItem, 5, 41, false)) {
                     return ItemStack.EMPTY;
-                } else if (index < 35) { // Item is in main player inventory and cannot fit
-                    if (!this.moveItemStackTo(slotItem, 34, 43, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 43) { // Item is in player hotbar and cannot fit
-                    if(!this.moveItemStackTo(slotItem, 7, 34, false)) {
-                        return ItemStack.EMPTY;
-                    }
                 }
 
                 if (slotItem.isEmpty()) {
@@ -106,4 +110,10 @@ public class DistilleryContainer extends ProcessingContainerBase {
         return super.quickMoveStack(playerIn, index);
     }
 
+    public boolean hasByproduct(ItemStack item) {
+        if(tileEntity.getLevel() != null) {
+            return tileEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new SimpleContainer(item), this.tileEntity.getLevel()).isPresent();
+        }
+        return false;
+    }
 }

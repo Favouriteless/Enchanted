@@ -22,24 +22,21 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
-import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.SimpleContainerData;
 
-public class SpinningWheelContainer extends ProcessingContainerBase {
+public class SpinningWheelMenu extends ProcessingMenuBase {
 
-	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
+	public SpinningWheelMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
 		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 
 		// Container Inventory
@@ -51,16 +48,12 @@ public class SpinningWheelContainer extends ProcessingContainerBase {
 		addInventorySlots(playerInventory, 8, 84);
 	}
 
-	public SpinningWheelContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
-	}
-
 	@Override
 	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemStack;
 		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 
 			ItemStack slotItem = slot.getItem();
 			itemStack = slotItem.copy();

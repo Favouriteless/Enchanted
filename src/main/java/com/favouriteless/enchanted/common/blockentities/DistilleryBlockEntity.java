@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.containers.DistilleryContainer;
+import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -289,7 +289,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory player) {
-        return new DistilleryContainer(id, player, this, this.data);
+        return new DistilleryMenu(id, player, this, this.data);
     }
 
 }

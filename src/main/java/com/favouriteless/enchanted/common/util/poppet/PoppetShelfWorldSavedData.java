@@ -48,7 +48,7 @@ public class PoppetShelfWorldSavedData extends SavedData {
 	public final ServerLevel level;
 
 	public PoppetShelfWorldSavedData(ServerLevel world) {
-		super(NAME);
+		super();
 		this.level = world;
 	}
 
@@ -57,25 +57,27 @@ public class PoppetShelfWorldSavedData extends SavedData {
 			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
 			DimensionDataStorage storage = overworld.getDataStorage();
-			return storage.computeIfAbsent(() -> new PoppetShelfWorldSavedData(overworld), NAME);
+			return storage.computeIfAbsent((nbt) -> PoppetShelfWorldSavedData.load(overworld, nbt),() -> new PoppetShelfWorldSavedData(overworld), NAME);
 		}
 		else {
 			throw new RuntimeException("Game attempted to load server-side poppet shelf data from a client-side world.");
 		}
 	}
 
-	@Override
-	public void load(CompoundTag nbt) {
+	public static PoppetShelfWorldSavedData load(ServerLevel level, CompoundTag nbt) {
+		PoppetShelfWorldSavedData data = new PoppetShelfWorldSavedData(level);
+
 		for(String identifier : nbt.getAllKeys()) {
-			ServerLevel world = getLevelFromShelfIdentifier(identifier);
-			BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
+			ServerLevel world = data.getLevelFromShelfIdentifier(identifier);
+			BlockPos pos = data.getBlockPosFromShelfIdentifier(identifier);
 			PoppetShelfInventory inventory = new PoppetShelfInventory(world, pos);
 
 			inventory.load((CompoundTag)nbt.get(identifier));
-			SHELF_STORAGE.put(identifier, inventory);
-			setupPoppetUUIDs(identifier, inventory);
+			data.SHELF_STORAGE.put(identifier, inventory);
+			data.setupPoppetUUIDs(identifier, inventory);
 		}
 		Enchanted.LOGGER.info("Loaded poppet shelves successfully");
+		return data;
 	}
 
 	@Override
@@ -144,23 +146,7 @@ public class PoppetShelfWorldSavedData extends SavedData {
 		return new BlockPos(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]));
 	}
 
-	public static class PoppetEntry {
-
-		private final ItemStack item;
-		private final String shelfIdentifier;
-
-		public PoppetEntry(ItemStack item, String shelfIdentifier) {
-			this.item = item;
-			this.shelfIdentifier = shelfIdentifier;
-		}
-
-		public ItemStack getItem() {
-			return item;
-		}
-
-		public String getShelfIdentifier() {
-			return shelfIdentifier;
-		}
+	public record PoppetEntry(ItemStack item, String shelfIdentifier) {
 
 		public boolean matches(ItemStack stack, String shelfIdentifier) {
 			return stack.equals(item) && shelfIdentifier.equals(this.shelfIdentifier);

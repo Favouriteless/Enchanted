@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
-import com.favouriteless.enchanted.common.containers.AltarContainer;
+import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.observerlib.altar.AltarObserverProvider;
@@ -312,7 +312,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new AltarContainer(id, this, this.fields);
+        return new AltarMenu(id, this, this.fields);
     }
 
     public static class AltarBlockData {

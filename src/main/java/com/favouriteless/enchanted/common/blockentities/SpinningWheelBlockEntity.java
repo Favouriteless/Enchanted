@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
+import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.world.entity.player.Inventory;
@@ -224,6 +224,6 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory player) {
-		return new SpinningWheelContainer(id, player, this, data);
+		return new SpinningWheelMenu(id, player, this, data);
 	}
 }

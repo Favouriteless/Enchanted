@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
-import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
+import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
@@ -313,7 +313,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory player) {
-        return new WitchOvenContainer(id, player, this, this.data);
+        return new WitchOvenMenu(id, player, this, this.data);
     }
 
     private boolean isBurning() {

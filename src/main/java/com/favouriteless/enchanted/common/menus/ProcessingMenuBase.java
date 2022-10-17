@@ -22,10 +22,11 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.MenuType;
@@ -36,11 +37,11 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import javax.annotation.Nullable;
 
-public abstract class ProcessingContainerBase extends ContainerBase {
+public abstract class ProcessingMenuBase extends MenuBase {
 
     protected final ContainerData data;
 
-    protected ProcessingContainerBase(@Nullable MenuType<?> type, int id, InventoryBlockEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
+    protected ProcessingMenuBase(@Nullable MenuType<?> type, int id, InventoryBlockEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
         super(type, id, tileEntity, canInteractWithCallable, block);
         this.data = data;
 
@@ -53,18 +54,18 @@ public abstract class ProcessingContainerBase extends ContainerBase {
         return data;
     }
 
-    public class SlotFuel extends Slot {
+    public static class SlotFuel extends Slot {
         public SlotFuel(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return (net.minecraftforge.common.ForgeHooks.getBurnTime(stack) > 0);
+            return (net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
         }
     }
 
-    public class SlotInput extends Slot {
+    public static class SlotInput extends Slot {
         public SlotInput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
@@ -75,7 +76,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
         }
     }
 
-    public class SlotOutput extends Slot {
+    public static class SlotOutput extends Slot {
         public SlotOutput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
@@ -86,7 +87,7 @@ public abstract class ProcessingContainerBase extends ContainerBase {
         }
     }
 
-    public class SlotJarInput extends Slot {
+    public static class SlotJarInput extends Slot {
         public SlotJarInput(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }

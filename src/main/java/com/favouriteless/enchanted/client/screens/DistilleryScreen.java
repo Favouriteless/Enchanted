@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.containers.DistilleryContainer;
+import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,9 +38,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class DistilleryScreen extends AbstractContainerScreen<DistilleryContainer> {
+public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
 
-    private final DistilleryContainer container;
+    private final DistilleryMenu container;
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/distillery.png");
 
@@ -58,7 +58,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryContaine
 
     private static final int[] BUBBLELENGTHS = new int[]{0, 6, 11, 16, 20, 24, 29};
 
-    public DistilleryScreen(DistilleryContainer container, Inventory playerInventory, Component title) {
+    public DistilleryScreen(DistilleryMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 

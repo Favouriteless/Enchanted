@@ -36,7 +36,7 @@ public class PlayerInventoryHelper {
      * @param item
      */
     public static void tryGiveItem(Player player, ItemStack item) {
-        if(player != null && !player.inventory.add(item)) {
+        if(player != null && !player.getInventory().add(item)) {
             player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
         }
     }

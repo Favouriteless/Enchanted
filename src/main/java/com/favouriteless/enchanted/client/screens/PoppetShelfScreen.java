@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
+import com.favouriteless.enchanted.common.menus.PoppetShelfMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,11 +38,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfContainer> {
+public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/poppet_shelf.png");
 
-    public PoppetShelfScreen(PoppetShelfContainer container, Inventory playerInventory, Component title) {
+    public PoppetShelfScreen(PoppetShelfMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 176;

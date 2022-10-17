@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.containers.AltarContainer;
+import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,12 +38,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class AltarScreen extends AbstractContainerScreen<AltarContainer> {
+public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/altar.png");
-    private AltarContainer container;
+    private AltarMenu container;
 
-    public AltarScreen(AltarContainer container, Inventory playerInventory, Component title) {
+    public AltarScreen(AltarMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 

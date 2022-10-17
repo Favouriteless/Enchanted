@@ -71,8 +71,8 @@ public class PoppetEvents {
 				if(!cancel) {
 					Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 					for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-						if(entry.getItem().getItem() instanceof AbstractDeathPoppetItem)
-							if(((AbstractDeathPoppetItem)entry.getItem().getItem()).protectsAgainst(source))
+						if(entry.item().getItem() instanceof AbstractDeathPoppetItem)
+							if(((AbstractDeathPoppetItem)entry.item().getItem()).protectsAgainst(source))
 								poppetEntryQueue.add(entry);
 					cancel = PoppetHelper.tryUseDeathPoppetEntryQueue(poppetEntryQueue, player);
 				}
@@ -99,7 +99,7 @@ public class PoppetEvents {
 			if(!canceled) {
 				Queue<PoppetEntry> poppetEntryQueue = new PriorityQueue<>(new PoppetEntryComparator());
 				for(PoppetEntry entry : PoppetShelfManager.getEntriesFor(player))
-					if(EnchantedItems.isToolPoppet(entry.getItem().getItem()))
+					if(EnchantedItems.isToolPoppet(entry.item().getItem()))
 						poppetEntryQueue.add(entry);
 				canceled = PoppetHelper.tryUseItemProtectionPoppetEntryQueue(poppetEntryQueue, player, tool);
 			}
@@ -148,7 +148,7 @@ public class PoppetEvents {
 	private static class PoppetEntryComparator implements Comparator<PoppetEntry> {
 		@Override
 		public int compare(PoppetEntry o1, PoppetEntry o2) {
-			return Math.round(Math.signum(((AbstractPoppetItem)o1.getItem().getItem()).failRate - ((AbstractPoppetItem)o2.getItem().getItem()).failRate));
+			return Math.round(Math.signum(((AbstractPoppetItem)o1.item().getItem()).failRate - ((AbstractPoppetItem)o2.item().getItem()).failRate));
 		}
 	}
 

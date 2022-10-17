@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.containers.SpinningWheelContainer;
+import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,9 +38,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelContainer> {
+public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMenu> {
 
-    private SpinningWheelContainer container;
+    private SpinningWheelMenu container;
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/spinning_wheel.png");
 
@@ -60,7 +60,7 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelCo
     public static final int WHEEL_FRAME2_V = 74;
     public static final int WHEEL_SIZE = 34;
 
-    public SpinningWheelScreen(SpinningWheelContainer container, Inventory playerInventory, Component title) {
+    public SpinningWheelScreen(SpinningWheelMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 

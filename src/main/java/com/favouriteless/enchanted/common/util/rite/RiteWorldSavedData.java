@@ -42,11 +42,11 @@ public class RiteWorldSavedData extends SavedData {
 
 	private static final String NAME = "enchanted_rites";
 	public final List<AbstractRite> ACTIVE_RITES = new ArrayList<>();
-	public final ServerLevel world;
+	public final ServerLevel level;
 	
 	public RiteWorldSavedData(ServerLevel world) {
-		super(NAME);
-		this.world = world;
+		super();
+		this.level = world;
 	}
 
 	public static RiteWorldSavedData get(Level world) {
@@ -54,15 +54,15 @@ public class RiteWorldSavedData extends SavedData {
 			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
 			DimensionDataStorage storage = overworld.getDataStorage();
-			return storage.computeIfAbsent(() -> new RiteWorldSavedData(overworld), NAME);
+			return storage.computeIfAbsent((nbt) -> RiteWorldSavedData.load(overworld, nbt), () -> new RiteWorldSavedData(overworld), NAME);
 		}
 		else {
 			throw new RuntimeException("Game attempted to load serverside rite data from a clientside world.");
 		}
 	}
 
-	@Override
-	public void load(CompoundTag nbt) {
+	public static RiteWorldSavedData load(ServerLevel level, CompoundTag nbt) {
+		RiteWorldSavedData data = new RiteWorldSavedData(level);
 		ListTag riteList = nbt.getList("riteList", 10);
 
 		for(int i = 0; i < riteList.size(); i++) {
@@ -71,14 +71,15 @@ public class RiteWorldSavedData extends SavedData {
 
 			if(type != null) {
 				AbstractRite rite = type.create();
-				rite.load(riteNbt, this.world);
-				ACTIVE_RITES.add(rite);
+				rite.load(riteNbt, data.level);
+				data.ACTIVE_RITES.add(rite);
 			}
 			else {
 				Enchanted.LOGGER.error("Invalid rite type found in world save. Rite will not be loaded.");
 			}
 		}
 		Enchanted.LOGGER.info("Loaded active rites successfully");
+		return data;
 	}
 
 	@Override

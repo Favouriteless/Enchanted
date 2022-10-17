@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.containers.WitchOvenContainer;
+import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,9 +38,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenContainer> {
+public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
 
-    private final WitchOvenContainer container;
+    private final WitchOvenMenu container;
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/witch_oven.png");
 
@@ -57,7 +57,7 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenContainer>
     public static final int FLAME_ICON_V = 12;
     public static final int FLAME_SIZE = 14;
 
-    public WitchOvenScreen(WitchOvenContainer container, Inventory playerInventory, Component title) {
+    public WitchOvenScreen(WitchOvenMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
 

@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.player.Player;
@@ -36,13 +36,13 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import javax.annotation.Nullable;
 
-public class ContainerBase extends AbstractContainerMenu {
+public class MenuBase extends AbstractContainerMenu {
 
 	protected BlockEntity tileEntity;
 	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
-	protected ContainerBase(@Nullable MenuType<?> type, int id, BlockEntity tileEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
+	protected MenuBase(@Nullable MenuType<?> type, int id, BlockEntity tileEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
 		super(type, id);
 		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;
@@ -63,15 +63,6 @@ public class ContainerBase extends AbstractContainerMenu {
 		for (int x = 0; x < 9; x++) { // Hotbar
 			addSlot(new Slot(playerInventory, x, 8 + (18 * x), startY + 58));
 		}
-	}
-
-	protected static BlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data, Class<? extends BlockEntity> type) {
-		final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
-
-		if(tileEntity != null && tileEntity.getClass() == type) {
-			return tileEntity;
-		}
-		throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
 	}
 
 }

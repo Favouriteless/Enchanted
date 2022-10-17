@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.common.containers.PoppetShelfContainer;
+import com.favouriteless.enchanted.common.menus.PoppetShelfMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
@@ -59,7 +59,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 	@Nullable
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player playerEntity) {
-		return new PoppetShelfContainer(id, playerInventory, this);
+		return new PoppetShelfMenu(id, playerInventory, this);
 	}
 
 	public void updateBlock() {

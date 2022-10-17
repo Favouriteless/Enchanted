@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
@@ -33,12 +33,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 
-public class PoppetShelfContainer extends ContainerBase {
+public class PoppetShelfMenu extends MenuBase {
 
-	public PoppetShelfContainer(int id, Inventory playerInventory, PoppetShelfBlockEntity tileEntity) {
+	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity tileEntity) {
 		super(EnchantedContainers.POPPET_SHELF.get(), id, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
 
 		for(int i = 0; i < tileEntity.getInventory().getContainerSize(); i++)
@@ -47,16 +46,12 @@ public class PoppetShelfContainer extends ContainerBase {
 		addInventorySlots(playerInventory, 8, 49);
 	}
 
-	public PoppetShelfContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (PoppetShelfBlockEntity)getTileEntity(playerInventory, data, PoppetShelfBlockEntity.class));
-	}
-
 	@Override
 	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack;
 		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			ItemStack slotItem = slot.getItem();
 			itemstack = slotItem.copy();
 

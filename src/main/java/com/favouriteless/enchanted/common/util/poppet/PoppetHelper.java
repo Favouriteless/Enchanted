@@ -131,7 +131,7 @@ public class PoppetHelper {
 	public static boolean tryUseDeathPoppetEntryQueue(Queue<PoppetEntry> queue, Player player) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
-			if(handleTryUseDeathPoppet(player, entry.getItem(), entry.getShelfIdentifier()))
+			if(handleTryUseDeathPoppet(player, entry.item(), entry.shelfIdentifier()))
 				return true;
 		}
 		return false;
@@ -169,7 +169,7 @@ public class PoppetHelper {
 	public static boolean tryUseItemProtectionPoppetEntryQueue(Queue<PoppetEntry> queue, Player player, ItemStack toolStack) {
 		while(!queue.isEmpty()) {
 			PoppetEntry entry = queue.remove();
-			if(handleTryUseItemProtectionPoppet(player, entry.getItem(), toolStack, entry.getShelfIdentifier()))
+			if(handleTryUseItemProtectionPoppet(player, entry.item(), toolStack, entry.shelfIdentifier()))
 				return true;
 		}
 		return false;

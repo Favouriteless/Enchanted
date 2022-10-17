@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.containers;
+package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
@@ -34,33 +34,19 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.SimpleContainerData;
 
-public class AltarContainer extends AbstractContainerMenu {
+public class AltarMenu extends AbstractContainerMenu {
 
     public final AltarBlockEntity tileEntity;
     private final ContainerLevelAccess canInteractWithCallable;
     private final ContainerData data;
 
-    public AltarContainer(final int windowId, final AltarBlockEntity tileEntity, ContainerData data) {
+    public AltarMenu(final int windowId, final AltarBlockEntity tileEntity, ContainerData data) {
         super(EnchantedContainers.ALTAR.get(), windowId);
         this.tileEntity = tileEntity;
         this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
         this.data = data;
         addDataSlots(this.data);
-    }
-
-    public AltarContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, getTileEntity(playerInventory, data), new SimpleContainerData(3));
-    }
-
-    private static AltarBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
-        final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
-
-        if(tileEntity instanceof AltarBlockEntity) {
-            return (AltarBlockEntity)tileEntity;
-        }
-        throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
     }
 
     public int getCurrentPower() {

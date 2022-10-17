@@ -42,7 +42,7 @@ public class MixinLivingEntity {
 		}
 	}
 
-	@Inject(method="broadcastBreakEvent(Lnet/minecraft/inventory/EquipmentSlotType;)V", at=@At("HEAD"))
+	@Inject(method="broadcastBreakEvent(Lnet/minecraft/world/entity/EquipmentSlot;)V", at=@At("HEAD"))
 	private void broadcastBreakEvent(EquipmentSlot slot, CallbackInfo ci) {
 		PoppetEvents.onLivingEntityBreak((LivingEntity)(Object)this, slot);
 	}

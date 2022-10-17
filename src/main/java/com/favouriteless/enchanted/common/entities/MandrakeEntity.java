@@ -1,47 +1,49 @@
 /*
- * Copyright (c) 2022. Favouriteless
- * Enchanted, a minecraft mod.
- * GNU GPLv3 License
  *
- *     This file is part of Enchanted.
+ *   Copyright (c) 2022. Favouriteless
+ *   Enchanted, a minecraft mod.
+ *   GNU GPLv3 License
  *
- *     Enchanted is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ *       This file is part of Enchanted.
  *
- *     Enchanted is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ *       Enchanted is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *       Enchanted is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU General Public License for more details.
+ *
+ *       You should have received a copy of the GNU General Public License
+ *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *
  */
 
 package com.favouriteless.enchanted.common.entities;
 
-import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
@@ -51,10 +53,6 @@ public class MandrakeEntity extends Monster {
 
     public MandrakeEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
-    }
-
-    public MandrakeEntity(Level world) {
-        super(EnchantedEntityTypes.MANDRAKE.get(), world);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -79,8 +77,8 @@ public class MandrakeEntity extends Monster {
     }
 
     @Override
-    protected SoundEvent getFallDamageSound(int pHeightIn) {
-        return SoundEvents.GHAST_HURT;
+    public Fallsounds getFallSounds() {
+        return new Fallsounds(SoundEvents.GENERIC_SMALL_FALL, SoundEvents.GENERIC_BIG_FALL);
     }
 
     @Override
@@ -113,15 +111,14 @@ public class MandrakeEntity extends Monster {
             if(--this.ticksUntilNextAttack <= 0) {
 
                 List<Entity> playersInRange = mob.level.getEntities((Entity)null,
-                        new AABB(
-                                this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
+                        new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
                                 this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8),
                         this::isPlayer);
 
                 for(Entity entity : playersInRange) {
                     if(((LivingEntity)entity).getItemBySlot(EquipmentSlot.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {
                         entity.hurt(DamageSource.mobAttack(this.mob), 1.0F);
-                        ((Player) entity).addEffect(new MobEffectInstance(MobEffect.byId(9), 200, 1));
+                        ((Player) entity).addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                     }
                 }
                 this.mob.level.playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundSource.HOSTILE, 10.0F,0.85F + random.nextFloat() * 0.1F);

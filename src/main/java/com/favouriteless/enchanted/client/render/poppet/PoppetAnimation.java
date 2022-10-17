@@ -1,22 +1,25 @@
 /*
- * Copyright (c) 2022. Favouriteless
- * Enchanted, a minecraft mod.
- * GNU GPLv3 License
  *
- *     This file is part of Enchanted.
+ *   Copyright (c) 2022. Favouriteless
+ *   Enchanted, a minecraft mod.
+ *   GNU GPLv3 License
  *
- *     Enchanted is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ *       This file is part of Enchanted.
  *
- *     Enchanted is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ *       Enchanted is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *       Enchanted is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU General Public License for more details.
+ *
+ *       You should have received a copy of the GNU General Public License
+ *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *
  */
 
 package com.favouriteless.enchanted.client.render.poppet;
@@ -45,12 +48,10 @@ public class PoppetAnimation {
 
 	private final ItemStack itemStack;
 	protected int ticks;
-	private final boolean success;
 
 	public PoppetAnimation(ItemStack itemStack, int ticks, boolean success) {
 		this.itemStack = itemStack;
 		this.ticks = ticks;
-		this.success = success;
 	}
 
 	public void render(PoseStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
@@ -87,7 +88,7 @@ public class PoppetAnimation {
 		MultiBufferSource.BufferSource renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 		minecraft.getItemRenderer().blitOffset += 50;
 		RenderSystem.translatef(0.0F, 0.0F, 100.0F + minecraft.getItemRenderer().blitOffset);
-		minecraft.getItemRenderer().renderStatic(itemStack, TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
+		minecraft.getItemRenderer().renderStatic(itemStack, TransformType.FIXED, 15728880, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer, 0);
 		minecraft.getItemRenderer().blitOffset -= 50;
 
 		matrixStack.popPose();

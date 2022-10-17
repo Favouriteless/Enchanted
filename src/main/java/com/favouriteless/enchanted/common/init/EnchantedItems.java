@@ -1,28 +1,31 @@
 /*
- * Copyright (c) 2022. Favouriteless
- * Enchanted, a minecraft mod.
- * GNU GPLv3 License
  *
- *     This file is part of Enchanted.
+ *   Copyright (c) 2022. Favouriteless
+ *   Enchanted, a minecraft mod.
+ *   GNU GPLv3 License
  *
- *     Enchanted is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ *       This file is part of Enchanted.
  *
- *     Enchanted is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ *       Enchanted is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *       Enchanted is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU General Public License for more details.
+ *
+ *       You should have received a copy of the GNU General Public License
+ *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *
  */
 
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.tileentity.item.SpinningWheelItemRenderer;
+import com.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.*;
@@ -59,7 +62,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> DISTILLERY = registerBlockItem("distillery", EnchantedBlocks.DISTILLERY);
     public static final RegistryObject<Item> WITCH_CAULDRON = registerBlockItem("witch_cauldron", EnchantedBlocks.WITCH_CAULDRON);
     public static final RegistryObject<Item> KETTLE = registerBlockItem("kettle", EnchantedBlocks.KETTLE);
-    public static final RegistryObject<Item> SPINNING_WHEEL = registerBlockItemProperties("spinning_wheel", EnchantedBlocks.SPINNING_WHEEL, defaultProperties().setISTER(() -> SpinningWheelItemRenderer::new));
+    public static final RegistryObject<Item> SPINNING_WHEEL = ITEMS.register("spinning_wheel", () -> new SpinningWheelBlockItem(defaultProperties()));
     public static final RegistryObject<Item> POPPET_SHELF = registerBlockItemProperties("poppet_shelf", EnchantedBlocks.POPPET_SHELF, defaultProperties());
 
     public static final RegistryObject<Item> CHALICE = registerBlockItem("chalice", EnchantedBlocks.CHALICE);

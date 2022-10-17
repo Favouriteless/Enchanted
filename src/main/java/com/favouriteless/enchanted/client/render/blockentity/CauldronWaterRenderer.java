@@ -1,27 +1,30 @@
 /*
- * Copyright (c) 2022. Favouriteless
- * Enchanted, a minecraft mod.
- * GNU GPLv3 License
  *
- *     This file is part of Enchanted.
+ *   Copyright (c) 2022. Favouriteless
+ *   Enchanted, a minecraft mod.
+ *   GNU GPLv3 License
  *
- *     Enchanted is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ *       This file is part of Enchanted.
  *
- *     Enchanted is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ *       Enchanted is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *       Enchanted is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU General Public License for more details.
+ *
+ *       You should have received a copy of the GNU General Public License
+ *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *
  */
 
-package com.favouriteless.enchanted.client.render.tileentity;
+package com.favouriteless.enchanted.client.render.blockentity;
 
-import com.favouriteless.enchanted.common.tileentity.CauldronBlockEntity;
+import com.favouriteless.enchanted.common.blockentities.CauldronBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -29,7 +32,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec2;
@@ -39,34 +41,34 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CauldronWaterRenderer<T extends CauldronBlockEntity<?>> extends BlockEntityRenderer<T> {
+public class CauldronWaterRenderer<T extends CauldronBlockEntity<?>> implements BlockEntityRenderer<T> {
 
     public static final ResourceLocation WATER_TEXTURE = new ResourceLocation("minecraft:textures/block/water_still.png");
     private static final int FRAME_TIME = 2;
     private final CauldronQuad quad;
 
 
-    public CauldronWaterRenderer(BlockEntityRenderDispatcher dispatcher, int waterWidth) {
-        super(dispatcher);
+    public CauldronWaterRenderer(int waterWidth) {
+        super();
         this.quad = new CauldronQuad((float)waterWidth / 2 - 0.01F);
     }
 
     @Override
-    public void render(T tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource renderBuffer, int combinedLight, int combinedOverlay) {
+    public void render(T blockEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource renderBuffer, int combinedLight, int combinedOverlay) {
         long ticks = Minecraft.getInstance().player.level.getGameTime(); // This frame count should be common across all TEs
 
-        int waterAmount = tileEntity.getWater();
+        int waterAmount = blockEntity.getWater();
         if(waterAmount > 0) {
 
-            double waterQuadHeight = tileEntity.getWaterY();
+            double waterQuadHeight = blockEntity.getWaterY();
 
             matrixStack.pushPose();
             matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
             VertexConsumer vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
-            long time = System.currentTimeMillis() - tileEntity.startTime;
+            long time = System.currentTimeMillis() - blockEntity.startTime;
             quad.render(matrixStack.last(), vertexBuilder,
-                    tileEntity.getRed(time), tileEntity.getGreen(time), tileEntity.getBlue(time), 160,
+                    blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time), 160,
                     0F, 1/32F * ( (float)(ticks/FRAME_TIME) % 32),
                     combinedLight);
 

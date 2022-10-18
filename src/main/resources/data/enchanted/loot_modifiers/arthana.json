@@ -1,4 +1,5 @@
 {
+  "type": "enchanted:arthana",
   "conditions": [
     {
       "condition": "minecraft:random_chance_with_looting",

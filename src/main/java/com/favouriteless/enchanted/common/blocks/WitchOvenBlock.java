@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -59,7 +60,14 @@ public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlockEntit
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    private static final VoxelShape SHAPE = Shapes.box(2.0D, 2.0D, 2.0D, 14.0D, 12.0D, 14.0D);
+    private static final VoxelShape SHAPE_NORTH = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16),
+            Shapes.box(5.0D/16, 0.0D, 8.0D/16, 11.0D/16, 1.0D, 14.0D/16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_SOUTH = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16),
+            Shapes.box(5.0D/16, 0.0D, 2.0D/16, 11.0D/16, 1.0D, 8.0D/16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_EAST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16),
+            Shapes.box(2.0D/16, 0.0D, 5.0D/16, 8.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_WEST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16),
+            Shapes.box(8.0D/16, 0.0D, 5.0D/16, 14.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
 
     public WitchOvenBlock(Properties builder) {
         super(builder);
@@ -105,7 +113,12 @@ public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlockEntit
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return switch(state.getValue(FACING)) {
+            case SOUTH -> SHAPE_SOUTH;
+            case EAST -> SHAPE_EAST;
+            case WEST -> SHAPE_WEST;
+            default -> SHAPE_NORTH;
+        };
     }
 
     @OnlyIn(Dist.CLIENT)

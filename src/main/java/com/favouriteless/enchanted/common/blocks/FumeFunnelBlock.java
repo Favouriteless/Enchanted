@@ -63,7 +63,11 @@ public class FumeFunnelBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final IntegerProperty TYPE = IntegerProperty.create("type", 0, 3 );
 
-    private static final VoxelShape SHAPE = Shapes.box(2.0D, 2.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    private static final VoxelShape SHAPE = Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 14.0D/16, 15.0D/16);
+    private static final VoxelShape SHAPE_TOP_NORTH = Shapes.box(5.0D/16, 0.0D, 8.0D/16, 11.0D/16, 8.0D/16, 14.0D/16);
+    private static final VoxelShape SHAPE_TOP_SOUTH = Shapes.box(5.0D/16, 0.0D, 2.0D/16, 11.0D/16, 8.0D/16, 8.0D/16);
+    private static final VoxelShape SHAPE_TOP_EAST = Shapes.box(2.0D/16, 0.0D, 5.0D/16, 8.0D/16, 8.0D/16, 11.0D/16);
+    private static final VoxelShape SHAPE_TOP_WEST = Shapes.box(8.0D/16, 0.0D, 5.0D/16, 14.0D/16, 8.0D/16, 11.0D/16);
 
     public FumeFunnelBlock(Properties properties) {
         super(properties);
@@ -72,7 +76,13 @@ public class FumeFunnelBlock extends Block {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(TYPE) == 1 ?
+                switch(state.getValue(FACING)) {
+            default -> SHAPE_TOP_NORTH;
+            case SOUTH -> SHAPE_TOP_SOUTH;
+            case EAST -> SHAPE_TOP_EAST;
+            case WEST -> SHAPE_TOP_WEST;
+        } : SHAPE;
     }
 
     @OnlyIn(Dist.CLIENT)

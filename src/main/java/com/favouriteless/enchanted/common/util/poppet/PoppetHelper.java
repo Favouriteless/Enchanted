@@ -109,7 +109,7 @@ public class PoppetHelper {
 				if(poppet.canProtect(player)) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
 						poppet.protect(player);
-						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 0.5F);
+						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.5F, 1.0F);
 						return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 					}
 					return PoppetResult.FAIL;

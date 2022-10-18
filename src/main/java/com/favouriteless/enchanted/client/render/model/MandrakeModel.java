@@ -47,14 +47,11 @@ public class MandrakeModel extends EntityModel<MandrakeEntity> {
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(0, 10).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 15.0F, 0.0F));
 		body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 25).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
-		PartDefinition Legs = body.addOrReplaceChild("legs", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-		PartDefinition LeftLeg = Legs.addOrReplaceChild("leftLeg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-		LeftLeg.addOrReplaceChild("leg_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 5.0F, 0.0F, 0.0F, 0.0F, -0.1745F));
-		PartDefinition RightLeg = Legs.addOrReplaceChild("rightLeg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-		RightLeg.addOrReplaceChild("leg_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 5.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
-		PartDefinition Arms = body.addOrReplaceChild("arms", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-		Arms.addOrReplaceChild("leftArm", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-		Arms.addOrReplaceChild("rightArm", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+		body.addOrReplaceChild("leftLeg", CubeListBuilder.create()
+				.texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 5.0F, 0.0F, 0.0F, 0.0F, -0.1745F));
+		body.addOrReplaceChild("rightLeg", CubeListBuilder.create()
+				.texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 5.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
 
 		PartDefinition leaves = partdefinition.addOrReplaceChild("leaves", CubeListBuilder.create().texOffs(16, 26).addBox(-4.0F, -6.0F, 0.0F, 8.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 12.0F, 0.0F, 0.0F, -2.3562F, 0.0F));
 		leaves.addOrReplaceChild("face2_r1", CubeListBuilder.create().texOffs(16, 26).addBox(-4.0F, -6.0F, 0.0F, 8.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
@@ -64,7 +61,8 @@ public class MandrakeModel extends EntityModel<MandrakeEntity> {
 
 	@Override
 	public void setupAnim(MandrakeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		body.getChild("leftLeg").xRot = (float)Math.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		body.getChild("rightLeg").xRot = (float)Math.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 	}
 
 	@Override

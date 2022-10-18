@@ -24,37 +24,31 @@
 
 package com.favouriteless.enchanted.common.entities;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
-import net.minecraftforge.network.NetworkHooks;
 
 public class BroomstickEntity extends Entity {
 
@@ -130,6 +124,12 @@ public class BroomstickEntity extends Entity {
         return false;
     }
 
+    @Override
+    protected void playSwimSound(float pVolume) {}
+
+    @Override
+    protected void playStepSound(BlockPos pPos, BlockState pState) {}
+
     private void tickLerp() {
         if(isControlledByLocalInstance()) {
             lerpSteps = 0;
@@ -186,6 +186,10 @@ public class BroomstickEntity extends Entity {
 
             setYRot(getYRot() + deltaRotY);
             setXRot(Mth.clamp(getXRot() + deltaRotX, -30.0F, 30.0F));
+            if(this.hasPassenger(player)) {
+                player.setYRot(player.getYRot() + deltaRotY);
+            }
+
             setDeltaMovement(getNewDeltaMovement());
         }
     }
@@ -274,6 +278,8 @@ public class BroomstickEntity extends Entity {
     public void positionRider(Entity passenger) {
         if(hasPassenger(passenger)) {
             passenger.setPos(getX(), getY() + getPassengersRidingOffset(), getZ());
+
+            clampRotation(passenger);
         }
     }
 
@@ -294,22 +300,22 @@ public class BroomstickEntity extends Entity {
         return list.isEmpty() ? null : list.get(0);
     }
 
-    protected boolean canAddPassenger(Entity pPassenger) {
+    protected boolean canAddPassenger(Entity passenger) {
         return getPassengers().size() < 1;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public void onPassengerTurned(Entity pEntityToUpdate) {
-        clampRotation(pEntityToUpdate);
+    @Override
+    public void onPassengerTurned(Entity entity) {
+        clampRotation(entity);
     }
 
-    protected void clampRotation(Entity pEntityToUpdate) {
-        pEntityToUpdate.setYBodyRot(getYRot());
-        float f = Mth.wrapDegrees(pEntityToUpdate.getYRot() - getYRot());
+    protected void clampRotation(Entity entity) {
+        entity.setYBodyRot(getYRot());
+        float f = Mth.wrapDegrees(entity.getYRot() - getYRot());
         float f1 = Mth.clamp(f, -105.0F, 105.0F);
-        pEntityToUpdate.yRotO += f1 - f;
-        pEntityToUpdate.setYRot(getYRot() + f1 - f);
-        pEntityToUpdate.setYHeadRot(pEntityToUpdate.getYRot());
+        entity.yRotO += f1 - f;
+        entity.setYRot(entity.getYRot() + f1 - f);
+        entity.setYHeadRot(entity.getYRot());
     }
 
     @Override

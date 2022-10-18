@@ -52,7 +52,6 @@ public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 			dummyBe = new SpinningWheelBlockEntity(BlockPos.ZERO, EnchantedBlocks.SPINNING_WHEEL.get().defaultBlockState());
 
 		poseStack.pushPose();
-		poseStack.mulPose(Vector3f.XP.rotationDegrees(180));
 		Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, packedLight, packedOverlay);
 		poseStack.popPose();
 	}

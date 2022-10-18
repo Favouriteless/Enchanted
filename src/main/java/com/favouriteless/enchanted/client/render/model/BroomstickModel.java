@@ -46,7 +46,7 @@ public class BroomstickModel extends EntityModel<BroomstickEntity> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 		root.addOrReplaceChild("TailPlane2", CubeListBuilder.create().texOffs(-12, 20).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -8.5F, -3.1416F, 0.0F, -2.3562F));
 		root.addOrReplaceChild("TailPlane1", CubeListBuilder.create().texOffs(-12, 20).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -8.5F, 3.1416F, 0.0F, 2.3562F));
 		root.addOrReplaceChild("GoldBand", CubeListBuilder.create().texOffs(24, 0).addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -11.0F, -3.1416F, 0.0F, 3.1416F));

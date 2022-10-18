@@ -84,8 +84,9 @@ public class SpinningWheelRenderer implements BlockEntityRenderer<SpinningWheelB
 		poseStack.pushPose();
 		float rotationYDegrees = blockEntity.getLevel() != null ? blockEntity.getBlockState().getValue(SpinningWheelBlock.FACING).getOpposite().toYRot() : 0;
 
-		poseStack.translate(0.5F, 0.0F, 0.5F);
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationYDegrees));
+		poseStack.translate(0.5F, 1.5F, 0.5F);
+		poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationYDegrees));
+		poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
 
 		ContainerData furnaceData = blockEntity.getData();
 		float cookTime = furnaceData.get(2) >= 1 ? furnaceData.get(2) + partialTicks - 1 : 0;

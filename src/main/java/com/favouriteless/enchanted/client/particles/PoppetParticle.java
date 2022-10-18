@@ -34,12 +34,12 @@ public class PoppetParticle extends SimpleAnimatedParticle {
 
     protected PoppetParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet pSprites, int red, int green, int blue, int red1, int green1, int blue1) {
         super(world, x, y, z, pSprites, -0.05F);
+        this.friction = 0.6F;
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
         this.quadSize *= 0.75F;
         this.lifetime = 60 + this.random.nextInt(12);
-        this.friction = 0.6F;
         this.setSpriteFromAge(pSprites);
 
         if (this.random.nextInt(4) == 0) {

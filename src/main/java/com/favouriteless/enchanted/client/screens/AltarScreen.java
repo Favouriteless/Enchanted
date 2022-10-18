@@ -29,6 +29,7 @@ import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -41,7 +42,7 @@ import java.awt.*;
 public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/altar.png");
-    private AltarMenu container;
+    private final AltarMenu container;
 
     public AltarScreen(AltarMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
@@ -52,13 +53,14 @@ public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
     }
 
     @Override
-    protected void renderBg(PoseStack pMatrixStack, float pPartialTicks, int pX, int pY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(TEXTURE);
+    protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURE);
 
         int edgeSpacingX = (this.width - this.imageWidth) / 2;
         int edgeSpacingY = (this.height - this.imageHeight) / 2;
-        this.blit(pMatrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     @Override

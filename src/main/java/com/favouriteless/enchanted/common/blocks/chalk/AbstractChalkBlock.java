@@ -40,7 +40,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 
 
-public abstract class AbstractChalkBlock extends Block implements EntityBlock {
+public abstract class AbstractChalkBlock extends Block {
 
     public AbstractChalkBlock() {
         super(Properties.of(EnchantedMaterials.CHALK).noCollission().strength(0.5f, 0f).sound(SoundType.STONE));

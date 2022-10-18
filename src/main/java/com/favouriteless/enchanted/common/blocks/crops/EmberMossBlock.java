@@ -62,6 +62,6 @@ public class EmberMossBlock extends AbstractSpreadingBlock {
 
     @Override
     public boolean canSpreadOn(Block block) {
-        return block.is(Blocks.GRASS_BLOCK) || block.is(Blocks.DIRT) || block.is(Blocks.SAND);
+        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.SAND;
     }
 }

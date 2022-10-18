@@ -46,7 +46,7 @@ public class PoppetAnimation {
 	private final ItemStack itemStack;
 	protected int ticks;
 
-	public PoppetAnimation(ItemStack itemStack, int ticks, boolean success) {
+	public PoppetAnimation(ItemStack itemStack, int ticks) {
 		this.itemStack = itemStack;
 		this.ticks = ticks;
 	}

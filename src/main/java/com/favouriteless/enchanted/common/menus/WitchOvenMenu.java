@@ -24,15 +24,18 @@
 
 package com.favouriteless.enchanted.common.menus;
 
+import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
 import com.favouriteless.enchanted.common.blockentities.ProcessingBlockEntityBase;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
@@ -51,6 +54,10 @@ public class WitchOvenMenu extends ProcessingMenuBase {
         this.addSlot(new SlotOutput(tileEntity, 4, 107, 53)); // Jar output
 
         this.addInventorySlots(playerInventory, 8, 84);
+    }
+
+    public WitchOvenMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
     }
 
     @Override

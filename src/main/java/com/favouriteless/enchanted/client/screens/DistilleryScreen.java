@@ -29,6 +29,7 @@ import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -73,15 +74,16 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
     }
 
     protected void renderHoveredTooltip(PoseStack matrixStack, int x, int y) {
-        if (!minecraft.player.inventory.getCarried().isEmpty()) return;  // no tooltip if the player is dragging something
+        if (!minecraft.player.getInventory().getSelected().isEmpty()) return;  // no tooltip if the player is dragging something
             super.renderTooltip(matrixStack, x, y);
     }
 
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bind(TEXTURE);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURE);;
 
         int edgeSpacingX = (width - imageWidth) / 2;
         int edgeSpacingY = (height - imageHeight) / 2;
@@ -105,7 +107,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
     @Override
     protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         font.draw(matrixStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
-        font.draw(matrixStack, inventory.getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(matrixStack, minecraft.player.getInventory().getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
 
 }

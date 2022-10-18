@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -47,6 +48,19 @@ public class AltarMenu extends AbstractContainerMenu {
         this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
         this.data = data;
         addDataSlots(this.data);
+    }
+
+    public AltarMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, getTileEntity(playerInventory, data), new SimpleContainerData(3));
+    }
+
+    private static AltarBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+        final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+
+        if(tileEntity instanceof AltarBlockEntity) {
+            return (AltarBlockEntity)tileEntity;
+        }
+        throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
     }
 
     public int getCurrentPower() {

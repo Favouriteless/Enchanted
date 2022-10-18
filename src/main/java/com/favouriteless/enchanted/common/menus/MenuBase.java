@@ -65,4 +65,13 @@ public class MenuBase extends AbstractContainerMenu {
 		}
 	}
 
+	protected static BlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data, Class<? extends BlockEntity> type) {
+		final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+
+		if(tileEntity != null && tileEntity.getClass() == type) {
+			return tileEntity;
+		}
+		throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
+	}
+
 }

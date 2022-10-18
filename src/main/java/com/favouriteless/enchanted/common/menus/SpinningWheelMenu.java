@@ -24,11 +24,14 @@
 
 package com.favouriteless.enchanted.common.menus;
 
+import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
@@ -46,6 +49,10 @@ public class SpinningWheelMenu extends ProcessingMenuBase {
 		addSlot(new SlotOutput(tileEntity, 3, 130, 35)); // Spinning wheel output
 
 		addInventorySlots(playerInventory, 8, 84);
+	}
+
+	public SpinningWheelMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+		this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
 	}
 
 	@Override

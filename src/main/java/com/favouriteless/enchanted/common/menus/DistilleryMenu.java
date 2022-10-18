@@ -24,12 +24,15 @@
 
 package com.favouriteless.enchanted.common.menus;
 
+import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
@@ -50,6 +53,10 @@ public class DistilleryMenu extends ProcessingMenuBase {
         addSlot(new SlotOutput(tileEntity, 6, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
+    }
+
+    public DistilleryMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
     }
 
     @Override

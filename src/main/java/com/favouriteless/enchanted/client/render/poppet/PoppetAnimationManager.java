@@ -43,8 +43,7 @@ public class PoppetAnimationManager {
 	 */
 	public static void startAnimation(PoppetResult result, ItemStack itemStack) {
 		switch(result) {
-			case SUCCESS, SUCCESS_BREAK -> startAnimation(new PoppetAnimation(itemStack, 120, true));
-			case FAIL -> startAnimation(new PoppetAnimation(itemStack, 120, false));
+			case SUCCESS, SUCCESS_BREAK -> startAnimation(new PoppetAnimation(itemStack, 120));
 		}
 	}
 

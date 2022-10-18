@@ -28,6 +28,7 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -44,6 +45,10 @@ public class PoppetShelfMenu extends MenuBase {
 			addSlot(new PoppetSlot(tileEntity.getInventory(), i, 47 + i*22, 18));
 
 		addInventorySlots(playerInventory, 8, 49);
+	}
+
+	public PoppetShelfMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+		this(windowId, playerInventory, (PoppetShelfBlockEntity)getTileEntity(playerInventory, data, PoppetShelfBlockEntity.class));
 	}
 
 	@Override

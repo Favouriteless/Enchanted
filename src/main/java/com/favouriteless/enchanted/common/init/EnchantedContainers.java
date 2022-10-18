@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.menus.*;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -36,13 +37,13 @@ public class EnchantedContainers {
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Enchanted.MOD_ID);
 
     public static final RegistryObject<MenuType<WitchOvenMenu>> WITCH_OVEN = CONTAINER_TYPES.register("witch_oven",
-            () -> IForgeContainerType.create(WitchOvenMenu::new));
+            () -> IForgeMenuType.create(WitchOvenMenu::new));
     public static final RegistryObject<MenuType<DistilleryMenu>> DISTILLERY = CONTAINER_TYPES.register("distillery",
-            () -> IForgeContainerType.create(DistilleryMenu::new));
+            () -> IForgeMenuType.create(DistilleryMenu::new));
     public static final RegistryObject<MenuType<AltarMenu>> ALTAR = CONTAINER_TYPES.register("altar",
-            () -> IForgeContainerType.create(AltarMenu::new));
+            () -> IForgeMenuType.create(AltarMenu::new));
     public static final RegistryObject<MenuType<SpinningWheelMenu>> SPINNING_WHEEL = CONTAINER_TYPES.register("spinning_wheel",
-            () -> IForgeContainerType.create(SpinningWheelMenu::new));
+            () -> IForgeMenuType.create(SpinningWheelMenu::new));
     public static final RegistryObject<MenuType<PoppetShelfMenu>> POPPET_SHELF = CONTAINER_TYPES.register("poppet_shelf",
-            () -> IForgeContainerType.create(PoppetShelfMenu::new));
+            () -> IForgeMenuType.create(PoppetShelfMenu::new));
 }

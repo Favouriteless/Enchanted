@@ -40,7 +40,7 @@ public class CommonSetupEvents {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        EnchantedRecipeTypes.init();
+        event.enqueueWork(EnchantedRecipeTypes::init);
     }
 
     @SubscribeEvent

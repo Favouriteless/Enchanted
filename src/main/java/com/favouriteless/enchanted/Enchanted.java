@@ -63,7 +63,6 @@ public class Enchanted
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        EnchantedRecipeTypes.init();
         EnchantedRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
         EnchantedEffects.EFFECTS.register(modEventBus);
         EnchantedParticles.PARTICLE_TYPES.register(modEventBus);

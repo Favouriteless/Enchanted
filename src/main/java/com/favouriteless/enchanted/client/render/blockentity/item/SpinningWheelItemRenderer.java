@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.client.render.blockentity.item;
 import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -50,6 +51,9 @@ public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 		if(dummyBe == null)
 			dummyBe = new SpinningWheelBlockEntity(BlockPos.ZERO, EnchantedBlocks.SPINNING_WHEEL.get().defaultBlockState());
 
+		poseStack.pushPose();
+		poseStack.mulPose(Vector3f.XP.rotationDegrees(180));
 		Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, packedLight, packedOverlay);
+		poseStack.popPose();
 	}
 }

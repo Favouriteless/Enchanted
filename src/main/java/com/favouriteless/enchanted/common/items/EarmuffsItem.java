@@ -25,9 +25,12 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
@@ -76,7 +79,7 @@ public class EarmuffsItem extends ArmorItem {
 			@Nullable
 			@Override
 			public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-				return new EarmuffsModel(_default.getHead());
+				return new EarmuffsModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayerLocations.EARMUFFS));
 			}
 		});
 	}

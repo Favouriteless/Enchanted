@@ -61,10 +61,10 @@ public abstract class AbstractChalkBlock extends Block {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        BlockPos blockpos = pos.below();
-        BlockState blockstate = worldIn.getBlockState(blockpos);
-        return blockstate.isFaceSturdy(worldIn, blockpos, Direction.UP);
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos belowPos = pos.below();
+        BlockState blockstate = level.getBlockState(belowPos);
+        return blockstate.isFaceSturdy(level, belowPos, Direction.UP);
     }
 
 }

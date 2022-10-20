@@ -126,7 +126,7 @@ public enum CirclePart {
 
     public boolean canPlace(Level world, BlockPos centerPos) {
         for(BlockPos pos : circlePoints) {
-            if(!world.getBlockState(centerPos.offset(pos)).getMaterial().isReplaceable() || EnchantedBlocks.CHALK_WHITE.get().canSurvive(null, world, pos)) { // Not air or chalk can't survive
+            if(!world.getBlockState(centerPos.offset(pos)).isAir() || !EnchantedBlocks.CHALK_WHITE.get().canSurvive(null, world, centerPos.offset(pos))) { // Not air or chalk can't survive
                 return false;
             }
         }

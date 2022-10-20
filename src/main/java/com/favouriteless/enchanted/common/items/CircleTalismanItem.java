@@ -56,42 +56,42 @@ public class CircleTalismanItem extends Item {
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		Level world = context.getLevel();
-		BlockPos pos = context.getClickedPos().above();
-		ItemStack stack = context.getItemInHand();
+		if(!world.isClientSide) {
+			BlockPos pos = context.getClickedPos().above();
+			ItemStack stack = context.getItemInHand();
 
 
-		if(stack.hasTag()) {
-			CompoundTag nbt = stack.getTag();
-			byte small = nbt.contains("small") ? nbt.getByte("small") : 0;
-			byte medium = nbt.contains("medium") ? nbt.getByte("medium") : 0;
-			byte large = nbt.contains("large") ? nbt.getByte("large") : 0;
+			if(stack.hasTag()) {
+				CompoundTag nbt = stack.getTag();
+				byte small = nbt.contains("small") ? nbt.getByte("small") : 0;
+				byte medium = nbt.contains("medium") ? nbt.getByte("medium") : 0;
+				byte large = nbt.contains("large") ? nbt.getByte("large") : 0;
 
-			if(small != 0 || medium != 0 || large != 0) {
-				boolean validPlace = world.getBlockState(pos).isAir() && EnchantedBlocks.CHALK_GOLD.get().canSurvive(null, world, pos);
-				if(validPlace) {
-					if(small != 0 && !CirclePart.SMALL.canPlace(world, pos)) validPlace = false;
-					if(medium != 0 && !CirclePart.MEDIUM.canPlace(world, pos)) validPlace = false;
-					if(large != 0 && !CirclePart.LARGE.canPlace(world, pos)) validPlace = false;
-				}
+				if(small != 0 || medium != 0 || large != 0) {
+					boolean validPlace = world.getBlockState(pos).isAir() && EnchantedBlocks.CHALK_GOLD.get().canSurvive(null, world, pos);
+					if(validPlace) {
+						if(small != 0 && !CirclePart.SMALL.canPlace(world, pos)) validPlace = false;
+						if(medium != 0 && !CirclePart.MEDIUM.canPlace(world, pos)) validPlace = false;
+						if(large != 0 && !CirclePart.LARGE.canPlace(world, pos)) validPlace = false;
 
-				if(validPlace) {
-					if(!world.isClientSide) {
-						world.setBlockAndUpdate(pos, EnchantedBlocks.CHALK_GOLD.get().getStateForPlacement(new BlockPlaceContext(context)));
-						if(small != 0)
-							CirclePart.SMALL.place(world, pos, small == 1 ? EnchantedBlocks.CHALK_WHITE.get() : small == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
-						if(medium != 0)
-							CirclePart.MEDIUM.place(world, pos, medium == 1 ? EnchantedBlocks.CHALK_WHITE.get() : medium == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
-						if(large != 0)
-							CirclePart.LARGE.place(world, pos, large == 1 ? EnchantedBlocks.CHALK_WHITE.get() : large == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
+						if(validPlace) {
+							world.setBlockAndUpdate(pos, EnchantedBlocks.CHALK_GOLD.get().getStateForPlacement(new BlockPlaceContext(context)));
+							if(small != 0)
+								CirclePart.SMALL.place(world, pos, small == 1 ? EnchantedBlocks.CHALK_WHITE.get() : small == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
+							if(medium != 0)
+								CirclePart.MEDIUM.place(world, pos, medium == 1 ? EnchantedBlocks.CHALK_WHITE.get() : medium == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
+							if(large != 0)
+								CirclePart.LARGE.place(world, pos, large == 1 ? EnchantedBlocks.CHALK_WHITE.get() : large == 2 ? EnchantedBlocks.CHALK_RED.get() : EnchantedBlocks.CHALK_PURPLE.get(), context);
 
-						stack.setTag(new CompoundTag());
+							stack.setTag(new CompoundTag());
+
+							return InteractionResult.SUCCESS;
+						}
 					}
 
-					return InteractionResult.SUCCESS;
-				}
-				else {
 					if(context.getPlayer() != null) {
 						context.getPlayer().displayClientMessage(new TextComponent("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
+						return InteractionResult.PASS;
 					}
 				}
 			}
@@ -99,6 +99,8 @@ public class CircleTalismanItem extends Item {
 
 		return InteractionResult.FAIL;
 	}
+
+
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {

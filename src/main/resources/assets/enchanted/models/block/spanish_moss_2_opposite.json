@@ -1,6 +1,0 @@
-{
-    "parent": "minecraft:block/vine_2_opposite",
-    "textures": {
-        "vine": "enchanted:block/spanish_moss"
-    }
-}

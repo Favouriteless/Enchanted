@@ -1,6 +1,0 @@
-{
-    "parent": "minecraft:block/vine_3",
-    "textures": {
-        "vine": "enchanted:block/spanish_moss"
-    }
-}

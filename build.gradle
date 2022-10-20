@@ -38,6 +38,8 @@ minecraft {
 
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args '--username', 'Favouriteless'
+            args '--uuid', '9410df73-6be3-41d5-a620-51b2e9be667b'
 
             mods {
                 enchanted {

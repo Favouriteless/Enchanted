@@ -119,7 +119,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ARTHANA = registerSwordItem("arthana", Tiers.GOLD, 3, -2.4F);
     public static final RegistryObject<Item> EARMUFFS = ITEMS.register("earmuffs", () -> new EarmuffsItem(defaultProperties()));
 
-    public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(defaultProperties()));
+    public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(defaultProperties().stacksTo(1)));
     public static final RegistryObject<Item> WAYSTONE = registerItem("waystone");
     public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Properties())); // With no creative tab
     public static final RegistryObject<Item> BROOM = ITEMS.register("broom", () -> new BroomItem(defaultProperties()));

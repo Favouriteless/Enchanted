@@ -86,8 +86,8 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	private final IItemHandlerModifiable items = new InvWrapper(this);
 	private final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
 
-	private final int warmingMax = 80;
-	private final int blendingMilliseconds = 500;
+	private static final int WARMING_MAX = 80;
+	private static final int BLENDING_MILLISECONDS = 500;
 	private final int cookTime;
 
 	private final List<BlockPos> potentialAltars = new ArrayList<>();
@@ -125,6 +125,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		if(t instanceof CauldronBlockEntity<?> blockEntity) {
 			if(level != null) {
 				if(!level.isClientSide) {
+					boolean shouldUpdate = false;
 					if(blockEntity.justLoaded) {
 						blockEntity.matchRecipes();
 						blockEntity.justLoaded = false;
@@ -134,13 +135,17 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 						BlockState stateBelow = level.getBlockState(blockEntity.worldPosition.below());
 
 						if(providesHeat(stateBelow) && blockEntity.tank.getFluidAmount() == blockEntity.tank.getCapacity()) { // On top of heat block, cauldron is full
-							if(blockEntity.warmingUp < blockEntity.warmingMax) {
+							if(blockEntity.warmingUp < WARMING_MAX) {
 								blockEntity.warmingUp++;
+								if(blockEntity.warmingUp == WARMING_MAX)
+									shouldUpdate = true;
 							}
 							else if(blockEntity.potentialRecipes.size() == 1 && blockEntity.potentialRecipes.get(0).fullMatch(blockEntity, level)) { // Has final recipe
 								if(blockEntity.cookProgress < blockEntity.cookTime) {
 									blockEntity.cookProgress++;
 									blockEntity.recalculateTargetColour();
+									if(blockEntity.cookProgress == 1 || blockEntity.cookProgress == blockEntity.cookTime)
+										shouldUpdate = true;
 								}
 								else {
 									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
@@ -155,16 +160,20 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 									else {
 										blockEntity.setFailed(); // Fail if not enough power
 									}
+									shouldUpdate = true;
 								}
 							}
 						}
 						else {
 							if(blockEntity.hasItems)
 								blockEntity.setFailed(); // Fail if heat or water is lost while cooking
+							if(blockEntity.warmingUp > 0)
+								shouldUpdate = true;
 							blockEntity.warmingUp = 0;
 						}
 					}
-					blockEntity.updateBlock();
+					if(shouldUpdate)
+						blockEntity.updateBlock();
 				}
 				// ------------------------ CLIENT STUFF ------------------------
 				else {
@@ -188,7 +197,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 						if(!blockEntity.isComplete && blockEntity.cookProgress > 0 && blockEntity.cookProgress < blockEntity.cookTime) {
 							blockEntity.handleCookParticles(time);
 						}
-						else if(blockEntity.warmingUp == blockEntity.warmingMax && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
+						else if(blockEntity.warmingUp == WARMING_MAX && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
 							double xOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
 							double zOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
 							double dx = blockEntity.worldPosition.getX() + xOffset;
@@ -217,15 +226,15 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	public abstract void handleCookParticles(long time);
 
 	public int getRed(long time) {
-		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startRed, targetRed));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startRed, targetRed));
 	}
 
 	public int getGreen(long time) {
-		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startGreen, targetGreen));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startGreen, targetGreen));
 	}
 
 	public int getBlue(long time) {
-		return (int)Math.round(Mth.lerp(Math.min((double)time / blendingMilliseconds, 1.0D), startBlue, targetBlue));
+		return (int)Math.round(Mth.lerp(Math.min((double)time / BLENDING_MILLISECONDS, 1.0D), startBlue, targetBlue));
 	}
 
 	private void setFailed() {
@@ -384,7 +393,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	}
 
 	public boolean isHot() {
-		return warmingUp == warmingMax;
+		return warmingUp == WARMING_MAX;
 	}
 
 	protected void setPotentialRecipes(List<T> potentialRecipes) {
@@ -469,7 +478,6 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	@Override
 	public void handleUpdateTag(CompoundTag nbt) {
-		super.handleUpdateTag(nbt);
 		setWater(nbt.getInt("waterAmount"));
 		isFailed = nbt.getBoolean("isFailed");
 		isComplete = nbt.getBoolean("isComplete");
@@ -481,15 +489,21 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		int tg = nbt.getInt("targetGreen");
 		int tb = nbt.getInt("targetBlue");
 
-		if(tr != targetRed && tg != targetGreen && tb != targetBlue) {
-			startTime = System.currentTimeMillis();
-			startRed = getRed(startTime);
-			startGreen = getGreen(startTime);
-			startBlue = getBlue(startTime);
-			targetRed = tr;
-			targetGreen = tg;
-			targetBlue = tb;
+		if(tr != targetRed || tg != targetGreen || tb != targetBlue) { // If colour changed
+			updateTargetColour(tr, tg, tb);
 		}
+	}
+
+	public void updateTargetColour(int red, int green, int blue) {
+		long time = System.currentTimeMillis();
+		long timeSince = time - startTime;
+		startRed = getRed(timeSince);
+		startGreen = getGreen(timeSince);
+		startBlue = getBlue(timeSince);
+		targetRed = red;
+		targetGreen = green;
+		targetBlue = blue;
+		startTime = time;
 	}
 
 	@Override

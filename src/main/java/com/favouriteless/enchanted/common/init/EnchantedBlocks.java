@@ -30,6 +30,8 @@ import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.blocks.altar.CandelabraBlock;
 import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlock;
 import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlockMilk;
+import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
+import com.favouriteless.enchanted.common.blocks.cauldrons.WitchCauldronBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.*;

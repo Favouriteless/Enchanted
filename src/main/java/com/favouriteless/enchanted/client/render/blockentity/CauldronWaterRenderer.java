@@ -25,18 +25,18 @@
 package com.favouriteless.enchanted.client.render.blockentity;
 
 import com.favouriteless.enchanted.common.blockentities.CauldronBlockEntity;
+import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
-import net.minecraft.world.phys.Vec2;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -55,24 +55,26 @@ public class CauldronWaterRenderer<T extends CauldronBlockEntity<?>> implements 
 
     @Override
     public void render(T blockEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource renderBuffer, int combinedLight, int combinedOverlay) {
-        long ticks = Minecraft.getInstance().player.level.getGameTime(); // This frame count should be common across all TEs
+        if((blockEntity.getLevel().getBlockState(blockEntity.getBlockPos()).getBlock() instanceof CauldronBlockBase)) {
+            long ticks = blockEntity.getLevel().getGameTime(); // This frame count should be common across all TEs
 
-        int waterAmount = blockEntity.getWater();
-        if(waterAmount > 0) {
+            int waterAmount = blockEntity.getWater();
+            if(waterAmount > 0) {
 
-            double waterQuadHeight = blockEntity.getWaterY();
+                double waterQuadHeight = blockEntity.getWaterY();
 
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
+                matrixStack.pushPose();
+                matrixStack.translate(0.5D, waterQuadHeight, 0.5D);
 
-            VertexConsumer vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
-            long time = System.currentTimeMillis() - blockEntity.startTime;
-            quad.render(matrixStack.last(), vertexBuilder,
-                    blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time), 160,
-                    0F, 1/32F * ( (float)(ticks/FRAME_TIME) % 32),
-                    combinedLight);
+                VertexConsumer vertexBuilder = renderBuffer.getBuffer((RenderType.entityTranslucentCull(WATER_TEXTURE)));
+                long time = System.currentTimeMillis() - blockEntity.startTime;
+                quad.render(matrixStack.last(), vertexBuilder,
+                        blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time), 160,
+                        0F, 1 / 32F * ((float) (ticks / FRAME_TIME) % 32),
+                        combinedLight);
 
-            matrixStack.popPose();
+                matrixStack.popPose();
+            }
         }
     }
 

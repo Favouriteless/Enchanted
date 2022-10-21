@@ -27,7 +27,7 @@ package com.favouriteless.enchanted.common.data;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
-import com.favouriteless.enchanted.common.blocks.KettleBlock;
+import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;

@@ -30,6 +30,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 import java.util.UUID;
 
 public interface IBedPlayerCapability extends INBTSerializable<CompoundTag> {
-    UUID getValue();
-    void setValue(UUID uuid);
+    UUID getUUID();
+    void setUUID(UUID uuid);
+    String getName();
+    void setName(String name);
 }

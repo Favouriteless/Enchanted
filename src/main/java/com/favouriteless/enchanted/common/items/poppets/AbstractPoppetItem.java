@@ -66,14 +66,13 @@ public abstract class AbstractPoppetItem extends Item {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> toolTip, TooltipFlag flag) {
 		toolTip.add(new TextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(ChatFormatting.RED));
 		if(PoppetHelper.isBound(stack)) {
-			toolTip.add(new TextComponent(PoppetHelper.getBoundPlayer(stack, world).getDisplayName().getString()).withStyle(ChatFormatting.GRAY));
+			toolTip.add(new TextComponent(PoppetHelper.getBoundName(stack)).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity entity) {
-		if(entity instanceof Player) {
-			Player player = (Player)entity;
+		if(entity instanceof Player player) {
 			ItemStack taglockStack = player.getOffhandItem();
 
 			if(taglockStack.getItem() instanceof TaglockFilledItem) {

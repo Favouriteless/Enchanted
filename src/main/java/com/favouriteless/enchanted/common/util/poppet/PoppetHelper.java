@@ -84,10 +84,18 @@ public class PoppetHelper {
 		return null;
 	}
 
+	public static String getBoundName(ItemStack item) {
+		if(isBound(item)) {
+			return item.getTag().getString("boundName");
+		}
+		return "None";
+	}
+
 	public static void bind(ItemStack item, Player player) {
 		if(item.getItem() instanceof AbstractPoppetItem) {
 			CompoundTag tag = item.getOrCreateTag();
 			tag.putUUID("boundPlayer", player.getUUID());
+			tag.putString("boundName", player.getDisplayName().getString());
 			item.setTag(tag);
 		}
 	}
@@ -97,14 +105,14 @@ public class PoppetHelper {
 			if(item.hasTag()) {
 				CompoundTag tag = item.getTag();
 				tag.remove("boundPlayer");
+				tag.remove("boundName");
 				item.setTag(tag);
 			}
 		}
 	}
 
 	public static PoppetResult tryUseDeathPoppet(Player player, ItemStack poppetStack, ServerLevel level, String shelfIdentifier) {
-		if(poppetStack.getItem() instanceof AbstractDeathPoppetItem) {
-			AbstractDeathPoppetItem poppet = (AbstractDeathPoppetItem)poppetStack.getItem();
+		if(poppetStack.getItem() instanceof AbstractDeathPoppetItem poppet) {
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(poppet.canProtect(player)) {
 					if(RANDOM.nextFloat() > poppet.getFailRate()) {
@@ -144,8 +152,7 @@ public class PoppetHelper {
 	}
 
 	public static PoppetResult tryUseItemProtectionPoppet(Player player, ItemStack poppetStack, ItemStack toolStack, ServerLevel level, String shelfIdentifier) {
-		if(poppetStack.getItem() instanceof ItemProtectionPoppetItem) {
-			ItemProtectionPoppetItem poppet = (ItemProtectionPoppetItem)poppetStack.getItem();
+		if(poppetStack.getItem() instanceof ItemProtectionPoppetItem poppet) {
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(RANDOM.nextFloat() > poppet.getFailRate()) {
 					poppet.protect(toolStack);

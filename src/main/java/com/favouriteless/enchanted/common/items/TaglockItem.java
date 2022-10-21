@@ -102,9 +102,11 @@ public class TaglockItem extends Item {
                 if (tileEntity == null) return InteractionResult.FAIL;
                 IBedPlayerCapability playerCapability = tileEntity.getCapability(BedPlayerCapabilityManager.INSTANCE).orElse(null);
 
-                if (playerCapability.getValue() != null) {
-                    fillTaglockEntity(context.getPlayer(), context.getItemInHand(), world.getPlayerByUUID(playerCapability.getValue()));
-                    context.getLevel().getPlayerByUUID(playerCapability.getValue());
+                if (playerCapability.getUUID() != null && playerCapability.getName() != null) {
+                    fillTaglock(context.getPlayer(), context.getItemInHand(), playerCapability.getUUID(), playerCapability.getName());
+                    context.getLevel().getPlayerByUUID(playerCapability.getUUID());
+                    playerCapability.setName(null);
+                    playerCapability.setUUID(null);
                 }
                 return InteractionResult.CONSUME;
             }
@@ -135,8 +137,7 @@ public class TaglockItem extends Item {
     }
 
     public void fillTaglock(Player pPlayer, ItemStack stack, UUID uuid, String name) {
-        if(pPlayer instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer)pPlayer;
+        if(pPlayer instanceof ServerPlayer player) {
             ItemStack newStack = new ItemStack(EnchantedItems.TAGLOCK_FILLED.get(), 1);
 
             CompoundTag nbt = new CompoundTag();

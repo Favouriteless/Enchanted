@@ -70,7 +70,10 @@ public class BedPlayerCapabilityManager {
         BlockPos pos = event.getPos();
         Player player = event.getPlayer();
         if(pos != null){
-            event.getPlayer().level.getBlockEntity(pos).getCapability(INSTANCE).ifPresent(source -> source.setValue(player.getUUID()));
+            event.getPlayer().level.getBlockEntity(pos).getCapability(INSTANCE).ifPresent(source ->  {
+                source.setUUID(player.getUUID());
+                source.setName(player.getDisplayName().getString());
+            });
         }
     }
 

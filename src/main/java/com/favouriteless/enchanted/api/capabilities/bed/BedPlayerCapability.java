@@ -30,29 +30,43 @@ import java.util.UUID;
 
 public class BedPlayerCapability implements IBedPlayerCapability {
 
-    private static final String KEY_NAME = "player_uuid";
-    private UUID value;
+    private static final String UUID_KEY_NAME = "player_uuid";
+    private static final String NAME_KEY_NAME = "player_name";
+    private UUID uuid;
+    private String name;
 
     @Override
-    public UUID getValue() {
-        return value;
+    public UUID getUUID() {
+        return uuid;
     }
 
     @Override
-    public void setValue(UUID uuid) {
-        value = uuid;
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        if(value != null) nbt.putUUID(KEY_NAME, value);
+        if(uuid != null) nbt.putUUID(UUID_KEY_NAME, uuid);
+        if(name != null) nbt.putString(NAME_KEY_NAME, name);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if(nbt.contains(KEY_NAME)) this.setValue(nbt.getUUID(KEY_NAME));
+        if(nbt.contains(UUID_KEY_NAME)) this.setUUID(nbt.getUUID(UUID_KEY_NAME));
+        if(nbt.contains(NAME_KEY_NAME)) this.setName(nbt.getString(NAME_KEY_NAME));
     }
 
 }

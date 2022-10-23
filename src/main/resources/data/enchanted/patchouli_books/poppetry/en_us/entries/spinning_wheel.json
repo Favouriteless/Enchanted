@@ -8,18 +8,6 @@
       "text": "The spinning wheel is a device used to weave materials together, for example in a poppet. $(br2)Place the required items into the spinning wheel and provide sufficient  power from an altar to weave items together."
     },
     {
-      "type": "patchouli:multiblock",
-      "enable_visualize": false,
-      "multiblock": {
-        "mapping": {
-          "0": "enchanted:spinning_wheel"
-        },
-        "pattern": [
-          [ " 0 " ]
-        ]
-      }
-    },
-    {
       "type": "patchouli:crafting",
       "recipe": "enchanted:craft_spinning_wheel"
     }

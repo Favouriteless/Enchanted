@@ -94,8 +94,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 
 	@Override
 	public void render(PoseStack matrix, IComponentRenderContext context, float partialticks, int mouseX, int mouseY) {
-		if(rite != null && context.getGui() instanceof GuiBook) {
-			GuiBook gui = (GuiBook)context.getGui();
+		if(rite != null && context.getGui() instanceof GuiBook gui) {
 
 			for(ResourceLocation resourceLocation : circleImages) {
 				renderCircle(matrix, resourceLocation);
@@ -111,9 +110,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	@Override
 	public void onDisplayed(IComponentRenderContext context) {
 		Screen gui = context.getGui();
-		if(gui instanceof GuiBookEntry) {
-			GuiBookEntry entry = (GuiBookEntry)gui;
-			TextComponent text = new TextComponent(rite.POWER + " Power Required");
+		if(gui instanceof GuiBookEntry entry) {
 			this.powerTextRenderer = new BookTextRenderer(entry, new TextComponent(rite.POWER + " Power Required"), 2, 140, 116, 9, 0x000000);
 		}
 	}

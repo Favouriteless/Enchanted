@@ -1,19 +1,19 @@
 {
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "Magic Circle",
       "centered": true,
       "x": -1,
       "y": -1
     },
     {
-      "type": "separator",
+      "type": "patchouli:separator",
       "x": -1,
       "y": -1
     },
     {
-      "type": "custom",
+      "type": "patchouli:custom",
       "class": "com.favouriteless.enchanted.api.patchouli.components.RiteRequirementsComponent",
       "x": 58,
       "y": 75,

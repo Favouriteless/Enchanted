@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "patchouli:shapeless_book_recipe",
   "ingredients": [
     { "item": "minecraft:ink_sac" },
     { "item": "minecraft:book" },
@@ -7,12 +7,5 @@
     { "item": "minecraft:poppy" },
     { "item": "minecraft:dandelion" }
   ],
-  "result":
-  {
-    "item": "patchouli:guide_book",
-    "nbt": {
-      "patchouli:book": "enchanted:herbology"
-    },
-    "count": 1
-  }
+  "book": "enchanted:herbology"
 }

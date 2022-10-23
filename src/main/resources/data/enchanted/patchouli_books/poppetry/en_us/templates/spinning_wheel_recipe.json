@@ -2,19 +2,19 @@
   "processor": "com.favouriteless.enchanted.api.patchouli.processors.SpinningWheelRecipeProcessor",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "Spinning Wheel",
       "centered": true,
       "x": -1,
       "y": -1
     },
     {
-      "type": "separator",
+      "type": "patchouli:separator",
       "x": -1,
       "y": -1
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "enchanted:textures/patchouli/spinning_wheel_background.png",
       "width": 89,
       "height": 113,
@@ -24,28 +24,28 @@
       "y": 22
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#in0",
       "framed": true,
       "x": 50,
       "y": 24
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#in1",
       "framed": true,
       "x": 16,
       "y": 97
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#in2",
       "framed": true,
       "x": 85,
       "y": 97
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#out",
       "framed": false,
       "x": 50,

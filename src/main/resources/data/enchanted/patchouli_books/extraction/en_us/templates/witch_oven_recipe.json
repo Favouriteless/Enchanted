@@ -2,35 +2,35 @@
   "processor": "com.favouriteless.enchanted.api.patchouli.processors.WitchOvenRecipeProcessor",
   "components": [
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item":  "#input",
       "framed": true,
       "x": 26,
       "y": 0
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item":  "#result",
       "framed": true,
       "x": 74,
       "y": 0
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item":  "#jar",
       "framed": true,
       "x": 26,
       "y": 28
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item":  "#byproduct",
       "framed": true,
       "x": 74,
       "y": 28
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "enchanted:textures/patchouli/arrow_right.png",
       "width": 22,
       "height": 16,
@@ -40,7 +40,7 @@
       "y": 0
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "enchanted:textures/patchouli/furnace_burn.png",
       "width": 16,
       "height": 16,
@@ -50,7 +50,7 @@
       "y": 28
     },
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#text",
       "centered": true,
       "x": -1,

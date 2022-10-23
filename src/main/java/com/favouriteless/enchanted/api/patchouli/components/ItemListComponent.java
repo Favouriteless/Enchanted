@@ -55,7 +55,7 @@ public class ItemListComponent implements ICustomComponent {
 	}
 
 	@Override
-	public void render(PoseStack matrix, IComponentRenderContext context, float partialticks, int mouseX, int mouseY) {
+	public void render(PoseStack matrix, IComponentRenderContext context, float partialTicks, int mouseX, int mouseY) {
 		for(ItemRow row : itemRows) {
 			row.render(matrix, context, mouseX, mouseY);
 		}

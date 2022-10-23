@@ -1,14 +1,14 @@
 {
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "Oven Byproduct",
       "centered": true,
       "x": -1,
       "y": -1
     },
     {
-      "type": "separator",
+      "type": "patchouli:separator",
       "x": -1,
       "y": -1
     }

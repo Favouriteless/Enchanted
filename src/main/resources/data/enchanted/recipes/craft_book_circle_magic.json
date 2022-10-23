@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "patchouli:shapeless_book_recipe",
   "ingredients": [
     { "item": "minecraft:ink_sac" },
     { "item": "minecraft:book" },
@@ -7,12 +7,5 @@
     { "item": "enchanted:rowan_berries" },
     { "item": "enchanted:whiff_of_magic" }
   ],
-  "result":
-  {
-    "item": "patchouli:guide_book",
-    "nbt": {
-      "patchouli:book": "enchanted:circle_magic"
-    },
-    "count": 1
-  }
+  "book": "enchanted:circle_magic"
 }

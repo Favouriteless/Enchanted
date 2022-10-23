@@ -66,17 +66,16 @@ public class AltarChangeObserver extends ChangeObserver {
     }
 
     @Override
-    public boolean notifyChange(Level world, BlockPos center, BlockChangeSet changeSet) {
-        if(!world.isClientSide) {
-            BlockEntity te = world.getBlockEntity(center);
-            if (te instanceof AltarBlockEntity) {
-                AltarBlockEntity altar = (AltarBlockEntity)te;
+    public boolean notifyChange(Level level, BlockPos center, BlockChangeSet changeSet) {
+        if(!level.isClientSide) {
+            BlockEntity be = level.getBlockEntity(center);
+            if (be instanceof AltarBlockEntity altar) {
 
                 for (BlockStateChangeSet.StateChange change : changeSet.getChanges()) { // For all changes
                     if (altar.posWithinRange(change.getAbsolutePosition(), range)) { // Change is relevant
                         if(!change.getOldState().is(change.getNewState().getBlock())) { // Block changed
                             if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.POWER_CONSUMERS).contains(change.getNewState().getBlock())) {
-                                altar.addConsumer((IAltarPowerConsumer) world.getBlockEntity(change.getAbsolutePosition()));
+                                altar.addConsumer((IAltarPowerConsumer) level.getBlockEntity(change.getAbsolutePosition()));
                             }
                             altar.removePower(change.getOldState().getBlock());
                             altar.addPower(change.getNewState().getBlock());

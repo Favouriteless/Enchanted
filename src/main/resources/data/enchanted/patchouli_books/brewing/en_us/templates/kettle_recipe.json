@@ -3,19 +3,19 @@
   "recipe": "#recipe",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "Kettle Recipe",
       "centered": true,
       "x": -1,
       "y": -1
     },
     {
-      "type": "separator",
+      "type": "patchouli:separator",
       "x": -1,
       "y": -1
     },
     {
-      "type": "custom",
+      "type": "patchouli:custom",
       "class": "com.favouriteless.enchanted.api.patchouli.components.ItemListComponent",
       "x": 58,
       "y": 46,
@@ -25,7 +25,7 @@
       "startBottom": true
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "enchanted:textures/patchouli/arrow_down.png",
       "width": 16,
       "height": 22,
@@ -35,7 +35,7 @@
       "y": 50
     },
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#power",
       "centered": true,
       "x": -1,
@@ -43,7 +43,7 @@
       "scale": 0.8
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "enchanted:textures/patchouli/cauldron.png",
       "width": 76,
       "height": 88,
@@ -54,7 +54,7 @@
       "y": 73
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item":  "#result",
       "framed": true,
       "x": 50,

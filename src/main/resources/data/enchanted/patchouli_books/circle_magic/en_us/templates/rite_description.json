@@ -1,19 +1,19 @@
 {
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#rite_name",
       "centered": true,
       "x": -1,
       "y": -1
     },
     {
-      "type": "separator",
+      "type": "patchouli:separator",
       "x": -1,
       "y": -1
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#text",
       "x": 0,
       "y": 22

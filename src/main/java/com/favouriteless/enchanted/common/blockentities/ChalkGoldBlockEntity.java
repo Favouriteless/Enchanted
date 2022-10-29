@@ -64,7 +64,7 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IAltarPowerCons
 
                 if (rite != null) {
                     currentRite = rite;
-                    currentRite.setWorld((ServerLevel)world);
+                    currentRite.setLevel((ServerLevel)world);
                     currentRite.setPos(pos);
                     currentRite.setCaster(player);
                     currentRite.setChalk(this);

@@ -70,7 +70,7 @@ public abstract class AbstractRite {
 
     protected final List<ItemStack> itemsConsumed = new ArrayList<>();
 
-    public ServerLevel world; // World ritual started in
+    public ServerLevel level; // World ritual started in
     public BlockPos pos; // Position ritual started at
     public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
@@ -92,7 +92,7 @@ public abstract class AbstractRite {
     public CompoundTag save() {
         CompoundTag nbt = new CompoundTag();
         nbt.putString("type", getType().getRegistryName().toString());
-        nbt.putString("dimension", world.dimension().location().toString());
+        nbt.putString("dimension", level.dimension().location().toString());
         nbt.putInt("x", pos.getX());
         nbt.putInt("y", pos.getY());
         nbt.putInt("z", pos.getZ());
@@ -105,7 +105,7 @@ public abstract class AbstractRite {
     }
 
     public void load(CompoundTag nbt, Level world) {
-        setWorld(world.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
+        setLevel(world.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
         setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
         casterUUID = nbt.getUUID("caster");
         if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
@@ -116,12 +116,12 @@ public abstract class AbstractRite {
     }
 
     protected boolean tryConsumePower(int amount) {
-        if(world != null) {
+        if(level != null) {
             if(amount > 0) {
-                BlockEntity te = world.getBlockEntity(pos);
+                BlockEntity te = level.getBlockEntity(pos);
                 if(te instanceof ChalkGoldBlockEntity) {
                     List<BlockPos> potentialAltars = ((ChalkGoldBlockEntity) te).getAltarPositions();
-                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(world, potentialAltars);
+                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
 
                     if(altar != null) {
                         if(altar.currentPower >= amount) {
@@ -160,6 +160,10 @@ public abstract class AbstractRite {
      */
     protected abstract void execute();
 
+    protected boolean checkAdditional() {
+        return true;
+    }
+
     /**
      * Run tick based rite effects unrelated to starting up
      */
@@ -168,9 +172,9 @@ public abstract class AbstractRite {
     public abstract RiteType<?> getType();
 
     public void tick() {
-        if(world != null && !world.isClientSide ) {
+        if(level != null && !level.isClientSide ) {
             if(isAttached && chalk == null) {
-                BlockEntity te = world.getBlockEntity(pos);
+                BlockEntity te = level.getBlockEntity(pos);
                 if(te instanceof ChalkGoldBlockEntity) {
                     setChalk((ChalkGoldBlockEntity)te);
                     chalk.setRite(this);
@@ -181,7 +185,7 @@ public abstract class AbstractRite {
             ticks++;
             if (isStarting) {
                 if(ticks % 20 == 0) {
-                    List<Entity> allEntities = world.getEntities(null, new AABB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
+                    List<Entity> allEntities = level.getEntities(null, new AABB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
 
                     boolean hasItem = false;
                     for(Entity entity : allEntities) {
@@ -232,7 +236,7 @@ public abstract class AbstractRite {
     }
 
     protected void startExecuting() {
-        if(tryConsumePower(POWER)) {
+        if(tryConsumePower(POWER) && checkAdditional()) {
             this.isStarting = false;
             execute();
         }
@@ -242,9 +246,8 @@ public abstract class AbstractRite {
     }
 
     protected void detatchFromChalk() {
-        BlockEntity te = world.getBlockEntity(pos);
-        if(te instanceof ChalkGoldBlockEntity) {
-            ChalkGoldBlockEntity chalk = (ChalkGoldBlockEntity)te;
+        BlockEntity te = level.getBlockEntity(pos);
+        if(te instanceof ChalkGoldBlockEntity chalk) {
             if(chalk.getRite() == this)
                 chalk.clearRite();
         }
@@ -257,7 +260,7 @@ public abstract class AbstractRite {
     public void stopExecuting() {
         detatchFromChalk();
         this.isStarting = false;
-        BlockEntity te = world.getBlockEntity(pos);
+        BlockEntity te = level.getBlockEntity(pos);
         if(te instanceof ChalkGoldBlockEntity) {
             ((ChalkGoldBlockEntity)te).clearRite();
         }
@@ -270,26 +273,26 @@ public abstract class AbstractRite {
 
         while(!itemsConsumed.isEmpty()) {
             ItemStack stack = itemsConsumed.get(0);
-            ItemEntity entity = new ItemEntity(world, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
-            world.addFreshEntity(entity);
+            ItemEntity entity = new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
+            level.addFreshEntity(entity);
             itemsConsumed.remove(stack);
         }
 
-        world.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
+        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
 
-        Player player = world.getPlayerByUUID(casterUUID);
+        Player player = level.getPlayerByUUID(casterUUID);
         if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
 
         for(int i = 0; i < 25; i++) {
             double dx = pos.getX() + Math.random();
             double dy = pos.getY() + Math.random();
             double dz = pos.getZ() + Math.random();
-            world.sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+            level.sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
         }
 
-        BlockEntity te = world.getBlockEntity(pos);
-        if(te instanceof ChalkGoldBlockEntity) {
-            ((ChalkGoldBlockEntity)te).clearRite();
+        BlockEntity be = level.getBlockEntity(pos);
+        if(be instanceof ChalkGoldBlockEntity chalk) {
+            chalk.clearRite();
         }
     }
 
@@ -301,7 +304,12 @@ public abstract class AbstractRite {
         if(amountNeeded >= stack.getCount()) { // Not enough/perfect
             ITEMS_REQUIRED.put(item, ITEMS_REQUIRED.get(item)-stack.getCount());
             if(ITEMS_REQUIRED.get(item) <= 0) ITEMS_REQUIRED.remove(item); // Remove if all consumed
-            itemsConsumed.add(stack);
+
+            if(item == EnchantedItems.ATTUNED_STONE_CHARGED.get())
+                itemsConsumed.add(new ItemStack(EnchantedItems.ATTUNED_STONE.get(), stack.getCount()));
+            else
+                itemsConsumed.add(stack);
+
             entity.setNeverPickUp();
             entity.discard();
         }
@@ -317,22 +325,22 @@ public abstract class AbstractRite {
             targetEntity = getTargetEntity();
         }
 
-        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
+        level.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 5; i++) {
             double dx = entity.position().x - 0.15D + (Math.random() * 0.3D);
             double dy = entity.position().y + (Math.random() * 0.3D);
             double dz = entity.position().z - 0.15D + (Math.random() * 0.3D);
-            world.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
     protected Entity getTargetEntity() {
-        Entity target = world.getServer().getPlayerList().getPlayer(targetUUID);
+        Entity target = level.getServer().getPlayerList().getPlayer(targetUUID);
 
         if(target != null)
             return target;
         else {
-            for(ServerLevel serverWorld : world.getServer().getAllLevels()) {
+            for(ServerLevel serverWorld : level.getServer().getAllLevels()) {
                 target = serverWorld.getEntity(targetUUID);
                 if(target != null) return target;
             }
@@ -350,12 +358,12 @@ public abstract class AbstractRite {
         }
         entity.discard();
 
-        world.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
+        level.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 10; i++) {
             double dx = entity.position().x - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
             double dy = entity.position().y + (Math.random() * entity.getBbHeight());
             double dz = entity.position().z - (entity.getBbWidth()/2) + (Math.random() * entity.getBbWidth());
-            world.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -422,8 +430,8 @@ public abstract class AbstractRite {
         return diff;
     }
 
-    public void setWorld(ServerLevel world) {
-        this.world = world;
+    public void setLevel(ServerLevel level) {
+        this.level = level;
     }
 
     public void setPos(BlockPos pos) {
@@ -443,7 +451,7 @@ public abstract class AbstractRite {
             double dx = pos.getX() - 1.0D + Math.random() * 3.0D;
             double dy = pos.getY() + Math.random() * 2.0D;
             double dz = pos.getZ() - 1.0D + Math.random() * 3.0D;
-            world.sendParticles(ParticleTypes.WITCH, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(ParticleTypes.WITCH, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 

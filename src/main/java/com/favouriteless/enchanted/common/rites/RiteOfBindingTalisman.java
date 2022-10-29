@@ -74,19 +74,19 @@ public class RiteOfBindingTalisman extends AbstractCreateItemRite {
             talisman.setTag(nbt);
             spawnItems(talisman);
 
-            if(small != 0) CirclePart.SMALL.destroy(world, pos);
-            if(medium != 0) CirclePart.MEDIUM.destroy(world, pos);
-            if(large != 0) CirclePart.LARGE.destroy(world, pos);
-            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            if(small != 0) CirclePart.SMALL.destroy(level, pos);
+            if(medium != 0) CirclePart.MEDIUM.destroy(level, pos);
+            if(large != 0) CirclePart.LARGE.destroy(level, pos);
+            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
 
         stopExecuting();
     }
 
     private byte testForCircle(CirclePart size) {
-        if(size.match(world, pos, EnchantedBlocks.CHALK_WHITE.get())) return 1;
-        if(size.match(world, pos, EnchantedBlocks.CHALK_RED.get())) return 2;
-        if(size.match(world, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 3;
+        if(size.match(level, pos, EnchantedBlocks.CHALK_WHITE.get())) return 1;
+        if(size.match(level, pos, EnchantedBlocks.CHALK_RED.get())) return 2;
+        if(size.match(level, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 3;
         return 0;
     }
 

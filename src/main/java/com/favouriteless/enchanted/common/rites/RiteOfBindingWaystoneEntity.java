@@ -54,7 +54,7 @@ public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
-        Entity closestEntity = CirclePart.SMALL.getClosestEntity(world, pos, entity -> !(entity instanceof Player) && entity instanceof LivingEntity);
+        Entity closestEntity = CirclePart.SMALL.getClosestEntity(level, pos, entity -> !(entity instanceof Player) && entity instanceof LivingEntity);
 
         if(closestEntity != null) {
             CompoundTag nbt = new CompoundTag();

@@ -50,14 +50,14 @@ public class RiteOfSummoningEntity extends AbstractRite {
     @Override
     public void execute() {
         if(targetEntity == null) targetEntity = getTargetEntity();
-        if(world != null && pos != null && targetEntity != null) {
-            spawnParticles(world, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
+        if(level != null && pos != null && targetEntity != null) {
+            spawnParticles(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
             spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
-            world.playSound(null, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
+            level.playSound(null, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
             targetEntity.level.playSound(null, targetEntity.getX(), targetEntity.getX(), targetEntity.getY(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
 
-            if(world != targetEntity.level) {
-                targetEntity.changeDimension(world);
+            if(level != targetEntity.level) {
+                targetEntity.changeDimension(level);
             }
             targetEntity.teleportTo(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
         }

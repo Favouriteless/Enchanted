@@ -46,20 +46,20 @@ public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteTyp
 
 	public AbstractRite create(ServerLevel world) {
 		AbstractRite rite = create();
-		rite.setWorld(world);
+		rite.setLevel(world);
 		return rite;
 	}
 
 	public AbstractRite create(ServerLevel world, BlockPos pos) {
 		AbstractRite rite = create();
-		rite.setWorld(world);
+		rite.setLevel(world);
 		rite.setPos(pos);
 		return rite;
 	}
 
 	public AbstractRite create(ServerLevel world, BlockPos pos, Player caster) {
 		AbstractRite rite = create();
-		rite.setWorld(world);
+		rite.setLevel(world);
 		rite.setPos(pos);
 		rite.setCaster(caster);
 		return rite;

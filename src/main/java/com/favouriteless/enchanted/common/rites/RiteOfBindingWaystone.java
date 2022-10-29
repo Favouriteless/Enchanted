@@ -51,7 +51,7 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
     @Override
     public void execute() {
         CompoundTag nbt = new CompoundTag();
-        nbt.putString("dimension", world.dimension().location().toString());
+        nbt.putString("dimension", level.dimension().location().toString());
         nbt.putInt("xPos", pos.getX());
         nbt.putInt("yPos", pos.getY());
         nbt.putInt("zPos", pos.getZ());

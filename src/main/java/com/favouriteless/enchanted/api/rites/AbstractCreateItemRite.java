@@ -39,12 +39,12 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
     }
 
     protected void spawnItems(ItemStack... item) {
-        if(world != null && !world.isClientSide) {
+        if(level != null && !level.isClientSide) {
             for(ItemStack stack : item) {
-                ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
-                world.addFreshEntity(itemEntity);
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+                level.addFreshEntity(itemEntity);
             }
-            world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+            level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
 
             spawnParticles();
         }

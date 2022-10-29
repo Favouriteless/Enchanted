@@ -53,12 +53,12 @@ public class RiteOfSanctity extends AbstractRite {
 
     @Override
     public void execute() {
-        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+        level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
     }
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(world, pos, entity -> entity instanceof Monster);
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof Monster);
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
                 Vec3 opposingVector = entity.position().subtract(pos.getX(), pos.getY(), pos.getZ());
@@ -73,8 +73,8 @@ public class RiteOfSanctity extends AbstractRite {
             double dy = pos.getY() + 0.1D;
             double dz = pos.getZ() + 0.5D;
 
-            world.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx + 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
-            world.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx - 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
+            level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx + 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
+            level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx - 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
         }
     }
 

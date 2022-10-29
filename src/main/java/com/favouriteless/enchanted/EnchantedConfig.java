@@ -45,6 +45,9 @@ public class EnchantedConfig {
     public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_TOOL_POPPET;
     public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_ARMOUR_POPPET;
 
+    // Rites
+    public static final ForgeConfigSpec.ConfigValue<Integer> TOTAL_ECLIPSE_COOLDOWN;
+
     static {
         BUILDER.push("Altar Options");
         ALTAR_RANGE = BUILDER.define("altar_range", 16);
@@ -62,6 +65,10 @@ public class EnchantedConfig {
         BUILDER.push("Poppet Options");
         WHITELIST_TOOL_POPPET = BUILDER.comment("Enable the #enchanted:tool_poppet_whitelist tag").define("tool_poppet_whitelist", false);
         WHITELIST_ARMOUR_POPPET = BUILDER.comment("Enable the #enchanted:armour_poppet_whitelist tag").define("armour_poppet_whitelist", false);
+        BUILDER.pop();
+
+        BUILDER.push("Rite Options");
+        TOTAL_ECLIPSE_COOLDOWN = BUILDER.comment("Global cooldown for the rite of eclipse in seconds").define("total_eclipse_cooldown", 0);
         BUILDER.pop();
 
         BUILDER.push("Miscellaneous Options");

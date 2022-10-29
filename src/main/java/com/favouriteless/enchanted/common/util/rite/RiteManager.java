@@ -39,8 +39,8 @@ import java.util.List;
 public class RiteManager {
 
 	public static void addRite(AbstractRite rite) {
-		if(rite.world != null) {
-			RiteWorldSavedData data = RiteWorldSavedData.get(rite.world);
+		if(rite.level != null) {
+			RiteWorldSavedData data = RiteWorldSavedData.get(rite.level);
 			data.ACTIVE_RITES.add(rite);
 			data.setDirty();
 		}

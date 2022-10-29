@@ -53,7 +53,7 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
     @Override
     public void execute() {
         ItemStack waystone = itemsConsumed.get(0);
-        Player caster = world.getPlayerByUUID(casterUUID);
+        Player caster = level.getPlayerByUUID(casterUUID);
 
         if(caster != null && waystone.hasTag()) {
             CompoundTag nbt = waystone.getTag();
@@ -86,12 +86,12 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
 
             if(targetWorld != null) {
                 spawnParticles((ServerLevel) caster.level, caster.getX(), caster.getY(), caster.getZ());
-                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
+                level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
                 if(caster.level != targetWorld) {
                     caster.changeDimension(targetWorld);
                 }
                 caster.teleportTo(x + 0.5D, y + 0.5D, z + 0.5D);
-                world.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
+                level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
                 spawnParticles(targetWorld, x + 0.5D, y, z + 0.5D);
             }
             else {

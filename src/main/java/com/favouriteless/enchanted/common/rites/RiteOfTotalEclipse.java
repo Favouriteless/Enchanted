@@ -24,17 +24,23 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.world.item.Items;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 
 public class RiteOfTotalEclipse extends AbstractRite {
+
+    private static long LAST_USE_TIME = System.currentTimeMillis();
 
     protected RiteOfTotalEclipse(int power, int powerTick) {
         super(power, powerTick);
@@ -49,8 +55,9 @@ public class RiteOfTotalEclipse extends AbstractRite {
 
     @Override
     public void execute() {
-        world.setDayTime(18000);
-        world.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+        level.setDayTime(18000);
+        level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+        LAST_USE_TIME = System.currentTimeMillis();
         stopExecuting();
     }
 
@@ -63,4 +70,13 @@ public class RiteOfTotalEclipse extends AbstractRite {
         return EnchantedRiteTypes.TOTAL_ECLIPSE.get();
     }
 
+    @Override
+    protected boolean checkAdditional() {
+        if(System.currentTimeMillis() > LAST_USE_TIME + EnchantedConfig.TOTAL_ECLIPSE_COOLDOWN.get() * 1000) {
+            Player caster = level.getPlayerByUUID(casterUUID);
+            caster.displayClientMessage(new TextComponent("The moon is not ready to be called forth.").withStyle(ChatFormatting.RED), false);
+            return true;
+        }
+        return false;
+    }
 }

@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.multiblock.observerlib.altar;
+package com.favouriteless.enchanted.common.observerlib.altar;
 
 import hellfirepvp.observerlib.api.ChangeObserver;
 import hellfirepvp.observerlib.api.ObserverProvider;

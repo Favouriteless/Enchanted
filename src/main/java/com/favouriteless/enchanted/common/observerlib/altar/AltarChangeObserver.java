@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.multiblock.observerlib.altar;
+package com.favouriteless.enchanted.common.observerlib.altar;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags;

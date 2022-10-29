@@ -31,7 +31,7 @@ import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.multiblock.observerlib.altar.AltarObserverProvider;
+import com.favouriteless.enchanted.common.observerlib.altar.AltarObserverProvider;
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import hellfirepvp.observerlib.api.ChangeSubscriber;

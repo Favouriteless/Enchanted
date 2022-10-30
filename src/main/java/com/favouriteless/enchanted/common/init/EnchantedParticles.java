@@ -31,6 +31,7 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,6 +51,7 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<SimpleColouredData>> KETTLE_COOK = PARTICLE_TYPES.register("kettle_cook", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<CircleMagicData>> CIRCLE_MAGIC = PARTICLE_TYPES.register("circle_magic", () -> new CircleMagicParticleType(false));
     public static final RegistryObject<ParticleType<TwoToneColouredData>> POPPET = PARTICLE_TYPES.register("poppet", () -> new TwoToneColouredParticleType(false));
+    public static final RegistryObject<SimpleParticleType> STATIC_FLAME = PARTICLE_TYPES.register("static_flame", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -59,6 +61,7 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(KETTLE_COOK.get(), KettleCookParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(POPPET.get(), PoppetParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(STATIC_FLAME.get(), StaticFlameParticle.Factory::new);
     }
 
 }

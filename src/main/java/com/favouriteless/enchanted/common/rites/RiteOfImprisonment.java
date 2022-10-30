@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.StaticFlameParticle;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
@@ -64,7 +64,7 @@ public class RiteOfImprisonment extends AbstractRite {
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, 5, entity -> entity instanceof Monster);
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof Monster);
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
                 tetheredMonsters.add((Monster)entity);
@@ -72,7 +72,7 @@ public class RiteOfImprisonment extends AbstractRite {
         }
         List<Monster> removeList = new ArrayList<>();
         for(Monster monster : tetheredMonsters) {
-            Vec3 relativePos = monster.position().subtract(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D);
+            Vec3 relativePos = monster.position().subtract(pos.getX()+0.5D, monster.position().y(), pos.getZ()+0.5D);
             double distance = relativePos.length();
             if(distance > TETHER_RANGE + TETHER_BREAK_RANGE) {
                 removeList.add(monster);
@@ -83,14 +83,24 @@ public class RiteOfImprisonment extends AbstractRite {
         }
         removeList.forEach(tetheredMonsters::remove);
 
-        if(this.ticks % 2 == 0) {
-            double cx = pos.getX() + 0.5D;
-            double cz = pos.getZ() + 0.5D;
-            double dy = pos.getY() + 0.1D;
-            double dz = pos.getZ() + 0.5D;
+        if(this.ticks % StaticFlameParticle.LIFETIME == 0) {
 
-            level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx + 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
-            level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx - 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
+            for(int a = 0; a < 360; a++) {
+                double angle = Math.toRadians(a);
+                double cx = pos.getX() + 0.5D + Math.sin(angle)*(TETHER_RANGE + 0.3D);
+                double cy = pos.getY() + 0.2D;
+                double cz = pos.getZ() + 0.5D + Math.cos(angle)*(TETHER_RANGE + 0.3D);
+
+                level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy + 4.0D, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+
+                if(a % 20 == 0) {
+                    for(int i = 0; i < 40; i++) {
+                        cy += 4.0D / 40;
+                        level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                    }
+                }
+            }
         }
     }
 

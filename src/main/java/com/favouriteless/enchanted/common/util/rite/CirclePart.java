@@ -145,24 +145,24 @@ public enum CirclePart {
         }
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, int height) {
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos) {
         List<Entity> outlist = new ArrayList<>();
 
         for(AABB aabb : insideBoxes) {
-            outlist.addAll(world.getEntities((Entity) null, aabb.move(centerPos).setMaxY(height), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
+            outlist.addAll(world.getEntities((Entity) null, aabb.move(centerPos), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
         }
 
         return outlist;
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, int height, Predicate<Entity> predicate) {
-        List<Entity> outlist = getEntitiesInside(world, centerPos, height);
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
+        List<Entity> outlist = getEntitiesInside(world, centerPos);
         outlist.removeIf(entity -> !predicate.test(entity));
         return outlist;
     }
 
     public Entity getClosestEntity(Level world, BlockPos centerPos) {
-        return closest(getEntitiesInside(world, centerPos, 1), centerPos);
+        return closest(getEntitiesInside(world, centerPos), centerPos);
     }
 
     public Entity closest(List<Entity> entities, BlockPos pos) {
@@ -181,7 +181,7 @@ public enum CirclePart {
     }
 
     public Entity getClosestEntity(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
-        List<Entity> entities = getEntitiesInside(world, centerPos, 1);
+        List<Entity> entities = getEntitiesInside(world, centerPos);
         entities.removeIf(entity -> !predicate.test(entity));
 
         return closest(entities, centerPos);

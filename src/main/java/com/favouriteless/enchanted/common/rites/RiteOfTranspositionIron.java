@@ -25,12 +25,15 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
+import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -42,6 +45,7 @@ import java.util.List;
 public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 
 	private int progress = 0;
+	private static final double CIRCLE_RADIUS = 7.5D;
 
 	public RiteOfTranspositionIron() {
 		super(0, 0, SoundEvents.COPPER_BREAK);
@@ -66,17 +70,42 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 			BlockPos blockPos = new BlockPos(testPos.getX(), i, testPos.getZ());
 			Block block = level.getBlockState(blockPos).getBlock();
 			if(block == Blocks.IRON_ORE) {
-				level.setBlock(blockPos, Blocks.STONE.defaultBlockState(), 1);
+				level.setBlockAndUpdate(blockPos, Blocks.STONE.defaultBlockState());
 				spawnItems(new ItemStack(Items.RAW_IRON));
 			}
 			else if(block == Blocks.DEEPSLATE_IRON_ORE) {
-				level.setBlock(blockPos, Blocks.DEEPSLATE.defaultBlockState(), 1);
+				level.setBlockAndUpdate(blockPos, Blocks.DEEPSLATE.defaultBlockState());
 				spawnItems(new ItemStack(Items.RAW_IRON));
+			}
+		}
+
+		if(this.ticks % 20 == 0) {
+
+			for(int a = 0; a < 360; a+=2) {
+				double centerX = pos.getX() + 0.5D;
+				double centerZ = pos.getZ() + 0.5D;
+				double cx = centerX + Math.sin(a)*CIRCLE_RADIUS;
+				double cy = pos.getY() + 0.2D;
+				double cz = centerZ + Math.cos(a)*CIRCLE_RADIUS;
+
+				level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, centerX, centerZ, CIRCLE_RADIUS), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 			}
 		}
 
 		if(progress > circlePoints.size()-1)
 			stopExecuting();
+	}
+
+	@Override
+	protected CompoundTag saveAdditional(CompoundTag nbt) {
+		nbt.putInt("progress", progress);
+		return nbt;
+	}
+
+	@Override
+	protected void loadAdditional(CompoundTag nbt) {
+		if(nbt.contains("progress"))
+			progress = nbt.getInt("progress");
 	}
 
 	@Override

@@ -189,8 +189,7 @@ public abstract class AbstractRite {
 
                     boolean hasItem = false;
                     for(Entity entity : allEntities) {
-                        if(entity instanceof ItemEntity) {
-                            ItemEntity itemEntity = (ItemEntity) entity;
+                        if(entity instanceof ItemEntity itemEntity) {
                             if(ITEMS_REQUIRED.containsKey(itemEntity.getItem().getItem())) {
                                 consumeItem(itemEntity);
                                 hasItem = true;
@@ -240,11 +239,6 @@ public abstract class AbstractRite {
 //        if(tryConsumePower(POWER) && checkAdditional()) {
         if(checkAdditional()) {
             this.isStarting = false;
-            if(ITEMS_REQUIRED.containsKey(EnchantedItems.ATTUNED_STONE_CHARGED.get())) {
-                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
-                        new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), ITEMS_REQUIRED.get(EnchantedItems.ATTUNED_STONE_CHARGED.get())));
-                level.addFreshEntity(entity);
-            }
             execute();
         }
         else {
@@ -312,10 +306,12 @@ public abstract class AbstractRite {
             ITEMS_REQUIRED.put(item, ITEMS_REQUIRED.get(item)-stack.getCount());
             if(ITEMS_REQUIRED.get(item) <= 0) ITEMS_REQUIRED.remove(item); // Remove if all consumed
 
-            if(item == EnchantedItems.ATTUNED_STONE_CHARGED.get())
-                itemsConsumed.add(new ItemStack(EnchantedItems.ATTUNED_STONE.get(), stack.getCount()));
-            else
+            if(item != EnchantedItems.ATTUNED_STONE_CHARGED.get())
                 itemsConsumed.add(stack);
+            else {
+                ItemEntity itemEntity = new ItemEntity(level, entity.position().x(), entity.position().y(), entity.position().z(), new ItemStack(EnchantedItems.ATTUNED_STONE.get(), stack.getCount()));
+                level.addFreshEntity(itemEntity);
+            }
 
             entity.setNeverPickUp();
             entity.discard();
@@ -327,8 +323,7 @@ public abstract class AbstractRite {
             entity.setItem(stack);
         }
         if(item == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
-            UUID entityUuid = stack.getTag().getUUID("entity");
-            this.targetUUID = entityUuid;
+            this.targetUUID = stack.getTag().getUUID("entity");
             targetEntity = getTargetEntity();
         }
 
@@ -395,8 +390,7 @@ public abstract class AbstractRite {
         HashMap<EntityType<?>, Integer> entities = new HashMap<>();
 
         for(Entity entity : allEntities) { // Get items/entities in area
-            if(entity instanceof ItemEntity) {
-                ItemEntity itemEntity = (ItemEntity)entity;
+            if(entity instanceof ItemEntity itemEntity) {
                 ItemStack itemStack = itemEntity.getItem();
                 if(!items.containsKey(itemStack.getItem())) {
                     items.put(itemStack.getItem(), itemStack.getCount());

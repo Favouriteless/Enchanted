@@ -62,9 +62,12 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteOfInfusionBroom::new));
 
     public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
+    public static final RegistryObject<RiteType<?>> IMPRISONMENT = RITE_TYPES.register("imprisonment", () -> new RiteType<>(RiteOfImprisonment::new));
+
+    public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteOfTranspositionIron::new));
 
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
-    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummoningEntity::new));
+    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummonEntity::new));
 
 
     public static AbstractRite getFromRequirements(HashMap<CirclePart, Block> circles, HashMap<EntityType<?>, Integer> entities, HashMap<Item, Integer> items) {

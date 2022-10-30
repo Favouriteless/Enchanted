@@ -31,23 +31,29 @@ import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Items;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class RiteOfSanctity extends AbstractRite {
+public class RiteOfImprisonment extends AbstractRite {
 
-    public static final double REPULSE_FACTOR = 0.03D;
+    public static final double ATTRACT_VELOCITY = 0.03D;
+    public static final double TETHER_RANGE = 3.0D;
+    public static final double TETHER_BREAK_RANGE = 1.0D;
+    private final Set<Monster> tetheredMonsters = new HashSet<>();
 
-    public RiteOfSanctity() {
+    public RiteOfImprisonment() {
         super(500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(Items.FEATHER, 1);
+        ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
     }
 
@@ -61,11 +67,21 @@ public class RiteOfSanctity extends AbstractRite {
         List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, 5, entity -> entity instanceof Monster);
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
-                Vec3 opposingVector = entity.position().subtract(pos.getX(), entity.position().y(), pos.getZ());
-                double distance = opposingVector.distanceTo(new Vec3(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D));
-                entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(distance * 10).scale(REPULSE_FACTOR / 500D)));
+                tetheredMonsters.add((Monster)entity);
             }
         }
+        List<Monster> removeList = new ArrayList<>();
+        for(Monster monster : tetheredMonsters) {
+            Vec3 relativePos = monster.position().subtract(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D);
+            double distance = relativePos.length();
+            if(distance > TETHER_RANGE + TETHER_BREAK_RANGE) {
+                removeList.add(monster);
+            }
+            else if(distance > TETHER_RANGE) {
+                monster.setDeltaMovement(relativePos.normalize().scale(-1 * ATTRACT_VELOCITY));
+            }
+        }
+        removeList.forEach(tetheredMonsters::remove);
 
         if(this.ticks % 2 == 0) {
             double cx = pos.getX() + 0.5D;
@@ -80,7 +96,7 @@ public class RiteOfSanctity extends AbstractRite {
 
     @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.SANCTITY.get();
+        return EnchantedRiteTypes.IMPRISONMENT.get();
     }
 
 }

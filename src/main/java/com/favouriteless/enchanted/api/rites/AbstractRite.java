@@ -227,17 +227,24 @@ public abstract class AbstractRite {
                 }
             }
             else if(!isRemoved) {
-                if(tryConsumePower(POWER_TICK))
-                    onTick();
-                else
-                    stopExecuting();
+//                if(tryConsumePower(POWER_TICK))
+//                    onTick();
+//                else
+//                    stopExecuting();
+                onTick();
             }
         }
     }
 
     protected void startExecuting() {
-        if(tryConsumePower(POWER) && checkAdditional()) {
+//        if(tryConsumePower(POWER) && checkAdditional()) {
+        if(checkAdditional()) {
             this.isStarting = false;
+            if(ITEMS_REQUIRED.containsKey(EnchantedItems.ATTUNED_STONE_CHARGED.get())) {
+                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                        new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), ITEMS_REQUIRED.get(EnchantedItems.ATTUNED_STONE_CHARGED.get())));
+                level.addFreshEntity(entity);
+            }
             execute();
         }
         else {

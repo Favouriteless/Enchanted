@@ -80,18 +80,24 @@ public enum CirclePart {
             "    XXXXXXX    ");
 
     private final List<BlockPos> circlePoints = new ArrayList<>();
+    private final List<BlockPos> insideCirclePoints = new ArrayList<>();
     private final List<AABB> insideBoxes = new ArrayList<>();
-    private final int size;
 
     CirclePart(String shape) {
-        size = (int)Math.sqrt(shape.length());
-        int offset = size/2;
+        int size = (int) Math.sqrt(shape.length());
+        int offset = size /2;
 
         // Create edge positions
         for(int z = 0; z < size; z++) {
             for(int x = 0; x < size; x++) {
-                if(shape.charAt(x + (size*z)) == 'X') {
-                    circlePoints.add(new BlockPos(x-offset, 0, z-offset));
+                char c = shape.charAt(x + (size * z));
+                BlockPos pos = new BlockPos(x-offset, 0, z-offset);
+                if(c == 'X') {
+                    circlePoints.add(pos);
+                    insideCirclePoints.add(pos);
+                }
+                else if(c == 'O') {
+                    insideCirclePoints.add(pos);
                 }
             }
         }
@@ -99,7 +105,7 @@ public enum CirclePart {
         // Create inside boxes
         for(int z = 0; z < size; z++) {
             for(int x = 0; x < size; x++) {
-                int index = x + (size*z);
+                int index = x + (size *z);
                 if(shape.charAt(index) == 'X' || shape.charAt(index) == 'O') {
                     AABBBuilder builder = new AABBBuilder(shape, x, z, size);
                     shape = builder.build();
@@ -139,24 +145,24 @@ public enum CirclePart {
         }
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos) {
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, int height) {
         List<Entity> outlist = new ArrayList<>();
 
         for(AABB aabb : insideBoxes) {
-            outlist.addAll(world.getEntities((Entity)null, aabb.move(centerPos), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
+            outlist.addAll(world.getEntities((Entity) null, aabb.move(centerPos).setMaxY(height), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
         }
 
         return outlist;
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
-        List<Entity> outlist = getEntitiesInside(world, centerPos);
+    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, int height, Predicate<Entity> predicate) {
+        List<Entity> outlist = getEntitiesInside(world, centerPos, height);
         outlist.removeIf(entity -> !predicate.test(entity));
         return outlist;
     }
 
     public Entity getClosestEntity(Level world, BlockPos centerPos) {
-        return closest(getEntitiesInside(world, centerPos), centerPos);
+        return closest(getEntitiesInside(world, centerPos, 1), centerPos);
     }
 
     public Entity closest(List<Entity> entities, BlockPos pos) {
@@ -175,10 +181,18 @@ public enum CirclePart {
     }
 
     public Entity getClosestEntity(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
-        List<Entity> entities = getEntitiesInside(world, centerPos);
+        List<Entity> entities = getEntitiesInside(world, centerPos, 1);
         entities.removeIf(entity -> !predicate.test(entity));
 
         return closest(entities, centerPos);
+    }
+
+    public List<BlockPos> getCirclePoints() {
+        return circlePoints;
+    }
+
+    public List<BlockPos> getInsideCirclePoints() {
+        return insideCirclePoints;
     }
 
     private static class AABBBuilder {

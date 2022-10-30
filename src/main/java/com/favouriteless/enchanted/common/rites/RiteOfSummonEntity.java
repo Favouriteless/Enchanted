@@ -36,9 +36,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
 
-public class RiteOfSummoningEntity extends AbstractRite {
+public class RiteOfSummonEntity extends AbstractRite {
 
-    public RiteOfSummoningEntity() {
+    public RiteOfSummonEntity() {
         super(3000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);

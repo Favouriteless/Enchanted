@@ -24,27 +24,30 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 
 /**
  * Simple AbstractRite implementation for creating a single item
  */
 public abstract class AbstractCreateItemRite extends AbstractRite {
 
-    public AbstractCreateItemRite(int power, int powerTick) {
+    private final SoundEvent createItemSound;
+
+    public AbstractCreateItemRite(int power, int powerTick, SoundEvent createItemSound) {
         super(power, powerTick);
+        this.createItemSound = createItemSound;
     }
 
-    protected void spawnItems(ItemStack... item) {
+    protected void spawnItems(ItemStack... items) {
         if(level != null && !level.isClientSide) {
-            for(ItemStack stack : item) {
+            for(ItemStack stack : items) {
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
                 level.addFreshEntity(itemEntity);
             }
-            level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+            level.playSound(null, pos, createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
 
             spawnParticles();
         }

@@ -62,6 +62,7 @@ public class RiteOfBindingWaystoneDuplicate extends AbstractCreateItemRite {
         if(stoneItem != null && stoneItem.hasTag()) {
             ItemStack newStone = stoneItem.copy();
             spawnItems(stoneItem, newStone);
+            spawnMagicParticles();
         }
         else {
             cancel();

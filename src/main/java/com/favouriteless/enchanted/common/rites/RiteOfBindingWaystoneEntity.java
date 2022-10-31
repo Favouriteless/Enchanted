@@ -64,6 +64,7 @@ public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
             item.setTag(nbt);
 
             spawnItems(item);
+            spawnMagicParticles();
         }
         else {
             cancel();

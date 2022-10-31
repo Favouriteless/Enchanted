@@ -60,6 +60,7 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
         item.setTag(nbt);
 
         spawnItems(item);
+        spawnMagicParticles();
         stopExecuting();
     }
 

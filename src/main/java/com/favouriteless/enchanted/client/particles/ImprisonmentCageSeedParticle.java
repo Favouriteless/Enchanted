@@ -33,9 +33,9 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class ImprisonmentCageParticleSeed extends NoRenderParticle {
+public class ImprisonmentCageSeedParticle extends NoRenderParticle {
 
-	protected ImprisonmentCageParticleSeed(ClientLevel pLevel, double x, double y, double z) {
+	protected ImprisonmentCageSeedParticle(ClientLevel pLevel, double x, double y, double z) {
 		super(pLevel, x, y, z);
 		this.x = x;
 		this.y = y;
@@ -69,7 +69,7 @@ public class ImprisonmentCageParticleSeed extends NoRenderParticle {
 		}
 
 		public Particle createParticle(SimpleParticleType type, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-			return new ImprisonmentCageParticleSeed(level, pX, pY, pZ);
+			return new ImprisonmentCageSeedParticle(level, pX, pY, pZ);
 		}
 	}
 }

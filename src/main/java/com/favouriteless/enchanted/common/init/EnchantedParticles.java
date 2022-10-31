@@ -56,6 +56,7 @@ public class EnchantedParticles {
 
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> BROILING_SEED = PARTICLE_TYPES.register("broiling_seed", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -66,8 +67,9 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(POPPET.get(), PoppetParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE.get(), ImprisonmentCageParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageParticleSeed.Factory::new);
-        Minecraft.getInstance().particleEngine.register(TRANSPOSITION_IRON_SEED.get(), TranspositionIronParticleSeed.Factory::new);
+        Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(TRANSPOSITION_IRON_SEED.get(), TranspositionIronSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
     }
 
 }

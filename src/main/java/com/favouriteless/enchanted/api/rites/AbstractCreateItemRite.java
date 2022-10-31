@@ -48,8 +48,19 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
                 level.addFreshEntity(itemEntity);
             }
             level.playSound(null, pos, createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
-
-            spawnParticles();
         }
     }
+
+    protected void replaceItem(ItemEntity entity, ItemStack... newItems) {
+        if(!entity.level.isClientSide) {
+            for(ItemStack stack : newItems) {
+                ItemEntity newEntity = new ItemEntity(entity.level, entity.position().x(), entity.position().y(), entity.position().z(), stack);
+                entity.level.addFreshEntity(newEntity);
+            }
+            level.playSound(null, entity.blockPosition(), createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
+            entity.discard();
+        }
+    }
+
+
 }

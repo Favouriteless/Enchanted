@@ -74,6 +74,7 @@ public class RiteOfBindingTalisman extends AbstractCreateItemRite {
             ItemStack talisman = new ItemStack(EnchantedItems.CIRCLE_TALISMAN.get(), 1, nbt);
             talisman.setTag(nbt);
             spawnItems(talisman);
+            spawnMagicParticles();
 
             if(small != 0) CirclePart.SMALL.destroy(level, pos);
             if(medium != 0) CirclePart.MEDIUM.destroy(level, pos);

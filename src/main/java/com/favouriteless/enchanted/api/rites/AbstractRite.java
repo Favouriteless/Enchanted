@@ -447,7 +447,7 @@ public abstract class AbstractRite {
         this.isStarting = true;
     }
 
-    protected void spawnParticles() {
+    protected void spawnMagicParticles() {
         for(int i = 0; i < 25; i++) {
             double dx = pos.getX() - 1.0D + Math.random() * 3.0D;
             double dy = pos.getY() + Math.random() * 2.0D;

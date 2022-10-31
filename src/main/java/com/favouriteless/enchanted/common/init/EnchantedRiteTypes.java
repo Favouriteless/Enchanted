@@ -49,6 +49,7 @@ public class EnchantedRiteTypes {
 
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
+    public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteOfBroiling::new));
 
     public static final RegistryObject<RiteType<?>> BINDING_TALISMAN = RITE_TYPES.register("binding_talisman", () -> new RiteType<>(RiteOfBindingTalisman::new));
     public static final RegistryObject<RiteType<?>> BINDING_TALISMAN_CHARGED = RITE_TYPES.register("binding_talisman_charged", () -> new RiteType<>(RiteOfBindingTalismanCharged::new));

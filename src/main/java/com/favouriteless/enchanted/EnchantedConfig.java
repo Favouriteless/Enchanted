@@ -47,6 +47,7 @@ public class EnchantedConfig {
 
     // Rites
     public static final ForgeConfigSpec.ConfigValue<Integer> TOTAL_ECLIPSE_COOLDOWN;
+    public static final ForgeConfigSpec.ConfigValue<Float> BROILING_BURN_CHANCE;
 
     static {
         BUILDER.push("Altar Options");
@@ -69,6 +70,7 @@ public class EnchantedConfig {
 
         BUILDER.push("Rite Options");
         TOTAL_ECLIPSE_COOLDOWN = BUILDER.comment("Global cooldown for the rite of eclipse in seconds").define("total_eclipse_cooldown", 0);
+        BROILING_BURN_CHANCE = BUILDER.comment("Chance for food to be burned by the rite of broiling #default 0.3").define("broiling_burn_chance", 0.3F);
         BUILDER.pop();
 
         BUILDER.push("Miscellaneous Options");

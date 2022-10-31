@@ -47,6 +47,7 @@ public class RiteOfInfusionBroom extends AbstractCreateItemRite {
     @Override
     public void execute() {
         spawnItems(new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get(), 1));
+        spawnMagicParticles();
         stopExecuting();
     }
 

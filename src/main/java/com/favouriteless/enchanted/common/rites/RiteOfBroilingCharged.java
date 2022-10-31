@@ -24,43 +24,27 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class RiteOfChargingStone extends AbstractCreateItemRite {
+public class RiteOfBroilingCharged extends RiteOfBroiling {
 
-    public RiteOfChargingStone() {
-        super(2000, 0, SoundEvents.ZOMBIE_VILLAGER_CURE); // Power, power per tick
-        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE.get(), 1);
-        ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
-        ITEMS_REQUIRED.put(Items.REDSTONE, 1);
+    public RiteOfBroilingCharged() {
+        super(0, 0); // Power, power per tick
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_RED.get());
+        ITEMS_REQUIRED.put(Items.COAL, 1);
+        ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);
         ITEMS_REQUIRED.put(EnchantedItems.WOOD_ASH.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
-    }
-
-    @Override
-    public void execute() {
-        spawnItems(new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1));
-        spawnMagicParticles();
-        stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
+        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
     }
 
     @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.CHARGING_STONE.get();
+        return EnchantedRiteTypes.BROILING.get();
     }
 
 }

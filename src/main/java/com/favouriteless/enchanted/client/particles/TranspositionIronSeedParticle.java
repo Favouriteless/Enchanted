@@ -35,9 +35,9 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import org.jetbrains.annotations.Nullable;
 
-public class TranspositionIronParticleSeed extends NoRenderParticle {
+public class TranspositionIronSeedParticle extends NoRenderParticle {
 
-	protected TranspositionIronParticleSeed(ClientLevel pLevel, double x, double y, double z) {
+	protected TranspositionIronSeedParticle(ClientLevel pLevel, double x, double y, double z) {
 		super(pLevel, x, y, z);
 	}
 
@@ -60,7 +60,7 @@ public class TranspositionIronParticleSeed extends NoRenderParticle {
 		@Nullable
 		@Override
 		public Particle createParticle(SimpleParticleType data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			return new TranspositionIronParticleSeed(world, x, y, z);
+			return new TranspositionIronSeedParticle(world, x, y, z);
 		}
 	}
 }

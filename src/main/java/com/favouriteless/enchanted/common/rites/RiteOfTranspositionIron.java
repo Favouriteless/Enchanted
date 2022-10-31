@@ -71,10 +71,12 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 			if(block == Blocks.IRON_ORE) {
 				level.setBlockAndUpdate(blockPos, Blocks.STONE.defaultBlockState());
 				spawnItems(new ItemStack(Items.RAW_IRON));
+				spawnMagicParticles();
 			}
 			else if(block == Blocks.DEEPSLATE_IRON_ORE) {
 				level.setBlockAndUpdate(blockPos, Blocks.DEEPSLATE.defaultBlockState());
 				spawnItems(new ItemStack(Items.RAW_IRON));
+				spawnMagicParticles();
 			}
 		}
 

@@ -25,18 +25,19 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.client.particles.StaticFlameParticle;
+import com.favouriteless.enchanted.client.particles.ImprisonmentCageParticle;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,7 +49,7 @@ public class RiteOfImprisonment extends AbstractRite {
     public static final double ATTRACT_VELOCITY = 0.03D;
     public static final double TETHER_RANGE = 3.0D;
     public static final double TETHER_BREAK_RANGE = 1.0D;
-    private final Set<Monster> tetheredMonsters = new HashSet<>();
+    private final Set<Entity> tetheredMonsters = new HashSet<>();
 
     public RiteOfImprisonment() {
         super(500, 3); // Power, power per tick
@@ -64,14 +65,12 @@ public class RiteOfImprisonment extends AbstractRite {
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof Monster);
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
-            for(Entity entity : currentEntities) {
-                tetheredMonsters.add((Monster)entity);
-            }
+            tetheredMonsters.addAll(currentEntities);
         }
-        List<Monster> removeList = new ArrayList<>();
-        for(Monster monster : tetheredMonsters) {
+        List<Entity> removeList = new ArrayList<>();
+        for(Entity monster : tetheredMonsters) {
             Vec3 relativePos = monster.position().subtract(pos.getX()+0.5D, monster.position().y(), pos.getZ()+0.5D);
             double distance = relativePos.length();
             if(distance > TETHER_RANGE + TETHER_BREAK_RANGE) {
@@ -83,24 +82,8 @@ public class RiteOfImprisonment extends AbstractRite {
         }
         removeList.forEach(tetheredMonsters::remove);
 
-        if(this.ticks % StaticFlameParticle.LIFETIME == 0) {
-
-            for(int a = 0; a < 360; a++) {
-                double angle = Math.toRadians(a);
-                double cx = pos.getX() + 0.5D + Math.sin(angle)*(TETHER_RANGE + 0.3D);
-                double cy = pos.getY() + 0.2D;
-                double cz = pos.getZ() + 0.5D + Math.cos(angle)*(TETHER_RANGE + 0.3D);
-
-                level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-                level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy + 4.0D, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-
-                if(a % 20 == 0) {
-                    for(int i = 0; i < 40; i++) {
-                        cy += 4.0D / 40;
-                        level.sendParticles(EnchantedParticles.STATIC_FLAME.get(), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-                    }
-                }
-            }
+        if(this.ticks % (ImprisonmentCageParticle.LIFETIME+15) == 0) { // 15 ticks for the fade time
+            level.sendParticles(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 

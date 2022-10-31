@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
@@ -45,7 +44,7 @@ import java.util.List;
 public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 
 	private int progress = 0;
-	private static final double CIRCLE_RADIUS = 7.5D;
+	public static final double CIRCLE_RADIUS = 7.5D;
 
 	public RiteOfTranspositionIron() {
 		super(0, 0, SoundEvents.COPPER_BREAK);
@@ -80,16 +79,7 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 		}
 
 		if(this.ticks % 20 == 0) {
-
-			for(int a = 0; a < 360; a+=2) {
-				double centerX = pos.getX() + 0.5D;
-				double centerZ = pos.getZ() + 0.5D;
-				double cx = centerX + Math.sin(a)*CIRCLE_RADIUS;
-				double cy = pos.getY() + 0.2D;
-				double cz = centerZ + Math.cos(a)*CIRCLE_RADIUS;
-
-				level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, centerX, centerZ, CIRCLE_RADIUS), cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-			}
+			level.sendParticles(EnchantedParticles.TRANSPOSITION_IRON_SEED.get(), pos.getX()+0.5D, pos.getY()-0.1D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 		}
 
 		if(progress > circlePoints.size()-1)

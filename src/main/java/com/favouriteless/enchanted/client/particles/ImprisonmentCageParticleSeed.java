@@ -24,65 +24,52 @@
 
 package com.favouriteless.enchanted.client.particles;
 
+import com.favouriteless.enchanted.common.init.EnchantedParticles;
+import com.favouriteless.enchanted.common.rites.RiteOfImprisonment;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.NoRenderParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.util.Mth;
 
-public class StaticFlameParticle extends TextureSheetParticle {
+public class ImprisonmentCageParticleSeed extends NoRenderParticle {
 
-	public static final int LIFETIME = 20;
-
-	protected StaticFlameParticle(ClientLevel pLevel, double pX, double pY, double pZ) {
-		super(pLevel, pX, pY, pZ);
-		this.lifetime = LIFETIME;
-		this.quadSize = 0.1F;
+	protected ImprisonmentCageParticleSeed(ClientLevel pLevel, double x, double y, double z) {
+		super(pLevel, x, y, z);
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	@Override
 	public void tick() {
-		this.xo = this.x;
-		this.yo = this.y;
-		this.zo = this.z;
-		if(age++ >= lifetime) {
-			this.alpha -= 0.03F;
-			if(this.alpha <= 0) {
-				remove();
+		for(int a = 0; a < 360; a++) {
+			double angle = Math.toRadians(a);
+			double cx = x + Math.sin(angle)*(RiteOfImprisonment.TETHER_RANGE + 0.3D);
+			double cy = y;
+			double cz = z + Math.cos(angle)*(RiteOfImprisonment.TETHER_RANGE + 0.3D);
+
+			level.addParticle(EnchantedParticles.IMPRISONMENT_CAGE.get(), cx, cy, cz, 0.0D, 0.0D, 0.0D);
+			level.addParticle(EnchantedParticles.IMPRISONMENT_CAGE.get(), cx, cy + 4.0D, cz, 0.0D, 0.0D, 0.0D);
+
+			if(a % 20 == 0) {
+				for(int i = 0; i < 40; i++) {
+					cy += 4.0D / 40;
+					level.addParticle(EnchantedParticles.IMPRISONMENT_CAGE.get(), cx, cy, cz, 0.0D, 0.0D, 0.0D);
+				}
 			}
 		}
-	}
-
-	public int getLightColor(float pPartialTick) {
-		float f = ((float)this.age + pPartialTick) / (float)this.lifetime;
-		f = Mth.clamp(f, 0.0F, 1.0F);
-		int i = super.getLightColor(pPartialTick);
-		int j = i & 255;
-		int k = i >> 16 & 255;
-		j += (int)(f * 15.0F * 16.0F);
-		if (j > 240) {
-			j = 240;
-		}
-
-		return j | k << 16;
-	}
-
-	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+		this.remove();
 	}
 
 	public static class Factory implements ParticleProvider<SimpleParticleType> {
-		private final SpriteSet sprite;
 
 		public Factory(SpriteSet sprites) {
-			this.sprite = sprites;
 		}
 
 		public Particle createParticle(SimpleParticleType type, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-			StaticFlameParticle particle = new StaticFlameParticle(level, pX, pY, pZ);
-			particle.pickSprite(this.sprite);
-			particle.scale(0.5F);
-			return particle;
+			return new ImprisonmentCageParticleSeed(level, pX, pY, pZ);
 		}
 	}
 }

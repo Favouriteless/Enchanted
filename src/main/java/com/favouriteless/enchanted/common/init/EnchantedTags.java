@@ -26,15 +26,13 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.core.Registry;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class EnchantedTags {
 
@@ -44,9 +42,15 @@ public class EnchantedTags {
     public static final TagKey<Block> MUTANDIS_BLACKLIST = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
     public static final TagKey<Block> CHALKS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
 
+    public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(new ResourceLocation(Enchanted.MOD_ID, "monsters"));
+
     public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_whitelist"));
     public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_whitelist"));
     public static final TagKey<Item> TOOL_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_blacklist"));
     public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_blacklist"));
+
+    private static TagKey<EntityType<?>> createEntityTag(ResourceLocation name) {
+        return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, name);
+    }
 
 }

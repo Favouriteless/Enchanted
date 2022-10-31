@@ -36,11 +36,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-@Mod.EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
 public class EnchantedParticles {
 
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Enchanted.MOD_ID);
@@ -51,7 +52,10 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<SimpleColouredData>> KETTLE_COOK = PARTICLE_TYPES.register("kettle_cook", () -> new SimpleColouredParticleType(false));
     public static final RegistryObject<ParticleType<CircleMagicData>> CIRCLE_MAGIC = PARTICLE_TYPES.register("circle_magic", () -> new CircleMagicParticleType(false));
     public static final RegistryObject<ParticleType<TwoToneColouredData>> POPPET = PARTICLE_TYPES.register("poppet", () -> new TwoToneColouredParticleType(false));
-    public static final RegistryObject<SimpleParticleType> STATIC_FLAME = PARTICLE_TYPES.register("static_flame", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE = PARTICLE_TYPES.register("imprisonment_cage", () -> new SimpleParticleType(false));
+
+    public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -61,7 +65,9 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(KETTLE_COOK.get(), KettleCookParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(POPPET.get(), PoppetParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(STATIC_FLAME.get(), StaticFlameParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE.get(), ImprisonmentCageParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageParticleSeed.Factory::new);
+        Minecraft.getInstance().particleEngine.register(TRANSPOSITION_IRON_SEED.get(), TranspositionIronParticleSeed.Factory::new);
     }
 
 }

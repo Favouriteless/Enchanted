@@ -29,14 +29,15 @@ import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.Circ
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.item.Items;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class RiteOfSanctity extends AbstractRite {
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof Monster);
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
                 Vec3 opposingVector = entity.position().subtract(pos.getX(), entity.position().y(), pos.getZ());

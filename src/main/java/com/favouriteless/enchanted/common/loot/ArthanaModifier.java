@@ -24,34 +24,25 @@
 
 package com.favouriteless.enchanted.common.loot;
 
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.List;
 
 public class ArthanaModifier extends LootModifier {
-
-    private static final HashMap<EntityType<?>, Item> ENTITY_DROPS = new HashMap<>();
-
-    static {
-        ENTITY_DROPS.put(EntityType.BAT, EnchantedItems.WOOL_OF_BAT.get());
-        ENTITY_DROPS.put(EntityType.WOLF, EnchantedItems.TONGUE_OF_DOG.get());
-        ENTITY_DROPS.put(EntityType.CREEPER, EnchantedItems.CREEPER_HEART.get());
-    }
 
     protected ArthanaModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -64,14 +55,14 @@ public class ArthanaModifier extends LootModifier {
         if(source != null) {
             Entity entity = source.getDirectEntity();
             if(entity != null) {
-                EntityType<?> entityKilled = context.getParamOrNull(LootContextParams.THIS_ENTITY).getType();
-
-                if(ENTITY_DROPS.containsKey(entityKilled) && entity instanceof LivingEntity) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
+                if(entity instanceof LivingEntity livingEntity) {
                     ItemStack item = livingEntity.getMainHandItem();
 
                     if(item.getItem() == EnchantedItems.ARTHANA.get()) {
-                        generatedLoot.add(new ItemStack(ENTITY_DROPS.get(entityKilled)));
+                        EntityType<?> entityKilled = context.getParamOrNull(LootContextParams.THIS_ENTITY).getType();
+                        ItemStack extraLoot = EnchantedData.ARTHANA_LOOT.getLootFor(entityKilled);
+                        if(extraLoot != null)
+                            generatedLoot.add(extraLoot);
                     }
                 }
             }
@@ -88,8 +79,7 @@ public class ArthanaModifier extends LootModifier {
 
         @Override
         public JsonObject write(ArthanaModifier instance) {
-            JsonObject json = makeConditions(instance.conditions);
-            return json;
+            return makeConditions(instance.conditions);
         }
     }
 }

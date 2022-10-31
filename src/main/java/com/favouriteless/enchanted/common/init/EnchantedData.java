@@ -25,6 +25,7 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.core.util.reloadlisteners.ArthanaLootManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarPowerProviderManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarUpgradeManager;
 import net.minecraft.tags.TagKey;
@@ -41,12 +42,14 @@ public class EnchantedData {
     public static final AltarPowerProviderManager<Block> ALTAR_POWER_BLOCKS = new AltarPowerProviderManager<>("altar/blocks", ForgeRegistries.BLOCKS::getValue);
     public static final AltarPowerProviderManager<TagKey<Block>> ALTAR_POWER_TAGS = new AltarPowerProviderManager<>("altar/tags", BlockTags::create);
     public static final AltarUpgradeManager ALTAR_UPGRADES = new AltarUpgradeManager("altar/upgrades");
+    public static final ArthanaLootManager ARTHANA_LOOT = new ArthanaLootManager("arthana");
 
     @SubscribeEvent
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
         event.addListener(ALTAR_POWER_BLOCKS);
         event.addListener(ALTAR_POWER_TAGS);
         event.addListener(ALTAR_UPGRADES);
+        event.addListener(ARTHANA_LOOT);
     }
 
 }

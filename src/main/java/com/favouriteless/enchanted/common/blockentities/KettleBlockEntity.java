@@ -43,8 +43,8 @@ public class KettleBlockEntity extends CauldronBlockEntity<KettleRecipe> {
     }
 
     @Override
-    public double getWaterStartY() {
-        return level.getBlockState(worldPosition).getValue(KettleBlock.TYPE) == 1 ? 0.1875D : 0.0625D;
+    public double getWaterStartY(BlockState state) {
+        return state.getValue(KettleBlock.TYPE) == 1 ? 0.1875D : 0.0625D;
     }
 
     @Override

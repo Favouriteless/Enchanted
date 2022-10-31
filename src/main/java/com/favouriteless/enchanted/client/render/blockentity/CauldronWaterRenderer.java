@@ -36,6 +36,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,13 +56,14 @@ public class CauldronWaterRenderer<T extends CauldronBlockEntity<?>> implements 
 
     @Override
     public void render(T blockEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource renderBuffer, int combinedLight, int combinedOverlay) {
-        if((blockEntity.getLevel().getBlockState(blockEntity.getBlockPos()).getBlock() instanceof CauldronBlockBase)) {
+        BlockState state = blockEntity.getLevel().getBlockState(blockEntity.getBlockPos());
+        if(state.getBlock() instanceof CauldronBlockBase) {
             long ticks = blockEntity.getLevel().getGameTime(); // This frame count should be common across all TEs
 
             int waterAmount = blockEntity.getWater();
             if(waterAmount > 0) {
 
-                double waterQuadHeight = blockEntity.getWaterY();
+                double waterQuadHeight = blockEntity.getWaterY(state);
 
                 matrixStack.pushPose();
                 matrixStack.translate(0.5D, waterQuadHeight, 0.5D);

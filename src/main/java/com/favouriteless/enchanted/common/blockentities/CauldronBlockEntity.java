@@ -28,30 +28,36 @@ import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.util.*;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -70,12 +76,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 
 public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IAltarPowerConsumer {
 
@@ -177,35 +177,37 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 				}
 				// ------------------------ CLIENT STUFF ------------------------
 				else {
-					if(blockEntity.justLoaded) {
-						blockEntity.justLoaded = false;
-						blockEntity.startRed = blockEntity.targetRed;
-						blockEntity.startGreen = blockEntity.targetGreen;
-						blockEntity.startBlue = blockEntity.targetBlue;
-					}
-					long time = System.currentTimeMillis() - blockEntity.startTime;
-					double waterY = blockEntity.getWaterY();
-
-					if(blockEntity.isHot() && RANDOM.nextInt(10) > 2) {
-						double dx = blockEntity.worldPosition.getX() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
-						double dy = blockEntity.worldPosition.getY() + waterY + 0.02D;
-						double dz = blockEntity.worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
-
-						level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
-					}
-					if(!blockEntity.isFailed) {
-						if(!blockEntity.isComplete && blockEntity.cookProgress > 0 && blockEntity.cookProgress < blockEntity.cookTime) {
-							blockEntity.handleCookParticles(time);
+					if(blockState.getBlock() instanceof CauldronBlockBase) {
+						if(blockEntity.justLoaded) {
+							blockEntity.justLoaded = false;
+							blockEntity.startRed = blockEntity.targetRed;
+							blockEntity.startGreen = blockEntity.targetGreen;
+							blockEntity.startBlue = blockEntity.targetBlue;
 						}
-						else if(blockEntity.warmingUp == WARMING_MAX && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
-							double xOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
-							double zOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
-							double dx = blockEntity.worldPosition.getX() + xOffset;
-							double dy = blockEntity.worldPosition.getY() + waterY;
-							double dz = blockEntity.worldPosition.getZ() + zOffset;
-							Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+						long time = System.currentTimeMillis() - blockEntity.startTime;
+						double waterY = blockEntity.getWaterY(blockState);
 
-							level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+						if(blockEntity.isHot() && RANDOM.nextInt(10) > 2) {
+							double dx = blockEntity.worldPosition.getX() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+							double dy = blockEntity.worldPosition.getY() + waterY + 0.02D;
+							double dz = blockEntity.worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+
+							level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
+						}
+						if(!blockEntity.isFailed) {
+							if(!blockEntity.isComplete && blockEntity.cookProgress > 0 && blockEntity.cookProgress < blockEntity.cookTime) {
+								blockEntity.handleCookParticles(time);
+							}
+							else if(blockEntity.warmingUp == WARMING_MAX && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
+								double xOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+								double zOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
+								double dx = blockEntity.worldPosition.getX() + xOffset;
+								double dy = blockEntity.worldPosition.getY() + waterY;
+								double dz = blockEntity.worldPosition.getZ() + zOffset;
+								Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
+
+								level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), blockEntity.getRed(time), blockEntity.getGreen(time), blockEntity.getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+							}
 						}
 					}
 				}
@@ -213,11 +215,11 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		}
 	}
 
-	public double getWaterY() {
-		return getWaterStartY() + (getWaterMaxHeight() * tank.getFluidAmount() / tank.getCapacity());
+	public double getWaterY(BlockState state) {
+		return getWaterStartY(state) + (getWaterMaxHeight() * tank.getFluidAmount() / tank.getCapacity());
 	}
 
-	public abstract double getWaterStartY();
+	public abstract double getWaterStartY(BlockState state);
 
 	public abstract double getWaterMaxHeight();
 

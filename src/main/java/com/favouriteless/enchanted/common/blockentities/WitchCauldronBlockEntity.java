@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,7 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
     }
 
     @Override
-    public double getWaterStartY() {
+    public double getWaterStartY(BlockState state) {
         return 0.1875D;
     }
 
@@ -59,7 +60,7 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
     @Override
     public void handleCookParticles(long time) {
         double dx = worldPosition.getX() + 0.5D;
-        double dy = worldPosition.getY() + getWaterY();
+        double dy = worldPosition.getY() + getWaterY(EnchantedBlocks.WITCH_CAULDRON.get().defaultBlockState());
         double dz = worldPosition.getZ() + 0.5D;
 
         level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0.0D, 0.0D, 0.0D);

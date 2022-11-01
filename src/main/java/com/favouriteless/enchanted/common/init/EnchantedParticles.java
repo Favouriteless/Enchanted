@@ -28,6 +28,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.client.particles.SkyWrathParticleType.SkyWrathData;
 import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
@@ -53,10 +54,12 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<CircleMagicData>> CIRCLE_MAGIC = PARTICLE_TYPES.register("circle_magic", () -> new CircleMagicParticleType(false));
     public static final RegistryObject<ParticleType<TwoToneColouredData>> POPPET = PARTICLE_TYPES.register("poppet", () -> new TwoToneColouredParticleType(false));
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE = PARTICLE_TYPES.register("imprisonment_cage", () -> new SimpleParticleType(false));
+    public static final RegistryObject<ParticleType<SkyWrathData>> SKY_WRATH = PARTICLE_TYPES.register("sky_wrath", () -> new SkyWrathParticleType(false));
 
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> BROILING_SEED = PARTICLE_TYPES.register("broiling_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> SKY_WRATH_SEED = PARTICLE_TYPES.register("sky_wrath_seed", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -70,6 +73,8 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(TRANSPOSITION_IRON_SEED.get(), TranspositionIronSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SKY_WRATH.get(), SkyWrathParticle.Factory::new);
     }
 
 }

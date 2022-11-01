@@ -44,7 +44,7 @@ public class RiteOfBroilingCharged extends RiteOfBroiling {
 
     @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.BROILING.get();
+        return EnchantedRiteTypes.BROILING_CHARGED.get();
     }
 
 }

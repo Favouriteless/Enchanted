@@ -61,6 +61,7 @@ public class RiteOfBroiling extends AbstractCreateItemRite {
 
     @Override
     public void execute() {
+        detatchFromChalk();
     }
 
     @Override

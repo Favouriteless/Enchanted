@@ -261,10 +261,6 @@ public abstract class AbstractRite {
     public void stopExecuting() {
         detatchFromChalk();
         this.isStarting = false;
-        BlockEntity te = level.getBlockEntity(pos);
-        if(te instanceof ChalkGoldBlockEntity) {
-            ((ChalkGoldBlockEntity)te).clearRite();
-        }
         RiteManager.removeRite(this);
     }
 

@@ -50,6 +50,7 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
     public static final RegistryObject<RiteType<?>> SKY_WRATH = RITE_TYPES.register("sky_wrath", () -> new RiteType<>(RiteOfSkyWrath::new));
+    public static final RegistryObject<RiteType<?>> SKY_WRATH_CHARGED = RITE_TYPES.register("sky_wrath_charged", () -> new RiteType<>(RiteOfSkyWrathCharged::new));
     public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteOfBroiling::new));
     public static final RegistryObject<RiteType<?>> BROILING_CHARGED = RITE_TYPES.register("broiling_charged", () -> new RiteType<>(RiteOfBroilingCharged::new));
 
@@ -59,8 +60,8 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_CHARGED = RITE_TYPES.register("binding_waystone_charged", () -> new RiteType<>(RiteOfBindingWaystoneCharged::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE = RITE_TYPES.register("binding_waystone_duplicate", () -> new RiteType<>(RiteOfBindingWaystoneDuplicate::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE_CHARGED = RITE_TYPES.register("binding_waystone_duplicate_charged", () -> new RiteType<>(RiteOfBindingWaystoneDuplicateCharged::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY = RITE_TYPES.register("binding_waystone_entity", () -> new RiteType<>(RiteOfBindingWaystoneEntity::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY_CHARGED = RITE_TYPES.register("binding_waystone_entity_charged", () -> new RiteType<>(RiteOfBindingWaystoneEntityCharged::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY = RITE_TYPES.register("binding_waystone_player", () -> new RiteType<>(RiteOfBindingWaystonePlayer::new));
+    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_ENTITY_CHARGED = RITE_TYPES.register("binding_waystone_player_charged", () -> new RiteType<>(RiteOfBindingWaystonePlayerCharged::new));
 
     public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteOfInfusionBroom::new));
 
@@ -70,6 +71,7 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteOfTranspositionIron::new));
 
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
+    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER_BLOODED = RITE_TYPES.register("transposition_player_blooded", () -> new RiteType<>(RiteOfTranspositionPlayerBlooded::new));
     public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummonEntity::new));
 
 

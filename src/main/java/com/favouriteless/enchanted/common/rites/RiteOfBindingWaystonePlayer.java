@@ -28,30 +28,39 @@ import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class RiteOfBindingWaystone extends AbstractCreateItemRite {
+public class RiteOfBindingWaystonePlayer extends AbstractCreateItemRite {
 
-    protected RiteOfBindingWaystone(int power, int powerTick) {
-        super(power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingWaystonePlayer(int power, int powerTick) {
+        super(power, powerTick, SoundEvents.ENDER_DRAGON_GROWL);
     }
 
-    public RiteOfBindingWaystone() {
+    public RiteOfBindingWaystonePlayer() {
         this(500, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
-        ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
+        ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
+        ITEMS_REQUIRED.put(Items.SNOWBALL, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
     }
 
     @Override
     public void execute() {
-        spawnItems(WaystoneHelper.create(level, pos));
-        spawnMagicParticles();
+        if(targetUUID != null) {
+            spawnItems(WaystoneHelper.create(targetUUID));
+            spawnMagicParticles();
+        }
+        else {
+            cancel();
+        }
         stopExecuting();
     }
 
@@ -60,8 +69,20 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
     }
 
     @Override
+    protected boolean checkAdditional() {
+        for(ItemStack stack : itemsConsumed) {
+            if(stack.getItem() == EnchantedItems.TAGLOCK_FILLED.get()) {
+                targetUUID = TaglockFilledItem.getUUID(stack);
+                if(targetUUID == null)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_WAYSTONE.get();
+        return EnchantedRiteTypes.BINDING_WAYSTONE_ENTITY.get();
     }
 
 }

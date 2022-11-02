@@ -29,17 +29,27 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 public class RiteOfSkyWrath extends AbstractRite {
 
     public static final int START_RAINING = 120;
-    public static final int EXPLODE = 160;
+    public static final int EXPLODE = 180;
     public static final double LIGHTNING_RADIUS = 5;
+    private BlockPos targetPos = null;
+    private Level targetLevel = null;
 
     public RiteOfSkyWrath(int power, int powerTick) {
         super(power, powerTick);
@@ -48,15 +58,49 @@ public class RiteOfSkyWrath extends AbstractRite {
     public RiteOfSkyWrath() {
         this(1000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(Items.WOODEN_SWORD, 1);
-        ITEMS_REQUIRED.put(EnchantedItems.WOOD_ASH.get(), 1);
+        ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
     }
 
     @Override
     public void execute() {
         detatchFromChalk();
-        level.sendParticles(EnchantedParticles.SKY_WRATH_SEED.get(), pos.getX()+0.5D, pos.getY()+2.0D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-        ticks = 0;
+        List<Entity> entities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof ItemEntity);
+
+        for(Entity entity : entities) {
+            if(entity instanceof ItemEntity itemEntity) {
+                if(itemEntity.getItem().getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
+                    if(itemEntity.getItem().hasTag()) {
+                        targetPos = WaystoneHelper.getPos(itemEntity.getItem());
+                        targetLevel = WaystoneHelper.getLevel(level, itemEntity.getItem());
+                        if(targetPos != null) {
+                            itemEntity.setNeverPickUp();
+                            itemEntity.discard();
+                            playConsumeEffects(itemEntity);
+                            break;
+                        }
+                    }
+                }
+                else if(itemEntity.getItem().getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
+                    if(itemEntity.getItem().hasTag()) {
+                        targetEntity = WaystoneHelper.getPlayer(level, itemEntity.getItem());
+                        if(targetEntity != null) {
+                            targetPos = targetEntity.blockPosition();
+                            targetLevel = targetEntity.level;
+                            itemEntity.setNeverPickUp();
+                            itemEntity.discard();
+                            playConsumeEffects(itemEntity);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(targetPos != null && targetLevel != null && targetLevel instanceof ServerLevel serverLevel)
+            serverLevel.sendParticles(EnchantedParticles.SKY_WRATH_SEED.get(), targetPos.getX()+0.5D, targetPos.getY()+2.0D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        else
+            level.sendParticles(EnchantedParticles.SKY_WRATH_SEED.get(), pos.getX()+0.5D, pos.getY()+2.0D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
     @Override
@@ -65,20 +109,23 @@ public class RiteOfSkyWrath extends AbstractRite {
             level.setWeatherParameters(0, 6000, true, true);
         }
         else if(ticks > EXPLODE) {
-            spawnLightning(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+            if(targetPos != null)
+                spawnLightning(targetLevel, targetPos.getX() + 0.5D, targetPos.getY(), targetPos.getZ() + 0.5D);
+            else
+                spawnLightning(level, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
             stopExecuting();
         }
     }
 
-    protected void spawnLightning(double x, double y, double z) {
+    protected void spawnLightning(Level pLevel, double x, double y, double z) {
         for(int a = 0; a < 360; a+=60) {
             double angle = Math.toRadians(a);
             double cx = x + Math.sin(angle) * LIGHTNING_RADIUS;
             double cz = z + Math.cos(angle) * LIGHTNING_RADIUS;
 
-            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(pLevel);
             lightningBolt.moveTo(cx, y, cz);
-            level.addFreshEntity(lightningBolt);
+            pLevel.addFreshEntity(lightningBolt);
         }
     }
 

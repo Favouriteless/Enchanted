@@ -31,25 +31,19 @@ import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.world.item.Items;
 
-public class RiteOfBindingWaystoneEntityCharged extends RiteOfBindingWaystoneEntity {
+public class RiteOfSkyWrathCharged extends RiteOfSkyWrath {
 
-    protected RiteOfBindingWaystoneEntityCharged(int power, int powerTick) {
-        super(power, powerTick);
-    }
-
-    public RiteOfBindingWaystoneEntityCharged() {
+    public RiteOfSkyWrathCharged() {
         super(0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
-        ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ICY_NEEDLE.get(), 1);
+        ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
     }
 
     @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_WAYSTONE_ENTITY_CHARGED.get();
+        return EnchantedRiteTypes.SKY_WRATH_CHARGED.get();
     }
 
 }

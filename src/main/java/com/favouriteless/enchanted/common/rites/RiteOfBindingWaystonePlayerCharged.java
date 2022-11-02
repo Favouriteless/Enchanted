@@ -24,61 +24,33 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class RiteOfBindingWaystoneEntity extends AbstractCreateItemRite {
+public class RiteOfBindingWaystonePlayerCharged extends RiteOfBindingWaystonePlayer {
 
-    protected RiteOfBindingWaystoneEntity(int power, int powerTick) {
-        super(power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingWaystonePlayerCharged(int power, int powerTick) {
+        super(power, powerTick);
     }
 
-    public RiteOfBindingWaystoneEntity() {
-        this(500, 0); // Power, power per tick
+    public RiteOfBindingWaystonePlayerCharged() {
+        super(0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
         ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
-        ITEMS_REQUIRED.put(Items.SNOWBALL, 1);
-    }
-
-    @Override
-    public void execute() {
-        Entity closestEntity = CirclePart.SMALL.getClosestEntity(level, pos, entity -> !(entity instanceof Player) && entity instanceof LivingEntity);
-
-        if(closestEntity != null) {
-            CompoundTag nbt = new CompoundTag();
-            nbt.putUUID("uuid", closestEntity.getUUID());
-            ItemStack item = new ItemStack(EnchantedItems.BOUND_WAYSTONE.get(), 1);
-            item.setTag(nbt);
-
-            spawnItems(item);
-            spawnMagicParticles();
-        }
-        else {
-            cancel();
-        }
-        stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
+        ITEMS_REQUIRED.put(EnchantedItems.ICY_NEEDLE.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
     }
 
     @Override
     public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_WAYSTONE_ENTITY.get();
+        return EnchantedRiteTypes.BINDING_WAYSTONE_ENTITY_CHARGED.get();
     }
 
 }

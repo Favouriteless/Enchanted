@@ -25,35 +25,35 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import com.mojang.math.Vector3f;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -239,6 +239,7 @@ public abstract class AbstractRite {
 //        if(tryConsumePower(POWER) && checkAdditional()) {
         if(checkAdditional()) {
             this.isStarting = false;
+            this.ticks = 0; // Reset ticks to make it less confusing
             execute();
         }
         else {
@@ -293,7 +294,8 @@ public abstract class AbstractRite {
         }
     }
 
-    private void consumeItem(ItemEntity entity) {
+    protected void consumeItem(ItemEntity entity) {
+        entity.setNeverPickUp();
         ItemStack stack = entity.getItem();
         Item item = stack.getItem();
         int amountNeeded = ITEMS_REQUIRED.get(stack.getItem());
@@ -309,7 +311,6 @@ public abstract class AbstractRite {
                 level.addFreshEntity(itemEntity);
             }
 
-            entity.setNeverPickUp();
             entity.discard();
         }
         else { // Too much
@@ -323,12 +324,17 @@ public abstract class AbstractRite {
             targetEntity = getTargetEntity();
         }
 
+        playConsumeEffects(entity);
+        entity.setDefaultPickUpDelay();
+    }
+
+    protected void playConsumeEffects(ItemEntity entity) {
         level.playSound(null, entity.blockPosition(), SoundEvents.CHICKEN_EGG, SoundSource.MASTER, 1.0F, 1.0F);
         for(int i = 0; i < 5; i++) {
             double dx = entity.position().x - 0.15D + (Math.random() * 0.3D);
             double dy = entity.position().y + (Math.random() * 0.3D);
             double dz = entity.position().z - 0.15D + (Math.random() * 0.3D);
-            level.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 5, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -346,7 +352,7 @@ public abstract class AbstractRite {
         return null;
     }
 
-    private void consumeEntity(Entity entity) {
+    protected void consumeEntity(Entity entity) {
         int newAmount = ENTITIES_REQUIRED.get(entity.getType())-1;
         if(newAmount > 0) {
             ENTITIES_REQUIRED.put(entity.getType(), newAmount);

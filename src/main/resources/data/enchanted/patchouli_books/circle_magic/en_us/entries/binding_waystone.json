@@ -42,20 +42,20 @@
     {
       "type": "enchanted:rite_description",
       "rite_name": "Blooded Waystone",
-      "text": "This rite binds a waystone to the location of an entity, which will move as the entity moves. $(br2)Note that a despawned or unloaded entity will become invalid."
+      "text": "This rite binds a waystone to the location of a player, which will move as the player moves."
     },
     {
       "type": "enchanted:rite_requirements",
-      "rite": "enchanted:binding_waystone_entity"
+      "rite": "enchanted:binding_waystone_player"
     },
     {
       "type": "enchanted:rite_description",
       "rite_name": "Blooded Waystone",
-      "text": "This rite binds a waystone to the location of an entity, which will move as the entity moves. $(br2)Note that a despawned or unloaded entity will become invalid."
+      "text": "This rite binds a waystone to the location of a player, which will move as the player moves."
     },
     {
       "type": "enchanted:rite_requirements",
-      "rite": "enchanted:binding_waystone_entity_charged"
+      "rite": "enchanted:binding_waystone_player_charged"
     }
   ],
   "read_by_default": true

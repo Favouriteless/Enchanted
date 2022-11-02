@@ -25,31 +25,23 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.SimpleFoiledItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
-import net.minecraftforge.registries.RegistryObject;
 
 public class EnchantedItems {
 
@@ -122,6 +114,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(defaultProperties().stacksTo(1)));
     public static final RegistryObject<Item> WAYSTONE = registerItem("waystone");
     public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Properties())); // With no creative tab
+    public static final RegistryObject<Item> BLOODED_WAYSTONE = ITEMS.register("blooded_waystone", () -> new Item(new Properties())); // With no creative tab
     public static final RegistryObject<Item> BROOM = ITEMS.register("broom", () -> new BroomItem(defaultProperties()));
     public static final RegistryObject<Item> ENCHANTED_BROOMSTICK = ITEMS.register("enchanted_broomstick", () -> new BroomstickItem(defaultProperties()));
 

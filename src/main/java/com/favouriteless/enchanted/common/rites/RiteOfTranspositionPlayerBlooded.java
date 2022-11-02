@@ -31,7 +31,6 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -39,12 +38,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class RiteOfTranspositionPlayer extends AbstractRite {
+public class RiteOfTranspositionPlayerBlooded extends AbstractRite {
 
-    public RiteOfTranspositionPlayer() {
+    public RiteOfTranspositionPlayerBlooded() {
         super(0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
-        ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.BLOODED_WAYSTONE.get(), 1);
     }
 
     @Override
@@ -53,19 +52,18 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
         Player caster = level.getPlayerByUUID(casterUUID);
 
         if(caster != null) {
-            BlockPos targetPos = WaystoneHelper.getPos(stack);
-            ServerLevel targetLevel = (ServerLevel)WaystoneHelper.getLevel(level, stack);
+            Player target = WaystoneHelper.getPlayer(level, stack);
 
-            if(targetLevel != null && targetPos != null) {
+            if(target != null) {
                 spawnParticles((ServerLevel)caster.level, caster.getX(), caster.getY(), caster.getZ());
 
                 level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
-                if(caster.level != targetLevel) {
-                    caster.changeDimension(targetLevel);
+                if(caster.level != target.level) {
+                    caster.changeDimension((ServerLevel)target.level);
                 }
-                caster.teleportTo(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
+                caster.teleportTo(target.getX(), target.getY(), target.getZ());
                 level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
-                spawnParticles(targetLevel, targetPos.getX() + 0.5D, targetPos.getX(), targetPos.getZ() + 0.5D);
+                spawnParticles((ServerLevel)target.level, target.getX(), target.getX(), target.getZ());
             }
             else {
                 cancel();

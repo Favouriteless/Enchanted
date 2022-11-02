@@ -106,6 +106,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		talismanItem(EnchantedItems.CIRCLE_TALISMAN.get());
 		simpleItem(EnchantedItems.WAYSTONE.get());
 		simpleItem(EnchantedItems.BOUND_WAYSTONE.get());
+		simpleItem(EnchantedItems.BLOODED_WAYSTONE.get());
 
 		simpleItem(EnchantedItems.EARMUFFS.get());
 

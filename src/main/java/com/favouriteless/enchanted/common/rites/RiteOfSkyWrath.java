@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -32,12 +33,15 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
@@ -45,6 +49,7 @@ import java.util.List;
 
 public class RiteOfSkyWrath extends AbstractRite {
 
+    private static long LAST_USE_TIME = System.currentTimeMillis();
     public static final int START_RAINING = 120;
     public static final int EXPLODE = 180;
     public static final double LIGHTNING_RADIUS = 5;
@@ -115,6 +120,16 @@ public class RiteOfSkyWrath extends AbstractRite {
                 spawnLightning(level, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
             stopExecuting();
         }
+    }
+
+    @Override
+    protected boolean checkAdditional() {
+        if(System.currentTimeMillis() > LAST_USE_TIME + EnchantedConfig.SKY_WRATH_COOLDOWN.get() * 1000) {
+            Player caster = level.getPlayerByUUID(casterUUID);
+            caster.displayClientMessage(new TextComponent("The sky is not ready to release lightning.").withStyle(ChatFormatting.RED), false);
+            return true;
+        }
+        return false;
     }
 
     protected void spawnLightning(Level pLevel, double x, double y, double z) {

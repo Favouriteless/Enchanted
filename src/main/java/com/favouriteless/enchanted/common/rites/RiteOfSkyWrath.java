@@ -56,12 +56,12 @@ public class RiteOfSkyWrath extends AbstractRite {
     private BlockPos targetPos = null;
     private Level targetLevel = null;
 
-    public RiteOfSkyWrath(int power, int powerTick) {
-        super(power, powerTick);
+    public RiteOfSkyWrath(RiteType<?> type, int power, int powerTick) {
+        super(type, power, powerTick);
     }
 
     public RiteOfSkyWrath() {
-        this(1000, 0); // Power, power per tick
+        this(EnchantedRiteTypes.SKY_WRATH.get(), 1000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
@@ -70,6 +70,7 @@ public class RiteOfSkyWrath extends AbstractRite {
     @Override
     public void execute() {
         detatchFromChalk();
+        LAST_USE_TIME = System.currentTimeMillis();
         List<Entity> entities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof ItemEntity);
 
         for(Entity entity : entities) {
@@ -142,11 +143,6 @@ public class RiteOfSkyWrath extends AbstractRite {
             lightningBolt.moveTo(cx, y, cz);
             pLevel.addFreshEntity(lightningBolt);
         }
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.SKY_WRATH.get();
     }
 
 }

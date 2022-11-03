@@ -30,7 +30,6 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +41,7 @@ import net.minecraft.world.item.ItemStack;
 public class RiteOfTranspositionPlayer extends AbstractRite {
 
     public RiteOfTranspositionPlayer() {
-        super(0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.TRANSPOSITION_PLAYER.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
     }
@@ -85,15 +84,6 @@ public class RiteOfTranspositionPlayer extends AbstractRite {
             double dz = z - 0.5D + (Math.random() * 1.5D);
             world.sendParticles(ParticleTypes.PORTAL, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.TRANSPOSITION_PLAYER.get();
     }
 
 }

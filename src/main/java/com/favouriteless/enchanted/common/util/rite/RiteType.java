@@ -25,9 +25,6 @@
 package com.favouriteless.enchanted.common.util.rite;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.function.Supplier;
@@ -42,27 +39,6 @@ public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteTyp
 
 	public AbstractRite create() {
 		return this.supplier.get();
-	}
-
-	public AbstractRite create(ServerLevel world) {
-		AbstractRite rite = create();
-		rite.setLevel(world);
-		return rite;
-	}
-
-	public AbstractRite create(ServerLevel world, BlockPos pos) {
-		AbstractRite rite = create();
-		rite.setLevel(world);
-		rite.setPos(pos);
-		return rite;
-	}
-
-	public AbstractRite create(ServerLevel world, BlockPos pos, Player caster) {
-		AbstractRite rite = create();
-		rite.setLevel(world);
-		rite.setPos(pos);
-		rite.setCaster(caster);
-		return rite;
 	}
 
 }

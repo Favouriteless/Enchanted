@@ -62,6 +62,8 @@ import java.util.UUID;
 
 public abstract class AbstractRite {
 
+    private final RiteType<?> riteType;
+
     public final HashMap<CirclePart, Block> CIRCLES_REQUIRED = new HashMap<>();
     public final HashMap<EntityType<?>, Integer> ENTITIES_REQUIRED = new HashMap<>();
     public final HashMap<Item, Integer> ITEMS_REQUIRED = new HashMap<>();
@@ -77,14 +79,15 @@ public abstract class AbstractRite {
     public Entity targetEntity;
 
     private boolean isStarting = false;
-    protected int ticks = 0;
+    protected long ticks = 0;
     private boolean isAttached = true;
 
     private ChalkGoldBlockEntity chalk = null;
 
     public boolean isRemoved = false;
 
-    public AbstractRite(int power, int powerTick) {
+    public AbstractRite(RiteType<?> type, int power, int powerTick) {
+        this.riteType = type;
         this.POWER = power;
         this.POWER_TICK = powerTick;
     }
@@ -98,7 +101,7 @@ public abstract class AbstractRite {
         nbt.putInt("z", pos.getZ());
         nbt.putUUID("caster", casterUUID);
         if(targetUUID != null) nbt.putUUID("target", targetUUID);
-        nbt.putInt("ticks", ticks);
+        nbt.putLong("ticks", ticks);
         nbt.putBoolean("isAttached", isAttached);
 
         return saveAdditional(nbt);
@@ -109,7 +112,7 @@ public abstract class AbstractRite {
         setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
         casterUUID = nbt.getUUID("caster");
         if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
-        ticks = nbt.getInt("ticks");
+        ticks = nbt.getLong("ticks");
         isAttached = nbt.getBoolean("isAttached");
 
         loadAdditional(nbt);
@@ -151,25 +154,25 @@ public abstract class AbstractRite {
      * Override this to load any additional nbt info
      * @param nbt
      */
-    protected void loadAdditional(CompoundTag nbt) {
-
-    }
+    protected void loadAdditional(CompoundTag nbt) {}
 
     /**
      * Initial effects of the rite, for example spawning an item or playing a sound
      */
-    protected abstract void execute();
+    protected void execute() {}
+
+    /**
+     * Run tick based rite effects unrelated to starting up
+     */
+    protected void onTick() {}
 
     protected boolean checkAdditional() {
         return true;
     }
 
-    /**
-     * Run tick based rite effects unrelated to starting up
-     */
-    protected abstract void onTick();
-
-    public abstract RiteType<?> getType();
+    public RiteType<?> getType() {
+        return this.riteType;
+    }
 
     public void tick() {
         if(level != null && !level.isClientSide ) {

@@ -26,21 +26,15 @@ package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.world.item.Items;
 
 public class RiteOfBindingTalismanCharged extends RiteOfBindingTalisman {
 
     public RiteOfBindingTalismanCharged() {
-        super(0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BINDING_TALISMAN_CHARGED.get(), 0, 0); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_TALISMAN_CHARGED.get();
     }
 
 }

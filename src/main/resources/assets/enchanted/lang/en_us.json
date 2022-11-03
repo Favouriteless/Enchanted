@@ -1,8 +1,8 @@
 {
-    "item.enchanted.chalk_gold": "Golden Chalk",
-    "item.enchanted.chalk_white": "Ritual Chalk",
-    "item.enchanted.chalk_red": "Infernal Chalk",
-    "item.enchanted.chalk_purple": "Otherwhere Chalk",
+    "block.enchanted.chalk_gold": "Golden Chalk",
+    "block.enchanted.chalk_white": "Ritual Chalk",
+    "block.enchanted.chalk_red": "Infernal Chalk",
+    "block.enchanted.chalk_purple": "Otherwhere Chalk",
     "item.enchanted.arthana": "Arthana",
     "item.enchanted.earmuffs": "Earmuffs",
     "item.enchanted.circle_talisman": "Circle Talisman",
@@ -47,6 +47,8 @@
     "item.enchanted.flying_ointment": "Flying Ointment",
     "item.enchanted.mystic_unguent": "Mystic Unguent",
     "item.enchanted.happenstance_oil": "Happenstance Oil",
+
+    "item.enchanted.brew_of_the_grotesque": "Brew of the Grotesque",
 
     "item.enchanted.ghost_of_the_light": "Ghost of the Light",
     "item.enchanted.soul_of_the_world": "Soul of the World",

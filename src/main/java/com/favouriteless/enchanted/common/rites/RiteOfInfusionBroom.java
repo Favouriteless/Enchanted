@@ -29,14 +29,13 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 
 public class RiteOfInfusionBroom extends AbstractCreateItemRite {
 
     public RiteOfInfusionBroom() {
-        super(3000, 0, SoundEvents.ZOMBIE_VILLAGER_CURE); // Power, power per tick
+        super(EnchantedRiteTypes.INFUSION_BROOM.get(), 3000, 0, SoundEvents.ZOMBIE_VILLAGER_CURE); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.BROOM.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.FLYING_OINTMENT.get(), 1);
 
@@ -49,15 +48,6 @@ public class RiteOfInfusionBroom extends AbstractCreateItemRite {
         spawnItems(new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get(), 1));
         spawnMagicParticles();
         stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.INFUSION_BROOM.get();
     }
 
 }

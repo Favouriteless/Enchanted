@@ -28,22 +28,16 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.world.item.Items;
 
 public class RiteOfSkyWrathCharged extends RiteOfSkyWrath {
 
     public RiteOfSkyWrathCharged() {
-        super(0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.SKY_WRATH_CHARGED.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.SKY_WRATH_CHARGED.get();
     }
 
 }

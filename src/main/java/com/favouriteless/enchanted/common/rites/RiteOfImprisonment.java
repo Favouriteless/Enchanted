@@ -31,7 +31,6 @@ import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -52,7 +51,7 @@ public class RiteOfImprisonment extends AbstractRite {
     private final Set<Entity> tetheredMonsters = new HashSet<>();
 
     public RiteOfImprisonment() {
-        super(500, 3); // Power, power per tick
+        super(EnchantedRiteTypes.IMPRISONMENT.get(), 500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -85,11 +84,6 @@ public class RiteOfImprisonment extends AbstractRite {
         if(this.ticks % (ImprisonmentCageParticle.LIFETIME+15) == 0) { // 15 ticks for the fade time
             level.sendParticles(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.IMPRISONMENT.get();
     }
 
 }

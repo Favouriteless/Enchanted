@@ -157,6 +157,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> MYSTIC_UNGUENT = registerBrew("mystic_unguent", MobEffects.WEAKNESS, 1200, 1);
     public static final RegistryObject<Item> HAPPENSTANCE_OIL = registerBrew("happenstance_oil", MobEffects.NIGHT_VISION, 1200, 0);
 
+    public static final RegistryObject<Item> BREW_OF_THE_GROTESQUE = registerItem("brew_of_the_grotesque");
+
     public static final RegistryObject<Item> GHOST_OF_THE_LIGHT = registerBrew("ghost_of_the_light", MobEffects.POISON, 1200, 1);
     public static final RegistryObject<Item> SOUL_OF_THE_WORLD = registerBrew("soul_of_the_world", MobEffects.POISON, 1200, 1);
     public static final RegistryObject<Item> SPIRIT_OF_OTHERWHERE = registerBrew("spirit_of_otherwhere", MobEffects.POISON, 1200, 1);

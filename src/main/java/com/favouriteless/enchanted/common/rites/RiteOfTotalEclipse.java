@@ -42,12 +42,12 @@ public class RiteOfTotalEclipse extends AbstractRite {
 
     private static long LAST_USE_TIME = System.currentTimeMillis();
 
-    protected RiteOfTotalEclipse(int power, int powerTick) {
-        super(power, powerTick);
+    protected RiteOfTotalEclipse(RiteType<?> type, int power, int powerTick) {
+        super(type, power, powerTick);
     }
 
     public RiteOfTotalEclipse() {
-        super(3000, 0); // Power, power per tick
+        this(EnchantedRiteTypes.TOTAL_ECLIPSE.get(), 3000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.STONE_AXE, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
@@ -59,15 +59,6 @@ public class RiteOfTotalEclipse extends AbstractRite {
         level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
         LAST_USE_TIME = System.currentTimeMillis();
         stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.TOTAL_ECLIPSE.get();
     }
 
     @Override

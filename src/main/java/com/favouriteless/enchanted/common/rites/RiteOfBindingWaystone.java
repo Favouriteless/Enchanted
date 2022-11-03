@@ -36,12 +36,12 @@ import net.minecraft.world.item.Items;
 
 public class RiteOfBindingWaystone extends AbstractCreateItemRite {
 
-    protected RiteOfBindingWaystone(int power, int powerTick) {
-        super(power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingWaystone(RiteType<?> type, int power, int powerTick) {
+        super(type, power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
     }
 
     public RiteOfBindingWaystone() {
-        this(500, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BINDING_WAYSTONE.get(), 500, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
@@ -53,15 +53,6 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
         spawnItems(WaystoneHelper.create(level, pos));
         spawnMagicParticles();
         stopExecuting();
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_WAYSTONE.get();
     }
 
 }

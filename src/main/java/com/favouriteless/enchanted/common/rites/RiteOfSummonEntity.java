@@ -29,17 +29,16 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.world.item.Items;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.Items;
 
 public class RiteOfSummonEntity extends AbstractRite {
 
     public RiteOfSummonEntity() {
-        super(3000, 0); // Power, power per tick
+        super(EnchantedRiteTypes.SUMMONING_ENTITY.get(), 3000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
@@ -49,7 +48,8 @@ public class RiteOfSummonEntity extends AbstractRite {
 
     @Override
     public void execute() {
-        if(targetEntity == null) targetEntity = getTargetEntity();
+        if(targetEntity == null)
+            targetEntity = getTargetEntity();
         if(level != null && pos != null && targetEntity != null) {
             spawnParticles(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
             spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
@@ -74,15 +74,6 @@ public class RiteOfSummonEntity extends AbstractRite {
             double dz = z - 0.5D + (Math.random() * 1.5D);
             world.sendParticles(ParticleTypes.PORTAL, dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.SUMMONING_ENTITY.get();
     }
 
 }

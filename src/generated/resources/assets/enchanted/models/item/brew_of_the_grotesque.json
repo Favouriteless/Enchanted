@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "enchanted:item/brew_of_the_grotesque"
+  }
+}

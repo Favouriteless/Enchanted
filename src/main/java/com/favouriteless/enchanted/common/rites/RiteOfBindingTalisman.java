@@ -38,12 +38,12 @@ import net.minecraft.world.level.block.Blocks;
 
 public class RiteOfBindingTalisman extends AbstractCreateItemRite {
 
-    protected RiteOfBindingTalisman(int power, int powerTick) {
-        super(power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingTalisman(RiteType<?> type, int power, int powerTick) {
+        super(type, power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
     }
 
     public RiteOfBindingTalisman() {
-        this(1000, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BINDING_TALISMAN.get(), 1000, 0); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
     }
@@ -90,15 +90,6 @@ public class RiteOfBindingTalisman extends AbstractCreateItemRite {
         if(size.match(level, pos, EnchantedBlocks.CHALK_RED.get())) return 2;
         if(size.match(level, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 3;
         return 0;
-    }
-
-    @Override
-    public void onTick() {
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_TALISMAN.get();
     }
 
 }

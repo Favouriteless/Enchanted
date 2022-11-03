@@ -28,12 +28,11 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 
 public class RiteOfBindingWaystoneDuplicateCharged extends RiteOfBindingWaystoneDuplicate {
 
     public RiteOfBindingWaystoneDuplicateCharged() {
-        super(0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE_CHARGED.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
@@ -41,10 +40,5 @@ public class RiteOfBindingWaystoneDuplicateCharged extends RiteOfBindingWaystone
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
     }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE_CHARGED.get();
-    }
-
+    
 }

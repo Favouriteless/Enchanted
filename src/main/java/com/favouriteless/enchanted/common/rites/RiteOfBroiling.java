@@ -47,12 +47,12 @@ public class RiteOfBroiling extends AbstractCreateItemRite {
     private static final Random RANDOM = new Random();
     public static final double CIRCLE_RADIUS = 3.0D;
 
-    public RiteOfBroiling(int power, int powerTick) {
-        super(power, powerTick, SoundEvents.BLAZE_SHOOT);
+    public RiteOfBroiling(RiteType<?> type, int power, int powerTick) {
+        super(type, power, powerTick, SoundEvents.BLAZE_SHOOT);
     }
 
     public RiteOfBroiling() {
-        this(1000, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BROILING.get(), 1000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(Items.COAL, 1);
         ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);
@@ -101,11 +101,6 @@ public class RiteOfBroiling extends AbstractCreateItemRite {
                 .filter(recipe -> recipe.getIngredients().get(0).test(item.getItem()))
                 .findFirst()
                 .orElse(null);
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.BROILING.get();
     }
 
 }

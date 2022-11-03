@@ -100,6 +100,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.SOUL_OF_THE_WORLD.get());
 		simpleItem(EnchantedItems.SPIRIT_OF_OTHERWHERE.get());
 		simpleItem(EnchantedItems.INFERNAL_ANIMUS.get());
+		simpleItem(EnchantedItems.BREW_OF_THE_GROTESQUE.get());
 		simpleItem(EnchantedItems.GARLIC.get());
 		simpleToolItem(EnchantedItems.ARTHANA.get());
 

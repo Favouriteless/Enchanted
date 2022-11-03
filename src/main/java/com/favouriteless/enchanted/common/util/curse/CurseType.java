@@ -22,22 +22,23 @@
  *
  */
 
-package com.favouriteless.enchanted.common.rites;
+package com.favouriteless.enchanted.common.util.curse;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import net.minecraft.world.item.Items;
+import com.favouriteless.enchanted.api.rites.AbstractCurse;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class RiteOfTotalEclipseCharged extends RiteOfTotalEclipse {
+import java.util.function.Supplier;
 
-    public RiteOfTotalEclipseCharged() {
-        super(EnchantedRiteTypes.TOTAL_ECLIPSE_CHARGED.get(), 0, 0); // Power, power per tick
-        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(Items.IRON_AXE, 1);
-        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-    }
+public class CurseType<T extends AbstractCurse> extends ForgeRegistryEntry<CurseType<?>> {
+
+	private final Supplier<AbstractCurse> supplier;
+
+	public CurseType(Supplier<AbstractCurse> supplier) {
+		this.supplier = supplier;
+	}
+
+	public AbstractCurse create() {
+		return this.supplier.get();
+	}
 
 }

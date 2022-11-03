@@ -30,7 +30,6 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -47,17 +46,13 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 	public static final double CIRCLE_RADIUS = 7.5D;
 
 	public RiteOfTranspositionIron() {
-		super(0, 0, SoundEvents.COPPER_BREAK);
+		super(EnchantedRiteTypes.TRANSPOSITION_IRON.get(), 0, 0, SoundEvents.COPPER_BREAK);
 		CIRCLES_REQUIRED.put(CirclePart.LARGE, EnchantedBlocks.CHALK_PURPLE.get());
 		ITEMS_REQUIRED.put(Items.ENDER_PEARL, 1);
 		ITEMS_REQUIRED.put(Items.IRON_INGOT, 1);
 		ITEMS_REQUIRED.put(Items.BLAZE_POWDER, 1);
 		ITEMS_REQUIRED.put(EnchantedItems.DIAMOND_VAPOUR.get(), 1);
 		ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-	}
-
-	@Override
-	protected void execute() {
 	}
 
 	@Override
@@ -98,10 +93,5 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 	protected void loadAdditional(CompoundTag nbt) {
 		if(nbt.contains("progress"))
 			progress = nbt.getInt("progress");
-	}
-
-	@Override
-	public RiteType<?> getType() {
-		return EnchantedRiteTypes.TRANSPOSITION_IRON.get();
 	}
 }

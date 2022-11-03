@@ -260,7 +260,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
 			else {
-				tank.drain(new FluidStack(Fluids.WATER, tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount()), IFluidHandler.FluidAction.EXECUTE);
+				tank.drain(new FluidStack(Fluids.WATER, tank.getCapacity() / potentialRecipes.get(0).getResultItem().getCount() + 1), IFluidHandler.FluidAction.EXECUTE);
 			}
 			if(!itemOut.isEmpty()) {
 				if(player != null) {

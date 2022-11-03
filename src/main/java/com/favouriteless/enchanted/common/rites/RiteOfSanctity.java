@@ -31,7 +31,6 @@ import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +45,7 @@ public class RiteOfSanctity extends AbstractRite {
     public static final double REPULSE_FACTOR = 0.03D;
 
     public RiteOfSanctity() {
-        super(500, 3); // Power, power per tick
+        super(EnchantedRiteTypes.SANCTITY.get(), 500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.FEATHER, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -77,11 +76,6 @@ public class RiteOfSanctity extends AbstractRite {
             level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx + 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
             level.sendParticles(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 255, 255, 255, cx, cz, 3.0D), cx - 3.0D, dy, dz, 1, 0.0D, 0.35D, 0.0D, 0.0D);
         }
-    }
-
-    @Override
-    public RiteType<?> getType() {
-        return EnchantedRiteTypes.SANCTITY.get();
     }
 
 }

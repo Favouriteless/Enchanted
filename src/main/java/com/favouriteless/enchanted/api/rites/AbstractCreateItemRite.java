@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -36,8 +37,8 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
 
     private final SoundEvent createItemSound;
 
-    public AbstractCreateItemRite(int power, int powerTick, SoundEvent createItemSound) {
-        super(power, powerTick);
+    public AbstractCreateItemRite(RiteType<?> type, int power, int powerTick, SoundEvent createItemSound) {
+        super(type, power, powerTick);
         this.createItemSound = createItemSound;
     }
 

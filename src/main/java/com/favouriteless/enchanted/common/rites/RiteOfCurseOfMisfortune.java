@@ -24,28 +24,31 @@
 
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
 
-public class RiteOfBindingWaystonePlayerCharged extends RiteOfBindingWaystonePlayer {
+public class RiteOfCurseOfMisfortune extends AbstractRite {
 
-    protected RiteOfBindingWaystonePlayerCharged(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick);
+    public RiteOfCurseOfMisfortune() {
+        super(EnchantedRiteTypes.CURSE_OF_MISFORTUNE.get(), 2000, 0); // Power
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
+        ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.EXHALE_OF_THE_HORNED_ONE.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.BREW_OF_THE_GROTESQUE.get(), 1);
+        ITEMS_REQUIRED.put(Items.FERMENTED_SPIDER_EYE, 1);
+        ITEMS_REQUIRED.put(Items.GUNPOWDER, 1);
     }
 
-    public RiteOfBindingWaystonePlayerCharged() {
-        this(EnchantedRiteTypes.BINDING_WAYSTONE_PLAYER_CHARGED.get(), 0, 0); // Power, power per tick
-        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
-        ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ICY_NEEDLE.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
+    @Override
+    public void execute() {
+        level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.5F, 1.0F);
     }
 
 }

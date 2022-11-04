@@ -22,9 +22,10 @@
  *
  */
 
-package com.favouriteless.enchanted.api.rites;
+package com.favouriteless.enchanted.api.curses;
 
 import com.favouriteless.enchanted.common.util.curse.CurseType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.UUID;
@@ -35,10 +36,11 @@ import java.util.UUID;
 public abstract class AbstractCurse {
 
     public final CurseType<?> type;
-    private UUID targetUUID;
-    private UUID casterUUID;
+    protected UUID targetUUID;
+    protected UUID casterUUID;
+    protected int level;
 
-    public ServerPlayer targetPlayer;
+    protected ServerPlayer targetPlayer;
 
     protected long ticks = 0;
 
@@ -72,5 +74,34 @@ public abstract class AbstractCurse {
     public void setCaster(UUID casterUUID) {
         this.casterUUID = casterUUID;
     }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void save(CompoundTag nbt) {
+        nbt.putString("type", type.getRegistryName().toString());
+        nbt.putUUID("target", targetUUID);
+        nbt.putUUID("caster", casterUUID);
+        nbt.putLong("ticks", ticks);
+        nbt.putInt("level", level);
+        saveAdditional(nbt);
+    }
+
+    public void load(CompoundTag nbt) {
+        targetUUID = nbt.getUUID("target");
+        casterUUID = nbt.getUUID("caster");
+        ticks = nbt.getLong("ticks");
+        level = nbt.getInt("level");
+        loadAdditional(nbt);
+    }
+
+    protected void saveAdditional(CompoundTag nbt) {}
+
+    protected void loadAdditional(CompoundTag nbt) {}
 
 }

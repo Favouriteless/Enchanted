@@ -46,7 +46,7 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements Con
 	public PoppetShelfInventory(Level level, BlockPos pos) {
 		this.level = level;
 		this.pos = pos;
-		identifier = PoppetShelfWorldSavedData.getShelfIdentifier(level, pos);
+		identifier = PoppetShelfSavedData.getShelfIdentifier(level, pos);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements Con
 	@Override
 	public void setChanged() {
 		if(!level.isClientSide)
-			PoppetShelfWorldSavedData.get(level).setDirty();
+			PoppetShelfSavedData.get(level).setDirty();
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class PoppetShelfInventory extends AbstractList<ItemStack> implements Con
 			if(get(index).isEmpty()) {
 				get(index).setCount(1);
 			}
-			PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(level);
+			PoppetShelfSavedData data = PoppetShelfSavedData.get(level);
 			data.removePoppetUUID(identifier, get(index));
 			data.setupPoppetUUID(identifier, value);
 		}

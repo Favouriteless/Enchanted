@@ -40,32 +40,32 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.*;
 
-public class PoppetShelfWorldSavedData extends SavedData {
+public class PoppetShelfSavedData extends SavedData {
 
 	private static final String NAME = "enchanted_poppets";
 	public final Map<UUID, List<PoppetEntry>> PLAYER_POPPETS = new HashMap<>();
 	public final Map<String, PoppetShelfInventory> SHELF_STORAGE = new HashMap<>();
 	public final ServerLevel level;
 
-	public PoppetShelfWorldSavedData(ServerLevel world) {
+	public PoppetShelfSavedData(ServerLevel world) {
 		super();
 		this.level = world;
 	}
 
-	public static PoppetShelfWorldSavedData get(Level world) {
+	public static PoppetShelfSavedData get(Level world) {
 		if (world instanceof ServerLevel) {
 			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
 			DimensionDataStorage storage = overworld.getDataStorage();
-			return storage.computeIfAbsent((nbt) -> PoppetShelfWorldSavedData.load(overworld, nbt),() -> new PoppetShelfWorldSavedData(overworld), NAME);
+			return storage.computeIfAbsent((nbt) -> PoppetShelfSavedData.load(overworld, nbt),() -> new PoppetShelfSavedData(overworld), NAME);
 		}
 		else {
 			throw new RuntimeException("Game attempted to load server-side poppet shelf data from a client-side world.");
 		}
 	}
 
-	public static PoppetShelfWorldSavedData load(ServerLevel level, CompoundTag nbt) {
-		PoppetShelfWorldSavedData data = new PoppetShelfWorldSavedData(level);
+	public static PoppetShelfSavedData load(ServerLevel level, CompoundTag nbt) {
+		PoppetShelfSavedData data = new PoppetShelfSavedData(level);
 
 		for(String identifier : nbt.getAllKeys()) {
 			ServerLevel world = data.getLevelFromShelfIdentifier(identifier);

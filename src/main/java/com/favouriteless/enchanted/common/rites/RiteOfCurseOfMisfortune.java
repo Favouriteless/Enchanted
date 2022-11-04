@@ -26,8 +26,10 @@ package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.util.curse.CurseManager;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -37,7 +39,6 @@ public class RiteOfCurseOfMisfortune extends AbstractRite {
 
     public RiteOfCurseOfMisfortune() {
         super(EnchantedRiteTypes.CURSE_OF_MISFORTUNE.get(), 2000, 0); // Power
-        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.EXHALE_OF_THE_HORNED_ONE.get(), 1);
@@ -48,7 +49,14 @@ public class RiteOfCurseOfMisfortune extends AbstractRite {
 
     @Override
     public void execute() {
-        level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.5F, 1.0F);
+        if(targetUUID != null) {
+            level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.5F, 1.0F);
+            CurseManager.createCurse(level, EnchantedCurseTypes.MISFORTUNE.get(), targetUUID, casterUUID, 1);
+        }
+        else {
+            cancel();
+        }
+        stopExecuting();
     }
 
 }

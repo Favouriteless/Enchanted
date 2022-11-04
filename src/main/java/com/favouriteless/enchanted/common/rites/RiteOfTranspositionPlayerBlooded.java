@@ -48,7 +48,7 @@ public class RiteOfTranspositionPlayerBlooded extends AbstractRite {
     @Override
     public void execute() {
         ItemStack stack = itemsConsumed.get(0);
-        Player caster = level.getPlayerByUUID(casterUUID);
+        Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
 
         if(caster != null) {
             Player target = WaystoneHelper.getPlayer(level, stack);

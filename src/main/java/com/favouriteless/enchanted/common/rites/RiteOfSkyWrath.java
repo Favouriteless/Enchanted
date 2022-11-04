@@ -126,7 +126,7 @@ public class RiteOfSkyWrath extends AbstractRite {
     @Override
     protected boolean checkAdditional() {
         if(System.currentTimeMillis() > LAST_USE_TIME + EnchantedConfig.SKY_WRATH_COOLDOWN.get() * 1000) {
-            Player caster = level.getPlayerByUUID(casterUUID);
+            Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
             caster.displayClientMessage(new TextComponent("The sky is not ready to release lightning.").withStyle(ChatFormatting.RED), false);
             return true;
         }

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.rites.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.common.curses.CurseOfMisfortune;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +36,6 @@ import java.util.function.Supplier;
 public class EnchantedCurseTypes {
 
     public static final DeferredRegister<CurseType<?>> CURSE_TYPES = DeferredRegister.create(new ResourceLocation(Enchanted.MOD_ID, "curses"), Enchanted.MOD_ID);
-
     public static final Supplier<IForgeRegistry<CurseType<?>>> REGISTRY = CURSE_TYPES.makeRegistry(Generify.<CurseType<?>>from(CurseType.class), RegistryBuilder::new);
 
     public static final RegistryObject<CurseType<?>> MISFORTUNE = CURSE_TYPES.register("misfortune", () -> new CurseType<>(CurseOfMisfortune::new));

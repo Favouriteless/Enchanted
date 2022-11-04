@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.util.curse;
 
-import com.favouriteless.enchanted.api.rites.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.function.Supplier;

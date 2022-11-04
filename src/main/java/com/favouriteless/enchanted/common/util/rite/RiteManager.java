@@ -33,32 +33,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-import java.util.List;
-
-@EventBusSubscriber(modid= Enchanted.MOD_ID, bus= Bus.FORGE)
+@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class RiteManager {
 
 	public static void addRite(AbstractRite rite) {
 		if(rite.level != null) {
-			RiteWorldSavedData data = RiteWorldSavedData.get(rite.level);
+			RiteSavedData data = RiteSavedData.get(rite.level);
 			data.ACTIVE_RITES.add(rite);
 			data.setDirty();
 		}
 	}
 
-	public static void removeRite(AbstractRite rite) {
-		rite.isRemoved = true;
-	}
-
-	public static List<AbstractRite> getActiveRites(Level world) {
-		RiteWorldSavedData data = RiteWorldSavedData.get(world);
-		return data.ACTIVE_RITES;
-	}
-
 	@SubscribeEvent
 	public static void onWorldTick(WorldTickEvent event) {
 		if(event.phase == Phase.START && event.world.dimension() == Level.OVERWORLD) {
-			RiteWorldSavedData data = RiteWorldSavedData.get(event.world);
+			RiteSavedData data = RiteSavedData.get(event.world);
 
 			data.ACTIVE_RITES.removeIf(rite -> rite.isRemoved);
 			for(AbstractRite rite : data.ACTIVE_RITES) {

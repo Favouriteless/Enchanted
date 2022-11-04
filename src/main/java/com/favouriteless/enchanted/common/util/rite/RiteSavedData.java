@@ -38,31 +38,31 @@ import net.minecraft.world.level.saveddata.SavedData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RiteWorldSavedData extends SavedData {
+public class RiteSavedData extends SavedData {
 
 	private static final String NAME = "enchanted_rites";
 	public final List<AbstractRite> ACTIVE_RITES = new ArrayList<>();
 	public final ServerLevel level;
 	
-	public RiteWorldSavedData(ServerLevel world) {
+	public RiteSavedData(ServerLevel world) {
 		super();
 		this.level = world;
 	}
 
-	public static RiteWorldSavedData get(Level world) {
+	public static RiteSavedData get(Level world) {
 		if (world instanceof ServerLevel) {
 			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
 			DimensionDataStorage storage = overworld.getDataStorage();
-			return storage.computeIfAbsent((nbt) -> RiteWorldSavedData.load(overworld, nbt), () -> new RiteWorldSavedData(overworld), NAME);
+			return storage.computeIfAbsent((nbt) -> RiteSavedData.load(overworld, nbt), () -> new RiteSavedData(overworld), NAME);
 		}
 		else {
 			throw new RuntimeException("Game attempted to load serverside rite data from a clientside world.");
 		}
 	}
 
-	public static RiteWorldSavedData load(ServerLevel level, CompoundTag nbt) {
-		RiteWorldSavedData data = new RiteWorldSavedData(level);
+	public static RiteSavedData load(ServerLevel level, CompoundTag nbt) {
+		RiteSavedData data = new RiteSavedData(level);
 		ListTag riteList = nbt.getList("riteList", 10);
 
 		for(int i = 0; i < riteList.size(); i++) {

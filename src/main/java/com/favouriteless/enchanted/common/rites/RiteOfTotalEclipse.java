@@ -64,7 +64,7 @@ public class RiteOfTotalEclipse extends AbstractRite {
     @Override
     protected boolean checkAdditional() {
         if(System.currentTimeMillis() > LAST_USE_TIME + EnchantedConfig.TOTAL_ECLIPSE_COOLDOWN.get() * 1000) {
-            Player caster = level.getPlayerByUUID(casterUUID);
+            Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
             caster.displayClientMessage(new TextComponent("The moon is not ready to be called forth.").withStyle(ChatFormatting.RED), false);
             return true;
         }

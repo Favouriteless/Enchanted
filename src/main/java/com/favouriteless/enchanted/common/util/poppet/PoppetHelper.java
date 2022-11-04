@@ -29,7 +29,7 @@ import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfWorldSavedData.PoppetEntry;
+import com.favouriteless.enchanted.common.util.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -77,9 +77,9 @@ public class PoppetHelper {
 		return false;
 	}
 
-	public static Player getBoundPlayer(ItemStack item, Level world) {
+	public static Player getBoundPlayer(ItemStack item, Level level) {
 		if(isBound(item)) {
-			return world.getPlayerByUUID(item.getTag().getUUID("boundPlayer"));
+			return level.getServer().getPlayerList().getPlayer(item.getTag().getUUID("boundPlayer"));
 		}
 		return null;
 	}
@@ -199,7 +199,7 @@ public class PoppetHelper {
 		if(item.getDamageValue() >= item.getMaxDamage()) {
 			item.shrink(1);
 			if(shelfIdentifier != null && item.getCount() <= 0) {
-				PoppetShelfWorldSavedData data = PoppetShelfWorldSavedData.get(level);
+				PoppetShelfSavedData data = PoppetShelfSavedData.get(level);
 				PoppetShelfInventory inventory = data.SHELF_STORAGE.get(shelfIdentifier);
 				for(int i = 0; i < inventory.getContainerSize(); i++)
 					if(inventory.get(i).equals(item))

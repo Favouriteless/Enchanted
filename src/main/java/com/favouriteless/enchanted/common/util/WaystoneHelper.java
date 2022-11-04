@@ -76,7 +76,7 @@ public class WaystoneHelper {
 			if(stack.hasTag()) {
 				CompoundTag nbt = stack.getTag();
 				if(nbt.contains("uuid"))
-					return level.getPlayerByUUID(nbt.getUUID("uuid"));
+					return level.getServer().getPlayerList().getPlayer(nbt.getUUID("uuid"));
 			}
 		}
 		return null;

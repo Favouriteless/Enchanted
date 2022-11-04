@@ -29,7 +29,6 @@ import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteManager;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
@@ -265,12 +264,12 @@ public abstract class AbstractRite {
     public void stopExecuting() {
         detatchFromChalk();
         this.isStarting = false;
-        RiteManager.removeRite(this);
+        this.isRemoved = true;
     }
 
     public void cancel() {
         isStarting = false;
-        RiteManager.removeRite(this);
+        this.isRemoved = true;
 
         while(!itemsConsumed.isEmpty()) {
             ItemStack stack = itemsConsumed.get(0);
@@ -281,7 +280,7 @@ public abstract class AbstractRite {
 
         level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
 
-        Player player = level.getPlayerByUUID(casterUUID);
+        Player player = level.getServer().getPlayerList().getPlayer(casterUUID);
         if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
 
         for(int i = 0; i < 25; i++) {

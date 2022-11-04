@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.curses;
 
-import com.favouriteless.enchanted.api.rites.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
 
 public class CurseOfMisfortune extends AbstractCurse {

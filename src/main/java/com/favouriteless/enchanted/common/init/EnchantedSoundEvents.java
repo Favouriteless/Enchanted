@@ -22,20 +22,20 @@
  *
  */
 
-package com.favouriteless.enchanted.common.curses;
+package com.favouriteless.enchanted.common.init;
 
-import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
-import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
-import net.minecraft.network.chat.TextComponent;
+import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-public class CurseOfMisfortune extends AbstractRandomCurse {
+public class EnchantedSoundEvents {
 
-	public CurseOfMisfortune() {
-		super(EnchantedCurseTypes.MISFORTUNE.get(), 120, 300); // Executes once every 2-5 minutes
-	}
+	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Enchanted.MOD_ID);
 
-	@Override
-	protected void execute() {
-		targetPlayer.displayClientMessage(new TextComponent("cursed" + ticks), false);
-	}
+	public static RegistryObject<SoundEvent> CURSE_WHISPER = SOUND_EVENTS.register("curse_whisper", () -> new SoundEvent(new ResourceLocation(Enchanted.MOD_ID, "curse_whisper")));
+
+
 }

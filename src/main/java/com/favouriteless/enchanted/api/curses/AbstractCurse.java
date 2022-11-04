@@ -24,16 +24,22 @@
 
 package com.favouriteless.enchanted.api.curses;
 
+import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 
 import java.util.UUID;
 
 /**
- * AbstractRite implementation for creating a curse
+ * Curses base class
  */
 public abstract class AbstractCurse {
+
+    public static final double WHISPER_CHANCE = 1 / 8.0D;
 
     public final CurseType<?> type;
     protected UUID targetUUID;
@@ -48,7 +54,22 @@ public abstract class AbstractCurse {
         this.type = type;
     }
 
-    public void tick() {}
+    public void tick(ServerLevel level) { // Ticks with level purely for level access, do not save this anywhere.
+        if(targetPlayer == null || targetPlayer.isRemoved()) {
+            targetPlayer = level.getServer().getPlayerList().getPlayer(targetUUID);
+        }
+        if(targetPlayer != null) {
+            onTick();
+            if(ticks % 600 == 0) {
+                if(Math.random() < WHISPER_CHANCE)
+                    targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 1.0F, (float)Math.random()*0.15F + 0.85F));
+            }
+        }
+
+        ticks++;
+    }
+
+    protected abstract void onTick();
 
     public CurseType<?> getType() {
         return type;

@@ -94,10 +94,10 @@ public class CurseManager {
 
 	@SubscribeEvent
 	public static void onWorldTick(WorldTickEvent event) {
-		if(event.phase == Phase.START && event.world.dimension() == Level.OVERWORLD) {
+		if(event.phase == Phase.START && event.world.dimension() == Level.OVERWORLD && event.world instanceof ServerLevel level) {
 			for(List<AbstractCurse> curses : ACTIVE_CURSES.values()) {
 				for(AbstractCurse curse : curses) {
-					curse.tick();
+					curse.tick(level);
 				}
 			}
 		}
@@ -110,6 +110,7 @@ public class CurseManager {
 			UUID uuid = player.getUUID();
 			if(data.curses.containsKey(uuid))
 				ACTIVE_CURSES.put(uuid, data.curses.get(uuid));
+			data.setDirty();
 		}
 	}
 

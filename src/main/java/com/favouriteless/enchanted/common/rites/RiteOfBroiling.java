@@ -40,11 +40,9 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.Random;
 
 public class RiteOfBroiling extends AbstractCreateItemRite {
 
-    private static final Random RANDOM = new Random();
     public static final double CIRCLE_RADIUS = 3.0D;
 
     public RiteOfBroiling(RiteType<?> type, int power, int powerTick) {
@@ -85,7 +83,7 @@ public class RiteOfBroiling extends AbstractCreateItemRite {
 
             int burnedCount = 0;
             for(int i = 0; i < itemEntity.getItem().getCount(); i++)
-                if(RANDOM.nextFloat() < EnchantedConfig.BROILING_BURN_CHANCE.get())
+                if(Math.random() < EnchantedConfig.BROILING_BURN_CHANCE.get())
                     burnedCount++;
 
             replaceItem(itemEntity, new ItemStack(recipe.getResultItem().getItem(), recipe.getResultItem().getCount()-burnedCount), new ItemStack(Items.CHARCOAL, burnedCount));

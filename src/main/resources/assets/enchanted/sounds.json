@@ -1,0 +1,10 @@
+{
+  "curse_whisper": {
+    "sounds": [
+      "enchanted:curse_whisper_1",
+      "enchanted:curse_whisper_2",
+      "enchanted:curse_whisper_3",
+      "enchanted:curse_whisper_4"
+    ]
+  }
+}

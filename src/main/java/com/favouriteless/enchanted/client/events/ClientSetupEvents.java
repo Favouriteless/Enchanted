@@ -25,14 +25,14 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
+import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
 import com.favouriteless.enchanted.client.render.entity.MandrakeRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.MandrakeModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
-import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
@@ -40,6 +40,7 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -74,6 +75,7 @@ public class ClientSetupEvents {
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(EnchantedEntityTypes.MANDRAKE.get(), MandrakeRenderer::new);
 		event.registerEntityRenderer(EnchantedEntityTypes.BROOMSTICK.get(), BroomstickRenderer::new);
+		event.registerEntityRenderer(EnchantedEntityTypes.THROWABLE_BREW.get(), ThrownItemRenderer::new);
 
 		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(10));
 		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(8));

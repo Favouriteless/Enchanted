@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.common.init;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
+import com.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -158,6 +159,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> HAPPENSTANCE_OIL = registerBrew("happenstance_oil", MobEffects.NIGHT_VISION, 1200, 0);
 
     public static final RegistryObject<Item> BREW_OF_THE_GROTESQUE = registerItem("brew_of_the_grotesque");
+    public static final RegistryObject<Item> BREW_OF_LOVE = ITEMS.register("brew_of_love", () -> new LoveBrewItem(defaultProperties()));
 
     public static final RegistryObject<Item> GHOST_OF_THE_LIGHT = registerBrew("ghost_of_the_light", MobEffects.POISON, 1200, 1);
     public static final RegistryObject<Item> SOUL_OF_THE_WORLD = registerBrew("soul_of_the_world", MobEffects.POISON, 1200, 1);

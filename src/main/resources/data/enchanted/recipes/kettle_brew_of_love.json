@@ -1,0 +1,15 @@
+{
+  "type": "enchanted:kettle",
+  "inputs": [
+    { "item": "minecraft:poppy" },
+    { "item": "minecraft:golden_carrot" },
+    { "item": "minecraft:lily_pad" },
+    { "item": "minecraft:cocoa_beans" },
+    { "item": "enchanted:whiff_of_magic" },
+    { "item": "enchanted:artichoke" }
+  ],
+  "output": { "item": "enchanted:brew_of_love", "count": 3 },
+  "power": 0,
+  "cookingColour": { "red": 176, "green": 70, "blue": 165 },
+  "finalColour": { "red": 247, "green": 143, "blue": 235 }
+}

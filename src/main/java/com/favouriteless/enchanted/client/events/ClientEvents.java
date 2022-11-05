@@ -27,12 +27,18 @@ package com.favouriteless.enchanted.client.events;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
-import net.minecraft.world.item.Items;
-import net.minecraft.network.chat.TextComponent;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.AbstractSoundInstance;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,6 +64,20 @@ public class ClientEvents {
 	public static void onItemTooltip(ItemTooltipEvent event) {
 		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && EnchantedConfig.DISABLE_TOTEMS.get()) {
 			event.getToolTip().add(new TextComponent("Totems are disabled (Enchanted config)").withStyle(ChatFormatting.RED));
+		}
+	}
+
+	@SubscribeEvent
+	public static void earmuffsPlaySound(PlaySoundEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		Player player = mc.player;
+
+		if(player != null) {
+			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
+				AbstractSoundInstance sound = (AbstractSoundInstance)event.getSound();
+				sound.volume *= 0.03F;
+				event.setSound(sound);
+			}
 		}
 	}
 }

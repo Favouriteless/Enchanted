@@ -28,13 +28,12 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
-import com.favouriteless.enchanted.common.sounds.CauldronBubblingSoundInstance;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -448,7 +447,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			startRed = targetRed;
 			startGreen = targetGreen;
 			startBlue = targetBlue;
-			Minecraft.getInstance().getSoundManager().play(new CauldronBubblingSoundInstance(this));
+			CauldronBlockEntityClientHandler.startCauldronBubbling(this);
 		}
 	}
 

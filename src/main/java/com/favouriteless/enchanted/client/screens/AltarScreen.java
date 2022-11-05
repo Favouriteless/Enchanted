@@ -26,19 +26,16 @@ package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 import java.awt.*;
 
-@OnlyIn(Dist.CLIENT)
 public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
 
     private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/altar.png");

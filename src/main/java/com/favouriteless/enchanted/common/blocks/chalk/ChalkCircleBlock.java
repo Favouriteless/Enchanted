@@ -24,16 +24,14 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import java.util.Random;
 
@@ -60,7 +58,6 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
         return defaultBlockState().setValue(GLYPH, random.nextInt(48));
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
 
         if(this.particleType != null) {

@@ -27,12 +27,9 @@ package com.favouriteless.enchanted.client.particles;
 import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-@OnlyIn(Dist.CLIENT)
 public class KettleCookParticle extends TextureSheetParticle {
 
     protected KettleCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {

@@ -28,12 +28,10 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
@@ -122,32 +120,26 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 			return particleType;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public int getRed() {
 			return red;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public int getGreen() {
 			return green;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public int getBlue() {
 			return blue;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public double getRadius() {
 			return radius;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public double getCenterX() {
 			return centerX;
 		}
 
-		@OnlyIn(Dist.CLIENT)
 		public double getCenterZ() {
 			return centerZ;
 		}

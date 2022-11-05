@@ -28,17 +28,13 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
-
-import net.minecraft.core.particles.ParticleOptions.Deserializer;
 
 public class TwoToneColouredParticleType extends ParticleType<TwoToneColouredParticleType.TwoToneColouredData> {
     public static final Codec<TwoToneColouredData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -124,32 +120,26 @@ public class TwoToneColouredParticleType extends ParticleType<TwoToneColouredPar
             return particleType;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getRed() {
             return red;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getGreen() {
             return green;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getBlue() {
             return blue;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getRed1() {
             return red1;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getGreen1() {
             return green1;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public int getBlue1() {
             return blue1;
         }

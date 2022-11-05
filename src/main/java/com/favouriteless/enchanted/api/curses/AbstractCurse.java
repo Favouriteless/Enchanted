@@ -71,7 +71,6 @@ public abstract class AbstractCurse {
         else if(timeSinceWhisper > MIN_WHISPER_TIME*20L)
             if(Math.random() < WHISPER_CHANCE)
                 whisper();
-
         ticks++;
     }
 

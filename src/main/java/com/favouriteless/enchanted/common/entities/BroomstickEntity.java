@@ -24,9 +24,8 @@
 
 package com.favouriteless.enchanted.common.entities;
 
+import com.favouriteless.enchanted.client.client_handlers.entities.BroomstickEntityClientHandler;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -43,8 +42,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -102,7 +99,7 @@ public class BroomstickEntity extends Entity {
             if(level.isClientSide) {
                 deltaRotX *= 0.8F;
                 deltaRotY *= 0.8F;
-                controlBroom();
+                BroomstickEntityClientHandler.controlBroom(this);
             }
             else {
                 setDeltaMovement(getDeltaMovement().scale(0.75D).add(0.0D, -0.05D, 0.0D));
@@ -153,7 +150,7 @@ public class BroomstickEntity extends Entity {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Override
     public void lerpTo(double pX, double pY, double pZ, float pYaw, float pPitch, int pPosRotationIncrements, boolean pTeleport) {
         lerpX = pX;
         lerpY = pY;
@@ -161,37 +158,6 @@ public class BroomstickEntity extends Entity {
         lerpYRot = pYaw;
         lerpXRot = pPitch;
         lerpSteps = 10;
-    }
-
-    private void controlBroom() {
-        if(isVehicle()) {
-            LocalPlayer player = Minecraft.getInstance().player;
-            inputJump = false;
-
-            if(player.input.left) {
-                deltaRotY--;
-            }
-            if(player.input.right) {
-                deltaRotY++;
-            }
-            if(player.input.down) {
-                deltaRotX--;
-            }
-            if(player.input.up) {
-                deltaRotX++;
-            }
-            if(player.input.jumping) {
-                inputJump = true;
-            }
-
-            setYRot(getYRot() + deltaRotY);
-            setXRot(Mth.clamp(getXRot() + deltaRotX, -30.0F, 30.0F));
-            if(this.hasPassenger(player)) {
-                player.setYRot(player.getYRot() + deltaRotY);
-            }
-
-            setDeltaMovement(getNewDeltaMovement());
-        }
     }
 
     public Vec3 getNewDeltaMovement() {
@@ -300,6 +266,7 @@ public class BroomstickEntity extends Entity {
         return list.isEmpty() ? null : list.get(0);
     }
 
+    @Override
     protected boolean canAddPassenger(Entity passenger) {
         return getPassengers().size() < 1;
     }
@@ -402,11 +369,31 @@ public class BroomstickEntity extends Entity {
     /**
      * Setups the entity to do the hurt animation. Only used by packets in multiplayer.
      */
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateHurt() {
         setHurtDir(-getHurtDir());
         setHurtTime(10);
         setDamage(getDamage() * 11.0F);
     }
+
+    public void setInputJump(boolean value) {
+        inputJump = value;
+    }
+
+    public void setDeltaRotX(float value) {
+        deltaRotX = value;
+    }
+
+    public void setDeltaRotY(float value) {
+        deltaRotY = value;
+    }
+
+    public float getDeltaRotX() {
+        return deltaRotX;
+    }
+
+    public float getDeltaRotY() {
+        return deltaRotY;
+    }
+
 }

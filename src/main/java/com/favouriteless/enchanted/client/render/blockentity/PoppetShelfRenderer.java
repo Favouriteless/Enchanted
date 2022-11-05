@@ -27,18 +27,15 @@ package com.favouriteless.enchanted.client.render.blockentity;
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class PoppetShelfRenderer implements BlockEntityRenderer<PoppetShelfBlockEntity> {
 
     private static final Vector3f[] ITEM_POS = new Vector3f[] {

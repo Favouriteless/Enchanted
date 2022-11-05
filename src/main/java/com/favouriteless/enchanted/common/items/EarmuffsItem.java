@@ -27,24 +27,16 @@ package com.favouriteless.enchanted.common.items;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.jetbrains.annotations.Nullable;
@@ -56,21 +48,6 @@ public class EarmuffsItem extends ArmorItem {
 
 	public EarmuffsItem(Properties pProperties) {
 		super(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, pProperties);
-	}
-
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void playSound(PlaySoundEvent event) {
-		Minecraft mc = Minecraft.getInstance();
-		Player player = mc.player;
-
-		if(player != null) {
-			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				AbstractSoundInstance sound = (AbstractSoundInstance)event.getSound();
-				sound.volume *= 0.03F;
-				event.setSound(sound);
-			}
-		}
 	}
 
 	@Override
@@ -88,7 +65,6 @@ public class EarmuffsItem extends ArmorItem {
 
 	@Nullable
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return EarmuffsModel.TEXTURE.toString();
 	}

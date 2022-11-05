@@ -24,27 +24,25 @@
 
 package com.favouriteless.enchanted.common.util.poppet;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.poppets.AbstractDeathPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfSavedData.PoppetEntry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 
 import java.util.Queue;
-import java.util.Random;
 import java.util.UUID;
 
 public class PoppetHelper {
-
-	public static final Random RANDOM = new Random();
 
 	public static boolean isBound(ItemStack item) {
 		if(item.hasTag()) {
@@ -115,7 +113,7 @@ public class PoppetHelper {
 		if(poppetStack.getItem() instanceof AbstractDeathPoppetItem poppet) {
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
 				if(poppet.canProtect(player)) {
-					if(RANDOM.nextFloat() > poppet.getFailRate()) {
+					if(Enchanted.RANDOM.nextFloat() > poppet.getFailRate()) {
 						poppet.protect(player);
 						level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.5F, 1.0F);
 						return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
@@ -154,7 +152,7 @@ public class PoppetHelper {
 	public static PoppetResult tryUseItemProtectionPoppet(Player player, ItemStack poppetStack, ItemStack toolStack, ServerLevel level, String shelfIdentifier) {
 		if(poppetStack.getItem() instanceof ItemProtectionPoppetItem poppet) {
 			if(PoppetHelper.belongsTo(poppetStack, player)) {
-				if(RANDOM.nextFloat() > poppet.getFailRate()) {
+				if(Enchanted.RANDOM.nextFloat() > poppet.getFailRate()) {
 					poppet.protect(toolStack);
 					return tryDamagePoppet(poppetStack, level, shelfIdentifier) ? PoppetResult.SUCCESS_BREAK : PoppetResult.SUCCESS;
 				}

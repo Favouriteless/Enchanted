@@ -40,7 +40,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class EarmuffsModel extends HumanoidModel<LivingEntity> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/models/armor/custom/earmuffs.png");
+	public static final ResourceLocation TEXTURE = Enchanted.location("textures/models/armor/custom/earmuffs.png");
 
 	public EarmuffsModel(ModelPart root) {
 		super(root);

@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 
 public class EnchantedCurseTypes {
 
-    public static final DeferredRegister<CurseType<?>> CURSE_TYPES = DeferredRegister.create(new ResourceLocation(Enchanted.MOD_ID, "curses"), Enchanted.MOD_ID);
+    public static final DeferredRegister<CurseType<?>> CURSE_TYPES = DeferredRegister.create(Enchanted.location("curses"), Enchanted.MOD_ID);
     public static final Supplier<IForgeRegistry<CurseType<?>>> REGISTRY = CURSE_TYPES.makeRegistry(Generify.<CurseType<?>>from(CurseType.class), RegistryBuilder::new);
 
     public static final RegistryObject<CurseType<?>> MISFORTUNE = CURSE_TYPES.register("misfortune", () -> new CurseType<>(CurseOfMisfortune::new));

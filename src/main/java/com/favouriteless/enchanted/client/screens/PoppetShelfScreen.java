@@ -41,7 +41,7 @@ import java.awt.*;
 @OnlyIn(Dist.CLIENT)
 public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/poppet_shelf.png");
+    private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/poppet_shelf.png");
 
     public PoppetShelfScreen(PoppetShelfMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);

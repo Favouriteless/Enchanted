@@ -36,7 +36,7 @@ public class EnchantedPackets {
 
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-			new ResourceLocation(Enchanted.MOD_ID, "main"),
+			Enchanted.location("main"),
 			() -> PROTOCOL_VERSION,
 			PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals

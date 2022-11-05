@@ -44,7 +44,7 @@ public class EnchantedTreeGrower extends AbstractTreeGrower {
 	private final ResourceLocation location;
 
 	public EnchantedTreeGrower(String id) {
-		location = new ResourceLocation(Enchanted.MOD_ID, id);
+		location = Enchanted.location(id);
 	}
 
 	@Override

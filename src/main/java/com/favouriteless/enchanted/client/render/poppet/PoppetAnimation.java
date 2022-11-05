@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.client.render.poppet;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -33,11 +34,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.Random;
-
 public class PoppetAnimation {
-
-	private static final Random RANDOM = new Random();
 
 	private final ItemStack itemStack;
 	protected int ticks;
@@ -60,7 +57,7 @@ public class PoppetAnimation {
 		if(work > 0.2F && work < 0.55F) {
 			int maxOffset = widthScaled > heightScaled ? widthScaled / 80 : heightScaled / 80;
 			int offsetOffset = maxOffset/2;
-			matrixStack.translate(RANDOM.nextInt(maxOffset)-offsetOffset, RANDOM.nextInt(maxOffset)-offsetOffset, 0);
+			matrixStack.translate(Enchanted.RANDOM.nextInt(maxOffset)-offsetOffset, Enchanted.RANDOM.nextInt(maxOffset)-offsetOffset, 0);
 		}
 
 		matrixStack.translate((float)(widthScaled / 2), (float)(heightScaled / 2), -50.0D);

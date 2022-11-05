@@ -24,17 +24,14 @@
 
 package com.favouriteless.enchanted.core.util;
 
+import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import java.util.Random;
-
 public class StaticItemStackHelper {
-
-	public static final Random RANDOM = new Random();
 
 	public static boolean canStack(ItemStack original, ItemStack other) {
 		if(original.isStackable())
@@ -60,14 +57,14 @@ public class StaticItemStackHelper {
 			double d0 = EntityType.ITEM.getWidth();
 			double d1 = 1.0D - d0;
 			double d2 = d0 / 2.0D;
-			double d3 = Math.floor(x) + RANDOM.nextDouble() * d1 + d2;
-			double d4 = Math.floor(y) + RANDOM.nextDouble() * d1;
-			double d5 = Math.floor(z) + RANDOM.nextDouble() * d1 + d2;
+			double d3 = Math.floor(x) + Enchanted.RANDOM.nextDouble() * d1 + d2;
+			double d4 = Math.floor(y) + Enchanted.RANDOM.nextDouble() * d1;
+			double d5 = Math.floor(z) + Enchanted.RANDOM.nextDouble() * d1 + d2;
 
 			while(!item.isEmpty()) {
-				ItemEntity itementity = new ItemEntity(level, d3, d4, d5, item.split(RANDOM.nextInt(21) + 10));
+				ItemEntity itementity = new ItemEntity(level, d3, d4, d5, item.split(Enchanted.RANDOM.nextInt(21) + 10));
 				float f = 0.05F;
-				itementity.setDeltaMovement(RANDOM.nextGaussian() * (double)0.05F, RANDOM.nextGaussian() * (double)0.05F + (double)0.2F, RANDOM.nextGaussian() * (double)0.05F);
+				itementity.setDeltaMovement(Enchanted.RANDOM.nextGaussian() * (double)0.05F, Enchanted.RANDOM.nextGaussian() * (double)0.05F + (double)0.2F, Enchanted.RANDOM.nextGaussian() * (double)0.05F);
 				level.addFreshEntity(itementity);
 			}
 		}

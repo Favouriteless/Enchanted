@@ -42,7 +42,7 @@ import net.minecraft.world.inventory.ContainerData;
 
 public class SpinningWheelRenderer implements BlockEntityRenderer<SpinningWheelBlockEntity> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/block/spinning_wheel.png");
+	public static final ResourceLocation TEXTURE = Enchanted.location("textures/block/spinning_wheel.png");
 
 	private final ModelPart wheel;
 	private final ModelPart body;

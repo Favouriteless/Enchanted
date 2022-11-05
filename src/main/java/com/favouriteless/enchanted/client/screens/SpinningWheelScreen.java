@@ -43,7 +43,7 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMe
 
     private SpinningWheelMenu container;
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/spinning_wheel.png");
+    private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/spinning_wheel.png");
 
     public static final int ICONS_U = 176;
 

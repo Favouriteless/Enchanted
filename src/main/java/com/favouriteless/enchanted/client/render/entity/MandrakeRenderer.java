@@ -35,7 +35,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MandrakeRenderer extends MobRenderer<MandrakeEntity, MandrakeModel> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/entity/mandrake.png");
+    private static final ResourceLocation TEXTURE = Enchanted.location("textures/entity/mandrake.png");
 
     public MandrakeRenderer(Context context) {
         super(context, new MandrakeModel(context.bakeLayer(ModelLayerLocations.MANDRAKE)), 0.3f);

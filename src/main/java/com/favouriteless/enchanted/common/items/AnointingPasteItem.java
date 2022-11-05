@@ -24,25 +24,20 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-
-import java.util.Random;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AnointingPasteItem extends Item {
-
-    private static final Random RANDOM = new Random();
 
     public AnointingPasteItem(Properties properties) {
         super(properties);
@@ -65,9 +60,9 @@ public class AnointingPasteItem extends Item {
 
     public static void spawnParticles(Level world, BlockPos pos) {
         for(int i = 0; i < 20; i++) {
-            double x = RANDOM.nextDouble() * 2;
-            double y = RANDOM.nextDouble() * 1.5D;
-            double z = RANDOM.nextDouble() * 2;
+            double x = Enchanted.RANDOM.nextDouble() * 2;
+            double y = Enchanted.RANDOM.nextDouble() * 1.5D;
+            double z = Enchanted.RANDOM.nextDouble() * 2;
 
             world.addParticle(ParticleTypes.WITCH, pos.getX()-0.5D + x, pos.getY() + y, pos.getZ()-0.5D + z, 0.0D, 0.0D, 0.0D);
         }

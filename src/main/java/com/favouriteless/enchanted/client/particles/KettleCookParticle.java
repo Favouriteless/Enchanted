@@ -24,24 +24,22 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import net.minecraft.client.particle.*;
+import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class KettleCookParticle extends TextureSheetParticle {
 
-    private static final Random RANDOM = new Random();
-
     protected KettleCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min((red + RANDOM.nextInt(20) - 10)/255F, 1.0F);
-        this.gCol = Math.min((green + RANDOM.nextInt(20) - 10)/255F, 1.0F);
-        this.bCol = Math.min((blue + RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.rCol = Math.min((red + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.gCol = Math.min((green + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.bCol = Math.min((blue + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.4F);
         this.lifetime = 20;

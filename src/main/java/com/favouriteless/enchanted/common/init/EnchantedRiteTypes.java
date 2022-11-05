@@ -42,7 +42,7 @@ import java.util.function.Supplier;
 
 public class EnchantedRiteTypes {
 
-    public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(new ResourceLocation(Enchanted.MOD_ID, "rites"), Enchanted.MOD_ID);
+    public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(Enchanted.location("rites"), Enchanted.MOD_ID);
     public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry(Generify.<RiteType<?>>from(RiteType.class), RegistryBuilder::new);
 
     public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteOfChargingStone::new));

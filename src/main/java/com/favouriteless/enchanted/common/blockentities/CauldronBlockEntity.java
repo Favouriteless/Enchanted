@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
@@ -31,7 +32,9 @@ import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.S
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
+import com.favouriteless.enchanted.common.sounds.CauldronBubblingSoundInstance;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -75,7 +78,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IAltarPowerConsumer {
 
@@ -99,10 +101,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	public boolean isFailed = false;
 	public boolean isComplete = false;
 
-	private boolean justLoaded = false;
-
 	// Only needed client side (rendering)
-	private static final Random RANDOM = new Random();
 	private boolean hasItems = false;
 
 	private int targetRed = 63;
@@ -126,10 +125,6 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			if(level != null) {
 				if(!level.isClientSide) {
 					boolean shouldUpdate = false;
-					if(blockEntity.justLoaded) {
-						blockEntity.matchRecipes();
-						blockEntity.justLoaded = false;
-					}
 					if(!blockEntity.isFailed && !blockEntity.isComplete) {
 
 						BlockState stateBelow = level.getBlockState(blockEntity.worldPosition.below());
@@ -178,16 +173,10 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 				// ------------------------ CLIENT STUFF ------------------------
 				else {
 					if(blockState.getBlock() instanceof CauldronBlockBase) {
-						if(blockEntity.justLoaded) {
-							blockEntity.justLoaded = false;
-							blockEntity.startRed = blockEntity.targetRed;
-							blockEntity.startGreen = blockEntity.targetGreen;
-							blockEntity.startBlue = blockEntity.targetBlue;
-						}
 						long time = System.currentTimeMillis() - blockEntity.startTime;
 						double waterY = blockEntity.getWaterY(blockState);
 
-						if(blockEntity.isHot() && RANDOM.nextInt(10) > 2) {
+						if(blockEntity.isHot() && Enchanted.RANDOM.nextInt(10) > 2) {
 							double dx = blockEntity.worldPosition.getX() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
 							double dy = blockEntity.worldPosition.getY() + waterY + 0.02D;
 							double dz = blockEntity.worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
@@ -198,7 +187,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 							if(!blockEntity.isComplete && blockEntity.cookProgress > 0 && blockEntity.cookProgress < blockEntity.cookTime) {
 								blockEntity.handleCookParticles(time);
 							}
-							else if(blockEntity.warmingUp == WARMING_MAX && blockEntity.hasItems && RANDOM.nextInt(10) > 6) {
+							else if(blockEntity.warmingUp == WARMING_MAX && blockEntity.hasItems && Enchanted.RANDOM.nextInt(10) > 6) {
 								double xOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
 								double zOffset = 0.5D + (Math.random() - 0.5D) * blockEntity.getWaterWidth();
 								double dx = blockEntity.worldPosition.getX() + xOffset;
@@ -381,9 +370,9 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			targetBlue = potentialRecipes.get(0).getCookingBlue();
 		}
 		else {
-			targetRed = RANDOM.nextInt(80);
-			targetGreen = RANDOM.nextInt(80);
-			targetBlue = RANDOM.nextInt(80);
+			targetRed = Enchanted.RANDOM.nextInt(80);
+			targetGreen = Enchanted.RANDOM.nextInt(80);
+			targetBlue = Enchanted.RANDOM.nextInt(80);
 		}
 	}
 
@@ -447,8 +436,20 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			CompoundTag itemNbt = (CompoundTag)nbt.get("itemOut");
 			itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
 		}
+	}
 
-		justLoaded = true;
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		if(!level.isClientSide) {
+			matchRecipes();
+		}
+		else {
+			startRed = targetRed;
+			startGreen = targetGreen;
+			startBlue = targetBlue;
+			Minecraft.getInstance().getSoundManager().play(new CauldronBubblingSoundInstance(this));
+		}
 	}
 
 	@Nullable

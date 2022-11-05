@@ -24,23 +24,22 @@
 
 package com.favouriteless.enchanted.common.blocks.crops;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class MandrakeBlock extends CropsBlockAgeFive {
 
@@ -63,7 +62,7 @@ public class MandrakeBlock extends CropsBlockAgeFive {
                     spawnMandrake(world, pos);
                     return;
                 } else { // 1/5 Chance to "wake up" mandrake at night
-                    if (RANDOM.nextInt(5) == 0) {
+                    if (Enchanted.RANDOM.nextInt(5) == 0) {
                         spawnMandrake(world, pos);
                         return;
                     }

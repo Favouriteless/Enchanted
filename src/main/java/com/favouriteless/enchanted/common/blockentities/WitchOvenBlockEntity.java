@@ -24,42 +24,40 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
-import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
-
-    private static final Random RANDOM = new Random();
 
     private int burnTime = 0;
     private int burnTimeTotal = 0;
@@ -209,7 +207,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
             ItemStack itemstack1 = recipe.getResultItem();
             ItemStack itemstack2 = this.inventoryContents.get(2);
 
-            if(RANDOM.nextDouble() <= getByproductChance()) {
+            if(Enchanted.RANDOM.nextDouble() <= getByproductChance()) {
                 createByproduct();
             }
 

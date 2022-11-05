@@ -44,7 +44,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/entity/broomstick.png");
+	public static final ResourceLocation TEXTURE = Enchanted.location("textures/entity/broomstick.png");
 	protected final BroomstickModel model;
 
 	public BroomstickRenderer(Context context) {

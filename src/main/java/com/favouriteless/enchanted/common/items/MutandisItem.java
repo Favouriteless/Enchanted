@@ -24,24 +24,22 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Random;
 
 public class MutandisItem extends Item {
 
-    private static final Random RANDOM = new Random();
     private final TagKey<Block> validBlocks;
 
     public MutandisItem(TagKey<Block> validBlocks, Properties properties) {
@@ -61,7 +59,7 @@ public class MutandisItem extends Item {
 
                 BlockState newState = null;
                 while(newState == null) {
-                    Block newBlock = ForgeRegistries.BLOCKS.tags().getTag(validBlocks).getRandomElement(RANDOM).get();
+                    Block newBlock = ForgeRegistries.BLOCKS.tags().getTag(validBlocks).getRandomElement(Enchanted.RANDOM).get();
                     if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(newBlock)) {
                         newState = newBlock.defaultBlockState();
                     }

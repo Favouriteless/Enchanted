@@ -43,7 +43,7 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
 
     private final WitchOvenMenu container;
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/witch_oven.png");
+    private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/witch_oven.png");
 
     public static final int COOK_BAR_XPOS = 76;
     public static final int COOK_BAR_YPOS = 16;

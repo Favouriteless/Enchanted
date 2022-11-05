@@ -51,7 +51,7 @@ public class RiteOfCurseOfMisfortune extends AbstractRite {
     public void execute() {
         if(targetUUID != null) {
             level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.5F, 1.0F);
-            CurseManager.createCurse(level, EnchantedCurseTypes.MISFORTUNE.get(), targetUUID, casterUUID, 1);
+            CurseManager.createCurse(level, EnchantedCurseTypes.MISFORTUNE.get(), targetUUID, casterUUID, 0);
         }
         else {
             cancel();

@@ -24,18 +24,17 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import net.minecraft.client.particle.*;
+import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class BoilingParticle extends TextureSheetParticle {
 
-    private static final Random RANDOM = new Random();
     private final SpriteSet sprites;
 
     protected BoilingParticle(ClientLevel world, double x, double y, double z, int red, int green, int blue, SpriteSet pSprites) {
@@ -44,8 +43,8 @@ public class BoilingParticle extends TextureSheetParticle {
         this.gCol = green/255F;
         this.bCol = blue/255F;
         this.sprites = pSprites;
-        this.scale((RANDOM.nextFloat() * 0.4F));
-        this.lifetime = RANDOM.nextInt(10) + 5;
+        this.scale(Enchanted.RANDOM.nextFloat() * 0.4F);
+        this.lifetime = Enchanted.RANDOM.nextInt(10) + 5;
         this.setSpriteFromAge(pSprites);
         this.hasPhysics = false;
     }

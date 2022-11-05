@@ -301,7 +301,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void createChangeSubscriber() {
-        changeSubscriber = ObserverHelper.getHelper().observeArea(level, worldPosition, new AltarObserverProvider(new ResourceLocation(Enchanted.MOD_ID, "altar_observer")));
+        changeSubscriber = ObserverHelper.getHelper().observeArea(level, worldPosition, new AltarObserverProvider(Enchanted.location("altar_observer")));
     }
 
     @Override

@@ -34,17 +34,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 @Mod.EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EnchantedLootModifiers {
 
-    private static final Random RANDOM = new Random();
-
     @SubscribeEvent
     public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
         event.getRegistry().register(new GrassSeedModifier.Serializer().setRegistryName(new ResourceLocation(Enchanted.MOD_ID,"grass_seeds")));
-        event.getRegistry().register(new ArthanaModifier.Serializer().setRegistryName(new ResourceLocation(Enchanted.MOD_ID, "arthana")));
+        event.getRegistry().register(new ArthanaModifier.Serializer().setRegistryName(Enchanted.location("arthana")));
     }
 
 }

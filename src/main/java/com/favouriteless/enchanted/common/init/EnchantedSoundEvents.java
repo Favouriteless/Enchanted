@@ -35,7 +35,8 @@ public class EnchantedSoundEvents {
 
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Enchanted.MOD_ID);
 
-	public static RegistryObject<SoundEvent> CURSE_WHISPER = SOUND_EVENTS.register("curse_whisper", () -> new SoundEvent(new ResourceLocation(Enchanted.MOD_ID, "curse_whisper")));
+	public static RegistryObject<SoundEvent> CURSE_WHISPER = SOUND_EVENTS.register("curse_whisper", () -> new SoundEvent(Enchanted.location("curse_whisper")));
+	public static RegistryObject<SoundEvent> CAULDRON_BUBBLING = SOUND_EVENTS.register("cauldron_bubbling", () -> new SoundEvent(Enchanted.location("cauldron_bubbling")));
 
 
 }

@@ -43,7 +43,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
 
     private final DistilleryMenu container;
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Enchanted.MOD_ID, "textures/gui/distillery.png");
+    private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/distillery.png");
 
     public static final int COOK_BAR_XPOS = 69;
     public static final int COOK_BAR_YPOS = 12;

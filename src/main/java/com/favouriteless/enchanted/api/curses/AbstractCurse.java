@@ -39,7 +39,9 @@ import java.util.UUID;
  */
 public abstract class AbstractCurse {
 
-    public static final double WHISPER_CHANCE = 1 / 8.0D;
+    public static final int MIN_WHISPER_TIME = 180;
+    public static final int MAX_WHISPER_TIME = 360;
+    public static final double WHISPER_CHANCE = 1.0D / ((MAX_WHISPER_TIME - MIN_WHISPER_TIME)*20);
 
     public final CurseType<?> type;
     protected UUID targetUUID;
@@ -49,6 +51,7 @@ public abstract class AbstractCurse {
     protected ServerPlayer targetPlayer;
 
     protected long ticks = 0;
+    private long lastWhisper = 0;
 
     public AbstractCurse(CurseType<?> type) {
         this.type = type;
@@ -60,16 +63,26 @@ public abstract class AbstractCurse {
         }
         if(targetPlayer != null) {
             onTick();
-            if(ticks % 600 == 0) {
-                if(Math.random() < WHISPER_CHANCE)
-                    targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 1.0F, (float)Math.random()*0.15F + 0.85F));
-            }
         }
+
+        long timeSinceWhisper = ticks - lastWhisper;
+        if(timeSinceWhisper > MAX_WHISPER_TIME*20L)
+            whisper();
+        else if(timeSinceWhisper > MIN_WHISPER_TIME*20L)
+            if(Math.random() < WHISPER_CHANCE)
+                whisper();
 
         ticks++;
     }
 
     protected abstract void onTick();
+
+    private void whisper() {
+        if(targetPlayer != null) {
+            lastWhisper = ticks;
+            targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 0.2F, (float) Math.random() * 0.15F + 0.85F));
+        }
+    }
 
     public CurseType<?> getType() {
         return type;

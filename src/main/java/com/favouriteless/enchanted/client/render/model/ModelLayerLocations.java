@@ -30,9 +30,9 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ModelLayerLocations {
 
-	public static final ModelLayerLocation BROOMSTICK = new ModelLayerLocation(new ResourceLocation(Enchanted.MOD_ID, "broomstick"), "main");
-	public static final ModelLayerLocation MANDRAKE = new ModelLayerLocation(new ResourceLocation(Enchanted.MOD_ID, "mandrake"), "main");
-	public static final ModelLayerLocation SPINNING_WHEEL = new ModelLayerLocation(new ResourceLocation(Enchanted.MOD_ID, "spinning_wheel"), "main");
-	public static final ModelLayerLocation EARMUFFS = new ModelLayerLocation(new ResourceLocation(Enchanted.MOD_ID, "earmuffs"), "main");
+	public static final ModelLayerLocation BROOMSTICK = new ModelLayerLocation(Enchanted.location("broomstick"), "main");
+	public static final ModelLayerLocation MANDRAKE = new ModelLayerLocation(Enchanted.location("mandrake"), "main");
+	public static final ModelLayerLocation SPINNING_WHEEL = new ModelLayerLocation(Enchanted.location("spinning_wheel"), "main");
+	public static final ModelLayerLocation EARMUFFS = new ModelLayerLocation(Enchanted.location("earmuffs"), "main");
 
 }

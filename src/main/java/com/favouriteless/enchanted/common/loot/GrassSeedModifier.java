@@ -24,14 +24,15 @@
 
 package com.favouriteless.enchanted.common.loot;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -39,11 +40,8 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class GrassSeedModifier extends LootModifier {
-
-    private static final Random RANDOM = new Random();
 
     private static final List<Item> seeds = Arrays.asList(
             EnchantedItems.ARTICHOKE_SEEDS.get(),
@@ -69,7 +67,7 @@ public class GrassSeedModifier extends LootModifier {
             for (ItemStack item : generatedLoot) {
                 if(item.getItem() == Items.WHEAT_SEEDS) {
                     outputItems.add(new ItemStack(
-                            seeds.get(RANDOM.nextInt(seeds.size())),
+                            seeds.get(Enchanted.RANDOM.nextInt(seeds.size())),
                             item.getCount()));
                 }
                 else {

@@ -24,17 +24,16 @@
 
 package com.favouriteless.enchanted.client.particles;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
-import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class CauldronCookParticle extends TextureSheetParticle {
 
-    private static final Random RANDOM = new Random();
     public static final double ANGLE = 8.0D;
     public static final double RADIUS_INCREASE = 0.005D;
 
@@ -46,15 +45,15 @@ public class CauldronCookParticle extends TextureSheetParticle {
 
     protected CauldronCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min((red + RANDOM.nextInt(40) - 20)/255F, 1.0F);
-        this.gCol = Math.min((green + RANDOM.nextInt(40) - 20)/255F, 1.0F);
-        this.bCol = Math.min((blue + RANDOM.nextInt(40) - 20)/255F, 1.0F);
+        this.rCol = Math.min((red + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
+        this.gCol = Math.min((green + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
+        this.bCol = Math.min((blue + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.6F);
         this.age = 0;
         this.lifetime = 80;
         this.hasPhysics = false;
-        this.circleStart = RANDOM.nextInt(5) + 10;
+        this.circleStart = Enchanted.RANDOM.nextInt(5) + 10;
 
         this.xStart = x;
         this.zStart = z;

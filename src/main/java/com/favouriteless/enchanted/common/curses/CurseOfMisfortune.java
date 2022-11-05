@@ -24,9 +24,13 @@
 
 package com.favouriteless.enchanted.common.curses;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
 import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
-import net.minecraft.network.chat.TextComponent;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class CurseOfMisfortune extends AbstractRandomCurse {
 
@@ -36,6 +40,14 @@ public class CurseOfMisfortune extends AbstractRandomCurse {
 
 	@Override
 	protected void execute() {
-		targetPlayer.displayClientMessage(new TextComponent("cursed" + ticks), false);
+		MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MISFORTUNE_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
+		if(effect != null) {
+			int effectLevel = 0;
+			for(int i = 0; i < level; i++) {
+				if(Math.random() < 0.25D)
+					effectLevel++; // Every additional curse level has a 25% chance to increase the effect level
+			}
+			targetPlayer.addEffect(new MobEffectInstance(effect, 1200, effectLevel));
+		}
 	}
 }

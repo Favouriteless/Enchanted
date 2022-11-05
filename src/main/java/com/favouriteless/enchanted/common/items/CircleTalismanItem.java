@@ -106,9 +106,9 @@ public class CircleTalismanItem extends Item {
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		event.enqueueWork(() ->
 		{
-			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "small"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("small") * 0.3F : 0F);
-			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "medium"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("medium") * 0.3F : 0F);
-			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), new ResourceLocation(Enchanted.MOD_ID, "large"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("large") * 0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("small"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("small") * 0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("medium"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("medium") * 0.3F : 0F);
+			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("large"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("large") * 0.3F : 0F);
 		});
 	}
 }

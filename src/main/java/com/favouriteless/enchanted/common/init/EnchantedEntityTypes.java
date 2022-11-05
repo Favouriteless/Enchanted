@@ -43,11 +43,11 @@ public class EnchantedEntityTypes {
 
     public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> EntityType.Builder.<MandrakeEntity>of(MandrakeEntity::new, MobCategory.MONSTER)
             .sized(0.4F, 0.7F)
-            .build(new ResourceLocation(Enchanted.MOD_ID, "mandrake").toString()));
+            .build(Enchanted.location("mandrake").toString()));
 
     public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> EntityType.Builder.of(BroomstickEntity::new, MobCategory.MISC)
             .sized(1.0F, 1.0F)
             .clientTrackingRange(10)
-            .build(new ResourceLocation(Enchanted.MOD_ID, "broomstick").toString()));
+            .build(Enchanted.location("broomstick").toString()));
 
 }

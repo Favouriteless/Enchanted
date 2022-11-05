@@ -48,7 +48,7 @@ import javax.annotation.Nonnull;
 public class BedPlayerCapabilityManager {
 
     public static Capability<IBedPlayerCapability> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {});
-    public static final ResourceLocation NAME = new ResourceLocation(Enchanted.MOD_ID, "player_bed");
+    public static final ResourceLocation NAME = Enchanted.location("player_bed");
 
     public BedPlayerCapabilityManager() {}
 

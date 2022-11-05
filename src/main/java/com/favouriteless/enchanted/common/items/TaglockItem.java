@@ -24,41 +24,39 @@
 
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
 import com.favouriteless.enchanted.api.capabilities.bed.IBedPlayerCapability;
+import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
-import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.world.level.Level;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class TaglockItem extends Item {
-
-    public static final Random RANDOM = new Random();
 
     public TaglockItem(Properties properties) {
         super(properties);
@@ -74,7 +72,7 @@ public class TaglockItem extends Item {
             if(!facingAway(player, (Player) target)) {
                 failChance += 4;
             }
-            if (RANDOM.nextInt(10) >= failChance) {
+            if (Enchanted.RANDOM.nextInt(10) >= failChance) {
                 if(!player.level.isClientSide) {
                     player.displayClientMessage(new TextComponent("Taglock attempt failed").withStyle(ChatFormatting.RED), false);
                     ((ServerPlayer) target).displayClientMessage(new TextComponent(player.getDisplayName() + " has tried to taglock you").withStyle(ChatFormatting.RED), false);

@@ -118,7 +118,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	private void repopulateCircleResources() {
 		circleImages.clear();
 		if(rite != null) {
-			circleImages.add(new ResourceLocation(Enchanted.MOD_ID, PATH + "gold" + FILE_END));
+			circleImages.add(Enchanted.location(PATH + "gold" + FILE_END));
 
 			ResourceLocation small = getImageResource(CirclePart.SMALL, "small");
 			ResourceLocation medium = getImageResource(CirclePart.MEDIUM, "medium");
@@ -132,7 +132,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	private ResourceLocation getImageResource(CirclePart part, String suffix) {
 		for(Block block : BLOCK_IMAGES.keySet()) {
 			if(rite.hasCircle(part, block))
-				return new ResourceLocation(Enchanted.MOD_ID, BLOCK_IMAGES.get(block) + "_" + suffix + FILE_END);
+				return Enchanted.location(BLOCK_IMAGES.get(block) + "_" + suffix + FILE_END);
 		}
 		return null;
 	}

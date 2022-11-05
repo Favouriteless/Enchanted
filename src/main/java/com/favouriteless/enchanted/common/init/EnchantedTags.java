@@ -30,34 +30,41 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class EnchantedTags {
 
-    public static final TagKey<Block> CHALKS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "chalks"));
-    public static final TagKey<Block> LEAVES = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "leaves"));
-    public static final TagKey<Block> LOGS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "logs"));
-    public static final TagKey<Block> MUTANDIS_BLACKLIST = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_blacklist_plants"));
-    public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_extremis_plants"));
-    public static final TagKey<Block> MUTANDIS_PLANTS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "mutandis_plants"));
-    public static final TagKey<Block> PLANKS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "planks"));
-    public static final TagKey<Block> POWER_CONSUMERS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "power_consumers"));
-    public static final TagKey<Block> SAPLINGS = BlockTags.create(new ResourceLocation(Enchanted.MOD_ID, "saplings"));
+    public static final TagKey<Block> CHALKS = BlockTags.create(Enchanted.location("chalks"));
+    public static final TagKey<Block> LEAVES = BlockTags.create(Enchanted.location("leaves"));
+    public static final TagKey<Block> LOGS = BlockTags.create(Enchanted.location("logs"));
+    public static final TagKey<Block> MUTANDIS_BLACKLIST = BlockTags.create(Enchanted.location("mutandis_blacklist_plants"));
+    public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.create(Enchanted.location("mutandis_extremis_plants"));
+    public static final TagKey<Block> MUTANDIS_PLANTS = BlockTags.create(Enchanted.location("mutandis_plants"));
+    public static final TagKey<Block> PLANKS = BlockTags.create(Enchanted.location("planks"));
+    public static final TagKey<Block> POWER_CONSUMERS = BlockTags.create(Enchanted.location("power_consumers"));
+    public static final TagKey<Block> SAPLINGS = BlockTags.create(Enchanted.location("saplings"));
 
-    public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_blacklist"));
-    public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "armour_poppet_whitelist"));
-    public static final TagKey<Item> RAW_FOODS = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "raw_foods"));
-    public static final TagKey<Item> TOOL_POPPET_BLACKLIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_blacklist"));
-    public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(new ResourceLocation(Enchanted.MOD_ID, "tool_poppet_whitelist"));
+    public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(Enchanted.location("armour_poppet_blacklist"));
+    public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(Enchanted.location("armour_poppet_whitelist"));
+    public static final TagKey<Item> RAW_FOODS = ItemTags.create(Enchanted.location("raw_foods"));
+    public static final TagKey<Item> TOOL_POPPET_BLACKLIST = ItemTags.create(Enchanted.location("tool_poppet_blacklist"));
+    public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(Enchanted.location("tool_poppet_whitelist"));
 
-    public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(new ResourceLocation(Enchanted.MOD_ID, "monsters"));
+    public static final TagKey<MobEffect> MISFORTUNE_EFFECTS = createEffectTag(Enchanted.location("misfortune_effects"));
+
+    public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(Enchanted.location("monsters"));
 
 
 
     private static TagKey<EntityType<?>> createEntityTag(ResourceLocation name) {
         return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, name);
+    }
+
+    private static TagKey<MobEffect> createEffectTag(ResourceLocation name) {
+        return TagKey.create(Registry.MOB_EFFECT_REGISTRY, name);
     }
 
 }

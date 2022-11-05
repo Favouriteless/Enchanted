@@ -60,6 +60,7 @@ public class EnchantedParticles {
     public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> BROILING_SEED = PARTICLE_TYPES.register("broiling_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> SKY_WRATH_SEED = PARTICLE_TYPES.register("sky_wrath_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> CURSE_SEED = PARTICLE_TYPES.register("curse_seed", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -75,6 +76,7 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(SKY_WRATH.get(), SkyWrathParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(CURSE_SEED.get(), CurseSeedParticle.Factory::new);
     }
 
 }

@@ -39,8 +39,8 @@ import java.util.UUID;
  */
 public abstract class AbstractCurse {
 
-    public static final int MIN_WHISPER_TIME = 180;
-    public static final int MAX_WHISPER_TIME = 360;
+    public static final int MIN_WHISPER_TIME = 120;
+    public static final int MAX_WHISPER_TIME = 240;
     public static final double WHISPER_CHANCE = 1.0D / ((MAX_WHISPER_TIME - MIN_WHISPER_TIME)*20);
 
     public final CurseType<?> type;

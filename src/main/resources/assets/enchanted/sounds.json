@@ -11,5 +11,10 @@
     "sounds": [
       "enchanted:cauldron_bubbling"
     ]
+  },
+  "curse_cast": {
+    "sounds": [
+      "enchanted:curse_cast"
+    ]
   }
 }

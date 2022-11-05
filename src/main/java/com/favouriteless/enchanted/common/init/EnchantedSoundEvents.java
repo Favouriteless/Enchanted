@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,6 +36,7 @@ public class EnchantedSoundEvents {
 
 	public static RegistryObject<SoundEvent> CURSE_WHISPER = SOUND_EVENTS.register("curse_whisper", () -> new SoundEvent(Enchanted.location("curse_whisper")));
 	public static RegistryObject<SoundEvent> CAULDRON_BUBBLING = SOUND_EVENTS.register("cauldron_bubbling", () -> new SoundEvent(Enchanted.location("cauldron_bubbling")));
+	public static RegistryObject<SoundEvent> CURSE_CAST = SOUND_EVENTS.register("curse_cast", () -> new SoundEvent(Enchanted.location("curse_cast")));
 
 
 }

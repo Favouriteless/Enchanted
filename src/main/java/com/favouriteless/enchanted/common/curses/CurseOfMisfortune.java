@@ -43,11 +43,14 @@ public class CurseOfMisfortune extends AbstractRandomCurse {
 		MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MISFORTUNE_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
 		if(effect != null) {
 			int effectLevel = 0;
+			int effectDuration = 30;
 			for(int i = 0; i < level; i++) {
 				if(Math.random() < 0.25D)
 					effectLevel++; // Every additional curse level has a 25% chance to increase the effect level
+				if(Math.random() < 0.25D)
+					effectDuration += 15; // Every additional curse level has a 25% chance to increase duration by 15 seconds
 			}
-			targetPlayer.addEffect(new MobEffectInstance(effect, 1200, effectLevel));
+			targetPlayer.addEffect(new MobEffectInstance(effect, effectDuration*20, effectLevel));
 		}
 	}
 }

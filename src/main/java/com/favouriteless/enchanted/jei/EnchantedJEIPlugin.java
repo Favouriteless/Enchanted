@@ -32,6 +32,7 @@ import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
+import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -53,6 +54,9 @@ public class EnchantedJEIPlugin implements IModPlugin {
 
     private static final ResourceLocation locationSpinningWheel = new ResourceLocation("enchanted", "spinning_wheel_category");
     private static final RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel = new RecipeType(locationSpinningWheel, SpinningWheelRecipe.class);
+
+    private static final ResourceLocation locationWitchCauldron= new ResourceLocation("enchanted", "witch_cauldron_category");
+    private static final RecipeType<WitchCauldronRecipe> recipeTypeWitchCauldron = new RecipeType(locationWitchCauldron, WitchCauldronRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -79,6 +83,8 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new WitchOvenCategory(registration.getJeiHelpers(), recipeTypeOven));
         registration.addRecipeCategories(new DistilleryCategory(registration.getJeiHelpers(),recipeTypeDistillery));
         registration.addRecipeCategories(new SpinningWheelCategory(registration.getJeiHelpers(),recipeTypeSpinningWheel));
+        registration.addRecipeCategories(new WitchCauldronCategory(registration.getJeiHelpers(),recipeTypeWitchCauldron));
+
     }
 
     @Override
@@ -92,6 +98,8 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipes(recipeTypeOven, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_OVEN));
         registration.addRecipes(recipeTypeDistillery, m.getAllRecipesFor(EnchantedRecipeTypes.DISTILLERY));
         registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
+        registration.addRecipes(recipeTypeWitchCauldron, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
+
     }
 
     @Override
@@ -107,6 +115,8 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.WITCH_OVEN.get()), recipeTypeOven);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.DISTILLERY.get()), recipeTypeDistillery);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.SPINNING_WHEEL.get()), recipeTypeSpinningWheel);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.WITCH_CAULDRON.get()), recipeTypeWitchCauldron);
+
         IModPlugin.super.registerRecipeCatalysts(registration);
     }
 

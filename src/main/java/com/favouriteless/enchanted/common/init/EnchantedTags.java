@@ -33,6 +33,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
 public class EnchantedTags {
@@ -54,6 +55,7 @@ public class EnchantedTags {
     public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(Enchanted.location("tool_poppet_whitelist"));
 
     public static final TagKey<MobEffect> MISFORTUNE_EFFECTS = createEffectTag(Enchanted.location("misfortune_effects"));
+    public static final TagKey<Biome> OVERHEATING_BIOMES = createBiomeTag(Enchanted.location("overheating_biomes"));
 
     public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(Enchanted.location("monsters"));
 
@@ -61,6 +63,10 @@ public class EnchantedTags {
 
     private static TagKey<EntityType<?>> createEntityTag(ResourceLocation name) {
         return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, name);
+    }
+
+    private static TagKey<Biome> createBiomeTag(ResourceLocation name) {
+        return TagKey.create(Registry.BIOME_REGISTRY, name);
     }
 
     private static TagKey<MobEffect> createEffectTag(ResourceLocation name) {

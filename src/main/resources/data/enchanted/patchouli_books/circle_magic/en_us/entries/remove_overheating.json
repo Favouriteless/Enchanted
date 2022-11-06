@@ -1,0 +1,18 @@
+{
+  "name": "Cleanse Overheating",
+  "icon": "minecraft:blaze_powder",
+  "category": "enchanted:curses",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Cleanse Overheating",
+      "text": "Cleanse the targeted being of overheating. $(br2)If the caster is not skilled enough to break the curse there is a chance it may make things worse."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:remove_overheating"
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 3
+}

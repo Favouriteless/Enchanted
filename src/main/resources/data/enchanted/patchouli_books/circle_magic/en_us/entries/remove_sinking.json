@@ -1,0 +1,18 @@
+{
+  "name": "Cleanse Sinking",
+  "icon": "minecraft:water_bucket",
+  "category": "enchanted:curses",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Cleanse Sinking",
+      "text": "Cleanse the targeted being of sinking. $(br2)If the caster is not skilled enough to break the curse there is a chance it may make things worse."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:remove_sinking"
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 3
+}

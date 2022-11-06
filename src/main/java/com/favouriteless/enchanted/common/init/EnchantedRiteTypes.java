@@ -75,6 +75,12 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummonEntity::new));
 
     public static final RegistryObject<RiteType<?>> CURSE_OF_MISFORTUNE = RITE_TYPES.register("curse_of_misfortune", () -> new RiteType<>(RiteOfCurseOfMisfortune::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_SINKING = RITE_TYPES.register("curse_of_sinking", () -> new RiteType<>(RiteOfCurseOfSinking::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_OVERHEATING = RITE_TYPES.register("curse_of_overheating", () -> new RiteType<>(RiteOfCurseOfOverheating::new));
+
+    public static final RegistryObject<RiteType<?>> REMOVE_MISFORTUNE = RITE_TYPES.register("remove_misfortune", () -> new RiteType<>(RiteOfRemoveMisfortune::new));
+    public static final RegistryObject<RiteType<?>> REMOVE_SINKING = RITE_TYPES.register("remove_sinking", () -> new RiteType<>(RiteOfRemoveSinking::new));
+    public static final RegistryObject<RiteType<?>> REMOVE_OVERHEATING = RITE_TYPES.register("remove_overheating", () -> new RiteType<>(RiteOfRemoveOverheating::new));
 
 
 

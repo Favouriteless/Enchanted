@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "enchanted:rite_description",
-      "rite_name": "Misfortune",
+      "rite_name": "Curse of Misfortune",
       "text": "Curse the afflicated to become prone to occasionally gaining an unfortunate effect such as weakness or mining fatigue."
     },
     {
@@ -13,5 +13,6 @@
       "rite": "enchanted:curse_of_misfortune"
     }
   ],
-  "read_by_default": true
+  "read_by_default": true,
+  "sortnum": 2
 }

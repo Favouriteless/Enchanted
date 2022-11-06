@@ -24,22 +24,26 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
-import com.favouriteless.enchanted.common.util.curse.CurseManager;
+import com.favouriteless.enchanted.common.util.curse.CurseSavedData;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundSource;
 
+import java.util.List;
+
 /**
  * Simple AbstractRite implementation for creating a curse
  */
-public abstract class AbstractCurseRite extends AbstractRite {
+public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
+    public static final int RAISE = 300;
     private final CurseType<?> curseType;
 
-    public AbstractCurseRite(RiteType<?> type, int power, CurseType<?> curseType) {
-        super(type, power, 0);
+    public AbstractRemoveCurseRite(RiteType<?> type, int power, int powerTick, CurseType<?> curseType) {
+        super(type, power, powerTick);
         this.curseType = curseType;
     }
 
@@ -48,9 +52,17 @@ public abstract class AbstractCurseRite extends AbstractRite {
         if(targetUUID == null)
             cancel();
         else {
-            level.sendParticles(EnchantedParticles.CURSE_SEED.get(), pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(EnchantedParticles.REMOVE_CURSE_SEED.get(), pos.getX()+0.5D, pos.getY() + 2.5D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             level.playSound(null, pos, EnchantedSoundEvents.CURSE_CAST.get(), SoundSource.MASTER, 1.5F, 1.0F);
-            CurseManager.createCurse(level, curseType, targetUUID, casterUUID, 0);
+            List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(targetUUID);
+            if(curses != null) {
+                for(AbstractCurse curse : curses) {
+                    if(curse.getType() == curseType) {
+                        curses.remove(curse);
+                        break;
+                    }
+                }
+            }
             stopExecuting();
         }
     }

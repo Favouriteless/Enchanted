@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractCurseRite;
+import com.favouriteless.enchanted.api.rites.AbstractRemoveCurseRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -32,16 +32,16 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.world.item.Items;
 
-public class RiteOfCurseOfMisfortune extends AbstractCurseRite {
+public class RiteOfRemoveOverheating extends AbstractRemoveCurseRite {
 
-    public RiteOfCurseOfMisfortune() {
-        super(EnchantedRiteTypes.CURSE_OF_MISFORTUNE.get(), 2000, EnchantedCurseTypes.MISFORTUNE.get()); // Power, curse type
-        CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
+    public RiteOfRemoveOverheating() {
+        super(EnchantedRiteTypes.REMOVE_OVERHEATING.get(), 2000, 0, EnchantedCurseTypes.OVERHEATING.get()); // Power, power per tick, curse type
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.EXHALE_OF_THE_HORNED_ONE.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.BREW_OF_THE_GROTESQUE.get(), 1);
-        ITEMS_REQUIRED.put(Items.FERMENTED_SPIDER_EYE, 1);
-        ITEMS_REQUIRED.put(Items.GUNPOWDER, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.BREATH_OF_THE_GODDESS.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.ICY_NEEDLE.get(), 1);
+        ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.BREW_OF_THE_DEPTHS.get(), 1);
     }
 
 

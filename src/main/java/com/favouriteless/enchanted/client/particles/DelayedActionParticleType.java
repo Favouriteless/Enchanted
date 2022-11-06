@@ -24,8 +24,7 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.client.particles.SkyWrathParticleType.SkyWrathData;
-import com.favouriteless.enchanted.common.rites.RiteOfSkyWrath;
+import com.favouriteless.enchanted.client.particles.DelayedActionParticleType.DelayedActionData;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
@@ -38,103 +37,76 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
-public class SkyWrathParticleType extends ParticleType<SkyWrathData> {
-	public static final Codec<SkyWrathData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+public class DelayedActionParticleType extends ParticleType<DelayedActionData> {
+	public static final Codec<DelayedActionData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.STRING.fieldOf("particle_type").forGetter(data -> data.particleType.getRegistryName().toString()),
-			Codec.INT.fieldOf("red").forGetter(data -> data.red),
-			Codec.INT.fieldOf("green").forGetter(data -> data.green),
-			Codec.INT.fieldOf("blue").forGetter(data -> data.blue),
 			Codec.DOUBLE.fieldOf("centerX").forGetter(data -> data.centerX),
 			Codec.DOUBLE.fieldOf("centerY").forGetter(data -> data.centerY),
 			Codec.DOUBLE.fieldOf("centerZ").forGetter(data -> data.centerZ),
-			Codec.INT.fieldOf("explodeTicks").forGetter(data -> data.explodeTicks)
-	).apply(instance, (type, red, green, blue, centerX, centerY, centerZ, explodeTicks) -> new SkyWrathData((ParticleType<SkyWrathData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), red, green, blue, centerX, centerY, centerZ, explodeTicks)));
+			Codec.INT.fieldOf("actionTicks").forGetter(data -> data.actionTicks)
+	).apply(instance, (type, centerX, centerY, centerZ, actionTicks) -> new DelayedActionData((ParticleType<DelayedActionData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), centerX, centerY, centerZ, actionTicks)));
 
-	public SkyWrathParticleType(boolean alwaysShow) {
-		super(alwaysShow, SkyWrathData.DESERIALIZER);
+	public DelayedActionParticleType(boolean alwaysShow) {
+		super(alwaysShow, DelayedActionData.DESERIALIZER);
 	}
 
 	@Override
-	public Codec<SkyWrathData> codec() {
+	public Codec<DelayedActionData> codec() {
 		return CODEC;
 	}
 
-	public static class SkyWrathData implements ParticleOptions {
+	public static class DelayedActionData implements ParticleOptions {
 
-		public static final Deserializer<SkyWrathData> DESERIALIZER = new Deserializer<>() {
-			public SkyWrathData fromCommand(ParticleType<SkyWrathData> particleType, StringReader reader) throws CommandSyntaxException {
-				reader.expect(' ');
-				int red = reader.readInt();
-				reader.expect(' ');
-				int green = reader.readInt();
-				reader.expect(' ');
-				int blue = reader.readInt();
+		public static final Deserializer<DelayedActionData> DESERIALIZER = new Deserializer<>() {
+			public DelayedActionData fromCommand(ParticleType<DelayedActionData> particleType, StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
 				double centerX = reader.readDouble();
 				reader.expect(' ');
 				double centerY = reader.readDouble();
 				reader.expect(' ');
 				double centerZ = reader.readDouble();
+				reader.expect(' ');
+				int actionTicks = reader.readInt();
 
-				return new SkyWrathData(particleType, red, green, blue, centerX, centerY, centerZ, RiteOfSkyWrath.EXPLODE);
+				return new DelayedActionData(particleType, centerX, centerY, centerZ, actionTicks);
 			}
 
-			public SkyWrathData fromNetwork(ParticleType<SkyWrathData> particleType, FriendlyByteBuf buffer) {
-				return new SkyWrathData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
+			public DelayedActionData fromNetwork(ParticleType<DelayedActionData> particleType, FriendlyByteBuf buffer) {
+				return new DelayedActionData(particleType, buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
 			}
 		};
 
-		private final ParticleType<SkyWrathData> particleType;
-		private final int red;
-		private final int green;
-		private final int blue;
+		private final ParticleType<DelayedActionData> particleType;
 		private final double centerX;
 		private final double centerY;
 		private final double centerZ;
-		private final int explodeTicks;
+		private final int actionTicks;
 
-		public SkyWrathData(ParticleType<SkyWrathData> particleType, int red, int green, int blue, double centerX, double centerY, double centerZ, int explodeTicks) {
+		public DelayedActionData(ParticleType<DelayedActionData> particleType, double centerX, double centerY, double centerZ, int explodeTicks) {
 			this.particleType = particleType;
-			this.red = red;
-			this.green = green;
-			this.blue = blue;
 			this.centerX = centerX;
 			this.centerY = centerY;
 			this.centerZ = centerZ;
-			this.explodeTicks = explodeTicks;
+			this.actionTicks = explodeTicks;
 		}
 
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), red, green, blue);
+			return String.format(Locale.ROOT, "%s", ForgeRegistries.PARTICLE_TYPES.getKey(getType()));
 		}
 
 		@Override
 		public void writeToNetwork(FriendlyByteBuf buffer) {
-			buffer.writeInt(red);
-			buffer.writeInt(green);
-			buffer.writeInt(blue);
 			buffer.writeDouble(centerX);
 			buffer.writeDouble(centerY);
 			buffer.writeDouble(centerZ);
+			buffer.writeInt(actionTicks);
 		}
 
 		@Override
 		public ParticleType<?> getType() {
 			return particleType;
-		}
-
-		public int getRed() {
-			return red;
-		}
-
-		public int getGreen() {
-			return green;
-		}
-
-		public int getBlue() {
-			return blue;
 		}
 
 		public double getCenterX() {
@@ -149,8 +121,8 @@ public class SkyWrathParticleType extends ParticleType<SkyWrathData> {
 			return centerZ;
 		}
 
-		public int getExplodeTicks() {
-			return explodeTicks;
+		public int getActionTicks() {
+			return actionTicks;
 		}
 
 	}

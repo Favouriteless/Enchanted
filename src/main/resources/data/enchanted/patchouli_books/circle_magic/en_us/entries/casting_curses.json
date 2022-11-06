@@ -19,5 +19,6 @@
       "text": "The clothing worn by witch hunters is known to mitigate most of the effects caused by curses, and voodoo protection poppets are also thought to have some effect at blocking low level curses."
     }
   ],
-  "read_by_default": false
+  "read_by_default": false,
+  "sortnum": 1
 }

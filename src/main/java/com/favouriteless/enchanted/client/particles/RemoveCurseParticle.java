@@ -29,23 +29,22 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;
 
-public class SkyWrathParticle extends TextureSheetParticle {
+public class RemoveCurseParticle extends TextureSheetParticle {
 
-	private static final double EXPLODE_SPEED = 0.7D;
-	private static final double ATTRACT_SPEED = 0.02D;
-	private static final double ORBIT_SPEED = 20.0D;
-
+	private static final double RAISE_SPEED = 0.7D;
+	private static final double RAISE_ACCELERATION = 0.05D;
+	private static final double ATTRACT_SPEED = 0.06D;
+	private final int raiseTicks;
 	private final double centerX;
 	private final double centerY;
 	private final double centerZ;
-	private final int explodeTicks;
 
-	protected SkyWrathParticle(ClientLevel level, double x, double y, double z, double centerX, double centerY, double centerZ, int explodeTicks) {
+	protected RemoveCurseParticle(ClientLevel level, double x, double y, double z, double centerX, double centerY, double centerZ, int raiseTicks) {
 		super(level, x, y, z);
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.centerZ = centerZ;
-		this.explodeTicks = explodeTicks;
+		this.raiseTicks = raiseTicks;
 		this.alpha = 0.0F;
 	}
 
@@ -54,39 +53,37 @@ public class SkyWrathParticle extends TextureSheetParticle {
 		this.xo = this.x;
 		this.yo = this.y;
 		this.zo = this.z;
-
-		if(age < explodeTicks) {
+		if(age++ < raiseTicks) {
 			if(alpha < 1.0F) {
-				alpha += 0.3F;
+				alpha += 0.05F;
 				if(alpha > 1.0F)
 					alpha = 1.0F;
 			}
-			Vec3 relativePos = new Vec3(x - centerX, y - centerY, z - centerZ);
-			double radius = relativePos.length() - ATTRACT_SPEED;
-			double a = Math.toRadians(ORBIT_SPEED);
-			Vec3 rotatedRelativePos = new Vec3(
-					relativePos.x*Math.cos(a) - relativePos.z*Math.sin(a),
-					relativePos.y,
-					relativePos.z*Math.sin(a) + relativePos.x*Math.cos(a)
-			);
-			Vec3 newPos = rotatedRelativePos.normalize().scale(radius).add(new Vec3(centerX, centerY, centerZ));
-			this.x = newPos.x();
-			this.y = newPos.y();
-			this.z = newPos.z();
+
+			Vec3 relativePos = new Vec3(x, y, z).subtract(centerX, centerY, centerZ);
+			if(relativePos.length() <= RemoveCurseSeedParticle.ORB_RADIUS) {
+				xd = 0.0D;
+				yd = 0.0D;
+				zd = 0.0D;
+			}
+			else {
+				Vec3 velocity = relativePos.normalize().scale(-1 * ATTRACT_SPEED);
+				xd = velocity.x();
+				yd = velocity.y();
+				zd = velocity.z();
+			}
 		}
 		else {
-			Vec3 velocity = new Vec3(x - centerX, y - centerY, z - centerZ).normalize().scale(EXPLODE_SPEED);
-			this.xd = velocity.x();
-			this.yd = velocity.y();
-			this.zd = velocity.z();
-			this.move(xd, yd, zd);
-			this.alpha -= 0.06F;
-
-			if(alpha < 0.0F)
+			if(alpha > 0.0F) {
+				alpha -= 0.05F;
+				xd = 0.0D;
+				yd = Math.min(yd + RAISE_ACCELERATION, RAISE_SPEED);
+				zd = 0.0D;
+			}
+			else
 				remove();
 		}
-
-		age++;
+		this.move(xd, yd, zd);
 	}
 
 	@Override
@@ -102,7 +99,7 @@ public class SkyWrathParticle extends TextureSheetParticle {
 		}
 
 		public Particle createParticle(DelayedActionData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			SkyWrathParticle particle = new SkyWrathParticle(level, x, y, z, data.getCenterX(), data.getCenterY(), data.getCenterZ(), data.getActionTicks());
+			RemoveCurseParticle particle = new RemoveCurseParticle(level, x, y, z, data.getCenterX(), data.getCenterY(), data.getCenterZ(), data.getActionTicks());
 			particle.pickSprite(this.sprite);
 			return particle;
 		}

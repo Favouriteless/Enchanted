@@ -79,7 +79,7 @@ public abstract class AbstractCurse {
     private void whisper() {
         if(targetPlayer != null) {
             lastWhisper = ticks;
-            targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 0.2F, (float) Math.random() * 0.15F + 0.85F));
+            targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 0.3F, (float) Math.random() * 0.15F + 0.85F));
         }
     }
 

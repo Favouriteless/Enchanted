@@ -160,6 +160,7 @@ public class EnchantedItems {
 
     public static final RegistryObject<Item> BREW_OF_THE_GROTESQUE = registerItem("brew_of_the_grotesque");
     public static final RegistryObject<Item> BREW_OF_LOVE = ITEMS.register("brew_of_love", () -> new LoveBrewItem(defaultProperties()));
+    public static final RegistryObject<Item> BREW_OF_THE_DEPTHS = registerBrew("brew_of_the_depths", MobEffects.WATER_BREATHING, 6000, 0);
 
     public static final RegistryObject<Item> GHOST_OF_THE_LIGHT = registerBrew("ghost_of_the_light", MobEffects.POISON, 1200, 1);
     public static final RegistryObject<Item> SOUL_OF_THE_WORLD = registerBrew("soul_of_the_world", MobEffects.POISON, 1200, 1);

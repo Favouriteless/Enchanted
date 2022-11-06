@@ -32,17 +32,16 @@ import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.world.item.Items;
 
-public class RiteOfCurseOfMisfortune extends AbstractCurseRite {
+public class RiteOfCurseOfOverheating extends AbstractCurseRite {
 
-    public RiteOfCurseOfMisfortune() {
-        super(EnchantedRiteTypes.CURSE_OF_MISFORTUNE.get(), 2000, EnchantedCurseTypes.MISFORTUNE.get()); // Power, curse type
+    public RiteOfCurseOfOverheating() {
+        super(EnchantedRiteTypes.CURSE_OF_OVERHEATING.get(), 2000, EnchantedCurseTypes.OVERHEATING.get()); // Power, curse type
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.EXHALE_OF_THE_HORNED_ONE.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.DEMONIC_BLOOD.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.BREW_OF_THE_GROTESQUE.get(), 1);
-        ITEMS_REQUIRED.put(Items.FERMENTED_SPIDER_EYE, 1);
-        ITEMS_REQUIRED.put(Items.GUNPOWDER, 1);
+        ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);
     }
-
 
 }

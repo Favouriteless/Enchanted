@@ -56,6 +56,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.MANDRAKE_ROOT.get());
 		simpleItem(EnchantedItems.WOLFSBANE_FLOWER.get());
 		simpleItem(EnchantedItems.ICY_NEEDLE.get());
+		simpleItem(EnchantedItems.GARLIC.get());
 		simpleItem(EnchantedItems.ANOINTING_PASTE.get());
 		simpleItem(EnchantedItems.MUTANDIS.get());
 		simpleItem(EnchantedItems.MUTANDIS_EXTREMIS.get());
@@ -91,6 +92,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.WOOL_OF_BAT.get());
 		simpleItem(EnchantedItems.TONGUE_OF_DOG.get());
 		simpleItem(EnchantedItems.CREEPER_HEART.get());
+		simpleToolItem(EnchantedItems.ARTHANA.get());
 		simpleItem(EnchantedItems.BONE_NEEDLE.get());
 		simpleItem(EnchantedItems.REDSTONE_SOUP.get());
 		simpleItem(EnchantedItems.FLYING_OINTMENT.get());
@@ -102,8 +104,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.INFERNAL_ANIMUS.get());
 		simpleItem(EnchantedItems.BREW_OF_THE_GROTESQUE.get());
 		simpleItem(EnchantedItems.BREW_OF_LOVE.get());
-		simpleItem(EnchantedItems.GARLIC.get());
-		simpleToolItem(EnchantedItems.ARTHANA.get());
+		simpleItem(EnchantedItems.BREW_OF_THE_DEPTHS.get());
 
 		talismanItem(EnchantedItems.CIRCLE_TALISMAN.get());
 		simpleItem(EnchantedItems.WAYSTONE.get());

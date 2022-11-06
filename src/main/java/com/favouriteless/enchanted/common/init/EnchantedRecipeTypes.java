@@ -49,7 +49,7 @@ public class EnchantedRecipeTypes {
     public static RecipeType<KettleRecipe> KETTLE;
     public static RegistryObject<KettleRecipe.Serializer> KETTLE_SERIALIZER = RECIPE_SERIALIZERS.register("kettle", KettleRecipe.Serializer::new);
 
-    public static RecipeType<KettleRecipe> SPINNING_WHEEL;
+    public static RecipeType<SpinningWheelRecipe> SPINNING_WHEEL;
     public static RegistryObject<SpinningWheelRecipe.Serializer> SPINNING_WHEEL_SERIALIZER = RECIPE_SERIALIZERS.register("spinning_wheel", SpinningWheelRecipe.Serializer::new);
 
 

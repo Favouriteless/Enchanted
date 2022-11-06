@@ -28,8 +28,10 @@ package com.favouriteless.enchanted.jei;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
+import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
+import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -43,11 +45,14 @@ import net.minecraft.world.item.crafting.RecipeManager;
 
 @JeiPlugin
 public class EnchantedJEIPlugin implements IModPlugin {
-    private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven");
+    private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
     private static final RecipeType<WitchOvenRecipe> recipeTypeOven = new RecipeType(locationOven, WitchOvenRecipe.class);
 
-    private static final ResourceLocation locationDistillery = new ResourceLocation("enchanted", "distillery");
+    private static final ResourceLocation locationDistillery = new ResourceLocation("enchanted", "distillery_category");
     private static final RecipeType<DistilleryRecipe> recipeTypeDistillery = new RecipeType(locationDistillery, DistilleryRecipe.class);
+
+    private static final ResourceLocation locationSpinningWheel = new ResourceLocation("enchanted", "spinning_wheel_category");
+    private static final RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel = new RecipeType(locationSpinningWheel, SpinningWheelRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -73,6 +78,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new WitchOvenCategory(registration.getJeiHelpers(), recipeTypeOven));
         registration.addRecipeCategories(new DistilleryCategory(registration.getJeiHelpers(),recipeTypeDistillery));
+        registration.addRecipeCategories(new SpinningWheelCategory(registration.getJeiHelpers(),recipeTypeSpinningWheel));
     }
 
     @Override
@@ -85,12 +91,14 @@ public class EnchantedJEIPlugin implements IModPlugin {
         RecipeManager m = Minecraft.getInstance().level.getRecipeManager();
         registration.addRecipes(recipeTypeOven, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_OVEN));
         registration.addRecipes(recipeTypeDistillery, m.getAllRecipesFor(EnchantedRecipeTypes.DISTILLERY));
+        registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(WitchOvenMenu.class, recipeTypeOven, 0, 1, 5, 36);
         registration.addRecipeTransferHandler(DistilleryMenu.class, recipeTypeDistillery, 1, 2, 7, 36);
+        registration.addRecipeTransferHandler(SpinningWheelMenu.class, recipeTypeSpinningWheel, 0, 3, 4, 36);
         IModPlugin.super.registerRecipeTransferHandlers(registration);
     }
 
@@ -98,6 +106,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.WITCH_OVEN.get()), recipeTypeOven);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.DISTILLERY.get()), recipeTypeDistillery);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.SPINNING_WHEEL.get()), recipeTypeSpinningWheel);
         IModPlugin.super.registerRecipeCatalysts(registration);
     }
 

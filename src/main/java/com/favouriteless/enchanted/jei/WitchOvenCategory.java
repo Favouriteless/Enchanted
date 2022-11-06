@@ -70,29 +70,27 @@ public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        int imageWidth = 176;
-        int imageHeight = 85;
-        return helper.getGuiHelper().createDrawable(Enchanted.location("textures/gui/witch_oven_craft.png"), 0, 0, imageWidth, imageHeight);
+        return helper.getGuiHelper().createDrawable(Enchanted.location("textures/gui/witch_oven_craft.png"), 40, 10, 96, 65);
     }
 
     @Override
     public IDrawable getIcon() {
-
         return helper.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.WITCH_OVEN.get()));
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, WitchOvenRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 53, 17).addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 107, 17).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
-        builder.addSlot(RecipeIngredientRole.CATALYST, 53, 53).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
     }
 
 
     @Override
     public void draw(WitchOvenRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        fire.draw(stack, 80, 37);
-        arrow.draw(stack, 76, 16);
+        fire.draw(stack, 40, 27);
+        arrow.draw(stack, 36, 6);
+
     }
 
     @Override

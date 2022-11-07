@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
@@ -33,6 +33,8 @@ import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -40,13 +42,13 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 
-public class RiteOfTranspositionIron extends AbstractCreateItemRite {
+public class RiteOfTranspositionIron extends AbstractRite {
 
 	private int progress = 0;
 	public static final double CIRCLE_RADIUS = 7.5D;
 
 	public RiteOfTranspositionIron() {
-		super(EnchantedRiteTypes.TRANSPOSITION_IRON.get(), 0, 0, SoundEvents.COPPER_BREAK);
+		super(EnchantedRiteTypes.TRANSPOSITION_IRON.get(), 0, 0);
 		CIRCLES_REQUIRED.put(CirclePart.LARGE, EnchantedBlocks.CHALK_PURPLE.get());
 		ITEMS_REQUIRED.put(Items.ENDER_PEARL, 1);
 		ITEMS_REQUIRED.put(Items.IRON_INGOT, 1);
@@ -65,12 +67,14 @@ public class RiteOfTranspositionIron extends AbstractCreateItemRite {
 			Block block = level.getBlockState(blockPos).getBlock();
 			if(block == Blocks.IRON_ORE) {
 				level.setBlockAndUpdate(blockPos, Blocks.STONE.defaultBlockState());
-				spawnItems(new ItemStack(Items.RAW_IRON));
+				level.addFreshEntity(new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, new ItemStack(Items.RAW_IRON)));
+				level.playSound(null, pos, SoundEvents.COPPER_BREAK, SoundSource.MASTER, 1.0F, 1.0F);
 				spawnMagicParticles();
 			}
 			else if(block == Blocks.DEEPSLATE_IRON_ORE) {
 				level.setBlockAndUpdate(blockPos, Blocks.DEEPSLATE.defaultBlockState());
-				spawnItems(new ItemStack(Items.RAW_IRON));
+				level.addFreshEntity(new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, new ItemStack(Items.RAW_IRON)));
+				level.playSound(null, pos, SoundEvents.COPPER_BREAK, SoundSource.MASTER, 1.0F, 1.0F);
 				spawnMagicParticles();
 			}
 		}

@@ -39,16 +39,6 @@ import java.util.UUID;
 
 public class WaystoneHelper {
 
-	public static void bind(ItemStack stack, Level level, BlockPos pos) {
-		if(stack.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
-			CompoundTag nbt = stack.getOrCreateTag();
-			nbt.putString("dimension", level.dimension().location().toString());
-			nbt.putInt("xPos", pos.getX());
-			nbt.putInt("yPos", pos.getY());
-			nbt.putInt("zPos", pos.getZ());
-		}
-	}
-
 	public static BlockPos getPos(ItemStack stack) {
 		if(stack.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
 			if(stack.hasTag()) {
@@ -80,6 +70,16 @@ public class WaystoneHelper {
 			}
 		}
 		return null;
+	}
+
+	public static void bind(ItemStack stack, Level level, BlockPos pos) {
+		if(stack.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
+			CompoundTag nbt = stack.getOrCreateTag();
+			nbt.putString("dimension", level.dimension().location().toString());
+			nbt.putInt("xPos", pos.getX());
+			nbt.putInt("yPos", pos.getY());
+			nbt.putInt("zPos", pos.getZ());
+		}
 	}
 
 	public static void bind(ItemStack stack, UUID uuid) {

@@ -25,12 +25,13 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.*;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -41,16 +42,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-public class RiteOfBroiling extends AbstractCreateItemRite {
+public class RiteOfBroiling extends AbstractRite {
 
     public static final double CIRCLE_RADIUS = 3.0D;
 
-    public RiteOfBroiling(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick, SoundEvents.BLAZE_SHOOT);
+    public RiteOfBroiling(RiteType<?> type, int power) {
+        super(type, power, 0);
     }
 
     public RiteOfBroiling() {
-        this(EnchantedRiteTypes.BROILING.get(), 1000, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BROILING.get(), 1000); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(Items.COAL, 1);
         ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);
@@ -86,6 +87,7 @@ public class RiteOfBroiling extends AbstractCreateItemRite {
                 if(Math.random() < EnchantedConfig.BROILING_BURN_CHANCE.get())
                     burnedCount++;
 
+            level.playSound(null, itemEntity, SoundEvents.BLAZE_SHOOT, SoundSource.MASTER, 1.0F, 1.0F);
             replaceItem(itemEntity, new ItemStack(recipe.getResultItem().getItem(), recipe.getResultItem().getCount()-burnedCount), new ItemStack(Items.CHARCOAL, burnedCount));
 
             level.sendParticles(ParticleTypes.SMALL_FLAME, itemEntity.position().x(), itemEntity.position().y(), itemEntity.position().z, 25, 0.2D, 0.2D, 0.2D, 0.0D);

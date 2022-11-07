@@ -36,12 +36,12 @@ import net.minecraft.world.item.Items;
 
 public class RiteOfBindingWaystoneDuplicate extends AbstractCreateItemRite {
 
-    protected RiteOfBindingWaystoneDuplicate(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingWaystoneDuplicate(RiteType<?> type, int power) {
+        super(type, power, SoundEvents.ZOMBIE_VILLAGER_CURE, new ItemStack(EnchantedItems.BOUND_WAYSTONE.get(), 2));
     }
 
     public RiteOfBindingWaystoneDuplicate() {
-        this(EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE.get(), 500, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE.get(), 500); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
@@ -50,26 +50,14 @@ public class RiteOfBindingWaystoneDuplicate extends AbstractCreateItemRite {
     }
 
     @Override
-    public void execute() {
-        ItemStack stoneItem = null;
-
-        for(ItemStack stack : itemsConsumed) {
-            if(stack.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
-                stoneItem = stack;
+    public void setupItemNbt(int index, ItemStack stack) {
+        if(index == 0) {
+            for(ItemStack item : itemsConsumed) {
+                if(item.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
+                    stack.setTag(item.getOrCreateTag());
+                }
             }
         }
-
-        if(stoneItem != null && stoneItem.hasTag()) {
-            ItemStack newStone = stoneItem.copy();
-            spawnItems(stoneItem, newStone);
-            spawnMagicParticles();
-        }
-        else {
-            cancel();
-            return;
-        }
-
-        stopExecuting();
     }
 
 }

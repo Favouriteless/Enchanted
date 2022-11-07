@@ -33,7 +33,7 @@ import net.minecraft.world.item.Items;
 public class RiteOfBroilingCharged extends RiteOfBroiling {
 
     public RiteOfBroilingCharged() {
-        super(EnchantedRiteTypes.BROILING_CHARGED.get(), 0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BROILING_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(Items.COAL, 1);
         ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);

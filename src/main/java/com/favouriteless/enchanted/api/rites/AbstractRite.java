@@ -472,4 +472,14 @@ public abstract class AbstractRite {
         return CIRCLES_REQUIRED.containsKey(part) && CIRCLES_REQUIRED.get(part) == block;
     }
 
+    protected void replaceItem(ItemEntity entity, ItemStack... newItems) {
+        if(!entity.level.isClientSide) {
+            for(ItemStack stack : newItems) {
+                ItemEntity newEntity = new ItemEntity(entity.level, entity.position().x(), entity.position().y(), entity.position().z(), stack);
+                entity.level.addFreshEntity(newEntity);
+            }
+            entity.discard();
+        }
+    }
+
 }

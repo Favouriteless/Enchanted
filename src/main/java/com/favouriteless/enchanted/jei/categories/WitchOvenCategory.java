@@ -47,12 +47,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
-    IJeiHelpers helper;
+    private final RecipeType<WitchOvenRecipe> type;
+    private final IJeiHelpers helper;
 
-    RecipeType<WitchOvenRecipe> type;
-
-    IDrawableAnimated fire;
-    IDrawableAnimated arrow;
+    private final IDrawableAnimated fire;
+    private final IDrawableAnimated arrow;
 
     public WitchOvenCategory(IJeiHelpers helper, RecipeType<WitchOvenRecipe> type) {
         this.type = type;

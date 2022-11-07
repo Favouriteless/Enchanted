@@ -46,12 +46,10 @@ import net.minecraft.world.item.ItemStack;
 
 public class WitchCauldronCategory implements IRecipeCategory<WitchCauldronRecipe> {
 
-    IJeiHelpers jeiHelpers;
-    RecipeType<WitchCauldronRecipe> type;
+    private final RecipeType<WitchCauldronRecipe> type;
+    private final IJeiHelpers jeiHelpers;
 
-    IDrawableAnimated arrow;
-
-
+    private final IDrawableAnimated arrow;
 
     public WitchCauldronCategory(IJeiHelpers jeiHelpers, RecipeType<WitchCauldronRecipe> type) {
         this.jeiHelpers = jeiHelpers;

@@ -46,11 +46,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class DistilleryCategory implements IRecipeCategory<DistilleryRecipe> {
 
-    IJeiHelpers helper;
-    RecipeType<DistilleryRecipe> type;
+    private final RecipeType<DistilleryRecipe> type;
+    private final IJeiHelpers helper;
 
-    IDrawableAnimated bubbles;
-    IDrawableAnimated arrow;
+    private final IDrawableAnimated bubbles;
+    private final IDrawableAnimated arrow;
 
 
     public DistilleryCategory(IJeiHelpers helper, RecipeType<DistilleryRecipe> type) {

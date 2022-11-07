@@ -46,9 +46,10 @@ import net.minecraft.world.item.ItemStack;
 
 public class KettleCategory implements IRecipeCategory<KettleRecipe> {
 
-    IJeiHelpers jeiHelpers;
-    RecipeType<KettleRecipe> type;
-    IDrawableAnimated arrow;
+    private final RecipeType<KettleRecipe> type;
+    private final IJeiHelpers jeiHelpers;
+
+    private final IDrawableAnimated arrow;
 
     public KettleCategory(IJeiHelpers jeiHelpers, RecipeType<KettleRecipe> type) {
         this.jeiHelpers = jeiHelpers;

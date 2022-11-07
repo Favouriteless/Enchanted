@@ -48,11 +48,11 @@ import java.util.List;
 
 public class SpinningWheelCategory implements IRecipeCategory<SpinningWheelRecipe> {
 
-    IJeiHelpers jeiHelpers;
-    RecipeType<SpinningWheelRecipe> type;
+    private final RecipeType<SpinningWheelRecipe> type;
+    private final IJeiHelpers jeiHelpers;
 
-    IDrawableAnimated leftArrow;
-    IDrawableAnimated rightArrow;
+    private final IDrawableAnimated leftArrow;
+    private final IDrawableAnimated rightArrow;
 
     public SpinningWheelCategory(IJeiHelpers jeiHelpers, RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel) {
         this.jeiHelpers = jeiHelpers;

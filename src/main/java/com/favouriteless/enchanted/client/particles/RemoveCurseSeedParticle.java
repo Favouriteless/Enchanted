@@ -33,6 +33,7 @@ import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.phys.Vec3;
 
@@ -46,15 +47,23 @@ public class RemoveCurseSeedParticle extends NoRenderParticle {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.lifetime = 200;
+		this.lifetime = 300;
 	}
 
 	@Override
 	public void tick() {
 		if(age++ < lifetime) {
-			spawnParticle();
-			if(Math.random() < 0.5D)
+			if(age < 200) {
 				spawnParticle();
+				if(Math.random() < 0.5D)
+					spawnParticle();
+			}
+			if(age > 40) {
+				double dx = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
+				double dy = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
+				double dz = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
+				level.addParticle(ParticleTypes.SOUL, x+dx, y+dy, z+dz, 0.0D, 0.0D, 0.0D);
+			}
 		}
 		else
 			remove();

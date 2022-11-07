@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.api.rites;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.util.curse.CurseManager;
 import com.favouriteless.enchanted.common.util.curse.CurseSavedData;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
@@ -58,7 +59,7 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             if(curses != null) {
                 for(AbstractCurse curse : curses) {
                     if(curse.getType() == curseType) {
-                        curses.remove(curse);
+                        CurseManager.removeCurse(level, curse);
                         break;
                     }
                 }

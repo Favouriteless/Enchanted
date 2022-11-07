@@ -9,7 +9,7 @@
     },
     {
       "type": "enchanted:kettle_recipe",
-      "recipe": "enchanted:brew_of_the_depths"
+      "recipe": "enchanted:kettle_brew_of_the_depths"
     }
   ],
   "read_by_default": true

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.common.init.*;
-import com.favouriteless.enchanted.common.network.EnchantedPackets;
+import com.favouriteless.enchanted.common.init.EnchantedPackets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;

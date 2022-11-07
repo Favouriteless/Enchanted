@@ -137,4 +137,8 @@ public abstract class AbstractCurse {
 
     protected void loadAdditional(CompoundTag nbt) {}
 
+    public void onRemove(ServerLevel level) {
+
+    }
+
 }

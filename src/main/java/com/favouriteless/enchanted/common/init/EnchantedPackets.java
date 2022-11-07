@@ -22,12 +22,13 @@
  *
  */
 
-package com.favouriteless.enchanted.common.network;
+package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.network.EnchantedPacket;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
+import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -45,6 +46,7 @@ public class EnchantedPackets {
 	public static void registerPackets() {
 		int id = 0;
 		INSTANCE.registerMessage(id++, EnchantedPoppetAnimationPacket.class, EnchantedPoppetAnimationPacket::encode, EnchantedPoppetAnimationPacket::decode, EnchantedPoppetAnimationPacket::handle);
+		INSTANCE.registerMessage(id++, EnchantedSinkingCursePacket.class, EnchantedSinkingCursePacket::encode, EnchantedSinkingCursePacket::decode, EnchantedSinkingCursePacket::handle);
 	}
 
 	public static void sendToPlayer(EnchantedPacket packet, ServerPlayer player) {

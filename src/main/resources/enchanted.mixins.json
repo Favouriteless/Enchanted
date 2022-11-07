@@ -7,6 +7,7 @@
     "MixinLivingEntity"
   ],
   "client": [
+    "MixinLocalPlayer"
   ],
   "minVersion": "0.8"
 }

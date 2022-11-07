@@ -26,8 +26,14 @@ package com.favouriteless.enchanted.common.curses;
 
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.EnchantedPackets;
+import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
+import net.minecraft.server.level.ServerLevel;
 
 public class CurseOfSinking extends AbstractCurse {
+
+	public boolean wasSwimming = false;
+	public boolean wasFlying = false;
 
 	public CurseOfSinking() {
 		super(EnchantedCurseTypes.SINKING.get());
@@ -35,8 +41,30 @@ public class CurseOfSinking extends AbstractCurse {
 
 	@Override
 	protected void onTick() {
-		if(targetPlayer.isFallFlying() || targetPlayer.isSwimming()) {
-			targetPlayer.setDeltaMovement(targetPlayer.getDeltaMovement().add(0.0D, -1.0D, 0.0D));
+		level = 4;
+		if(targetPlayer != null) {
+			boolean isSwimming = targetPlayer.isInWater();
+			boolean isFlying = targetPlayer.isFallFlying();
+
+			if(isSwimming != wasSwimming || isFlying != wasFlying) {
+				if(isSwimming)
+					EnchantedPackets.sendToPlayer(new EnchantedSinkingCursePacket(-0.025D * (level + 1)), targetPlayer);
+				else if(isFlying)
+					EnchantedPackets.sendToPlayer(new EnchantedSinkingCursePacket(-0.05D * (level + 1)), targetPlayer);
+				else
+					EnchantedPackets.sendToPlayer(new EnchantedSinkingCursePacket(0.0D), targetPlayer);
+				wasSwimming = isSwimming;
+				wasFlying = isFlying;
+			}
+		}
+	}
+
+	@Override
+	public void onRemove(ServerLevel level) {
+		if(targetPlayer == null || targetPlayer.isRemoved())
+			targetPlayer = level.getServer().getPlayerList().getPlayer(targetUUID);
+		if(targetPlayer != null) {
+			EnchantedPackets.sendToPlayer(new EnchantedSinkingCursePacket(0.0D), targetPlayer); // Reset the player's sinking when removed
 		}
 	}
 

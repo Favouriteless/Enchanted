@@ -23,7 +23,7 @@
  */
 
 
-package com.favouriteless.enchanted.jei;
+package com.favouriteless.enchanted.jei.categories;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.EnchantedItems;

@@ -32,16 +32,17 @@ import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class RiteOfBindingWaystone extends AbstractCreateItemRite {
 
-    protected RiteOfBindingWaystone(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick, SoundEvents.ZOMBIE_VILLAGER_CURE);
+    protected RiteOfBindingWaystone(RiteType<?> type, int power) {
+        super(type, power, SoundEvents.ZOMBIE_VILLAGER_CURE, new ItemStack(EnchantedItems.BOUND_WAYSTONE.get()));
     }
 
     public RiteOfBindingWaystone() {
-        this(EnchantedRiteTypes.BINDING_WAYSTONE.get(), 500, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BINDING_WAYSTONE.get(), 500); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
@@ -49,10 +50,10 @@ public class RiteOfBindingWaystone extends AbstractCreateItemRite {
     }
 
     @Override
-    public void execute() {
-        spawnItems(WaystoneHelper.create(level, pos));
-        spawnMagicParticles();
-        stopExecuting();
+    public void setupItemNbt(int index, ItemStack stack) {
+        if(index == 0) {
+            WaystoneHelper.bind(stack, level, pos);
+        }
     }
 
 }

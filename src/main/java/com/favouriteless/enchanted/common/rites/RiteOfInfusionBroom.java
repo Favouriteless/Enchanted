@@ -35,19 +35,11 @@ import net.minecraft.world.item.ItemStack;
 public class RiteOfInfusionBroom extends AbstractCreateItemRite {
 
     public RiteOfInfusionBroom() {
-        super(EnchantedRiteTypes.INFUSION_BROOM.get(), 3000, 0, SoundEvents.ZOMBIE_VILLAGER_CURE); // Power, power per tick
-        ITEMS_REQUIRED.put(EnchantedItems.BROOM.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.FLYING_OINTMENT.get(), 1);
-
+        super(EnchantedRiteTypes.INFUSION_BROOM.get(), 3000, SoundEvents.ZOMBIE_VILLAGER_CURE, new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get(), 1)); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
-    }
-
-    @Override
-    public void execute() {
-        spawnItems(new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get(), 1));
-        spawnMagicParticles();
-        stopExecuting();
+        ITEMS_REQUIRED.put(EnchantedItems.BROOM.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.FLYING_OINTMENT.get(), 1);
     }
 
 }

@@ -32,7 +32,7 @@ import com.favouriteless.enchanted.common.util.rite.CirclePart;
 public class RiteOfBindingWaystoneDuplicateCharged extends RiteOfBindingWaystoneDuplicate {
 
     public RiteOfBindingWaystoneDuplicateCharged() {
-        super(EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE_CHARGED.get(), 0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BINDING_WAYSTONE_DUPLICATE_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);

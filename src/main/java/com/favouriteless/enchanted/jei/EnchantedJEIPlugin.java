@@ -25,8 +25,11 @@
 
 package com.favouriteless.enchanted.jei;
 
+import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
@@ -41,6 +44,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class EnchantedJEIPlugin implements IModPlugin {
@@ -59,9 +65,12 @@ public class EnchantedJEIPlugin implements IModPlugin {
     private static final ResourceLocation locationKettle= new ResourceLocation("enchanted", "kettle_category");
     private static final RecipeType<KettleRecipe> recipeTypeKettle = new RecipeType(locationKettle, KettleRecipe.class);
 
+    private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
+    private static final RecipeType<AbstractCreateItemRite> recipeTypeRite = new RecipeType(locationRite, AbstractRite.class);
+
     @Override
     public ResourceLocation getPluginUid() {
-        return null;
+        return new ResourceLocation("enchanted","jei_plugin");
     }
 
     @Override
@@ -86,6 +95,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new SpinningWheelCategory(registration.getJeiHelpers(),recipeTypeSpinningWheel));
         registration.addRecipeCategories(new WitchCauldronCategory(registration.getJeiHelpers(),recipeTypeWitchCauldron));
         registration.addRecipeCategories(new KettleCategory(registration.getJeiHelpers(),recipeTypeKettle));
+        registration.addRecipeCategories(new RiteCategory(registration.getJeiHelpers(),recipeTypeRite));
 
     }
 
@@ -102,7 +112,13 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
         registration.addRecipes(recipeTypeWitchCauldron, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
         registration.addRecipes(recipeTypeKettle, m.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
-
+        List<AbstractCreateItemRite> t = EnchantedRiteTypes.RITE_TYPES.getEntries()
+                .stream()
+                .map(r->r.get().create())
+                .filter(AbstractCreateItemRite.class::isInstance)
+                .map(AbstractCreateItemRite.class::cast)
+                .collect(Collectors.toList());
+        registration.addRecipes(recipeTypeRite,t);
     }
 
     @Override
@@ -120,7 +136,10 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.SPINNING_WHEEL.get()), recipeTypeSpinningWheel);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.WITCH_CAULDRON.get()), recipeTypeWitchCauldron);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.KETTLE.get()), recipeTypeKettle);
-
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_WHITE.get()),recipeTypeRite);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_GOLD.get()),recipeTypeRite);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_PURPLE.get()),recipeTypeRite);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_RED.get()),recipeTypeRite);
         IModPlugin.super.registerRecipeCatalysts(registration);
     }
 

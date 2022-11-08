@@ -116,6 +116,9 @@
     "block.enchanted.poppet_shelf": "Poppet Shelf",
     "container.enchanted.poppet_shelf": "Poppet Shelf",
     "container.enchanted.altar": "Altar",
+    "jei.enchanted.witch_cauldron": "Witch Cauldron",
+    "jei.enchanted.kettle" : "Kettle",
+    "jei.enchanted.circle_magic": "Circle Magic",
 
     "block.enchanted.chalice": "Chalice",
     "block.enchanted.chalice_filled": "Filled Chalice",

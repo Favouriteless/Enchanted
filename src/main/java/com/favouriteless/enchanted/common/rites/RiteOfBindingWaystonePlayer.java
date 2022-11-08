@@ -55,7 +55,8 @@ public class RiteOfBindingWaystonePlayer extends AbstractCreateItemRite {
     @Override
     public void setupItemNbt(int index, ItemStack stack) {
         if(index == 0) {
-            WaystoneHelper.bind(stack, targetUUID);
+            if(targetUUID != null)
+                WaystoneHelper.bind(stack, targetUUID);
         }
     }
 

@@ -24,65 +24,34 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.rites.AbstractRemoveCurseRite;
-import com.favouriteless.enchanted.client.particles.DelayedActionParticleType.DelayedActionData;
+import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.world.phys.Vec3;
 
-public class RemoveCurseSeedParticle extends NoRenderParticle {
+public class CurseBlightSeedParticle extends NoRenderParticle {
 
-	private static final double RADIUS = 4.5D;
-	public static final double ORB_RADIUS = 1.0D;
-
-	protected RemoveCurseSeedParticle(ClientLevel pLevel, double x, double y, double z) {
+	protected CurseBlightSeedParticle(ClientLevel pLevel, double x, double y, double z) {
 		super(pLevel, x, y, z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.lifetime = 300;
-		this.hasPhysics = false;
 	}
 
 	@Override
 	public void tick() {
-		if(age++ < lifetime) {
-			if(age < 200) {
-				spawnParticle();
-				if(Math.random() < 0.5D)
-					spawnParticle();
-			}
-			if(age > 40) {
-				double dx = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
-				double dy = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
-				double dz = (Math.random()-0.5D) * ORB_RADIUS/1.5D;
-				level.addParticle(ParticleTypes.SOUL, x+dx, y+dy, z+dz, 0.0D, 0.0D, 0.0D);
-			}
+		for(int a = 0; a < 360; a+=2) {
+			double angle = Math.toRadians(a);
+			double cx = x + Math.sin(angle) * 0.1D;
+			double cz = z + Math.cos(angle) * 0.1D;
+
+			level.addParticle(new CircleMagicData(EnchantedParticles.CURSE_BLIGHT.get(), 255, 255, 255, x, z, 0.1D), cx, y, cz, 0.0D, 0.0D, 0.0D);
 		}
-		else
-			remove();
-	}
-
-	private void spawnParticle() {
-		double u = Math.random();
-		double x1 = Enchanted.RANDOM.nextGaussian();
-		double x2 = Enchanted.RANDOM.nextGaussian();
-		double x3 = Enchanted.RANDOM.nextGaussian();
-		double mag = Math.sqrt(x1 * x1 + x2 * x2 + x3 * x3);
-		x1 /= mag;
-		x2 /= mag;
-		x3 /= mag;
-		double c = Math.cbrt(u);
-		Vec3 spherePos = new Vec3(x1 * c, x2 * c, x3 * c).scale(RADIUS);
-
-		level.addParticle(new DelayedActionData(EnchantedParticles.REMOVE_CURSE.get(), x, y, z, AbstractRemoveCurseRite.RAISE - age + (int)Math.round(Math.random()*10)), x + spherePos.x, y + spherePos.y, z + spherePos.z, 0.0D, 0.0D, 0.0D);
+		this.remove();
 	}
 
 	public static class Factory implements ParticleProvider<SimpleParticleType> {
@@ -91,7 +60,7 @@ public class RemoveCurseSeedParticle extends NoRenderParticle {
 		}
 
 		public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			return new RemoveCurseSeedParticle(level, x, y, z);
+			return new CurseBlightSeedParticle(level, x, y, z);
 		}
 	}
 }

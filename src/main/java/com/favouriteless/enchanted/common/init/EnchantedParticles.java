@@ -56,12 +56,14 @@ public class EnchantedParticles {
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE = PARTICLE_TYPES.register("imprisonment_cage", () -> new SimpleParticleType(false));
     public static final RegistryObject<ParticleType<DelayedActionData>> SKY_WRATH = PARTICLE_TYPES.register("sky_wrath", () -> new DelayedActionParticleType(false));
     public static final RegistryObject<ParticleType<DelayedActionData>> REMOVE_CURSE = PARTICLE_TYPES.register("remove_curse", () -> new DelayedActionParticleType(false));
+    public static final RegistryObject<ParticleType<CircleMagicData>> CURSE_BLIGHT = PARTICLE_TYPES.register("curse_blight", () -> new CircleMagicParticleType(false));
 
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> BROILING_SEED = PARTICLE_TYPES.register("broiling_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> SKY_WRATH_SEED = PARTICLE_TYPES.register("sky_wrath_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> CURSE_SEED = PARTICLE_TYPES.register("curse_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> CURSE_BLIGHT_SEED = PARTICLE_TYPES.register("curse_blight_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> REMOVE_CURSE_SEED = PARTICLE_TYPES.register("remove_curse_seed", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
@@ -79,6 +81,8 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(SKY_WRATH.get(), SkyWrathParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(CURSE_SEED.get(), CurseSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(CURSE_BLIGHT_SEED.get(), CurseBlightSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(CURSE_BLIGHT.get(), CurseBlightParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(REMOVE_CURSE_SEED.get(), RemoveCurseSeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(REMOVE_CURSE.get(), RemoveCurseParticle.Factory::new);
     }

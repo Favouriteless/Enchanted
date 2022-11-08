@@ -46,6 +46,7 @@ public class SkyWrathSeedParticle extends NoRenderParticle {
 		this.y = y;
 		this.z = z;
 		this.lifetime = 60;
+		this.hasPhysics = false;
 	}
 
 	@Override

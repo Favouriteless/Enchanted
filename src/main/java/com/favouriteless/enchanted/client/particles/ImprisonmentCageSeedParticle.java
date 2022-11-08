@@ -40,6 +40,7 @@ public class ImprisonmentCageSeedParticle extends NoRenderParticle {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.hasPhysics = false;
 	}
 
 	@Override

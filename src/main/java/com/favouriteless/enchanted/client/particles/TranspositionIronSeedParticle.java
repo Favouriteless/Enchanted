@@ -37,8 +37,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class TranspositionIronSeedParticle extends NoRenderParticle {
 
-	protected TranspositionIronSeedParticle(ClientLevel pLevel, double x, double y, double z) {
-		super(pLevel, x, y, z);
+	protected TranspositionIronSeedParticle(ClientLevel level, double x, double y, double z) {
+		super(level, x, y, z);
+		this.hasPhysics = false;
 	}
 
 	@Override

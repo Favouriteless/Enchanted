@@ -47,6 +47,7 @@ public class SkyWrathParticle extends TextureSheetParticle {
 		this.centerZ = centerZ;
 		this.explodeTicks = explodeTicks;
 		this.alpha = 0.0F;
+		this.hasPhysics = false;
 	}
 
 	@Override

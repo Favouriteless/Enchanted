@@ -47,6 +47,9 @@ public class EnchantedTags {
     public static final TagKey<Block> PLANKS = BlockTags.create(Enchanted.location("planks"));
     public static final TagKey<Block> POWER_CONSUMERS = BlockTags.create(Enchanted.location("power_consumers"));
     public static final TagKey<Block> SAPLINGS = BlockTags.create(Enchanted.location("saplings"));
+    public static final TagKey<Block> BLIGHT_DECAYABLE_BLOCKS = BlockTags.create(Enchanted.location("blight_decayable_blocks"));
+    public static final TagKey<Block> BLIGHT_DECAY_BLOCKS = BlockTags.create(Enchanted.location("blight_decay_blocks"));
+    public static final TagKey<Block> BLIGHT_DECAYABLE_PLANTS = BlockTags.create(Enchanted.location("blight_decayable_plants"));
 
     public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(Enchanted.location("armour_poppet_blacklist"));
     public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(Enchanted.location("armour_poppet_whitelist"));
@@ -55,6 +58,8 @@ public class EnchantedTags {
     public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(Enchanted.location("tool_poppet_whitelist"));
 
     public static final TagKey<MobEffect> MISFORTUNE_EFFECTS = createEffectTag(Enchanted.location("misfortune_effects"));
+    public static final TagKey<MobEffect> BLIGHT_EFFECTS = createEffectTag(Enchanted.location("blight_effects"));
+
     public static final TagKey<Biome> OVERHEATING_BIOMES = createBiomeTag(Enchanted.location("overheating_biomes"));
 
     public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(Enchanted.location("monsters"));

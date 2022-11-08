@@ -24,21 +24,29 @@
 
 package com.favouriteless.enchanted.client.particles;
 
+import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
-public class ImprisonmentCageParticle extends TextureSheetParticle {
+public class CurseBlightParticle extends TextureSheetParticle {
 
-	public static final int LIFETIME = 40;
+	private static final double REPEL_SPEED = 0.3D;
 
-	protected ImprisonmentCageParticle(ClientLevel pLevel, double pX, double pY, double pZ) {
-		super(pLevel, pX, pY, pZ);
-		this.lifetime = LIFETIME;
-		this.quadSize = 0.1F;
+	private final double centerX;
+	private final double centerZ;
+
+	protected CurseBlightParticle(ClientLevel level, double x, double y, double z, double centerX, double centerZ) {
+		super(level, x, y, z);
+		this.centerX = centerX;
+		this.centerZ = centerZ;
 		this.alpha = 0.0F;
+		this.lifetime = 60;
+		this.quadSize = 0.1F;
 		this.hasPhysics = false;
+		this.rCol = 31/255F;
+		this.gCol = 30/255F;
+		this.bCol = 77/255F;
 	}
 
 	@Override
@@ -46,30 +54,30 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 		this.xo = this.x;
 		this.yo = this.y;
 		this.zo = this.z;
-		if(age++ >= lifetime) {
-			this.alpha -= 0.02F;
-			if(this.alpha <= 0) {
-				remove();
+
+		if(age < lifetime) {
+			if(alpha < 1.0F) {
+				alpha += 0.2F;
+				if(alpha > 1.0F)
+					alpha = 1.0F;
 			}
 		}
-		else if(alpha <= 1.0F) {
-			this.alpha += 0.04F;
+		else {
+			if(alpha > 0.0F) {
+				alpha -= 0.02F;
+				if(alpha < 0.0F) {
+					alpha = 0.0F;
+					remove();
+				}
+			}
 		}
-	}
+		Vec3 velocity = new Vec3(x - centerX, 0, z - centerZ).normalize().scale(REPEL_SPEED);
+		this.xd = velocity.x();
+		this.yd = velocity.y();
+		this.zd = velocity.z();
 
-	@Override
-	public int getLightColor(float pPartialTick) {
-		float f = ((float)this.age + pPartialTick) / (float)this.lifetime;
-		f = Mth.clamp(f, 0.0F, 1.0F);
-		int i = super.getLightColor(pPartialTick);
-		int j = i & 255;
-		int k = i >> 16 & 255;
-		j += (int)(f * 15.0F * 16.0F);
-		if (j > 240) {
-			j = 240;
-		}
-
-		return j | k << 16;
+		this.move(xd, yd, zd);
+		age++;
 	}
 
 	@Override
@@ -77,17 +85,16 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
-	public static class Factory implements ParticleProvider<SimpleParticleType> {
+	public static class Factory implements ParticleProvider<CircleMagicData> {
 		private final SpriteSet sprite;
 
 		public Factory(SpriteSet sprites) {
 			this.sprite = sprites;
 		}
 
-		public Particle createParticle(SimpleParticleType type, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-			ImprisonmentCageParticle particle = new ImprisonmentCageParticle(level, pX, pY, pZ);
+		public Particle createParticle(CircleMagicData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			CurseBlightParticle particle = new CurseBlightParticle(level, x, y, z, data.getCenterX(), data.getCenterZ());
 			particle.pickSprite(this.sprite);
-			particle.scale(0.5F);
 			return particle;
 		}
 	}

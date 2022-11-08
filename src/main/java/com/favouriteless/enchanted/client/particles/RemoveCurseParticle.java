@@ -46,6 +46,7 @@ public class RemoveCurseParticle extends TextureSheetParticle {
 		this.centerZ = centerZ;
 		this.raiseTicks = raiseTicks;
 		this.alpha = 0.0F;
+		this.hasPhysics = false;
 	}
 
 	@Override

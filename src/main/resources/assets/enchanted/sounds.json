@@ -16,5 +16,10 @@
     "sounds": [
       "enchanted:curse_cast"
     ]
+  },
+  "remove_curse": {
+    "sounds": [
+      "enchanted:remove_curse"
+    ]
   }
 }

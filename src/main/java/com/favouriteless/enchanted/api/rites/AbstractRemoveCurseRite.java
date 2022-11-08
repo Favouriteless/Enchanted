@@ -41,6 +41,7 @@ import java.util.List;
 public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
     public static final int RAISE = 300;
+    public static final int START_SOUND = 190;
     private final CurseType<?> curseType;
 
     public AbstractRemoveCurseRite(RiteType<?> type, int power, int powerTick, CurseType<?> curseType) {
@@ -52,9 +53,16 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
     protected void execute() {
         if(targetUUID == null)
             cancel();
-        else {
+        else
             level.sendParticles(EnchantedParticles.REMOVE_CURSE_SEED.get(), pos.getX()+0.5D, pos.getY() + 2.5D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-            level.playSound(null, pos, EnchantedSoundEvents.CURSE_CAST.get(), SoundSource.MASTER, 1.5F, 1.0F);
+    }
+
+    @Override
+    protected void onTick() {
+        if(ticks == START_SOUND) {
+            level.playSound(null, pos, EnchantedSoundEvents.REMOVE_CURSE.get(), SoundSource.MASTER, 1.0F, 1.0F);
+        }
+        else if(ticks == RAISE) {
             List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(targetUUID);
             if(curses != null) {
                 for(AbstractCurse curse : curses) {
@@ -67,5 +75,4 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             stopExecuting();
         }
     }
-
 }

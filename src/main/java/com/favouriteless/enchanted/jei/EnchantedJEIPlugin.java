@@ -112,13 +112,13 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
         registration.addRecipes(recipeTypeWitchCauldron, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
         registration.addRecipes(recipeTypeKettle, m.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
-        List<AbstractCreateItemRite> t = EnchantedRiteTypes.RITE_TYPES.getEntries()
+        List<AbstractCreateItemRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
                 .stream()
                 .map(r->r.get().create())
                 .filter(AbstractCreateItemRite.class::isInstance)
                 .map(AbstractCreateItemRite.class::cast)
                 .collect(Collectors.toList());
-        registration.addRecipes(recipeTypeRite,t);
+        registration.addRecipes(recipeTypeRite,ritesCreateItemCrafts);
     }
 
     @Override

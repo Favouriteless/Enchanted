@@ -41,12 +41,12 @@ public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
         this.recipeTypeRite = recipeTypeRite;
 
 
-        IDrawableBuilder b = jeiHelpers.getGuiHelper().drawableBuilder(Enchanted.location("textures/block/glyph_0.png"), 0, 0, GLYPH_SIZE, GLYPH_SIZE);
-        b.setTextureSize(GLYPH_SIZE, GLYPH_SIZE);
-        this.glyph_white = b.build();
-        b = jeiHelpers.getGuiHelper().drawableBuilder(Enchanted.location("textures/block/glyph_gold.png"), 0, 0, GLYPH_SIZE, GLYPH_SIZE);
-        b.setTextureSize(GLYPH_SIZE, GLYPH_SIZE);
-        this.glyph_golden = b.build();
+        IDrawableBuilder glyphDrawableBuilder = jeiHelpers.getGuiHelper().drawableBuilder(Enchanted.location("textures/block/glyph_0.png"), 0, 0, GLYPH_SIZE, GLYPH_SIZE);
+        glyphDrawableBuilder.setTextureSize(GLYPH_SIZE, GLYPH_SIZE);
+        this.glyph_white = glyphDrawableBuilder.build();
+        glyphDrawableBuilder = jeiHelpers.getGuiHelper().drawableBuilder(Enchanted.location("textures/block/glyph_gold.png"), 0, 0, GLYPH_SIZE, GLYPH_SIZE);
+        glyphDrawableBuilder.setTextureSize(GLYPH_SIZE, GLYPH_SIZE);
+        this.glyph_golden = glyphDrawableBuilder.build();
 
     }
 
@@ -75,7 +75,7 @@ public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
             for (int x = 0; x < MAXSIZE; x++) {
                 for (int y = 0; y < MAXSIZE; y++) {
                     if (circlePart.getCirclePoints().contains(new BlockPos(x - MAXSIZE / 2, 0, y - MAXSIZE / 2))) {
-                        glyph_white.draw(stack, (x) * GLYPH_SIZE, (y) * GLYPH_SIZE);
+                        glyph_white.draw(stack, x * GLYPH_SIZE, y * GLYPH_SIZE);
                     } else if (x - MAXSIZE / 2 == 0 && y - MAXSIZE / 2 == 0) {
                         glyph_golden.draw(stack, x * GLYPH_SIZE, y * GLYPH_SIZE);
                     }

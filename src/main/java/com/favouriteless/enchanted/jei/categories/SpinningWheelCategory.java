@@ -39,6 +39,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -51,8 +52,11 @@ public class SpinningWheelCategory implements IRecipeCategory<SpinningWheelRecip
     private final RecipeType<SpinningWheelRecipe> type;
     private final IJeiHelpers jeiHelpers;
 
+    private final int GUI_WIDTH = 140;
+
     private final IDrawableAnimated leftArrow;
     private final IDrawableAnimated rightArrow;
+    private final IDrawableStatic background;
 
     public SpinningWheelCategory(IJeiHelpers jeiHelpers, RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel) {
         this.jeiHelpers = jeiHelpers;
@@ -61,12 +65,24 @@ public class SpinningWheelCategory implements IRecipeCategory<SpinningWheelRecip
         this.leftArrow = jeiHelpers.getGuiHelper().createAnimatedDrawable(leftArrow, 120, IDrawableAnimated.StartDirection.BOTTOM, false);
         IDrawableStatic rightArrow = jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/spinning_wheel.png"), 176, 20, 15, 20);
         this.rightArrow = jeiHelpers.getGuiHelper().createAnimatedDrawable(rightArrow, 120, IDrawableAnimated.StartDirection.BOTTOM, false);
+        this.background = jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/spinning_wheel.png"), 20, 10, 140, 60);
     }
 
     @Override
     public void draw(SpinningWheelRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+        this.background.draw(stack);
         this.leftArrow.draw(stack,7,16);
         this.rightArrow.draw(stack,44,16);
+        drawPowerCost(Minecraft.getInstance(),stack,"Required Altar Power : "+recipe.getPower(),0xFFFFFFFF);
+    }
+
+    private void drawPowerCost(Minecraft minecraft, PoseStack poseStack, String text, int mainColor) {
+        int shadowColor = 0xFF000000 | (mainColor & 0xFCFCFC) >> 2;
+        int width = minecraft.font.width(text);
+        int x = GUI_WIDTH/2 - width/2 - 1;
+        int y = 65;
+
+        minecraft.font.draw(poseStack, text, x + 1, y, shadowColor);
     }
 
     @Override
@@ -76,7 +92,7 @@ public class SpinningWheelCategory implements IRecipeCategory<SpinningWheelRecip
 
     @Override
     public IDrawable getBackground() {
-        return jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/spinning_wheel.png"), 20, 10, 140, 60);
+        return jeiHelpers.getGuiHelper().createBlankDrawable(GUI_WIDTH,80);
     }
 
     @Override

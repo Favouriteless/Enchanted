@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.jei;
 
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
@@ -37,10 +38,12 @@ import com.favouriteless.enchanted.common.recipes.*;
 import com.favouriteless.enchanted.jei.categories.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -66,7 +69,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
     private static final RecipeType<KettleRecipe> recipeTypeKettle = new RecipeType(locationKettle, KettleRecipe.class);
 
     private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
-    private static final RecipeType<AbstractCreateItemRite> recipeTypeRite = new RecipeType(locationRite, AbstractRite.class);
+    private static final RecipeType<AbstractRite> recipeTypeRite = new RecipeType(locationRite, AbstractRite.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -112,13 +115,12 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
         registration.addRecipes(recipeTypeWitchCauldron, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
         registration.addRecipes(recipeTypeKettle, m.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
-        List<AbstractCreateItemRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
+        List<AbstractRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
                 .stream()
                 .map(r->r.get().create())
-                .filter(AbstractCreateItemRite.class::isInstance)
-                .map(AbstractCreateItemRite.class::cast)
                 .collect(Collectors.toList());
         registration.addRecipes(recipeTypeRite,ritesCreateItemCrafts);
+        registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK,new TextComponent("TEST"));
     }
 
     @Override

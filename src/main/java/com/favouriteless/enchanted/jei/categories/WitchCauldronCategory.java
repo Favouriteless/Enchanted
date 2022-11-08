@@ -39,6 +39,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -49,6 +50,7 @@ public class WitchCauldronCategory implements IRecipeCategory<WitchCauldronRecip
     private final RecipeType<WitchCauldronRecipe> type;
     private final IJeiHelpers jeiHelpers;
 
+    private final int GUI_WIDTH = 140;
     private final IDrawableAnimated arrow;
 
     public WitchCauldronCategory(IJeiHelpers jeiHelpers, RecipeType<WitchCauldronRecipe> type) {
@@ -61,8 +63,19 @@ public class WitchCauldronCategory implements IRecipeCategory<WitchCauldronRecip
 
     @Override
     public void draw(WitchCauldronRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        this.arrow.draw(stack,75,30);
+        this.arrow.draw(stack,85,30);
+        drawPowerCost(Minecraft.getInstance(),stack,"Required Altar Power : "+recipe.getPower(),0xFFFFFFFF);
     }
+
+    private void drawPowerCost(Minecraft minecraft, PoseStack poseStack, String text, int mainColor) {
+        int shadowColor = 0xFF000000 | (mainColor & 0xFCFCFC) >> 2;
+        int width = minecraft.font.width(text);
+        int x = GUI_WIDTH/2 - width/2 - 1;
+        int y = 55;
+
+        minecraft.font.draw(poseStack, text, x + 1, y, shadowColor);
+    }
+
 
     @Override
     public Component getTitle() {
@@ -71,17 +84,17 @@ public class WitchCauldronCategory implements IRecipeCategory<WitchCauldronRecip
 
     @Override
     public IDrawable getBackground() {
-        return jeiHelpers.getGuiHelper().createBlankDrawable(140,60);
+        return jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/witch_cauldron.png"),4,4,GUI_WIDTH,70);
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, WitchCauldronRecipe recipe, IFocusGroup focuses) {
         int offset = 0;
         for(ItemStack i : recipe.getItemsIn()){
-            builder.addSlot(RecipeIngredientRole.INPUT,10+offset,5).addIngredient(VanillaTypes.ITEM_STACK,i);
+            builder.addSlot(RecipeIngredientRole.INPUT,5+offset,5).addIngredient(VanillaTypes.ITEM_STACK,i);
             offset += 20;
         }
-        builder.addSlot(RecipeIngredientRole.OUTPUT,100,30).addIngredient(VanillaTypes.ITEM_STACK,recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT,110,30).addIngredient(VanillaTypes.ITEM_STACK,recipe.getResultItem());
     }
 
     @Override

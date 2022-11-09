@@ -21,5 +21,26 @@
     "sounds": [
       "enchanted:remove_curse"
     ]
+  },
+  "broom_sweep": {
+    "sounds": [
+      "enchanted:broom_sweep_1",
+      "enchanted:broom_sweep_2",
+      "enchanted:broom_sweep_3",
+      "enchanted:broom_sweep_4"
+    ]
+  },
+  "chalk_write": {
+    "sounds": [
+      "enchanted:chalk_write_1",
+      "enchanted:chalk_write_2",
+      "enchanted:chalk_write_3",
+      "enchanted:chalk_write_4"
+    ]
+  },
+  "silent": {
+    "sounds": [
+      "enchanted:silent"
+    ]
   }
 }

@@ -31,7 +31,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -42,7 +41,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public abstract class AbstractChalkBlock extends Block {
 
     public AbstractChalkBlock() {
-        super(Properties.of(EnchantedMaterials.CHALK).noCollission().strength(0.5f, 0f).sound(SoundType.STONE));
+        super(Properties.of(EnchantedMaterials.CHALK).noCollission().strength(0.5f, 0f));
     }
 
     @Override

@@ -25,9 +25,9 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.common.blocks.chalk.AbstractChalkBlock;
+import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
@@ -44,23 +44,22 @@ public class ChalkItem extends BlockItem {
         if(block instanceof AbstractChalkBlock) {
             chalkBlock = (AbstractChalkBlock) block;
         } else {
-            chalkBlock = null;
+            throw new IllegalStateException("Chalk item registered with a non-chalk block.");
         }
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context)
-    {
+    public InteractionResult useOn(UseOnContext context) {
         if(context.getClickedFace() == Direction.UP) {
             BlockPos targetLocation = context.getClickedPos().above();
 
             if (context.getLevel().getBlockState(targetLocation).isAir()) {
-                if (chalkBlock.canSurvive(chalkBlock.defaultBlockState(),context.getLevel(), targetLocation)) {
+                if (chalkBlock.canSurvive(chalkBlock.defaultBlockState(), context.getLevel(), targetLocation)) {
                     if(!context.getLevel().isClientSide()) {
-                        context.getLevel().setBlockAndUpdate(context.getClickedPos().offset(0, 1, 0), chalkBlock.getStateForPlacement(new BlockPlaceContext(context)));
+                        context.getLevel().setBlockAndUpdate(targetLocation, chalkBlock.getStateForPlacement(new BlockPlaceContext(context)));
                     }
-                    context.getLevel().playSound(context.getPlayer(), context.getClickedPos().offset(0, 1, 0), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1f, 1f);
-                    context.getPlayer().getItemInHand(context.getHand()).hurtAndBreak(1, context.getPlayer(), (p_220038_0_) -> { });
+                    context.getLevel().playSound(context.getPlayer(), targetLocation, EnchantedSoundEvents.CHALK_WRITE.get(), SoundSource.PLAYERS, 1F, 1F);
+                    context.getPlayer().getItemInHand(context.getHand()).hurtAndBreak(1, context.getPlayer(), (item) -> { });
 
                     return InteractionResult.SUCCESS;
                 }

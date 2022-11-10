@@ -40,10 +40,14 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
@@ -79,17 +83,26 @@ public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, WitchOvenRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
-        builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
-    }
+        List<ItemStack> itemsOut = new ArrayList<>();
+        for(ItemStack stack : recipe.getInput().getItems()) {
+            Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMELTING)
+                    .stream()
+                    .filter(smelt -> smelt.getIngredients().get(0).test(stack))
+                    .findFirst().ifPresent(smeltingRecipe -> itemsOut.add(smeltingRecipe.getResultItem()));
+        }
 
+        if(!itemsOut.isEmpty()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addItemStacks(itemsOut);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 43).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
+            builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
+        }
+    }
 
     @Override
     public void draw(WitchOvenRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         fire.draw(stack, 40, 27);
         arrow.draw(stack, 36, 6);
-
     }
 
     @Override

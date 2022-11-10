@@ -2,14 +2,14 @@ package com.favouriteless.enchanted.jei.categories;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
-import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.jei.EnchantedJEIPlugin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -22,119 +22,115 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RiteCategory implements IRecipeCategory<AbstractRite> {
+public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
 
-    IJeiHelpers jeiHelpers;
-    RecipeType<AbstractRite> recipeTypeRite;
+    private final IJeiHelpers jeiHelpers;
+    private final RecipeType<AbstractCreateItemRite> recipeTypeRite;
 
-    private static final int GLYPH_SIZE = 100;
+    private static final int GLYPH_SIZE = 110;
+    private static final int START_RADIUS = 15;
+    private static final int RADIUS_INCREMENT = 15;
 
     private final IDrawableStatic glyph_golden;
-    private final IDrawableStatic glyph_white[] = new IDrawableStatic[3];
+    private final List<IDrawableStatic> circles = new ArrayList<>();
+    private final IDrawableAnimated arrow;
 
-    private final IDrawableStatic[] glyph_red = new IDrawableStatic[3];
+    public RiteCategory(IJeiHelpers jeiHelpers, RecipeType<AbstractCreateItemRite> recipeTypeRite) {
+        this.jeiHelpers = jeiHelpers;
+        this.recipeTypeRite = recipeTypeRite;
+        IDrawableStatic arrow = jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/witch_oven.png"), 176, 14, 24, 17);
+        this.arrow = jeiHelpers.getGuiHelper().createAnimatedDrawable(arrow, 120, IDrawableAnimated.StartDirection.LEFT, false);
+        glyph_golden = buildTexture(Enchanted.location("textures/gui/jei/gold_glyph.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
+    }
 
-    private final IDrawableStatic[] glyph_purple = new IDrawableStatic[3];
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, AbstractCreateItemRite rite, IFocusGroup focuses) {
+        List<ItemStack> itemList = new ArrayList<>();
+        for(Item item : rite.ITEMS_REQUIRED.keySet())
+            itemList.add(new ItemStack(item, rite.ITEMS_REQUIRED.get(item)));
+
+        int circleNum = 1;
+        int itemsRemaining = itemList.size();
+
+        while(itemsRemaining > 0) {
+            int radius = START_RADIUS + (circleNum-1)*RADIUS_INCREMENT;
+            int limit = (int)Math.round(Math.pow(6, circleNum));
+            int itemCount = Math.min(itemsRemaining, limit);
+
+            for(int i = 0; i < itemCount; i++) {
+                ItemStack stack = itemList.get(0);
+                itemList.remove(stack);
+
+                double angle = Math.toRadians(i * (360.0D / itemCount) + 180);
+                int cx = (int) Math.round(Math.sin(-angle) * radius) - 8;
+                int cy = (int) Math.round(Math.cos(-angle) * radius) - 8;
+
+                builder.addSlot(RecipeIngredientRole.INPUT, 47 + cx, 60 + cy).addItemStack(stack);
+                itemsRemaining--;
+            }
+            circleNum++;
+        }
+
+        ItemStack[] itemsOut = rite.getResultItems();
+        int numRows = (int)Math.ceil(itemsOut.length / 3.0D);
+        int height = numRows * 17;
+        int startX = 119;
+        int startY = 64 - (int)Math.round(height/2.0D);
+        for(int i = 0; i < itemsOut.length; i++) {
+            ItemStack stack = itemsOut[i];
+            builder.addSlot(RecipeIngredientRole.OUTPUT, startX + (i%3)*17, startY + i/3*17).addItemStack(stack);
+        }
+
+        circles.clear();
+        for(CirclePart circlePart : rite.CIRCLES_REQUIRED.keySet()) {
+            Block block = rite.CIRCLES_REQUIRED.get(circlePart);
+            ResourceLocation textureLocation = EnchantedJEIPlugin.getCircleTextureLocation(circlePart, block);
+            if(textureLocation != null) {
+                circles.add(buildTexture(textureLocation, GLYPH_SIZE, GLYPH_SIZE, jeiHelpers));
+            }
+        }
+    }
+
+
+    @Override
+    public void draw(AbstractCreateItemRite rite, IRecipeSlotsView recipeSlotsView, PoseStack poseStack, double mouseX, double mouseY) {
+        for(IDrawableStatic drawable : circles) {
+            drawable.draw(poseStack, 0, 14);
+        }
+        glyph_golden.draw(poseStack, 0, 14);
+        this.arrow.draw(poseStack, 95, 56);
+
+        ResourceLocation riteName = rite.getType().getRegistryName();
+        String nameText = new TranslatableComponent("rite." + riteName.getNamespace() + "." + riteName.getPath()).getString();
+        drawText(Minecraft.getInstance(), poseStack, nameText, 180, 0, 0xFFFFFFFF);
+        drawText(Minecraft.getInstance(), poseStack, "Required Altar Power : " + rite.POWER, 180, 112, 0xFFFFFFFF);
+
+        if(!rite.ENTITIES_REQUIRED.isEmpty() || rite.hasAdditionalRequirements()) {
+            poseStack.pushPose();
+            poseStack.scale(0.5F, 0.5F, 0.5F);
+            drawText(Minecraft.getInstance(), poseStack, "Has additional requirements", 360, 18, 0xFFFFFFFF);
+            poseStack.popPose();
+        }
+    }
+
+    private void drawText(Minecraft minecraft, PoseStack poseStack, String text, int x, int y, int mainColor) {
+        int shadowColor = 0xFF000000 | (mainColor & 0xFCFCFC) >> 2;
+        int width = minecraft.font.width(text);
+        int cx = x/2 - width/2 - 1;
+        minecraft.font.draw(poseStack, text, cx + 1, y, shadowColor);
+    }
 
     private IDrawableStatic buildTexture(ResourceLocation resourceLocation, int width, int height, IJeiHelpers helper) {
         IDrawableBuilder builder = helper.getGuiHelper().drawableBuilder(resourceLocation, 0, 0, width, height);
         builder.setTextureSize(width, height);
         return builder.build();
-    }
-
-    public RiteCategory(IJeiHelpers jeiHelpers, RecipeType<AbstractRite> recipeTypeRite) {
-        this.jeiHelpers = jeiHelpers;
-        this.recipeTypeRite = recipeTypeRite;
-
-        glyph_white[0] = buildTexture(Enchanted.location("textures/patchouli/white_small.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_white[1] = buildTexture(Enchanted.location("textures/patchouli/white_medium.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_white[2] = buildTexture(Enchanted.location("textures/patchouli/white_large.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-
-        glyph_red[0] = buildTexture(Enchanted.location("textures/patchouli/red_small.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_red[1] = buildTexture(Enchanted.location("textures/patchouli/red_medium.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_red[2] = buildTexture(Enchanted.location("textures/patchouli/red_large.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-
-        glyph_purple[0] = buildTexture(Enchanted.location("textures/patchouli/purple_small.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_purple[1] = buildTexture(Enchanted.location("textures/patchouli/purple_medium.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-        glyph_purple[2] = buildTexture(Enchanted.location("textures/patchouli/purple_large.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-
-        glyph_golden = buildTexture(Enchanted.location("textures/patchouli/gold.png"), GLYPH_SIZE, GLYPH_SIZE, jeiHelpers);
-
-
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, AbstractRite recipe, IFocusGroup focuses) {
-        int i = 100;
-        int j = 20;
-        for (Map.Entry<Item, Integer> entry : recipe.ITEMS_REQUIRED.entrySet()) {
-            if (i + 20 > 180) {
-                i = 100;
-                j += 20;
-            }
-            builder.addSlot(RecipeIngredientRole.INPUT, i, j).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(entry.getKey(), entry.getValue()));
-            i += 20;
-        }
-        if(recipe instanceof AbstractCreateItemRite){
-            AbstractCreateItemRite recipe2 = (AbstractCreateItemRite) recipe;
-            for (ItemStack item : recipe2.getResultItems()) {
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 130 , 80).addIngredient(VanillaTypes.ITEM_STACK, item);
-            }
-        }
-
-    }
-
-
-    @Override
-    public void draw(AbstractRite recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        String circlesRequiredText = "";
-        for (CirclePart circlePart : recipe.CIRCLES_REQUIRED.keySet()) {
-            IDrawableStatic[] texture = recipe.CIRCLES_REQUIRED.get(circlePart).equals(EnchantedBlocks.CHALK_WHITE.get()) ? glyph_white : (recipe.CIRCLES_REQUIRED.get(circlePart).equals(EnchantedBlocks.CHALK_RED.get()) ? glyph_red : glyph_purple);
-            switch (circlePart){
-                case LARGE -> {
-                    if(circlesRequiredText!="")circlesRequiredText+="-";
-                    circlesRequiredText+="15x15";
-                    texture[2].draw(stack,0,20);
-                }
-                case MEDIUM -> {
-                    if(circlesRequiredText!="")circlesRequiredText+="-";
-                    circlesRequiredText+="11x11";
-                    texture[1].draw(stack,0,20);
-                }
-                default -> {
-                    if(circlesRequiredText!="")circlesRequiredText+="-";
-                    circlesRequiredText+="7x7";
-                    texture[0].draw(stack,0,20);
-                }
-            }
-        }
-        glyph_golden.draw(stack,0,20);
-
-        int i = 60;
-        for(EntityType e : recipe.ENTITIES_REQUIRED.keySet()){
-            System.out.println(e.getCategory().getName());
-            drawText(Minecraft.getInstance(),stack,e.getCategory().getName(),100,i,0xFFFFFFFF);
-            i+=20;
-        }
-
-        drawText(Minecraft.getInstance(),stack,circlesRequiredText,100,107,0xFFFFFFFF);
-        drawText(Minecraft.getInstance(),stack,recipe.getType().getRegistryName().toString(),180,0,0xFFFFFFFF);
-    }
-    private void drawText(Minecraft minecraft, PoseStack poseStack, String text,int x,int y, int mainColor) {
-        int shadowColor = 0xFF000000 | (mainColor & 0xFCFCFC) >> 2;
-        int width = minecraft.font.width(text);
-        int X = x/2 - width/2 - 1;
-        int Y = y;
-
-        minecraft.font.draw(poseStack, text, X + 1, Y, shadowColor);
     }
 
     @Override
@@ -144,7 +140,7 @@ public class RiteCategory implements IRecipeCategory<AbstractRite> {
 
     @Override
     public IDrawable getBackground() {
-        return this.jeiHelpers.getGuiHelper().createBlankDrawable(180, 120);
+        return jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/jei/circle_magic.png"), 0, 0, 180, 120);
     }
 
     @Override
@@ -158,7 +154,7 @@ public class RiteCategory implements IRecipeCategory<AbstractRite> {
     }
 
     @Override
-    public Class<? extends AbstractRite> getRecipeClass() {
+    public Class<? extends AbstractCreateItemRite> getRecipeClass() {
         return this.recipeTypeRite.getRecipeClass();
     }
 }

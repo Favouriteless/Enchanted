@@ -25,9 +25,8 @@
 
 package com.favouriteless.enchanted.jei;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
-import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
@@ -35,6 +34,7 @@ import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.*;
+import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.jei.categories.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -43,16 +43,23 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.block.Block;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @JeiPlugin
 public class EnchantedJEIPlugin implements IModPlugin {
+
+    private static final Map<CirclePart, String> CIRCLE_PART_TEXTURE_NAMES = new HashMap<>();
+    private static final Map<Block, String> BLOCK_TEXTURE_SUFFIXES = new HashMap<>();
+
     private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
     private static final RecipeType<WitchOvenRecipe> recipeTypeOven = new RecipeType(locationOven, WitchOvenRecipe.class);
 
@@ -69,7 +76,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
     private static final RecipeType<KettleRecipe> recipeTypeKettle = new RecipeType(locationKettle, KettleRecipe.class);
 
     private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
-    private static final RecipeType<AbstractRite> recipeTypeRite = new RecipeType(locationRite, AbstractRite.class);
+    private static final RecipeType<AbstractCreateItemRite> recipeTypeRite = new RecipeType(locationRite, AbstractCreateItemRite.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -109,18 +116,22 @@ public class EnchantedJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        RecipeManager m = Minecraft.getInstance().level.getRecipeManager();
-        registration.addRecipes(recipeTypeOven, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_OVEN));
-        registration.addRecipes(recipeTypeDistillery, m.getAllRecipesFor(EnchantedRecipeTypes.DISTILLERY));
-        registration.addRecipes(recipeTypeSpinningWheel, m.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
-        registration.addRecipes(recipeTypeWitchCauldron, m.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
-        registration.addRecipes(recipeTypeKettle, m.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
-        List<AbstractRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
+        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        registration.addRecipes(recipeTypeOven, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.WITCH_OVEN));
+        registration.addRecipes(recipeTypeDistillery, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.DISTILLERY));
+        registration.addRecipes(recipeTypeSpinningWheel, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
+        registration.addRecipes(recipeTypeWitchCauldron, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
+        registration.addRecipes(recipeTypeKettle, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
+        List<AbstractCreateItemRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
                 .stream()
-                .map(r->r.get().create())
+                .map(rite -> rite.get().create())
+                .filter(rite -> rite instanceof AbstractCreateItemRite)
+                .map(rite -> (AbstractCreateItemRite)rite)
                 .collect(Collectors.toList());
-        registration.addRecipes(recipeTypeRite,ritesCreateItemCrafts);
-        registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK,new TextComponent("TEST"));
+        registration.addRecipes(recipeTypeRite, ritesCreateItemCrafts);
+
+        registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("jei.enchanted.chalice_filled"));
+        registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED_MILK.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("jei.enchanted.chalice_filled_milk"));
     }
 
     @Override
@@ -159,4 +170,18 @@ public class EnchantedJEIPlugin implements IModPlugin {
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
         IModPlugin.super.onRuntimeAvailable(jeiRuntime);
     }
+
+    public static void registerCirclePartPrefix(CirclePart part, String name) {
+        CIRCLE_PART_TEXTURE_NAMES.putIfAbsent(part, name);
+    }
+
+    public static void registerBlockSuffix(Block block, String name) {
+        BLOCK_TEXTURE_SUFFIXES.putIfAbsent(block, name);
+    }
+
+    public static ResourceLocation getCircleTextureLocation(CirclePart circle, Block block) {
+        return (CIRCLE_PART_TEXTURE_NAMES.containsKey(circle) && BLOCK_TEXTURE_SUFFIXES.containsKey(block)) ?
+                Enchanted.location("textures/gui/jei/" + CIRCLE_PART_TEXTURE_NAMES.get(circle) + "_" + BLOCK_TEXTURE_SUFFIXES.get(block) + ".png") : null;
+    }
+
 }

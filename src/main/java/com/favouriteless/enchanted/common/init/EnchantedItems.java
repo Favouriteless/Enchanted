@@ -141,7 +141,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> PURIFIED_MILK = registerItem("purified_milk");
     public static final RegistryObject<Item> REEK_OF_MISFORTUNE = registerItem("reek_of_misfortune");
     public static final RegistryObject<Item> ATTUNED_STONE = registerItem("attuned_stone");
-    public static final RegistryObject<Item> ATTUNED_STONE_CHARGED = ITEMS.register("attuned_stone_charged", () -> new SimpleFoiledItem(defaultProperties().stacksTo(1)));
+    public static final RegistryObject<Item> ATTUNED_STONE_CHARGED = ITEMS.register("attuned_stone_charged", () -> new SimpleFoiledItem(defaultProperties()));
     public static final RegistryObject<Item> GYPSUM = registerItem("gypsum");
     public static final RegistryObject<Item> QUICKLIME = registerItem("quicklime");
     public static final RegistryObject<Item> REFINED_EVIL = registerItem("refined_evil");

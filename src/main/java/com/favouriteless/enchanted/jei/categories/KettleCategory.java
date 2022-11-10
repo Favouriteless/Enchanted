@@ -66,9 +66,9 @@ public class KettleCategory implements IRecipeCategory<KettleRecipe> {
     }
 
     @Override
-    public void draw(KettleRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        this.arrow.draw(stack,85,30);
-        drawPowerCost(Minecraft.getInstance(),stack,"Required Altar Power : "+recipe.getPower(),0xFFFFFFFF);
+    public void draw(KettleRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack poseStack, double mouseX, double mouseY) {
+        this.arrow.draw(poseStack, 85, 29);
+        drawPowerCost(Minecraft.getInstance(), poseStack, "Required Altar Power : " + recipe.getPower(), 0xFFFFFFFF);
     }
 
     private void drawPowerCost(Minecraft minecraft, PoseStack poseStack, String text, int mainColor) {
@@ -92,7 +92,7 @@ public class KettleCategory implements IRecipeCategory<KettleRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/kettle.png"),4,4,GUI_WIDTH,70);
+        return jeiHelpers.getGuiHelper().createDrawable(Enchanted.location("textures/gui/jei/witch_cauldron.png"), 4, 4, GUI_WIDTH, 70);
     }
 
     @Override

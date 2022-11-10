@@ -75,4 +75,12 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
      */
     public void setupItemNbt(int index, ItemStack stack) {}
 
+    /**
+     * Return true if JEI entry should display additional requirements message, including for entities.
+     * @return
+     */
+    public boolean hasAdditionalRequirements() {
+        return false;
+    }
+
 }

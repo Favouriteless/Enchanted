@@ -118,7 +118,7 @@
     "block.enchanted.poppet_shelf": "Poppet Shelf",
     "container.enchanted.poppet_shelf": "Poppet Shelf",
     "container.enchanted.altar": "Altar",
-    "jei.enchanted.witch_cauldron": "Witch Cauldron",
+    "jei.enchanted.witch_cauldron": "Witch's Cauldron",
     "jei.enchanted.kettle" : "Kettle",
     "jei.enchanted.circle_magic": "Circle Magic",
 
@@ -155,5 +155,17 @@
     "item.enchanted.armour_poppet_infused": "Infused Armour Protection Poppet",
     "item.enchanted.armour_poppet_sturdy": "Sturdy Armour Protection Poppet",
 
-    "itemGroup.enchanted.main": "Enchanted"
+    "itemGroup.enchanted.main": "Enchanted",
+
+    "rite.enchanted.charging_stone": "Rite of Charging",
+    "rite.enchanted.binding_waystone": "Rite of Binding",
+    "rite.enchanted.binding_waystone_charged": "Rite of Binding",
+    "rite.enchanted.binding_waystone_duplicate": "Rite of Binding",
+    "rite.enchanted.binding_waystone_duplicate_charged": "Rite of Binding",
+    "rite.enchanted.binding_waystone_player": "Rite of Binding",
+    "rite.enchanted.binding_waystone_player_charged": "Rite of Binding",
+    "rite.enchanted.infusion_broom": "Rite of Infusion",
+
+    "jei.enchanted.chalice_filled": "Right click on a chalice using redstone soup",
+    "jei.enchanted.chalice_filled_milk": "Right click on a chalice using a bucket of milk"
 }

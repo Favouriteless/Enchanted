@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.common.init.*;
-import com.favouriteless.enchanted.common.init.EnchantedPackets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +49,7 @@ public class Enchanted {
     public static final CreativeModeTab TAB = new CreativeModeTab("enchanted.main") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(EnchantedBlocks.WITCH_OVEN.get());
+            return new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get());
         }
     };
 
@@ -60,7 +59,6 @@ public class Enchanted {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnchantedConfig.SPEC, "enchanted-common.toml");
         INSTANCE = this;
         MinecraftForge.EVENT_BUS.register(this);
-
     }
 
     private void registerAll() {

@@ -59,6 +59,7 @@ public class EnchantedTags {
 
     public static final TagKey<MobEffect> MISFORTUNE_EFFECTS = createEffectTag(Enchanted.location("misfortune_effects"));
     public static final TagKey<MobEffect> BLIGHT_EFFECTS = createEffectTag(Enchanted.location("blight_effects"));
+    public static final TagKey<MobEffect> FERTILITY_CURE_EFFECTS = createEffectTag(Enchanted.location("fertility_cure_effects"));
 
     public static final TagKey<Biome> OVERHEATING_BIOMES = createBiomeTag(Enchanted.location("overheating_biomes"));
 

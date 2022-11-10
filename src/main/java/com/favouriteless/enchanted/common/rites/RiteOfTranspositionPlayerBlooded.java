@@ -40,7 +40,7 @@ import net.minecraft.world.item.ItemStack;
 public class RiteOfTranspositionPlayerBlooded extends AbstractRite {
 
     public RiteOfTranspositionPlayerBlooded() {
-        super(EnchantedRiteTypes.TRANSPOSITION_PLAYER.get(), 0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.TRANSPOSITION_PLAYER_BLOODED.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BLOODED_WAYSTONE.get(), 1);
     }

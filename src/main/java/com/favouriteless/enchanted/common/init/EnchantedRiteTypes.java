@@ -67,6 +67,8 @@ public class EnchantedRiteTypes {
 
     public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
     public static final RegistryObject<RiteType<?>> IMPRISONMENT = RITE_TYPES.register("imprisonment", () -> new RiteType<>(RiteOfImprisonment::new));
+    public static final RegistryObject<RiteType<?>> FERTILITY = RITE_TYPES.register("fertility", () -> new RiteType<>(RiteOfFertility::new));
+    public static final RegistryObject<RiteType<?>> FERTILITY_CHARGED = RITE_TYPES.register("fertility_charged", () -> new RiteType<>(RiteOfFertilityCharged::new));
 
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteOfTranspositionIron::new));
 

@@ -24,25 +24,27 @@
 
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.api.rites.AbstractRemoveCurseRite;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.world.item.Items;
 
-public class RiteOfRemoveSinking extends AbstractRemoveCurseRite {
+public class RiteOfFertilityCharged extends AbstractRite {
 
-    public RiteOfRemoveSinking() {
-        super(EnchantedRiteTypes.REMOVE_SINKING.get(), 2000, 0, EnchantedCurseTypes.SINKING.get()); // Power, power per tick, curse type
-        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
-        ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.BREATH_OF_THE_GODDESS.get(), 1);
-        ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
-        ITEMS_REQUIRED.put(Items.NETHER_WART, 1);
-        ITEMS_REQUIRED.put(EnchantedItems.BREW_OF_THE_DEPTHS.get(), 1);
+    public RiteOfFertilityCharged(RiteType<?> type, int power) {
+        super(type, power, 0);
     }
 
+    public RiteOfFertilityCharged() {
+        this(EnchantedRiteTypes.FERTILITY_CHARGED.get(), 0); // Power, power per tick
+        ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.DIAMOND_VAPOUR.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.GYPSUM.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.MUTANDIS_EXTREMIS.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
+    }
 
 }

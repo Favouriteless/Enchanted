@@ -49,7 +49,7 @@ public class CurseBlightSeedParticle extends NoRenderParticle {
 			double cx = x + Math.sin(angle) * 0.1D;
 			double cz = z + Math.cos(angle) * 0.1D;
 
-			level.addParticle(new CircleMagicData(EnchantedParticles.CURSE_BLIGHT.get(), 255, 255, 255, x, z, 0.1D), cx, y, cz, 0.0D, 0.0D, 0.0D);
+			level.addParticle(new CircleMagicData(EnchantedParticles.CURSE_BLIGHT.get(), 31, 30, 77, x, y, z, 0.1D), cx, y, cz, 0.0D, 0.0D, 0.0D);
 		}
 		this.remove();
 	}

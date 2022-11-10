@@ -29,24 +29,26 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;
 
-public class CurseBlightParticle extends TextureSheetParticle {
+public class RepellingParticle extends TextureSheetParticle {
 
 	private static final double REPEL_SPEED = 0.3D;
 
 	private final double centerX;
+	private final double centerY;
 	private final double centerZ;
 
-	protected CurseBlightParticle(ClientLevel level, double x, double y, double z, double centerX, double centerZ) {
+	protected RepellingParticle(ClientLevel level, double x, double y, double z, int red, int green, int blue, double centerX, double centerY, double centerZ) {
 		super(level, x, y, z);
 		this.centerX = centerX;
+		this.centerY = centerY;
 		this.centerZ = centerZ;
 		this.alpha = 0.0F;
 		this.lifetime = 60;
-		this.quadSize = 0.1F;
 		this.hasPhysics = false;
-		this.rCol = 31/255F;
-		this.gCol = 30/255F;
-		this.bCol = 77/255F;
+		this.quadSize = 0.1F;
+		this.rCol = red/255F;
+		this.gCol = green/255F;
+		this.bCol = blue/255F;
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class CurseBlightParticle extends TextureSheetParticle {
 				}
 			}
 		}
-		Vec3 velocity = new Vec3(x - centerX, 0, z - centerZ).normalize().scale(REPEL_SPEED);
+		Vec3 velocity = new Vec3(x - centerX, y - centerY, z - centerZ).normalize().scale(REPEL_SPEED);
 		this.xd = velocity.x();
 		this.yd = velocity.y();
 		this.zd = velocity.z();
@@ -93,7 +95,7 @@ public class CurseBlightParticle extends TextureSheetParticle {
 		}
 
 		public Particle createParticle(CircleMagicData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			CurseBlightParticle particle = new CurseBlightParticle(level, x, y, z, data.getCenterX(), data.getCenterZ());
+			RepellingParticle particle = new RepellingParticle(level, x, y, z, data.getRed(), data.getGreen(), data.getBlue(), data.getCenterX(), data.getCenterY(), data.getCenterZ());
 			particle.pickSprite(this.sprite);
 			return particle;
 		}

@@ -31,45 +31,45 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class RiteOfCurseOfBlight extends AbstractRite {
+public class RiteOfFertility extends AbstractRite {
 
-    public static final int BLIGHT_RADIUS = 50;
-    public static final int BLIGHT_RADIUS_SQ = BLIGHT_RADIUS*BLIGHT_RADIUS;
-    public static final int TICKS_PER_BLOCK = 3;
+    public static final int RADIUS = 25;
+    public static final int RADIUS_SQ = RADIUS * RADIUS;
+    public static final int TICKS_PER_BLOCK = 5;
 
     public Set<LivingEntity> entities;
     public Set<BlockPos> positions;
 
     public int blockTicks = 0;
 
-    public RiteOfCurseOfBlight() {
-        super(EnchantedRiteTypes.CURSE_OF_BLIGHT.get(), 0, 0); // Power, power per tick
-        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.REDSTONE_SOUP.get(), 1);
-        ITEMS_REQUIRED.put(EnchantedItems.REEK_OF_MISFORTUNE.get(), 1);
-        ITEMS_REQUIRED.put(Items.FERMENTED_SPIDER_EYE, 1);
-        ITEMS_REQUIRED.put(Items.GLISTERING_MELON_SLICE, 1);
-        ITEMS_REQUIRED.put(Items.ROTTEN_FLESH, 1);
-        ITEMS_REQUIRED.put(Items.DIAMOND, 1);
+    public RiteOfFertility(RiteType<?> type, int power) {
+        super(type, power, 0);
+    }
+
+    public RiteOfFertility() {
+        this(EnchantedRiteTypes.FERTILITY.get(), 3000); // Power, power per tick
+        ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.DIAMOND_VAPOUR.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.GYPSUM.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.MUTANDIS.get(), 1);
     }
 
     @Override
@@ -85,15 +85,19 @@ public class RiteOfCurseOfBlight extends AbstractRite {
                 List<LivingEntity> entitiesHandled = new ArrayList<>();
                 for(LivingEntity entity : entities) {
                     if(entity.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) { // Sqr distance is much faster to calculate
-                        if(entity instanceof Villager villager && Math.random() < EnchantedConfig.BLIGHT_ZOMBIE_CHANCE.get())
-                            villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
-                        else {
-                            MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
-                            if(effect != null) {
-                                if(entity != level.getEntity(casterUUID))
-                                    entity.addEffect(new MobEffectInstance(effect, 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
-                            }
+                        if(entity instanceof ZombieVillager villager)
+                            villager.startConverting(casterUUID, Enchanted.RANDOM.nextInt(2401) + 3600);
+
+                        Collection<MobEffectInstance> effects = entity.getActiveEffects();
+                        List<MobEffect> toRemove = new ArrayList<>();
+                        for(MobEffectInstance effect : effects) {
+                            if(ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.FERTILITY_CURE_EFFECTS).contains(effect.getEffect()))
+                                toRemove.add(effect.getEffect());
                         }
+                        for(MobEffect effect : toRemove) {
+                            entity.removeEffect(effect);
+                        }
+
                         entitiesHandled.add(entity);
                     }
                 }
@@ -101,16 +105,10 @@ public class RiteOfCurseOfBlight extends AbstractRite {
                 List<BlockPos> positionsHandled = new ArrayList<>();
                 for(BlockPos pos : positions) {
                     if(this.pos.distToCenterSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) {
-                        if(Math.random() < EnchantedConfig.BLIGHT_DECAY_CHANCE.get()) {
-                            Block decayBlock = level.getBlockState(pos).getBlock();
-                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
-                                Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);
-                                if(block != null)
-                                    level.setBlockAndUpdate(pos, block.defaultBlockState());
-                            }
-                            else if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAYABLE_PLANTS).contains(decayBlock))
-                                level.setBlockAndUpdate(pos, Blocks.DEAD_BUSH.defaultBlockState());
-                        }
+                        BlockState state = level.getBlockState(pos);
+                        if(state.getBlock() instanceof BonemealableBlock block)
+                            if(Math.random() < EnchantedConfig.FERTILITY_BONE_MEAL_CHANCE.get())
+                                block.performBonemeal(level, level.random, pos, state);
                         positionsHandled.add(pos);
                     }
                 }
@@ -125,7 +123,7 @@ public class RiteOfCurseOfBlight extends AbstractRite {
 
             if(ticks % (TICKS_PER_BLOCK*5) == 0) {
                 level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.1F, 1.0F);
-                level.sendParticles(EnchantedParticles.CURSE_BLIGHT_SEED.get(), pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, 1, 0, 0, 0, 0);
+                level.sendParticles(EnchantedParticles.FERTILITY_SEED.get(), pos.getX()+0.5D, pos.getY()+2D, pos.getZ()+0.5D, 1, 0, 0, 0, 0);
             }
         }
         else
@@ -137,7 +135,7 @@ public class RiteOfCurseOfBlight extends AbstractRite {
         if(level != null) {
             for(Entity entity : level.getEntities().getAll())
                 if(entity instanceof LivingEntity livingEntity)
-                    if(entity.distanceToSqr(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D) <= BLIGHT_RADIUS_SQ) // If within circle
+                    if(entity.distanceToSqr(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D) <= RADIUS_SQ) // If within circle
                         entities.add(livingEntity);
         }
         return entities;
@@ -145,10 +143,10 @@ public class RiteOfCurseOfBlight extends AbstractRite {
 
     public Set<BlockPos> getBlockPosSet() {
         Set<BlockPos> positions = new HashSet<>();
-        for(int x = -BLIGHT_RADIUS; x < BLIGHT_RADIUS; x++) {
-            for(int y = -BLIGHT_RADIUS; y < BLIGHT_RADIUS; y++) {
-                for(int z = -BLIGHT_RADIUS; z < BLIGHT_RADIUS; z++) {
-                    if(pos.distToCenterSqr(pos.getX()+x, pos.getY()+y, pos.getZ()+z) < BLIGHT_RADIUS_SQ)
+        for(int x = -RADIUS; x < RADIUS; x++) {
+            for(int y = -RADIUS; y < RADIUS; y++) {
+                for(int z = -RADIUS; z < RADIUS; z++) {
+                    if(pos.distToCenterSqr(pos.getX()+x, pos.getY()+y, pos.getZ()+z) < RADIUS_SQ)
                         positions.add(new BlockPos(pos.getX()+x, pos.getY()+y, pos.getZ()+z));
                 }
             }

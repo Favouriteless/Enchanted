@@ -45,10 +45,10 @@ public class TranspositionIronSeedParticle extends NoRenderParticle {
 	@Override
 	public void tick() {
 		for(int a = 0; a < 360; a+=2) {
-			double cx = xo + Math.sin(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
-			double cz = zo + Math.cos(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
+			double cx = x + Math.sin(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
+			double cz = z + Math.cos(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
 
-			level.addParticle(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, xo, zo, RiteOfTranspositionIron.CIRCLE_RADIUS), cx, yo, cz, 0.0D, 0.0D, 0.0D);
+			level.addParticle(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, x, y, z, RiteOfTranspositionIron.CIRCLE_RADIUS), cx, y, cz, 0.0D, 0.0D, 0.0D);
 		}
 		this.remove();
 	}

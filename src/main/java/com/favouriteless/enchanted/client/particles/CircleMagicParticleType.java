@@ -43,9 +43,10 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 			Codec.INT.fieldOf("green").forGetter(data -> data.green),
 			Codec.INT.fieldOf("blue").forGetter(data -> data.blue),
 			Codec.DOUBLE.fieldOf("centerX").forGetter(data -> data.centerX),
+			Codec.DOUBLE.fieldOf("centerY").forGetter(data -> data.centerY),
 			Codec.DOUBLE.fieldOf("centerZ").forGetter(data -> data.centerZ),
 			Codec.DOUBLE.fieldOf("radius").forGetter(data -> data.radius)
-	).apply(instance, (type, red, green, blue, centerX, centerY, radius) -> new CircleMagicData((ParticleType<CircleMagicData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), red, green, blue, centerX, centerY, radius)));
+	).apply(instance, (type, red, green, blue, centerX, centerY, centerZ, radius) -> new CircleMagicData((ParticleType<CircleMagicData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), red, green, blue, centerX, centerY, centerZ, radius)));
 
 	public CircleMagicParticleType(boolean alwaysShow) {
 		super(alwaysShow, CircleMagicData.DESERIALIZER);
@@ -71,13 +72,15 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 				reader.expect(' ');
 				double centerX = reader.readDouble();
 				reader.expect(' ');
+				double centerY = reader.readDouble();
+				reader.expect(' ');
 				double centerZ = reader.readDouble();
 
-				return new CircleMagicData(particleType, red, green, blue, centerX, centerZ, radius);
+				return new CircleMagicData(particleType, red, green, blue, centerX, centerY, centerZ, radius);
 			}
 
 			public CircleMagicData fromNetwork(ParticleType<CircleMagicData> particleType, FriendlyByteBuf buffer) {
-				return new CircleMagicData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+				return new CircleMagicData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
 			}
 		};
 
@@ -87,15 +90,17 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 		private final int blue;
 		private final double radius;
 		private final double centerX;
+		private final double centerY;
 		private final double centerZ;
 
-		public CircleMagicData(ParticleType<CircleMagicData> particleType, int red, int green, int blue, double centerX, double centerZ, double radius) {
+		public CircleMagicData(ParticleType<CircleMagicData> particleType, int red, int green, int blue, double centerX, double centerY, double centerZ, double radius) {
 			this.particleType = particleType;
 			this.red = red;
 			this.green = green;
 			this.blue = blue;
 			this.radius = radius;
 			this.centerX = centerX;
+			this.centerY = centerY;
 			this.centerZ = centerZ;
 		}
 
@@ -111,6 +116,7 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 			buffer.writeInt(green);
 			buffer.writeInt(blue);
 			buffer.writeDouble(centerX);
+			buffer.writeDouble(centerY);
 			buffer.writeDouble(centerZ);
 			buffer.writeDouble(radius);
 		}
@@ -138,6 +144,10 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 
 		public double getCenterX() {
 			return centerX;
+		}
+
+		public double getCenterY() {
+			return centerY;
 		}
 
 		public double getCenterZ() {

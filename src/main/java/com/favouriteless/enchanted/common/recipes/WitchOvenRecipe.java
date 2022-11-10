@@ -111,7 +111,7 @@ public class WitchOvenRecipe implements Recipe<Container> {
 
         @Override
         public WitchOvenRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            Ingredient ingredientIn = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient"));
+            Ingredient ingredientIn = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
             ItemStack itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(json, "result"))));
 
             int jarsNeeded = GsonHelper.getAsInt(json, "jarsneeded", 1);

@@ -1,8 +1,8 @@
 {
   "type": "enchanted:witch_oven",
-  "ingredient": [
-    {"tag": "enchanted:raw_foods"}
-  ],
+  "ingredient": {
+    "tag": "enchanted:raw_foods"
+  },
   "result": "enchanted:foul_fume",
   "jarsneeded": 1
 }

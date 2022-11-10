@@ -1,8 +1,8 @@
 {
   "type": "enchanted:witch_oven",
-  "ingredient": [
-    {"item": "minecraft:birch_sapling"}
-  ],
+  "ingredient": {
+    "item": "minecraft:birch_sapling"
+  },
   "result": "enchanted:breath_of_the_goddess",
   "jarsneeded": 1
 }

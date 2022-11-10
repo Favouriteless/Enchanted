@@ -31,7 +31,7 @@ import net.minecraft.world.item.Items;
 public class RiteOfBindingTalismanCharged extends RiteOfBindingTalisman {
 
     public RiteOfBindingTalismanCharged() {
-        super(EnchantedRiteTypes.BINDING_TALISMAN_CHARGED.get(), 0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BINDING_TALISMAN_CHARGED.get(), 0); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);

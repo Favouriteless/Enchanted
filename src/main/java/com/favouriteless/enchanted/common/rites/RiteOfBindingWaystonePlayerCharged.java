@@ -28,17 +28,12 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
 import net.minecraft.world.item.Items;
 
 public class RiteOfBindingWaystonePlayerCharged extends RiteOfBindingWaystonePlayer {
 
-    protected RiteOfBindingWaystonePlayerCharged(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick);
-    }
-
     public RiteOfBindingWaystonePlayerCharged() {
-        this(EnchantedRiteTypes.BINDING_WAYSTONE_PLAYER_CHARGED.get(), 0, 0); // Power, power per tick
+        super(EnchantedRiteTypes.BINDING_WAYSTONE_PLAYER_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);

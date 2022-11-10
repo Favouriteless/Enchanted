@@ -38,12 +38,12 @@ import net.minecraft.world.item.Items;
 
 public class RiteOfBindingWaystonePlayer extends AbstractCreateItemRite {
 
-    protected RiteOfBindingWaystonePlayer(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick, SoundEvents.ENDER_DRAGON_GROWL);
+    protected RiteOfBindingWaystonePlayer(RiteType<?> type, int power) {
+        super(type, power, SoundEvents.ENDER_DRAGON_GROWL, new ItemStack(EnchantedItems.BLOODED_WAYSTONE.get(), 1));
     }
 
     public RiteOfBindingWaystonePlayer() {
-        this(EnchantedRiteTypes.BINDING_WAYSTONE_PLAYER.get(), 500, 0); // Power, power per tick
+        this(EnchantedRiteTypes.BINDING_WAYSTONE_PLAYER.get(), 500); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);
@@ -53,15 +53,11 @@ public class RiteOfBindingWaystonePlayer extends AbstractCreateItemRite {
     }
 
     @Override
-    public void execute() {
-        if(targetUUID != null) {
-            spawnItems(WaystoneHelper.create(targetUUID));
-            spawnMagicParticles();
+    public void setupItemNbt(int index, ItemStack stack) {
+        if(index == 0) {
+            if(targetUUID != null)
+                WaystoneHelper.bind(stack, targetUUID);
         }
-        else {
-            cancel();
-        }
-        stopExecuting();
     }
 
     @Override

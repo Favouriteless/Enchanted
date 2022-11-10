@@ -31,37 +31,48 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Simple AbstractRite implementation for creating a single item
+ * Simple AbstractRite implementation for creating items with JEI compat
  */
 public abstract class AbstractCreateItemRite extends AbstractRite {
 
     private final SoundEvent createItemSound;
+    private final ItemStack[] resultItems;
 
-    public AbstractCreateItemRite(RiteType<?> type, int power, int powerTick, SoundEvent createItemSound) {
-        super(type, power, powerTick);
+    public AbstractCreateItemRite(RiteType<?> type, int power, SoundEvent createItemSound, ItemStack... resultItems) {
+        super(type, power, 0);
         this.createItemSound = createItemSound;
+        this.resultItems = resultItems;
     }
 
-    protected void spawnItems(ItemStack... items) {
+    @Override
+    public void execute() {
         if(level != null && !level.isClientSide) {
-            for(ItemStack stack : items) {
-                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+            for(ItemStack stack : getResultItems()) {
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
                 level.addFreshEntity(itemEntity);
             }
             level.playSound(null, pos, createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
+            spawnMagicParticles();
         }
+        stopExecuting();
     }
 
-    protected void replaceItem(ItemEntity entity, ItemStack... newItems) {
-        if(!entity.level.isClientSide) {
-            for(ItemStack stack : newItems) {
-                ItemEntity newEntity = new ItemEntity(entity.level, entity.position().x(), entity.position().y(), entity.position().z(), stack);
-                entity.level.addFreshEntity(newEntity);
-            }
-            level.playSound(null, entity.blockPosition(), createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
-            entity.discard();
+    /**
+     * Use a copy of these itemstacks if making any changes.
+     * @return
+     */
+    public ItemStack[] getResultItems() {
+        for(int i = 0; i < resultItems.length; i++) {
+            setupItemNbt(i, resultItems[i]);
         }
+        return resultItems;
     }
 
+    /**
+     * For any custom nbt which needs to be added to the itemstacks at time of execution.
+     * @param index
+     * @param stack
+     */
+    public void setupItemNbt(int index, ItemStack stack) {}
 
 }

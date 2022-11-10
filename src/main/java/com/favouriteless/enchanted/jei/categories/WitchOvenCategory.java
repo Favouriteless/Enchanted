@@ -40,10 +40,16 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
@@ -79,8 +85,19 @@ public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, WitchOvenRecipe recipe, IFocusGroup focuses) {
+        List<SmeltingRecipe> smeltingRecipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMELTING);
+        Ingredient output = Ingredient.of(
+                Arrays.stream(recipe.getInput().getItems())
+                        .map((i) -> smeltingRecipes.stream()
+                                .filter(smeltingRecipe -> smeltingRecipe.getIngredients()
+                                        .stream()
+                                        .flatMap(ingre -> Arrays.stream(ingre.getItems()))
+                                        .anyMatch(item -> item.is((i.getItem()))))
+                                .findFirst().get().getResultItem())
+        );
         builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addIngredients(output);
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 43).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
         builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
     }
 

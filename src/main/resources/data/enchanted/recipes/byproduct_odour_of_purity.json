@@ -1,8 +1,8 @@
 {
   "type": "enchanted:witch_oven",
-  "ingredient": {
-    "item": "enchanted:hawthorn_sapling"
-  },
+  "ingredient": [
+    {"item": "enchanted:hawthorn_sapling"}
+  ],
   "result": "enchanted:odour_of_purity",
   "jarsneeded": 1
 }

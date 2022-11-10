@@ -1,8 +1,8 @@
 {
   "type": "enchanted:witch_oven",
-  "ingredient": {
-    "item": "enchanted:rowan_sapling"
-  },
+  "ingredient": [
+    {"item": "enchanted:rowan_sapling"}
+  ],
   "result": "enchanted:whiff_of_magic",
   "jarsneeded": 1
 }

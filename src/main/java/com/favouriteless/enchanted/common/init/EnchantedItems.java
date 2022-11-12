@@ -82,6 +82,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ALDER_LEAVES = registerBlockItem("alder_leaves", EnchantedBlocks.ALDER_LEAVES);
     public static final RegistryObject<Item> ALDER_SAPLING = registerBlockItem("alder_sapling", EnchantedBlocks.ALDER_SAPLING);
 
+    public static final RegistryObject<Item> WICKER_BUNDLE = registerBlockItem("wicker_bundle", EnchantedBlocks.WICKER_BUNDLE);
+
     public static final RegistryObject<Item> ARTICHOKE_SEEDS = ITEMS.register("artichoke_seeds", () -> new ArtichokeSeedsItem(EnchantedBlocks.ARTICHOKE.get(), defaultProperties()));
     public static final RegistryObject<Item> BELLADONNA_SEEDS = registerBlockNamedItem("belladonna_seeds", EnchantedBlocks.BELLADONNA);
     public static final RegistryObject<Item> MANDRAKE_SEEDS = registerBlockNamedItem("mandrake_seeds", EnchantedBlocks.MANDRAKE);
@@ -159,6 +161,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> HAPPENSTANCE_OIL = registerBrew("happenstance_oil", MobEffects.NIGHT_VISION, 1200, 0);
 
     public static final RegistryObject<Item> BREW_OF_THE_GROTESQUE = registerItem("brew_of_the_grotesque");
+    public static final RegistryObject<Item> BREW_OF_SPROUTING = registerItem("brew_of_sprouting");
     public static final RegistryObject<Item> BREW_OF_LOVE = ITEMS.register("brew_of_love", () -> new LoveBrewItem(defaultProperties()));
     public static final RegistryObject<Item> BREW_OF_THE_DEPTHS = registerBrew("brew_of_the_depths", MobEffects.WATER_BREATHING, 6000, 0);
 

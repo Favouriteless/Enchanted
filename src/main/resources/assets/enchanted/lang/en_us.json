@@ -50,6 +50,7 @@
 
     "item.enchanted.brew_of_the_grotesque": "Brew of the Grotesque",
     "item.enchanted.brew_of_the_depths": "Brew of the Depths",
+    "item.enchanted.brew_of_sprouting": "Brew of Sprouting",
     "item.enchanted.brew_of_love": "Brew of Love",
 
     "item.enchanted.ghost_of_the_light": "Ghost of the Light",
@@ -76,6 +77,8 @@
     "item.enchanted.wolfsbane_flower": "Wolfsbane Flower",
     "item.enchanted.garlic": "Garlic",
     "block.enchanted.blood_poppy": "Blood Poppy",
+
+    "block.enchanted.wicker_bundle": "Wicker Bundle",
 
     "block.enchanted.rowan_log": "Rowan Log",
     "block.enchanted.rowan_planks": "Rowan Planks",

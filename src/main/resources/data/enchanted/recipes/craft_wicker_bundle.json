@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "sss",
+    "sss",
+    "sss"
+  ],
+  "key":
+  {
+    "s": { "tag": "minecraft:saplings" }
+  },
+  "result":
+  {
+    "item": "enchanted:wicker_bundle",
+    "count": 1
+  }
+}

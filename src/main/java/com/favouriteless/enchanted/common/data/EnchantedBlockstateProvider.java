@@ -54,9 +54,10 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		logBlockWithItem(EnchantedBlocks.ROWAN_LOG.get());
-		logBlockWithItem(EnchantedBlocks.HAWTHORN_LOG.get());
-		logBlockWithItem(EnchantedBlocks.ALDER_LOG.get());
+		rotatedPillarBlockWithItem(EnchantedBlocks.ROWAN_LOG.get());
+		rotatedPillarBlockWithItem(EnchantedBlocks.HAWTHORN_LOG.get());
+		rotatedPillarBlockWithItem(EnchantedBlocks.ALDER_LOG.get());
+		rotatedPillarBlockWithItem(EnchantedBlocks.WICKER_BUNDLE.get());
 		simpleBlockWithItem(EnchantedBlocks.ROWAN_PLANKS.get());
 		simpleBlockWithItem(EnchantedBlocks.HAWTHORN_PLANKS.get());
 		simpleBlockWithItem(EnchantedBlocks.ALDER_PLANKS.get());
@@ -211,7 +212,7 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 		itemModels().getBuilder(block.getRegistryName().getPath()).parent(models().getExistingFile(modLoc("block/" + name + "_0")));
 	}
 
-	private void logBlockWithItem(RotatedPillarBlock block) {
+	private void rotatedPillarBlockWithItem(RotatedPillarBlock block) {
 		logBlock(block);
 		simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
 	}

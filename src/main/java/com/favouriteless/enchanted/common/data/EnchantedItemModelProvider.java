@@ -104,6 +104,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.INFERNAL_ANIMUS.get());
 		simpleItem(EnchantedItems.BREW_OF_THE_GROTESQUE.get());
 		simpleItem(EnchantedItems.BREW_OF_LOVE.get());
+		simpleItem(EnchantedItems.BREW_OF_SPROUTING.get());
 		simpleItem(EnchantedItems.BREW_OF_THE_DEPTHS.get());
 
 		talismanItem(EnchantedItems.CIRCLE_TALISMAN.get());

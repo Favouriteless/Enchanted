@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.multiblock;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;

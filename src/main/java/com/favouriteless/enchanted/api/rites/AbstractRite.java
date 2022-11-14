@@ -228,18 +228,16 @@ public abstract class AbstractRite {
                 }
             }
             else if(!isRemoved) {
-//                if(tryConsumePower(POWER_TICK))
-//                    onTick();
-//                else
-//                    stopExecuting();
-                onTick();
+                if(tryConsumePower(POWER_TICK))
+                    onTick();
+                else
+                    stopExecuting();
             }
         }
     }
 
     protected void startExecuting() {
-//        if(tryConsumePower(POWER) && checkAdditional()) {
-        if(checkAdditional()) {
+        if(tryConsumePower(POWER) && checkAdditional()) {
             this.isStarting = false;
             this.ticks = 0; // Reset ticks to make it less confusing
             execute();

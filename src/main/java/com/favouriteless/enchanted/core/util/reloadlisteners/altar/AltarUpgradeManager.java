@@ -82,6 +82,7 @@ public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implem
         });
         this.upgrades = outputList;
     }
+
     public List<AltarUpgrade> get() {
         return upgrades;
     }

@@ -22,20 +22,16 @@
  *
  */
 
-package com.favouriteless.enchanted.core.util;
+package com.favouriteless.enchanted.common.multiblock;
 
-import hellfirepvp.observerlib.api.ObserverHelper;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class MultiBlockTools {
 
-    // Return true on success;
     public static boolean breakMultiblock(IMultiBlockType type, Level world, BlockPos pos, BlockState state) {
-        // First find the bottom left position of our multiblock
         BlockPos bottomLeft = type.getBottomLowerLeft(world, pos, state);
-        ObserverHelper.getHelper().removeObserver(world, bottomLeft);
         if (bottomLeft != null) {
             for (int dx = 0 ; dx < type.getWidth() ; dx++) {
                 for (int dy = 0 ; dy < type.getHeight() ; dy++) {

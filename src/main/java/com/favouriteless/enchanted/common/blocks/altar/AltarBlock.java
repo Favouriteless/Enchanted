@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
-import com.favouriteless.enchanted.core.util.MultiBlockTools;
+import com.favouriteless.enchanted.common.multiblock.MultiBlockTools;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -111,7 +111,7 @@ public class AltarBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AltarBlockEntity(pos, state);
+        return state.getValue(FORMED) == AltarPartIndex.P000 ? new AltarBlockEntity(pos, state) : null;
     }
 
 
@@ -125,4 +125,6 @@ public class AltarBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return type == EnchantedBlockEntityTypes.ALTAR.get() ? AltarBlockEntity::tick : null;
     }
+
+
 }

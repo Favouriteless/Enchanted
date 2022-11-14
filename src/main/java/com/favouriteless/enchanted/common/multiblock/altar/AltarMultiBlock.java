@@ -24,12 +24,16 @@
 
 package com.favouriteless.enchanted.common.multiblock.altar;
 
+import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.core.util.IMultiBlockType;
-import net.minecraft.world.level.block.state.BlockState;
+import com.favouriteless.enchanted.common.multiblock.IMultiBlockType;
+import com.favouriteless.enchanted.common.stateobserver.altar.AltarStateObserver;
+import com.favouriteless.stateobserver.StateObserverManager;
+import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
@@ -91,6 +95,14 @@ public class AltarMultiBlock implements IMultiBlockType {
     public void unformBlock(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if(state.is(EnchantedBlocks.ALTAR.get())) {
+            if(state.getValue(AltarBlock.FORMED) == AltarPartIndex.P000) {
+                AbstractStateObserver observer = StateObserverManager.getObserver(world, pos, AltarStateObserver.class);
+                if(observer != null)
+                    StateObserverManager.removeObserver(observer);
+
+                if(world.getBlockEntity(pos) instanceof AltarBlockEntity)
+                    world.removeBlockEntity(pos);
+            }
             world.setBlockAndUpdate(pos, EnchantedBlocks.ALTAR.get().defaultBlockState());
         }
     }

@@ -79,26 +79,28 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        name 'hellfirepvp maven'
-        url 'https://maven.hellfiredev.net/'
-    }
-    maven {
-        url 'https://maven.blamejared.com'
+        name = "blamejared"
+        url = 'https://maven.blamejared.com'
     }
     maven {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "cursemaven"
+        url = "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.84'
 
-    compileOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.18.2-1.6.0.v4") { transitive = false })
-    runtimeOnly fg.deobf(project.dependencies.create("hellfirepvp.observerlib:observerlib:1.18.2-1.6.0.v4") { transitive = false })
+    implementation fg.deobf("curse.maven:stateobserver-701213:4084960")
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
 
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")

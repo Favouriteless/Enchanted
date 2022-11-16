@@ -90,7 +90,7 @@ public class RiteOfFertility extends AbstractRite {
                         Collection<MobEffectInstance> effects = entity.getActiveEffects();
                         List<MobEffect> toRemove = new ArrayList<>();
                         for(MobEffectInstance effect : effects) {
-                            if(ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.FERTILITY_CURE_EFFECTS).contains(effect.getEffect()))
+                            if(ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.FERTILITY_CURE_EFFECTS).contains(effect.getEffect()))
                                 toRemove.add(effect.getEffect());
                         }
                         for(MobEffect effect : toRemove) {

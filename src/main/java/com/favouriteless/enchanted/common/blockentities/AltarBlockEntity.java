@@ -205,7 +205,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
                 for (int y = 0; y < (range+2)*2; y++) {
                     for (int z = 0; z < (range+2)*2; z++) {
                         BlockPos currentPos = startingPos.offset(x, y, z);
-                        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.POWER_CONSUMERS).contains(level.getBlockState(currentPos).getBlock())) {
+                        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.POWER_CONSUMERS).contains(level.getBlockState(currentPos).getBlock())) {
                             addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
                         }
                         else if(posWithinRange(currentPos, range)) {

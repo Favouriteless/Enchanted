@@ -50,7 +50,7 @@ public class AltarStateObserver extends AbstractStateObserver {
                 for (StateChange change : getStateChangeSet().getChanges()) { // For all changes
                     if (altar.posWithinRange(change.pos(), EnchantedConfig.ALTAR_RANGE.get())) { // Change is relevant
                         if(!change.oldState().is(change.newState().getBlock())) { // Block changed
-                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.POWER_CONSUMERS).contains(change.newState().getBlock())) {
+                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.POWER_CONSUMERS).contains(change.newState().getBlock())) {
                                 altar.addConsumer((IAltarPowerConsumer) getLevel().getBlockEntity(change.pos()));
                             }
                             altar.removeBlock(change.oldState().getBlock());

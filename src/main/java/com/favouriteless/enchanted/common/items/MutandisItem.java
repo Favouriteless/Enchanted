@@ -49,18 +49,18 @@ public class MutandisItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_PLANTS).stream().allMatch(block -> ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(block)))
+        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_PLANTS).stream().allMatch(block -> ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(block)))
             return InteractionResult.FAIL; // If all whitelisted plants are blacklisted
 
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-        if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(state.getBlock()) && ForgeRegistries.BLOCKS.tags().getTag(validBlocks).contains(state.getBlock())) {
+        if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(state.getBlock()) && ForgeRegistries.BLOCKS.tags().getTag(validBlocks).contains(state.getBlock())) {
             Level world = context.getLevel();
             if(!world.isClientSide) {
 
                 BlockState newState = null;
                 while(newState == null) {
                     Block newBlock = ForgeRegistries.BLOCKS.tags().getTag(validBlocks).getRandomElement(Enchanted.RANDOM).get();
-                    if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.MUTANDIS_BLACKLIST).contains(newBlock)) {
+                    if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(newBlock)) {
                         newState = newBlock.defaultBlockState();
                     }
                 }

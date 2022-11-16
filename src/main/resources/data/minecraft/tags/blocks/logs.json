@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "enchanted:rowan_log",
-    "enchanted:hawthorn_log",
-    "enchanted:alder_log"
-  ]
+    "#enchanted:logs"
+    ]
 }

@@ -49,7 +49,7 @@ public class ProtectionBarrierBlock extends TemporaryProtectionBarrierBlock {
 		if (context instanceof EntityCollisionContext entityContext) {
 			Entity entity = entityContext.getEntity();
 			if(entity != null) {
-				if(ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.MONSTERS).contains(entityContext.getEntity().getType()))
+				if(ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entityContext.getEntity().getType()))
 					return super.getCollisionShape(state, level, pos, context);
 				else if(entityContext.getEntity() instanceof Player player && player.isCrouching())
 					return Shapes.empty();

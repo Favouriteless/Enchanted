@@ -87,7 +87,7 @@ public class RiteOfCurseOfBlight extends AbstractRite {
                         if(entity instanceof Villager villager && Math.random() < EnchantedConfig.BLIGHT_ZOMBIE_CHANCE.get())
                             villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
                         else {
-                            MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
+                            MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
                             if(effect != null) {
                                 if(entity != level.getEntity(casterUUID))
                                     entity.addEffect(new MobEffectInstance(effect, 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
@@ -102,12 +102,12 @@ public class RiteOfCurseOfBlight extends AbstractRite {
                     if(this.pos.distToCenterSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) {
                         if(Math.random() < EnchantedConfig.BLIGHT_DECAY_CHANCE.get()) {
                             Block decayBlock = level.getBlockState(pos).getBlock();
-                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
-                                Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);
+                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
+                                Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);
                                 if(block != null)
                                     level.setBlockAndUpdate(pos, block.defaultBlockState());
                             }
-                            else if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.BLIGHT_DECAYABLE_PLANTS).contains(decayBlock))
+                            else if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_PLANTS).contains(decayBlock))
                                 level.setBlockAndUpdate(pos, Blocks.DEAD_BUSH.defaultBlockState());
                         }
                         positionsHandled.add(pos);

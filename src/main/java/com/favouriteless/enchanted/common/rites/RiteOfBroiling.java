@@ -67,7 +67,7 @@ public class RiteOfBroiling extends AbstractRite {
     public void onTick() {
         if(ticks % 5 == 0) {
             List<Entity> entitiesInside = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof ItemEntity); // Get all ItemEntity
-            entitiesInside.removeIf(entity -> !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.RAW_FOODS).contains(((ItemEntity) entity).getItem().getItem())); // Remove if not raw food
+            entitiesInside.removeIf(entity -> !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.RAW_FOODS).contains(((ItemEntity) entity).getItem().getItem())); // Remove if not raw food
             entitiesInside.sort((a, b) -> a.distanceToSqr(pos.getX() + 0.5D, pos.getY(), pos.getX() + 0.5D) > b.distanceToSqr(pos.getX() + 0.5D, pos.getY(), pos.getX() + 0.5D) ? 1 : 0); // Sort by distance.
 
             if(entitiesInside.isEmpty()) { // If no food left to cook

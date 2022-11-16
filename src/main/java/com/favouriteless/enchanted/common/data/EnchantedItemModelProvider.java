@@ -92,6 +92,7 @@ public class EnchantedItemModelProvider extends ItemModelProvider {
 		simpleItem(EnchantedItems.WOOL_OF_BAT.get());
 		simpleItem(EnchantedItems.TONGUE_OF_DOG.get());
 		simpleItem(EnchantedItems.CREEPER_HEART.get());
+		simpleItem(EnchantedItems.ENT_TWIG.get());
 		simpleToolItem(EnchantedItems.ARTHANA.get());
 		simpleItem(EnchantedItems.BONE_NEEDLE.get());
 		simpleItem(EnchantedItems.REDSTONE_SOUP.get());

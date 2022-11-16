@@ -85,8 +85,8 @@ public class PoppetEvents {
 	@SubscribeEvent
 	public static void onItemBreak(PlayerDestroyItemEvent event) {
 		ItemStack tool = event.getOriginal();
-		if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.TOOL_POPPET_BLACKLIST).contains(tool.getItem())
-				&& !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.TOOL_POPPET_WHITELIST).contains(tool.getItem()))) {
+		if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.TOOL_POPPET_BLACKLIST).contains(tool.getItem())
+				&& !(EnchantedConfig.WHITELIST_TOOL_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.TOOL_POPPET_WHITELIST).contains(tool.getItem()))) {
 			Player player = event.getPlayer();
 
 			Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
@@ -111,8 +111,8 @@ public class PoppetEvents {
 	public static void onLivingEntityBreak(LivingEntity entity, EquipmentSlot slot) {
 		if(entity instanceof Player player) {
 			ItemStack armourStack = entity.getItemBySlot(slot).copy();
-			if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.ARMOUR_POPPET_BLACKLIST).contains(armourStack.getItem())
-					&& !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.ARMOUR_POPPET_WHITELIST).contains(armourStack.getItem()))) {
+			if(!ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.ARMOUR_POPPET_BLACKLIST).contains(armourStack.getItem())
+					&& !(EnchantedConfig.WHITELIST_ARMOUR_POPPET.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.ARMOUR_POPPET_WHITELIST).contains(armourStack.getItem()))) {
 
 				Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
 				for(ItemStack itemStack : player.getInventory().items)

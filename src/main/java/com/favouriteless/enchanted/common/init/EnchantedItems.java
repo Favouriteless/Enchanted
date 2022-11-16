@@ -102,8 +102,8 @@ public class EnchantedItems {
     public static final RegistryObject<Item> BLOOD_POPPY = registerBlockItem("blood_poppy", EnchantedBlocks.BLOOD_POPPY);
 
     public static final RegistryObject<Item> ANOINTING_PASTE = ITEMS.register("anointing_paste", () -> new AnointingPasteItem(defaultProperties()));
-    public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(EnchantedTags.MUTANDIS_PLANTS, defaultProperties()));
-    public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(EnchantedTags.MUTANDIS_EXTREMIS_PLANTS, defaultProperties()));
+    public static final RegistryObject<Item> MUTANDIS = ITEMS.register("mutandis", () -> new MutandisItem(EnchantedTags.Blocks.MUTANDIS_PLANTS, defaultProperties()));
+    public static final RegistryObject<Item> MUTANDIS_EXTREMIS = ITEMS.register("mutandis_extremis", () -> new MutandisItem(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS, defaultProperties()));
     public static final RegistryObject<Item> TAGLOCK = ITEMS.register("taglock", () -> new TaglockItem(defaultProperties()));
     public static final RegistryObject<Item> TAGLOCK_FILLED = ITEMS.register("taglock_filled", () -> new TaglockFilledItem(new Properties()));
 
@@ -116,8 +116,8 @@ public class EnchantedItems {
 
     public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(defaultProperties().stacksTo(1)));
     public static final RegistryObject<Item> WAYSTONE = registerItem("waystone");
-    public static final RegistryObject<Item> BOUND_WAYSTONE = ITEMS.register("bound_waystone", () -> new Item(new Properties())); // With no creative tab
-    public static final RegistryObject<Item> BLOODED_WAYSTONE = ITEMS.register("blooded_waystone", () -> new Item(new Properties())); // With no creative tab
+    public static final RegistryObject<Item> BOUND_WAYSTONE = registerItemNoTab("bound_waystone");
+    public static final RegistryObject<Item> BLOODED_WAYSTONE = registerItemNoTab("blooded_waystone");
     public static final RegistryObject<Item> BROOM = ITEMS.register("broom", () -> new BroomItem(defaultProperties()));
     public static final RegistryObject<Item> ENCHANTED_BROOMSTICK = ITEMS.register("enchanted_broomstick", () -> new BroomstickItem(defaultProperties()));
 
@@ -154,6 +154,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> TONGUE_OF_DOG = registerItem("tongue_of_dog");
     public static final RegistryObject<Item> CREEPER_HEART = registerItem("creeper_heart");
     public static final RegistryObject<Item> BONE_NEEDLE = registerItem("bone_needle");
+    public static final RegistryObject<Item> ENT_TWIG = registerItem("ent_twig");
 
     public static final RegistryObject<Item> REDSTONE_SOUP = registerBrew("redstone_soup", MobEffects.ABSORPTION, 2400, 1);
     public static final RegistryObject<Item> FLYING_OINTMENT = registerBrew("flying_ointment", MobEffects.LEVITATION, 400, 0);
@@ -206,6 +207,10 @@ public class EnchantedItems {
 
     private static RegistryObject<Item> registerItem(String name) {
         return ITEMS.register(name, () -> new Item(defaultProperties()));
+    }
+
+    private static RegistryObject<Item> registerItemNoTab(String name) {
+        return ITEMS.register(name, () -> new Item(new Properties()));
     }
 
     private static RegistryObject<Item> registerItemProperties(String name, Properties properties) {

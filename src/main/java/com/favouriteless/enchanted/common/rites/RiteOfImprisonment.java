@@ -64,7 +64,7 @@ public class RiteOfImprisonment extends AbstractRite {
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.MONSTERS).contains(entity.getType()));
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             tetheredMonsters.addAll(currentEntities);
         }

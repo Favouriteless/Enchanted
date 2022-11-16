@@ -58,7 +58,7 @@ public class RiteOfSanctity extends AbstractRite {
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.MONSTERS).contains(entity.getType()));
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
                 Vec3 opposingVector = entity.position().subtract(pos.getX(), entity.position().y(), pos.getZ());

@@ -40,7 +40,7 @@ public class CurseOfMisfortune extends AbstractRandomCurse {
 
 	@Override
 	protected void execute() {
-		MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MISFORTUNE_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
+		MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.MISFORTUNE_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
 		if(effect != null) {
 			int effectLevel = 0;
 			int effectDuration = 30;

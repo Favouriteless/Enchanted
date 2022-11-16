@@ -37,7 +37,7 @@ public class CurseOfOverheating extends AbstractRandomCurse {
 
 	@Override
 	protected void execute() {
-		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())) {
+		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.Biomes.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())) {
 			int duration = 4;
 			for(int i = 0; i < level; i++) {
 				if(Math.random() < 0.75D)

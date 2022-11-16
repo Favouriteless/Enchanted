@@ -25,7 +25,6 @@
 
 package com.favouriteless.enchanted.jei;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
@@ -34,7 +33,6 @@ import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.*;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.jei.categories.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -47,18 +45,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.block.Block;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @JeiPlugin
 public class EnchantedJEIPlugin implements IModPlugin {
-
-    private static final Map<CirclePart, String> CIRCLE_PART_TEXTURE_NAMES = new HashMap<>();
-    private static final Map<Block, String> BLOCK_TEXTURE_SUFFIXES = new HashMap<>();
 
     private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
     private static final RecipeType<WitchOvenRecipe> recipeTypeOven = new RecipeType(locationOven, WitchOvenRecipe.class);
@@ -169,19 +161,6 @@ public class EnchantedJEIPlugin implements IModPlugin {
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
         IModPlugin.super.onRuntimeAvailable(jeiRuntime);
-    }
-
-    public static void registerCirclePartPrefix(CirclePart part, String name) {
-        CIRCLE_PART_TEXTURE_NAMES.putIfAbsent(part, name);
-    }
-
-    public static void registerBlockSuffix(Block block, String name) {
-        BLOCK_TEXTURE_SUFFIXES.putIfAbsent(block, name);
-    }
-
-    public static ResourceLocation getCircleTextureLocation(CirclePart circle, Block block) {
-        return (CIRCLE_PART_TEXTURE_NAMES.containsKey(circle) && BLOCK_TEXTURE_SUFFIXES.containsKey(block)) ?
-                Enchanted.location("textures/gui/jei/" + CIRCLE_PART_TEXTURE_NAMES.get(circle) + "_" + BLOCK_TEXTURE_SUFFIXES.get(block) + ".png") : null;
     }
 
 }

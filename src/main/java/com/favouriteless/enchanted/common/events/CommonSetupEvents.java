@@ -30,7 +30,7 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.jei.EnchantedJEIPlugin;
+import com.favouriteless.enchanted.jei.EnchantedJEITextures;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -43,12 +43,14 @@ public class CommonSetupEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(EnchantedRecipeTypes::init);
-        EnchantedJEIPlugin.registerCirclePartPrefix(CirclePart.SMALL, "small");
-        EnchantedJEIPlugin.registerCirclePartPrefix(CirclePart.MEDIUM, "medium");
-        EnchantedJEIPlugin.registerCirclePartPrefix(CirclePart.LARGE, "large");
-        EnchantedJEIPlugin.registerBlockSuffix(EnchantedBlocks.CHALK_WHITE.get(), "white");
-        EnchantedJEIPlugin.registerBlockSuffix(EnchantedBlocks.CHALK_RED.get(), "red");
-        EnchantedJEIPlugin.registerBlockSuffix(EnchantedBlocks.CHALK_PURPLE.get(), "purple");
+
+
+        EnchantedJEITextures.registerCirclePartPrefix(CirclePart.SMALL, "small");
+        EnchantedJEITextures.registerCirclePartPrefix(CirclePart.MEDIUM, "medium");
+        EnchantedJEITextures.registerCirclePartPrefix(CirclePart.LARGE, "large");
+        EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_WHITE.get(), "white");
+        EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_RED.get(), "red");
+        EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_PURPLE.get(), "purple");
     }
 
     @SubscribeEvent

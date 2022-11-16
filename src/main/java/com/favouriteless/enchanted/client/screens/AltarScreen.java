@@ -50,6 +50,12 @@ public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
     }
 
     @Override
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
     protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -61,11 +67,11 @@ public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
     }
 
     @Override
-    protected void renderLabels(PoseStack pMatrixStack, int pX, int pY) {
+    protected void renderLabels(PoseStack matrixStack, int pX, int pY) {
         String powerString = String.format("%s/%s (%sx)", container.getCurrentPower(), container.getMaxPower(), container.getRechargeMultiplier());
         int xOffset = this.font.width(powerString) / 2;
         int yOffset = this.font.lineHeight / 2;
-        this.font.draw(pMatrixStack, powerString, (float)this.imageWidth / 2 - xOffset, (float)this.imageHeight / 2 - yOffset, Color.darkGray.getRGB());
+        this.font.draw(matrixStack, powerString, (float)this.imageWidth / 2 - xOffset, (float)this.imageHeight / 2 - yOffset, Color.darkGray.getRGB());
     }
 
 }

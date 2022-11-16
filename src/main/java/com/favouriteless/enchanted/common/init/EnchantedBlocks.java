@@ -91,6 +91,7 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> CHALICE_FILLED = BLOCKS.register("chalice_filled", () -> new ChaliceBlock(Properties.copy(CHALICE.get()), true));
     public static final RegistryObject<Block> CHALICE_FILLED_MILK = BLOCKS.register("chalice_filled_milk", () -> new ChaliceBlockMilk(Properties.copy(CHALICE.get())));
     public static final RegistryObject<Block> CANDELABRA = BLOCKS.register("candelabra", () -> new CandelabraBlock(Properties.copy(CHALICE.get()).lightLevel((state) -> 14)));
+    public static final RegistryObject<Block> INFINITY_EGG = BLOCKS.register("infinity_egg", () -> new InfinityEggBlock(Properties.copy(Blocks.DRAGON_EGG)));
 
     public static final RegistryObject<RotatedPillarBlock> WICKER_BUNDLE = BLOCKS.register("wicker_bundle", () -> new HayBlock(Properties.copy(Blocks.HAY_BLOCK)));
 

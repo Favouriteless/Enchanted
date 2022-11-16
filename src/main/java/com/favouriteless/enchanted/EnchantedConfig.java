@@ -57,6 +57,7 @@ public class EnchantedConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> BLIGHT_ZOMBIE_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Double> FERTILITY_BONE_MEAL_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Integer> FOREST_TREE_COUNT;
+    public static final ForgeConfigSpec.ConfigValue<Integer> FOREST_RADIUS;
 
     static {
         BUILDER.push("Altar Options");
@@ -88,7 +89,8 @@ public class EnchantedConfig {
         BLIGHT_DECAY_CHANCE = BUILDER.comment("Chance for blocks to be decayed by the curse of blight #default 0.3").define("blight_decay_chance", 0.3D);
         BLIGHT_ZOMBIE_CHANCE = BUILDER.comment("Chance for villagers to be zombified by the curse of blight #default 0.3").define("blight_zombie_chance", 0.3D);
         FERTILITY_BONE_MEAL_CHANCE = BUILDER.comment("Chance for blocks to be bone mealed by the rite of fertility #default 0.8").define("fertility_bone_meal_chance", 0.8D);
-        FOREST_TREE_COUNT = BUILDER.comment("Average tree count for the rite of forest to place #default 20").define("forest_tree_amount", 20);
+        FOREST_TREE_COUNT = BUILDER.comment("Average tree count for the rite of the forest to place #default 25").define("forest_tree_amount", 25);
+        FOREST_RADIUS = BUILDER.comment("Maximum radius trees can be placed in by the rite of the forest #default 25").define("forest_tree_radius", 25);
         BUILDER.pop();
 
         BUILDER.push("Miscellaneous Options");

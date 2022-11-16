@@ -62,6 +62,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CHALICE_FILLED = registerBlockItem("chalice_filled", EnchantedBlocks.CHALICE_FILLED);
     public static final RegistryObject<Item> CHALICE_FILLED_MILK = registerBlockItem("chalice_filled_milk", EnchantedBlocks.CHALICE_FILLED_MILK);
     public static final RegistryObject<Item> CANDELABRA = registerBlockItem("candelabra", EnchantedBlocks.CANDELABRA);
+    public static final RegistryObject<Item> INFINITY_EGG = registerBlockItem("infinity_egg", EnchantedBlocks.INFINITY_EGG);
 
     public static final RegistryObject<Item> ROWAN_LOG = registerBlockItem("rowan_log", EnchantedBlocks.ROWAN_LOG);
     public static final RegistryObject<Item> ROWAN_PLANKS = registerBlockItem("rowan_planks", EnchantedBlocks.ROWAN_PLANKS);

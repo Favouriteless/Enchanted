@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.jei.EnchantedJEIPlugin;
+import com.favouriteless.enchanted.jei.EnchantedJEITextures;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -91,7 +91,7 @@ public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
         circles.clear();
         for(CirclePart circlePart : rite.CIRCLES_REQUIRED.keySet()) {
             Block block = rite.CIRCLES_REQUIRED.get(circlePart);
-            ResourceLocation textureLocation = EnchantedJEIPlugin.getCircleTextureLocation(circlePart, block);
+            ResourceLocation textureLocation = EnchantedJEITextures.getCircleTextureLocation(circlePart, block);
             if(textureLocation != null) {
                 circles.add(buildTexture(textureLocation, GLYPH_SIZE, GLYPH_SIZE, jeiHelpers));
             }

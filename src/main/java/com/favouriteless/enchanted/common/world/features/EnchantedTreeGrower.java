@@ -49,7 +49,7 @@ public class EnchantedTreeGrower extends AbstractTreeGrower {
 
 	@Override
 	public boolean growTree(ServerLevel level, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random) {
-		ConfiguredFeature<?, ?> feature = level.registryAccess().registry(Registry.CONFIGURED_FEATURE_REGISTRY).get().get(location);
+		ConfiguredFeature<?, ?> feature = level.registryAccess().registry(Registry.CONFIGURED_FEATURE_REGISTRY).orElseThrow().get(location);
 		if(feature == null)
 			return false;
 

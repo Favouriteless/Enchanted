@@ -45,15 +45,6 @@ public class EnchantedRiteTypes {
     public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(Enchanted.location("rites"), Enchanted.MOD_ID);
     public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry(Generify.<RiteType<?>>from(RiteType.class), RegistryBuilder::new);
 
-    public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteOfChargingStone::new));
-
-    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
-    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
-    public static final RegistryObject<RiteType<?>> SKY_WRATH = RITE_TYPES.register("sky_wrath", () -> new RiteType<>(RiteOfSkyWrath::new));
-    public static final RegistryObject<RiteType<?>> SKY_WRATH_CHARGED = RITE_TYPES.register("sky_wrath_charged", () -> new RiteType<>(RiteOfSkyWrathCharged::new));
-    public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteOfBroiling::new));
-    public static final RegistryObject<RiteType<?>> BROILING_CHARGED = RITE_TYPES.register("broiling_charged", () -> new RiteType<>(RiteOfBroilingCharged::new));
-
     public static final RegistryObject<RiteType<?>> BINDING_TALISMAN = RITE_TYPES.register("binding_talisman", () -> new RiteType<>(RiteOfBindingTalisman::new));
     public static final RegistryObject<RiteType<?>> BINDING_TALISMAN_CHARGED = RITE_TYPES.register("binding_talisman_charged", () -> new RiteType<>(RiteOfBindingTalismanCharged::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE = RITE_TYPES.register("binding_waystone", () -> new RiteType<>(RiteOfBindingWaystone::new));
@@ -62,31 +53,33 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE_CHARGED = RITE_TYPES.register("binding_waystone_duplicate_charged", () -> new RiteType<>(RiteOfBindingWaystoneDuplicateCharged::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER = RITE_TYPES.register("binding_waystone_player", () -> new RiteType<>(RiteOfBindingWaystonePlayer::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER_CHARGED = RITE_TYPES.register("binding_waystone_player_charged", () -> new RiteType<>(RiteOfBindingWaystonePlayerCharged::new));
-
-    public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteOfInfusionBroom::new));
-
-    public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
+    public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteOfBroiling::new));
+    public static final RegistryObject<RiteType<?>> BROILING_CHARGED = RITE_TYPES.register("broiling_charged", () -> new RiteType<>(RiteOfBroilingCharged::new));
+    public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteOfChargingStone::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_BLIGHT = RITE_TYPES.register("curse_of_blight", () -> new RiteType<>(RiteOfCurseOfBlight::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_MISFORTUNE = RITE_TYPES.register("curse_of_misfortune", () -> new RiteType<>(RiteOfCurseOfMisfortune::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_OVERHEATING = RITE_TYPES.register("curse_of_overheating", () -> new RiteType<>(RiteOfCurseOfOverheating::new));
+    public static final RegistryObject<RiteType<?>> CURSE_OF_SINKING = RITE_TYPES.register("curse_of_sinking", () -> new RiteType<>(RiteOfCurseOfSinking::new));
+    public static final RegistryObject<RiteType<?>> FERTILITY = RITE_TYPES.register("fertility", () -> new RiteType<>(RiteOfFertility::new));
+    public static final RegistryObject<RiteType<?>> FERTILITY_CHARGED = RITE_TYPES.register("fertility_charged", () -> new RiteType<>(RiteOfFertilityCharged::new));
+    public static final RegistryObject<RiteType<?>> FOREST = RITE_TYPES.register("forest", () -> new RiteType<>(RiteOfForest::new));
     public static final RegistryObject<RiteType<?>> IMPRISONMENT = RITE_TYPES.register("imprisonment", () -> new RiteType<>(RiteOfImprisonment::new));
+    public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteOfInfusionBroom::new));
     public static final RegistryObject<RiteType<?>> PROTECTION = RITE_TYPES.register("protection", () -> new RiteType<>(RiteOfProtection::new));
     public static final RegistryObject<RiteType<?>> PROTECTION_LARGE = RITE_TYPES.register("protection_large", () -> new RiteType<>(RiteOfProtectionLarge::new));
     public static final RegistryObject<RiteType<?>> PROTECTION_TEMPORARY = RITE_TYPES.register("protection_temporary", () -> new RiteType<>(RiteOfProtectionTemporary::new));
-    public static final RegistryObject<RiteType<?>> FERTILITY = RITE_TYPES.register("fertility", () -> new RiteType<>(RiteOfFertility::new));
-    public static final RegistryObject<RiteType<?>> FERTILITY_CHARGED = RITE_TYPES.register("fertility_charged", () -> new RiteType<>(RiteOfFertilityCharged::new));
-
+    public static final RegistryObject<RiteType<?>> REMOVE_MISFORTUNE = RITE_TYPES.register("remove_misfortune", () -> new RiteType<>(RiteOfRemoveMisfortune::new));
+    public static final RegistryObject<RiteType<?>> REMOVE_OVERHEATING = RITE_TYPES.register("remove_overheating", () -> new RiteType<>(RiteOfRemoveOverheating::new));
+    public static final RegistryObject<RiteType<?>> REMOVE_SINKING = RITE_TYPES.register("remove_sinking", () -> new RiteType<>(RiteOfRemoveSinking::new));
+    public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteOfSanctity::new));
+    public static final RegistryObject<RiteType<?>> SKY_WRATH = RITE_TYPES.register("sky_wrath", () -> new RiteType<>(RiteOfSkyWrath::new));
+    public static final RegistryObject<RiteType<?>> SKY_WRATH_CHARGED = RITE_TYPES.register("sky_wrath_charged", () -> new RiteType<>(RiteOfSkyWrathCharged::new));
+    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummonEntity::new));
+    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteOfTotalEclipse::new));
+    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteOfTotalEclipseCharged::new));
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteOfTranspositionIron::new));
-
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteOfTranspositionPlayer::new));
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER_BLOODED = RITE_TYPES.register("transposition_player_blooded", () -> new RiteType<>(RiteOfTranspositionPlayerBlooded::new));
-    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteOfSummonEntity::new));
-
-    public static final RegistryObject<RiteType<?>> CURSE_OF_MISFORTUNE = RITE_TYPES.register("curse_of_misfortune", () -> new RiteType<>(RiteOfCurseOfMisfortune::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_SINKING = RITE_TYPES.register("curse_of_sinking", () -> new RiteType<>(RiteOfCurseOfSinking::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_OVERHEATING = RITE_TYPES.register("curse_of_overheating", () -> new RiteType<>(RiteOfCurseOfOverheating::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_BLIGHT = RITE_TYPES.register("curse_of_blight", () -> new RiteType<>(RiteOfCurseOfBlight::new));
-
-    public static final RegistryObject<RiteType<?>> REMOVE_MISFORTUNE = RITE_TYPES.register("remove_misfortune", () -> new RiteType<>(RiteOfRemoveMisfortune::new));
-    public static final RegistryObject<RiteType<?>> REMOVE_SINKING = RITE_TYPES.register("remove_sinking", () -> new RiteType<>(RiteOfRemoveSinking::new));
-    public static final RegistryObject<RiteType<?>> REMOVE_OVERHEATING = RITE_TYPES.register("remove_overheating", () -> new RiteType<>(RiteOfRemoveOverheating::new));
 
 
 
@@ -126,7 +119,6 @@ public class EnchantedRiteTypes {
     }
 
     private static class Generify {
-
         @SuppressWarnings("unchecked")
         public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls)
         {

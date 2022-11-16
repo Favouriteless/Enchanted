@@ -33,15 +33,15 @@ import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Plane;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Direction.Plane;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -88,6 +88,7 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 		complexBlockWithItem(EnchantedBlocks.CHALICE.get());
 		complexBlockWithItem(EnchantedBlocks.CHALICE_FILLED.get());
 		complexBlockWithItem(EnchantedBlocks.CHALICE_FILLED_MILK.get());
+		complexBlockWithItem(EnchantedBlocks.INFINITY_EGG.get(), "block/dragon_egg");
 		complexBlockWithItem(EnchantedBlocks.CANDELABRA.get());
 		kettleBlockWithItem(EnchantedBlocks.KETTLE.get());
 		complexBlockWithItem(EnchantedBlocks.POPPET_SHELF.get());
@@ -154,6 +155,12 @@ public class EnchantedBlockstateProvider extends BlockStateProvider {
 
 	private void complexBlockWithItem(Block block) {
 		ModelFile model = models().getExistingFile(modLoc("block/" + block.getRegistryName().getPath()));
+		simpleBlock(block, model);
+		simpleBlockItem(block, model);
+	}
+
+	private void complexBlockWithItem(Block block, String location) {
+		ModelFile model = models().getExistingFile(mcLoc(location));
 		simpleBlock(block, model);
 		simpleBlockItem(block, model);
 	}

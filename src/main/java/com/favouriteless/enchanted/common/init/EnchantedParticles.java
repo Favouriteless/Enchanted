@@ -26,10 +26,12 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
-import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
-import com.favouriteless.enchanted.client.particles.DelayedActionParticleType.DelayedActionData;
-import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
+import com.favouriteless.enchanted.client.particles.types.*;
+import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
+import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -58,6 +60,7 @@ public class EnchantedParticles {
     public static final RegistryObject<ParticleType<DelayedActionData>> REMOVE_CURSE = PARTICLE_TYPES.register("remove_curse", () -> new DelayedActionParticleType(false));
     public static final RegistryObject<ParticleType<CircleMagicData>> CURSE_BLIGHT = PARTICLE_TYPES.register("curse_blight", () -> new CircleMagicParticleType(false));
     public static final RegistryObject<ParticleType<CircleMagicData>> FERTILITY = PARTICLE_TYPES.register("fertility", () -> new CircleMagicParticleType(false));
+    public static final RegistryObject<SimpleParticleType> PROTECTION = PARTICLE_TYPES.register("protection", () -> new SimpleParticleType(false));
 
     public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
@@ -67,6 +70,7 @@ public class EnchantedParticles {
     public static final RegistryObject<SimpleParticleType> CURSE_BLIGHT_SEED = PARTICLE_TYPES.register("curse_blight_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> REMOVE_CURSE_SEED = PARTICLE_TYPES.register("remove_curse_seed", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> FERTILITY_SEED = PARTICLE_TYPES.register("fertility_seed", () -> new SimpleParticleType(false));
+    public static final RegistryObject<ParticleType<DoubleParticleData>> PROTECTION_SEED = PARTICLE_TYPES.register("protection_seed", () -> new DoubleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
@@ -89,6 +93,8 @@ public class EnchantedParticles {
         Minecraft.getInstance().particleEngine.register(REMOVE_CURSE.get(), RemoveCurseParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(FERTILITY_SEED.get(), FertilitySeedParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(FERTILITY.get(), RepellingParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(PROTECTION_SEED.get(), ProtectionSeedParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(PROTECTION.get(), ProtectionParticle.Factory::new);
     }
 
 }

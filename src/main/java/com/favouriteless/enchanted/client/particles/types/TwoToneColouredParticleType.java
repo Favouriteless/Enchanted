@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.client.particles;
+package com.favouriteless.enchanted.client.particles.types;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

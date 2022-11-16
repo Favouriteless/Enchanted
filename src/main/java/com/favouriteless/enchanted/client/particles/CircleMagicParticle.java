@@ -24,13 +24,12 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class CircleMagicParticle extends TextureSheetParticle {
 

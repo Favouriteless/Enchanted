@@ -165,6 +165,11 @@ public abstract class AbstractRite {
      */
     protected void onTick() {}
 
+    /**
+     * Use for behaviour needed when rite stops.
+     */
+    public void onStopExecuting() {}
+
     protected boolean checkAdditional() {
         return true;
     }
@@ -260,6 +265,7 @@ public abstract class AbstractRite {
      * Call this when the rite is finished
      */
     public void stopExecuting() {
+        onStopExecuting();
         detatchFromChalk();
         this.isStarting = false;
         this.isRemoved = true;
@@ -326,6 +332,13 @@ public abstract class AbstractRite {
 
         playConsumeEffects(entity);
         entity.setDefaultPickUpDelay();
+    }
+
+    protected void consumeItemNoRequirement(ItemEntity entity) {
+        entity.setNeverPickUp();
+        playConsumeEffects(entity);
+        itemsConsumed.add(entity.getItem());
+        entity.discard();
     }
 
     protected void playConsumeEffects(ItemEntity entity) {

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.particles.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;

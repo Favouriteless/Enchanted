@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.client.particles.TwoToneColouredParticleType.TwoToneColouredData;
+import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 

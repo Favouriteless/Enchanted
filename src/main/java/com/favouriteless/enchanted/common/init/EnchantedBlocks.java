@@ -131,6 +131,9 @@ public class EnchantedBlocks {
     public static final RegistryObject<Block> CHALK_RED = BLOCKS.register("chalk_red", () -> new ChalkCircleBlock(ParticleTypes.FLAME));
     public static final RegistryObject<Block> CHALK_PURPLE = BLOCKS.register("chalk_purple", () -> new ChalkCircleBlock(ParticleTypes.DRAGON_BREATH));
 
+    public static final RegistryObject<Block> PROTECTION_BARRIER = BLOCKS.register("protection_barrier", () -> new ProtectionBarrierBlock(Properties.copy(Blocks.BARRIER)));
+    public static final RegistryObject<Block> PROTECTION_BARRIER_TEMPORARY = BLOCKS.register("protection_barrier_temporary", () -> new TemporaryProtectionBarrierBlock(Properties.copy(Blocks.BARRIER)));
+
     //public static final RegistryObject<Block> DEMON_HEART = BLOCKS.register("demon_heart", DemonHeart::new);
 
     //-------------------------------------------------------- UTILITY FUNCTIONS FOR CREATING BLOCKS --------------------------------------------------------

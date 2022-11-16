@@ -22,9 +22,9 @@
  *
  */
 
-package com.favouriteless.enchanted.client.particles;
+package com.favouriteless.enchanted.client.particles.types;
 
-import com.favouriteless.enchanted.client.particles.DelayedActionParticleType.DelayedActionData;
+import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;

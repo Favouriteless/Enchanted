@@ -82,7 +82,7 @@ public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
         int numRows = (int)Math.ceil(itemsOut.length / 3.0D);
         int height = numRows * 17;
         int startX = 119;
-        int startY = 64 - (int)Math.round(height/2.0D);
+        int startY = 61 - (int)Math.round(height/2.0D);
         for(int i = 0; i < itemsOut.length; i++) {
             ItemStack stack = itemsOut[i];
             builder.addSlot(RecipeIngredientRole.OUTPUT, startX + (i%3)*17, startY + i/3*17).addItemStack(stack);
@@ -105,7 +105,7 @@ public class RiteCategory implements IRecipeCategory<AbstractCreateItemRite> {
             drawable.draw(poseStack, 0, 14);
         }
         glyph_golden.draw(poseStack, 0, 14);
-        this.arrow.draw(poseStack, 95, 56);
+        this.arrow.draw(poseStack, 95, 53);
 
         ResourceLocation riteName = rite.getType().getRegistryName();
         String nameText = new TranslatableComponent("rite." + riteName.getNamespace() + "." + riteName.getPath()).getString();

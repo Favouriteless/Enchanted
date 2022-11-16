@@ -25,6 +25,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 

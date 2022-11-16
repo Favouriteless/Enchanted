@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.client.particles.DelayedActionParticleType.DelayedActionData;
+import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;

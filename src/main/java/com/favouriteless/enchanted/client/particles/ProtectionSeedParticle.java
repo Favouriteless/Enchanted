@@ -24,57 +24,54 @@
 
 package com.favouriteless.enchanted.client.particles;
 
-import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
+import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.rites.RiteOfSkyWrath;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.core.particles.SimpleParticleType;
 
-public class SkyWrathSeedParticle extends NoRenderParticle {
+public class ProtectionSeedParticle extends NoRenderParticle {
 
-	private static final double xSpread = 0.3D;
-	private static final double ySpread = 0.3D;
-	private static final double zSpread = 0.3D;
+	private final double radius;
 
-	protected SkyWrathSeedParticle(ClientLevel pLevel, double x, double y, double z) {
+	protected ProtectionSeedParticle(ClientLevel pLevel, double x, double y, double z, double radius) {
 		super(pLevel, x, y, z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.lifetime = 60;
 		this.hasPhysics = false;
+		this.radius = radius;
 	}
 
 	@Override
 	public void tick() {
-		if(age++ < lifetime) {
-			if(age % 3 == 0) {
-				for(int a = 0; a < 360; a += 20) {
-					double angle = Math.toRadians(a);
+		double increment = 1.0D / radius; // Total radians / circumference for radians per step
+		for(double y = 0; y <= Math.PI*2 + increment/2; y += increment) {
+			for(double p = 0; p <= Math.PI*2 + increment/2; p += increment) {
+				double cosY = Math.cos(y);
+				double sinY = Math.sin(y);
+				double cosP = Math.cos(p);
+				double sinP = Math.sin(p);
+				double cx = sinY * cosP * radius + this.x + (Math.random()-0.5D);
+				double cy = sinP * radius + this.y + (Math.random()-0.5D);
+				double cz = cosY * cosP * radius + this.z + (Math.random()-0.5D);
 
-					double cx = x + Math.sin(angle) * RiteOfSkyWrath.LIGHTNING_RADIUS + Math.random() * xSpread;
-					double cy = y + Math.random() * ySpread;
-					double cz = z + Math.cos(angle) * RiteOfSkyWrath.LIGHTNING_RADIUS + Math.random() * zSpread;
-
-					level.addParticle(new DelayedActionData(EnchantedParticles.SKY_WRATH.get(), x, y, z, RiteOfSkyWrath.EXPLODE-age), cx, cy, cz, 0, 0, 0);
-				}
+				if(Math.random() < 0.5D)
+					level.addParticle(EnchantedParticles.PROTECTION.get(), cx, cy, cz, 0.0D, 0.0D, 0.0D);
 			}
 		}
-		else
-			this.remove();
+		remove();
 	}
 
-	public static class Factory implements ParticleProvider<SimpleParticleType> {
+	public static class Factory implements ParticleProvider<DoubleParticleData> {
 
 		public Factory(SpriteSet sprites) {
 		}
 
-		public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			return new SkyWrathSeedParticle(level, x, y, z);
+		public Particle createParticle(DoubleParticleData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			return new ProtectionSeedParticle(level, x, y, z, data.getValue());
 		}
 	}
 }

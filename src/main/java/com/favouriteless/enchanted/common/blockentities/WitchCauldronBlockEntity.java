@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.client.particles.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;

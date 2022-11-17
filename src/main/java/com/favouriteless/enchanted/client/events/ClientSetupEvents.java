@@ -31,7 +31,6 @@ import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRender
 import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
 import com.favouriteless.enchanted.client.render.entity.MandrakeRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
-import com.favouriteless.enchanted.client.render.model.MandrakeModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.client.screens.*;
@@ -87,7 +86,6 @@ public class ClientSetupEvents {
 	@SubscribeEvent
 	public static void registerLayerDefinitions(RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModelLayerLocations.BROOMSTICK, BroomstickModel::createLayerDefinition);
-		event.registerLayerDefinition(ModelLayerLocations.MANDRAKE, MandrakeModel::createLayerDefinition);
 		event.registerLayerDefinition(ModelLayerLocations.SPINNING_WHEEL, SpinningWheelRenderer::createLayerDefinition);
 		event.registerLayerDefinition(ModelLayerLocations.EARMUFFS, EarmuffsModel::createLayerDefinition);
 	}

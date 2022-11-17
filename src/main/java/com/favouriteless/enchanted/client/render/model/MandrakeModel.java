@@ -24,50 +24,30 @@
 
 package com.favouriteless.enchanted.client.render.model;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class MandrakeModel extends EntityModel<MandrakeEntity> {
-	private final ModelPart body;
-	private final ModelPart leaves;
+public class MandrakeModel extends AnimatedGeoModel<MandrakeEntity> {
 
-	public MandrakeModel(ModelPart root) {
-		this.body = root.getChild("body");
-		this.leaves = root.getChild("leaves");
-	}
+	public static final ResourceLocation MODEL_LOCATION = Enchanted.location("geo/mandrake.json");
+	public static final ResourceLocation ANIMATION_LOCATION = Enchanted.location("animations/mandrake.json");
+	public static final ResourceLocation TEXTURE_LOCATION = Enchanted.location("textures/entity/mandrake.png");
 
-	public static LayerDefinition createLayerDefinition() {
-		MeshDefinition meshdefinition = new MeshDefinition();
-		PartDefinition partdefinition = meshdefinition.getRoot();
-
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(0, 10).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 15.0F, 0.0F));
-		body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 25).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
-
-		body.addOrReplaceChild("leftLeg", CubeListBuilder.create()
-				.texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 5.0F, 0.0F, 0.0F, 0.0F, -0.1745F));
-		body.addOrReplaceChild("rightLeg", CubeListBuilder.create()
-				.texOffs(0, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 5.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
-
-		PartDefinition leaves = partdefinition.addOrReplaceChild("leaves", CubeListBuilder.create().texOffs(16, 26).addBox(-4.0F, -6.0F, 0.0F, 8.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 12.0F, 0.0F, 0.0F, -2.3562F, 0.0F));
-		leaves.addOrReplaceChild("face2_r1", CubeListBuilder.create().texOffs(16, 26).addBox(-4.0F, -6.0F, 0.0F, 8.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
-
-		return LayerDefinition.create(meshdefinition, 32, 32);
+	@Override
+	public ResourceLocation getModelLocation(MandrakeEntity object) {
+		return MODEL_LOCATION;
 	}
 
 	@Override
-	public void setupAnim(MandrakeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		body.getChild("leftLeg").xRot = (float)Math.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		body.getChild("rightLeg").xRot = (float)Math.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	public ResourceLocation getTextureLocation(MandrakeEntity object) {
+		return TEXTURE_LOCATION;
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		leaves.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public ResourceLocation getAnimationFileLocation(MandrakeEntity animatable) {
+		return ANIMATION_LOCATION;
 	}
+
 }

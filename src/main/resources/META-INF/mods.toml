@@ -31,3 +31,9 @@ Enchanted is your mod for all things occult or witchcraft. A modernized attempt 
     versionRange="[1.18.2-71.1,]"
     ordering="NONE"
     sides="BOTH"
+[[dependencies.enchanted]]
+    modId="geckolib3"
+    mandatory=true
+    versionRange="[1.18-3.0.55,]"
+    ordering="NONE"
+    side="BOTH"

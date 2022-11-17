@@ -93,14 +93,17 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.84'
 
     implementation fg.deobf("curse.maven:stateobserver-701213:4084960")
-
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
 
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")

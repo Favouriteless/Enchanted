@@ -24,25 +24,25 @@
 
 package com.favouriteless.enchanted.client.render.entity;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.MandrakeModel;
-import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class MandrakeRenderer extends MobRenderer<MandrakeEntity, MandrakeModel> {
-
-    private static final ResourceLocation TEXTURE = Enchanted.location("textures/entity/mandrake.png");
+public class MandrakeRenderer extends GeoEntityRenderer<MandrakeEntity> {
 
     public MandrakeRenderer(Context context) {
-        super(context, new MandrakeModel(context.bakeLayer(ModelLayerLocations.MANDRAKE)), 0.3f);
+        super(context, new MandrakeModel());
     }
 
     @Override
-    public ResourceLocation getTextureLocation(MandrakeEntity entity) {
-        return TEXTURE;
+    public RenderType getRenderType(MandrakeEntity animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+        return RenderType.entityCutoutNoCull(texture);
     }
 }

@@ -1,0 +1,17 @@
+{
+  "name": "Forest",
+  "icon": "minecraft:oak_sapling",
+  "category": "enchanted:world",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Forest",
+      "text": "Create a forest of trees around the circle using whatever sapling was dropped inside the circle during casting."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:forest"
+    }
+  ],
+  "read_by_default": true
+}

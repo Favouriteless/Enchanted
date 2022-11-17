@@ -31,7 +31,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,12 +43,21 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class MandrakeEntity extends Monster {
+public class MandrakeEntity extends Monster implements IAnimatable {
 
-    public WaterAvoidingRandomStrollGoal randomWalkingGoal;
+    private final AnimationFactory animationFactory = GeckoLibUtil.createFactory(this);
 
     public MandrakeEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -63,8 +71,8 @@ public class MandrakeEntity extends Monster {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.randomWalkingGoal = new WaterAvoidingRandomStrollGoal(this, 1.0D, 1.0F);
-        this.randomWalkingGoal.setInterval(1);
+        WaterAvoidingRandomStrollGoal randomWalkingGoal = new WaterAvoidingRandomStrollGoal(this, 1.0D, 1.0F);
+        randomWalkingGoal.setInterval(1);
 
         this.goalSelector.addGoal(0, new MandrakeAttackGoal(this));
         this.goalSelector.addGoal(1, new FloatGoal(this));
@@ -84,6 +92,26 @@ public class MandrakeEntity extends Monster {
     @Override
     protected boolean shouldDropExperience() {
         return false;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mandrake.walk", EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().clearAnimationCache();
+            return PlayState.STOP;
+        }
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return animationFactory;
     }
 
     protected class MandrakeAttackGoal extends Goal {
@@ -110,25 +138,21 @@ public class MandrakeEntity extends Monster {
         public void tick() {
             if(--this.ticksUntilNextAttack <= 0) {
 
-                List<Entity> playersInRange = mob.level.getEntities((Entity)null,
+                List<LivingEntity> entitiesInRange = mob.level.getEntitiesOfClass(LivingEntity.class,
                         new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
-                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8),
-                        this::isPlayer);
+                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof MandrakeEntity) );
 
-                for(Entity entity : playersInRange) {
-                    if(((LivingEntity)entity).getItemBySlot(EquipmentSlot.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {
+                for(LivingEntity entity : entitiesInRange) {
+                    if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {
                         entity.hurt(DamageSource.mobAttack(this.mob), 1.0F);
-                        ((Player) entity).addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+                        if(entity instanceof Player player && !player.isCreative())
+                            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                     }
                 }
                 this.mob.level.playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundSource.HOSTILE, 10.0F,0.85F + random.nextFloat() * 0.1F);
 
                 this.ticksUntilNextAttack = 30;
             }
-        }
-
-        private boolean isPlayer(Entity entity) {
-            return entity instanceof Player;
         }
 
     }

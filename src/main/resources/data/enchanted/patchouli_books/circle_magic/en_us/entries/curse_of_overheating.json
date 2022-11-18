@@ -2,6 +2,7 @@
   "name": "Curse of Overheating",
   "icon": "minecraft:blaze_powder",
   "category": "enchanted:curses",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

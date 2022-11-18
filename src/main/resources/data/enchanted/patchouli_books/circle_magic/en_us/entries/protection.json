@@ -2,6 +2,7 @@
   "name": "Protection",
   "icon": "minecraft:shield",
   "category": "enchanted:creature",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

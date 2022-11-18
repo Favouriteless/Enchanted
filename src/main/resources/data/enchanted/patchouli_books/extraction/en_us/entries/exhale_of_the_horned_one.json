@@ -2,6 +2,7 @@
   "name": "Exhale of the Horned One",
   "icon": "enchanted:exhale_of_the_horned_one",
   "category": "enchanted:collecting_fumes",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

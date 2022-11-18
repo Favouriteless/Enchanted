@@ -2,6 +2,7 @@
   "name": "Poppet Shelf",
   "icon": "enchanted:poppet_shelf",
   "category": "enchanted:creating_poppets",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

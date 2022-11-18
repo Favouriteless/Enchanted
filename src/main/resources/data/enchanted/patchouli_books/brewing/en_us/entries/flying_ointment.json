@@ -2,6 +2,7 @@
   "name": "Flying Ointment",
   "icon": "enchanted:flying_ointment",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

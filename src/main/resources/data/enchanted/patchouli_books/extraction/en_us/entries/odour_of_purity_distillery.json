@@ -2,6 +2,7 @@
   "name": "Odour of Purity",
   "icon": "enchanted:odour_of_purity",
   "category": "enchanted:distillation",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

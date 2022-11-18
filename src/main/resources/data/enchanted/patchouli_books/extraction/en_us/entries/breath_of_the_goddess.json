@@ -2,6 +2,7 @@
   "name": "Breath of the Goddess",
   "icon": "enchanted:breath_of_the_goddess",
   "category": "enchanted:collecting_fumes",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

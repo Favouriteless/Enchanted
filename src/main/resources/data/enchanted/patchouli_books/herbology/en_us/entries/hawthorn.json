@@ -2,6 +2,7 @@
   "name": "Hawthorn Tree",
   "icon": "enchanted:textures/block/hawthorn_sapling.png",
   "category": "enchanted:mutated_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

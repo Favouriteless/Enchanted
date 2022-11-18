@@ -2,6 +2,7 @@
   "name": "Nether Wart",
   "icon": "minecraft:nether_wart",
   "category": "enchanted:cauldron",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,6 +2,7 @@
   "name": "Infernal Chalk",
   "icon": "enchanted:chalk_red",
   "category": "enchanted:performing_rites",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

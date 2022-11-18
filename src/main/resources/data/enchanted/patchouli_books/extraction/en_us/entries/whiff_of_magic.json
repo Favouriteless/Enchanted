@@ -2,6 +2,7 @@
   "name": "Whiff of Magic",
   "icon": "enchanted:whiff_of_magic",
   "category": "enchanted:collecting_fumes",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

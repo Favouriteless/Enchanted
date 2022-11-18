@@ -2,6 +2,7 @@
   "name": "Spanish Moss",
   "icon": "enchanted:textures/block/spanish_moss.png",
   "category": "enchanted:mutated_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

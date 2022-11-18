@@ -2,6 +2,7 @@
   "name": "Fertility",
   "icon": "minecraft:emerald",
   "category": "enchanted:world",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

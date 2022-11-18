@@ -2,6 +2,7 @@
   "name": "Drop of Luck",
   "icon": "enchanted:drop_of_luck",
   "category": "enchanted:cauldron",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

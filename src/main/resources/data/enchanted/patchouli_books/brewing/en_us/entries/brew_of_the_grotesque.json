@@ -2,6 +2,7 @@
   "name": "Brew of the Grotesque",
   "icon": "enchanted:brew_of_the_grotesque",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

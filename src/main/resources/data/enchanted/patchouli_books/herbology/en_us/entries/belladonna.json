@@ -2,6 +2,7 @@
   "name": "Belladonna Flowers",
   "icon": "enchanted:textures/item/belladonna_flower.png",
   "category": "enchanted:common_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

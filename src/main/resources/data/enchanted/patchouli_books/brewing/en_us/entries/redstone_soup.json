@@ -2,6 +2,7 @@
   "name": "Redstone Soup",
   "icon": "enchanted:redstone_soup",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

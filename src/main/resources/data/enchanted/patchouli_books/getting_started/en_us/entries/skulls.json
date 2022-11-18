@@ -2,6 +2,7 @@
   "name": "Skull Upgrades",
   "icon": "enchanted:chalice_filled",
   "category": "enchanted:altars",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

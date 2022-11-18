@@ -2,6 +2,7 @@
   "name": "Talisman",
   "icon": "enchanted:circle_talisman",
   "category": "enchanted:binding",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

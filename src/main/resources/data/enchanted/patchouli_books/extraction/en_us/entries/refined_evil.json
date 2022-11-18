@@ -2,6 +2,7 @@
   "name": "Refined Evil",
   "icon": "enchanted:refined_evil",
   "category": "enchanted:distillation",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

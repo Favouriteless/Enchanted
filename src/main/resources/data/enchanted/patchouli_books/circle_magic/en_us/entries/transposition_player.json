@@ -2,6 +2,7 @@
   "name": "Transpose Player",
   "icon": "minecraft:ender_pearl",
   "category": "enchanted:transposition",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

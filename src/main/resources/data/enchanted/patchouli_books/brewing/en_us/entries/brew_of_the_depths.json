@@ -2,6 +2,7 @@
   "name": "Brew of the Depths",
   "icon": "enchanted:brew_of_the_depths",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

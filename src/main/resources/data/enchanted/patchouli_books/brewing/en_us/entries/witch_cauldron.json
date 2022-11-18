@@ -2,6 +2,7 @@
   "name": "Witch's Cauldron",
   "icon": "enchanted:witch_cauldron",
   "category": "enchanted:cauldron",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

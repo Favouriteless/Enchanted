@@ -2,6 +2,7 @@
   "name": "Soul of the World",
   "icon": "enchanted:soul_of_the_world",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

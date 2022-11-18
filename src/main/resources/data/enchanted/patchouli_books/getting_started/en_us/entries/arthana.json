@@ -2,6 +2,7 @@
   "name": "Arthana",
   "icon": "enchanted:arthana",
   "category": "enchanted:tools",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

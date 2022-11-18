@@ -2,6 +2,7 @@
   "name": "Mutandis Extremis",
   "icon": "enchanted:mutandis_extremis",
   "category": "enchanted:mutated_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,6 +2,7 @@
   "name": "Broom Infusion",
   "icon": "enchanted:enchanted_broomstick",
   "category": "enchanted:infusion",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

@@ -2,6 +2,7 @@
   "name": "Attuned Stone",
   "icon": "enchanted:attuned_stone",
   "category": "enchanted:crafting_materials",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

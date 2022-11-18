@@ -2,6 +2,7 @@
   "name": "Distillery",
   "icon": "enchanted:distillery",
   "category": "enchanted:distillation",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

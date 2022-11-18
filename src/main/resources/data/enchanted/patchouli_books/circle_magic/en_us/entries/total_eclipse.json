@@ -2,6 +2,7 @@
   "name": "Total Eclipse",
   "icon": "minecraft:clock",
   "category": "enchanted:world",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

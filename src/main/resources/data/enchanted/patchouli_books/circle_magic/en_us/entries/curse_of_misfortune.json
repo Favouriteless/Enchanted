@@ -2,6 +2,7 @@
   "name": "Curse of Misfortune",
   "icon": "minecraft:ender_eye",
   "category": "enchanted:curses",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

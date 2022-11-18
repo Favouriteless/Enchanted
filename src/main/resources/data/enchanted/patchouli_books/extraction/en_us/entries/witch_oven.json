@@ -2,6 +2,7 @@
   "name": "Witch's Oven",
   "icon": "enchanted:witch_oven",
   "category": "enchanted:collecting_fumes",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

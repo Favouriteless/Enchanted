@@ -2,6 +2,7 @@
   "name": "Mutandis",
   "icon": "enchanted:mutandis",
   "category": "enchanted:cauldron",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

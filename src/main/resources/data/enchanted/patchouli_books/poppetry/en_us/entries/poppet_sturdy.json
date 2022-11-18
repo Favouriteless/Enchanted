@@ -2,6 +2,7 @@
   "name": "Sturdy Poppets",
   "icon": "enchanted:poppet_sturdy",
   "category": "enchanted:creating_poppets",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,6 +2,7 @@
   "name": "Imprisonment",
   "icon": "minecraft:iron_bars",
   "category": "enchanted:creature",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

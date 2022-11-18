@@ -2,6 +2,7 @@
   "name": "Sanctity",
   "icon": "minecraft:feather",
   "category": "enchanted:creature",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

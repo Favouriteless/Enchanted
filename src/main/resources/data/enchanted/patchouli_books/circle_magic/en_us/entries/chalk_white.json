@@ -2,6 +2,7 @@
   "name": "Ritual Chalk",
   "icon": "enchanted:chalk_white",
   "category": "enchanted:performing_rites",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

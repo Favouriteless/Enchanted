@@ -2,6 +2,7 @@
   "name": "Tear of the Goddess",
   "icon": "enchanted:tear_of_the_goddess",
   "category": "enchanted:distillation",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

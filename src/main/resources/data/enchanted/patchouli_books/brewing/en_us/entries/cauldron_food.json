@@ -2,6 +2,7 @@
   "name": "Boiling Food",
   "icon": "minecraft:cooked_beef",
   "category": "enchanted:cauldron",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

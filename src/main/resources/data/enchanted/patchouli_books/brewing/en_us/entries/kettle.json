@@ -2,6 +2,7 @@
   "name": "Kettle",
   "icon": "enchanted:kettle",
   "category": "enchanted:kettle",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

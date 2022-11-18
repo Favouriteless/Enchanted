@@ -2,6 +2,7 @@
   "name": "Mandrakes",
   "icon": "enchanted:textures/item/mandrake_root.png",
   "category": "enchanted:common_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,6 +2,7 @@
   "name": "Reek of Misfortune",
   "icon": "enchanted:reek_of_misfortune",
   "category": "enchanted:collecting_fumes",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

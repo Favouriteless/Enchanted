@@ -2,6 +2,7 @@
   "name": "Snowbells",
   "icon": "minecraft:textures/item/snowball.png",
   "category": "enchanted:common_plants",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

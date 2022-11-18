@@ -2,6 +2,7 @@
   "name": "Taglocks",
   "icon": "enchanted:taglock_filled",
   "category": "enchanted:crafting_materials",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

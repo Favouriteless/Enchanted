@@ -2,6 +2,7 @@
   "name": "Performing Rites",
   "icon": "enchanted:textures/block/glyph_gold.png",
   "category": "enchanted:performing_rites",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

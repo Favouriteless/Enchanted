@@ -2,6 +2,7 @@
   "name": "Forest",
   "icon": "minecraft:oak_sapling",
   "category": "enchanted:world",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

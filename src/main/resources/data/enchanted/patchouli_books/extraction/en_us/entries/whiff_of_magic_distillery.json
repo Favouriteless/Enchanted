@@ -2,6 +2,7 @@
   "name": "Whiff of Magic",
   "icon": "enchanted:whiff_of_magic",
   "category": "enchanted:distillation",
+  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

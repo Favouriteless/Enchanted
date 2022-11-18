@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.client.EnchantedClientConfig;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.ChatFormatting;
@@ -39,11 +40,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import vazkii.patchouli.api.PatchouliAPI;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class ClientEvents {
@@ -79,6 +82,11 @@ public class ClientEvents {
 				event.setSound(sound);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void onDataReload(OnDatapackSyncEvent event) {
+		PatchouliAPI.get().setConfigFlag("enchanted:hardcore_books", EnchantedClientConfig.HARDCORE_BOOKS.get());
 	}
 
 }

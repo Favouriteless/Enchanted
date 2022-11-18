@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted;
 
+import com.favouriteless.enchanted.client.EnchantedClientConfig;
 import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -57,6 +58,7 @@ public class Enchanted {
         registerAll();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EnchantedConfig.SPEC, "enchanted-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EnchantedClientConfig.SPEC, "enchanted-client.toml");
         INSTANCE = this;
         MinecraftForge.EVENT_BUS.register(this);
     }

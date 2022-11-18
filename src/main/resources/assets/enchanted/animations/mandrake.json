@@ -102,20 +102,20 @@
 							"vector": [0, 0, 0]
 						},
 						"0.1667": {
-							"vector": [0, 0, -6],
-							"easing": "easeOutSine"
+							"vector": [0, 0, 9],
+							"easing": "easeInSine"
 						},
 						"0.3333": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -4.5],
 							"easing": "easeInSine"
 						},
 						"0.5": {
-							"vector": [0, 0, 6],
-							"easing": "easeOutSine"
+							"vector": [0, 0, -9],
+							"easing": "easeOutCubic"
 						},
 						"0.6667": {
 							"vector": [0, 0, 0],
-							"easing": "easeInSine"
+							"easing": "easeInOutQuad"
 						}
 					}
 				}

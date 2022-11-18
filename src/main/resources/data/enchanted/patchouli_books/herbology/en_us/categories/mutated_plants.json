@@ -2,5 +2,6 @@
   "name": "Mutated Plants",
   "description": "This section is about rare plants which require a mutation or other magicks to acquire. These can be considered extremely valuable and have extensive magical properties.",
   "icon": "enchanted:textures/item/mutandis.png",
+  "flag": "!enchanted:hardcore_books",
   "sortnum": 1
 }

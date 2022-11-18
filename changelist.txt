@@ -1,0 +1,11 @@
+Additions:
+ - Hardcore mode for patchouli books
+ - Ents
+ - Familiars (Cat, toad, owl)
+
+Changes:
+ - Rewrote most book entries.
+ - Mandrakes have a new walk animation
+
+Tweaks:
+ - Entities have been migrated to using Geckolib.

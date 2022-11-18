@@ -26,19 +26,21 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -101,43 +103,45 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
         cookTimeTotal = nbt.getInt("cookTimeTotal");
     }
 
-    public void tick() {
-        boolean isBurning = isBurning();
-        boolean shouldSave = false;
 
-        if (level != null && !level.isClientSide) {
-            matchRecipe();
-            AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+        if(t instanceof DistilleryBlockEntity blockEntity) {
+            boolean isBurning = blockEntity.isBurning();
+            boolean shouldSave = false;
 
-            if(canDistill(currentRecipe) && altar != null) {
-                if(altar.currentPower > 10.0D) {
-                    altar.currentPower -= 10.0D;
-                    burnTime = 1;
-                    cookTime++;
+            if(level != null && !level.isClientSide) {
+                blockEntity.matchRecipe();
+                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.potentialAltars);
+
+                if(blockEntity.canDistill(blockEntity.currentRecipe) && altar != null) {
+                    if(altar.currentPower > 10.0D) {
+                        altar.currentPower -= 10.0D;
+                        blockEntity.burnTime = 1;
+                        blockEntity.cookTime++;
 
 
-                    if(cookTime == cookTimeTotal) {
-                        cookTime = 0;
-                        distill(currentRecipe);
+                        if(blockEntity.cookTime == blockEntity.cookTimeTotal) {
+                            blockEntity.cookTime = 0;
+                            blockEntity.distill(blockEntity.currentRecipe);
+                        }
                     }
                 }
-            }
-            else {
-                burnTime = 0;
-                cookTime = 0;
-            }
+                else {
+                    blockEntity.burnTime = 0;
+                    blockEntity.cookTime = 0;
+                }
 
 
-            if (isBurning != isBurning()) {
-                shouldSave = true;
-                level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(AbstractFurnaceBlock.LIT, isBurning()), 3);
+                if(isBurning != blockEntity.isBurning()) {
+                    shouldSave = true;
+                    level.setBlock(blockEntity.worldPosition, level.getBlockState(blockEntity.worldPosition).setValue(AbstractFurnaceBlock.LIT, blockEntity.isBurning()), 3);
+                }
+            }
+
+            if(shouldSave) {
+                blockEntity.setChanged();
             }
         }
-
-        if (shouldSave) {
-            setChanged();
-        }
-
     }
 
     protected void distill(DistilleryRecipe recipeIn) {

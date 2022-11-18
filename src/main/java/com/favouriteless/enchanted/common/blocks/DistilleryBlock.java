@@ -25,6 +25,8 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
+import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,6 +35,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -99,5 +103,9 @@ public class DistilleryBlock extends SimpleContainerBlockBase<DistilleryBlockEnt
 
     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) { }
 
-
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return type == EnchantedBlockEntityTypes.DISTILLERY.get() ? DistilleryBlockEntity::tick : null;
+    }
 }

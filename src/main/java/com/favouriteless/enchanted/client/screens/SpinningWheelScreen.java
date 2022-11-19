@@ -69,12 +69,7 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMe
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
-    }
-
-    protected void renderHoveredTooltip(PoseStack matrixStack, int x, int y) {
-        if (!this.minecraft.player.getInventory().getSelected().isEmpty()) return;  // no tooltip if the player is dragging something
-            super.renderTooltip(matrixStack, x, y);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override

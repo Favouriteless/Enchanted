@@ -66,15 +66,8 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
-
-
-    protected void renderHoveredTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
-        if (!minecraft.player.getInventory().getSelected().isEmpty()) return;
-        super.renderTooltip(matrixStack, mouseX, mouseY);
-    }
-
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {

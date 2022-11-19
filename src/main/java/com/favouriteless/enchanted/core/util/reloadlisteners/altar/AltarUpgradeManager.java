@@ -30,12 +30,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implem
                         float powerMultiplier = GsonHelper.getAsFloat(upgradeObject, "powerMultiplier");
                         int priority = GsonHelper.getAsInt(upgradeObject, "priority");
 
-                        if(block != null) {
+                        if(block != Blocks.AIR) {
                             if(powerMultiplier > 0 || rechargeMultiplier > 0) {
                                 outputList.add(new AltarUpgrade(resourceLocation, block, rechargeMultiplier, powerMultiplier, priority));
                             }

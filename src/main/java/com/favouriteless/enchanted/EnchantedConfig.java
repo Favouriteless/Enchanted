@@ -25,6 +25,7 @@
 package com.favouriteless.enchanted;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class EnchantedConfig {
 
@@ -32,32 +33,36 @@ public class EnchantedConfig {
     public static final ForgeConfigSpec SPEC;
 
     // Altar
-    public static final ForgeConfigSpec.ConfigValue<Integer> ALTAR_RANGE;
-    public static final ForgeConfigSpec.ConfigValue<Double> ALTAR_BASE_RECHARGE;
+    public static final ConfigValue<Integer> ALTAR_RANGE;
+    public static final ConfigValue<Double> ALTAR_BASE_RECHARGE;
 
     // Cauldron
-    public static final ForgeConfigSpec.ConfigValue<Boolean> CAULDRON_ITEM_SPOIL;
+    public static final ConfigValue<Boolean> CAULDRON_ITEM_SPOIL;
 
     // Kettle
-    public static final ForgeConfigSpec.ConfigValue<Boolean> KETTLE_ITEM_SPOIL;
+    public static final ConfigValue<Boolean> KETTLE_ITEM_SPOIL;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_TOTEMS;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_TOOL_POPPET;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_ARMOUR_POPPET;
+    // Poppets
+    public static final ConfigValue<Boolean> WHITELIST_TOOL_POPPET;
+    public static final ConfigValue<Boolean> WHITELIST_ARMOUR_POPPET;
 
     // Rites
-    public static final ForgeConfigSpec.ConfigValue<Integer> TOTAL_ECLIPSE_COOLDOWN;
-    public static final ForgeConfigSpec.ConfigValue<Integer> SKY_WRATH_COOLDOWN;
-    public static final ForgeConfigSpec.ConfigValue<Double> BROILING_BURN_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_MISFORTUNE;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_OVERHEATING;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_SINKING;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_BLIGHT;
-    public static final ForgeConfigSpec.ConfigValue<Double> BLIGHT_DECAY_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Double> BLIGHT_ZOMBIE_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Double> FERTILITY_BONE_MEAL_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Integer> FOREST_TREE_COUNT;
-    public static final ForgeConfigSpec.ConfigValue<Integer> FOREST_RADIUS;
+    public static final ConfigValue<Integer> TOTAL_ECLIPSE_COOLDOWN;
+    public static final ConfigValue<Integer> SKY_WRATH_COOLDOWN;
+    public static final ConfigValue<Double> BROILING_BURN_CHANCE;
+    public static final ConfigValue<Boolean> DISABLE_MISFORTUNE;
+    public static final ConfigValue<Boolean> DISABLE_OVERHEATING;
+    public static final ConfigValue<Boolean> DISABLE_SINKING;
+    public static final ConfigValue<Boolean> DISABLE_BLIGHT;
+    public static final ConfigValue<Double> BLIGHT_DECAY_CHANCE;
+    public static final ConfigValue<Double> BLIGHT_ZOMBIE_CHANCE;
+    public static final ConfigValue<Double> FERTILITY_BONE_MEAL_CHANCE;
+    public static final ConfigValue<Integer> FOREST_TREE_COUNT;
+    public static final ConfigValue<Integer> FOREST_RADIUS;
+    
+    // Other
+    public static final ConfigValue<Boolean> HOE_ONLY_SEEDS;
+    public static final ConfigValue<Boolean> DISABLE_TOTEMS;
 
     static {
         BUILDER.push("Altar Options");
@@ -94,8 +99,10 @@ public class EnchantedConfig {
         BUILDER.pop();
 
         BUILDER.push("Miscellaneous Options");
+        HOE_ONLY_SEEDS = BUILDER.comment("Only drop modded seeds when a hoe is used to break grass. #default false").define("hoe_seeds", false);
         DISABLE_TOTEMS = BUILDER.comment("Disable totems of undying (to make poppets more useful) #default false").define("disable_totems", false);
         BUILDER.pop();
+
 
         SPEC = BUILDER.build();
     }

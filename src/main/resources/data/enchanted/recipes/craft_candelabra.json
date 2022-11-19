@@ -10,7 +10,7 @@
   {
     "a": { "item": "enchanted:attuned_stone" },
     "i": { "item": "minecraft:iron_ingot" },
-    "t": { "item": "minecraft:torch" }
+    "t": { "item": "minecraft:candle" }
   },
   "result":
   {

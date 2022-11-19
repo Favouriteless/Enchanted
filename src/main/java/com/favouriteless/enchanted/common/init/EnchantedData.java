@@ -28,9 +28,11 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.core.util.reloadlisteners.ArthanaLootManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarPowerProviderManager;
 import com.favouriteless.enchanted.core.util.reloadlisteners.altar.AltarUpgradeManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,7 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public class EnchantedData {
 
-    public static final AltarPowerProviderManager<Block> ALTAR_POWER_BLOCKS = new AltarPowerProviderManager<>("altar/blocks", ForgeRegistries.BLOCKS::getValue);
+    public static final AltarPowerProviderManager<Block> ALTAR_POWER_BLOCKS = new AltarPowerProviderManager<>("altar/blocks", EnchantedData::blockKeySupplier);
     public static final AltarPowerProviderManager<TagKey<Block>> ALTAR_POWER_TAGS = new AltarPowerProviderManager<>("altar/tags", BlockTags::create);
     public static final AltarUpgradeManager ALTAR_UPGRADES = new AltarUpgradeManager("altar/upgrades");
     public static final ArthanaLootManager ARTHANA_LOOT = new ArthanaLootManager("arthana");
@@ -50,6 +52,14 @@ public class EnchantedData {
         event.addListener(ALTAR_POWER_TAGS);
         event.addListener(ALTAR_UPGRADES);
         event.addListener(ARTHANA_LOOT);
+    }
+
+    private static Block blockKeySupplier(ResourceLocation key) {
+        Block block = ForgeRegistries.BLOCKS.getValue(key);
+        if(block != Blocks.AIR)
+            return block;
+        else
+            return null;
     }
 
 }

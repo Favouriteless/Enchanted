@@ -1,13 +1,18 @@
 Additions:
+ - Config option to make seeds dropping require a hoe.
 
 Changes:
+- Candles can now be used as an altar upgrade.
 
 Tweaks:
  - Blooded waystones now show the name of their bound creature. (Only if bound after this update, sorry)
  - Updated broomstick book entry to match the new control scheme.
  - Chalk can now replace existing chalk when being placed.
  - Made the jar outline in the distillery's jar slot less harsh.
+ - Candelabra recipe now uses candles instead of torches.
+ - Torches give less recharge rate for altars now.
 
 Bugfixes:
 - Blood poppies now actually behave like plants.
 - Rites now accept blooded waystones of non-player entities.
+- Fixed invalid block names in the altar upgrade jsons causing air to become an upgrade.

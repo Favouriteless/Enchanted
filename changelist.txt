@@ -5,6 +5,7 @@ Changes:
 Tweaks:
  - Blooded waystones now show the name of their bound creature. (Only if bound after this update, sorry)
  - Updated broomstick book entry to match the new control scheme.
+ - Chalk can now replace existing chalk when being placed.
 
 Bugfixes:
 - Blood poppies now actually behave like plants.

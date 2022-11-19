@@ -2,8 +2,23 @@
   "type": "enchanted:grass_seeds",
   "conditions": [
     {
-      "condition": "minecraft:block_state_property",
-      "block": "minecraft:grass"
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "tag": "enchanted:hoes"
+      }
+    },
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:grass"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:tall_grass"
+        }
+      ]
     },
     {
       "condition": "minecraft:random_chance",

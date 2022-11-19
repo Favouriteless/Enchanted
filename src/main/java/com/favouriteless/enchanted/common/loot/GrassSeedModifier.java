@@ -59,9 +59,7 @@ public class GrassSeedModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-
         List<ItemStack> outputItems = new ArrayList<>();
-
 
         if(!generatedLoot.isEmpty()) {
             for (ItemStack item : generatedLoot) {

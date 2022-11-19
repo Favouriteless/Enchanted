@@ -4,6 +4,7 @@ Changes:
 
 Tweaks:
  - Blooded waystones now show the name of their bound creature. (Only if bound after this update, sorry)
+ - Updated broomstick book entry to match the new control scheme.
 
 Bugfixes:
 - Blood poppies now actually behave like plants.

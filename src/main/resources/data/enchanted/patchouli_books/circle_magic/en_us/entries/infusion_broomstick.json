@@ -7,7 +7,7 @@
     {
       "type": "enchanted:rite_description",
       "rite_name": "Broom Infusion",
-      "text": "Imbue a standard broom with the power of flight, allowing the witch or warlock to ride it.$(br2)Accelerate using Jump."
+      "text": "Imbue a standard broom with the power of flight, allowing the witch or warlock to ride it.$(br2)Default controls are WASD, Space/LControl and C/V."
     },
     {
       "type": "enchanted:rite_requirements",

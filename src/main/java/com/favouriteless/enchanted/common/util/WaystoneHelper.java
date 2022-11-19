@@ -35,6 +35,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class WaystoneHelper {
@@ -82,15 +83,17 @@ public class WaystoneHelper {
 		}
 	}
 
-	public static void bind(ItemStack stack, UUID uuid) {
+	public static void bind(ItemStack stack, UUID uuid, @Nullable String name) {
 		if(stack.getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
 			CompoundTag nbt = stack.getOrCreateTag();
 			nbt.putUUID("uuid", uuid);
+			if(name != null)
+				nbt.putString("displayName", name);
 		}
 	}
 
 	public static void bind(ItemStack stack, Entity entity) {
-		bind(stack, entity.getUUID());
+		bind(stack, entity.getUUID(), entity.getDisplayName().getString());
 	}
 
 	public static ItemStack create(Level level, BlockPos pos) {
@@ -105,9 +108,9 @@ public class WaystoneHelper {
 		return stack;
 	}
 
-	public static ItemStack create(UUID uuid) {
+	public static ItemStack create(UUID uuid, @Nullable String name) {
 		ItemStack stack = new ItemStack(EnchantedItems.BLOODED_WAYSTONE.get(), 1);
-		bind(stack, uuid);
+		bind(stack, uuid, name);
 		return stack;
 	}
 

@@ -118,7 +118,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> CIRCLE_TALISMAN = ITEMS.register("circle_talisman", () -> new CircleTalismanItem(defaultProperties().stacksTo(1)));
     public static final RegistryObject<Item> WAYSTONE = registerItem("waystone");
     public static final RegistryObject<Item> BOUND_WAYSTONE = registerItemNoTab("bound_waystone");
-    public static final RegistryObject<Item> BLOODED_WAYSTONE = registerItemNoTab("blooded_waystone");
+    public static final RegistryObject<Item> BLOODED_WAYSTONE = ITEMS.register("blooded_waystone", () -> new BloodedWaystoneItem(new Properties()));
     public static final RegistryObject<Item> BROOM = ITEMS.register("broom", () -> new BroomItem(defaultProperties()));
     public static final RegistryObject<Item> ENCHANTED_BROOMSTICK = ITEMS.register("enchanted_broomstick", () -> new BroomstickItem(defaultProperties()));
 

@@ -56,7 +56,7 @@ public class RiteOfBindingWaystonePlayer extends AbstractCreateItemRite {
     public void setupItemNbt(int index, ItemStack stack) {
         if(index == 0) {
             if(targetUUID != null)
-                WaystoneHelper.bind(stack, targetUUID);
+                WaystoneHelper.bind(stack, targetUUID, targetEntity != null ? targetEntity.getDisplayName().getString() : targetName);
         }
     }
 

@@ -75,6 +75,7 @@ public abstract class AbstractRite {
     public BlockPos pos; // Position ritual started at
     public UUID casterUUID; // Player who started ritual
     public UUID targetUUID; // Target of the ritual
+    public String targetName; // Name of the target entity.
     public Entity targetEntity;
 
     private boolean isStarting = false;
@@ -327,6 +328,7 @@ public abstract class AbstractRite {
         }
         if(item == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
             this.targetUUID = stack.getTag().getUUID("entity");
+            this.targetName = stack.getTag().getString("entityName");
             targetEntity = getTargetEntity();
         }
 

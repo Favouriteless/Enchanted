@@ -1,0 +1,14 @@
+{
+  "name": "Circle Magic",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Foci items and glyphs may be used to call on nature to exercise it's power. $(br2)A book with the secrets of this art can be fashioned from an empty book, a feather, ink, the berries of a rowan tree and fumes from the same."
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 3
+}

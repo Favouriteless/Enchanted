@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "ttt",
+    "ccc",
     "iai",
     " i "
   ],
@@ -10,7 +10,7 @@
   {
     "a": { "item": "enchanted:attuned_stone" },
     "i": { "item": "minecraft:iron_ingot" },
-    "t": { "item": "minecraft:candle" }
+    "c": { "item": "minecraft:candle" }
   },
   "result":
   {

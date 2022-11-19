@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The distillery allows witches and warlocks to separate a material into it's components by utilising differences in boiling and condensing points. $(br2)Place near an Altar with sufficient power."
+      "text": "The distillery allows witches to separate a material into it's components by utilising differences in boiling and condensing points. $(br2)Place near an Altar with sufficient power."
     },
     {
       "type": "patchouli:multiblock",

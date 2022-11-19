@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "While expensive, nether wart can be synthesised in a cauldron in the case that the Witch or Warlock cannot find any via normal means.$(br2)It is recommended to not do this as it is both expensive and ineffective."
+      "text": "While expensive, nether wart can be synthesised in a cauldron in the case that the Witch cannot find any via normal means.$(br2)It is recommended to not do this as it is both expensive and ineffective."
     },
     {
       "type": "enchanted:cauldron_recipe",

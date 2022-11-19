@@ -1,0 +1,13 @@
+{
+  "name": "Wicker Bundle",
+  "icon": "enchanted:wicker_bundle",
+  "category": "enchanted:crafting_materials_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nine saplings bundled together is called a wicker bundle."
+    }
+  ],
+  "read_by_default": true
+}

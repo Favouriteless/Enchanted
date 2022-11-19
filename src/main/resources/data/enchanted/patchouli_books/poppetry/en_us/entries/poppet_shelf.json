@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The poppet shelf allows a witch or warlock to use poppets without being forced to hold them in their own inventory. This works across dimensions and can be extremely powerful."
+      "text": "The poppet shelf allows a witch to use poppets without being forced to hold them in their own inventory. This works across dimensions and can be extremely powerful."
     },
     {
       "type": "patchouli:crafting",

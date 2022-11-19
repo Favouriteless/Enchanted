@@ -1,6 +1,6 @@
 {
   "name": "Witchcraft: Brewing",
-  "landing_text": "$(bold)Introduction$()$(br)One of the essential skills for a Witch or Warlock is being able to create brews in cauldrons and kettles. This book aims to display some recipes for brews.",
+  "landing_text": "$(bold)Introduction$()$(br)One of the essential skills for a Witch is being able to create brews in cauldrons and kettles. This book aims to display some recipes for brews.",
   "version": 1,
   "show_progress": false,
   "creative_tab": "enchanted.main",

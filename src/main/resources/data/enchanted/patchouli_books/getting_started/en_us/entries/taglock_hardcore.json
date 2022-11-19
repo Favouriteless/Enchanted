@@ -1,0 +1,13 @@
+{
+  "name": "Taglocks",
+  "icon": "enchanted:taglock_filled",
+  "category": "enchanted:crafting_materials_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Taglocks can be used to obtain a sample of a living being. These can be used directly, or on something the being frequently contacts, such as a bed. $(br2)A glass bottle and a needle are needed to create a taglock kit."
+    }
+  ],
+  "read_by_default": true
+}

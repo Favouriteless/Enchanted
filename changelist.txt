@@ -1,18 +1,22 @@
 Additions:
+- Books now have a hardcore mode (disabled by default) which replaces recipes with descriptions and changes language to be more immersive.
+    This is unfinished and currently only has content in The Art of Witchcraft book.
 - Config option to make seeds dropping require a hoe.
 
 Changes:
 - Candles can now be used as an altar upgrade.
+- Candelabra recipe now uses candles instead of torches.
 
 Tweaks:
 - Blooded waystones now show the name of their bound creature. (Only if bound after this update, sorry)
 - Updated broomstick book entry to match the new control scheme.
 - Chalk can now replace existing chalk when being placed.
 - Made the jar outline in the distillery's jar slot less harsh.
-- Candelabra recipe now uses candles instead of torches.
 - Torches give less recharge rate for altars now.
+- Wicker bundle and broom pages added to The Art of Witchcraft.
+- Reworded some book entries.
 
 Bugfixes:
-- Blood poppies now actually behave like plants.
+- Blood poppies now break when not on grass or dirt.
 - Rites now accept blooded waystones of non-player entities.
-- Fixed invalid block names in the altar upgrade jsons causing air to become an upgrade.
+- Invalid block names inside the altar upgrade jsons won't make air become an upgrade any more.

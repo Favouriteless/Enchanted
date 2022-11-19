@@ -1,0 +1,14 @@
+{
+  "name": "Poppetry",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "One can redirect effects from one being to another with help from a poppet.$(br2)Instructions to weave poppets can be found in a book shaped with a feather, ink, the sapling of an alder tree and the breath of the goddess"
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 3
+}

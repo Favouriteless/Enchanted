@@ -1,0 +1,13 @@
+{
+  "name": "Broom",
+  "icon": "enchanted:broom",
+  "category": "enchanted:tools_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A broom with a wooden handle and bristles of hawthorn makes for quick removal of chalk."
+    }
+  ],
+  "read_by_default": true
+}

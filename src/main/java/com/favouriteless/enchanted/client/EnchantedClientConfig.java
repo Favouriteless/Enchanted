@@ -36,7 +36,7 @@ public class EnchantedClientConfig {
 
 	static {
 		BUILDER.push("Patchouli Options");
-		HARDCORE_BOOKS = BUILDER.comment("Enable hardcore mode for the books/information").define("hardcore_books", false);
+		HARDCORE_BOOKS = BUILDER.comment("Enable hardcore mode for the books/information. Recipes will be described with words and language will be shifted to be more immersive.").define("hardcore_books", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

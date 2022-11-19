@@ -1,0 +1,14 @@
+{
+  "name": "Extraction",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources_hardcore",
+  "flag": "enchanted:hardcore_books",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Extract concentrates and fumes from materials. $(br2)Described in a book written with a feather, ink, the flower of a belladonna plant and coal."
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 1
+}

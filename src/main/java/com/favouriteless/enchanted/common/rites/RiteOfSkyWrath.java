@@ -89,7 +89,7 @@ public class RiteOfSkyWrath extends AbstractRite {
                 }
                 else if(itemEntity.getItem().getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
                     if(itemEntity.getItem().hasTag()) {
-                        targetEntity = WaystoneHelper.getPlayer(level, itemEntity.getItem());
+                        targetEntity = WaystoneHelper.getEntity(level, itemEntity.getItem());
                         if(targetEntity != null) {
                             targetPos = targetEntity.blockPosition();
                             targetLevel = targetEntity.level;

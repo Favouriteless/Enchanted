@@ -8,3 +8,4 @@ Tweaks:
 
 Bugfixes:
 - Blood poppies now actually behave like plants.
+- Rites now accept blooded waystones of non-player entities.

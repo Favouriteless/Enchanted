@@ -38,7 +38,6 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -117,9 +116,9 @@ public class RiteOfProtection extends AbstractRite {
                     break;
                 }
                 else if(stack.getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
-                    Player player = WaystoneHelper.getPlayer(level, stack);
-                    targetLevel = (ServerLevel)player.getLevel();
-                    targetPos = player.blockPosition();
+                    targetEntity = WaystoneHelper.getEntity(level, stack);
+                    targetLevel = (ServerLevel)targetEntity.getLevel();
+                    targetPos = targetEntity.blockPosition();
                     consumeItemNoRequirement(itemEntity);
                     break;
                 }

@@ -51,18 +51,18 @@ public class RiteOfTranspositionPlayerBlooded extends AbstractRite {
         Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
 
         if(caster != null) {
-            Player target = WaystoneHelper.getPlayer(level, stack);
+            targetEntity = WaystoneHelper.getEntity(level, stack);
 
-            if(target != null) {
+            if(targetEntity != null) {
                 spawnParticles((ServerLevel)caster.level, caster.getX(), caster.getY(), caster.getZ());
 
                 level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
-                if(caster.level != target.level) {
-                    caster.changeDimension((ServerLevel)target.level);
+                if(caster.level != targetEntity.level) {
+                    caster.changeDimension((ServerLevel)targetEntity.level);
                 }
-                caster.teleportTo(target.getX(), target.getY(), target.getZ());
+                caster.teleportTo(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
                 level.playSound(null, caster.position().x, caster.position().y, caster.position().z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
-                spawnParticles((ServerLevel)target.level, target.getX(), target.getX(), target.getZ());
+                spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getX(), targetEntity.getZ());
             }
             else {
                 cancel();

@@ -30,8 +30,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -62,12 +63,23 @@ public class WaystoneHelper {
 		return null;
 	}
 
-	public static Player getPlayer(Level level, ItemStack stack) { // Requires a level to grab server from
+	public static Entity getEntity(Level level, ItemStack stack) { // Requires a level to grab server from
 		if(stack.getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
 			if(stack.hasTag()) {
 				CompoundTag nbt = stack.getTag();
-				if(nbt.contains("uuid"))
-					return level.getServer().getPlayerList().getPlayer(nbt.getUUID("uuid"));
+				if(nbt.contains("uuid")) {
+					UUID uuid = nbt.getUUID("uuid");
+
+					ServerPlayer player = level.getServer().getPlayerList().getPlayer(uuid);
+					if(player != null)
+						return player;
+
+					for(ServerLevel serverLevel : level.getServer().getAllLevels()) {
+						Entity entity = serverLevel.getEntity(uuid);
+						if(entity != null)
+							return entity;
+					}
+				}
 			}
 		}
 		return null;

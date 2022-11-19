@@ -10,5 +10,5 @@ Tweaks:
 
 Bugfixes:
  - Fixed distilleries not working.
- - Fixed hopper interactions with distillery, witch oven & spinning wheel
- - Removed blood poppy from mutandis
+ - Fixed hopper interactions with distillery, witch oven & spinning wheel.
+ - Removed blood poppy from mutandis.

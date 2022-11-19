@@ -26,22 +26,23 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -53,6 +54,9 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	private SpinningWheelRecipe currentRecipe;
 	private final List<BlockPos> potentialAltars = new ArrayList<>();
 	private boolean isSpinning = false;
+
+	private static final int[] SLOTS_FOR_OTHER = new int[]{0, 1, 2};
+	private static final int[] SLOTS_FOR_DOWN = new int[]{3};
 
 	public static final int COOK_TIME_TOTAL = 400;
 	private int cookTime = 0;
@@ -226,4 +230,26 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	protected AbstractContainerMenu createMenu(int id, Inventory player) {
 		return new SpinningWheelMenu(id, player, this, data);
 	}
+
+	@Override
+	public int[] getSlotsForFace(Direction side) {
+		if(side == Direction.DOWN)
+			return SLOTS_FOR_DOWN;
+		else
+			return SLOTS_FOR_OTHER;
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
+		if(direction != Direction.DOWN)
+			return slot == 0 || slot == 1 || slot == 2;
+
+		return false;
+	}
+
+	@Override
+	public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+		return direction == Direction.DOWN && slot == 3;
+	}
+
 }

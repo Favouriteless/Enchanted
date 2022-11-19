@@ -34,10 +34,7 @@ import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.client.screens.*;
-import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedContainers;
-import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -61,6 +58,7 @@ public class ClientSetupEvents {
 		MenuScreens.register(EnchantedContainers.POPPET_SHELF.get(), PoppetShelfScreen::new);
 
 		EnchantedBlocks.initRender();
+		EnchantedKeybinds.registerKeybinds();
 	}
 
 	@SubscribeEvent

@@ -1,11 +1,14 @@
 Additions:
- - Hardcore mode for patchouli books
- - Ents
- - Familiars (Cat, toad, owl)
 
 Changes:
- - Rewrote most book entries.
- - Mandrakes have a new walk animation
+ - Mandrakes have a new walk animation.
+ - Broomsticks have a new control scheme.
 
 Tweaks:
  - Entities have been migrated to using Geckolib.
+ - Added wither skeletons, zoglins and zombie piglins to default rite of imprisonment/sanctity tag.
+
+Bugfixes:
+ - Fixed distilleries not working.
+ - Fixed hopper interactions with distillery, witch oven & spinning wheel
+ - Removed blood poppy from mutandis

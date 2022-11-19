@@ -27,9 +27,11 @@ package com.favouriteless.enchanted.common.blockentities;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -51,6 +53,10 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     private DistilleryRecipe currentRecipe;
     private final List<BlockPos> potentialAltars = new ArrayList<>();
+
+    private static final int[] SLOTS_FOR_UP = new int[]{1, 2};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{3};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{0};
 
     private int burnTime = 0;
     private int cookTime = 0;
@@ -294,6 +300,30 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory player) {
         return new DistilleryMenu(id, player, this, this.data);
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return switch(side) {
+            case UP -> SLOTS_FOR_UP;
+            case DOWN -> SLOTS_FOR_DOWN;
+            default -> SLOTS_FOR_SIDES;
+        };
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
+        if(direction == Direction.UP)
+            return slot > 0 && slot < 3;
+        else if(direction != Direction.DOWN)
+            return slot == 0 && stack.getItem() == EnchantedItems.CLAY_JAR.get();
+
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        return direction == Direction.DOWN && slot > 2;
     }
 
 }

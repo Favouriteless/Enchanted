@@ -29,6 +29,7 @@ import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.core.BlockPos;
@@ -95,6 +96,10 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         }
     };
 
+    private static final int[] SLOTS_FOR_UP = new int[]{0};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{2, 4};
+    private static final int[] SLOTS_FOR_WEST = new int[]{3};
+    private static final int[] SLOTS_FOR_OTHER = new int[]{1};
     public WitchOvenBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, NonNullList.withSize(5, ItemStack.EMPTY));
     }
@@ -321,4 +326,32 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
     protected int getCookTime() {
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        if(side != Direction.UP && side != Direction.DOWN)
+            side = Direction.fromYRot(side.toYRot() + level.getBlockState(worldPosition).getValue(WitchOvenBlock.FACING).toYRot());
+        return switch(side) {
+            case UP -> SLOTS_FOR_UP;
+            case DOWN -> SLOTS_FOR_DOWN;
+            case WEST -> SLOTS_FOR_WEST;
+            default -> SLOTS_FOR_OTHER;
+        };
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
+        if(direction == Direction.UP)
+            return slot == 0;
+        else if(direction != Direction.DOWN)
+            return (slot == 3 && stack.getItem() == EnchantedItems.CLAY_JAR.get()) || (slot == 1 && net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
+
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        return direction == Direction.DOWN && slot > 2;
+    }
+
 }

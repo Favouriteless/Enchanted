@@ -23,6 +23,9 @@
     "minecraft:stray",
     "minecraft:vex",
     "minecraft:zombie",
-    "minecraft:zombie_villager"
+    "minecraft:zombie_villager",
+    "minecraft:wither_skeleton",
+    "minecraft:zoglin",
+    "minecraft:zombified_piglin"
   ]
 }

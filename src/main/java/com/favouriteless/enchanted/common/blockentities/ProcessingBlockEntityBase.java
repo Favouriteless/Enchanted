@@ -25,11 +25,11 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 
 public abstract class ProcessingBlockEntityBase extends InventoryBlockEntityBase {

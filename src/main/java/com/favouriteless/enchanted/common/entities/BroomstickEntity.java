@@ -41,6 +41,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -55,7 +56,8 @@ public class BroomstickEntity extends Entity {
     private float deltaRotX = 0.0F;
     private float deltaRotY = 0.0F;
 
-    private boolean inputJump = false;
+    private int inputAcceleration = 0;
+    private int inputClimb = 0;
 
     private int lerpSteps = 0;
     private double lerpX = 0.0D;
@@ -161,28 +163,20 @@ public class BroomstickEntity extends Entity {
     }
 
     public Vec3 getNewDeltaMovement() {
-        Vec3 delta = getDeltaMovement();
-        Vec3 targetDir = getLookAngle();
-        double speed = delta.length();
+        Vec3 velocity = getDeltaMovement();
 
-        Vec3 dir;
-        if(speed > 0.001D) {
-            dir = delta.normalize();
-            double f = Math.abs(dir.subtract(targetDir).length()) / 4.0D;
-            dir = new Vec3(Mth.lerp(f, dir.x, targetDir.x), Mth.lerp(f, dir.y, targetDir.y), Mth.lerp(f, dir.z, targetDir.z));
-        }
-        else {
-            dir = targetDir;
-        }
+        Vec3 forward = Vec3.directionFromRotation(new Vec2(getXRot(), getYRot()));
+        Vec3 up = Vec3.directionFromRotation(new Vec2(getXRot()-90, getYRot()));
+        Vec3 left = up.cross(forward);
 
-        if(inputJump)
-            speed += ACCELERATION;
-        else
-            speed *= 0.85D;
+        double acceleration = inputAcceleration * ACCELERATION;
+        velocity = forward.scale(velocity.dot(forward) * (inputAcceleration == 0 ? 0.85D : 1.0D) + acceleration)
+                .add(up.scale(velocity.dot(up) * 0.85D))
+                .add(left.scale(velocity.dot(left) * 0.85D));
+        velocity = velocity.add(0, inputClimb * ACCELERATION*1.25D, 0);
 
-
-        speed = Math.max(Math.min(MAX_SPEED, speed), 0);
-        return dir.multiply(speed, speed, speed);
+        double speed = Math.max(Math.min(velocity.length(), MAX_SPEED), 0);
+        return velocity.normalize().scale(speed);
     }
 
     @Override
@@ -376,9 +370,24 @@ public class BroomstickEntity extends Entity {
         setDamage(getDamage() * 11.0F);
     }
 
-    public void setInputJump(boolean value) {
-        inputJump = value;
+    public void setInputAcceleration(boolean forwards, boolean backwards) {
+        if((!forwards && !backwards) || (forwards && backwards))
+            inputAcceleration = 0;
+        else if(forwards)
+                inputAcceleration = 1;
+        else
+            inputAcceleration = -1;
     }
+
+    public void setInputClimb(boolean up, boolean down) {
+        if((!up && !down) || (up && down))
+            inputClimb = 0;
+        else if(up)
+            inputClimb = 1;
+        else
+            inputClimb = -1;
+    }
+
 
     public void setDeltaRotX(float value) {
         deltaRotX = value;

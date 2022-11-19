@@ -25,30 +25,46 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryBlockEntityBase extends RandomizableContainerBlockEntity {
+public abstract class InventoryBlockEntityBase extends RandomizableContainerBlockEntity implements WorldlyContainer {
 
 	protected NonNullList<ItemStack> inventoryContents;
-	protected IItemHandlerModifiable items = new InvWrapper(this);
-	protected LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
+
+	protected final IItemHandlerModifiable items = new InvWrapper(this);
+	protected final LazyOptional<IItemHandlerModifiable> itemHandler = LazyOptional.of(() -> items);
+
+	private final SidedInvWrapper upWrapper = new SidedInvWrapper(this, Direction.UP);
+	private final LazyOptional<SidedInvWrapper> upItemHandler = LazyOptional.of(() -> upWrapper);
+	private final SidedInvWrapper northWrapper = new SidedInvWrapper(this, Direction.NORTH);
+	private final LazyOptional<SidedInvWrapper> northItemHandler = LazyOptional.of(() -> northWrapper);
+	private final SidedInvWrapper southWrapper = new SidedInvWrapper(this, Direction.SOUTH);
+	private final LazyOptional<SidedInvWrapper> southItemHandler = LazyOptional.of(() -> southWrapper);
+	private final SidedInvWrapper eastWrapper = new SidedInvWrapper(this, Direction.EAST);
+	private final LazyOptional<SidedInvWrapper> eastItemHandler = LazyOptional.of(() -> eastWrapper);
+	private final SidedInvWrapper westWrapper = new SidedInvWrapper(this, Direction.WEST);
+	private final LazyOptional<SidedInvWrapper> westItemHandler = LazyOptional.of(() -> westWrapper);
+	private final SidedInvWrapper downWrapper = new SidedInvWrapper(this, Direction.DOWN);
+	private final LazyOptional<SidedInvWrapper> downItemHandler = LazyOptional.of(() -> downWrapper);
 
 	protected int numPlayersUsing;
 
@@ -126,7 +142,14 @@ public abstract class InventoryBlockEntityBase extends RandomizableContainerBloc
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull Direction side) {
 		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return itemHandler.cast();
+			return switch(side) {
+				case UP -> upItemHandler.cast();
+				case DOWN -> downItemHandler.cast();
+				case NORTH -> northItemHandler.cast();
+				case EAST -> eastItemHandler.cast();
+				case SOUTH -> southItemHandler.cast();
+				case WEST -> westItemHandler.cast();
+			};
 		}
 		return super.getCapability(cap, side);
 	}

@@ -77,9 +77,10 @@ public class ClientEvents {
 
 		if(player != null) {
 			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EnchantedItems.EARMUFFS.get()) {
-				AbstractSoundInstance sound = (AbstractSoundInstance)event.getSound();
-				sound.volume *= 0.03F;
-				event.setSound(sound);
+				if(event.getSound() instanceof AbstractSoundInstance sound) {
+					sound.volume *= 0.03F;
+					event.setSound(sound);
+				}
 			}
 		}
 	}

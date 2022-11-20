@@ -53,22 +53,22 @@ import java.util.stream.Collectors;
 public class EnchantedJEIPlugin implements IModPlugin {
 
     private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
-    private static final RecipeType<WitchOvenRecipe> recipeTypeOven = new RecipeType(locationOven, WitchOvenRecipe.class);
+    private static final RecipeType<WitchOvenRecipe> recipeTypeOven = new RecipeType<>(locationOven, WitchOvenRecipe.class);
 
     private static final ResourceLocation locationDistillery = new ResourceLocation("enchanted", "distillery_category");
-    private static final RecipeType<DistilleryRecipe> recipeTypeDistillery = new RecipeType(locationDistillery, DistilleryRecipe.class);
+    private static final RecipeType<DistilleryRecipe> recipeTypeDistillery = new RecipeType<>(locationDistillery, DistilleryRecipe.class);
 
     private static final ResourceLocation locationSpinningWheel = new ResourceLocation("enchanted", "spinning_wheel_category");
-    private static final RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel = new RecipeType(locationSpinningWheel, SpinningWheelRecipe.class);
+    private static final RecipeType<SpinningWheelRecipe> recipeTypeSpinningWheel = new RecipeType<>(locationSpinningWheel, SpinningWheelRecipe.class);
 
     private static final ResourceLocation locationWitchCauldron= new ResourceLocation("enchanted", "witch_cauldron_category");
-    private static final RecipeType<WitchCauldronRecipe> recipeTypeWitchCauldron = new RecipeType(locationWitchCauldron, WitchCauldronRecipe.class);
+    private static final RecipeType<WitchCauldronRecipe> recipeTypeWitchCauldron = new RecipeType<>(locationWitchCauldron, WitchCauldronRecipe.class);
 
     private static final ResourceLocation locationKettle= new ResourceLocation("enchanted", "kettle_category");
-    private static final RecipeType<KettleRecipe> recipeTypeKettle = new RecipeType(locationKettle, KettleRecipe.class);
+    private static final RecipeType<KettleRecipe> recipeTypeKettle = new RecipeType<>(locationKettle, KettleRecipe.class);
 
     private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
-    private static final RecipeType<AbstractCreateItemRite> recipeTypeRite = new RecipeType(locationRite, AbstractCreateItemRite.class);
+    private static final RecipeType<AbstractCreateItemRite> recipeTypeRite = new RecipeType<>(locationRite, AbstractCreateItemRite.class);
 
     @Override
     public ResourceLocation getPluginUid() {

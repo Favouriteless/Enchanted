@@ -2,12 +2,6 @@
   "type": "enchanted:grass_seeds",
   "conditions": [
     {
-      "condition": "minecraft:match_tool",
-      "predicate": {
-        "tag": "enchanted:hoes"
-      }
-    },
-    {
       "condition": "minecraft:alternative",
       "terms": [
         {

@@ -54,11 +54,11 @@ public class EnchantedRecipeTypes {
 
 
     public static void init() {
-        WITCH_OVEN = RecipeType.register("witch_oven");
-        DISTILLERY = RecipeType.register("distillery");
-        WITCH_CAULDRON = RecipeType.register("witch_cauldron");
-        KETTLE = RecipeType.register("kettle");
-        SPINNING_WHEEL = RecipeType.register("spinning_wheel");
+        WITCH_OVEN = RecipeType.register("enchanted:witch_oven");
+        DISTILLERY = RecipeType.register("enchanted:distillery");
+        WITCH_CAULDRON = RecipeType.register("enchanted:witch_cauldron");
+        KETTLE = RecipeType.register("enchanted:kettle");
+        SPINNING_WHEEL = RecipeType.register("enchanted:spinning_wheel");
     }
 
 }

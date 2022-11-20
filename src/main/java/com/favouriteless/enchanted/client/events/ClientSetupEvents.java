@@ -29,7 +29,8 @@ import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRender
 import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
-import com.favouriteless.enchanted.client.render.entity.MandrakeRenderer;
+import com.favouriteless.enchanted.client.render.entity.EntRenderer;
+import com.favouriteless.enchanted.client.render.entity.SimpleAnimatedGeoRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
@@ -70,7 +71,8 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(EnchantedEntityTypes.MANDRAKE.get(), MandrakeRenderer::new);
+		event.registerEntityRenderer(EnchantedEntityTypes.MANDRAKE.get(), context -> new SimpleAnimatedGeoRenderer<>(context, "mandrake"));
+		event.registerEntityRenderer(EnchantedEntityTypes.ENT.get(), EntRenderer::new);
 		event.registerEntityRenderer(EnchantedEntityTypes.BROOMSTICK.get(), BroomstickRenderer::new);
 		event.registerEntityRenderer(EnchantedEntityTypes.THROWABLE_BREW.get(), ThrownItemRenderer::new);
 

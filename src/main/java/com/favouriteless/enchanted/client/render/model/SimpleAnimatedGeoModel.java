@@ -25,29 +25,34 @@
 package com.favouriteless.enchanted.client.render.model;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class MandrakeModel extends AnimatedGeoModel<MandrakeEntity> {
+public class SimpleAnimatedGeoModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
 
-	public static final ResourceLocation MODEL_LOCATION = Enchanted.location("geo/mandrake.json");
-	public static final ResourceLocation ANIMATION_LOCATION = Enchanted.location("animations/mandrake.json");
-	public static final ResourceLocation TEXTURE_LOCATION = Enchanted.location("textures/entity/mandrake.png");
+	private final ResourceLocation modelLocation;
+	private final ResourceLocation animationLocation;
+	private final ResourceLocation textureLocation;
 
-	@Override
-	public ResourceLocation getModelLocation(MandrakeEntity object) {
-		return MODEL_LOCATION;
+	public SimpleAnimatedGeoModel(String name) {
+		this.modelLocation = Enchanted.location("geo/" + name + ".json");
+		this.animationLocation = Enchanted.location("animations/" + name + ".json");;
+		this.textureLocation = Enchanted.location("textures/entity/" + name + ".png");;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MandrakeEntity object) {
-		return TEXTURE_LOCATION;
+	public ResourceLocation getModelLocation(T object) {
+		return modelLocation;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(MandrakeEntity animatable) {
-		return ANIMATION_LOCATION;
+	public ResourceLocation getTextureLocation(T object) {
+		return textureLocation;
 	}
 
+	@Override
+	public ResourceLocation getAnimationFileLocation(T animatable) {
+		return animationLocation;
+	}
 }

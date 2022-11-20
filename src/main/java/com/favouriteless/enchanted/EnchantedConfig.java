@@ -63,6 +63,7 @@ public class EnchantedConfig {
     // Other
     public static final ConfigValue<Boolean> HOE_ONLY_SEEDS;
     public static final ConfigValue<Boolean> DISABLE_TOTEMS;
+    public static final ConfigValue<Double> ENT_AXE_MULTIPLIER;
 
     static {
         BUILDER.push("Altar Options");
@@ -101,6 +102,7 @@ public class EnchantedConfig {
         BUILDER.push("Miscellaneous Options");
         HOE_ONLY_SEEDS = BUILDER.comment("Only drop modded seeds when a hoe is used to break grass. #default false").define("hoe_seeds", false);
         DISABLE_TOTEMS = BUILDER.comment("Disable totems of undying (to make poppets more useful) #default false").define("disable_totems", false);
+        ENT_AXE_MULTIPLIER = BUILDER.comment("The damage multiplier for axes against an Ent #default 3.0").define("ent_axe_multiplier", 3.0D);
         BUILDER.pop();
 
 

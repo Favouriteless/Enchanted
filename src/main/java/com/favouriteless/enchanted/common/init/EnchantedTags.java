@@ -63,8 +63,10 @@ public class EnchantedTags {
     public static class Items {
         public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = ItemTags.create(Enchanted.location("armour_poppet_blacklist"));
         public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = ItemTags.create(Enchanted.location("armour_poppet_whitelist"));
+        public static final TagKey<Item> AXES = ItemTags.create(Enchanted.location("axes"));
         public static final TagKey<Item> CHALICES = ItemTags.create(Enchanted.location("chalices"));
         public static final TagKey<Item> CHALKS = ItemTags.create(Enchanted.location("chalks"));
+        public static final TagKey<Item> HOES = ItemTags.create(Enchanted.location("hoes"));
         public static final TagKey<Item> LEAVES = ItemTags.create(Enchanted.location("leaves"));
         public static final TagKey<Item> LOGS = ItemTags.create(Enchanted.location("logs"));
         public static final TagKey<Item> PLANKS = ItemTags.create(Enchanted.location("planks"));

@@ -25,6 +25,7 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.entities.EntEntity;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
@@ -44,7 +45,6 @@ public class CommonSetupEvents {
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(EnchantedRecipeTypes::init);
 
-
         EnchantedJEITextures.registerCirclePartPrefix(CirclePart.SMALL, "small");
         EnchantedJEITextures.registerCirclePartPrefix(CirclePart.MEDIUM, "medium");
         EnchantedJEITextures.registerCirclePartPrefix(CirclePart.LARGE, "large");
@@ -56,6 +56,7 @@ public class CommonSetupEvents {
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(EnchantedEntityTypes.MANDRAKE.get(), MandrakeEntity.createAttributes().build());
+        event.put(EnchantedEntityTypes.ENT.get(), EntEntity.createAttributes().build());
     }
 
 }

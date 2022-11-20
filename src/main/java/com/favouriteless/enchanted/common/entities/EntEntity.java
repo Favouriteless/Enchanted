@@ -24,25 +24,21 @@
 
 package com.favouriteless.enchanted.common.entities;
 
-import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -53,35 +49,37 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.List;
-
-public class MandrakeEntity extends Monster implements IAnimatable {
+public class EntEntity extends Monster implements IAnimatable {
 
     private final AnimationFactory animationFactory = GeckoLibUtil.createFactory(this);
 
-    public MandrakeEntity(EntityType<? extends Monster> type, Level world) {
+    public EntEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, false));
+    }
 
-        WaterAvoidingRandomStrollGoal randomWalkingGoal = new WaterAvoidingRandomStrollGoal(this, 1.0D, 1.0F);
-        randomWalkingGoal.setInterval(1);
-
-        this.goalSelector.addGoal(0, new MandrakeAttackGoal(this));
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, randomWalkingGoal);
+    @Override
+    public boolean hurt(DamageSource source, float amount) { // If using an axe take bonus damage
+        if(source.getEntity() instanceof LivingEntity entity)
+            if(entity.getMainHandItem().is(EnchantedTags.Items.AXES))
+                return super.hurt(source, (float)(amount * EnchantedConfig.ENT_AXE_MULTIPLIER.get()));
+        return super.hurt(source, amount);
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.GHAST_DEATH;
+        return SoundEvents.DONKEY_DEATH;
     }
 
     @Override
@@ -91,7 +89,7 @@ public class MandrakeEntity extends Monster implements IAnimatable {
 
     @Override
     protected boolean shouldDropExperience() {
-        return false;
+        return true;
     }
 
     @Override
@@ -101,7 +99,7 @@ public class MandrakeEntity extends Monster implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mandrake.walk", EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk", EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else {
             event.getController().clearAnimationCache();
@@ -112,49 +110,6 @@ public class MandrakeEntity extends Monster implements IAnimatable {
     @Override
     public AnimationFactory getFactory() {
         return animationFactory;
-    }
-
-    protected class MandrakeAttackGoal extends Goal {
-
-        protected final MandrakeEntity mob;
-        protected int ticksUntilNextAttack;
-
-        public MandrakeAttackGoal(MandrakeEntity entity) {
-            this.mob = entity;
-            this.ticksUntilNextAttack = 0;
-        }
-
-        @Override
-        public boolean canUse() {
-            return true;
-        }
-
-        @Override
-        public void stop() {
-            this.ticksUntilNextAttack = 30;
-        }
-
-        @Override
-        public void tick() {
-            if(--this.ticksUntilNextAttack <= 0) {
-
-                List<LivingEntity> entitiesInRange = mob.level.getEntitiesOfClass(LivingEntity.class,
-                        new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
-                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof MandrakeEntity) );
-
-                for(LivingEntity entity : entitiesInRange) {
-                    if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {
-                        entity.hurt(DamageSource.mobAttack(this.mob), 1.0F);
-                        if(entity instanceof Player player && !player.isCreative())
-                            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-                    }
-                }
-                this.mob.level.playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundSource.HOSTILE, 10.0F,0.85F + random.nextFloat() * 0.1F);
-
-                this.ticksUntilNextAttack = 30;
-            }
-        }
-
     }
 
 }

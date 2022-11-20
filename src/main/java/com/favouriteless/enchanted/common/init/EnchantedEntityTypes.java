@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.EntEntity;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.entities.ThrowableBrewEntity;
 import net.minecraft.world.entity.EntityType;
@@ -39,8 +40,11 @@ public class EnchantedEntityTypes {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> Builder.<MandrakeEntity>of(MandrakeEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> Builder.of(MandrakeEntity::new, MobCategory.MONSTER)
             .sized(0.4F, 0.7F).build(Enchanted.location("mandrake").toString()));
+
+    public static final RegistryObject<EntityType<EntEntity>> ENT = ENTITY_TYPES.register("ent", () -> Builder.of(EntEntity::new, MobCategory.MONSTER)
+            .sized(2F, 3.5F).build(Enchanted.location("ent").toString()));
 
     public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> Builder.of(BroomstickEntity::new, MobCategory.MISC)
             .sized(1.0F, 1.0F).clientTrackingRange(10).build(Enchanted.location("broomstick").toString()));

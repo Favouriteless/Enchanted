@@ -33,10 +33,13 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -197,13 +200,18 @@ public class EnchantedItems {
     public static final RegistryObject<Item> ARMOUR_POPPET_INFUSED = registerItemProtectionPoppet("armour_poppet_infused", 0.0F, 1, 0.0F, PoppetColour.EQUIPMENT);
     public static final RegistryObject<Item> ARMOUR_POPPET_STURDY = registerItemProtectionPoppet("armour_poppet_sturdy", 0.0F, 2, 0.9F, PoppetColour.EQUIPMENT);
 
-
+    public static final RegistryObject<Item> MANDRAKE_SPAWN_EGG = registerSpawnEgg("mandrake_spawn_egg", EnchantedEntityTypes.MANDRAKE::get, 0x634C39, 0x291A0E);
+    public static final RegistryObject<Item> ENT_SPAWN_EGG = registerSpawnEgg("ent_spawn_egg", EnchantedEntityTypes.ENT::get, 0x2A5422, 0x183812);
 
 
 
 
     private static Properties defaultProperties() {
         return new Properties().tab(Enchanted.TAB);
+    }
+
+    private static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int backgroundColour, int highlightColour) {
+        return ITEMS.register(name, () -> new ForgeSpawnEggItem(type, backgroundColour, highlightColour, defaultProperties()));
     }
 
     private static RegistryObject<Item> registerItem(String name) {

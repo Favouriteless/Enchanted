@@ -27,9 +27,9 @@ package com.favouriteless.enchanted.common.loot;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,7 +38,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class GrassSeedModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if(EnchantedConfig.HOE_ONLY_SEEDS.get() && !ForgeRegistries.ITEMS.tags().getTag(EnchantedTags.Items.HOES).contains(context.getParam(LootContextParams.TOOL).getItem()))
+        if(EnchantedConfig.HOE_ONLY_SEEDS.get() && !(context.getParam(LootContextParams.TOOL).getItem() instanceof HoeItem))
             return generatedLoot;
 
         List<ItemStack> outputItems = new ArrayList<>();

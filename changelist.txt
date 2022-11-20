@@ -8,3 +8,5 @@ Tweaks:
  - Mandrakes are now 20% slower.
 
 Bugfixes:
+ - Hoe for seeds config is not broken any more and does not always require a hoe.
+ - Ambient sounds won't make earmuffs crash you any more.

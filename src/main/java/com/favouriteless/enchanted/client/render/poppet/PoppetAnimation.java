@@ -47,6 +47,8 @@ public class PoppetAnimation {
 	public void render(PoseStack matrixStack, float partialTicks, int widthScaled, int heightScaled) {
 		int ticksLeft = 120 - this.ticks;
 		float work = ((float)ticksLeft + partialTicks) / 120.0F; // Work done (0->1)
+		float workSq = work*work;
+		float workCb = workSq*work;
 
 		float scale = 255.0F * Mth.sin((float)Math.pow(2.05F * work - 0.9F, 7) + 0.5F); // Plug this into a graphing tool to see how it scales
 
@@ -63,7 +65,7 @@ public class PoppetAnimation {
 		matrixStack.translate((float)(widthScaled / 2), (float)(heightScaled / 2), -50.0D);
 		matrixStack.scale(scale, -scale, scale); // Renders upside down at a positive scale
 
-		float rotationCurve = (float)(10.25F * Math.pow(work, 5) - 24.95F * Math.pow(work, 4) + 25.5F * Math.pow(work, 3) - 13.8F * (work*work) + 4.0F * work);
+		float rotationCurve = 10.25F * workCb*workSq - 24.95F * workSq*workSq + 25.5F * workSq*work - 13.8F * workSq + 4.0F * work;
 		float piCurve = rotationCurve * (float)Math.PI;
 		matrixStack.mulPose(Vector3f.YP.rotationDegrees(900.0F * Mth.abs(Mth.sin(piCurve))));
 		matrixStack.mulPose(Vector3f.XP.rotationDegrees(6.0F * Mth.cos(work * 8.0F)));

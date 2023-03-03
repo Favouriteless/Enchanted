@@ -120,11 +120,9 @@ public class EnchantedRiteTypes {
 
     private static class Generify {
         @SuppressWarnings("unchecked")
-        public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls)
-        {
+        public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls) {
             return (Class<T>) cls;
         }
-
     }
 
 }

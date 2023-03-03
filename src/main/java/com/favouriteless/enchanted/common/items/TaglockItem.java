@@ -75,7 +75,7 @@ public class TaglockItem extends Item {
             if (Enchanted.RANDOM.nextInt(10) >= failChance) {
                 if(!player.level.isClientSide) {
                     player.displayClientMessage(new TextComponent("Taglock attempt failed").withStyle(ChatFormatting.RED), false);
-                    ((ServerPlayer) target).displayClientMessage(new TextComponent(player.getDisplayName() + " has tried to taglock you").withStyle(ChatFormatting.RED), false);
+                    ((ServerPlayer) target).displayClientMessage(new TextComponent(player.getDisplayName().getString() + " has tried to taglock you").withStyle(ChatFormatting.RED), false);
                 }
                 return InteractionResult.FAIL;
             }

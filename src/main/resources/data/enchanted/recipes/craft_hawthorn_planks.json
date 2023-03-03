@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "enchanted:hawthorn_log"
+    }
+  ],
+  "result":
+  {
+    "item": "enchanted:hawthorn_planks",
+    "count": 4
+  }
+}

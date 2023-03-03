@@ -24,7 +24,6 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import net.minecraft.client.Minecraft;
@@ -35,15 +34,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE, value=Dist.CLIENT)
 public class EarmuffsItem extends ArmorItem {
 
 	public EarmuffsItem(Properties pProperties) {

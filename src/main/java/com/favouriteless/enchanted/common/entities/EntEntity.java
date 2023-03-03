@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,6 +37,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -58,7 +58,7 @@ public class EntEntity extends Monster implements IAnimatable {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class EntEntity extends Monster implements IAnimatable {
     @Override
     public boolean hurt(DamageSource source, float amount) { // If using an axe take bonus damage
         if(source.getEntity() instanceof LivingEntity entity)
-            if(entity.getMainHandItem().is(EnchantedTags.Items.AXES))
+            if(entity.getMainHandItem().getItem() instanceof AxeItem)
                 return super.hurt(source, (float)(amount * EnchantedConfig.ENT_AXE_MULTIPLIER.get()));
         return super.hurt(source, amount);
     }

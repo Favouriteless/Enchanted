@@ -344,14 +344,14 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         if(direction == Direction.UP)
             return slot == 0;
         else if(direction != Direction.DOWN)
-            return (slot == 3 && stack.getItem() == EnchantedItems.CLAY_JAR.get()) || (slot == 1 && net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
+            return (slot == 2 && stack.getItem() == EnchantedItems.CLAY_JAR.get()) || (slot == 1 && net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
 
         return false;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
-        return direction == Direction.DOWN && slot > 2;
+        return direction == Direction.DOWN && (slot == 2 || slot == 4);
     }
 
 }

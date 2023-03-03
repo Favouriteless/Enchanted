@@ -72,6 +72,7 @@ public class EnchantedTags {
         public static final TagKey<Item> PLANKS = ItemTags.create(Enchanted.location("planks"));
         public static final TagKey<Item> RAW_FOODS = ItemTags.create(Enchanted.location("raw_foods"));
         public static final TagKey<Item> SAPLINGS = ItemTags.create(Enchanted.location("saplings"));
+        public static final TagKey<Item> SEEDS_DROPS = ItemTags.create(Enchanted.location("seeds_drops"));
         public static final TagKey<Item> STAIRS = ItemTags.create(Enchanted.location("stairs"));
         public static final TagKey<Item> TOOL_POPPET_BLACKLIST = ItemTags.create(Enchanted.location("tool_poppet_blacklist"));
         public static final TagKey<Item> TOOL_POPPET_WHITELIST = ItemTags.create(Enchanted.location("tool_poppet_whitelist"));

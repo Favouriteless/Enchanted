@@ -64,13 +64,13 @@ public class DistilleryMenu extends ProcessingMenuBase {
         ItemStack itemstack;
         Slot slot = this.slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
 
             ItemStack slotItem = slot.getItem();
             itemstack = slotItem.copy();
 
             if (index <= 6) { // If container slot
-                if (!this.moveItemStackTo(slotItem, 5, 41, true)) {
+                if (!this.moveItemStackTo(slotItem, 7, 41, true)) {
                     return ItemStack.EMPTY;
                 }
             } else { // If not a container slot

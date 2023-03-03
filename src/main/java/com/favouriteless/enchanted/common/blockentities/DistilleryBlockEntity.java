@@ -55,7 +55,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     private final List<BlockPos> potentialAltars = new ArrayList<>();
 
     private static final int[] SLOTS_FOR_UP = new int[]{1, 2};
-    private static final int[] SLOTS_FOR_DOWN = new int[]{3};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{3, 4, 5, 6};
     private static final int[] SLOTS_FOR_SIDES = new int[]{0};
 
     private int burnTime = 0;

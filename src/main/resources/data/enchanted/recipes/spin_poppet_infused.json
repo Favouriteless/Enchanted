@@ -1,6 +1,6 @@
 {
   "type": "enchanted:spinning_wheel",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:poppet" },
     { "item": "enchanted:attuned_stone_charged" },
     { "item": "minecraft:ender_pearl"}

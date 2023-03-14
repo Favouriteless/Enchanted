@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wsw",
+    "sas",
+    " c "
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "c": {
+      "item": "minecraft:cauldron"
+    },
+    "a": {
+      "item": "enchanted:attuned_stone"
+    }
+  },
+  "result": {
+    "item": "enchanted:kettle"
+  }
+}

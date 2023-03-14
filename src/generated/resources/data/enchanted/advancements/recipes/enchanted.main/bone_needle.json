@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:bone_needle"
+    ]
+  },
+  "criteria": {
+    "has_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bone"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:bone_needle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bone",
+      "has_the_recipe"
+    ]
+  ]
+}

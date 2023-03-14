@@ -42,6 +42,7 @@ public class DataGenerators {
 
 		gen.addProvider(new EnchantedBlockstateProvider(gen, existingFileHelper));
 		gen.addProvider(new EnchantedItemModelProvider(gen, existingFileHelper));
+		gen.addProvider(new EnchantedRecipeProvider(gen));
 	}
 
 }

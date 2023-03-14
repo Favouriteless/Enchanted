@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:alder_slab"
+    ]
+  },
+  "criteria": {
+    "has_alder_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:alder_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:alder_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_alder_log",
+      "has_the_recipe"
+    ]
+  ]
+}

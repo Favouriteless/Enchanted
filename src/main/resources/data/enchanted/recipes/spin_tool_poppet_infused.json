@@ -1,6 +1,6 @@
 {
   "type": "enchanted:spinning_wheel",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:poppet_infused" },
     { "item": "enchanted:hint_of_rebirth" },
     { "item": "minecraft:diamond_sword" }

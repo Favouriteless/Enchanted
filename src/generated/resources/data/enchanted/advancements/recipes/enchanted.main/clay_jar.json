@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:clay_jar"
+    ]
+  },
+  "criteria": {
+    "has_clay_jar_soft": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:clay_jar_soft"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:clay_jar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_clay_jar_soft",
+      "has_the_recipe"
+    ]
+  ]
+}

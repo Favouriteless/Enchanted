@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:purified_milk"
+    ]
+  },
+  "criteria": {
+    "has_odour_of_purity": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:odour_of_purity"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:purified_milk"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_odour_of_purity",
+      "has_the_recipe"
+    ]
+  ]
+}

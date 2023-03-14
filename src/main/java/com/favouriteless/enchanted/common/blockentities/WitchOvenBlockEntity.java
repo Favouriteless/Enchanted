@@ -30,6 +30,7 @@ import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.core.BlockPos;
@@ -293,12 +294,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         WitchOvenRecipe currentRecipe = null;
         if (level != null) {
             currentRecipe = level.getRecipeManager()
-                    .getRecipes()
-                    .stream()
-                    .filter(recipe -> recipe instanceof WitchOvenRecipe)
-                    .map(recipe -> (WitchOvenRecipe) recipe)
-                    .filter((recipe) -> recipe.matches(this, level))
-                    .findFirst()
+                    .getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, this, level)
                     .orElse(null);
         }
         return currentRecipe;

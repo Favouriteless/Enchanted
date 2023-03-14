@@ -24,25 +24,25 @@
 
 package com.favouriteless.enchanted.common.recipes;
 
+import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
-import net.minecraft.world.Container;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DistilleryRecipe implements Recipe<Container> {
+public class DistilleryRecipe implements Recipe<DistilleryBlockEntity> {
 
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
@@ -73,23 +73,6 @@ public class DistilleryRecipe implements Recipe<Container> {
         return cookTime;
     }
 
-    public boolean matches(List<ItemStack> items) {
-        if(!items.isEmpty()) {
-            int requiredItems = getItemsIn().size();
-
-            for(ItemStack stack : getItemsIn()) {
-                for(ItemStack item : items) {
-                    if(stack.getItem() == item.getItem() && item.getCount() >= stack.getCount()) {
-                        requiredItems--;
-                        break;
-                    }
-                }
-            }
-            return requiredItems == 0;
-        }
-        return false;
-    }
-
     public int getJarCount() {
         int count = 0;
 
@@ -100,15 +83,25 @@ public class DistilleryRecipe implements Recipe<Container> {
         return count;
     }
 
-
-
     @Override
-    public boolean matches(Container inv, Level worldIn) {
-        return false;
+    public boolean matches(DistilleryBlockEntity inv, Level level) {
+        List<ItemStack> items = inv.getItemsIn();
+
+        int requiredItems = getItemsIn().size();
+
+        for(ItemStack stack : getItemsIn()) {
+            for(ItemStack item : items) {
+                if(stack.getItem() == item.getItem() && item.getCount() >= stack.getCount()) {
+                    requiredItems--;
+                    break;
+                }
+            }
+        }
+        return requiredItems == 0;
     }
 
     @Override
-    public ItemStack assemble(Container inv) {
+    public ItemStack assemble(DistilleryBlockEntity inv) {
         return null;
     }
 
@@ -149,8 +142,8 @@ public class DistilleryRecipe implements Recipe<Container> {
         @Override
         public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "iteminputs"));
-            NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "itemoutputs"));
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
+            NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "result"));
             int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
 
             return new DistilleryRecipe(recipeId, itemsIn, itemsOut, cookTime);
@@ -162,15 +155,13 @@ public class DistilleryRecipe implements Recipe<Container> {
 
             int inSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
-            for (int x = 0; x < inSize; ++x) {
+            for (int x = 0; x < inSize; ++x)
                 itemsIn.add(buffer.readItem());
-            }
 
             int outSize = buffer.readInt();
             NonNullList<ItemStack> itemsOut = NonNullList.create();
-            for (int x = 0; x < outSize; ++x) {
+            for (int x = 0; x < outSize; ++x)
                 itemsIn.add(buffer.readItem());
-            }
 
             int cookTime = buffer.readInt();
 
@@ -181,14 +172,12 @@ public class DistilleryRecipe implements Recipe<Container> {
         public void toNetwork(FriendlyByteBuf buffer, DistilleryRecipe recipe) {
 
             buffer.writeInt(recipe.getItemsIn().size());
-            for (ItemStack stack : recipe.getItemsIn()) {
+            for (ItemStack stack : recipe.getItemsIn())
                 buffer.writeItem(stack);
-            }
 
             buffer.writeInt(recipe.getItemsOut().size());
-            for (ItemStack stack : recipe.getItemsOut()) {
+            for (ItemStack stack : recipe.getItemsOut())
                 buffer.writeItem(stack);
-            }
 
             buffer.writeInt(recipe.getCookTime());
 

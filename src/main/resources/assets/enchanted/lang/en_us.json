@@ -185,5 +185,7 @@
     "key.enchanted.broom_aim_down": "Point Down",
 
     "jei.enchanted.chalice_filled": "Right click on a chalice using redstone soup",
-    "jei.enchanted.chalice_filled_milk": "Right click on a chalice using a bucket of milk"
+    "jei.enchanted.chalice_filled_milk": "Right click on a chalice using a bucket of milk",
+    "container.enchanted.kettle": "Kettle",
+    "container.witch_cauldron": "Witch Cauldron"
 }

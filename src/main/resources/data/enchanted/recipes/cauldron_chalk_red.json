@@ -1,11 +1,11 @@
 {
   "type": "enchanted:witch_cauldron",
-  "inputs": [
+  "ingredients": [
     { "item": "minecraft:nether_wart" },
     { "item": "minecraft:blaze_powder" },
     { "item": "enchanted:chalk_white" }
   ],
-  "output": { "item": "enchanted:chalk_red", "count": 1 },
+  "result": { "item": "enchanted:chalk_red", "count": 1 },
   "power": 2000,
   "cookingColour": { "red": 84, "green": 1, "blue": 26 },
   "finalColour": { "red": 156, "green": 1, "blue": 47 }

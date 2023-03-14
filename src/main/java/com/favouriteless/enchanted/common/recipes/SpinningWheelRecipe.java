@@ -138,7 +138,7 @@ public class SpinningWheelRecipe implements Recipe<SpinningWheelBlockEntity> {
 
         @Override
         public SpinningWheelRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "inputs"));
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             int power = GsonHelper.getAsInt(json, "power", 0);
 

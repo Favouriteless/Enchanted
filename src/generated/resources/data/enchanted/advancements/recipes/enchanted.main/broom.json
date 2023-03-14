@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:broom"
+    ]
+  },
+  "criteria": {
+    "has_hawthorn_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:hawthorn_sapling"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:broom"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hawthorn_sapling",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "type": "enchanted:kettle",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:redstone_soup" },
     { "type":"forge:nbt", "item": "minecraft:potion", "nbt": "{Potion:'minecraft:long_night_vision'}"},
     { "item": "minecraft:ender_eye" },
@@ -8,7 +8,7 @@
     { "item": "minecraft:spider_eye" },
     { "item": "enchanted:mandrake_root" }
   ],
-  "output": { "item": "enchanted:happenstance_oil", "count": 1 },
+  "result": { "item": "enchanted:happenstance_oil", "count": 1 },
   "power": 2000,
   "cookingColour": { "red": 50, "green": 15, "blue": 110 },
   "finalColour": { "red": 84, "green": 26, "blue": 184 }

@@ -1,11 +1,11 @@
 {
   "type": "enchanted:distillery",
-  "iteminputs": [
+  "ingredients": [
     { "item": "enchanted:clay_jar", "count": 3 },
     { "item": "minecraft:diamond", "count": 1 },
     { "item": "enchanted:oil_of_vitriol", "count": 1 }
   ],
-  "itemoutputs": [
+  "result": [
     { "item": "enchanted:diamond_vapour", "count": 2 },
     { "item": "enchanted:odour_of_purity", "count": 1 }
   ],

@@ -1,6 +1,6 @@
 {
   "type": "enchanted:spinning_wheel",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:poppet_sturdy" },
     { "item": "enchanted:rowan_berries" },
     { "item": "minecraft:rotten_flesh" }

@@ -1,6 +1,6 @@
 {
   "type": "enchanted:spinning_wheel",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:poppet_infused" },
     { "item": "enchanted:chalk_purple" },
     { "item": "enchanted:ender_dew" }

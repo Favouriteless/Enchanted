@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "enchanted:fume_funnel"
+    },
+    {
+      "item": "enchanted:fume_filter"
+    }
+  ],
+  "result": {
+    "item": "enchanted:fume_funnel_filtered"
+  }
+}

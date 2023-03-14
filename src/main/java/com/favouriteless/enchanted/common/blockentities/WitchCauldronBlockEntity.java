@@ -28,13 +28,12 @@ import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticle
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.stream.Collectors;
 
 public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronRecipe> {
 
@@ -68,15 +67,9 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
 
     @Override
     protected void matchRecipes() {
-        if (level != null) {
+        if (level != null)
             setPotentialRecipes(level.getRecipeManager()
-                    .getRecipes()
-                    .stream()
-                    .filter(recipe -> recipe instanceof WitchCauldronRecipe)
-                    .map(recipe -> (WitchCauldronRecipe)recipe)
-                    .filter(recipe -> recipe.matches(this, level))
-                    .collect(Collectors.toList()));
-        }
+                    .getRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON, this, level));
     }
 
     @Override

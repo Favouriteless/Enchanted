@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "iai",
+    " i "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:candle"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "a": {
+      "item": "enchanted:attuned_stone"
+    }
+  },
+  "result": {
+    "item": "enchanted:candelabra"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "type": "enchanted:kettle",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:mutandis_extremis" },
     { "item": "enchanted:mandrake_root"},
     { "item": "enchanted:artichoke" },
@@ -8,7 +8,7 @@
     { "item": "enchanted:tongue_of_dog" },
     { "item": "minecraft:poisonous_potato" }
   ],
-  "output": { "item": "enchanted:brew_of_the_grotesque", "count": 3 },
+  "result": { "item": "enchanted:brew_of_the_grotesque", "count": 3 },
   "power": 750,
   "cookingColour": { "red": 54, "green": 42, "blue": 33 },
   "finalColour": { "red": 128, "green": 95, "blue": 70 }

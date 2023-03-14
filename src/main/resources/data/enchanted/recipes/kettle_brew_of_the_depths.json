@@ -1,6 +1,6 @@
 {
   "type": "enchanted:kettle",
-  "inputs": [
+  "ingredients": [
     { "item": "minecraft:lily_pad" },
     { "item": "minecraft:ink_sac" },
     { "item": "enchanted:mandrake_root" },
@@ -8,7 +8,7 @@
     { "item": "enchanted:artichoke" },
     { "item": "enchanted:odour_of_purity" }
   ],
-  "output": { "item": "enchanted:brew_of_the_depths", "count": 3 },
+  "result": { "item": "enchanted:brew_of_the_depths", "count": 3 },
   "power": 0,
   "cookingColour": { "red": 24, "green": 110, "blue": 168 },
   "finalColour": { "red": 84, "green": 186, "blue": 214 }

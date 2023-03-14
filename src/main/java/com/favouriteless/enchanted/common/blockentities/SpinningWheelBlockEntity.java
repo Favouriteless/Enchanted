@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.common.blockentities;
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.core.BlockPos;
@@ -164,20 +165,10 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	private void matchRecipe() {
-		if (level != null) {
+		if (level != null)
 			currentRecipe = level.getRecipeManager()
-					.getRecipes()
-					.stream()
-					.filter(recipe -> recipe instanceof SpinningWheelRecipe)
-					.map(recipe -> (SpinningWheelRecipe) recipe)
-					.filter(this::matchRecipe)
-					.findFirst()
+					.getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, this, level)
 					.orElse(null);
-		}
-	}
-
-	private boolean matchRecipe(SpinningWheelRecipe recipe) {
-		return recipe.matches(this, level);
 	}
 
 	@Override

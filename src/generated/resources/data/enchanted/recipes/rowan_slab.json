@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "enchanted:rowan_log"
+    }
+  },
+  "result": {
+    "item": "enchanted:rowan_slab",
+    "count": 6
+  }
+}

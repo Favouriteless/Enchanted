@@ -1,9 +1,9 @@
 {
   "type": "enchanted:witch_cauldron",
-  "inputs": [
+  "ingredients": [
     { "item": "minecraft:chicken" }
   ],
-  "output": { "item": "minecraft:cooked_chicken", "count": 1 },
+  "result": { "item": "minecraft:cooked_chicken", "count": 1 },
   "power": 0,
   "cookingColour": { "red": 82, "green": 40, "blue": 84 },
   "finalColour": { "red": 110, "green": 22, "blue": 115 }

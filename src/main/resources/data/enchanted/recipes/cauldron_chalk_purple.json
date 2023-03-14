@@ -1,12 +1,12 @@
 {
   "type": "enchanted:witch_cauldron",
-  "inputs": [
+  "ingredients": [
     { "item": "minecraft:nether_wart" },
     { "item": "enchanted:tear_of_the_goddess" },
     { "item": "minecraft:ender_pearl" },
     { "item": "enchanted:chalk_white" }
   ],
-  "output": { "item": "enchanted:chalk_purple", "count": 1 },
+  "result": { "item": "enchanted:chalk_purple", "count": 1 },
   "power": 2000,
   "cookingColour": { "red": 49, "green": 21, "blue": 74 },
   "finalColour": { "red": 73, "green": 13, "blue": 130 }

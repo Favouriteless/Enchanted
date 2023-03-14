@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "enchanted:wood_ash"
+    }
+  ],
+  "result": {
+    "item": "enchanted:quicklime"
+  }
+}

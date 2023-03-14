@@ -1,9 +1,9 @@
 {
   "type": "enchanted:witch_cauldron",
-  "inputs": [
+  "ingredients": [
     { "item": "minecraft:beef" }
   ],
-  "output": { "item": "minecraft:cooked_beef", "count": 1 },
+  "result": { "item": "minecraft:cooked_beef", "count": 1 },
   "power": 0,
   "cookingColour": { "red": 24, "green": 48, "blue": 22 },
   "finalColour": { "red": 28, "green": 94, "blue": 22 }

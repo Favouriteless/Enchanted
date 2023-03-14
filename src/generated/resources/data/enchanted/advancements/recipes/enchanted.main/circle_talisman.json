@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enchanted:circle_talisman"
+    ]
+  },
+  "criteria": {
+    "has_attuned_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:attuned_stone"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enchanted:circle_talisman"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_attuned_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

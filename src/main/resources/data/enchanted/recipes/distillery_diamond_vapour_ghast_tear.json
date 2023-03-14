@@ -1,11 +1,11 @@
 {
   "type": "enchanted:distillery",
-  "iteminputs": [
+  "ingredients": [
     { "item": "enchanted:clay_jar", "count": 3 },
     { "item": "enchanted:diamond_vapour", "count": 1 },
     { "item": "minecraft:ghast_tear", "count": 1 }
   ],
-  "itemoutputs": [
+  "result": [
     { "item": "enchanted:odour_of_purity", "count": 1 },
     { "item": "enchanted:reek_of_misfortune", "count": 1 },
     { "item": "enchanted:foul_fume", "count": 1 },

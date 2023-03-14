@@ -54,8 +54,8 @@ public class KettleRecipe extends CauldronTypeRecipe {
         @Override
         public KettleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "inputs"));
-            ItemStack itemOut = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
+            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
+            ItemStack itemOut = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             int power = GsonHelper.getAsInt(json, "power");
             int[] cookingColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "cookingColour"));
             int[] finalColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "finalColour"));

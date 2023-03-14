@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "blb",
+    "bgb",
+    "ifi"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:glowstone"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "l": {
+      "item": "minecraft:lava_bucket"
+    },
+    "f": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "enchanted:fume_funnel"
+  }
+}

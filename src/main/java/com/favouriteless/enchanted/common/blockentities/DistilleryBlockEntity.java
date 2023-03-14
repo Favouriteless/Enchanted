@@ -28,6 +28,7 @@ import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.core.BlockPos;
@@ -245,21 +246,12 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     private void matchRecipe() {
         if (level != null) {
             currentRecipe = level.getRecipeManager()
-                    .getRecipes()
-                    .stream()
-                    .filter(recipe -> recipe instanceof DistilleryRecipe)
-                    .map(recipe -> (DistilleryRecipe) recipe)
-                    .filter(recipe -> matchRecipe(recipe, getItemsIn()))
-                    .findFirst()
+                    .getRecipeFor(EnchantedRecipeTypes.DISTILLERY, this, level)
                     .orElse(null);
-            if(currentRecipe != null) {
-                this.cookTimeTotal = this.currentRecipe.getCookTime();
-            }
-        }
-    }
 
-    private boolean matchRecipe(DistilleryRecipe recipe, List<ItemStack> list) {
-        return recipe.matches(list);
+            if(currentRecipe != null)
+                this.cookTimeTotal = this.currentRecipe.getCookTime();
+        }
     }
 
     public List<ItemStack> getItemsIn() {

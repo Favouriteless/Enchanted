@@ -1,6 +1,6 @@
 {
   "type": "enchanted:witch_cauldron",
-  "inputs": [
+  "ingredients": [
     { "item": "enchanted:mandrake_root" },
     { "item": "enchanted:tear_of_the_goddess" },
     { "item": "enchanted:diamond_vapour" },
@@ -8,7 +8,7 @@
     { "item": "minecraft:wheat" },
     { "item": "enchanted:mutandis" }
   ],
-  "output": { "item": "minecraft:nether_wart", "count": 1 },
+  "result": { "item": "minecraft:nether_wart", "count": 1 },
   "power": 0,
   "cookingColour": { "red": 92, "green": 35, "blue": 0 },
   "finalColour": { "red": 153, "green": 52, "blue": 0 }

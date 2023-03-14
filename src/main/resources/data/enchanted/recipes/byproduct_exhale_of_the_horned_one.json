@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "minecraft:oak_sapling"
   },
-  "result": "enchanted:exhale_of_the_horned_one",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:exhale_of_the_horned_one", "count": 1 }
 }

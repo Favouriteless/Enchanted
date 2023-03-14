@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "enchanted:alder_sapling"
   },
-  "result": "enchanted:reek_of_misfortune",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:reek_of_misfortune", "count": 1 }
 }

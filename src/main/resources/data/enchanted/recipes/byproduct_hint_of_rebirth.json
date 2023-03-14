@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "minecraft:spruce_sapling"
   },
-  "result": "enchanted:hint_of_rebirth",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:hint_of_rebirth", "count": 1 }
 }

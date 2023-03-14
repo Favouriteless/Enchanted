@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "enchanted:rowan_sapling"
   },
-  "result": "enchanted:whiff_of_magic",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:whiff_of_magic", "count": 1 }
 }

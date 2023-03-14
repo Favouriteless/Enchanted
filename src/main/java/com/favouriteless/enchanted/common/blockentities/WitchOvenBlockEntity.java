@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *
@@ -236,13 +236,18 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         ItemStack outputStack = this.inventoryContents.get(4);
         ItemStack jarStack = this.inventoryContents.get(3);
 
-        if(currentRecipe != null && jarStack.getCount() >= currentRecipe.getJarsNeeded()) {
-            if (outputStack.isEmpty()) {
-                this.inventoryContents.set(4, currentRecipe.getResultItem().copy());
-                jarStack.shrink(currentRecipe.getJarsNeeded());
-            } else if (outputStack.getItem() == currentRecipe.getResultItem().getItem() && outputStack.getCount() < outputStack.getMaxStackSize()) {
-                outputStack.grow(1);
-                jarStack.shrink(currentRecipe.getJarsNeeded());
+        if(currentRecipe != null) {
+            ItemStack result = currentRecipe.getResultItem().copy();
+
+            if(jarStack.getCount() >= result.getCount()) {
+                if(outputStack.isEmpty()) {
+                    this.inventoryContents.set(4, result);
+                    jarStack.shrink(result.getCount());
+                }
+                else if(outputStack.getItem() == result.getItem() && outputStack.getCount() < (outputStack.getMaxStackSize() - result.getCount())) {
+                    outputStack.grow(result.getCount());
+                    jarStack.shrink(result.getCount());
+                }
             }
         }
     }

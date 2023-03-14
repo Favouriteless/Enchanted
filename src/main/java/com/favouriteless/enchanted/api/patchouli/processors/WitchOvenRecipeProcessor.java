@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *
@@ -56,7 +56,7 @@ public class WitchOvenRecipeProcessor implements IComponentProcessor {
 		if(key.startsWith("input"))
 			return IVariable.from(itemIn);
 		else if(key.startsWith("jar"))
-			return IVariable.from(new ItemStack(EnchantedItems.CLAY_JAR.get(), byproductRecipe.getJarsNeeded()));
+			return IVariable.from(new ItemStack(EnchantedItems.CLAY_JAR.get()));
 		else if(key.startsWith("result"))
 			return IVariable.from(resultItem);
 		else if(key.startsWith("byproduct"))

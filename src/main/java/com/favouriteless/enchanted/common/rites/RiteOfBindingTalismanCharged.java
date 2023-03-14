@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *

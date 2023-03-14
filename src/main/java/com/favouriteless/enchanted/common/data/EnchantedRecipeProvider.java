@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *
@@ -74,6 +74,7 @@ public class EnchantedRecipeProvider extends RecipeProvider {
 		stairs(recipeConsumer, EnchantedItems.ROWAN_STAIRS.get(), EnchantedItems.ROWAN_STAIRS.get());
 		stairs(recipeConsumer, EnchantedItems.ALDER_STAIRS.get(), EnchantedItems.ALDER_STAIRS.get());
 		stairs(recipeConsumer, EnchantedItems.HAWTHORN_STAIRS.get(), EnchantedItems.HAWTHORN_STAIRS.get());
+
 		// Shapeless recipes
 		ShapelessRecipeBuilder.shapeless(EnchantedItems.ANOINTING_PASTE.get()).requires(EnchantedItems.ARTICHOKE_SEEDS.get()).requires(EnchantedItems.MANDRAKE_SEEDS.get()).requires(EnchantedItems.BELLADONNA_SEEDS.get()).requires(EnchantedItems.SNOWBELL_SEEDS.get()).unlockedBy("has_seeds", has(EnchantedTags.Items.SEEDS_DROPS)).save(recipeConsumer);
 		ShapelessRecipeBuilder.shapeless(EnchantedItems.BONE_NEEDLE.get(), 8).requires(Items.FLINT).requires(Items.BONE).unlockedBy("has_bone", has(Items.BONE)).save(recipeConsumer);

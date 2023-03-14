@@ -3,6 +3,5 @@
   "ingredient": {
     "tag": "enchanted:raw_foods"
   },
-  "result": "enchanted:foul_fume",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:foul_fume", "count": 1 }
 }

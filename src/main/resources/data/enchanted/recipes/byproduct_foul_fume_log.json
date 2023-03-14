@@ -3,6 +3,5 @@
   "ingredient": {
     "tag": "minecraft:logs_that_burn"
   },
-  "result": "enchanted:foul_fume",
-  "jarsneeded": 1
+  "result": { "item": "enchanted:foul_fume", "count": 1 }
 }

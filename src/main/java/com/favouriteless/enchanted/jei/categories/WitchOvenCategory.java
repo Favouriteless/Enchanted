@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *
@@ -95,7 +95,7 @@ public class WitchOvenCategory implements IRecipeCategory<WitchOvenRecipe> {
             builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
             builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addItemStacks(itemsOut);
             builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 43).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
-            builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarsNeeded()));
+            builder.addSlot(RecipeIngredientRole.CATALYST, 13, 43).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getResultItem().getCount()));
         }
     }
 

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2022. Favouriteless
+ *   Copyright (c) 2023. Favouriteless
  *   Enchanted, a minecraft mod.
  *   GNU GPLv3 License
  *
@@ -26,17 +26,17 @@ package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -48,18 +48,12 @@ public class WitchOvenRecipe implements Recipe<Container> {
 
     private final Ingredient ingredient;
     private final ItemStack result;
-    private final int jarsNeeded;
 
-    public WitchOvenRecipe(ResourceLocation id, Ingredient ingredient, ItemStack result, int jarsNeeded) {
+    public WitchOvenRecipe(ResourceLocation id, Ingredient ingredient, ItemStack result) {
         this.type = EnchantedRecipeTypes.WITCH_OVEN;
         this.id = id;
         this.ingredient = ingredient;
         this.result = result;
-        this.jarsNeeded = jarsNeeded;
-    }
-
-    public int getJarsNeeded() {
-        return this.jarsNeeded;
     }
 
     public Ingredient getInput() {
@@ -67,7 +61,7 @@ public class WitchOvenRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container inv, Level worldIn) {
+    public boolean matches(Container inv, Level level) {
         return this.ingredient.test(inv.getItem(0));
     }
 
@@ -111,29 +105,25 @@ public class WitchOvenRecipe implements Recipe<Container> {
 
         @Override
         public WitchOvenRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            Ingredient ingredientIn = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-            ItemStack itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(json, "result"))));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
+            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), false);
 
-            int jarsNeeded = GsonHelper.getAsInt(json, "jars", 1);
-
-            return new WitchOvenRecipe(recipeId, ingredientIn, itemOut, jarsNeeded);
+            return new WitchOvenRecipe(recipeId, ingredient, result);
         }
 
         @Nullable
         @Override
         public WitchOvenRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            Ingredient ingredientIn = Ingredient.fromNetwork(buffer);
-            ItemStack itemOut = buffer.readItem();
-            int jarsNeeded = buffer.readInt();
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            ItemStack result = buffer.readItem();
 
-            return new WitchOvenRecipe(recipeId, ingredientIn, itemOut, jarsNeeded);
+            return new WitchOvenRecipe(recipeId, ingredient, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, WitchOvenRecipe recipe) {
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeItem(recipe.getResultItem());
-            buffer.writeInt(recipe.getJarsNeeded());
+            buffer.writeItemStack(recipe.getResultItem(), true);
         }
 
     }

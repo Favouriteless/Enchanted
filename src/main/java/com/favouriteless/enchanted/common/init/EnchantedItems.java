@@ -39,6 +39,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -222,7 +223,7 @@ public class EnchantedItems {
         return ITEMS.register(name, () -> new Item(new Properties()));
     }
 
-    private static RegistryObject<Item> registerItemProperties(String name, Properties properties) {
+    private static RegistryObject<Item> registerItem(String name, Properties properties) {
         return ITEMS.register(name, () -> new Item(properties));
     }
 
@@ -304,6 +305,19 @@ public class EnchantedItems {
 
     public static  boolean isArmourPoppet(Item item) {
         return item == ARMOUR_POPPET.get() || item == ARMOUR_POPPET_INFUSED.get() || item == ARMOUR_POPPET_STURDY.get();
+    }
+
+    public static void registerCompostables() {
+        ComposterBlock.COMPOSTABLES.put(ARTICHOKE_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(ARTICHOKE.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(SNOWBELL_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(BELLADONNA_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(BELLADONNA_FLOWER.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(MANDRAKE_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(MANDRAKE_ROOT.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(WOLFSBANE_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(WOLFSBANE_FLOWER.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(GARLIC.get(), 0.45F);
     }
 
 }

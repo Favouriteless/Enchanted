@@ -29,6 +29,7 @@ import com.favouriteless.enchanted.common.entities.EntEntity;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.jei.EnchantedJEITextures;
@@ -51,6 +52,8 @@ public class CommonSetupEvents {
         EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_WHITE.get(), "white");
         EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_RED.get(), "red");
         EnchantedJEITextures.registerBlockSuffix(EnchantedBlocks.CHALK_PURPLE.get(), "purple");
+
+        EnchantedItems.registerCompostables();
     }
 
     @SubscribeEvent

@@ -94,6 +94,10 @@ repositories {
         }
     }
     maven {
+        name = "SmartBrainLib Maven"
+        url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
+    }
+    maven {
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
 }
@@ -104,6 +108,7 @@ dependencies {
     implementation fg.deobf("curse.maven:stateobserver-701213:4084960")
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
+    implementation fg.deobf("net.tslat.smartbrainlib:SmartBrainLib-forge-${mc_version}:${sbl_version}")
 
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")

@@ -37,3 +37,9 @@ Enchanted is your mod for all things occult or witchcraft. A modernized attempt 
     versionRange="[1.18-3.0.55,]"
     ordering="NONE"
     side="BOTH"
+[[dependencies.enchanted]]
+    modId="smartbrainlib"
+    mandatory=true
+    versionRange="[1.8,)"
+    ordering="NONE"
+    side="SERVER"

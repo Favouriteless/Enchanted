@@ -2,7 +2,6 @@
   "name": "Mystic Unguent",
   "icon": "enchanted:mystic_unguent",
   "category": "enchanted:kettle",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

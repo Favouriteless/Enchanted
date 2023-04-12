@@ -42,10 +42,15 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -83,14 +88,17 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     @Override
     public BrainActivityGroup<EntEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-
+                new SetRandomWalkTarget<>()
         );
     }
 
-
-
-
-
+    @Override
+    public BrainActivityGroup<EntEntity> getFightTasks() {
+        return BrainActivityGroup.fightTasks(
+                new InvalidateAttackTarget<>(),
+                new TargetOrRetaliate<>()
+        );
+    }
 
     @Override
     protected Brain.Provider<?> brainProvider() {
@@ -103,7 +111,10 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 200.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.15D)
+                .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Override
@@ -131,11 +142,28 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "lowerBodyController", 0, this::lowerBodyPredicate));
+        data.addAnimationController(new AnimationController<>(this, "upperBodyController", 0, this::upperBodyPredicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        return PlayState.CONTINUE;
+    private <E extends IAnimatable> PlayState lowerBodyPredicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_lower", EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().clearAnimationCache();
+            return PlayState.STOP;
+        }
+    }
+
+    private <E extends IAnimatable> PlayState upperBodyPredicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_upper", EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().clearAnimationCache();
+            return PlayState.STOP;
+        }
     }
 
     @Override

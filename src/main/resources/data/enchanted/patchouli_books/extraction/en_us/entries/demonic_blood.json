@@ -2,7 +2,6 @@
   "name": "Demonic Blood",
   "icon": "enchanted:demonic_blood",
   "category": "enchanted:distillation",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

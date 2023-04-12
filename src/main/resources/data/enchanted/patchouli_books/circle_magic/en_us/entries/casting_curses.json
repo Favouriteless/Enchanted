@@ -2,7 +2,6 @@
   "name": "Casting Curses",
   "icon": "minecraft:wither_rose",
   "category": "enchanted:curses",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

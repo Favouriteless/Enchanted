@@ -2,6 +2,5 @@
   "name": "World Rites",
   "description": "World rites are a powerful form of magick in which a Witch attempts to alter natural phenomenon. This can often prove dangerous.",
   "icon": "minecraft:grass_block",
-  "flag": "!enchanted:hardcore_books",
   "sortnum": 0
 }

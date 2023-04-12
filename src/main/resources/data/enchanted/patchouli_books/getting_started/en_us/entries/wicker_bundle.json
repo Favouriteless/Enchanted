@@ -2,7 +2,6 @@
   "name": "Wicker Bundle",
   "icon": "enchanted:wicker_bundle",
   "category": "enchanted:crafting_materials",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

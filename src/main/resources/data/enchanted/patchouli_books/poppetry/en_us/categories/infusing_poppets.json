@@ -2,6 +2,5 @@
   "name": "Infusing Poppets",
   "description": "This section contains all of the different upgrades you can use on basic poppets and their effects.",
   "icon": "enchanted:fire_poppet_infused",
-  "flag": "!enchanted:hardcore_books",
   "sortnum": 1
 }

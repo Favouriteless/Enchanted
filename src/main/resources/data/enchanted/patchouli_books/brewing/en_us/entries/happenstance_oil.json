@@ -2,7 +2,6 @@
   "name": "Happenstance Oil",
   "icon": "enchanted:happenstance_oil",
   "category": "enchanted:kettle",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

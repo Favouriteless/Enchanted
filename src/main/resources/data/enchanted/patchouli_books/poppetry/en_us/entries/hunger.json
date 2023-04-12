@@ -2,7 +2,6 @@
   "name": "Hunger",
   "icon": "enchanted:hunger_poppet",
   "category": "enchanted:infusing_poppets",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

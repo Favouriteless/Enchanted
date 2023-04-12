@@ -2,7 +2,6 @@
   "name": "Brew of Love",
   "icon": "enchanted:brew_of_love",
   "category": "enchanted:kettle",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

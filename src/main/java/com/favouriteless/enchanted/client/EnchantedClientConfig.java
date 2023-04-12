@@ -25,19 +25,13 @@
 package com.favouriteless.enchanted.client;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class EnchantedClientConfig {
 	public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec SPEC;
 
-	// Patchouli books
-	public static ConfigValue<Boolean> HARDCORE_BOOKS;
 
 	static {
-		BUILDER.push("Patchouli Options");
-		HARDCORE_BOOKS = BUILDER.comment("Enable hardcore mode for the books/information. Recipes will be described with words and language will be shifted to be more immersive.").define("hardcore_books", false);
-		BUILDER.pop();
 
 		SPEC = BUILDER.build();
 	}

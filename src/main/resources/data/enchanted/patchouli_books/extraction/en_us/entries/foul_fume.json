@@ -2,11 +2,10 @@
   "name": "Foul Fume",
   "icon": "enchanted:foul_fume",
   "category": "enchanted:collecting_fumes",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Sulfur dioxide, referred to as Foul Fumes, is a colourless gas with a very pungent odour. $(br2)Can be toxic at high concentrations, witches and warlocks should avoid opening the jar."
+      "text": "Sulfur dioxide, referred to as Foul Fumes, is a colourless gas with a very pungent odour. $(br2)Can be toxic at high concentrations, witches should avoid opening the jar."
     },
     {
       "type": "enchanted:witch_oven_recipe_duo",

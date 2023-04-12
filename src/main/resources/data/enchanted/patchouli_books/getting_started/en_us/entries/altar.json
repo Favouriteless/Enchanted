@@ -2,7 +2,6 @@
   "name": "Altars",
   "icon": "enchanted:altar",
   "category": "enchanted:altars",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

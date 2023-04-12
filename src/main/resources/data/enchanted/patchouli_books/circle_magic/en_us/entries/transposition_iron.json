@@ -2,7 +2,6 @@
   "name": "Transpose Iron",
   "icon": "minecraft:raw_iron",
   "category": "enchanted:transposition",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

@@ -2,7 +2,6 @@
   "name": "Golden Chalk",
   "icon": "enchanted:chalk_gold",
   "category": "enchanted:performing_rites",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

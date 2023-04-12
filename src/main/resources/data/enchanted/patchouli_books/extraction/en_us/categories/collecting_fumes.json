@@ -2,6 +2,5 @@
   "name": "Collecting Fumes",
   "description": "This section details the witch oven and it's byproducts used for magical purposes.",
   "icon": "enchanted:witch_oven",
-  "flag": "!enchanted:hardcore_books",
   "sortnum": 0
 }

@@ -2,7 +2,6 @@
   "name": "Bone Needle",
   "icon": "enchanted:bone_needle",
   "category": "enchanted:crafting_materials",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

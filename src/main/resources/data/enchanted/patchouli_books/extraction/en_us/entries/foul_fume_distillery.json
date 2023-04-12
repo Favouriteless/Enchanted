@@ -2,7 +2,6 @@
   "name": "Foul Fume",
   "icon": "enchanted:foul_fume",
   "category": "enchanted:distillation",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:distillery_recipe",

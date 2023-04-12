@@ -2,7 +2,6 @@
   "name": "Hint of Rebirth",
   "icon": "enchanted:hint_of_rebirth",
   "category": "enchanted:collecting_fumes",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

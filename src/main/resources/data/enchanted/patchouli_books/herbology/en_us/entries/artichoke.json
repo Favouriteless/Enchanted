@@ -2,7 +2,6 @@
   "name": "Water Artichoke",
   "icon": "enchanted:textures/item/artichoke.png",
   "category": "enchanted:common_plants",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

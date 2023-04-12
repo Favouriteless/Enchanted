@@ -2,7 +2,6 @@
   "name": "Earmuffs",
   "icon": "enchanted:earmuffs",
   "category": "enchanted:tools",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

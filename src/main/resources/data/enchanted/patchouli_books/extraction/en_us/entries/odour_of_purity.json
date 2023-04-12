@@ -2,7 +2,6 @@
   "name": "Odour of Purity",
   "icon": "enchanted:odour_of_purity",
   "category": "enchanted:collecting_fumes",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

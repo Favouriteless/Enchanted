@@ -2,6 +2,5 @@
   "name": "Performing Rites",
   "description": "This section details the process used to perform a circle magic rite.",
   "icon": "enchanted:textures/block/glyph_gold.png",
-  "flag": "!enchanted:hardcore_books",
   "sortnum": -1
 }

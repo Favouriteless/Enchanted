@@ -2,7 +2,6 @@
   "name": "Otherwhere Chalk",
   "icon": "enchanted:chalk_purple",
   "category": "enchanted:cauldron",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

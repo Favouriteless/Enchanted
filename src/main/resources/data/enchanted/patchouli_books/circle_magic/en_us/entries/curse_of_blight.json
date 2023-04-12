@@ -2,7 +2,6 @@
   "name": "Curse of Blight",
   "icon": "minecraft:spider_eye",
   "category": "enchanted:curses",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

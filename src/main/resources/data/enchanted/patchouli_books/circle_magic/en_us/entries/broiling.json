@@ -2,7 +2,6 @@
   "name": "Broiling",
   "icon": "minecraft:beef",
   "category": "enchanted:world",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

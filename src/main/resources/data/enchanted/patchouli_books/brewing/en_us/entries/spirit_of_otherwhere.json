@@ -2,7 +2,6 @@
   "name": "Spirit of Otherwhere",
   "icon": "enchanted:spirit_of_otherwhere",
   "category": "enchanted:kettle",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,7 +2,6 @@
   "name": "Summon Entity",
   "icon": "minecraft:ender_eye",
   "category": "enchanted:transposition",
-  "flag": "!enchanted:hardcore_books",
   "pages": [
     {
       "type": "enchanted:rite_description",

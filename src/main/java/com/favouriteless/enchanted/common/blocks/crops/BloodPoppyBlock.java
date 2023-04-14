@@ -60,10 +60,10 @@ public class BloodPoppyBlock extends FlowerBlock implements EntityBlock {
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if(!world.isClientSide && entity instanceof LivingEntity) {
             if(!state.getValue(FILLED)) {
-                BlockEntity tileEntity = world.getBlockEntity(pos);
-                if(tileEntity instanceof BloodPoppyBlockEntity bloodPoppyTileEntity) {
-                    bloodPoppyTileEntity.setUUID(entity.getUUID());
-                    bloodPoppyTileEntity.setName(entity.getDisplayName().getString());
+                BlockEntity t = world.getBlockEntity(pos);
+                if(t instanceof BloodPoppyBlockEntity be) {
+                    be.setUUID(entity.getUUID());
+                    be.setName(entity.getDisplayName().getString());
                     world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
                 } else {
                     throw new IllegalStateException(String.format("Blood poppy at %s, %s, %s has invalid BlockEntity", pos.getX(), pos.getY(), pos.getZ()));
@@ -79,11 +79,11 @@ public class BloodPoppyBlock extends FlowerBlock implements EntityBlock {
 
     public static void reset(Level world, BlockPos pos) {
         if(!world.isClientSide) {
-            BloodPoppyBlockEntity tileEntity = (BloodPoppyBlockEntity)world.getBlockEntity(pos);
+            BloodPoppyBlockEntity blockEntity = (BloodPoppyBlockEntity)world.getBlockEntity(pos);
             BlockState state = world.getBlockState(pos);
 
             world.setBlockAndUpdate(pos, state.setValue(FILLED, false));
-            tileEntity.reset();
+            blockEntity.reset();
         }
     }
 

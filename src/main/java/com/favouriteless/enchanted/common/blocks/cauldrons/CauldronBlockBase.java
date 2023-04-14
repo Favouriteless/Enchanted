@@ -93,8 +93,8 @@ public abstract class CauldronBlockBase extends Block implements EntityBlock {
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if(!world.isClientSide && entity instanceof ItemEntity) {
-			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if(tileEntity instanceof CauldronBlockEntity<?> cauldron) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if(blockEntity instanceof CauldronBlockEntity<?> cauldron) {
 				if(!cauldron.isFailed && cauldron.isFull() && cauldron.isHot()) {
 					cauldron.addItem((ItemEntity) entity);
 				}

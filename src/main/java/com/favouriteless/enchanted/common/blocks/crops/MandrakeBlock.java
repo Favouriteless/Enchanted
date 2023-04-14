@@ -52,7 +52,7 @@ public class MandrakeBlock extends CropsBlockAgeFive {
     }
 
     @Override
-    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity tileEntity, ItemStack stack) {
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
 
@@ -69,7 +69,7 @@ public class MandrakeBlock extends CropsBlockAgeFive {
                 }
             }
         }
-        dropResources(state, world, pos, tileEntity, player, stack);
+        dropResources(state, world, pos, blockEntity, player, stack);
     }
 
     public static void spawnMandrake(Level world, BlockPos pos) {

@@ -52,7 +52,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlockEntity> {
+public class WitchOvenBlock extends SimpleContainerBlockBase {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;

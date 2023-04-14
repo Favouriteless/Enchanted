@@ -40,11 +40,6 @@ import net.minecraft.world.level.Level;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -80,23 +75,21 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     @Override
     public BrainActivityGroup<EntEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new LookAtTarget<>(),
-                new MoveToWalkTarget<>()
+
         );
     }
 
     @Override
     public BrainActivityGroup<EntEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new SetRandomWalkTarget<>()
+
         );
     }
 
     @Override
     public BrainActivityGroup<EntEntity> getFightTasks() {
         return BrainActivityGroup.fightTasks(
-                new InvalidateAttackTarget<>(),
-                new TargetOrRetaliate<>()
+
         );
     }
 
@@ -112,7 +105,7 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 200.0D)
+                .add(Attributes.MAX_HEALTH, 400.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
@@ -147,7 +140,7 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     }
 
     private <E extends IAnimatable> PlayState lowerBodyPredicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
+        if(true) {//if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_lower", EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else {
@@ -157,7 +150,7 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     }
 
     private <E extends IAnimatable> PlayState upperBodyPredicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
+        if(true) {//if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_upper", EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else {

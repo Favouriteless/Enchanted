@@ -29,24 +29,20 @@ import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
-import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -60,6 +56,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
+
+    private AbstractCookingRecipe currentSmeltingRecipe;
+    private boolean canSmelt = false; // Cache for performance
 
     private int burnTime = 0;
     private int burnTimeTotal = 0;
@@ -101,154 +100,128 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
     private static final int[] SLOTS_FOR_DOWN = new int[]{2, 4};
     private static final int[] SLOTS_FOR_WEST = new int[]{3};
     private static final int[] SLOTS_FOR_OTHER = new int[]{1};
+
     public WitchOvenBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, NonNullList.withSize(5, ItemStack.EMPTY));
-    }
-
-    @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        burnTime = nbt.getInt("burnTime");
-        burnTimeTotal = nbt.getInt("burnTimeTotal");
-        cookTime = nbt.getInt("cookTime");
-        cookTimeTotal = nbt.getInt("cookTimeTotal");
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        nbt.putInt("burnTime", burnTime);
-        nbt.putInt("burnTimeTotal", burnTimeTotal);
-        nbt.putInt("cookTime", cookTime);
-        nbt.putInt("cookTimeTotal", cookTimeTotal);
+        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, 5);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
-        if(t instanceof WitchOvenBlockEntity blockEntity) {
-            boolean flag = blockEntity.isBurning();
-            boolean flag1 = false;
+        if(t instanceof WitchOvenBlockEntity be) {
+            boolean startedBurning = be.isBurning();
 
             if(!level.isClientSide) {
-                ItemStack fuelStack = blockEntity.inventoryContents.get(1);
-                if(blockEntity.isBurning()) {
-                    blockEntity.burnTime--;
-                }
+                ItemStack fuelStack = be.inventoryContents.getStackInSlot(1);
 
+                if(be.isBurning())
+                    be.burnTime--;
 
-                if(blockEntity.isBurning() || !fuelStack.isEmpty() && !blockEntity.inventoryContents.get(0).isEmpty()) {
-                    Recipe<?> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, blockEntity, level).orElse(null);
-                    if(!blockEntity.isBurning() && blockEntity.canSmelt(recipe) && !ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(blockEntity.inventoryContents.get(0).getItem())) {
-                        blockEntity.burnTime = blockEntity.getBurnTime(fuelStack);
-                        blockEntity.burnTimeTotal = blockEntity.getBurnTime(fuelStack);
-                        if(blockEntity.isBurning()) {
-                            flag1 = true;
-                            if(fuelStack.hasContainerItem())
-                                blockEntity.inventoryContents.set(1, fuelStack.getContainerItem());
-                            else if(!fuelStack.isEmpty()) {
+                if(be.isBurning() || !fuelStack.isEmpty()) {
+                    if(be.canSmelt) {
+                        if(!be.isBurning()) { // Handle start burning fuel
+                            be.burnTime = be.getBurnTime(fuelStack);
+                            be.burnTimeTotal = be.burnTime;
+                            if(be.isBurning()) { // In case item is not fuel (for some reason)
                                 fuelStack.shrink(1);
-                                if(fuelStack.isEmpty()) {
-                                    blockEntity.inventoryContents.set(1, fuelStack.getContainerItem());
-                                }
                             }
                         }
-                    }
 
-                    if(blockEntity.isBurning() && blockEntity.canSmelt(recipe)) {
-                        blockEntity.cookTime++;
-                        if(blockEntity.cookTime == blockEntity.cookTimeTotal) {
-                            blockEntity.cookTime = 0;
-                            blockEntity.cookTimeTotal = (int) Math.round(blockEntity.getCookTime() * 0.8D);
-                            blockEntity.smelt(recipe);
-                            flag1 = true;
+                        if(be.isBurning()) {
+                            be.cookTime++;
+                            if(be.cookTime == be.cookTimeTotal) { // If finished cooking
+                                be.cookTime = 0;
+                                be.cookTimeTotal = 0;
+                                be.smelt();
+                            }
                         }
+                        else if(be.cookTime > 0)
+                            be.cookTime = Math.min(be.cookTime - 2, 0); // Was cooking but not burning anymore
                     }
-                    else {
-                        blockEntity.cookTime = 0;
-                    }
-                }
-                else if(!blockEntity.isBurning() && blockEntity.cookTime > 0) {
-                    blockEntity.cookTime = Mth.clamp(blockEntity.cookTime - 2, 0, blockEntity.cookTimeTotal);
+                    else
+                        be.cookTime = 0;
+
                 }
 
-                if(flag != blockEntity.isBurning()) {
-                    flag1 = true;
-                    level.setBlock(blockEntity.worldPosition, level.getBlockState(blockEntity.worldPosition).setValue(WitchOvenBlock.LIT, blockEntity.isBurning()), 3);
-                    blockEntity.updateFumeFunnels();
+                if(startedBurning != be.isBurning()) { // Update fume funnels and self if the burn state changed
+                    level.setBlock(be.worldPosition, level.getBlockState(be.worldPosition).setValue(WitchOvenBlock.LIT, be.isBurning()), 3);
+                    be.updateFumeFunnels();
                 }
             }
 
-            if(flag1) {
-                blockEntity.setChanged();
-            }
+            be.setChanged();
         }
     }
 
-    protected boolean canSmelt(@Nullable Recipe<?> recipeIn) {
-        if (!this.inventoryContents.get(0).isEmpty() && recipeIn != null) { // If item in input & recipe not null
+    protected boolean canSmelt() {
+        if (currentSmeltingRecipe != null) { // If recipe not null
+            ItemStack resultStack = currentSmeltingRecipe.getResultItem();
 
-            ItemStack resultStack = recipeIn.getResultItem();
-
-            if (resultStack.isEmpty()) { // If recipe makes nothing
+            if(resultStack.isEmpty()) // If recipe makes nothing
                 return false;
-            } else {
-                ItemStack outputStack = this.inventoryContents.get(2);
-                if (outputStack.isEmpty()) { // If output is empty
-                    return true;
-                } else if (!outputStack.sameItem(resultStack)) { // If output is a different item
-                    return false;
-                } else if (outputStack.getCount() + resultStack.getCount() <= this.getMaxStackSize() && outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize()) {
-                    return true;
-                } else {
-                    return outputStack.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize();
-                }
-            }
-        } else {
-            return false;
+            if(ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(inventoryContents.getStackInSlot(0).getItem())) // Can't smelt ores
+                return false;
+
+            ItemStack outputStack = this.inventoryContents.getStackInSlot(2);
+            if (outputStack.isEmpty()) // If output is empty
+                return true;
+            else if (!outputStack.sameItem(resultStack)) // If output is a different item
+                return false;
+
+            return outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize(); // Can fit output into slot
         }
+        return false;
     }
 
-    protected void smelt(@Nullable Recipe<?> recipe) {
-        if (recipe != null && this.canSmelt(recipe)) {
-            ItemStack itemstack = this.inventoryContents.get(0);
-            ItemStack itemstack1 = recipe.getResultItem();
-            ItemStack itemstack2 = this.inventoryContents.get(2);
+    protected void smelt() {
+        if (currentSmeltingRecipe != null) {
+            ItemStack inputStack = inventoryContents.getStackInSlot(0);
+            ItemStack fuelStack = inventoryContents.getStackInSlot(1);
+            ItemStack outputStack = inventoryContents.getStackInSlot(2);
+            ItemStack recipeResult = currentSmeltingRecipe.getResultItem().copy();
 
-            if(Enchanted.RANDOM.nextDouble() <= getByproductChance()) {
+            if(Enchanted.RANDOM.nextDouble() <= getByproductChance())
                 createByproduct();
+
+            if (outputStack.isEmpty())
+                inventoryContents.setStackInSlot(2, recipeResult);
+            else if (outputStack.getItem() == recipeResult.getItem()) {
+                outputStack.grow(recipeResult.getCount());
+                inventoryContents.setStackInSlot(2, outputStack);
             }
 
-            if (itemstack2.isEmpty()) {
-                this.inventoryContents.set(2, itemstack1.copy());
-            } else if (itemstack2.getItem() == itemstack1.getItem()) {
-                itemstack2.grow(itemstack1.getCount());
-            }
+            if (inputStack.getItem() == Blocks.WET_SPONGE.asItem() && !fuelStack.isEmpty() && fuelStack.getItem() == Items.BUCKET)
+                inventoryContents.setStackInSlot(1, new ItemStack(Items.WATER_BUCKET));
 
-            if (itemstack.getItem() == Blocks.WET_SPONGE.asItem() && !this.inventoryContents.get(1).isEmpty() && this.inventoryContents.get(1).getItem() == Items.BUCKET) {
-                this.inventoryContents.set(1, new ItemStack(Items.WATER_BUCKET));
-            }
-
-            itemstack.shrink(1);
+            inputStack.shrink(1);
+            inventoryContents.setStackInSlot(0, inputStack);
         }
     }
 
     private void createByproduct() {
-        WitchOvenRecipe currentRecipe = matchRecipe();
-        ItemStack outputStack = this.inventoryContents.get(4);
-        ItemStack jarStack = this.inventoryContents.get(3);
+        if(level != null) {
+            level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, recipeWrapper, level).ifPresent(recipe -> {
+                ItemStack jarStack = inventoryContents.getStackInSlot(3);
+                ItemStack outputStack = inventoryContents.getStackInSlot(4);
 
-        if(currentRecipe != null) {
-            ItemStack result = currentRecipe.getResultItem().copy();
+                ItemStack result = recipe.getResultItem().copy();
 
-            if(jarStack.getCount() >= result.getCount()) {
-                if(outputStack.isEmpty()) {
-                    this.inventoryContents.set(4, result);
-                    jarStack.shrink(result.getCount());
+                if(jarStack.getCount() >= result.getCount()) {
+                    if(outputStack.isEmpty()) {
+                        inventoryContents.setStackInSlot(4, result);
+
+                        jarStack.shrink(result.getCount());
+                        inventoryContents.setStackInSlot(3, jarStack);
+                    }
+                    else if(outputStack.getItem() == result.getItem() && outputStack.getCount() < (outputStack.getMaxStackSize() - result.getCount())) {
+                        int diff = outputStack.getMaxStackSize() - result.getCount();
+
+                        outputStack.grow(result.getCount());
+                        inventoryContents.setStackInSlot(4, outputStack);
+
+                        jarStack.shrink(Math.min(diff, result.getCount()));
+                        inventoryContents.setStackInSlot(3, jarStack);
+                    }
                 }
-                else if(outputStack.getItem() == result.getItem() && outputStack.getCount() < (outputStack.getMaxStackSize() - result.getCount())) {
-                    outputStack.grow(result.getCount());
-                    jarStack.shrink(result.getCount());
-                }
-            }
+            });
         }
     }
 
@@ -295,14 +268,21 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         return byproductChance;
     }
 
-    private WitchOvenRecipe matchRecipe() {
-        WitchOvenRecipe currentRecipe = null;
+    @Override
+    protected void onInventoryChanged(int slot) {
+        if(slot == 0)
+            matchRecipe();
+        if(slot != 1)
+            canSmelt = canSmelt();
+    }
+
+    private void matchRecipe() {
         if (level != null) {
-            currentRecipe = level.getRecipeManager()
-                    .getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, this, level)
-                    .orElse(null);
+            currentSmeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, recipeWrapper, level).orElse(null);
+
+            if(currentSmeltingRecipe != null)
+                cookTimeTotal = (int)Math.round(currentSmeltingRecipe.getCookingTime() * 0.8D);
         }
-        return currentRecipe;
     }
 
     @Override
@@ -310,49 +290,43 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         return data;
     }
 
-    @Override
-    protected Component getDefaultName() {
-        return new TranslatableComponent("container.enchanted.witch_oven");
-    }
-
-    @Override
-    protected AbstractContainerMenu createMenu(int id, Inventory player) {
-        return new WitchOvenMenu(id, player, this, this.data);
-    }
-
     private boolean isBurning() {
         return this.burnTime > 0;
     }
 
-    protected int getCookTime() {
-        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        matchRecipe();
+        canSmelt = canSmelt();
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        if(side != Direction.UP && side != Direction.DOWN)
-            side = Direction.fromYRot(side.toYRot() + level.getBlockState(worldPosition).getValue(WitchOvenBlock.FACING).toYRot());
-        return switch(side) {
-            case UP -> SLOTS_FOR_UP;
-            case DOWN -> SLOTS_FOR_DOWN;
-            case WEST -> SLOTS_FOR_WEST;
-            default -> SLOTS_FOR_OTHER;
-        };
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        burnTime = nbt.getInt("burnTime");
+        burnTimeTotal = nbt.getInt("burnTimeTotal");
+        cookTime = nbt.getInt("cookTime");
+        cookTimeTotal = nbt.getInt("cookTimeTotal");
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
-        if(direction == Direction.UP)
-            return slot == 0;
-        else if(direction != Direction.DOWN)
-            return (slot == 2 && stack.getItem() == EnchantedItems.CLAY_JAR.get()) || (slot == 1 && net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
-
-        return false;
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        nbt.putInt("burnTime", burnTime);
+        nbt.putInt("burnTimeTotal", burnTimeTotal);
+        nbt.putInt("cookTime", cookTime);
+        nbt.putInt("cookTimeTotal", cookTimeTotal);
     }
 
     @Override
-    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
-        return direction == Direction.DOWN && (slot == 2 || slot == 4);
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.enchanted.witch_oven");
     }
 
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+        return new WitchOvenMenu(id, playerInventory, this, data);
+    }
 }

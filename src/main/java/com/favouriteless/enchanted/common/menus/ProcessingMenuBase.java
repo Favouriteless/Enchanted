@@ -41,8 +41,8 @@ public abstract class ProcessingMenuBase extends MenuBase {
 
     protected final ContainerData data;
 
-    protected ProcessingMenuBase(@Nullable MenuType<?> type, int id, InventoryBlockEntityBase tileEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
-        super(type, id, tileEntity, canInteractWithCallable, block);
+    protected ProcessingMenuBase(@Nullable MenuType<?> type, int id, InventoryBlockEntityBase blockEntity, ContainerLevelAccess canInteractWithCallable, Block block, ContainerData data) {
+        super(type, id, blockEntity, canInteractWithCallable, block);
         this.data = data;
 
         if(data != null) {

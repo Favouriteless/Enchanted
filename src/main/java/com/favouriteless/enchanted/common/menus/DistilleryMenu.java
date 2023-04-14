@@ -40,23 +40,23 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class DistilleryMenu extends ProcessingMenuBase {
 
-    public DistilleryMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
-        super(EnchantedContainers.DISTILLERY.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
+    public DistilleryMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase blockEntity, final ContainerData data) {
+        super(EnchantedContainers.DISTILLERY.get(), windowId, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
 
-        // Container Inventory
-        addSlot(new SlotJarInput(tileEntity, 0, 32, 35)); // Jar input
-        addSlot(new SlotInput(tileEntity, 1, 54, 25)); // Ingredient input
-        addSlot(new SlotInput(tileEntity, 2, 54, 45)); // Ingredient input
-        addSlot(new SlotOutput(tileEntity, 3, 127, 7)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 4, 127, 26)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 5, 127, 45)); // Distillery output
-        addSlot(new SlotOutput(tileEntity, 6, 127, 64)); // Distillery output
+        // SpinningWheelBlockEntity Inventory
+        addSlot(new SlotJarInput(blockEntity, 0, 32, 35)); // Jar input
+        addSlot(new SlotInput(blockEntity, 1, 54, 25)); // Ingredient input
+        addSlot(new SlotInput(blockEntity, 2, 54, 45)); // Ingredient input
+        addSlot(new SlotOutput(blockEntity, 3, 127, 7)); // Distillery output
+        addSlot(new SlotOutput(blockEntity, 4, 127, 26)); // Distillery output
+        addSlot(new SlotOutput(blockEntity, 5, 127, 45)); // Distillery output
+        addSlot(new SlotOutput(blockEntity, 6, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
     }
 
     public DistilleryMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
+        this(windowId, playerInventory, (InventoryBlockEntityBase) getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
     }
 
     @Override

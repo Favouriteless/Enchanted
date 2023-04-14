@@ -39,20 +39,20 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class SpinningWheelMenu extends ProcessingMenuBase {
 
-	public SpinningWheelMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
-		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
+	public SpinningWheelMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase blockEntity, final ContainerData data) {
+		super(EnchantedContainers.SPINNING_WHEEL.get(), windowId, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 
-		// Container Inventory
-		addSlot(new SlotInput(tileEntity, 0, 45, 23)); // Main input
-		addSlot(new SlotInput(tileEntity, 1, 33, 47)); // Ingredient input
-		addSlot(new SlotInput(tileEntity, 2, 57, 47)); // Ingredient input
-		addSlot(new SlotOutput(tileEntity, 3, 130, 35)); // Spinning wheel output
+		// SpinningWheelBlockEntity Inventory
+		addSlot(new SlotInput(blockEntity, 0, 45, 23)); // Main input
+		addSlot(new SlotInput(blockEntity, 1, 33, 47)); // Ingredient input
+		addSlot(new SlotInput(blockEntity, 2, 57, 47)); // Ingredient input
+		addSlot(new SlotOutput(blockEntity, 3, 130, 35)); // Spinning wheel output
 
 		addInventorySlots(playerInventory, 8, 84);
 	}
 
 	public SpinningWheelMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
+		this(windowId, playerInventory, (InventoryBlockEntityBase) getBlockEntity(playerInventory, data, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
 	}
 
 	@Override

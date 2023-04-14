@@ -22,13 +22,14 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities.bed;
+package com.favouriteless.enchanted.common.capabilities.bed;
 
+import com.favouriteless.enchanted.api.capabilities.bed.IBedCapability;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.UUID;
 
-public class BedPlayerCapability implements IBedPlayerCapability {
+public class BedCapabilityImpl implements IBedCapability {
 
     private static final String UUID_KEY_NAME = "player_uuid";
     private static final String NAME_KEY_NAME = "player_name";

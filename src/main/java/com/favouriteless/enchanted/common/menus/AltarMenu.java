@@ -38,29 +38,29 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class AltarMenu extends AbstractContainerMenu {
 
-    public final AltarBlockEntity tileEntity;
+    public final AltarBlockEntity blockEntity;
     private final ContainerLevelAccess canInteractWithCallable;
     private final ContainerData data;
 
-    public AltarMenu(final int windowId, final AltarBlockEntity tileEntity, ContainerData data) {
+    public AltarMenu(final int windowId, final AltarBlockEntity blockEntity, ContainerData data) {
         super(EnchantedContainers.ALTAR.get(), windowId);
-        this.tileEntity = tileEntity;
-        this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
+        this.blockEntity = blockEntity;
+        this.canInteractWithCallable = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
         this.data = data;
         addDataSlots(this.data);
     }
 
     public AltarMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, getTileEntity(playerInventory, data), new SimpleContainerData(3));
+        this(windowId, getBlockEntity(playerInventory, data), new SimpleContainerData(3));
     }
 
-    private static AltarBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
-        final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+    private static AltarBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+        final BlockEntity blockEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
-        if(tileEntity instanceof AltarBlockEntity) {
-            return (AltarBlockEntity)tileEntity;
+        if(blockEntity instanceof AltarBlockEntity) {
+            return (AltarBlockEntity)blockEntity;
         }
-        throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
+        throw new IllegalStateException("BlockEntity at " + data.readBlockPos() + " is not correct");
     }
 
     public int getCurrentPower() {

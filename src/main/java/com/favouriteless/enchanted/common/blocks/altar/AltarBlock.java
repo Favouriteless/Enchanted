@@ -96,9 +96,9 @@ public class AltarBlock extends BaseEntityBlock {
                 BlockState cornerState = world.getBlockState(cornerPos);
 
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
-                    BlockEntity tileEntity = world.getBlockEntity(cornerPos);
-                    if (tileEntity instanceof AltarBlockEntity) {
-                        NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)tileEntity, tileEntity.getBlockPos());
+                    BlockEntity blockEntity = world.getBlockEntity(cornerPos);
+                    if (blockEntity instanceof AltarBlockEntity) {
+                        NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)blockEntity, blockEntity.getBlockPos());
                     }
                 }
                 return InteractionResult.CONSUME;

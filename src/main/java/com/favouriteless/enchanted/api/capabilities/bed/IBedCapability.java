@@ -22,19 +22,16 @@
  *
  */
 
-package com.favouriteless.enchanted.api.altar;
+package com.favouriteless.enchanted.api.capabilities.bed;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.List;
+import java.util.UUID;
 
-/**
- * Use for marking a BlockEntity as a power consumer.
- */
-public interface IAltarPowerConsumer {
-
-    List<BlockPos> getAltarPositions();
-    void removeAltar(BlockPos altarPos);
-    void addAltar(BlockPos altarPos);
-
+public interface IBedCapability extends INBTSerializable<CompoundTag> {
+    UUID getUUID();
+    void setUUID(UUID uuid);
+    String getName();
+    void setName(String name);
 }

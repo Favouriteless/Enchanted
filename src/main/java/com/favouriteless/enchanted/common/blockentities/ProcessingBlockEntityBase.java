@@ -25,17 +25,20 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public abstract class ProcessingBlockEntityBase extends InventoryBlockEntityBase {
 
-    public ProcessingBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, NonNullList<ItemStack> inventoryContents) {
-        super(type, pos, state, inventoryContents);
+    protected final RecipeWrapper recipeWrapper;
+
+    public ProcessingBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySize) {
+        super(type, pos, state, inventorySize);
+        recipeWrapper = new RecipeWrapper(inventoryContents);
     }
 
     public abstract ContainerData getData();

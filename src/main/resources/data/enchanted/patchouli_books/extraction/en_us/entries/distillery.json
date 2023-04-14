@@ -22,7 +22,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_distillery"
+      "recipe": "enchanted:distillery"
     }
   ],
   "read_by_default": false,

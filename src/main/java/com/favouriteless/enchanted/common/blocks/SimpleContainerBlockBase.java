@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.entity.player.Player;
@@ -38,18 +39,18 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-public abstract class SimpleContainerBlockBase<T extends RandomizableContainerBlockEntity> extends BaseEntityBlock {
+public abstract class SimpleContainerBlockBase extends BaseEntityBlock {
 
 	public SimpleContainerBlockBase(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
-		if(!worldIn.isClientSide) {
-			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof RandomizableContainerBlockEntity) {
-				NetworkHooks.openGui((ServerPlayer) player, (RandomizableContainerBlockEntity)tileEntity, pos);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
+		if(!level.isClientSide) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if(blockEntity instanceof MenuProvider) {
+				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider)blockEntity, pos);
 				return InteractionResult.SUCCESS;
 			}
 		}
@@ -57,13 +58,13 @@ public abstract class SimpleContainerBlockBase<T extends RandomizableContainerBl
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			BlockEntity tileEntity = world.getBlockEntity(blockPos);
-			if (tileEntity instanceof RandomizableContainerBlockEntity) {
-				Containers.dropContents(world, blockPos, (RandomizableContainerBlockEntity)tileEntity);
+			BlockEntity blockEntity = level.getBlockEntity(blockPos);
+			if (blockEntity instanceof RandomizableContainerBlockEntity) {
+				Containers.dropContents(level, blockPos, (RandomizableContainerBlockEntity)blockEntity);
 			}
-			super.onRemove(state, world, blockPos, newState, isMoving);
+			super.onRemove(state, level, blockPos, newState, isMoving);
 		}
 	}
 

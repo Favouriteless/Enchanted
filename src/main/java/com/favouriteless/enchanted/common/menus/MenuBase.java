@@ -38,15 +38,15 @@ import javax.annotation.Nullable;
 
 public class MenuBase extends AbstractContainerMenu {
 
-	protected BlockEntity tileEntity;
+	protected BlockEntity blockEntity;
 	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
-	protected MenuBase(@Nullable MenuType<?> type, int id, BlockEntity tileEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
+	protected MenuBase(@Nullable MenuType<?> type, int id, BlockEntity blockEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
 		super(type, id);
 		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;
-		this.tileEntity = tileEntity;
+		this.blockEntity = blockEntity;
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class MenuBase extends AbstractContainerMenu {
 		}
 	}
 
-	protected static BlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data, Class<? extends BlockEntity> type) {
-		final BlockEntity tileEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+	protected static BlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data, Class<? extends BlockEntity> type) {
+		final BlockEntity blockEntity = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
-		if(tileEntity != null && tileEntity.getClass() == type) {
-			return tileEntity;
+		if(blockEntity != null && blockEntity.getClass() == type) {
+			return blockEntity;
 		}
-		throw new IllegalStateException("TileEntity at " + data.readBlockPos() + " is not correct");
+		throw new IllegalStateException("BlockEntity at " + data.readBlockPos() + " is not correct");
 	}
 
 }

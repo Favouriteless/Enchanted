@@ -24,8 +24,8 @@
 
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
+import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -44,7 +44,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class SpinningWheelBlock extends SimpleContainerBlockBase<SpinningWheelBlockEntity> {
+public class SpinningWheelBlock extends SimpleContainerBlockBase {
 
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final VoxelShape X_SHAPE = Shapes.box(0.0625, 0, 0.3125, 0.9375, 0.8125, 0.6875);

@@ -24,7 +24,6 @@
 
 package com.favouriteless.enchanted.common.recipes;
 
-import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
@@ -32,6 +31,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -40,9 +40,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
-public class DistilleryRecipe implements Recipe<DistilleryBlockEntity> {
+public class DistilleryRecipe implements Recipe<Container> {
 
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
@@ -84,13 +83,12 @@ public class DistilleryRecipe implements Recipe<DistilleryBlockEntity> {
     }
 
     @Override
-    public boolean matches(DistilleryBlockEntity inv, Level level) {
-        List<ItemStack> items = inv.getItemsIn();
-
+    public boolean matches(Container inv, Level level) {
         int requiredItems = getItemsIn().size();
 
         for(ItemStack stack : getItemsIn()) {
-            for(ItemStack item : items) {
+            for(int i = 0; i < 3; i++) {
+                ItemStack item = inv.getItem(i);
                 if(stack.getItem() == item.getItem() && item.getCount() >= stack.getCount()) {
                     requiredItems--;
                     break;
@@ -101,7 +99,7 @@ public class DistilleryRecipe implements Recipe<DistilleryBlockEntity> {
     }
 
     @Override
-    public ItemStack assemble(DistilleryBlockEntity inv) {
+    public ItemStack assemble(Container inv) {
         return null;
     }
 

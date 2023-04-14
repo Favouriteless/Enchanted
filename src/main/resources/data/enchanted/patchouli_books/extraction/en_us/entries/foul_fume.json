@@ -19,7 +19,7 @@
     },
     {
       "type": "enchanted:witch_oven_recipe_single",
-      "recipe": "enchanted:byproduct_foul_fume_food",
+      "recipe": "enchanted:byproduct_foul_fume_raw_foods",
       "itemIn": "minecraft:beef",
       "resultItem": "minecraft:cooked_beef",
       "text": "Any food"

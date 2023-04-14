@@ -95,9 +95,9 @@ public class PoppetShelfSavedData extends SavedData {
 	public void updateShelf(String identifier) {
 		Level level = getLevelFromShelfIdentifier(identifier);
 		BlockPos pos = getBlockPosFromShelfIdentifier(identifier);
-		BlockEntity tileEntity = level.getBlockEntity(pos);
-		if(tileEntity instanceof PoppetShelfBlockEntity)
-			((PoppetShelfBlockEntity)tileEntity).updateBlock();
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if(blockEntity instanceof PoppetShelfBlockEntity)
+			((PoppetShelfBlockEntity)blockEntity).updateBlock();
 	}
 
 	public void setupPoppetUUIDs(String identifier, PoppetShelfInventory inventory) {
@@ -127,9 +127,9 @@ public class PoppetShelfSavedData extends SavedData {
 		}
 	}
 
-	public static String getShelfIdentifier(BlockEntity tileEntity) {
-		BlockPos pos = tileEntity.getBlockPos();
-		return String.format("%s+%s+%s+%s", tileEntity.getLevel().dimension().location(), pos.getX(), pos.getY(), pos.getZ());
+	public static String getShelfIdentifier(BlockEntity blockEntity) {
+		BlockPos pos = blockEntity.getBlockPos();
+		return String.format("%s+%s+%s+%s", blockEntity.getLevel().dimension().location(), pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	public static String getShelfIdentifier(Level level, BlockPos pos) {

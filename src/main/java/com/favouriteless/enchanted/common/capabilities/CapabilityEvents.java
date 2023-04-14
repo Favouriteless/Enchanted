@@ -22,16 +22,21 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities.bed;
+package com.favouriteless.enchanted.common.capabilities;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
+import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.capabilities.bed.BedCapabilityImpl;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-import java.util.UUID;
+@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
+public class CapabilityEvents {
 
-public interface IBedPlayerCapability extends INBTSerializable<CompoundTag> {
-    UUID getUUID();
-    void setUUID(UUID uuid);
-    String getName();
-    void setName(String name);
+	@SubscribeEvent
+	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+		event.register(BedCapabilityImpl.class);
+	}
+
 }

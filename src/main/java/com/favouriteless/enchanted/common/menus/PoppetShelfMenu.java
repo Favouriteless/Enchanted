@@ -38,17 +38,17 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class PoppetShelfMenu extends MenuBase {
 
-	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity tileEntity) {
-		super(EnchantedContainers.POPPET_SHELF.get(), id, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
+	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity blockEntity) {
+		super(EnchantedContainers.POPPET_SHELF.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
 
-		for(int i = 0; i < tileEntity.getInventory().getContainerSize(); i++)
-			addSlot(new PoppetSlot(tileEntity.getInventory(), i, 47 + i*22, 18));
+		for(int i = 0; i < blockEntity.getInventory().getContainerSize(); i++)
+			addSlot(new PoppetSlot(blockEntity.getInventory(), i, 47 + i*22, 18));
 
 		addInventorySlots(playerInventory, 8, 49);
 	}
 
 	public PoppetShelfMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (PoppetShelfBlockEntity)getTileEntity(playerInventory, data, PoppetShelfBlockEntity.class));
+		this(windowId, playerInventory, (PoppetShelfBlockEntity) getBlockEntity(playerInventory, data, PoppetShelfBlockEntity.class));
 	}
 
 	@Override

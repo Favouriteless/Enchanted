@@ -31,14 +31,13 @@ import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
@@ -59,20 +58,21 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	private static final int[] SLOTS_FOR_OTHER = new int[]{0, 1, 2};
 	private static final int[] SLOTS_FOR_DOWN = new int[]{3};
 
-	public static final int COOK_TIME_TOTAL = 400;
-	private int cookTime = 0;
+	public static final int SPIN_TIME_TOTAL = 400;
+	private int spinTime = 0;
+	private boolean canSpin = false; // Cache for performance
 	public ContainerData data = new ContainerData() {
 		public int get(int index) {
 			return switch(index) {
-				case 0 -> cookTime;
-				case 1 -> COOK_TIME_TOTAL;
+				case 0 -> spinTime;
+				case 1 -> SPIN_TIME_TOTAL;
 				default -> 0;
 			};
 		}
 
 		public void set(int index, int value) {
 			if(index == 0) {
-				cookTime = value;
+				spinTime = value;
 			}
 		}
 
@@ -84,65 +84,48 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	};
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
-		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state, NonNullList.withSize(4, ItemStack.EMPTY));
-	}
-
-	@Override
-	public void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
-		AltarPowerHelper.savePosTag(potentialAltars, nbt);
-		nbt.putInt("cookTime", cookTime);
-	}
-
-	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
-		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
-		cookTime = nbt.getInt("cookTime");
+		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state, 4);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
-		if(t instanceof SpinningWheelBlockEntity blockEntity) {
-
+		if(t instanceof SpinningWheelBlockEntity be) {
 			if(level != null) {
 				if(!level.isClientSide) {
-					blockEntity.matchRecipe();
-					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.potentialAltars);
+					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.potentialAltars);
 
-					if(blockEntity.canSpin(blockEntity.currentRecipe) && blockEntity.currentRecipe.getPower() > 0 && altar != null) {
-						double powerThisTick = (double)blockEntity.currentRecipe.getPower() / COOK_TIME_TOTAL;
+					if(be.canSpin && be.currentRecipe.getPower() > 0 && altar != null) {
+						double powerThisTick = (double)be.currentRecipe.getPower() / SPIN_TIME_TOTAL;
 						if(altar.currentPower > powerThisTick) {
 							altar.currentPower -= powerThisTick;
-							blockEntity.cookTime++;
+							be.spinTime++;
 
-							if(blockEntity.cookTime == COOK_TIME_TOTAL) {
-								blockEntity.cookTime = 0;
-								blockEntity.spin();
+							if(be.spinTime == SPIN_TIME_TOTAL) {
+								be.spinTime = 0;
+								be.spin();
 							}
 						}
 					}
-					else {
-						blockEntity.cookTime = 0;
-					}
+					else
+						be.spinTime = 0;
 
-					blockEntity.updateBlock();
+					be.updateBlock();
 				}
 				else {
-					if(blockEntity.isSpinning)
-						blockEntity.cookTime++;
+					if(be.isSpinning)
+						be.spinTime++;
 					else
-						blockEntity.cookTime = 0;
+						be.spinTime = 0;
 				}
 			}
 		}
 	}
 
 	protected void spin() {
-		currentRecipe.assemble(this);
+		currentRecipe.assemble(recipeWrapper);
 
 		for(ItemStack item : currentRecipe.getItemsIn()) {
-			for (int i = 0; i < inventoryContents.size()-1; i++) {
-				ItemStack stack = inventoryContents.get(i);
+			for (int i = 0; i < 3; i++) {
+				ItemStack stack = inventoryContents.getStackInSlot(i);
 				if(item.getItem() == stack.getItem()) {
 					stack.shrink(item.getCount());
 					break;
@@ -151,14 +134,14 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 		}
 	}
 
-	protected boolean canSpin(SpinningWheelRecipe recipeIn) {
-		if(recipeIn != null) {
-			ItemStack itemStack = inventoryContents.get(3);
-			if(itemStack.isEmpty())
+	protected boolean canSpin() {
+		if(currentRecipe != null) {
+			ItemStack itemStack = inventoryContents.getStackInSlot(3);
+			if(itemStack.isEmpty()) // Output is empty
 				return true;
 
-			if(recipeIn.getResultItem().sameItem(itemStack))
-				if(itemStack.getOrCreateTag().equals(recipeIn.getResultItem().getOrCreateTag()))
+			if(currentRecipe.getResultItem().sameItem(itemStack)) // Output same item & fits within stack
+				if(itemStack.getOrCreateTag().equals(currentRecipe.getResultItem().getOrCreateTag()))
 					return itemStack.getCount() < itemStack.getMaxStackSize();
 		}
 		return false;
@@ -166,26 +149,28 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	private void matchRecipe() {
 		if (level != null)
-			currentRecipe = level.getRecipeManager()
-					.getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, this, level)
-					.orElse(null);
+			currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, recipeWrapper, level).orElse(null);
 	}
 
 	@Override
-	public List<BlockPos> getAltarPositions() {
-		return potentialAltars;
+	protected void onInventoryChanged(int slot) {
+		if(slot < 3)
+			matchRecipe();
+		canSpin = canSpin();
 	}
 
 	@Override
-	public void removeAltar(BlockPos altarPos) {
-		potentialAltars.remove(altarPos);
-		setChanged();
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
+		AltarPowerHelper.savePosTag(potentialAltars, nbt);
+		nbt.putInt("spinTime", spinTime);
 	}
 
 	@Override
-	public void addAltar(BlockPos altarPos) {
-		AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
-		setChanged();
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
+		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+		spinTime = nbt.getInt("spinTime");
 	}
 
 	@Nullable
@@ -203,7 +188,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public CompoundTag getUpdateTag() {
 		CompoundTag nbt = super.getUpdateTag();
-		nbt.putBoolean("isSpinning", cookTime > 0);
+		nbt.putBoolean("isSpinning", spinTime > 0);
 		return nbt;
 	}
 
@@ -213,34 +198,31 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	protected Component getDefaultName() {
+	public Component getDisplayName() {
 		return new TranslatableComponent("container.enchanted.spinning_wheel");
 	}
 
+	@Nullable
 	@Override
-	protected AbstractContainerMenu createMenu(int id, Inventory player) {
-		return new SpinningWheelMenu(id, player, this, data);
+	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+		return new SpinningWheelMenu(id, playerInventory, this, data);
 	}
 
 	@Override
-	public int[] getSlotsForFace(Direction side) {
-		if(side == Direction.DOWN)
-			return SLOTS_FOR_DOWN;
-		else
-			return SLOTS_FOR_OTHER;
+	public List<BlockPos> getAltarPositions() {
+		return potentialAltars;
 	}
 
 	@Override
-	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
-		if(direction != Direction.DOWN)
-			return slot == 0 || slot == 1 || slot == 2;
-
-		return false;
+	public void removeAltar(BlockPos altarPos) {
+		potentialAltars.remove(altarPos);
+		setChanged();
 	}
 
 	@Override
-	public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
-		return direction == Direction.DOWN && slot == 3;
+	public void addAltar(BlockPos altarPos) {
+		AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
+		setChanged();
 	}
 
 }

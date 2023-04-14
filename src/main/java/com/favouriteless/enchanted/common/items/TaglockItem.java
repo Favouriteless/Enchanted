@@ -25,8 +25,8 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.capabilities.bed.BedPlayerCapabilityManager;
-import com.favouriteless.enchanted.api.capabilities.bed.IBedPlayerCapability;
+import com.favouriteless.enchanted.api.capabilities.bed.EnchantedCapabilities;
+import com.favouriteless.enchanted.api.capabilities.bed.IBedCapability;
 import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
@@ -91,14 +91,14 @@ public class TaglockItem extends Item {
         BlockState state = world.getBlockState(context.getClickedPos());
         if(state.getBlock() instanceof BedBlock) {
             if(!world.isClientSide) {
-                BlockEntity tileEntity;
+                BlockEntity blockEntity;
                 if (state.getValue(BedBlock.PART) == BedPart.HEAD) {
-                    tileEntity = world.getBlockEntity(context.getClickedPos());
+                    blockEntity = world.getBlockEntity(context.getClickedPos());
                 } else {
-                    tileEntity = world.getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
+                    blockEntity = world.getBlockEntity(context.getClickedPos().relative(BedBlock.getConnectedDirection(state)));
                 }
-                if (tileEntity == null) return InteractionResult.FAIL;
-                IBedPlayerCapability playerCapability = tileEntity.getCapability(BedPlayerCapabilityManager.INSTANCE).orElse(null);
+                if (blockEntity == null) return InteractionResult.FAIL;
+                IBedCapability playerCapability = blockEntity.getCapability(EnchantedCapabilities.BED).orElse(null);
 
                 if (playerCapability.getUUID() != null && playerCapability.getName() != null) {
                     fillTaglock(context.getPlayer(), context.getItemInHand(), playerCapability.getUUID(), playerCapability.getName());
@@ -113,10 +113,10 @@ public class TaglockItem extends Item {
         else if(state.getBlock() == EnchantedBlocks.BLOOD_POPPY.get()) {
             if(!world.isClientSide) {
                 if (state.getValue(BloodPoppyBlock.FILLED)) {
-                    BlockEntity tileEntity = world.getBlockEntity(context.getClickedPos());
-                    if (tileEntity != null) {
-                        BloodPoppyBlockEntity poppyTileEntity = (BloodPoppyBlockEntity)tileEntity;
-                        fillTaglock(context.getPlayer(), context.getItemInHand(), poppyTileEntity.getUUID(), poppyTileEntity.getName());
+                    BlockEntity blockEntity = world.getBlockEntity(context.getClickedPos());
+                    if (blockEntity != null) {
+                        BloodPoppyBlockEntity poppyBe = (BloodPoppyBlockEntity)blockEntity;
+                        fillTaglock(context.getPlayer(), context.getItemInHand(), poppyBe.getUUID(), poppyBe.getName());
                         BloodPoppyBlock.reset(world, context.getClickedPos());
                     }
                     else {

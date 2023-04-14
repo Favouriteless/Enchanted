@@ -46,7 +46,7 @@ public class RiteManager {
 
 	@SubscribeEvent
 	public static void onWorldTick(WorldTickEvent event) {
-		if(event.phase == Phase.START && event.world.dimension() == Level.OVERWORLD) {
+		if(event.phase == Phase.START && !event.world.isClientSide && event.world.dimension() == Level.OVERWORLD) {
 			RiteSavedData data = RiteSavedData.get(event.world);
 
 			data.ACTIVE_RITES.removeIf(rite -> rite.isRemoved);

@@ -22,19 +22,14 @@
  *
  */
 
-package com.favouriteless.enchanted.api.altar;
+package com.favouriteless.enchanted.api.capabilities.bed;
 
-import net.minecraft.core.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 
-import java.util.List;
+public class EnchantedCapabilities {
 
-/**
- * Use for marking a BlockEntity as a power consumer.
- */
-public interface IAltarPowerConsumer {
-
-    List<BlockPos> getAltarPositions();
-    void removeAltar(BlockPos altarPos);
-    void addAltar(BlockPos altarPos);
+	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
 
 }

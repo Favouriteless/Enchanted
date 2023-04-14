@@ -74,9 +74,9 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
 		if(!worldIn.isClientSide) {
-			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-			if(tileEntity instanceof PoppetShelfBlockEntity) {
-				NetworkHooks.openGui((ServerPlayer) player, (PoppetShelfBlockEntity)tileEntity, pos);
+			BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+			if(blockEntity instanceof PoppetShelfBlockEntity) {
+				NetworkHooks.openGui((ServerPlayer) player, (PoppetShelfBlockEntity)blockEntity, pos);
 				return InteractionResult.SUCCESS;
 			}
 		}
@@ -86,9 +86,9 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
 		if(state.getBlock() != newState.getBlock()) {
-			BlockEntity tileEntity = world.getBlockEntity(blockPos);
-			if(tileEntity instanceof PoppetShelfBlockEntity) {
-				PoppetShelfBlockEntity shelf = (PoppetShelfBlockEntity) tileEntity;
+			BlockEntity blockEntity = world.getBlockEntity(blockPos);
+			if(blockEntity instanceof PoppetShelfBlockEntity) {
+				PoppetShelfBlockEntity shelf = (PoppetShelfBlockEntity) blockEntity;
 				if(!world.isClientSide)
 					StaticItemStackHelper.dropContentsNoChange(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), shelf.getInventory());
 				PoppetShelfManager.removeShelf(shelf);

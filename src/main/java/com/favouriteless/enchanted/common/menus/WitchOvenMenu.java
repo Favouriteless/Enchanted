@@ -43,21 +43,21 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class WitchOvenMenu extends ProcessingMenuBase {
 
-    public WitchOvenMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase tileEntity, final ContainerData data) {
-        super(EnchantedContainers.WITCH_OVEN.get(), windowId, tileEntity, ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
+    public WitchOvenMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase blockEntity, final ContainerData data) {
+        super(EnchantedContainers.WITCH_OVEN.get(), windowId, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
 
-        // Container Inventory
-        this.addSlot(new SlotInput(tileEntity, 0, 53, 17)); // Ingredient input
-        this.addSlot(new SlotFuel(tileEntity, 1, 80, 53)); // Fuel Slot
-        this.addSlot(new SlotOutput(tileEntity, 2, 107, 17)); // Smelting output
-        this.addSlot(new SlotJarInput(tileEntity, 3, 53, 53)); // Jar input
-        this.addSlot(new SlotOutput(tileEntity, 4, 107, 53)); // Jar output
+        // SpinningWheelBlockEntity Inventory
+        this.addSlot(new SlotInput(blockEntity, 0, 53, 17)); // Ingredient input
+        this.addSlot(new SlotFuel(blockEntity, 1, 80, 53)); // Fuel Slot
+        this.addSlot(new SlotOutput(blockEntity, 2, 107, 17)); // Smelting output
+        this.addSlot(new SlotJarInput(blockEntity, 3, 53, 53)); // Jar input
+        this.addSlot(new SlotOutput(blockEntity, 4, 107, 53)); // Jar output
 
         this.addInventorySlots(playerInventory, 8, 84);
     }
 
     public WitchOvenMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryBlockEntityBase)getTileEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
+        this(windowId, playerInventory, (InventoryBlockEntityBase) getBlockEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
     }
 
     @Override
@@ -118,8 +118,8 @@ public class WitchOvenMenu extends ProcessingMenuBase {
     }
 
     public boolean hasByproduct(ItemStack item) {
-        if(tileEntity.getLevel() != null) {
-            return tileEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new SimpleContainer(item), this.tileEntity.getLevel()).isPresent();
+        if(blockEntity.getLevel() != null) {
+            return blockEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new SimpleContainer(item), this.blockEntity.getLevel()).isPresent();
         }
         return false;
     }

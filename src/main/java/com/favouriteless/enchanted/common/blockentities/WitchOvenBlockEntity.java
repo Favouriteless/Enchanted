@@ -177,7 +177,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
             ItemStack inputStack = inventoryContents.getStackInSlot(0);
             ItemStack fuelStack = inventoryContents.getStackInSlot(1);
             ItemStack outputStack = inventoryContents.getStackInSlot(2);
-            ItemStack recipeResult = currentSmeltingRecipe.getResultItem().copy();
+            ItemStack recipeResult = currentSmeltingRecipe.assemble(recipeWrapper);
 
             if(Enchanted.RANDOM.nextDouble() <= getByproductChance())
                 createByproduct();
@@ -200,10 +200,10 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
     private void createByproduct() {
         if(level != null) {
             level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, recipeWrapper, level).ifPresent(recipe -> {
-                ItemStack result = recipe.getResultItem().copy();
+                ItemStack result = recipe.assemble(recipeWrapper);
 
                 int transferred = inventoryContents.insertItem(4, result, false).getCount();
-                inventoryContents.extractItem(3, transferred, false);
+                inventoryContents.extractItem(3, recipe.getResultItem().getCount() - transferred, false);
             });
         }
     }

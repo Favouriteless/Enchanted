@@ -67,7 +67,7 @@ public class WitchOvenRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack assemble(Container inv) {
-        return null;
+        return result.copy();
     }
 
     @Override

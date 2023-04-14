@@ -126,45 +126,33 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     protected void distill() {
         if (currentRecipe != null) {
-            List<ItemStack> itemsOut = new ArrayList<>();
+            List<ItemStack> recipeItemsOut = new ArrayList<>();
 
             for(ItemStack itemStack : currentRecipe.getItemsOut())
-                itemsOut.add(itemStack.copy());
+                recipeItemsOut.add(itemStack.copy());
 
-            for (ItemStack item : itemsOut) {
-                for (int i = 3; i < 7; i++) { // Fit items into existing stacks
-                    ItemStack stack = this.inventoryContents.getStackInSlot(i);
-                    if (item.getItem() == stack.getItem()) {
-                        int spaceLeft = stack.getMaxStackSize() - stack.getCount();
-                        if (spaceLeft <= item.getCount()) {
-                            stack.grow(spaceLeft);
-                            item.shrink(spaceLeft);
-                        }
-                        else {
-                            stack.grow(item.getCount());
-                            item.shrink(item.getCount());
-                            break;
-                        }
-                    }
+            for (ItemStack recipeResult : recipeItemsOut) {
+                for (int i = 3; i < 7; i++) { // Try to fit items into existing stacks
+                    if(ItemStack.isSameItemSameTags(recipeResult, inventoryContents.getStackInSlot(i)))
+                        recipeResult.setCount(inventoryContents.insertItem(i, recipeResult, false).getCount());
                 }
             }
 
-            for(ItemStack item : itemsOut) {
-                if (!item.isEmpty()) {
+            for(ItemStack recipeResult : recipeItemsOut) {
+                if (!recipeResult.isEmpty()) {
                     for (int i = 3; i < 7; i++) { // Fit items into empty stacks
-                        if (this.inventoryContents.getStackInSlot(i).isEmpty()) {
-                            this.inventoryContents.setStackInSlot(i, item.copy());
+                        if (inventoryContents.getStackInSlot(i).isEmpty()) {
+                            inventoryContents.setStackInSlot(i, recipeResult.copy());
                             break;
                         }
                     }
                 }
             }
 
-            for(ItemStack item : currentRecipe.getItemsIn()) {
+            for(ItemStack recipeItem : currentRecipe.getItemsIn()) {
                 for (int i = 0; i < 3; i++) {
-                    ItemStack stack = this.inventoryContents.getStackInSlot(i);
-                    if(item.getItem() == stack.getItem()) {
-                        stack.shrink(item.getCount());
+                    if(ItemStack.isSameItemSameTags(recipeItem, inventoryContents.getStackInSlot(i))) {
+                        inventoryContents.extractItem(i, recipeItem.getCount(), false);
                         break;
                     }
                 }
@@ -181,7 +169,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             for(ItemStack item : itemsOut) { // Check for existing ItemStacks of correct type and size.
                 for(int i = 3; i < 7; i++) { // Iterate through output slots
                     ItemStack stack = inventoryContents.getStackInSlot(i);
-                    if(item.getItem() == stack.getItem()) {
+                    if(ItemStack.isSameItemSameTags(stack, stack)) {
                         if(item.getCount() + stack.getCount() <= stack.getMaxStackSize()) {
                             toRemoveOut.add(item);
                             break;
@@ -195,7 +183,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             itemsOut.removeAll(toRemoveOut); // ItemStacks have been accounted for
             toRemoveOut.clear();
 
-            boolean[] isEmpty = new boolean[] { // Cursed but quickest way to set stacks as not empty without actually modifying the inventory
+            boolean[] isEmpty = new boolean[] { // Cursed but quickest way to set slots as not empty without actually modifying them
                     inventoryContents.getStackInSlot(3).isEmpty(),
                     inventoryContents.getStackInSlot(4).isEmpty(),
                     inventoryContents.getStackInSlot(5).isEmpty(),

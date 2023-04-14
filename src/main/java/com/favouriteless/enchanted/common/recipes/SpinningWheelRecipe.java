@@ -26,7 +26,6 @@ package com.favouriteless.enchanted.common.recipes;
 
 
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
@@ -84,16 +83,7 @@ public class SpinningWheelRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack assemble(Container inv) {
-        ItemStack stack = inv.getItem(3);
-
-        if(StaticItemStackHelper.canStack(stack, result)) {
-            stack.grow(result.getCount());
-        }
-        else {
-            stack = result.copy();
-        }
-        inv.setItem(3, stack);
-        return stack;
+        return result.copy();
     }
 
     @Override

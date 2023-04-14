@@ -49,6 +49,7 @@ public class DistilleryRecipe implements Recipe<Container> {
     private final NonNullList<ItemStack> itemsIn;
     private final NonNullList<ItemStack> itemsOut;
     private final int cookTime;
+    private final int jarCount;
 
 
     public DistilleryRecipe(ResourceLocation id, NonNullList<ItemStack> itemsIn, NonNullList<ItemStack> itemsOut, int cookTime) {
@@ -58,10 +59,11 @@ public class DistilleryRecipe implements Recipe<Container> {
         this.itemsIn = itemsIn;
         this.itemsOut = itemsOut;
         this.cookTime = cookTime;
+        this.jarCount = calculateJarCount();
     }
 
     public NonNullList<ItemStack> getItemsOut() {
-        return this.itemsOut;
+        return itemsOut;
     }
 
     public NonNullList<ItemStack> getItemsIn() {
@@ -73,11 +75,13 @@ public class DistilleryRecipe implements Recipe<Container> {
     }
 
     public int getJarCount() {
-        int count = 0;
+        return jarCount;
+    }
 
-        for(ItemStack stack : itemsOut) {
+    public int calculateJarCount() {
+        int count = 0;
+        for(ItemStack stack : itemsOut)
             count += stack.getCount();
-        }
 
         return count;
     }
@@ -89,7 +93,7 @@ public class DistilleryRecipe implements Recipe<Container> {
         for(ItemStack stack : getItemsIn()) {
             for(int i = 0; i < 3; i++) {
                 ItemStack item = inv.getItem(i);
-                if(stack.getItem() == item.getItem() && item.getCount() >= stack.getCount()) {
+                if(ItemStack.isSameItemSameTags(stack, item) && item.getCount() >= stack.getCount()) {
                     requiredItems--;
                     break;
                 }
@@ -100,7 +104,7 @@ public class DistilleryRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack assemble(Container inv) {
-        return null;
+        return null; // Has multiple outputs, don't use this.
     }
 
     @Override
@@ -139,7 +143,6 @@ public class DistilleryRecipe implements Recipe<Container> {
 
         @Override
         public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-
             NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
             NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "result"));
             int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
@@ -150,7 +153,6 @@ public class DistilleryRecipe implements Recipe<Container> {
         @Nullable
         @Override
         public DistilleryRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-
             int inSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
             for (int x = 0; x < inSize; ++x)
@@ -168,7 +170,6 @@ public class DistilleryRecipe implements Recipe<Container> {
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, DistilleryRecipe recipe) {
-
             buffer.writeInt(recipe.getItemsIn().size());
             for (ItemStack stack : recipe.getItemsIn())
                 buffer.writeItem(stack);

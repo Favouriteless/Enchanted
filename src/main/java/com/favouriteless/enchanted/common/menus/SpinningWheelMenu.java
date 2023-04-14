@@ -43,7 +43,6 @@ public class SpinningWheelMenu extends ProcessingMenuBase {
 		super(EnchantedMenus.SPINNING_WHEEL.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
 		ItemStackHandler inventory = blockEntity.getInventory();
 
-		// SpinningWheelBlockEntity Inventory
 		addSlot(new SlotInput(inventory, 0, 45, 23)); // Main input
 		addSlot(new SlotInput(inventory, 1, 33, 47)); // Ingredient input
 		addSlot(new SlotInput(inventory, 2, 57, 47)); // Ingredient input
@@ -58,34 +57,28 @@ public class SpinningWheelMenu extends ProcessingMenuBase {
 
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
-		ItemStack itemStack;
-		Slot slot = this.slots.get(index);
+		Slot slot = slots.get(index);
 
 		if (slot.hasItem()) {
-
 			ItemStack slotItem = slot.getItem();
-			itemStack = slotItem.copy();
+			ItemStack originalItem = slotItem.copy();
 
-			if (index <= 3) { // If container slot
-				if (!this.moveItemStackTo(slotItem, 4, 40, true)) {
+			if (index < 4) { // If container slot
+				if (!moveItemStackTo(slotItem, 4, 40, true))
 					return ItemStack.EMPTY;
-				}
 			}
-			else{ // If in player inventory
-				if(!this.moveItemStackTo(slotItem, 0, 4, false)) {
+			else { // If in player inventory
+				if(!moveItemStackTo(slotItem, 0, 4, false))
 					return ItemStack.EMPTY;
-				}
 			}
 
-			if (slotItem.isEmpty()) {
+			if (slotItem.isEmpty())
 				slot.set(ItemStack.EMPTY);
-			} else {
+			else
 				slot.setChanged();
-			}
 
-			if (slotItem.getCount() == itemStack.getCount()) {
+			if (slotItem.getCount() == originalItem.getCount())
 				return ItemStack.EMPTY;
-			}
 
 			slot.onTake(player, slotItem);
 		}

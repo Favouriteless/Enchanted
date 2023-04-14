@@ -121,13 +121,12 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	protected void spin() {
-		currentRecipe.assemble(recipeWrapper);
+		inventoryContents.insertItem(3, currentRecipe.assemble(recipeWrapper), false);
 
-		for(ItemStack item : currentRecipe.getItemsIn()) {
+		for(ItemStack recipeStack : currentRecipe.getItemsIn()) {
 			for (int i = 0; i < 3; i++) {
-				ItemStack stack = inventoryContents.getStackInSlot(i);
-				if(item.getItem() == stack.getItem()) {
-					stack.shrink(item.getCount());
+				if(ItemStack.isSameItemSameTags(recipeStack, inventoryContents.getStackInSlot(i))) {
+					inventoryContents.extractItem(i, recipeStack.getCount(), false);
 					break;
 				}
 			}

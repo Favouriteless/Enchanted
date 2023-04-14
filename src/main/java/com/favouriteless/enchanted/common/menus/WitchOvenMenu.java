@@ -29,8 +29,8 @@ import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedMenus;
-import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -38,8 +38,10 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class WitchOvenMenu extends ProcessingMenuBase {
 
@@ -63,54 +65,53 @@ public class WitchOvenMenu extends ProcessingMenuBase {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack;
         Slot slot = this.slots.get(index);
-
         if (slot.hasItem()) {
-
             ItemStack slotItem = slot.getItem();
-            itemstack = slotItem.copy();
+            ItemStack originalItem = slotItem.copy();
 
-            if (index <= 4) { // If container slot
-                if (!this.moveItemStackTo(slotItem, 5, 41, true))
+            if (index <= 4) { // If slot from oven
+                if (!moveItemStackTo(slotItem, 5, 41, true))
                     return ItemStack.EMPTY;
-            } else { // If not a container slot
-                if (hasByproduct(slotItem)) { // Item has byproduct
-                    if (!this.moveItemStackTo(slotItem, 0, 1, false))
-                        return ItemStack.EMPTY;
-                } else if (ProcessingBlockEntityBase.isFuel(slotItem)) { // Item is fuel
-                    if (!this.moveItemStackTo(slotItem, 1, 2, false))
-                        return ItemStack.EMPTY;
-                } else if(itemstack.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
-                    if (!this.moveItemStackTo(slotItem, 3, 4, false))
-                        return ItemStack.EMPTY;
-                } else if (index < 32) { // Item is in main player inventory or cannot be processed
-                    if (!this.moveItemStackTo(slotItem, 32, 41, false))
-                        return ItemStack.EMPTY;
-                } else if (index < 41) { // Item is in player hotbar or cannot be processed
-                    if(!this.moveItemStackTo(slotItem, 5, 32, false))
-                        return ItemStack.EMPTY;
-                }
-                else if (!this.moveItemStackTo(slotItem, 5, 41, false))
+            } else if(hasRecipe(slotItem)) { // Item has viable recipe
+                if(!moveItemStackTo(slotItem, 0, 1, false))
                     return ItemStack.EMPTY;
-
-                if (slotItem.isEmpty())
-                    slot.set(ItemStack.EMPTY);
-                else
-                    slot.setChanged();
-
-                if (slotItem.getCount() == itemstack.getCount())
-                    return ItemStack.EMPTY;
-
-                slot.onTake(player, slotItem);
             }
+            else if(ProcessingBlockEntityBase.isFuel(slotItem)) { // Item is fuel
+                if(!moveItemStackTo(slotItem, 1, 2, false))
+                    return ItemStack.EMPTY;
+            }
+            else if(originalItem.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
+                if(!moveItemStackTo(slotItem, 3, 4, false))
+                    return ItemStack.EMPTY;
+            }
+            else if(index < 32) { // Item is in main player inventory but cannot be processed
+                if(!moveItemStackTo(slotItem, 32, 41, false))
+                    return ItemStack.EMPTY;
+            }
+            else if(index < 41) { // Item is in player hotbar but cannot be processed
+                if(!moveItemStackTo(slotItem, 5, 32, false))
+                    return ItemStack.EMPTY;
+            }
+
+            if (slotItem.isEmpty()) // If slot was made empty, replace with empty stack
+                slot.set(ItemStack.EMPTY);
+            else
+                slot.setChanged();
+
+            if (slotItem.getCount() == originalItem.getCount())
+                return ItemStack.EMPTY;
+
+            slot.onTake(player, slotItem);
         }
         return super.quickMoveStack(player, index);
     }
 
-    public boolean hasByproduct(ItemStack item) {
+    public boolean hasRecipe(ItemStack item) {
         if(blockEntity.getLevel() != null)
-            return blockEntity.getLevel().getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, new RecipeWrapper(((WitchOvenBlockEntity)blockEntity).getInventory()), blockEntity.getLevel()).isPresent();
+            return !ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(item.getItem()) &&
+                    blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), blockEntity.getLevel()).isPresent();
         return false;
     }
+
 }

@@ -53,34 +53,29 @@ public class PoppetShelfMenu extends MenuBase {
 
 	@Override
 	public ItemStack quickMoveStack(Player playerIn, int index) {
-		ItemStack itemstack;
-		Slot slot = this.slots.get(index);
+		ItemStack originalItem;
+		Slot slot = slots.get(index);
 
 		if (slot.hasItem()) {
 			ItemStack slotItem = slot.getItem();
-			itemstack = slotItem.copy();
+			originalItem = slotItem.copy();
 
-			if (index <= 3) { // If container slot
-				if (!this.moveItemStackTo(slotItem, 4, 40, true)) {
+			if (index < 4) { // If container slot
+				if (!moveItemStackTo(slotItem, 4, 40, true)) {
 					return ItemStack.EMPTY;
 				}
-			} else { // If not a container slot
-				if (!this.moveItemStackTo(slotItem, 0, 4, false)) {
-					return ItemStack.EMPTY;
-				}
+			} else if (!moveItemStackTo(slotItem, 0, 4, false))
+				return ItemStack.EMPTY;
 
-				if (slotItem.isEmpty()) {
-					slot.set(ItemStack.EMPTY);
-				} else {
-					slot.setChanged();
-				}
+			if (slotItem.isEmpty())
+				slot.set(ItemStack.EMPTY);
+			else
+				slot.setChanged();
 
-				if (slotItem.getCount() == itemstack.getCount()) {
-					return ItemStack.EMPTY;
-				}
+			if (slotItem.getCount() == originalItem.getCount())
+				return ItemStack.EMPTY;
 
-				slot.onTake(playerIn, slotItem);
-			}
+			slot.onTake(playerIn, slotItem);
 		}
 		return super.quickMoveStack(playerIn, index);
 	}

@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_book_extraction"
+      "recipe": "enchanted:book_extraction"
     }
   ],
   "read_by_default": false,

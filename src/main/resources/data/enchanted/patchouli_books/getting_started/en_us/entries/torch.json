@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_candelabra"
+      "recipe": "enchanted:candelabra"
     }
   ],
   "read_by_default": true

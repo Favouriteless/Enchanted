@@ -52,11 +52,11 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		MenuScreens.register(EnchantedContainers.WITCH_OVEN.get(), WitchOvenScreen::new);
-		MenuScreens.register(EnchantedContainers.DISTILLERY.get(), DistilleryScreen::new);
-		MenuScreens.register(EnchantedContainers.ALTAR.get(), AltarScreen::new);
-		MenuScreens.register(EnchantedContainers.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
-		MenuScreens.register(EnchantedContainers.POPPET_SHELF.get(), PoppetShelfScreen::new);
+		MenuScreens.register(EnchantedMenus.WITCH_OVEN.get(), WitchOvenScreen::new);
+		MenuScreens.register(EnchantedMenus.DISTILLERY.get(), DistilleryScreen::new);
+		MenuScreens.register(EnchantedMenus.ALTAR.get(), AltarScreen::new);
+		MenuScreens.register(EnchantedMenus.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+		MenuScreens.register(EnchantedMenus.POPPET_SHELF.get(), PoppetShelfScreen::new);
 
 		EnchantedBlocks.initRender();
 		EnchantedKeybinds.registerKeybinds();

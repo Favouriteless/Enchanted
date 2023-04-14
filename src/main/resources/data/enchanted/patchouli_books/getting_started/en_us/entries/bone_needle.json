@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_bone_needle"
+      "recipe": "enchanted:bone_needle"
     }
   ],
   "read_by_default": true

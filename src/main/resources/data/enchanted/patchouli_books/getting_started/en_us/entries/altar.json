@@ -30,7 +30,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_altar",
+      "recipe": "enchanted:altar",
       "text": "See Witchcraft: Extraction in the Additional Resources chapter to find out more about these materials."
     }
   ],

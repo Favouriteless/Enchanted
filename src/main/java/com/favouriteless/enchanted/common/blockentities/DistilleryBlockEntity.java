@@ -43,7 +43,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -52,10 +51,7 @@ import java.util.List;
 public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer {
 
     private DistilleryRecipe currentRecipe;
-    private boolean canDistill = false; // Cache for performance
     private final List<BlockPos> potentialAltars = new ArrayList<>();
-
-    private static final int[] INPUT_SLOTS = new int[] { 0, 1, 2 };
 
     private static final int[] SLOTS_FOR_UP = new int[] { 1, 2 };
     private static final int[] SLOTS_FOR_DOWN = new int[] { 3, 4, 5, 6 };
@@ -100,8 +96,9 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
             if(level != null && !level.isClientSide) {
                 AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.potentialAltars);
+                be.matchRecipe();
 
-                if(be.canDistill && altar != null) {
+                if(be.canDistill() && altar != null) {
                     if(altar.currentPower > 10.0D) {
                         altar.currentPower -= 10.0D;
                         be.isBurning = true;
@@ -109,7 +106,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
                         if(be.cookTime == be.cookTimeTotal) {
                             be.cookTime = 0;
-                            be.distill(be.currentRecipe);
+                            be.distill();
                         }
                     }
                 }
@@ -119,20 +116,19 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
                 }
 
 
-                if(isBurning != be.isBurning) {
+                if(isBurning != be.isBurning)
                     level.setBlock(be.worldPosition, level.getBlockState(be.worldPosition).setValue(AbstractFurnaceBlock.LIT, be.isBurning), 3);
-                }
             }
 
             be.setChanged();
         }
     }
 
-    protected void distill(DistilleryRecipe recipeIn) {
-        if (recipeIn != null) {
+    protected void distill() {
+        if (currentRecipe != null) {
             List<ItemStack> itemsOut = new ArrayList<>();
 
-            for(ItemStack itemStack : recipeIn.getItemsOut())
+            for(ItemStack itemStack : currentRecipe.getItemsOut())
                 itemsOut.add(itemStack.copy());
 
             for (ItemStack item : itemsOut) {
@@ -164,7 +160,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
                 }
             }
 
-            for(ItemStack item : recipeIn.getItemsIn()) {
+            for(ItemStack item : currentRecipe.getItemsIn()) {
                 for (int i = 0; i < 3; i++) {
                     ItemStack stack = this.inventoryContents.getStackInSlot(i);
                     if(item.getItem() == stack.getItem()) {
@@ -241,18 +237,12 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     private void matchRecipe() {
         if (level != null) {
-            currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.DISTILLERY, recipeWrapper, level).orElse(null);
+            if(currentRecipe == null || !currentRecipe.matches(recipeWrapper, level))
+                currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.DISTILLERY, recipeWrapper, level).orElse(null);
 
             if(currentRecipe != null)
                 cookTimeTotal = currentRecipe.getCookTime();
         }
-    }
-
-    @Override
-    protected void onInventoryChanged(int slot) {
-        if(ArrayUtils.contains(INPUT_SLOTS, slot))
-            matchRecipe();
-        canDistill = canDistill();
     }
 
     @Override

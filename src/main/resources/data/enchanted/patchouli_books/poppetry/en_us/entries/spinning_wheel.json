@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_spinning_wheel"
+      "recipe": "enchanted:spinning_wheel"
     }
   ],
   "read_by_default": false,

@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_poppet_shelf"
+      "recipe": "enchanted:poppet_shelf"
     }
   ],
   "read_by_default": false,

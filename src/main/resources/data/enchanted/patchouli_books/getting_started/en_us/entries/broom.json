@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_broom"
+      "recipe": "enchanted:broom"
     }
   ],
   "read_by_default": true

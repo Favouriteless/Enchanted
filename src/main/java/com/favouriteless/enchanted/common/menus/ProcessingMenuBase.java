@@ -24,16 +24,17 @@
 
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -45,29 +46,30 @@ public abstract class ProcessingMenuBase extends MenuBase {
         super(type, id, blockEntity, canInteractWithCallable, block);
         this.data = data;
 
-        if(data != null) {
+        if(data != null)
             addDataSlots(data);
-        }
     }
 
     public ContainerData getData() {
         return data;
     }
 
-    public static class SlotFuel extends Slot {
-        public SlotFuel(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public static class SlotFuel extends SlotItemHandler {
+
+        public SlotFuel(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return (net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
+            return (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
         }
     }
 
-    public static class SlotInput extends Slot {
-        public SlotInput(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public static class SlotInput extends SlotItemHandler {
+
+        public SlotInput(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
         }
 
         @Override
@@ -76,9 +78,10 @@ public abstract class ProcessingMenuBase extends MenuBase {
         }
     }
 
-    public static class SlotOutput extends Slot {
-        public SlotOutput(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public static class SlotOutput extends SlotItemHandler {
+
+        public SlotOutput(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
         }
 
         @Override
@@ -87,9 +90,10 @@ public abstract class ProcessingMenuBase extends MenuBase {
         }
     }
 
-    public static class SlotJarInput extends Slot {
-        public SlotJarInput(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public static class SlotJarInput extends SlotItemHandler {
+
+        public SlotJarInput(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
         }
 
         @Override
@@ -98,4 +102,5 @@ public abstract class ProcessingMenuBase extends MenuBase {
         }
 
     }
+
 }

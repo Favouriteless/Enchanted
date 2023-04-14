@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_chalice"
+      "recipe": "enchanted:chalice"
     }
   ],
   "read_by_default": true

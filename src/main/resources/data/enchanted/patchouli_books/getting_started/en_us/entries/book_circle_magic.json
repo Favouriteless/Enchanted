@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_book_circle_magic"
+      "recipe": "enchanted:book_circle_magic"
     }
   ],
   "read_by_default": false,

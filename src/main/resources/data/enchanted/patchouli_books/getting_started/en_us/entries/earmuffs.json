@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_earmuffs"
+      "recipe": "enchanted:earmuffs"
     }
   ],
   "read_by_default": true

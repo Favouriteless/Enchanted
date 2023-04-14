@@ -60,7 +60,6 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	public static final int SPIN_TIME_TOTAL = 400;
 	private int spinTime = 0;
-	private boolean canSpin = false; // Cache for performance
 	public ContainerData data = new ContainerData() {
 		public int get(int index) {
 			return switch(index) {
@@ -92,8 +91,9 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 			if(level != null) {
 				if(!level.isClientSide) {
 					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.potentialAltars);
+					be.matchRecipe();
 
-					if(be.canSpin && be.currentRecipe.getPower() > 0 && altar != null) {
+					if(be.canSpin() && be.currentRecipe.getPower() > 0 && altar != null) {
 						double powerThisTick = (double)be.currentRecipe.getPower() / SPIN_TIME_TOTAL;
 						if(altar.currentPower > powerThisTick) {
 							altar.currentPower -= powerThisTick;
@@ -149,14 +149,8 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	private void matchRecipe() {
 		if (level != null)
-			currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, recipeWrapper, level).orElse(null);
-	}
-
-	@Override
-	protected void onInventoryChanged(int slot) {
-		if(slot < 3)
-			matchRecipe();
-		canSpin = canSpin();
+			if(currentRecipe == null || !currentRecipe.matches(recipeWrapper, level))
+				currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, recipeWrapper, level).orElse(null);
 	}
 
 	@Override

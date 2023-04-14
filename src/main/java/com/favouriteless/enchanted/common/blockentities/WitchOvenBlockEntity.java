@@ -58,7 +58,6 @@ import javax.annotation.Nullable;
 public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
     private AbstractCookingRecipe currentSmeltingRecipe;
-    private boolean canSmelt = false; // Cache for performance
 
     private int burnTime = 0;
     private int burnTimeTotal = 0;
@@ -116,12 +115,14 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
                     be.burnTime--;
 
                 if(be.isBurning() || !fuelStack.isEmpty()) {
-                    if(be.canSmelt) {
+                    be.matchRecipe();
+
+                    if(be.canSmelt()) {
                         if(!be.isBurning()) { // Handle start burning fuel
                             be.burnTime = be.getBurnTime(fuelStack);
                             be.burnTimeTotal = be.burnTime;
                             if(be.isBurning()) { // In case item is not fuel (for some reason)
-                                fuelStack.shrink(1);
+                                be.inventoryContents.extractItem(1, 1, false);
                             }
                         }
 
@@ -199,28 +200,10 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
     private void createByproduct() {
         if(level != null) {
             level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, recipeWrapper, level).ifPresent(recipe -> {
-                ItemStack jarStack = inventoryContents.getStackInSlot(3);
-                ItemStack outputStack = inventoryContents.getStackInSlot(4);
-
                 ItemStack result = recipe.getResultItem().copy();
 
-                if(jarStack.getCount() >= result.getCount()) {
-                    if(outputStack.isEmpty()) {
-                        inventoryContents.setStackInSlot(4, result);
-
-                        jarStack.shrink(result.getCount());
-                        inventoryContents.setStackInSlot(3, jarStack);
-                    }
-                    else if(outputStack.getItem() == result.getItem() && outputStack.getCount() < (outputStack.getMaxStackSize() - result.getCount())) {
-                        int diff = outputStack.getMaxStackSize() - result.getCount();
-
-                        outputStack.grow(result.getCount());
-                        inventoryContents.setStackInSlot(4, outputStack);
-
-                        jarStack.shrink(Math.min(diff, result.getCount()));
-                        inventoryContents.setStackInSlot(3, jarStack);
-                    }
-                }
+                int transferred = inventoryContents.insertItem(4, result, false).getCount();
+                inventoryContents.extractItem(3, transferred, false);
             });
         }
     }
@@ -268,17 +251,10 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         return byproductChance;
     }
 
-    @Override
-    protected void onInventoryChanged(int slot) {
-        if(slot == 0)
-            matchRecipe();
-        if(slot != 1)
-            canSmelt = canSmelt();
-    }
-
     private void matchRecipe() {
         if (level != null) {
-            currentSmeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, recipeWrapper, level).orElse(null);
+            if(currentSmeltingRecipe == null || !currentSmeltingRecipe.matches(recipeWrapper, level))
+                currentSmeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, recipeWrapper, level).orElse(null);
 
             if(currentSmeltingRecipe != null)
                 cookTimeTotal = (int)Math.round(currentSmeltingRecipe.getCookingTime() * 0.8D);
@@ -292,13 +268,6 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
     private boolean isBurning() {
         return this.burnTime > 0;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        matchRecipe();
-        canSmelt = canSmelt();
     }
 
     @Override

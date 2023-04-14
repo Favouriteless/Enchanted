@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_wicker_bundle"
+      "recipe": "enchanted:wicker_bundle"
     }
   ],
   "read_by_default": true

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedContainers;
+import com.favouriteless.enchanted.common.init.EnchantedMenus;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,7 +43,7 @@ public class AltarMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public AltarMenu(final int windowId, final AltarBlockEntity blockEntity, ContainerData data) {
-        super(EnchantedContainers.ALTAR.get(), windowId);
+        super(EnchantedMenus.ALTAR.get(), windowId);
         this.blockEntity = blockEntity;
         this.canInteractWithCallable = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
         this.data = data;

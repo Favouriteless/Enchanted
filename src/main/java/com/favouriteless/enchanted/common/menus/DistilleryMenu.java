@@ -26,41 +26,42 @@ package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedContainers;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.blockentities.InventoryBlockEntityBase;
+import com.favouriteless.enchanted.common.init.EnchantedMenus;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class DistilleryMenu extends ProcessingMenuBase {
 
-    public DistilleryMenu(final int windowId, final Inventory playerInventory, final InventoryBlockEntityBase blockEntity, final ContainerData data) {
-        super(EnchantedContainers.DISTILLERY.get(), windowId, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
+    public DistilleryMenu(int id, Inventory playerInventory, DistilleryBlockEntity blockEntity, ContainerData data) {
+        super(EnchantedMenus.DISTILLERY.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
+        ItemStackHandler inventory = blockEntity.getInventory();
 
         // SpinningWheelBlockEntity Inventory
-        addSlot(new SlotJarInput(blockEntity, 0, 32, 35)); // Jar input
-        addSlot(new SlotInput(blockEntity, 1, 54, 25)); // Ingredient input
-        addSlot(new SlotInput(blockEntity, 2, 54, 45)); // Ingredient input
-        addSlot(new SlotOutput(blockEntity, 3, 127, 7)); // Distillery output
-        addSlot(new SlotOutput(blockEntity, 4, 127, 26)); // Distillery output
-        addSlot(new SlotOutput(blockEntity, 5, 127, 45)); // Distillery output
-        addSlot(new SlotOutput(blockEntity, 6, 127, 64)); // Distillery output
+        addSlot(new SlotJarInput(inventory, 0, 32, 35)); // Jar input
+        addSlot(new SlotInput(inventory, 1, 54, 25)); // Ingredient input
+        addSlot(new SlotInput(inventory, 2, 54, 45)); // Ingredient input
+        addSlot(new SlotOutput(inventory, 3, 127, 7)); // Distillery output
+        addSlot(new SlotOutput(inventory, 4, 127, 26)); // Distillery output
+        addSlot(new SlotOutput(inventory, 5, 127, 45)); // Distillery output
+        addSlot(new SlotOutput(inventory, 6, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
     }
 
-    public DistilleryMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, (InventoryBlockEntityBase) getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
+    public DistilleryMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
+        this(id, playerInventory, (DistilleryBlockEntity)getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
     }
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack;
         Slot slot = this.slots.get(index);
 
@@ -100,10 +101,10 @@ public class DistilleryMenu extends ProcessingMenuBase {
                     return ItemStack.EMPTY;
                 }
 
-                slot.onTake(playerIn, slotItem);
+                slot.onTake(player, slotItem);
             }
         }
-        return super.quickMoveStack(playerIn, index);
+        return super.quickMoveStack(player, index);
     }
 
 }

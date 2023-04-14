@@ -78,13 +78,16 @@ public abstract class InventoryBlockEntityBase extends BlockEntity implements Me
 	@Override
 	public void setRemoved() {
 		super.setRemoved();
-		if(itemHandler != null) {
+		if(itemHandler != null)
 			itemHandler.invalidate();
-		}
 	}
 
 	protected void onInventoryChanged(int slot) {
 
+	}
+
+	public ItemStackHandler getInventory() {
+		return inventoryContents;
 	}
 
 }

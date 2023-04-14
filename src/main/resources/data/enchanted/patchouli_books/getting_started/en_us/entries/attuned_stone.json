@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_attuned_stone"
+      "recipe": "enchanted:attuned_stone"
     }
   ],
   "read_by_default": true

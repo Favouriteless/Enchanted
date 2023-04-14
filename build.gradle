@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.18.2-1.0.4'
+version = '1.18.2-1.0.5'
 group = 'com.favouriteless.enchanted'
 archivesBaseName = 'enchanted'
 
@@ -103,7 +103,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.84'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
 
     implementation fg.deobf("curse.maven:stateobserver-701213:4084960")
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")

@@ -24,17 +24,15 @@
 
 package com.favouriteless.enchanted.common.menus;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-
-import javax.annotation.Nullable;
 
 public class MenuBase extends AbstractContainerMenu {
 
@@ -42,7 +40,7 @@ public class MenuBase extends AbstractContainerMenu {
 	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
-	protected MenuBase(@Nullable MenuType<?> type, int id, BlockEntity blockEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
+	protected MenuBase(MenuType<?> type, int id, BlockEntity blockEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
 		super(type, id);
 		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;

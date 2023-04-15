@@ -70,6 +70,7 @@ public class DistilleryCategory implements IRecipeCategory<DistilleryRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DistilleryRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, recipe.getItemsIn().get(0));
         int offset = 0;
         for (ItemStack i : recipe.getItemsIn()) {
             if (offset != 0)
@@ -81,7 +82,6 @@ public class DistilleryCategory implements IRecipeCategory<DistilleryRecipe> {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 2 + offset).addIngredient(VanillaTypes.ITEM_STACK, i);
             offset += 19;
         }
-        builder.addSlot(RecipeIngredientRole.CATALYST, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EnchantedItems.CLAY_JAR.get(), recipe.getJarCount()));
         IRecipeCategory.super.setRecipe(builder, recipe, focuses);
     }
 

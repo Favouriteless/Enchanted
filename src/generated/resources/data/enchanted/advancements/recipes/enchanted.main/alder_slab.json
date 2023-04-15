@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_alder_log": {
+    "has_alder_planks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "enchanted:alder_log"
+              "enchanted:alder_planks"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_alder_log",
+      "has_alder_planks",
       "has_the_recipe"
     ]
   ]

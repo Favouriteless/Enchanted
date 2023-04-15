@@ -23,7 +23,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_anointing_paste",
+      "recipe": "enchanted:anointing_paste",
       "text": "Use anointing paste on a regular cauldron to turn it into a Witch's cauldron.$(br2)A brew may be created by filling the cauldron with water and dropping the correct items in the correct order into the cauldron."
     }
   ],

@@ -31,9 +31,12 @@ import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -43,19 +46,33 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer {
+public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer, MenuProvider {
 
+    private final ItemStackHandler jar = new ItemStackHandler(1);
+    private final ItemStackHandler input = new ItemStackHandler(2);
+    private final ItemStackHandler output = new ItemStackHandler(4);
+    private final CombinedInvWrapper inputCombined = new CombinedInvWrapper(jar, input);
+
+    private final LazyOptional<IItemHandlerModifiable> jarHandler = LazyOptional.of(() -> jar);
+    private final LazyOptional<IItemHandlerModifiable> inputHandler = LazyOptional.of(() -> input);
+    private final LazyOptional<IItemHandlerModifiable> outputHandler = LazyOptional.of(() -> output);
+
+    private final RecipeWrapper recipeWrapper = new RecipeWrapper(inputCombined);
     private DistilleryRecipe currentRecipe;
     private final List<BlockPos> potentialAltars = new ArrayList<>();
-
-    private static final int[] SLOTS_FOR_UP = new int[] { 1, 2 };
-    private static final int[] SLOTS_FOR_DOWN = new int[] { 3, 4, 5, 6 };
-    private static final int[] SLOTS_FOR_SIDES = new int[] { 0 };
 
     private boolean isBurning = false;
     private int cookTime = 0;
@@ -87,7 +104,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     };
 
     public DistilleryBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state, 7);
+        super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -132,17 +149,17 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
                 recipeItemsOut.add(itemStack.copy());
 
             for (ItemStack recipeResult : recipeItemsOut) {
-                for (int i = 3; i < 7; i++) { // Try to fit items into existing stacks
-                    if(ItemStack.isSameItemSameTags(recipeResult, inventoryContents.getStackInSlot(i)))
-                        recipeResult.setCount(inventoryContents.insertItem(i, recipeResult, false).getCount());
+                for (int i = 0; i < output.getSlots(); i++) { // Try to fit items into existing stacks
+                    if(ItemStack.isSameItemSameTags(recipeResult, output.getStackInSlot(i)))
+                        recipeResult.setCount(output.insertItem(i, recipeResult, false).getCount());
                 }
             }
 
             for(ItemStack recipeResult : recipeItemsOut) {
                 if (!recipeResult.isEmpty()) {
-                    for (int i = 3; i < 7; i++) { // Fit items into empty stacks
-                        if (inventoryContents.getStackInSlot(i).isEmpty()) {
-                            inventoryContents.setStackInSlot(i, recipeResult.copy());
+                    for (int i = 0; i < output.getSlots(); i++) { // Fit items into empty stacks
+                        if (output.getStackInSlot(i).isEmpty()) {
+                            output.setStackInSlot(i, recipeResult.copy());
                             break;
                         }
                     }
@@ -151,8 +168,8 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
             for(ItemStack recipeItem : currentRecipe.getItemsIn()) {
                 for (int i = 0; i < 3; i++) {
-                    if(ItemStack.isSameItemSameTags(recipeItem, inventoryContents.getStackInSlot(i))) {
-                        inventoryContents.extractItem(i, recipeItem.getCount(), false);
+                    if(ItemStack.isSameItemSameTags(recipeItem, inputCombined.getStackInSlot(i))) {
+                        inputCombined.extractItem(i, recipeItem.getCount(), false);
                         break;
                     }
                 }
@@ -166,16 +183,16 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             List<ItemStack> itemsOut = new ArrayList<>(currentRecipe.getItemsOut());
             List<ItemStack> toRemoveOut = new ArrayList<>();
 
-            for(ItemStack item : itemsOut) { // Check for existing ItemStacks of correct type and size.
-                for(int i = 3; i < 7; i++) { // Iterate through output slots
-                    ItemStack stack = inventoryContents.getStackInSlot(i);
-                    if(ItemStack.isSameItemSameTags(stack, stack)) {
-                        if(item.getCount() + stack.getCount() <= stack.getMaxStackSize()) {
-                            toRemoveOut.add(item);
+            for(ItemStack recipeStack : itemsOut) { // Check for existing ItemStacks of correct type and size.
+                for(int i = 0; i < output.getSlots(); i++) { // Iterate through output slots
+                    ItemStack invStack = output.getStackInSlot(i);
+                    if(ItemStack.isSameItemSameTags(invStack, invStack)) {
+                        if(recipeStack.getCount() + invStack.getCount() <= invStack.getMaxStackSize()) {
+                            toRemoveOut.add(recipeStack);
                             break;
                         }
                         else
-                            item.shrink(stack.getMaxStackSize() - stack.getCount());
+                            recipeStack.shrink(invStack.getMaxStackSize() - invStack.getCount());
                     }
                 }
             }
@@ -184,10 +201,10 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             toRemoveOut.clear();
 
             boolean[] isEmpty = new boolean[] { // Cursed but quickest way to set slots as not empty without actually modifying them
-                    inventoryContents.getStackInSlot(3).isEmpty(),
-                    inventoryContents.getStackInSlot(4).isEmpty(),
-                    inventoryContents.getStackInSlot(5).isEmpty(),
-                    inventoryContents.getStackInSlot(6).isEmpty()
+                    output.getStackInSlot(0).isEmpty(),
+                    output.getStackInSlot(1).isEmpty(),
+                    output.getStackInSlot(2).isEmpty(),
+                    output.getStackInSlot(3).isEmpty()
             };
             for(ItemStack item : itemsOut) { // Check for empty item slots
                 for(int i = 0; i < isEmpty.length; i++) {
@@ -205,24 +222,6 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
         return false;
     }
 
-    @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        AltarPowerHelper.savePosTag(potentialAltars, nbt);
-        nbt.putBoolean("burnTime", isBurning);
-        nbt.putInt("cookTime", cookTime);
-        nbt.putInt("cookTimeTotal", cookTimeTotal);
-    }
-
-    @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
-        isBurning = nbt.getBoolean("burnTime");
-        cookTime = nbt.getInt("cookTime");
-        cookTimeTotal = nbt.getInt("cookTimeTotal");
-    }
-
     private void matchRecipe() {
         if (level != null) {
             if(currentRecipe == null || !currentRecipe.matches(recipeWrapper, level))
@@ -233,9 +232,26 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
         }
     }
 
+    public ItemStackHandler getJarInventory() {
+        return jar;
+    }
+
+    public ItemStackHandler getInputInventory() {
+        return input;
+    }
+
+    public ItemStackHandler getOutputInventory() {
+        return output;
+    }
+
     @Override
     public ContainerData getData() {
         return data;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getDroppableInventory() {
+        return getDroppableInventoryFor(jar, input, output);
     }
 
     @Override
@@ -248,6 +264,58 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new DistilleryMenu(id, playerInventory, this, data);
     }
+
+    @Override
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        nbt.putBoolean("burnTime", isBurning);
+        nbt.putInt("cookTime", cookTime);
+        nbt.putInt("cookTimeTotal", cookTimeTotal);
+        nbt.put("jar", jar.serializeNBT());
+        nbt.put("input", input.serializeNBT());
+        nbt.put("output", output.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+        isBurning = nbt.getBoolean("burnTime");
+        cookTime = nbt.getInt("cookTime");
+        cookTimeTotal = nbt.getInt("cookTimeTotal");
+        jar.deserializeNBT(nbt.getCompound("jar"));
+        input.deserializeNBT(nbt.getCompound("input"));
+        output.deserializeNBT(nbt.getCompound("output"));
+    }
+
+    @NotNull
+    @Override
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if(side == null)
+                return super.getCapability(cap, side);
+            else if(side == Direction.UP)
+                return inputHandler.cast();
+            else if(side == Direction.DOWN)
+                return outputHandler.cast();
+            else
+                return jarHandler.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        if(inputHandler != null)
+            inputHandler.invalidate();
+        if(jarHandler != null)
+            jarHandler.invalidate();
+        if(outputHandler != null)
+            outputHandler.invalidate();
+    }
+
 
     @Override
     public List<BlockPos> getAltarPositions() {

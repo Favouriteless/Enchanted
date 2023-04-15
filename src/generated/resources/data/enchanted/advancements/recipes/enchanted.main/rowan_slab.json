@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_rowan_log": {
+    "has_rowan_planks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "enchanted:rowan_log"
+              "enchanted:rowan_planks"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_rowan_log",
+      "has_rowan_planks",
       "has_the_recipe"
     ]
   ]

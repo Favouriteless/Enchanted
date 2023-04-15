@@ -28,6 +28,9 @@ import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.menus.slots.SlotInput;
+import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;
+import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -36,28 +39,30 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
 
-public class DistilleryMenu extends ProcessingMenuBase {
+public class DistilleryMenu extends MenuBase {
 
-    public DistilleryMenu(int id, Inventory playerInventory, DistilleryBlockEntity blockEntity, ContainerData data) {
-        super(EnchantedMenus.DISTILLERY.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.DISTILLERY.get(), data);
-        ItemStackHandler inventory = blockEntity.getInventory();
+    public ContainerData data;
 
-        // SpinningWheelBlockEntity Inventory
-        addSlot(new SlotJarInput(inventory, 0, 32, 35)); // Jar input
-        addSlot(new SlotInput(inventory, 1, 54, 25)); // Ingredient input
-        addSlot(new SlotInput(inventory, 2, 54, 45)); // Ingredient input
-        addSlot(new SlotOutput(inventory, 3, 127, 7)); // Distillery output
-        addSlot(new SlotOutput(inventory, 4, 127, 26)); // Distillery output
-        addSlot(new SlotOutput(inventory, 5, 127, 45)); // Distillery output
-        addSlot(new SlotOutput(inventory, 6, 127, 64)); // Distillery output
+    public DistilleryMenu(int id, Inventory playerInventory, DistilleryBlockEntity be, ContainerData data) {
+        super(EnchantedMenus.DISTILLERY.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.DISTILLERY.get());
+        this.data = data;
+
+        addSlot(new SlotJarInput(be.getJarInventory(), 0, 32, 35)); // Jar input
+        addSlot(new SlotInput(be.getInputInventory(), 0, 54, 25)); // Ingredient input
+        addSlot(new SlotInput(be.getInputInventory(), 1, 54, 45)); // Ingredient input
+        addSlot(new SlotOutput(be.getOutputInventory(), 0, 127, 7)); // Distillery output
+        addSlot(new SlotOutput(be.getOutputInventory(), 1, 127, 26)); // Distillery output
+        addSlot(new SlotOutput(be.getOutputInventory(), 2, 127, 45)); // Distillery output
+
+        addSlot(new SlotOutput(be.getOutputInventory(), 3, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
+        addDataSlots(data);
     }
 
     public DistilleryMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
-        this(id, playerInventory, (DistilleryBlockEntity)getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(3));
+        this(id, playerInventory, (DistilleryBlockEntity)getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(2));
     }
 
     @Override
@@ -98,6 +103,10 @@ public class DistilleryMenu extends ProcessingMenuBase {
             slot.onTake(player, slotItem);
         }
         return super.quickMoveStack(player, index);
+    }
+
+    public ContainerData getData() {
+        return data;
     }
 
 }

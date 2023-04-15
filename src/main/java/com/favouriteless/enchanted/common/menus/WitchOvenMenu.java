@@ -29,6 +29,10 @@ import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.menus.slots.SlotFuel;
+import com.favouriteless.enchanted.common.menus.slots.SlotInput;
+import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;
+import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,23 +44,24 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class WitchOvenMenu extends ProcessingMenuBase {
+public class WitchOvenMenu extends MenuBase {
 
-    public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity blockEntity, ContainerData data) {
-        super(EnchantedMenus.WITCH_OVEN.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get(), data);
-        ItemStackHandler inventory = blockEntity.getInventory();
+    private final ContainerData data;
 
-        // SpinningWheelBlockEntity Inventory
-        addSlot(new SlotInput(inventory, 0, 53, 17)); // Ingredient input
-        addSlot(new SlotFuel(inventory, 1, 80, 53)); // Fuel Slot
-        addSlot(new SlotOutput(inventory, 2, 107, 17)); // Smelting output
-        addSlot(new SlotJarInput(inventory, 3, 53, 53)); // Jar input
-        addSlot(new SlotOutput(inventory, 4, 107, 53)); // Jar output
+    public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity be, ContainerData data) {
+        super(EnchantedMenus.WITCH_OVEN.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get());
+        this.data = data;
+
+        addSlot(new SlotInput(be.getInputInventory(), 0, 53, 17)); // Ingredient input
+        addSlot(new SlotFuel(be.getFuelInventory(), 0, 80, 53)); // Fuel Slot
+        addSlot(new SlotOutput(be.getOutputInventory(), 0, 107, 17)); // Smelting output
+        addSlot(new SlotJarInput(be.getJarInventory(), 0, 53, 53)); // Jar input
+        addSlot(new SlotOutput(be.getOutputInventory(), 1, 107, 53)); // Jar output
 
         addInventorySlots(playerInventory, 8, 84);
+        addDataSlots(data);
     }
 
     public WitchOvenMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
@@ -65,7 +70,7 @@ public class WitchOvenMenu extends ProcessingMenuBase {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        Slot slot = this.slots.get(index);
+        Slot slot = slots.get(index);
         if (slot.hasItem()) {
             ItemStack slotItem = slot.getItem();
             ItemStack originalItem = slotItem.copy();
@@ -112,6 +117,10 @@ public class WitchOvenMenu extends ProcessingMenuBase {
             return !ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(item.getItem()) &&
                     blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), blockEntity.getLevel()).isPresent();
         return false;
+    }
+
+    public ContainerData getData() {
+        return data;
     }
 
 }

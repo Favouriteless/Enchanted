@@ -27,6 +27,8 @@ package com.favouriteless.enchanted.common.menus;
 import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.menus.slots.SlotInput;
+import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,20 +37,22 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
 
-public class SpinningWheelMenu extends ProcessingMenuBase {
+public class SpinningWheelMenu extends MenuBase {
 
-	public SpinningWheelMenu(int id, Inventory playerInventory, SpinningWheelBlockEntity blockEntity, ContainerData data) {
-		super(EnchantedMenus.SPINNING_WHEEL.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get(), data);
-		ItemStackHandler inventory = blockEntity.getInventory();
+	private final ContainerData data;
 
-		addSlot(new SlotInput(inventory, 0, 45, 23)); // Main input
-		addSlot(new SlotInput(inventory, 1, 33, 47)); // Ingredient input
-		addSlot(new SlotInput(inventory, 2, 57, 47)); // Ingredient input
-		addSlot(new SlotOutput(inventory, 3, 130, 35)); // Spinning wheel output
+	public SpinningWheelMenu(int id, Inventory playerInventory, SpinningWheelBlockEntity be, ContainerData data) {
+		super(EnchantedMenus.SPINNING_WHEEL.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get());
+		this.data = data;
+
+		addSlot(new SlotInput(be.getInputInventory(), 0, 45, 23)); // Main input
+		addSlot(new SlotInput(be.getInputInventory(), 1, 33, 47)); // Ingredient input
+		addSlot(new SlotInput(be.getInputInventory(), 2, 57, 47)); // Ingredient input
+		addSlot(new SlotOutput(be.getOutputInventory(), 0, 130, 35)); // Spinning wheel output
 
 		addInventorySlots(playerInventory, 8, 84);
+		addDataSlots(data);
 	}
 
 	public SpinningWheelMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
@@ -83,6 +87,10 @@ public class SpinningWheelMenu extends ProcessingMenuBase {
 			slot.onTake(player, slotItem);
 		}
 		return super.quickMoveStack(player, index);
+	}
+
+	public ContainerData getData() {
+		return data;
 	}
 
 }

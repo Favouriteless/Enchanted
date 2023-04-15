@@ -49,7 +49,6 @@ public class DistilleryRecipe implements Recipe<Container> {
     private final NonNullList<ItemStack> itemsIn;
     private final NonNullList<ItemStack> itemsOut;
     private final int cookTime;
-    private final int jarCount;
 
 
     public DistilleryRecipe(ResourceLocation id, NonNullList<ItemStack> itemsIn, NonNullList<ItemStack> itemsOut, int cookTime) {
@@ -59,7 +58,6 @@ public class DistilleryRecipe implements Recipe<Container> {
         this.itemsIn = itemsIn;
         this.itemsOut = itemsOut;
         this.cookTime = cookTime;
-        this.jarCount = calculateJarCount();
     }
 
     public NonNullList<ItemStack> getItemsOut() {
@@ -72,18 +70,6 @@ public class DistilleryRecipe implements Recipe<Container> {
 
     public int getCookTime() {
         return cookTime;
-    }
-
-    public int getJarCount() {
-        return jarCount;
-    }
-
-    public int calculateJarCount() {
-        int count = 0;
-        for(ItemStack stack : itemsOut)
-            count += stack.getCount();
-
-        return count;
     }
 
     @Override
@@ -179,7 +165,6 @@ public class DistilleryRecipe implements Recipe<Container> {
                 buffer.writeItem(stack);
 
             buffer.writeInt(recipe.getCookTime());
-
         }
 
     }

@@ -33,9 +33,11 @@ import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -51,12 +53,30 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
+public class WitchOvenBlockEntity extends ProcessingBlockEntityBase implements MenuProvider {
 
+    private final ItemStackHandler input = new ItemStackHandler(1);
+    private final ItemStackHandler jar = new ItemStackHandler(1);
+    private final ItemStackHandler fuel = new ItemStackHandler(1);
+    private final ItemStackHandler output = new ItemStackHandler(2);
+
+    private final LazyOptional<IItemHandlerModifiable> inputHandler = LazyOptional.of(() -> input);
+    private final LazyOptional<IItemHandlerModifiable> jarHandler = LazyOptional.of(() -> jar);
+    private final LazyOptional<IItemHandlerModifiable> fuelHandler = LazyOptional.of(() -> fuel);
+    private final LazyOptional<IItemHandlerModifiable> outputHandler = LazyOptional.of(() -> output);
+
+    private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
     private AbstractCookingRecipe currentSmeltingRecipe;
 
     private int burnTime = 0;
@@ -95,13 +115,8 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         }
     };
 
-    private static final int[] SLOTS_FOR_UP = new int[]{0};
-    private static final int[] SLOTS_FOR_DOWN = new int[]{2, 4};
-    private static final int[] SLOTS_FOR_WEST = new int[]{3};
-    private static final int[] SLOTS_FOR_OTHER = new int[]{1};
-
     public WitchOvenBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, 5);
+        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -109,7 +124,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
             boolean startedBurning = be.isBurning();
 
             if(!level.isClientSide) {
-                ItemStack fuelStack = be.inventoryContents.getStackInSlot(1);
+                ItemStack fuelStack = be.fuel.getStackInSlot(0);
 
                 if(be.isBurning())
                     be.burnTime--;
@@ -122,7 +137,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
                             be.burnTime = be.getBurnTime(fuelStack);
                             be.burnTimeTotal = be.burnTime;
                             if(be.isBurning()) { // In case item is not fuel (for some reason)
-                                be.inventoryContents.extractItem(1, 1, false);
+                                be.fuel.extractItem(0, 1, false);
                             }
                         }
 
@@ -158,10 +173,10 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
             if(resultStack.isEmpty()) // If recipe makes nothing
                 return false;
-            if(ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(inventoryContents.getStackInSlot(0).getItem())) // Can't smelt ores
+            if(ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(input.getStackInSlot(0).getItem())) // Can't smelt ores
                 return false;
 
-            ItemStack outputStack = this.inventoryContents.getStackInSlot(2);
+            ItemStack outputStack = output.getStackInSlot(0);
             if (outputStack.isEmpty()) // If output is empty
                 return true;
             else if (!outputStack.sameItem(resultStack)) // If output is a different item
@@ -174,26 +189,19 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
 
     protected void smelt() {
         if (currentSmeltingRecipe != null) {
-            ItemStack inputStack = inventoryContents.getStackInSlot(0);
-            ItemStack fuelStack = inventoryContents.getStackInSlot(1);
-            ItemStack outputStack = inventoryContents.getStackInSlot(2);
+            ItemStack inputStack = input.getStackInSlot(0);
+            ItemStack fuelStack = fuel.getStackInSlot(0);
             ItemStack recipeResult = currentSmeltingRecipe.assemble(recipeWrapper);
 
             if(Enchanted.RANDOM.nextDouble() <= getByproductChance())
                 createByproduct();
 
-            if (outputStack.isEmpty())
-                inventoryContents.setStackInSlot(2, recipeResult);
-            else if (outputStack.getItem() == recipeResult.getItem()) {
-                outputStack.grow(recipeResult.getCount());
-                inventoryContents.setStackInSlot(2, outputStack);
-            }
+            output.insertItem(0, recipeResult, false);
 
             if (inputStack.getItem() == Blocks.WET_SPONGE.asItem() && !fuelStack.isEmpty() && fuelStack.getItem() == Items.BUCKET)
-                inventoryContents.setStackInSlot(1, new ItemStack(Items.WATER_BUCKET));
+                fuel.setStackInSlot(0, new ItemStack(Items.WATER_BUCKET));
 
-            inputStack.shrink(1);
-            inventoryContents.setStackInSlot(0, inputStack);
+            input.extractItem(0, 1, false);
         }
     }
 
@@ -202,8 +210,9 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
             level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.WITCH_OVEN, recipeWrapper, level).ifPresent(recipe -> {
                 ItemStack result = recipe.assemble(recipeWrapper);
 
-                int transferred = inventoryContents.insertItem(4, result, false).getCount();
-                inventoryContents.extractItem(3, recipe.getResultItem().getCount() - transferred, false);
+                int toTransfer = output.insertItem(1, result, true).getCount();
+                if(!jar.extractItem(0, recipe.getResultItem().getCount() - toTransfer, false).isEmpty())
+                    output.insertItem(1, result, false);
             });
         }
     }
@@ -261,31 +270,30 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
         }
     }
 
+    public ItemStackHandler getInputInventory() {
+        return input;
+    }
+
+    public ItemStackHandler getFuelInventory() {
+        return fuel;
+    }
+
+    public ItemStackHandler getJarInventory() {
+        return jar;
+    }
+
+    public ItemStackHandler getOutputInventory() {
+        return output;
+    }
+
     @Override
     public ContainerData getData() {
         return data;
     }
 
-    private boolean isBurning() {
-        return this.burnTime > 0;
-    }
-
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        burnTime = nbt.getInt("burnTime");
-        burnTimeTotal = nbt.getInt("burnTimeTotal");
-        cookTime = nbt.getInt("cookTime");
-        cookTimeTotal = nbt.getInt("cookTimeTotal");
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        nbt.putInt("burnTime", burnTime);
-        nbt.putInt("burnTimeTotal", burnTimeTotal);
-        nbt.putInt("cookTime", cookTime);
-        nbt.putInt("cookTimeTotal", cookTimeTotal);
+    public NonNullList<ItemStack> getDroppableInventory() {
+        return getDroppableInventoryFor(input, jar, fuel, output);
     }
 
     @Override
@@ -298,4 +306,68 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase {
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new WitchOvenMenu(id, playerInventory, this, data);
     }
+
+
+    @Override
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        nbt.putInt("burnTime", burnTime);
+        nbt.putInt("burnTimeTotal", burnTimeTotal);
+        nbt.putInt("cookTime", cookTime);
+        nbt.putInt("cookTimeTotal", cookTimeTotal);
+        nbt.put("input", input.serializeNBT());
+        nbt.put("jar", jar.serializeNBT());
+        nbt.put("fuel", fuel.serializeNBT());
+        nbt.put("output", output.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        burnTime = nbt.getInt("burnTime");
+        burnTimeTotal = nbt.getInt("burnTimeTotal");
+        cookTime = nbt.getInt("cookTime");
+        cookTimeTotal = nbt.getInt("cookTimeTotal");
+        input.deserializeNBT(nbt.getCompound("input"));
+        jar.deserializeNBT(nbt.getCompound("jar"));
+        fuel.deserializeNBT(nbt.getCompound("fuel"));
+        output.deserializeNBT(nbt.getCompound("output"));
+    }
+
+    @NotNull
+    @Override
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if(side == null)
+                return super.getCapability(cap, side);
+
+            if(side == Direction.UP)
+                return inputHandler.cast();
+            if(side == Direction.DOWN)
+                return outputHandler.cast();
+            if(side == level.getBlockState(worldPosition).getValue(WitchOvenBlock.FACING))
+                return jarHandler.cast();
+
+            return fuelHandler.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        if(inputHandler != null)
+            inputHandler.invalidate();
+        if(jarHandler != null)
+            jarHandler.invalidate();
+        if(fuelHandler != null)
+            fuelHandler.invalidate();
+        if(outputHandler != null)
+            outputHandler.invalidate();
+    }
+
+    private boolean isBurning() {
+        return this.burnTime > 0;
+    }
+
 }

@@ -24,7 +24,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_kettle",
+      "recipe": "enchanted:kettle",
       "text": "A brew or infusion may be created by filling the kettle with water and dropping the correct items in the correct order into the kettle. Brews can be collected with empty glass bottles once complete."
     }
   ],

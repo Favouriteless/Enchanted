@@ -31,11 +31,14 @@ import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -44,19 +47,30 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer {
+public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer, MenuProvider {
 
+	private final ItemStackHandler input = new ItemStackHandler(3);
+	private final ItemStackHandler output = new ItemStackHandler(1);
+
+	private final LazyOptional<IItemHandlerModifiable> inputHandler = LazyOptional.of(() -> input);
+	private final LazyOptional<IItemHandlerModifiable> outputHandler = LazyOptional.of(() -> output);
+
+	private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
 	private SpinningWheelRecipe currentRecipe;
 	private final List<BlockPos> potentialAltars = new ArrayList<>();
 	private boolean isSpinning = false;
-
-	private static final int[] SLOTS_FOR_OTHER = new int[]{0, 1, 2};
-	private static final int[] SLOTS_FOR_DOWN = new int[]{3};
 
 	public static final int SPIN_TIME_TOTAL = 400;
 	private int spinTime = 0;
@@ -83,7 +97,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	};
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
-		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state, 4);
+		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -121,12 +135,12 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	protected void spin() {
-		inventoryContents.insertItem(3, currentRecipe.assemble(recipeWrapper), false);
+		output.insertItem(0, currentRecipe.assemble(recipeWrapper), false);
 
 		for(ItemStack recipeStack : currentRecipe.getItemsIn()) {
-			for (int i = 0; i < 3; i++) {
-				if(ItemStack.isSameItemSameTags(recipeStack, inventoryContents.getStackInSlot(i))) {
-					inventoryContents.extractItem(i, recipeStack.getCount(), false);
+			for (int i = 0; i < input.getSlots(); i++) {
+				if(ItemStack.isSameItemSameTags(recipeStack, input.getStackInSlot(i))) {
+					input.extractItem(i, recipeStack.getCount(), false);
 					break;
 				}
 			}
@@ -135,13 +149,13 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	protected boolean canSpin() {
 		if(currentRecipe != null) {
-			ItemStack itemStack = inventoryContents.getStackInSlot(3);
-			if(itemStack.isEmpty()) // Output is empty
+			ItemStack outputStack = output.getStackInSlot(0);
+			if(outputStack.isEmpty()) // Output is empty
 				return true;
 
-			if(currentRecipe.getResultItem().sameItem(itemStack)) // Output same item & fits within stack
-				if(itemStack.getOrCreateTag().equals(currentRecipe.getResultItem().getOrCreateTag()))
-					return itemStack.getCount() < itemStack.getMaxStackSize();
+			ItemStack resultStack = currentRecipe.getResultItem();
+			if(ItemStack.isSameItemSameTags(outputStack, resultStack)) // Output same item & fits within stack
+				return outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize();
 		}
 		return false;
 	}
@@ -152,11 +166,42 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 				currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, recipeWrapper, level).orElse(null);
 	}
 
+	public ItemStackHandler getInputInventory() {
+		return input;
+	}
+
+	public ItemStackHandler getOutputInventory() {
+		return output;
+	}
+
+	@Override
+	public ContainerData getData() {
+		return data;
+	}
+
+	@Override
+	public NonNullList<ItemStack> getDroppableInventory() {
+		return getDroppableInventoryFor(input, output);
+	}
+
+	@Override
+	public Component getDisplayName() {
+		return new TranslatableComponent("container.enchanted.spinning_wheel");
+	}
+
+	@Nullable
+	@Override
+	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+		return new SpinningWheelMenu(id, playerInventory, this, data);
+	}
+
 	@Override
 	public void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		AltarPowerHelper.savePosTag(potentialAltars, nbt);
 		nbt.putInt("spinTime", spinTime);
+		nbt.put("input", input.serializeNBT());
+		nbt.put("output", output.serializeNBT());
 	}
 
 	@Override
@@ -164,6 +209,8 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 		super.load(nbt);
 		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
 		spinTime = nbt.getInt("spinTime");
+		input.deserializeNBT(nbt.getCompound("input"));
+		output.deserializeNBT(nbt.getCompound("output"));
 	}
 
 	@Nullable
@@ -185,20 +232,27 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 		return nbt;
 	}
 
+	@NotNull
 	@Override
-	public ContainerData getData() {
-		return data;
+	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if(side == null)
+				return super.getCapability(cap, side);
+			else if(side == Direction.DOWN)
+				return outputHandler.cast();
+			else
+				return inputHandler.cast();
+		}
+		return super.getCapability(cap, side);
 	}
 
 	@Override
-	public Component getDisplayName() {
-		return new TranslatableComponent("container.enchanted.spinning_wheel");
-	}
-
-	@Nullable
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-		return new SpinningWheelMenu(id, playerInventory, this, data);
+	public void setRemoved() {
+		super.setRemoved();
+		if(inputHandler != null)
+			inputHandler.invalidate();
+		if(outputHandler != null)
+			outputHandler.invalidate();
 	}
 
 	@Override

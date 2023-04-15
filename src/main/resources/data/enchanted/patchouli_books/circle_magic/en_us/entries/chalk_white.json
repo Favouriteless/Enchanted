@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_chalk_white"
+      "recipe": "enchanted:chalk_white"
     }
   ],
   "read_by_default": true

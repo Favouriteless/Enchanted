@@ -25,20 +25,19 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.minecraftforge.items.IItemHandler;
 
-public abstract class ProcessingBlockEntityBase extends InventoryBlockEntityBase {
+public abstract class ProcessingBlockEntityBase extends BlockEntity {
 
-    protected final RecipeWrapper recipeWrapper;
-
-    public ProcessingBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySize) {
-        super(type, pos, state, inventorySize);
-        recipeWrapper = new RecipeWrapper(inventoryContents);
+    public ProcessingBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     public abstract ContainerData getData();
@@ -60,6 +59,17 @@ public abstract class ProcessingBlockEntityBase extends InventoryBlockEntityBase
             BlockState state = level.getBlockState(worldPosition);
             level.sendBlockUpdated(worldPosition, state, state, 2);
         }
+    }
+
+    public abstract NonNullList<ItemStack> getDroppableInventory();
+
+    public NonNullList<ItemStack> getDroppableInventoryFor(IItemHandler... inventories) {
+        NonNullList<ItemStack> drops = NonNullList.create();
+        for(IItemHandler inventory : inventories)
+            for(int i = 0; i < inventory.getSlots(); i++)
+                drops.add(inventory.getStackInSlot(i));
+
+        return drops;
     }
 
 }

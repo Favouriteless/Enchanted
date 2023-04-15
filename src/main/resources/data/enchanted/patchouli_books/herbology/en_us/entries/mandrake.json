@@ -22,7 +22,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "enchanted:craft_earmuffs",
+      "recipe": "enchanted:earmuffs",
       "text": "Wearing earmuffs will protect against the mandrake's screams."
     }
   ],

@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_hawthorn_stairs": {
+    "has_hawthorn_planks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "enchanted:hawthorn_stairs"
+              "enchanted:hawthorn_planks"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_hawthorn_stairs",
+      "has_hawthorn_planks",
       "has_the_recipe"
     ]
   ]

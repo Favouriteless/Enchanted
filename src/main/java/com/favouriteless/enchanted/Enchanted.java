@@ -27,8 +27,6 @@ package com.favouriteless.enchanted;
 import com.favouriteless.enchanted.client.EnchantedClientConfig;
 import com.favouriteless.enchanted.common.init.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -47,12 +45,6 @@ public class Enchanted {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "enchanted";
     public static Enchanted INSTANCE;
-    public static final CreativeModeTab TAB = new CreativeModeTab("enchanted.main") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get());
-        }
-    };
 
     public Enchanted() {
         registerAll();

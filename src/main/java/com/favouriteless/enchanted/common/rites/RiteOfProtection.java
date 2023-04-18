@@ -30,16 +30,24 @@ import com.favouriteless.enchanted.common.init.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.stateobserver.altar.AltarStateObserver;
+import com.favouriteless.enchanted.common.stateobserver.rites.RiteOfProtectionObserver;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.util.rite.CirclePart;
 import com.favouriteless.enchanted.common.util.rite.RiteType;
+import com.favouriteless.stateobserver.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -47,6 +55,7 @@ import java.util.List;
 
 public class RiteOfProtection extends AbstractRite {
 
+    private RiteOfProtectionObserver stateObserver = null;
     protected final int radius;
     protected final Block block;
     protected ServerLevel targetLevel = null;
@@ -63,13 +72,13 @@ public class RiteOfProtection extends AbstractRite {
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
-
     }
 
     @Override
     public void execute() {
         findTargetPos();
         generateSphere(block);
+        getOrCreateObserver();
         targetLevel.sendParticles(new DoubleParticleData(EnchantedParticles.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
@@ -78,6 +87,7 @@ public class RiteOfProtection extends AbstractRite {
         if(targetLevel.isLoaded(targetPos))
             if(ticks % 20 == 0) {
                 generateSphere(block);
+                stateObserver.checkChanges();
                 targetLevel.sendParticles(new DoubleParticleData(EnchantedParticles.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             }
     }
@@ -85,6 +95,7 @@ public class RiteOfProtection extends AbstractRite {
     @Override
     public void onStopExecuting() {
         generateSphere(Blocks.AIR);
+        StateObserverManager.removeObserver(stateObserver);
     }
 
     protected void generateSphere(Block block) {
@@ -128,6 +139,40 @@ public class RiteOfProtection extends AbstractRite {
             targetLevel = level;
         if(targetPos == null)
             targetPos = pos;
+    }
+
+    @Override
+    protected boolean loadAdditional(CompoundTag nbt, Level level) {
+        if(!nbt.contains("targetLevel"))
+            return false;
+        if(!nbt.contains("targetX"))
+            return false;
+        if(!nbt.contains("targetY"))
+            return false;
+        if(!nbt.contains("targetZ"))
+            return false;
+
+        targetLevel = level.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("targetLevel"))));
+        targetPos = new BlockPos(nbt.getInt("targetX"), nbt.getInt("targetY"), nbt.getInt("targetZ"));
+        getOrCreateObserver();
+        generateSphere(block);
+
+        return true;
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag nbt) {
+        nbt.putString("targetLevel", targetLevel.dimension().location().toString());
+        nbt.putInt("targetX", targetPos.getX());
+        nbt.putInt("targetY", targetPos.getY());
+        nbt.putInt("targetZ", targetPos.getZ());
+    }
+
+    protected void getOrCreateObserver() {
+        if(stateObserver == null)
+            stateObserver = (RiteOfProtectionObserver) StateObserverManager.getObserver(level, targetPos, AltarStateObserver.class);
+        if(stateObserver == null)
+            stateObserver = StateObserverManager.createObserver(new RiteOfProtectionObserver(targetLevel, targetPos, radius + 1, radius + 1, radius + 1, block));
     }
 
 }

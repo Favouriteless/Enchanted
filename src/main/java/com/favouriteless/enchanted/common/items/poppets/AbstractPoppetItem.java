@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.items.poppets;
 
-import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
@@ -51,7 +51,7 @@ public abstract class AbstractPoppetItem extends Item {
 	public final PoppetColour colour;
 
 	public AbstractPoppetItem(float failRate, int durability, PoppetColour colour) {
-		super(new Item.Properties().tab(Enchanted.TAB).durability(durability));
+		super(new Item.Properties().tab(EnchantedItems.TAB).durability(durability));
 		this.failRate = failRate;
 		this.colour = colour;
 	}

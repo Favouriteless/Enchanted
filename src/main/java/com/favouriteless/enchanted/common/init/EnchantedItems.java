@@ -29,6 +29,8 @@ import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
 import com.favouriteless.enchanted.common.items.poppets.*;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -208,7 +210,7 @@ public class EnchantedItems {
 
 
     private static Properties defaultProperties() {
-        return new Properties().tab(Enchanted.TAB);
+        return new Properties().tab(TAB);
     }
 
     private static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int backgroundColour, int highlightColour) {
@@ -319,5 +321,30 @@ public class EnchantedItems {
         ComposterBlock.COMPOSTABLES.put(WOLFSBANE_FLOWER.get(), 0.65F);
         ComposterBlock.COMPOSTABLES.put(GARLIC.get(), 0.45F);
     }
+
+
+
+    public static final CreativeModeTab TAB = new CreativeModeTab(Enchanted.MOD_ID + ".main") {
+
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(EnchantedItems.ENCHANTED_BROOMSTICK.get());
+        }
+
+        @Override
+        public void fillItemList(NonNullList<ItemStack> items) {
+            super.fillItemList(items);
+
+            String[] keys = new String[] { "small", "medium", "large" };
+            for(int i = 1; i < 4; i++) {
+                for(String key : keys) {
+                    ItemStack stack = new ItemStack(CIRCLE_TALISMAN.get());
+                    CompoundTag nbt = stack.getOrCreateTag();
+                    nbt.putInt(key, i);
+                    items.add(stack);
+                }
+            }
+        }
+    };
 
 }

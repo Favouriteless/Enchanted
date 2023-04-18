@@ -104,18 +104,19 @@ public abstract class AbstractRite {
         nbt.putLong("ticks", ticks);
         nbt.putBoolean("isAttached", isAttached);
 
-        return saveAdditional(nbt);
+        saveAdditional(nbt);
+        return nbt;
     }
 
-    public void load(CompoundTag nbt, Level world) {
-        setLevel(world.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
+    public boolean load(CompoundTag nbt, Level level) {
+        setLevel(level.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
         setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
         casterUUID = nbt.getUUID("caster");
         if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
         ticks = nbt.getLong("ticks");
         isAttached = nbt.getBoolean("isAttached");
 
-        loadAdditional(nbt);
+        return loadAdditional(nbt, level);
     }
 
     protected boolean tryConsumePower(int amount) {
@@ -146,15 +147,13 @@ public abstract class AbstractRite {
      * @param nbt
      * @return Final nbt tag
      */
-    protected CompoundTag saveAdditional(CompoundTag nbt) {
-        return nbt;
-    }
+    protected void saveAdditional(CompoundTag nbt) {}
 
     /**
-     * Override this to load any additional nbt info
+     * Override this to load any additional nbt info, return false if loading needs to fail for whatever reason.
      * @param nbt
      */
-    protected void loadAdditional(CompoundTag nbt) {}
+    protected boolean loadAdditional(CompoundTag nbt, Level level) { return true; }
 
     /**
      * Initial effects of the rite, for example spawning an item or playing a sound

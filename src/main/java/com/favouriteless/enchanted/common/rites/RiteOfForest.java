@@ -40,6 +40,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -118,22 +119,24 @@ public class RiteOfForest extends AbstractRite {
     }
 
     @Override
-    protected CompoundTag saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
         ListTag usedPosTag = new ListTag();
-        for(BlockPos pos : usedPositions) {
+        for(BlockPos pos : usedPositions)
             usedPosTag.add(NbtUtils.writeBlockPos(pos));
-        }
         nbt.put("usedPositions", usedPosTag);
-        return nbt;
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt) {
+    protected boolean loadAdditional(CompoundTag nbt, Level level) {
+        if(!nbt.contains("usedPositions"))
+            return false;
+
         usedPositions.clear();
         ListTag usedPosTag = nbt.getList("usedPositions", 10);
-        for(Tag tag : usedPosTag) {
+        for(Tag tag : usedPosTag)
             usedPositions.add(NbtUtils.readBlockPos((CompoundTag)tag));
-        }
+
+        return true;
     }
 
     private boolean notNearUsed(BlockPos pos) {

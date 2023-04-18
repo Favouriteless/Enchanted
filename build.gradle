@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.18.2-1.0.5'
+version = '1.18.2-1.0.6'
 group = 'com.favouriteless.enchanted'
 archivesBaseName = 'enchanted'
 

@@ -137,9 +137,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             centerPos = facingX ?
                     Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
                     Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
-            if(firstLoad) {
+            if(firstLoad)
                 recalculatePower();
-            }
         }
     }
 
@@ -153,7 +152,6 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         nbt.put("blockData", altarBlockData.getSaveTag());
         nbt.put("upgradeData", altarUpgradeData.getSaveTag());
     }
-
 
     @Override
     public void load(CompoundTag nbt) {

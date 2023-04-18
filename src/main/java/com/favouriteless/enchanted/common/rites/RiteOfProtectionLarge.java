@@ -32,7 +32,7 @@ import net.minecraft.world.item.Items;
 public class RiteOfProtectionLarge extends RiteOfProtection {
 
     public RiteOfProtectionLarge() {
-        super(EnchantedRiteTypes.PROTECTION.get(), 1000, 6, 6, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
+        super(EnchantedRiteTypes.PROTECTION_LARGE.get(), 1000, 6, 6, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);

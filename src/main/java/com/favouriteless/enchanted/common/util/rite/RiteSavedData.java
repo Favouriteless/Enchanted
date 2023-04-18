@@ -67,16 +67,19 @@ public class RiteSavedData extends SavedData {
 
 		for(int i = 0; i < riteList.size(); i++) {
 			CompoundTag riteNbt = riteList.getCompound(i);
-			RiteType<?> type = EnchantedRiteTypes.REGISTRY.get().getValue(new ResourceLocation(riteNbt.getString("type")));
+			String typeString = riteNbt.getString("type");
+			RiteType<?> type = EnchantedRiteTypes.REGISTRY.get().getValue(new ResourceLocation(typeString));
 
 			if(type != null) {
 				AbstractRite rite = type.create();
-				rite.load(riteNbt, data.level);
-				data.ACTIVE_RITES.add(rite);
+
+				if(rite.load(riteNbt, data.level))
+					data.ACTIVE_RITES.add(rite);
+				else
+					Enchanted.LOGGER.error("Failed to load rite of type" + typeString);
 			}
-			else {
-				Enchanted.LOGGER.error("Invalid rite type found in world save. Rite will not be loaded.");
-			}
+			else
+				Enchanted.LOGGER.error(String.format("Invalid rite type %s found in world save. Rite will not be loaded.", typeString));
 		}
 		Enchanted.LOGGER.info("Loaded active rites successfully");
 		return data;

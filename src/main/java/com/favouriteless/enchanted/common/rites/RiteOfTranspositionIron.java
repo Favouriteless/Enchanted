@@ -37,6 +37,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -88,14 +89,16 @@ public class RiteOfTranspositionIron extends AbstractRite {
 	}
 
 	@Override
-	protected CompoundTag saveAdditional(CompoundTag nbt) {
+	protected void saveAdditional(CompoundTag nbt) {
 		nbt.putInt("progress", progress);
-		return nbt;
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag nbt) {
-		if(nbt.contains("progress"))
-			progress = nbt.getInt("progress");
+	protected boolean loadAdditional(CompoundTag nbt, Level level) {
+		if(!nbt.contains("progress"))
+			return false;
+
+		progress = nbt.getInt("progress");
+		return true;
 	}
 }

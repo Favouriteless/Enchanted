@@ -42,7 +42,7 @@ import java.util.List;
 
 public class RiteOfSanctity extends AbstractRite {
 
-    public static final double REPULSE_FACTOR = 0.03D;
+    public static final double REPULSE_FACTOR = 0.3D;
 
     public RiteOfSanctity() {
         super(EnchantedRiteTypes.SANCTITY.get(), 500, 3); // Power, power per tick
@@ -61,9 +61,13 @@ public class RiteOfSanctity extends AbstractRite {
         List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
-                Vec3 opposingVector = entity.position().subtract(pos.getX(), entity.position().y(), pos.getZ());
-                double distance = opposingVector.distanceTo(new Vec3(pos.getX()+0.5D, 0.0D, pos.getZ()+0.5D));
-                entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(distance * 10).scale(REPULSE_FACTOR / 500D)));
+                Vec3 opposingVector = entity.position().subtract(pos.getX()+0.5D, entity.position().y(), pos.getZ()+0.5D);
+                if(opposingVector.lengthSqr() < 0.3D)
+                    opposingVector = new Vec3(0.1D, 0.0D, 0.0D); // Stop entity from getting stuck perfectly in center;
+
+                double d = Math.max(opposingVector.length() - 2.0D, 0);
+                double force = (1 - (d / 2.0D)) * REPULSE_FACTOR;
+                entity.setDeltaMovement(entity.getDeltaMovement().add(opposingVector.normalize().scale(force)));
             }
         }
 

@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.favouriteless.enchanted.jei.JEIRecipeTypes.RECIPE_TYPE_SPINNING_WHEEL;
+
 public class SpinningWheelContainerHandler implements IGuiContainerHandler<SpinningWheelScreen> {
 
     @Override
@@ -51,7 +53,7 @@ public class SpinningWheelContainerHandler implements IGuiContainerHandler<Spinn
             @Override
             public void onClick(IFocusFactory focusFactory, IRecipesGui recipesGui) {
                 List<RecipeType<?>> list = new ArrayList<>();
-                list.add(EnchantedJEIPlugin.RECIPE_TYPE_SPINNING_WHEEL);
+                list.add(RECIPE_TYPE_SPINNING_WHEEL);
                 recipesGui.showTypes(list);
             }
         });

@@ -186,6 +186,9 @@
 
     "jei.enchanted.chalice_filled": "Right click on a chalice using redstone soup",
     "jei.enchanted.chalice_filled_milk": "Right click on a chalice using a bucket of milk",
+    "jei.enchanted.mutandis": "Mutandis",
+    "jei.enchanted.mutandis_extremis": "Mutandis Extremis",
+    "jei.enchanted.mutandis.description": "Use mutandis to transmute plants",
     "container.enchanted.kettle": "Kettle",
     "container.witch_cauldron": "Witch Cauldron"
 }

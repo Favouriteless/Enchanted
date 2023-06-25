@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.jei.container_handlers;
 
 import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
-import com.favouriteless.enchanted.jei.EnchantedJEIPlugin;
 import mezz.jei.api.gui.handlers.IGuiClickableArea;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.recipe.IFocusFactory;
@@ -36,6 +35,8 @@ import net.minecraft.client.renderer.Rect2i;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static com.favouriteless.enchanted.jei.JEIRecipeTypes.RECIPE_TYPE_WITCH_OVEN;
 
 public class WitchOvenContainerHandler implements IGuiContainerHandler<WitchOvenScreen> {
 
@@ -51,7 +52,7 @@ public class WitchOvenContainerHandler implements IGuiContainerHandler<WitchOven
             @Override
             public void onClick(IFocusFactory focusFactory, IRecipesGui recipesGui) {
                 List<RecipeType<?>> list = new ArrayList<>();
-                list.add(EnchantedJEIPlugin.RECIPE_TYPE_WITCH_OVEN);
+                list.add(RECIPE_TYPE_WITCH_OVEN);
                 recipesGui.showTypes(list);
             }
         });

@@ -32,6 +32,8 @@ import net.minecraft.world.inventory.Slot;
 
 import java.util.List;
 
+import static com.favouriteless.enchanted.jei.JEIRecipeTypes.RECIPE_TYPE_DISTILLERY;
+
 public class DistilleryTransferInfo implements IRecipeTransferInfo<DistilleryMenu,DistilleryRecipe> {
 
     @Override
@@ -66,6 +68,6 @@ public class DistilleryTransferInfo implements IRecipeTransferInfo<DistilleryMen
 
     @Override
     public ResourceLocation getRecipeCategoryUid() {
-        return EnchantedJEIPlugin.RECIPE_TYPE_DISTILLERY.getUid();
+        return RECIPE_TYPE_DISTILLERY.getUid();
     }
 }

@@ -32,17 +32,17 @@ import com.favouriteless.enchanted.client.screens.WitchOvenScreen;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
-import com.favouriteless.enchanted.common.recipes.*;
 import com.favouriteless.enchanted.jei.categories.*;
 import com.favouriteless.enchanted.jei.container_handlers.DistilleryContainerHandler;
 import com.favouriteless.enchanted.jei.container_handlers.SpinningWheelContainerHandler;
 import com.favouriteless.enchanted.jei.container_handlers.WitchOvenContainerHandler;
+import com.favouriteless.enchanted.jei.recipes.JEIMutandisRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
@@ -50,30 +50,14 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraftforge.registries.ForgeRegistries;
+import static com.favouriteless.enchanted.jei.JEIRecipeTypes.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @JeiPlugin
 public class EnchantedJEIPlugin implements IModPlugin {
-
-    private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
-    public static final RecipeType<WitchOvenRecipe> RECIPE_TYPE_WITCH_OVEN = new RecipeType<>(locationOven, WitchOvenRecipe.class);
-
-    private static final ResourceLocation locationDistillery = new ResourceLocation("enchanted", "distillery_category");
-    public static final RecipeType<DistilleryRecipe> RECIPE_TYPE_DISTILLERY = new RecipeType<>(locationDistillery, DistilleryRecipe.class);
-
-    private static final ResourceLocation locationSpinningWheel = new ResourceLocation("enchanted", "spinning_wheel_category");
-    public static final RecipeType<SpinningWheelRecipe> RECIPE_TYPE_SPINNING_WHEEL = new RecipeType<>(locationSpinningWheel, SpinningWheelRecipe.class);
-
-    private static final ResourceLocation locationWitchCauldron= new ResourceLocation("enchanted", "witch_cauldron_category");
-    public static final RecipeType<WitchCauldronRecipe> RECIPE_TYPE_WITCH_CAULDRON = new RecipeType<>(locationWitchCauldron, WitchCauldronRecipe.class);
-
-    private static final ResourceLocation locationKettle= new ResourceLocation("enchanted", "kettle_category");
-    public static final RecipeType<KettleRecipe> RECIPE_TYPE_KETTLE = new RecipeType<>(locationKettle, KettleRecipe.class);
-
-    private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
-    public static final RecipeType<AbstractCreateItemRite> RECIPE_TYPE_RITE = new RecipeType<>(locationRite, AbstractCreateItemRite.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -103,7 +87,8 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new WitchCauldronCategory(registration.getJeiHelpers(),RECIPE_TYPE_WITCH_CAULDRON));
         registration.addRecipeCategories(new KettleCategory(registration.getJeiHelpers(),RECIPE_TYPE_KETTLE));
         registration.addRecipeCategories(new RiteCategory(registration.getJeiHelpers(),RECIPE_TYPE_RITE));
-
+        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(),RECIPE_TYPE_MUTANDIS,new ItemStack(EnchantedItems.MUTANDIS.get()),new TranslatableComponent("jei.enchanted.mutandis")));
+        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(),RECIPE_TYPE_MUTANDIS_EXTREMIS,new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()),new TranslatableComponent("jei.enchanted.mutandis_extremis")));
     }
 
     @Override
@@ -112,7 +97,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
+    public void registerRecipes(IRecipeRegistration registration) {;
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         registration.addRecipes(RECIPE_TYPE_WITCH_OVEN, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.WITCH_OVEN));
         registration.addRecipes(RECIPE_TYPE_DISTILLERY, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.DISTILLERY));
@@ -126,6 +111,21 @@ public class EnchantedJEIPlugin implements IModPlugin {
                 .map(rite -> (AbstractCreateItemRite)rite)
                 .collect(Collectors.toList());
         registration.addRecipes(RECIPE_TYPE_RITE, ritesCreateItemCrafts);
+
+        registration.addRecipes(RECIPE_TYPE_MUTANDIS,
+                ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_PLANTS)
+                        .stream()
+                        .filter((b)->!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(b))
+                        .map(b->new JEIMutandisRecipe(EnchantedTags.Blocks.MUTANDIS_PLANTS,new ItemStack(b),new TranslatableComponent("jei.enchanted.mutandis.description")))
+                        .toList());
+
+        registration.addRecipes(RECIPE_TYPE_MUTANDIS_EXTREMIS,
+                ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS)
+                        .stream()
+                        .filter((b)->!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(b))
+                        .map(b->new JEIMutandisRecipe(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS,new ItemStack(b),new TranslatableComponent("jei.enchanted.mutandis.description")))
+                        .toList());
+
 
         registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("jei.enchanted.chalice_filled"));
         registration.addIngredientInfo(new ItemStack(EnchantedItems.CHALICE_FILLED_MILK.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("jei.enchanted.chalice_filled_milk"));
@@ -151,6 +151,8 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_GOLD.get()),RECIPE_TYPE_RITE);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_PURPLE.get()),RECIPE_TYPE_RITE);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_RED.get()),RECIPE_TYPE_RITE);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS.get()),RECIPE_TYPE_MUTANDIS);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()),RECIPE_TYPE_MUTANDIS_EXTREMIS);
         IModPlugin.super.registerRecipeCatalysts(registration);
     }
 

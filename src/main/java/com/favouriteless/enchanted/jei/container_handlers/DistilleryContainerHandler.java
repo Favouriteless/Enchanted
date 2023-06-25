@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.favouriteless.enchanted.jei.JEIRecipeTypes.RECIPE_TYPE_DISTILLERY;
+
 
 public class DistilleryContainerHandler implements IGuiContainerHandler<DistilleryScreen> {
 
@@ -51,7 +53,7 @@ public class DistilleryContainerHandler implements IGuiContainerHandler<Distille
             @Override
             public void onClick(IFocusFactory focusFactory, IRecipesGui recipesGui) {
                 List<RecipeType<?>> list = new ArrayList<>();
-                list.add(EnchantedJEIPlugin.RECIPE_TYPE_DISTILLERY);
+                list.add(RECIPE_TYPE_DISTILLERY);
                 recipesGui.showTypes(list);
             }
         });

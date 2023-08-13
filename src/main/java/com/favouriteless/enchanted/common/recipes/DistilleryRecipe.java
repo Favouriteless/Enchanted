@@ -147,7 +147,7 @@ public class DistilleryRecipe implements Recipe<Container> {
             int outSize = buffer.readInt();
             NonNullList<ItemStack> itemsOut = NonNullList.create();
             for (int x = 0; x < outSize; ++x)
-                itemsIn.add(buffer.readItem());
+                itemsOut.add(buffer.readItem());
 
             int cookTime = buffer.readInt();
 

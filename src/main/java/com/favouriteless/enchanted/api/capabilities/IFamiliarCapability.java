@@ -24,13 +24,15 @@
 
 package com.favouriteless.enchanted.api.capabilities;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public class EnchantedCapabilities {
+public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
 
-	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
-	public static Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
+    ResourceLocation LOCATION = Enchanted.location("familiar");
 
+    ResourceLocation getFamiliarType();
+    void setFamiliarType(ResourceLocation type);
 }

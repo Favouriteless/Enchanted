@@ -22,15 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities;
+package com.favouriteless.enchanted.common.init;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-
-public class EnchantedCapabilities {
-
-	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
-	public static Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
-
+public class EnchantedFamiliarTypes {
 }

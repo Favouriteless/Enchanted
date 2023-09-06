@@ -22,15 +22,21 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities;
+package com.favouriteless.enchanted.common.rites.entity;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import net.minecraft.world.item.Items;
 
-public class EnchantedCapabilities {
+public class RiteProtectionLarge extends RiteProtection {
 
-	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
-	public static Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
+    public RiteProtectionLarge() {
+        super(EnchantedRiteTypes.PROTECTION_LARGE.get(), 1000, 6, 6, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
+        CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
+        ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
+        ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
+
+    }
 
 }

@@ -22,52 +22,38 @@
  *
  */
 
-package com.favouriteless.enchanted.common.capabilities.bed;
+package com.favouriteless.enchanted.common.capabilities.familiar;
 
-import com.favouriteless.enchanted.api.capabilities.IBedCapability;
+import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
-import java.util.UUID;
+public class FamiliarCapabilityImpl implements IFamiliarCapability {
 
-public class BedCapabilityImpl implements IBedCapability {
-
-    private static final String UUID_KEY_NAME = "player_uuid";
-    private static final String NAME_KEY_NAME = "player_name";
-    private UUID uuid;
-    private String name;
+    private ResourceLocation type = null;
 
     @Override
-    public UUID getUUID() {
-        return uuid;
+    public ResourceLocation getFamiliarType() {
+        return type;
     }
 
     @Override
-    public void setUUID(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setFamiliarType(ResourceLocation type) {
+        this.type = type;
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        if(uuid != null) nbt.putUUID(UUID_KEY_NAME, uuid);
-        if(name != null) nbt.putString(NAME_KEY_NAME, name);
+        if(type != null)
+            nbt.putString("type", type.toString());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if(nbt.contains(UUID_KEY_NAME)) this.setUUID(nbt.getUUID(UUID_KEY_NAME));
-        if(nbt.contains(NAME_KEY_NAME)) this.setName(nbt.getString(NAME_KEY_NAME));
+        if(nbt.contains("type"))
+            type = new ResourceLocation(nbt.getString("type"));
     }
 
 }

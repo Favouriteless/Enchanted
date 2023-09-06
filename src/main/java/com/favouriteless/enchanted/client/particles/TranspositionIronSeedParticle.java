@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.rites.RiteOfTranspositionIron;
+import com.favouriteless.enchanted.common.rites.world.RiteTranspositionIron;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
@@ -45,10 +45,10 @@ public class TranspositionIronSeedParticle extends NoRenderParticle {
 	@Override
 	public void tick() {
 		for(int a = 0; a < 360; a+=2) {
-			double cx = x + Math.sin(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
-			double cz = z + Math.cos(a) * RiteOfTranspositionIron.CIRCLE_RADIUS;
+			double cx = x + Math.sin(a) * RiteTranspositionIron.CIRCLE_RADIUS;
+			double cz = z + Math.cos(a) * RiteTranspositionIron.CIRCLE_RADIUS;
 
-			level.addParticle(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, x, y, z, RiteOfTranspositionIron.CIRCLE_RADIUS), cx, y, cz, 0.0D, 0.0D, 0.0D);
+			level.addParticle(new CircleMagicData(EnchantedParticles.CIRCLE_MAGIC.get(), 170, 111, 58, x, y, z, RiteTranspositionIron.CIRCLE_RADIUS), cx, y, cz, 0.0D, 0.0D, 0.0D);
 		}
 		this.remove();
 	}

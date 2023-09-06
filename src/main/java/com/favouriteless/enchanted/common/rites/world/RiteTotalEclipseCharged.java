@@ -22,15 +22,22 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities;
+package com.favouriteless.enchanted.common.rites.world;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import net.minecraft.world.item.Items;
 
-public class EnchantedCapabilities {
+public class RiteTotalEclipseCharged extends RiteTotalEclipse {
 
-	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
-	public static Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
+    public RiteTotalEclipseCharged() {
+        super(EnchantedRiteTypes.TOTAL_ECLIPSE_CHARGED.get(), 0, 0); // Power, power per tick
+        CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+        ITEMS_REQUIRED.put(Items.IRON_AXE, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
+        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
+    }
 
 }

@@ -22,15 +22,19 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities;
+package com.favouriteless.enchanted.common.rites.binding;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import net.minecraft.world.item.Items;
 
-public class EnchantedCapabilities {
+public class RiteBindingTalismanCharged extends RiteBindingTalisman {
 
-	public static Capability<IBedCapability> BED = CapabilityManager.get(new CapabilityToken<>() {});
-	public static Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
+    public RiteBindingTalismanCharged() {
+        super(EnchantedRiteTypes.BINDING_TALISMAN_CHARGED.get(), 0); // Power, power per tick
+        ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
+        ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);
+        ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
+    }
 
 }

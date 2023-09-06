@@ -65,9 +65,9 @@ public class EnchantedRecipeProvider extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(EnchantedItems.SPINNING_WHEEL.get()).pattern("wrr").pattern("srr").pattern("pap").define('w', ItemTags.WOOL).define('s', Items.STICK).define('a', EnchantedItems.ATTUNED_STONE.get()).define('p', EnchantedItems.ALDER_PLANKS.get()).define('r', EnchantedItems.ROWAN_STAIRS.get()).unlockedBy("has_attuned_stone", has(EnchantedItems.ATTUNED_STONE.get())).save(recipeConsumer);
 		ShapedRecipeBuilder.shaped(EnchantedItems.WICKER_BUNDLE.get()).pattern("sss").pattern("sss").pattern("sss").define('s', ItemTags.SAPLINGS).unlockedBy("has_sapling", has(ItemTags.SAPLINGS)).save(recipeConsumer);
 		ShapedRecipeBuilder.shaped(EnchantedItems.WITCH_OVEN.get()).pattern(" b ").pattern("iii").pattern("ibi").define('i', Items.IRON_INGOT).define('b', Items.IRON_BARS).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(recipeConsumer);
-		planksFromLog(recipeConsumer, EnchantedItems.ROWAN_PLANKS.get(), EnchantedItems.ROWAN_PLANKS.get());
-		planksFromLog(recipeConsumer, EnchantedItems.ALDER_PLANKS.get(), EnchantedItems.ALDER_PLANKS.get());
-		planksFromLog(recipeConsumer, EnchantedItems.HAWTHORN_PLANKS.get(), EnchantedItems.HAWTHORN_PLANKS.get());
+		planksFromLog(recipeConsumer, EnchantedItems.ROWAN_PLANKS.get(), EnchantedItems.ROWAN_LOG.get());
+		planksFromLog(recipeConsumer, EnchantedItems.ALDER_PLANKS.get(), EnchantedItems.ALDER_LOG.get());
+		planksFromLog(recipeConsumer, EnchantedItems.HAWTHORN_PLANKS.get(), EnchantedItems.HAWTHORN_LOG.get());
 		slab(recipeConsumer, EnchantedItems.ROWAN_SLAB.get(), EnchantedItems.ROWAN_PLANKS.get());
 		slab(recipeConsumer, EnchantedItems.ALDER_SLAB.get(), EnchantedItems.ALDER_PLANKS.get());
 		slab(recipeConsumer, EnchantedItems.HAWTHORN_SLAB.get(), EnchantedItems.HAWTHORN_PLANKS.get());

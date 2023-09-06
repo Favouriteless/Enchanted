@@ -28,28 +28,15 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BedBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-import javax.annotation.Nonnull;
-
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class BedCapabilityManager {
 
     public BedCapabilityManager() {}
-
-    @SubscribeEvent
-    public static void onAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<BlockEntity> event) {
-        final BlockEntity obj = event.getObject();
-        if(obj instanceof BedBlockEntity) {
-            event.addCapability(Enchanted.location("bed"), new BedCapabilityProvider());
-        }
-    }
 
     @SubscribeEvent
     public static void onPlayerSleeping(PlayerSleepInBedEvent event){

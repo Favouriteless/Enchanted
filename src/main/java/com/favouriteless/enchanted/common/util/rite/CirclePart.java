@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.util.rite;
 
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;

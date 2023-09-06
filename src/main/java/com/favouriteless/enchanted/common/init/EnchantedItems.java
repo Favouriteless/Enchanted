@@ -25,6 +25,9 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEffects;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;

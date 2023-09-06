@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.api.curses;
 
-import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;

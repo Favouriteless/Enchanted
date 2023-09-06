@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.recipes;
 
-import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

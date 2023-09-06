@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.init;
 
+import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.common.util.ForgeSoundType;
 

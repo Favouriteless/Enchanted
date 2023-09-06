@@ -29,7 +29,7 @@ import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
-import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
@@ -52,6 +52,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -108,7 +109,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         super(EnchantedBlockEntityTypes.ALTAR.get(), pos, state);
     }
 
-    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T t) {
         if(t instanceof AltarBlockEntity blockEntity) {
             if(level != null && !level.isClientSide) {
                 if(blockEntity.ticksAlive % 20 == 0) {
@@ -149,8 +150,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         nbt.putDouble("maxPower", maxPower);
         nbt.putDouble("powerMultiplier", powerMultiplier);
         nbt.putDouble("rechargeMultiplier", rechargeMultiplier);
-        nbt.put("blockData", altarBlockData.getSaveTag());
-        nbt.put("upgradeData", altarUpgradeData.getSaveTag());
+        nbt.put("blockData", altarBlockData.serializeNBT());
+        nbt.put("upgradeData", altarUpgradeData.serializeNBT());
     }
 
     @Override
@@ -162,8 +163,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         powerMultiplier = nbt.getDouble("powerMultiplier");
         rechargeMultiplier = nbt.getDouble("rechargeMultiplier");
         if(nbt.contains("blockData") && nbt.contains("upgradeData")) {
-            altarBlockData.loadTag((CompoundTag) nbt.get("blockData"));
-            altarUpgradeData.loadTag((CompoundTag) nbt.get("upgradeData"));
+            altarBlockData.deserializeNBT((CompoundTag) nbt.get("blockData"));
+            altarUpgradeData.deserializeNBT((CompoundTag) nbt.get("upgradeData"));
         }
         else
             Enchanted.LOGGER.info(String.format("Failed to load power block data for altar at x:%s y:%s z:%s", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ()));
@@ -312,20 +313,18 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         return new AltarMenu(id, this, fields);
     }
 
-    public static class AltarBlockData {
+    public static class AltarBlockData implements INBTSerializable<CompoundTag> {
         public Map<Block, Integer> blockCounts = new HashMap<>();
         public Map<TagKey<Block>, Integer> tagCounts = new HashMap<>();
 
         public AltarBlockData() {
-            for(AltarPowerProvider<Block> provider : EnchantedData.ALTAR_POWER_BLOCKS.get()) {
+            for(AltarPowerProvider<Block> provider : EnchantedData.POWER_BLOCKS.getAll())
                 blockCounts.put(provider.getKey(), 0);
-            }
-            for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) {
+            for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.POWER_TAGS.getAll())
                 tagCounts.put(provider.getKey(), 0);
-            }
         }
 
-        public CompoundTag getSaveTag() {
+        public CompoundTag serializeNBT() {
             CompoundTag nbt = new CompoundTag();
             CompoundTag blockNbt = new CompoundTag();
             CompoundTag tagNbt = new CompoundTag();
@@ -342,7 +341,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             return nbt;
         }
 
-        public void loadTag(CompoundTag nbt) {
+        public void deserializeNBT(CompoundTag nbt) {
             CompoundTag blockNbt = (CompoundTag)nbt.get("blocksAmount");
             CompoundTag tagNbt = (CompoundTag)nbt.get("tagsAmount");
 
@@ -359,7 +358,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             Integer amount = blockCounts.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
+                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.POWER_TAGS.getAll()) { // For all tag power providers
                     if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
                         amount = tagCounts.get(provider.getKey());
                         tagCounts.replace(provider.getKey(), tagCounts.get(provider.getKey()) + 1);
@@ -371,7 +370,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
                 return 0;
             }
 
-            AltarPowerProvider<Block> provider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
+            AltarPowerProvider<Block> provider = EnchantedData.POWER_BLOCKS.get(block);
             blockCounts.replace(block, amount + 1);
             return amount < provider.getLimit() ? provider.getPower() : 0; // Return 0 if above limit
         }
@@ -380,7 +379,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             Integer amount = blockCounts.get(block);
 
             if(amount == null) { // Not in blocks
-                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.ALTAR_POWER_TAGS.get()) { // For all tag power providers
+                for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.POWER_TAGS.getAll()) { // For all tag power providers
                     if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
                         amount = tagCounts.get(provider.getKey());
                         tagCounts.replace(provider.getKey(), tagCounts.get(provider.getKey()) - 1);
@@ -393,7 +392,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
                 return 0;
             }
 
-            AltarPowerProvider<Block> provider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
+            AltarPowerProvider<Block> provider = EnchantedData.POWER_BLOCKS.get(block);
             blockCounts.replace(block, amount - 1);
             return amount > provider.getLimit() ? 0 : provider.getPower(); // Return 0 if above limit
         }
@@ -402,11 +401,19 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             double newPower = 0.0D;
 
             for(Block block : blockCounts.keySet()) {
-                AltarPowerProvider<Block> powerProvider = EnchantedData.ALTAR_POWER_BLOCKS.providerOf(block);
+                AltarPowerProvider<Block> powerProvider = EnchantedData.POWER_BLOCKS.get(block);
+                if(powerProvider == null) {
+                    blockCounts.remove(powerProvider.getKey());
+                    break;
+                }
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), blockCounts.get(block))) * powerProvider.getPower() * powerMultiplier;
             }
             for(TagKey<Block> tag : tagCounts.keySet()) {
-                AltarPowerProvider<TagKey<Block>> powerProvider = EnchantedData.ALTAR_POWER_TAGS.providerOf(tag);
+                AltarPowerProvider<TagKey<Block>> powerProvider = EnchantedData.POWER_TAGS.get(tag);
+                if(powerProvider == null) {
+                    tagCounts.remove(powerProvider.getKey());
+                    break;
+                }
                 newPower += Math.max(0, Math.min(powerProvider.getLimit(), tagCounts.get(tag))) * powerProvider.getPower() * powerMultiplier;
             }
 
@@ -420,11 +427,11 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
 
     }
 
-    public static class AltarUpgradeData {
+    public static class AltarUpgradeData implements INBTSerializable<CompoundTag> {
         public final Map<String, Map<AltarUpgrade, Integer>> upgradesByType = new HashMap<>();
 
         public AltarUpgradeData() {
-            for(AltarUpgrade upgrade : EnchantedData.ALTAR_UPGRADES.get()) {
+            for(AltarUpgrade upgrade : EnchantedData.ALTAR_UPGRADES.getAll()) {
                 String type = upgrade.type().toString();
                 if(!upgradesByType.containsKey(type))
                     upgradesByType.put(type, new HashMap<>());
@@ -434,7 +441,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
 
-        public CompoundTag getSaveTag() {
+        public CompoundTag serializeNBT() {
             CompoundTag nbt = new CompoundTag();
 
             for(String type : upgradesByType.keySet()) {
@@ -449,7 +456,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             return nbt;
         }
 
-        public void loadTag(CompoundTag nbt) {
+        public void deserializeNBT(CompoundTag nbt) {
             for(String type : nbt.getAllKeys()) {
                 upgradesByType.get(type).replaceAll((key, value) -> nbt.getInt(key.block().getRegistryName().toString()));
             }
@@ -478,7 +485,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         private AltarUpgrade getUpgrade(Block block) {
-            for(AltarUpgrade upgrade : EnchantedData.ALTAR_UPGRADES.get()) {
+            for(AltarUpgrade upgrade : EnchantedData.ALTAR_UPGRADES.getAll()) {
                 if(upgrade.block() == block)
                     return upgrade;
             }

@@ -26,8 +26,8 @@ package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;

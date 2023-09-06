@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.init;
+package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.*;
@@ -35,6 +35,7 @@ import com.favouriteless.enchanted.common.blocks.cauldrons.WitchCauldronBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.*;
+import com.favouriteless.enchanted.common.init.EnchantedMaterials;
 import com.favouriteless.enchanted.common.world.features.EnchantedTreeGrower;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;

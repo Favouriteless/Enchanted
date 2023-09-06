@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.recipes;
 
-import com.favouriteless.enchanted.common.init.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.core.util.StaticJSONHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.ItemStack;

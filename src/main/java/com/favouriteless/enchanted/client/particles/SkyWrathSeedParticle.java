@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
-import com.favouriteless.enchanted.common.init.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.world.RiteSkyWrath;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;

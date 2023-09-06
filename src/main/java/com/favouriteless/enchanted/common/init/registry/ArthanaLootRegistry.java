@@ -22,31 +22,28 @@
  *
  */
 
-package com.favouriteless.enchanted.common.items;
+package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.item.BlockItem;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 
-import java.util.function.Consumer;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SpinningWheelBlockItem extends BlockItem {
+public class ArthanaLootRegistry {
 
-	public SpinningWheelBlockItem(Properties properties) {
-		super(EnchantedBlocks.SPINNING_WHEEL.get(), properties);
+	private final Map<EntityType<?>, ItemStack> loot = new HashMap<>();
+
+	public void register(EntityType<?> type, ItemStack drop) {
+		loot.put(type, drop);
 	}
 
-	@Override
-	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-		consumer.accept(new IItemRenderProperties() {
-			@Override
-			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-				return new SpinningWheelItemRenderer();
-			}
-		});
+	public ItemStack get(EntityType<?> entityType) {
+		return loot.containsKey(entityType) ? loot.get(entityType).copy() : null;
 	}
 
+	public void reset() {
+		loot.clear();
+	}
 
 }

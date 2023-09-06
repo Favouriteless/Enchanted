@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.blocks.altar;
 
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;

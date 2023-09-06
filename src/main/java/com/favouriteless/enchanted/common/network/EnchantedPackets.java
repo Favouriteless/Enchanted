@@ -22,10 +22,9 @@
  *
  */
 
-package com.favouriteless.enchanted.common.init;
+package com.favouriteless.enchanted.common.network;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.network.EnchantedPacket;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
 import net.minecraft.server.level.ServerPlayer;

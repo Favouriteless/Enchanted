@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.data;
+package com.favouriteless.enchanted.common.datagen;
 
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedTags;

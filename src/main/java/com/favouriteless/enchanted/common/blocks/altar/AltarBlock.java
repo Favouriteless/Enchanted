@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.blocks.altar;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;

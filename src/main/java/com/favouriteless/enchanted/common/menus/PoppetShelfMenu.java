@@ -24,8 +24,8 @@
 
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;

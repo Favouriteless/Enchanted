@@ -22,31 +22,27 @@
  *
  */
 
-package com.favouriteless.enchanted.common.items;
+package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.item.BlockItem;
-import net.minecraftforge.client.IItemRenderProperties;
+import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity.AltarUpgrade;
 
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SpinningWheelBlockItem extends BlockItem {
+public class AltarUpgradeRegistry {
 
-	public SpinningWheelBlockItem(Properties properties) {
-		super(EnchantedBlocks.SPINNING_WHEEL.get(), properties);
+	private final List<AltarUpgrade> upgrades = new ArrayList<>();
+
+	public void register(AltarUpgrade upgrade) {
+		upgrades.add(upgrade);
 	}
 
-	@Override
-	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-		consumer.accept(new IItemRenderProperties() {
-			@Override
-			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-				return new SpinningWheelItemRenderer();
-			}
-		});
+	public List<AltarUpgrade> getAll() {
+		return upgrades;
 	}
 
+	public void reset() {
+		upgrades.clear();
+	}
 
 }

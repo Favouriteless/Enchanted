@@ -22,9 +22,10 @@
  *
  */
 
-package com.favouriteless.enchanted.core.util.reloadlisteners;
+package com.favouriteless.enchanted.common.loot;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
@@ -37,35 +38,28 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class ArthanaLootManager extends SimpleJsonResourceReloadListener {
+public class ArthanaLootReloadListener extends SimpleJsonResourceReloadListener {
 
-    private static final Gson GSON = new Gson();
-    private final Map<EntityType<?>, ItemStack> loot = new HashMap<>();
-
-    public ArthanaLootManager(String directory) {
-        super(GSON, directory);
+    public ArthanaLootReloadListener() {
+        super(new Gson(), "arthana");
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
-        loot.clear();
+    protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager manager, ProfilerFiller profiler) {
+        EnchantedData.ARTHANA_LOOT.reset();
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             try {
                 ItemStack stack = CraftingHelper.getItemStack(jsonElement.getAsJsonObject().getAsJsonObject("result"), true);
                 EntityType<?> type = ForgeRegistries.ENTITIES.getValue(resourceLocation);
 
                 if(type != null && !stack.isEmpty())
-                    loot.put(type, stack);
+                    EnchantedData.ARTHANA_LOOT.register(type, stack);
             } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
                 Enchanted.LOGGER.error("Parsing error loading altar upgrade {}: {}", resourceLocation, jsonparseexception.getMessage());
             }
         });
     }
 
-    public ItemStack getLootFor(EntityType<?> entityType) {
-        return loot.containsKey(entityType) ? loot.get(entityType).copy() : null;
-    }
 }

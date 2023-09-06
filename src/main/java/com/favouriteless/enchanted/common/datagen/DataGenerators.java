@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.data;
+package com.favouriteless.enchanted.common.datagen;
 
 import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.data.DataGenerator;

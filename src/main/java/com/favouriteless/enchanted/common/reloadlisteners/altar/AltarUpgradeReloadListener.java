@@ -22,10 +22,11 @@
  *
  */
 
-package com.favouriteless.enchanted.core.util.reloadlisteners.altar;
+package com.favouriteless.enchanted.common.reloadlisteners.altar;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity.AltarUpgrade;
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,24 +40,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
-public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implements Supplier<List<AltarUpgrade>> {
+public class AltarUpgradeReloadListener extends SimpleJsonResourceReloadListener {
 
-    private static final Gson GSON = new Gson();
-    private List<AltarUpgrade> upgrades = new ArrayList<>();
-
-    public AltarUpgradeManager(String directory) {
-        super(GSON, directory);
+    public AltarUpgradeReloadListener() {
+        super(new Gson(), "altar/upgrades");
     }
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
-        List<AltarUpgrade> outputList = new ArrayList<>();
-
+        EnchantedData.ALTAR_UPGRADES.reset();
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             try {
                 JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonElement, "altarupgrade");
@@ -72,7 +66,7 @@ public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implem
 
                         if(block != Blocks.AIR) {
                             if(powerMultiplier > 0 || rechargeMultiplier > 0) {
-                                outputList.add(new AltarUpgrade(resourceLocation, block, rechargeMultiplier, powerMultiplier, priority));
+                                EnchantedData.ALTAR_UPGRADES.register(new AltarUpgrade(resourceLocation, block, rechargeMultiplier, powerMultiplier, priority));
                             }
                         }
                     }
@@ -81,10 +75,6 @@ public class AltarUpgradeManager extends SimpleJsonResourceReloadListener implem
                 Enchanted.LOGGER.error("Parsing error loading altar upgrade {}: {}", resourceLocation, jsonparseexception.getMessage());
             }
         });
-        this.upgrades = outputList;
     }
 
-    public List<AltarUpgrade> get() {
-        return upgrades;
-    }
 }

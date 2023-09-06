@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.blocks.chalk;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

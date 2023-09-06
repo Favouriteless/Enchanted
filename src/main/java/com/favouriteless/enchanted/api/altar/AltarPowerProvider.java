@@ -36,10 +36,6 @@ public class AltarPowerProvider<T> {
         this.limit = limit;
     }
 
-    public boolean sameKey(AltarPowerProvider<?> powerProvider) {
-        return powerProvider.key.equals(this.key);
-    }
-
     public boolean is(T key) {
         return this.key == key;
     }

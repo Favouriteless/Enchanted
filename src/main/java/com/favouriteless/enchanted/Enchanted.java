@@ -26,6 +26,8 @@ package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.client.EnchantedClientConfig;
 import com.favouriteless.enchanted.common.init.*;
+import com.favouriteless.enchanted.common.init.registry.*;
+import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

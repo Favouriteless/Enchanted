@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.curses;
 
 import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
-import com.favouriteless.enchanted.common.init.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraftforge.registries.ForgeRegistries;
 

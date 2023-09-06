@@ -26,10 +26,10 @@ package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
 import com.favouriteless.enchanted.common.stateobserver.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.stateobserver.rites.RiteOfProtectionObserver;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
@@ -68,7 +68,7 @@ public class RiteProtection extends AbstractRite {
     }
 
     public RiteProtection() {
-        this(EnchantedRiteTypes.PROTECTION_LARGE.get(), 500, 4, 4, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
+        this(EnchantedRiteTypes.PROTECTION.get(), 500, 4, 4, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);

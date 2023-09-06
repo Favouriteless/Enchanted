@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.init.EnchantedEffects;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;

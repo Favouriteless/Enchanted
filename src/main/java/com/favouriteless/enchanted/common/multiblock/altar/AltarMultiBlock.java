@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.multiblock.altar;
 
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.multiblock.IMultiBlockType;
 import com.favouriteless.enchanted.common.stateobserver.altar.AltarStateObserver;
 import com.favouriteless.stateobserver.StateObserverManager;

@@ -59,8 +59,8 @@ public class ArthanaModifier extends LootModifier {
                     ItemStack item = livingEntity.getMainHandItem();
 
                     if(item.getItem() == EnchantedItems.ARTHANA.get()) {
-                        EntityType<?> entityKilled = context.getParamOrNull(LootContextParams.THIS_ENTITY).getType();
-                        ItemStack extraLoot = EnchantedData.ARTHANA_LOOT.getLootFor(entityKilled);
+                        EntityType<?> type = context.getParamOrNull(LootContextParams.THIS_ENTITY).getType();
+                        ItemStack extraLoot = EnchantedData.ARTHANA_LOOT.get(type);
                         if(extraLoot != null)
                             generatedLoot.add(extraLoot);
                     }
@@ -82,4 +82,5 @@ public class ArthanaModifier extends LootModifier {
             return makeConditions(instance.conditions);
         }
     }
+
 }

@@ -24,8 +24,8 @@
 
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;

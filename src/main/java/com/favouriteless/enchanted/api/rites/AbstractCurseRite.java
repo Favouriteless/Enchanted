@@ -24,8 +24,8 @@
 
 package com.favouriteless.enchanted.api.rites;
 
-import com.favouriteless.enchanted.common.init.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import com.favouriteless.enchanted.common.util.curse.CurseManager;
 import com.favouriteless.enchanted.common.util.curse.CurseType;
 import com.favouriteless.enchanted.common.util.rite.RiteType;

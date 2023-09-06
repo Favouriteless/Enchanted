@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.init;
+package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.menus.*;

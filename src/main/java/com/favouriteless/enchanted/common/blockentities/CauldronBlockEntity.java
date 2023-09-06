@@ -31,7 +31,7 @@ import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
-import com.favouriteless.enchanted.common.init.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.core.util.PlayerInventoryHelper;
 import net.minecraft.core.BlockPos;

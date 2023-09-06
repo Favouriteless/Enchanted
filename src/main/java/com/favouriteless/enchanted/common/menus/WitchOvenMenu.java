@@ -26,9 +26,9 @@ package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.blockentities.ProcessingBlockEntityBase;
 import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.menus.slots.SlotFuel;
 import com.favouriteless.enchanted.common.menus.slots.SlotInput;
 import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;

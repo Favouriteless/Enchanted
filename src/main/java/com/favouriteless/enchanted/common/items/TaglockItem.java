@@ -29,7 +29,7 @@ import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.capabilities.IBedCapability;
 import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;

@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.items.poppets.AbstractDeathPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
-import com.favouriteless.enchanted.common.init.EnchantedPackets;
+import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import com.favouriteless.enchanted.common.util.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.minecraft.nbt.CompoundTag;

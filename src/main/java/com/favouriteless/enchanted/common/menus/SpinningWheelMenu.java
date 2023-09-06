@@ -25,8 +25,8 @@
 package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedMenus;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.menus.slots.SlotInput;
 import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
 import net.minecraft.network.FriendlyByteBuf;

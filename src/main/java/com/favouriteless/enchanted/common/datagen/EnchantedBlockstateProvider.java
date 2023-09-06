@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.data;
+package com.favouriteless.enchanted.common.datagen;
 
 
 import com.favouriteless.enchanted.Enchanted;
@@ -32,7 +32,7 @@ import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
-import com.favouriteless.enchanted.common.init.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.data.DataGenerator;

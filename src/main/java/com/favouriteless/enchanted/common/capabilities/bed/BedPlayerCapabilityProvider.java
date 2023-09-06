@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.capabilities.bed;
 
-import com.favouriteless.enchanted.api.capabilities.bed.EnchantedCapabilities;
+import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.capabilities.bed.IBedCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

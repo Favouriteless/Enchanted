@@ -22,8 +22,9 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities.bed;
+package com.favouriteless.enchanted.api.capabilities;
 
+import com.favouriteless.enchanted.api.capabilities.bed.IBedCapability;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;

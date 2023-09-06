@@ -24,14 +24,18 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
+import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.common.curses.CurseManager;
+import com.favouriteless.enchanted.common.curses.CurseSavedData;
+import com.favouriteless.enchanted.common.curses.CurseType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
-import com.favouriteless.enchanted.common.util.curse.CurseManager;
-import com.favouriteless.enchanted.common.util.curse.CurseSavedData;
-import com.favouriteless.enchanted.common.util.curse.CurseType;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
 
 import java.util.List;
 
@@ -42,9 +46,9 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
     public static final int RAISE = 300;
     public static final int START_SOUND = 190;
-    private final CurseType<?> curseType;
+    private final CurseType curseType;
 
-    public AbstractRemoveCurseRite(RiteType<?> type, int power, int powerTick, CurseType<?> curseType) {
+    public AbstractRemoveCurseRite(RiteType<?> type, int power, int powerTick, CurseType curseType) {
         super(type, power, powerTick);
         this.curseType = curseType;
     }
@@ -65,9 +69,23 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
         else if(ticks == RAISE) {
             List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(targetUUID);
             if(curses != null) {
+                int casterLevel = 0;
+
+                IFamiliarCapability cap = level.getPlayerByUUID(casterUUID).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
+                if(cap.getFamiliarType() == EntityType.CAT)
+                    casterLevel++;
+
+
                 for(AbstractCurse curse : curses) {
                     if(curse.getType() == curseType) {
-                        CurseManager.removeCurse(level, curse);
+                        int diff = casterLevel - curse.getLevel();
+
+                        double cureChance = 0.8D + (diff * 0.2D); // If the caster is equal level, there is an 80% chance the curse will be cured.
+
+                        if(Enchanted.RANDOM.nextDouble() < cureChance)
+                            CurseManager.removeCurse(level, curse);
+                        else if(curse.getLevel() < CurseManager.MAX_LEVEL)
+                            curse.setLevel(curse.getLevel() + 1);
                         break;
                     }
                 }

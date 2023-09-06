@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.jei;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 

@@ -28,7 +28,7 @@ package com.favouriteless.enchanted.jei;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
@@ -114,7 +114,7 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipes(recipeTypeSpinningWheel, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.SPINNING_WHEEL));
         registration.addRecipes(recipeTypeWitchCauldron, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON));
         registration.addRecipes(recipeTypeKettle, recipeManager.getAllRecipesFor(EnchantedRecipeTypes.KETTLE));
-        List<AbstractCreateItemRite> ritesCreateItemCrafts = EnchantedRiteTypes.RITE_TYPES.getEntries()
+        List<AbstractCreateItemRite> ritesCreateItemCrafts = RiteTypes.RITE_TYPES.getEntries()
                 .stream()
                 .map(rite -> rite.get().create())
                 .filter(rite -> rite instanceof AbstractCreateItemRite)

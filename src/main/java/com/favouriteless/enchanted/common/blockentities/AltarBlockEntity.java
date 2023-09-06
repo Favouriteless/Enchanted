@@ -33,7 +33,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityType
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
-import com.favouriteless.enchanted.common.stateobserver.altar.AltarStateObserver;
+import com.favouriteless.enchanted.common.stateobserver.AltarStateObserver;
 import com.favouriteless.stateobserver.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

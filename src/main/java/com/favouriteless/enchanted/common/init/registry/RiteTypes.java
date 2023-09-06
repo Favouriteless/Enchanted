@@ -34,20 +34,24 @@ import com.favouriteless.enchanted.common.rites.processing.RiteBroilingCharged;
 import com.favouriteless.enchanted.common.rites.processing.RiteChargingStone;
 import com.favouriteless.enchanted.common.rites.processing.RiteInfusionBroom;
 import com.favouriteless.enchanted.common.rites.world.*;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
-import net.minecraft.world.level.block.Block;
+import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.core.util.RegistryHelper.Generify;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
 
-public class EnchantedRiteTypes {
+public class RiteTypes {
 
     public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(Enchanted.location("rites"), Enchanted.MOD_ID);
     public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry(Generify.<RiteType<?>>from(RiteType.class), RegistryBuilder::new);
@@ -60,6 +64,7 @@ public class EnchantedRiteTypes {
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE_CHARGED = RITE_TYPES.register("binding_waystone_duplicate_charged", () -> new RiteType<>(RiteBindingWaystoneDuplicateCharged::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER = RITE_TYPES.register("binding_waystone_player", () -> new RiteType<>(RiteBindingWaystonePlayer::new));
     public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER_CHARGED = RITE_TYPES.register("binding_waystone_player_charged", () -> new RiteType<>(RiteBindingWaystonePlayerCharged::new));
+    public static final RegistryObject<RiteType<?>> BINDING_FAMILIAR = RITE_TYPES.register("binding_familiar", () -> new RiteType<>(RiteBindingFamiliar::new));
     public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteBroiling::new));
     public static final RegistryObject<RiteType<?>> BROILING_CHARGED = RITE_TYPES.register("broiling_charged", () -> new RiteType<>(RiteBroilingCharged::new));
     public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteChargingStone::new));
@@ -123,13 +128,6 @@ public class EnchantedRiteTypes {
                 return registryObject.get().create();
         }
         return null;
-    }
-
-    private static class Generify {
-        @SuppressWarnings("unchecked")
-        public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls) {
-            return (Class<T>) cls;
-        }
     }
 
 }

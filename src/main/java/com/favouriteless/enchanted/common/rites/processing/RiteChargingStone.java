@@ -27,8 +27,8 @@ package com.favouriteless.enchanted.common.rites.processing;
 import com.favouriteless.enchanted.api.rites.AbstractCreateItemRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,7 +36,7 @@ import net.minecraft.world.item.Items;
 public class RiteChargingStone extends AbstractCreateItemRite {
 
     public RiteChargingStone() {
-        super(EnchantedRiteTypes.CHARGING_STONE.get(), 2000, SoundEvents.ZOMBIE_VILLAGER_CURE, new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1)); // Power, power per tick
+        super(RiteTypes.CHARGING_STONE.get(), 2000, SoundEvents.ZOMBIE_VILLAGER_CURE, new ItemStack(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1)); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE.get(), 1);

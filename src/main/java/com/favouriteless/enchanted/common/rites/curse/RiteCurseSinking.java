@@ -26,16 +26,16 @@ package com.favouriteless.enchanted.common.rites.curse;
 
 import com.favouriteless.enchanted.api.rites.AbstractCurseRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.world.item.Items;
 
 public class RiteCurseSinking extends AbstractCurseRite {
 
     public RiteCurseSinking() {
-        super(EnchantedRiteTypes.CURSE_OF_SINKING.get(), 2000, EnchantedCurseTypes.SINKING.get()); // Power, curse type
+        super(RiteTypes.CURSE_OF_SINKING.get(), 2000, CurseTypes.SINKING.get()); // Power, curse type
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.EXHALE_OF_THE_HORNED_ONE.get(), 1);

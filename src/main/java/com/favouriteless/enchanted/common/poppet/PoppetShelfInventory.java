@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.poppet;
+package com.favouriteless.enchanted.common.poppet;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.Container;

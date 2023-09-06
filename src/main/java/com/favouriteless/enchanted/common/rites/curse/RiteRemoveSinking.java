@@ -26,16 +26,16 @@ package com.favouriteless.enchanted.common.rites.curse;
 
 import com.favouriteless.enchanted.api.rites.AbstractRemoveCurseRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.world.item.Items;
 
 public class RiteRemoveSinking extends AbstractRemoveCurseRite {
 
     public RiteRemoveSinking() {
-        super(EnchantedRiteTypes.REMOVE_SINKING.get(), 2000, 0, EnchantedCurseTypes.SINKING.get()); // Power, power per tick, curse type
+        super(RiteTypes.REMOVE_SINKING.get(), 2000, 0, CurseTypes.SINKING.get()); // Power, power per tick, curse type
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.BREATH_OF_THE_GODDESS.get(), 1);

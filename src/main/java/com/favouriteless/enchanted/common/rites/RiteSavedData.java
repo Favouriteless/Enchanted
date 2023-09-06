@@ -22,11 +22,11 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.rite;
+package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -68,7 +68,7 @@ public class RiteSavedData extends SavedData {
 		for(int i = 0; i < riteList.size(); i++) {
 			CompoundTag riteNbt = riteList.getCompound(i);
 			String typeString = riteNbt.getString("type");
-			RiteType<?> type = EnchantedRiteTypes.REGISTRY.get().getValue(new ResourceLocation(typeString));
+			RiteType<?> type = RiteTypes.REGISTRY.get().getValue(new ResourceLocation(typeString));
 
 			if(type != null) {
 				AbstractRite rite = type.create();

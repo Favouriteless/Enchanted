@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.curse;
+package com.favouriteless.enchanted.common.curses;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
@@ -44,9 +44,10 @@ import java.util.*;
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class CurseManager {
 
+	public static final int MAX_LEVEL = 2;
 	public static final Map<UUID, List<AbstractCurse>> ACTIVE_CURSES = new HashMap<>();
 
-	public static void createCurse(ServerLevel level, CurseType<?> type, UUID targetUUID, UUID casterUUID, int curseLevel) {
+	public static void createCurse(ServerLevel level, CurseType type, UUID targetUUID, UUID casterUUID, int curseLevel) {
 		AbstractCurse curse = type.create();
 		curse.setTarget(targetUUID);
 		curse.setCaster(casterUUID);

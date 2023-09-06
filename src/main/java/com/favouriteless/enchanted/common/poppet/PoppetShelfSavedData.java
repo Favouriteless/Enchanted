@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.poppet;
+package com.favouriteless.enchanted.common.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;

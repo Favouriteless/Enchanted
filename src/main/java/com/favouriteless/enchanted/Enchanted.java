@@ -70,8 +70,9 @@ public class Enchanted {
         EnchantedItems.ITEMS.register(modEventBus);
         EnchantedBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         EnchantedMenus.MENU_TYPES.register(modEventBus);
-        EnchantedCurseTypes.CURSE_TYPES.register(modEventBus);
-        EnchantedRiteTypes.RITE_TYPES.register(modEventBus);
+        CurseTypes.CURSE_TYPES.register(modEventBus);
+        RiteTypes.RITE_TYPES.register(modEventBus);
+        FamiliarTypes.FAMILIAR_TYPES.register(modEventBus);
         EnchantedPackets.registerPackets();
     }
 

@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.api.curses;
 
-import com.favouriteless.enchanted.common.util.curse.CurseType;
+import com.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.nbt.CompoundTag;
 
 public abstract class AbstractRandomCurse extends AbstractCurse {
@@ -34,7 +34,7 @@ public abstract class AbstractRandomCurse extends AbstractCurse {
 	private final double chance;
 	private long lastUseTick = 0;
 
-	public AbstractRandomCurse(CurseType<?> type, int minTime, int maxTime) {
+	public AbstractRandomCurse(CurseType type, int minTime, int maxTime) {
 		super(type);
 		this.minTime = minTime;
 		this.maxTime = maxTime;

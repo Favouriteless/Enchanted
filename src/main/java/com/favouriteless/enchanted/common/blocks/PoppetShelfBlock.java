@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.core.util.StaticItemStackHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;

@@ -27,9 +27,9 @@ package com.favouriteless.enchanted.common.rites.world;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.world.item.Items;
 
 public class RiteFertilityCharged extends AbstractRite {
@@ -39,7 +39,7 @@ public class RiteFertilityCharged extends AbstractRite {
     }
 
     public RiteFertilityCharged() {
-        this(EnchantedRiteTypes.FERTILITY_CHARGED.get(), 0); // Power, power per tick
+        this(RiteTypes.FERTILITY_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
         ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);

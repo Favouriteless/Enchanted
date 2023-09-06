@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.capabilities.familiar;
+package com.favouriteless.enchanted.common.familiars;
 
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;

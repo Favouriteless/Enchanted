@@ -26,8 +26,8 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.common.menus.PoppetShelfMenu;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfManager;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;

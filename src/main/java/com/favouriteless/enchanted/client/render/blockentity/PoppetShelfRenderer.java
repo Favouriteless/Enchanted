@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.render.blockentity;
 
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfInventory;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;

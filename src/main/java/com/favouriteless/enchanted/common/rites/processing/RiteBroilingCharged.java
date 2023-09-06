@@ -26,14 +26,14 @@ package com.favouriteless.enchanted.common.rites.processing;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.world.item.Items;
 
 public class RiteBroilingCharged extends RiteBroiling {
 
     public RiteBroilingCharged() {
-        super(EnchantedRiteTypes.BROILING_CHARGED.get(), 0); // Power, power per tick
+        super(RiteTypes.BROILING_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(Items.COAL, 1);
         ITEMS_REQUIRED.put(Items.BLAZE_ROD, 1);

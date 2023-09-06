@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.rite;
+package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;

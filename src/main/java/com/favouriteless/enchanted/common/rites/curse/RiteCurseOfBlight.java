@@ -30,8 +30,8 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.*;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -63,7 +63,7 @@ public class RiteCurseOfBlight extends AbstractRite {
     public int blockTicks = 0;
 
     public RiteCurseOfBlight() {
-        super(EnchantedRiteTypes.CURSE_OF_BLIGHT.get(), 0, 0); // Power, power per tick
+        super(RiteTypes.CURSE_OF_BLIGHT.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.REDSTONE_SOUP.get(), 1);

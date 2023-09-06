@@ -25,23 +25,22 @@
 package com.favouriteless.enchanted.common.curses;
 
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
-import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
 import net.minecraft.server.level.ServerLevel;
 
-public class CurseOfSinking extends AbstractCurse {
+public class CurseSinking extends AbstractCurse {
 
 	public boolean wasSwimming = false;
 	public boolean wasFlying = false;
 
-	public CurseOfSinking() {
-		super(EnchantedCurseTypes.SINKING.get());
+	public CurseSinking() {
+		super(CurseTypes.SINKING.get());
 	}
 
 	@Override
 	protected void onTick() {
-		level = 4;
 		if(targetPlayer != null) {
 			boolean isSwimming = targetPlayer.isInWater();
 			boolean isFlying = targetPlayer.isFallFlying();

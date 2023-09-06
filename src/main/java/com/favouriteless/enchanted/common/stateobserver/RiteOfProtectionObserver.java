@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.stateobserver.rites;
+package com.favouriteless.enchanted.common.stateobserver;
 
 import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;

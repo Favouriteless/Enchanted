@@ -25,14 +25,14 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.world.item.Items;
 
 public class RiteProtectionLarge extends RiteProtection {
 
     public RiteProtectionLarge() {
-        super(EnchantedRiteTypes.PROTECTION_LARGE.get(), 1000, 6, 6, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
+        super(RiteTypes.PROTECTION_LARGE.get(), 1000, 6, 6, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
         ITEMS_REQUIRED.put(Items.GLOWSTONE_DUST, 1);

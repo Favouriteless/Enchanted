@@ -22,11 +22,11 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.curse;
+package com.favouriteless.enchanted.common.curses;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
-import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -72,7 +72,7 @@ public class CurseSavedData extends SavedData {
 			ListTag listNBT = playerTag.getList("curses", 10);
 			for(Tag tag : listNBT) {
 				CompoundTag curseTag = (CompoundTag)tag;
-				AbstractCurse curse = EnchantedCurseTypes.getByName(new ResourceLocation(curseTag.getString("type")));
+				AbstractCurse curse = CurseTypes.getByName(new ResourceLocation(curseTag.getString("type")));
 
 				if(curse != null) {
 					curse.load(curseTag);

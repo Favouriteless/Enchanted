@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.client.render.poppet;
 
-import com.favouriteless.enchanted.common.util.poppet.PoppetHelper.PoppetResult;
+import com.favouriteless.enchanted.common.poppet.PoppetHelper.PoppetResult;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

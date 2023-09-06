@@ -27,9 +27,9 @@ package com.favouriteless.enchanted.common.rites.binding;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
@@ -48,7 +48,7 @@ public class RiteBindingTalisman extends AbstractRite {
     }
 
     public RiteBindingTalisman() {
-        this(EnchantedRiteTypes.BINDING_TALISMAN.get(), 1000); // Power, power per tick
+        this(RiteTypes.BINDING_TALISMAN.get(), 1000); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
     }

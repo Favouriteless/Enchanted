@@ -26,14 +26,14 @@ package com.favouriteless.enchanted.common.rites.world;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.world.item.Items;
 
 public class RiteSkyWrathCharged extends RiteSkyWrath {
 
     public RiteSkyWrathCharged() {
-        super(EnchantedRiteTypes.SKY_WRATH_CHARGED.get(), 0, 0); // Power, power per tick
+        super(RiteTypes.SKY_WRATH_CHARGED.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);

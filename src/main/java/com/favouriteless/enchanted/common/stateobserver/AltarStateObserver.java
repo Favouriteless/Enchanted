@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.stateobserver.altar;
+package com.favouriteless.enchanted.common.stateobserver;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;

@@ -22,38 +22,57 @@
  *
  */
 
-package com.favouriteless.enchanted.common.capabilities.familiar;
+package com.favouriteless.enchanted.common.familiars;
 
 import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.UUID;
 
 public class FamiliarCapabilityImpl implements IFamiliarCapability {
 
-    private ResourceLocation type = null;
+    private EntityType<?> type = null;
+    private UUID uuid = null;
 
     @Override
-    public ResourceLocation getFamiliarType() {
+    public EntityType<?> getFamiliarType() {
         return type;
     }
 
     @Override
-    public void setFamiliarType(ResourceLocation type) {
+    public void setFamiliarType(EntityType<?> type) {
         this.type = type;
+    }
+
+    @Override
+    public UUID getFamiliarUUID() {
+        return uuid;
+    }
+
+    @Override
+    public void setFamiliarUUID(UUID uuid) {
+        this.uuid = uuid;
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        if(type != null)
-            nbt.putString("type", type.toString());
+        if(type != null) {
+            nbt.putString("type", ForgeRegistries.ENTITIES.getKey(type).toString());
+            nbt.putUUID("uuid", uuid);
+        }
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if(nbt.contains("type"))
-            type = new ResourceLocation(nbt.getString("type"));
+        if(nbt.contains("type")) {
+            type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(nbt.getString("type")));
+            uuid = nbt.getUUID("uuid");
+        }
     }
 
 }

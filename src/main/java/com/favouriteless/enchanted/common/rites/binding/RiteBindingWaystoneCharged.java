@@ -26,13 +26,13 @@ package com.favouriteless.enchanted.common.rites.binding;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 
 public class RiteBindingWaystoneCharged extends RiteBindingWaystone {
 
     public RiteBindingWaystoneCharged() {
-        super(EnchantedRiteTypes.BINDING_WAYSTONE_CHARGED.get(), 0); // Power, power per tick
+        super(RiteTypes.BINDING_WAYSTONE_CHARGED.get(), 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.ENDER_DEW.get(), 1);

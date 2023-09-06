@@ -27,8 +27,8 @@ package com.favouriteless.enchanted.api.patchouli.components;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.core.util.Vector2i;
 import com.google.gson.annotations.SerializedName;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -148,7 +148,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 
 	@Override
 	public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
-		AbstractRite rite = EnchantedRiteTypes.getByName(new ResourceLocation(lookup.apply(riteName).asString()));
+		AbstractRite rite = RiteTypes.getByName(new ResourceLocation(lookup.apply(riteName).asString()));
 		if(rite == null)
 			throw new IllegalStateException();
 		this.rite = rite;

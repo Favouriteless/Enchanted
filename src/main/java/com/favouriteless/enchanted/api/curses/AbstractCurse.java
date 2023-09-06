@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.api.curses;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
-import com.favouriteless.enchanted.common.util.curse.CurseType;
+import com.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -43,7 +43,7 @@ public abstract class AbstractCurse {
     public static final int MAX_WHISPER_TIME = 240;
     public static final double WHISPER_CHANCE = 1.0D / ((MAX_WHISPER_TIME - MIN_WHISPER_TIME)*20);
 
-    public final CurseType<?> type;
+    public final CurseType type;
     protected UUID targetUUID;
     protected UUID casterUUID;
     protected int level;
@@ -53,7 +53,7 @@ public abstract class AbstractCurse {
     protected long ticks = 0;
     private long lastWhisper = 0;
 
-    public AbstractCurse(CurseType<?> type) {
+    public AbstractCurse(CurseType type) {
         this.type = type;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractCurse {
         }
     }
 
-    public CurseType<?> getType() {
+    public CurseType getType() {
         return type;
     }
 

@@ -28,8 +28,8 @@ import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.RiteManager;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.RiteManager;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -60,7 +60,7 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IAltarPowerCons
         if(!world.isClientSide) {
             if (currentRite == null) {
 
-                AbstractRite rite = EnchantedRiteTypes.riteAvailableAt(world, pos);
+                AbstractRite rite = RiteTypes.riteAvailableAt(world, pos);
 
                 if (rite != null) {
                     currentRite = rite;

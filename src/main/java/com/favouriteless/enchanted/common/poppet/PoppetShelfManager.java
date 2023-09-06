@@ -22,10 +22,10 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.poppet;
+package com.favouriteless.enchanted.common.poppet;
 
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
-import com.favouriteless.enchanted.common.util.poppet.PoppetShelfSavedData.PoppetEntry;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
 

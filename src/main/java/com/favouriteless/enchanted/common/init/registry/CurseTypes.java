@@ -26,27 +26,27 @@ package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
-import com.favouriteless.enchanted.common.curses.CurseOfMisfortune;
-import com.favouriteless.enchanted.common.curses.CurseOfOverheating;
-import com.favouriteless.enchanted.common.curses.CurseOfSinking;
-import com.favouriteless.enchanted.common.util.curse.CurseType;
+import com.favouriteless.enchanted.common.curses.CurseMisfortune;
+import com.favouriteless.enchanted.common.curses.CurseOverheating;
+import com.favouriteless.enchanted.common.curses.CurseSinking;
+import com.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.*;
 
 import java.util.function.Supplier;
 
-public class EnchantedCurseTypes {
+public class CurseTypes {
 
-    public static final DeferredRegister<CurseType<?>> CURSE_TYPES = DeferredRegister.create(Enchanted.location("curses"), Enchanted.MOD_ID);
-    public static final Supplier<IForgeRegistry<CurseType<?>>> REGISTRY = CURSE_TYPES.makeRegistry(Generify.<CurseType<?>>from(CurseType.class), RegistryBuilder::new);
+    public static final DeferredRegister<CurseType> CURSE_TYPES = DeferredRegister.create(Enchanted.location("curses"), Enchanted.MOD_ID);
+    public static final Supplier<IForgeRegistry<CurseType>> REGISTRY = CURSE_TYPES.makeRegistry(Generify.<CurseType>from(CurseType.class), RegistryBuilder::new);
 
-    public static final RegistryObject<CurseType<?>> MISFORTUNE = CURSE_TYPES.register("misfortune", () -> new CurseType<>(CurseOfMisfortune::new));
-    public static final RegistryObject<CurseType<?>> SINKING = CURSE_TYPES.register("sinking", () -> new CurseType<>(CurseOfSinking::new));
-    public static final RegistryObject<CurseType<?>> OVERHEATING = CURSE_TYPES.register("overheating", () -> new CurseType<>(CurseOfOverheating::new));
+    public static final RegistryObject<CurseType> MISFORTUNE = CURSE_TYPES.register("misfortune", () -> new CurseType(CurseMisfortune::new));
+    public static final RegistryObject<CurseType> SINKING = CURSE_TYPES.register("sinking", () -> new CurseType(CurseSinking::new));
+    public static final RegistryObject<CurseType> OVERHEATING = CURSE_TYPES.register("overheating", () -> new CurseType(CurseOverheating::new));
 
 
     public static AbstractCurse getByName(ResourceLocation loc) {
-        for(RegistryObject<CurseType<?>> registryObject : CURSE_TYPES.getEntries()) {
+        for(RegistryObject<CurseType> registryObject : CURSE_TYPES.getEntries()) {
             if(registryObject.getId().equals(loc))
                 return registryObject.get().create();
         }

@@ -27,9 +27,9 @@ package com.favouriteless.enchanted.common.rites.entity;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +41,7 @@ import net.minecraft.world.item.ItemStack;
 public class RiteTranspositionPlayer extends AbstractRite {
 
     public RiteTranspositionPlayer() {
-        super(EnchantedRiteTypes.TRANSPOSITION_PLAYER.get(), 0, 0); // Power, power per tick
+        super(RiteTypes.TRANSPOSITION_PLAYER.get(), 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
     }

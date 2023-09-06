@@ -22,23 +22,27 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.curse;
+package com.favouriteless.enchanted.common.familiars;
 
-import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.function.Supplier;
+public class FamiliarType extends ForgeRegistryEntry<FamiliarType> {
 
-public class CurseType<T extends AbstractCurse> extends ForgeRegistryEntry<CurseType<?>> {
+	private final EntityType<?> typeIn;
+	private final EntityType<?> typeOut;
 
-	private final Supplier<AbstractCurse> supplier;
-
-	public CurseType(Supplier<AbstractCurse> supplier) {
-		this.supplier = supplier;
+	public FamiliarType(EntityType<?> typeIn, EntityType<?> typeOut) {
+		this.typeIn = typeIn;
+		this.typeOut = typeOut;
 	}
 
-	public AbstractCurse create() {
-		return this.supplier.get();
+	public EntityType<?> getTypeIn() {
+		return typeIn;
+	}
+
+	public EntityType<?> getTypeOut() {
+		return typeOut;
 	}
 
 }

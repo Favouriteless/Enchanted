@@ -22,7 +22,23 @@
  *
  */
 
-package com.favouriteless.enchanted.common.init;
+package com.favouriteless.enchanted.common.rites;
 
-public class EnchantedFamiliarTypes {
+import com.favouriteless.enchanted.api.rites.AbstractRite;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import java.util.function.Supplier;
+
+public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteType<?>> {
+
+	private final Supplier<AbstractRite> supplier;
+
+	public RiteType(Supplier<AbstractRite> supplier) {
+		this.supplier = supplier;
+	}
+
+	public AbstractRite create() {
+		return this.supplier.get();
+	}
+
 }

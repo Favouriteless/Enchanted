@@ -24,33 +24,27 @@
 
 package com.favouriteless.enchanted.common.curses;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
-import com.favouriteless.enchanted.common.init.registry.EnchantedCurseTypes;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class CurseOfMisfortune extends AbstractRandomCurse {
+public class CurseOverheating extends AbstractRandomCurse {
 
-	public CurseOfMisfortune() {
-		super(EnchantedCurseTypes.MISFORTUNE.get(), 120, 300); // Executes once every 2-5 minutes
+	public CurseOverheating() {
+		super(CurseTypes.OVERHEATING.get(), 30, 90); // Executes once every 0.5-1.5 minutes
 	}
 
 	@Override
 	protected void execute() {
-		MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.MISFORTUNE_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
-		if(effect != null) {
-			int effectLevel = 0;
-			int effectDuration = 30;
+		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.Biomes.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())) {
+			int duration = 4;
 			for(int i = 0; i < level; i++) {
-				if(Math.random() < 0.25D)
-					effectLevel++; // Every additional curse level has a 25% chance to increase the effect level
-				if(Math.random() < 0.25D)
-					effectDuration += 15; // Every additional curse level has a 25% chance to increase duration by 15 seconds
+				if(Math.random() < 0.75D)
+					duration += 4;
 			}
-			targetPlayer.addEffect(new MobEffectInstance(effect, effectDuration*20, effectLevel));
+			targetPlayer.setSecondsOnFire(duration);
 		}
 	}
+
 }

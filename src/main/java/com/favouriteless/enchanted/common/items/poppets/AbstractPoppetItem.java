@@ -27,7 +27,7 @@ package com.favouriteless.enchanted.common.items.poppets;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
-import com.favouriteless.enchanted.common.util.poppet.PoppetHelper;
+import com.favouriteless.enchanted.common.poppet.PoppetHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

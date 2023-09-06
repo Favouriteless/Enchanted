@@ -28,9 +28,9 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -45,7 +45,7 @@ public class RiteSanctity extends AbstractRite {
     public static final double REPULSE_FACTOR = 0.3D;
 
     public RiteSanctity() {
-        super(EnchantedRiteTypes.SANCTITY.get(), 500, 3); // Power, power per tick
+        super(RiteTypes.SANCTITY.get(), 500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.FEATHER, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);

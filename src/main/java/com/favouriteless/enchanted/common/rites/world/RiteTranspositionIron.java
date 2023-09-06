@@ -28,8 +28,8 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -49,7 +49,7 @@ public class RiteTranspositionIron extends AbstractRite {
 	public static final double CIRCLE_RADIUS = 7.5D;
 
 	public RiteTranspositionIron() {
-		super(EnchantedRiteTypes.TRANSPOSITION_IRON.get(), 0, 0);
+		super(RiteTypes.TRANSPOSITION_IRON.get(), 0, 0);
 		CIRCLES_REQUIRED.put(CirclePart.LARGE, EnchantedBlocks.CHALK_PURPLE.get());
 		ITEMS_REQUIRED.put(Items.ENDER_PEARL, 1);
 		ITEMS_REQUIRED.put(Items.IRON_INGOT, 1);

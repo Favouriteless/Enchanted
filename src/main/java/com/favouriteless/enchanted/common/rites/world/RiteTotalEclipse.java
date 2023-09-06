@@ -28,9 +28,9 @@ import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedRiteTypes;
-import com.favouriteless.enchanted.common.util.rite.CirclePart;
-import com.favouriteless.enchanted.common.util.rite.RiteType;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -47,7 +47,7 @@ public class RiteTotalEclipse extends AbstractRite {
     }
 
     public RiteTotalEclipse() {
-        this(EnchantedRiteTypes.TOTAL_ECLIPSE.get(), 3000, 0); // Power, power per tick
+        this(RiteTypes.TOTAL_ECLIPSE.get(), 3000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.STONE_AXE, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);

@@ -22,23 +22,17 @@
  *
  */
 
-package com.favouriteless.enchanted.common.util.rite;
+package com.favouriteless.enchanted.core.util;
 
-import com.favouriteless.enchanted.api.rites.AbstractRite;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import java.util.function.Supplier;
+public class RegistryHelper {
 
-public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteType<?>> {
-
-	private final Supplier<AbstractRite> supplier;
-
-	public RiteType(Supplier<AbstractRite> supplier) {
-		this.supplier = supplier;
-	}
-
-	public AbstractRite create() {
-		return this.supplier.get();
+	public static class Generify {
+		@SuppressWarnings("unchecked")
+		public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls) {
+			return (Class<T>) cls;
+		}
 	}
 
 }

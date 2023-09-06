@@ -82,13 +82,14 @@ public class RiteOfBroiling extends AbstractRite {
                 return;
             }
 
+            int totalCount = itemEntity.getItem().getCount();
             int burnedCount = 0;
-            for(int i = 0; i < itemEntity.getItem().getCount(); i++)
+            for(int i = 0; i < totalCount; i++)
                 if(Math.random() < EnchantedConfig.BROILING_BURN_CHANCE.get())
                     burnedCount++;
 
             level.playSound(null, itemEntity, SoundEvents.BLAZE_SHOOT, SoundSource.MASTER, 1.0F, 1.0F);
-            replaceItem(itemEntity, new ItemStack(recipe.getResultItem().getItem(), recipe.getResultItem().getCount()-burnedCount), new ItemStack(Items.CHARCOAL, burnedCount));
+            replaceItem(itemEntity, new ItemStack(recipe.getResultItem().getItem(), recipe.getResultItem().getCount() * (totalCount - burnedCount)), new ItemStack(Items.CHARCOAL, burnedCount));
 
             level.sendParticles(ParticleTypes.SMALL_FLAME, itemEntity.position().x(), itemEntity.position().y(), itemEntity.position().z, 25, 0.2D, 0.2D, 0.2D, 0.0D);
             level.sendParticles(EnchantedParticles.BROILING_SEED.get(), pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);

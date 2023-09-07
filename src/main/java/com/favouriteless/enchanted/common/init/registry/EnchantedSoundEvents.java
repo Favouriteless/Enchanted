@@ -40,6 +40,7 @@ public class EnchantedSoundEvents {
 	public static RegistryObject<SoundEvent> REMOVE_CURSE = SOUND_EVENTS.register("remove_curse", () -> new SoundEvent(Enchanted.location("remove_curse")));
 	public static RegistryObject<SoundEvent> BROOM_SWEEP = SOUND_EVENTS.register("broom_sweep", () -> new SoundEvent(Enchanted.location("broom_sweep")));
 	public static RegistryObject<SoundEvent> CHALK_WRITE = SOUND_EVENTS.register("chalk_write", () -> new SoundEvent(Enchanted.location("chalk_write")));
+	public static RegistryObject<SoundEvent> BIND_FAMILIAR = SOUND_EVENTS.register("bind_familiar", () -> new SoundEvent(Enchanted.location("bind_familiar")));
 
 	public static RegistryObject<SoundEvent> SILENT = SOUND_EVENTS.register("silent", () -> new SoundEvent(Enchanted.location("silent"))); // Only exists as a dummy sound to avoid nulls
 

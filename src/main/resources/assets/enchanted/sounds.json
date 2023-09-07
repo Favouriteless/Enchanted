@@ -42,5 +42,10 @@
     "sounds": [
       "enchanted:silent"
     ]
+  },
+  "bind_familiar": {
+    "sounds": [
+      "enchanted:bind_familiar"
+    ]
   }
 }

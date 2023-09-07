@@ -36,6 +36,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -63,11 +64,12 @@ public class RiteSummonFamiliar extends AbstractRite {
                 targetEntity.load(entry.getNbt());
                 targetEntity.setPos(vec3);
                 level.addFreshEntity(targetEntity);
+                ((TamableAnimal)targetEntity).setPersistenceRequired();
             }
 
             targetEntity.teleportTo(vec3.x, vec3.y, vec3.z);
             level.playSound(null, targetEntity, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
-            spawnParticles(level, vec3.x, vec3.y, vec3.z);
+            teleportParticles(level, vec3.x, vec3.y, vec3.z);
         }
         else {
             cancel();
@@ -89,7 +91,7 @@ public class RiteSummonFamiliar extends AbstractRite {
         return null;
     }
 
-    protected void spawnParticles(ServerLevel world, double x, double y, double z) {
+    protected void teleportParticles(ServerLevel world, double x, double y, double z) {
         for(int i = 0; i < 25; i++) {
             double dx = x - 0.5D + (Math.random() * 1.5D);
             double dy = y + (Math.random() * 2.0D);

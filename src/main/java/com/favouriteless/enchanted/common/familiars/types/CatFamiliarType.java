@@ -40,9 +40,7 @@ public class CatFamiliarType extends FamiliarType<Cat, FamiliarCat> {
 	public FamiliarCat create(Cat from) {
 		FamiliarCat familiar = EnchantedEntityTypes.FAMILIAR_CAT.get().create(from.getLevel());
 		familiar.setCatType(from.getCatType());
-		familiar.setCustomName(from.getCustomName());
 		familiar.setCollarColor(from.getCollarColor());
-		familiar.setCustomNameVisible(from.isCustomNameVisible());
 		return familiar;
 	}
 

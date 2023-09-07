@@ -29,10 +29,7 @@ import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.familiars.FamiliarType;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.init.registry.*;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -51,7 +48,7 @@ import java.util.UUID;
 public class RiteBindingFamiliar extends AbstractRite {
 
 	public static final int BIND_TICKS = 300;
-	public static final int START_SOUND = 190;
+	public static final int START_SOUND = 175;
 	public static final Vec3 OFFSET = new Vec3(0.5D, 2.5D, 0.5D);
 
 	public RiteBindingFamiliar() {
@@ -88,6 +85,9 @@ public class RiteBindingFamiliar extends AbstractRite {
 			return;
 		}
 
+		if(ticks == START_SOUND)
+			level.playSound(null, pos.getX() + OFFSET.x,  pos.getY() + OFFSET.y,  pos.getZ() + OFFSET.z, EnchantedSoundEvents.BIND_FAMILIAR.get(), SoundSource.MASTER, 1.5F, 1.0F);
+
 		if(ticks < BIND_TICKS) {
 			double dx = (pos.getX() + OFFSET.x + Enchanted.RANDOM.nextDouble() * 0.2D) - 0.1D;
 			double dy = ((pos.getY() + OFFSET.y + Enchanted.RANDOM.nextDouble() * 0.2D) - 0.1D) - targetEntity.getBbHeight() / 2.0D;
@@ -102,12 +102,15 @@ public class RiteBindingFamiliar extends AbstractRite {
 				familiar.setPos(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
 				familiar.setOwnerUUID(casterUUID);
 				familiar.setTame(true);
+				familiar.setCustomName(targetEntity.getCustomName());
+				familiar.setPersistenceRequired();
+
 				targetEntity.discard();
 				level.addFreshEntity(familiar);
 
+
 				FamiliarHelper.runIfCap(level, cap -> cap.setFamiliar(casterUUID, type, familiar));
 			}
-			level.playSound(null, pos, SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 1.0F, 1.0F);
 			stopExecuting();
 		}
 	}

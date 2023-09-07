@@ -25,6 +25,10 @@
 package com.favouriteless.enchanted.api.familiars;
 
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.NonNullConsumer;
@@ -34,6 +38,12 @@ public class FamiliarHelper {
 	public static void dismiss(TamableAnimal entity) {
 		runIfCap(entity.getLevel(), cap -> {
 			cap.getFamiliarFor(entity.getOwnerUUID()).setDismissed(true);
+
+			double width = entity.getBbWidth();
+			double height = entity.getBbHeight();
+			((ServerLevel)entity.getLevel()).sendParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY(), entity.getZ(), 30, width, height, width, 0.0D);
+
+			entity.getLevel().playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
 			entity.discard();
 		});
 	}

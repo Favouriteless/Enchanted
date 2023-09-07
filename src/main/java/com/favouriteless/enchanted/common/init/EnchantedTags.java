@@ -92,7 +92,7 @@ public class EnchantedTags {
 
     public static class EntityTypes {
         public static final TagKey<EntityType<?>> MONSTERS = createEntityTag(Enchanted.location("monsters"));
-        public static final TagKey<EntityType<?>> FAMILIARS = createEntityTag(Enchanted.location("familiars"));
+        public static final TagKey<EntityType<?>> TAGLOCK_BLACKLIST = createEntityTag(Enchanted.location("taglock_blacklist"));
     }
 
 

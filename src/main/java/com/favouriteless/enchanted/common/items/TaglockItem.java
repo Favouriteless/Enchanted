@@ -29,8 +29,9 @@ import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.capabilities.IBedCapability;
 import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedTags.EntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
@@ -53,6 +54,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.UUID;
 
@@ -80,7 +82,8 @@ public class TaglockItem extends Item {
                 return InteractionResult.FAIL;
             }
         }
-        fillTaglockEntity(player, stack, target);
+        if(!ForgeRegistries.ENTITIES.tags().getTag(EntityTypes.TAGLOCK_BLACKLIST).contains(target.getType()))
+            fillTaglockEntity(player, stack, target);
 
         return InteractionResult.SUCCESS;
     }

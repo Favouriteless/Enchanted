@@ -74,7 +74,8 @@ public class FamiliarCat extends Cat {
 		if(!level.isClientSide) {
 			FamiliarHelper.runIfCap(level, cap -> {
 				FamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
-				entry.setNbt(nbt);
+				if(entry != null)
+					entry.setNbt(nbt);
 			});
 		}
 	}

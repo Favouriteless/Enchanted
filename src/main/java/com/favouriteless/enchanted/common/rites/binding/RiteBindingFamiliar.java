@@ -105,11 +105,12 @@ public class RiteBindingFamiliar extends AbstractRite {
 				familiar.setCustomName(targetEntity.getCustomName());
 				familiar.setPersistenceRequired();
 
-				targetEntity.discard();
-				level.addFreshEntity(familiar);
-
-
-				FamiliarHelper.runIfCap(level, cap -> cap.setFamiliar(casterUUID, type, familiar));
+				FamiliarHelper.runIfCap(level, cap -> {
+					cap.setFamiliar(casterUUID, type, familiar);
+					Enchanted.LOGGER.info(String.format("Familiar of type %s bound to %s", FamiliarTypes.REGISTRY.get().getKey(type).toString(), casterUUID));
+					level.addFreshEntity(familiar);
+					targetEntity.discard();
+				});
 			}
 			stopExecuting();
 		}

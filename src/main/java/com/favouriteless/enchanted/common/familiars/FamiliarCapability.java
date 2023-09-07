@@ -61,7 +61,6 @@ public class FamiliarCapability implements IFamiliarCapability {
             tag.putBoolean("isDismissed", entry.isDismissed());
             nbt.put(uuid.toString(), tag);
         }
-
         return nbt;
     }
 

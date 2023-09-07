@@ -48,8 +48,10 @@ public class FamiliarCat extends Cat {
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		if(player.isCrouching() && hand == InteractionHand.MAIN_HAND) {
 			if(!level.isClientSide) {
-				FamiliarHelper.dismiss(this);
-				return InteractionResult.sidedSuccess(level.isClientSide);
+				if(player.getUUID().equals(getOwnerUUID())) {
+					FamiliarHelper.dismiss(this);
+					return InteractionResult.sidedSuccess(level.isClientSide);
+				}
 			}
 		}
 		return super.interact(player, hand);

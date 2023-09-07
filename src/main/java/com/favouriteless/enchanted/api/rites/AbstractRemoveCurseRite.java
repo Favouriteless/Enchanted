@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
@@ -40,7 +41,7 @@ import net.minecraft.sounds.SoundSource;
 import java.util.List;
 
 /**
- * Simple AbstractRite implementation for creating a curse
+ * Simple AbstractRite implementation for creating a curse removal
  */
 public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
@@ -83,10 +84,10 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
                         double cureChance = 1.0D + (diff * 0.2D); // If the caster is equal level, there is an 100% chance the curse will be cured.
 
-//                        if(Enchanted.RANDOM.nextDouble() < cureChance)
+                        if(Enchanted.RANDOM.nextDouble() < cureChance)
                             CurseManager.removeCurse(level, curse);
-//                        else if(curse.getLevel() < CurseManager.MAX_LEVEL)
-//                            curse.setLevel(curse.getLevel() + 1);
+                        else if(curse.getLevel() < CurseManager.MAX_LEVEL)
+                            curse.setLevel(curse.getLevel() + 1);
                         break;
                     }
                 }

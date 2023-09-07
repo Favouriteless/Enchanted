@@ -22,20 +22,24 @@
  *
  */
 
-package com.favouriteless.enchanted.client;
+package com.favouriteless.enchanted.api.familiars;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.NonNullConsumer;
 
-public class EnchantedClientConfig {
-	public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-	public static final ForgeConfigSpec SPEC;
+public class FamiliarHelper {
 
-	public static final ConfigValue<Boolean> USE_ORIGINAL_CAT_TYPE;
+	public static void dismiss(TamableAnimal entity) {
+		runIfCap(entity.getLevel(), cap -> {
+			cap.getFamiliarFor(entity.getOwnerUUID()).setDismissed(true);
+			entity.discard();
+		});
+	}
 
-	static {
-		USE_ORIGINAL_CAT_TYPE = BUILDER.comment("Render cat familiars with their original fur colour rather than all black #default false").define("original_cat_type", false);
-		SPEC = BUILDER.build();
+	public static void runIfCap(Level level, NonNullConsumer<IFamiliarCapability> consumer) {
+		level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).ifPresent(consumer);
 	}
 
 }

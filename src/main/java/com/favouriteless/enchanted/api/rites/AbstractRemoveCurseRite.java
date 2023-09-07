@@ -24,18 +24,18 @@
 
 package com.favouriteless.enchanted.api.rites;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseSavedData;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
 
 import java.util.List;
 
@@ -71,8 +71,9 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             if(curses != null) {
                 int casterLevel = 0;
 
-                IFamiliarCapability cap = level.getPlayerByUUID(casterUUID).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
-                if(cap.getFamiliarType() == EntityType.CAT)
+                IFamiliarCapability cap = level.getServer().getPlayerList().getPlayer(casterUUID).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
+                FamiliarEntry familiarEntry = cap.getFamiliarFor(casterUUID);
+                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
                     casterLevel++;
 
 
@@ -80,12 +81,12 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
                     if(curse.getType() == curseType) {
                         int diff = casterLevel - curse.getLevel();
 
-                        double cureChance = 0.8D + (diff * 0.2D); // If the caster is equal level, there is an 80% chance the curse will be cured.
+                        double cureChance = 1.0D + (diff * 0.2D); // If the caster is equal level, there is an 100% chance the curse will be cured.
 
-                        if(Enchanted.RANDOM.nextDouble() < cureChance)
+//                        if(Enchanted.RANDOM.nextDouble() < cureChance)
                             CurseManager.removeCurse(level, curse);
-                        else if(curse.getLevel() < CurseManager.MAX_LEVEL)
-                            curse.setLevel(curse.getLevel() + 1);
+//                        else if(curse.getLevel() < CurseManager.MAX_LEVEL)
+//                            curse.setLevel(curse.getLevel() + 1);
                         break;
                     }
                 }

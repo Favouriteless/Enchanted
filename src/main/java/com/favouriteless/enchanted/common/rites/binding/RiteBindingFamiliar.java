@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.rites.binding;
 
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
+import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.familiars.FamiliarType;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -40,6 +40,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +49,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 
 	public RiteBindingFamiliar() {
 		super(RiteTypes.BINDING_FAMILIAR.get(), 8000, 0);
-		CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
+		CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
 		ITEMS_REQUIRED.put(EnchantedItems.TEAR_OF_THE_GODDESS.get(), 1);
 		ITEMS_REQUIRED.put(EnchantedItems.ODOUR_OF_PURITY.get(), 1);
 		ITEMS_REQUIRED.put(EnchantedItems.WHIFF_OF_MAGIC.get(), 1);
@@ -59,32 +60,18 @@ public class RiteBindingFamiliar extends AbstractRite {
 	@Override
 	protected void execute() {
 		if(targetEntity != null) {
-			Player caster = level.getPlayerByUUID(casterUUID);
+			Vec3 vec3 = Vec3.atCenterOf(pos);
+			FamiliarType<?, ?> type = FamiliarTypes.getByInput(targetEntity.getType());
 
-			if(caster != null) {
-				FamiliarType familiarType = FamiliarTypes.getByProducer(targetEntity.getType());
+			if(type != null) {
+				TamableAnimal familiar = type.getFor(level);
+				familiar.setPos(vec3);
+				familiar.setOwnerUUID(casterUUID);
+				familiar.setTame(true);
+				targetEntity.discard();
+				level.addFreshEntity(familiar);
 
-				if(familiarType != null) {
-					Entity newEntity = familiarType.getTypeOut().create(level);
-					newEntity.setPos(targetEntity.position());
-
-					if(newEntity instanceof TamableAnimal tamable) {
-						tamable.setOwnerUUID(casterUUID);
-						tamable.setTame(true);
-					}
-
-					targetEntity.discard();
-					level.addFreshEntity(newEntity);
-
-					caster.getCapability(EnchantedCapabilities.FAMILIAR).ifPresent(cap -> {
-						if(cap.getFamiliarType() != null)
-							cap.setFamiliarUUID(null);
-
-
-						cap.setFamiliarType(targetEntity.getType());
-						cap.setFamiliarUUID(newEntity.getUUID());
-					});
-				}
+				FamiliarHelper.runIfCap(level, cap -> cap.setFamiliar(casterUUID, type, familiar));
 			}
 		}
 		level.playSound(null, pos, SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -93,7 +80,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 
 	@Override
 	protected boolean checkAdditional() {
-		List<Entity> entities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> FamiliarTypes.isFamiliarProducer(entity.getType()));
+		List<Entity> entities = CirclePart.MEDIUM.getEntitiesInside(level, pos, entity -> FamiliarTypes.getByInput(entity.getType()) != null);
 
 		if(entities.size() > 0) {
 			if(entities.get(0) instanceof TamableAnimal animal) {
@@ -108,7 +95,6 @@ public class RiteBindingFamiliar extends AbstractRite {
 			targetEntity = entities.get(0);
 			return true;
 		}
-
 		return false;
 	}
 

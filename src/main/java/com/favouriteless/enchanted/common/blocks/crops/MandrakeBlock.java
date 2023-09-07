@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.MandrakeEntity;
+import com.favouriteless.enchanted.common.entities.Mandrake;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -73,7 +73,7 @@ public class MandrakeBlock extends CropsBlockAgeFive {
     }
 
     public static void spawnMandrake(Level world, BlockPos pos) {
-        MandrakeEntity entity = EnchantedEntityTypes.MANDRAKE.get().create(world);
+        Mandrake entity = EnchantedEntityTypes.MANDRAKE.get().create(world);
         entity.moveTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, 0.0F, 0.0F);
         world.addFreshEntity(entity);
     }

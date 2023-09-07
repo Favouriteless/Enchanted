@@ -24,18 +24,15 @@
 
 package com.favouriteless.enchanted.client.render.model;
 
-import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 
-public class BroomstickModel extends EntityModel<BroomstickEntity> {
+public class BroomstickModel extends EntityModel<Broomstick> {
 	private final ModelPart root;
 
 	public BroomstickModel(ModelPart root) {
@@ -59,7 +56,7 @@ public class BroomstickModel extends EntityModel<BroomstickEntity> {
 	}
 
 	@Override
-	public void setupAnim(BroomstickEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Broomstick entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
 	}
 

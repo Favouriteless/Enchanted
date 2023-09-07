@@ -87,6 +87,7 @@ public class RiteTypes {
     public static final RegistryObject<RiteType<?>> SKY_WRATH = RITE_TYPES.register("sky_wrath", () -> new RiteType<>(RiteSkyWrath::new));
     public static final RegistryObject<RiteType<?>> SKY_WRATH_CHARGED = RITE_TYPES.register("sky_wrath_charged", () -> new RiteType<>(RiteSkyWrathCharged::new));
     public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteSummonEntity::new));
+    public static final RegistryObject<RiteType<?>> SUMMONING_FAMILIAR = RITE_TYPES.register("summoning_familiar", () -> new RiteType<>(RiteSummonFamiliar::new));
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteTotalEclipse::new));
     public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteTotalEclipseCharged::new));
     public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteTranspositionIron::new));

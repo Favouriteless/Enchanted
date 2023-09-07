@@ -28,7 +28,7 @@ package com.favouriteless.enchanted.client.render.entity;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -39,7 +39,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
+public class BroomstickRenderer extends EntityRenderer<Broomstick> {
 
 	public static final ResourceLocation TEXTURE = Enchanted.location("textures/entity/broomstick.png");
 	protected final BroomstickModel model;
@@ -50,7 +50,7 @@ public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 	}
 
 	@Override
-	public void render(BroomstickEntity entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
+	public void render(Broomstick entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 
 		matrix.translate(0.0D, 0.7D, 0.0D);
@@ -74,7 +74,7 @@ public class BroomstickRenderer extends EntityRenderer<BroomstickEntity> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(BroomstickEntity pEntity) {
+	public ResourceLocation getTextureLocation(Broomstick pEntity) {
 		return TEXTURE;
 	}
 

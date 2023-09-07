@@ -25,10 +25,7 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.BroomstickEntity;
-import com.favouriteless.enchanted.common.entities.EntEntity;
-import com.favouriteless.enchanted.common.entities.MandrakeEntity;
-import com.favouriteless.enchanted.common.entities.ThrowableBrewEntity;
+import com.favouriteless.enchanted.common.entities.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.Builder;
 import net.minecraft.world.entity.MobCategory;
@@ -40,16 +37,19 @@ public class EnchantedEntityTypes {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<EntityType<MandrakeEntity>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> Builder.of(MandrakeEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<Mandrake>> MANDRAKE = ENTITY_TYPES.register("mandrake", () -> Builder.of(Mandrake::new, MobCategory.MONSTER)
             .sized(0.4F, 0.7F).build(Enchanted.location("mandrake").toString()));
 
-    public static final RegistryObject<EntityType<EntEntity>> ENT = ENTITY_TYPES.register("ent", () -> Builder.of(EntEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<Ent>> ENT = ENTITY_TYPES.register("ent", () -> Builder.of(Ent::new, MobCategory.MONSTER)
             .sized(2F, 3.5F).build(Enchanted.location("ent").toString()));
 
-    public static final RegistryObject<EntityType<BroomstickEntity>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> Builder.of(BroomstickEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<Broomstick>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> Builder.of(Broomstick::new, MobCategory.MISC)
             .sized(1.0F, 1.0F).clientTrackingRange(10).build(Enchanted.location("broomstick").toString()));
 
-    public static final RegistryObject<EntityType<ThrowableBrewEntity>> THROWABLE_BREW = ENTITY_TYPES.register("throwable_brew", () -> Builder.of(ThrowableBrewEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<ThrowableBrew>> THROWABLE_BREW = ENTITY_TYPES.register("throwable_brew", () -> Builder.of(ThrowableBrew::new, MobCategory.MISC)
             .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(Enchanted.location("throwable_brew").toString()));
+
+    public static final RegistryObject<EntityType<FamiliarCat>> FAMILIAR_CAT = ENTITY_TYPES.register("familiar_cat", () -> Builder.of(FamiliarCat::new, MobCategory.CREATURE)
+            .sized(0.6F, 0.7F).clientTrackingRange(8).build(Enchanted.location("familiar_cat").toString()));
 
 }

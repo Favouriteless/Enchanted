@@ -24,25 +24,39 @@
 
 package com.favouriteless.enchanted.common.familiars;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class FamiliarType extends ForgeRegistryEntry<FamiliarType> {
+import java.util.function.Supplier;
 
-	private final EntityType<?> typeIn;
-	private final EntityType<?> typeOut;
+public abstract class FamiliarType<T extends Entity, C extends TamableAnimal> extends ForgeRegistryEntry<FamiliarType<?, ?>> {
 
-	public FamiliarType(EntityType<?> typeIn, EntityType<?> typeOut) {
+	private final Supplier<EntityType<T>> typeIn;
+	private final Supplier<EntityType<C>> typeOut;
+
+	public FamiliarType(Supplier<EntityType<T>> typeIn, Supplier<EntityType<C>> typeOut) {
 		this.typeIn = typeIn;
 		this.typeOut = typeOut;
 	}
 
-	public EntityType<?> getTypeIn() {
-		return typeIn;
+	public EntityType<T> getTypeIn() {
+		return typeIn.get();
 	}
 
-	public EntityType<?> getTypeOut() {
-		return typeOut;
+	public EntityType<C> getTypeOut() {
+		return typeOut.get();
+	}
+
+	/**
+	 * Create a familiar entity from the supplied entity. Don't need to change setTamed or ownerUUID.
+	 */
+	public abstract C create(T from);
+
+	public C getFor(ServerLevel level) {
+		return create(getTypeIn().create(level));
 	}
 
 }

@@ -22,14 +22,14 @@
  *
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.entities.EntEntity;
-import com.favouriteless.enchanted.common.entities.MandrakeEntity;
+import com.favouriteless.enchanted.common.entities.Ent;
+import com.favouriteless.enchanted.common.entities.FamiliarCat;
+import com.favouriteless.enchanted.common.entities.Mandrake;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.jei.EnchantedJEITextures;
@@ -58,8 +58,9 @@ public class CommonSetupEvents {
 
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(EnchantedEntityTypes.MANDRAKE.get(), MandrakeEntity.createAttributes().build());
-        event.put(EnchantedEntityTypes.ENT.get(), EntEntity.createAttributes().build());
+        event.put(EnchantedEntityTypes.MANDRAKE.get(), Mandrake.createAttributes().build());
+        event.put(EnchantedEntityTypes.ENT.get(), Ent.createAttributes().build());
+        event.put(EnchantedEntityTypes.FAMILIAR_CAT.get(), FamiliarCat.createAttributes().build());
     }
 
 }

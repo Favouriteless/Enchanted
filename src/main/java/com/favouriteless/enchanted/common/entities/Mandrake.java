@@ -55,11 +55,11 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class MandrakeEntity extends Monster implements IAnimatable {
+public class Mandrake extends Monster implements IAnimatable {
 
     private final AnimationFactory animationFactory = GeckoLibUtil.createFactory(this);
 
-    public MandrakeEntity(EntityType<? extends Monster> type, Level world) {
+    public Mandrake(EntityType<? extends Monster> type, Level world) {
         super(type, world);
     }
 
@@ -116,10 +116,10 @@ public class MandrakeEntity extends Monster implements IAnimatable {
 
     protected class MandrakeAttackGoal extends Goal {
 
-        protected final MandrakeEntity mob;
+        protected final Mandrake mob;
         protected int ticksUntilNextAttack;
 
-        public MandrakeAttackGoal(MandrakeEntity entity) {
+        public MandrakeAttackGoal(Mandrake entity) {
             this.mob = entity;
             this.ticksUntilNextAttack = 0;
         }
@@ -140,7 +140,7 @@ public class MandrakeEntity extends Monster implements IAnimatable {
 
                 List<LivingEntity> entitiesInRange = mob.level.getEntitiesOfClass(LivingEntity.class,
                         new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
-                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof MandrakeEntity) );
+                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof Mandrake) );
 
                 for(LivingEntity entity : entitiesInRange) {
                     if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() != EnchantedItems.EARMUFFS.get()) {

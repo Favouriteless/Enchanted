@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.render.entity;
 
 import com.favouriteless.enchanted.client.render.model.SimpleAnimatedGeoModel;
-import com.favouriteless.enchanted.common.entities.EntEntity;
+import com.favouriteless.enchanted.common.entities.Ent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -35,14 +35,14 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class EntRenderer extends GeoEntityRenderer<EntEntity> {
+public class EntRenderer extends GeoEntityRenderer<Ent> {
 
     public EntRenderer(Context context) {
         super(context, new SimpleAnimatedGeoModel<>("ent"));
     }
 
     @Override
-    public RenderType getRenderType(EntEntity animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+    public RenderType getRenderType(Ent animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
         return RenderType.entityCutoutNoCull(texture);
     }
 

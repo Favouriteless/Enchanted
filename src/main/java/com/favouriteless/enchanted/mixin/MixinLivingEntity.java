@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.mixin;
 
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.common.events.PoppetEvents;
+import com.favouriteless.enchanted.common.poppet.PoppetEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.damagesource.DamageSource;

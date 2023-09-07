@@ -25,14 +25,13 @@
 package com.favouriteless.enchanted.common.capabilities;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.capabilities.IBedCapability;
-import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
-import com.favouriteless.enchanted.common.capabilities.bed.BedCapabilityImpl;
-import com.favouriteless.enchanted.common.capabilities.bed.BedCapabilityProvider;
-import com.favouriteless.enchanted.common.familiars.FamiliarCapabilityImpl;
-import com.favouriteless.enchanted.common.familiars.FamiliarCapabilityProvider;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
+import com.favouriteless.enchanted.common.capabilities.bed.BedCapability;
+import com.favouriteless.enchanted.common.familiars.FamiliarCapability;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BedBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -46,23 +45,28 @@ public class CapabilityEvents {
 
 	@SubscribeEvent
 	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.register(BedCapabilityImpl.class);
-		event.register(FamiliarCapabilityImpl.class);
+		event.register(BedCapability.class);
+		event.register(FamiliarCapability.class);
 	}
 
 	@SubscribeEvent
 	public static void onAttachCapabilitiesBE(AttachCapabilitiesEvent<BlockEntity> event) {
 		BlockEntity be = event.getObject();
 		if(be instanceof BedBlockEntity)
-			event.addCapability(IBedCapability.LOCATION, new BedCapabilityProvider());
+			event.addCapability(IBedCapability.LOCATION, new SimplePersistentCapabilityProvider<>(EnchantedCapabilities.BED, new BedCapability()));
 	}
 
 	@SubscribeEvent
 	public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 
-		if(entity instanceof Player)
-			event.addCapability(IFamiliarCapability.LOCATION, new FamiliarCapabilityProvider());
+	}
+
+	@SubscribeEvent
+	public static void onAttachCapabilitiesLevel(AttachCapabilitiesEvent<Level> event) {
+		Level level = event.getObject();
+
+		event.addCapability(IFamiliarCapability.LOCATION, new SimplePersistentCapabilityProvider<>(EnchantedCapabilities.FAMILIAR, new FamiliarCapability()));
 	}
 
 }

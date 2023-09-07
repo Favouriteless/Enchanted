@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.effects;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEffects;

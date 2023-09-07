@@ -48,7 +48,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BroomstickEntity extends Entity {
+public class Broomstick extends Entity {
 
     public static final double ACCELERATION = 0.02D;
     public static final double MAX_SPEED = 1.0D;
@@ -66,11 +66,11 @@ public class BroomstickEntity extends Entity {
     private double lerpXRot = 0.0D;
     private double lerpYRot = 0.0D;
 
-    private static final EntityDataAccessor<Integer> DATA_ID_HURT = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> DATA_ID_HURTDIR = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(BroomstickEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Integer> DATA_ID_HURT = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_ID_HURTDIR = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.FLOAT);
 
-    public BroomstickEntity(EntityType<BroomstickEntity> type, Level world) {
+    public Broomstick(EntityType<Broomstick> type, Level world) {
         super(type, world);
         blocksBuilding = true;
     }
@@ -281,7 +281,7 @@ public class BroomstickEntity extends Entity {
 
     @Override
     public void push(Entity entity) {
-        if(entity instanceof BroomstickEntity) {
+        if(entity instanceof Broomstick) {
             if(entity.getBoundingBox().minY < getBoundingBox().maxY) {
                 super.push(entity);
             }

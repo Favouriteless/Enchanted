@@ -25,14 +25,15 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
 
 /**
  * Simple AbstractRite implementation for creating a curse
@@ -51,15 +52,16 @@ public abstract class AbstractCurseRite extends AbstractRite {
         if(targetUUID == null)
             cancel();
         else {
-            int curseLevel = 0;
+            int casterLevel = 0;
 
             IFamiliarCapability cap = level.getServer().getPlayerList().getPlayer(casterUUID).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
-            if(cap.getFamiliarType() == EntityType.CAT)
-                curseLevel++;
+            FamiliarEntry familiarEntry = cap.getFamiliarFor(casterUUID);
+            if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
+                casterLevel++;
 
             level.sendParticles(EnchantedParticles.CURSE_SEED.get(), pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             level.playSound(null, pos, EnchantedSoundEvents.CURSE_CAST.get(), SoundSource.MASTER, 1.5F, 1.0F);
-            CurseManager.createCurse(level, curseType, targetUUID, casterUUID, curseLevel);
+            CurseManager.createCurse(level, curseType, targetUUID, casterUUID, casterLevel);
             stopExecuting();
         }
     }

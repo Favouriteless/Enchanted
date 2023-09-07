@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.items.brews;
 
-import com.favouriteless.enchanted.common.entities.ThrowableBrewEntity;
+import com.favouriteless.enchanted.common.entities.ThrowableBrew;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -51,7 +51,7 @@ public abstract class ThrowableBrewItem extends Item {
 
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (!level.isClientSide) {
-			ThrowableBrewEntity entity = EnchantedEntityTypes.THROWABLE_BREW.get().create(level);
+			ThrowableBrew entity = EnchantedEntityTypes.THROWABLE_BREW.get().create(level);
 			entity.setOwner(player);
 			entity.setPos(player.getEyePosition().add(0.0D, -0.1D, 0.0D));
 			entity.setItem(itemstack);

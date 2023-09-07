@@ -30,6 +30,7 @@ import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer
 import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
 import com.favouriteless.enchanted.client.render.entity.EntRenderer;
+import com.favouriteless.enchanted.client.render.entity.FamiliarCatRenderer;
 import com.favouriteless.enchanted.client.render.entity.SimpleAnimatedGeoRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
@@ -79,6 +80,7 @@ public class ClientSetupEvents {
 		event.registerEntityRenderer(EnchantedEntityTypes.ENT.get(), EntRenderer::new);
 		event.registerEntityRenderer(EnchantedEntityTypes.BROOMSTICK.get(), BroomstickRenderer::new);
 		event.registerEntityRenderer(EnchantedEntityTypes.THROWABLE_BREW.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EnchantedEntityTypes.FAMILIAR_CAT.get(), FamiliarCatRenderer::new);
 
 		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(10));
 		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(8));

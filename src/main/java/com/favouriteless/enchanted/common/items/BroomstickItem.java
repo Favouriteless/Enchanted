@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.items;
 
-import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -52,7 +52,7 @@ public class BroomstickItem extends Item {
 		else {
 			BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
 
-			BroomstickEntity broom = EnchantedEntityTypes.BROOMSTICK.get().create(context.getLevel());
+			Broomstick broom = EnchantedEntityTypes.BROOMSTICK.get().create(context.getLevel());
 			broom.setPos(pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D);
 			broom.setDeltaMovement(Vec3.ZERO);
 			broom.xo = pos.getX()+0.5D;

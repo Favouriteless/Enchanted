@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.client.client_handlers.entities;
 
-import com.favouriteless.enchanted.common.entities.BroomstickEntity;
+import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.favouriteless.enchanted.common.init.EnchantedKeybinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -32,7 +32,7 @@ import net.minecraft.util.Mth;
 
 public class BroomstickEntityClientHandler {
 
-	public static void controlBroom(BroomstickEntity broom) {
+	public static void controlBroom(Broomstick broom) {
 		if(broom.isVehicle()) {
 			LocalPlayer player = Minecraft.getInstance().player;
 

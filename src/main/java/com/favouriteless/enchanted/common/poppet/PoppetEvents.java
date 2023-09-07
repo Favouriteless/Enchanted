@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
@@ -31,14 +31,12 @@ import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.items.poppets.AbstractDeathPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
-import com.favouriteless.enchanted.common.poppet.PoppetHelper;
-import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

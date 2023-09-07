@@ -35,9 +35,9 @@ import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class ThrowableBrewEntity extends ThrowableItemProjectile {
+public class ThrowableBrew extends ThrowableItemProjectile {
 
-	public ThrowableBrewEntity(EntityType<? extends ThrowableBrewEntity> type, Level level) {
+	public ThrowableBrew(EntityType<? extends ThrowableBrew> type, Level level) {
 		super(type, level);
 	}
 

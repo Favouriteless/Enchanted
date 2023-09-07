@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.familiars.FamiliarType;
+import com.favouriteless.enchanted.common.familiars.types.CatFamiliarType;
 import com.favouriteless.enchanted.core.util.RegistryHelper.Generify;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -37,23 +38,19 @@ import java.util.function.Supplier;
 
 public class FamiliarTypes {
 
-	public static final DeferredRegister<FamiliarType> FAMILIAR_TYPES = DeferredRegister.create(Enchanted.location("familiars"), Enchanted.MOD_ID);
-	public static final Supplier<IForgeRegistry<FamiliarType>> REGISTRY = FAMILIAR_TYPES.makeRegistry(Generify.from(FamiliarType.class), RegistryBuilder::new);
+	public static final DeferredRegister<FamiliarType<?, ?>> FAMILIAR_TYPES = DeferredRegister.create(Enchanted.location("familiars"), Enchanted.MOD_ID);
+	public static final Supplier<IForgeRegistry<FamiliarType<?, ?>>> REGISTRY = FAMILIAR_TYPES.makeRegistry(Generify.<FamiliarType<?, ?>>from(FamiliarType.class), RegistryBuilder::new);
 
-	public static final RegistryObject<FamiliarType> CAT = FAMILIAR_TYPES.register("cat", () -> new FamiliarType(EntityType.CAT, EntityType.CAT));
+	public static final RegistryObject<FamiliarType<?, ?>> CAT = FAMILIAR_TYPES.register("cat", CatFamiliarType::new);
 
 
 
-	public static FamiliarType getByProducer(EntityType<?> type) {
-		for(RegistryObject<FamiliarType> registryObject : FAMILIAR_TYPES.getEntries()) {
+	public static FamiliarType<?, ?> getByInput(EntityType<?> type) {
+		for(RegistryObject<FamiliarType<?, ?>> registryObject : FAMILIAR_TYPES.getEntries()) {
 			if(registryObject.get().getTypeIn() == type)
 				return registryObject.get();
 		}
 		return null;
-	}
-
-	public static boolean isFamiliarProducer(EntityType<?> type) {
-		return FAMILIAR_TYPES.getEntries().stream().anyMatch(familiar -> (familiar.get().getTypeIn() == type));
 	}
 
 }

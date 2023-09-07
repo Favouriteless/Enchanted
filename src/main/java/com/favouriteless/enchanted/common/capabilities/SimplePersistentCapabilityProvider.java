@@ -22,10 +22,8 @@
  *
  */
 
-package com.favouriteless.enchanted.common.familiars;
+package com.favouriteless.enchanted.common.capabilities;
 
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.capabilities.IFamiliarCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -36,15 +34,22 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class FamiliarCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class SimplePersistentCapabilityProvider<T extends INBTSerializable<CompoundTag>> implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-	private final IFamiliarCapability backend = new FamiliarCapabilityImpl();
-	private final LazyOptional<IFamiliarCapability> optionalData = LazyOptional.of(() -> backend);
+	private final Capability<T> cap;
+	private final T backend;
+	private final LazyOptional<T> optionalData;
+
+	public SimplePersistentCapabilityProvider(Capability<T> cap, T capImpl) {
+		this.cap = cap;
+		this.backend = capImpl;
+		this.optionalData = LazyOptional.of(() -> backend);
+	}
 
 	@NotNull
 	@Override
-	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		return EnchantedCapabilities.FAMILIAR.orEmpty(cap, optionalData);
+	public <C> LazyOptional<C> getCapability(@NotNull Capability<C> cap, @Nullable Direction side) {
+		return this.cap.orEmpty(cap, optionalData);
 	}
 
 	@Override
@@ -56,5 +61,4 @@ public class FamiliarCapabilityProvider implements ICapabilityProvider, INBTSeri
 	public void deserializeNBT(CompoundTag nbt) {
 		backend.deserializeNBT(nbt);
 	}
-
 }

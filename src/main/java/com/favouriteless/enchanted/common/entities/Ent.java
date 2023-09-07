@@ -54,11 +54,11 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<EntEntity> {
+public class Ent extends Monster implements IAnimatable, SmartBrainOwner<Ent> {
 
     private final AnimationFactory animationFactory = GeckoLibUtil.createFactory(this);
 
-    public EntEntity(EntityType<? extends Monster> type, Level world) {
+    public Ent(EntityType<? extends Monster> type, Level world) {
         super(type, world);
     }
 
@@ -66,28 +66,28 @@ public class EntEntity extends Monster implements IAnimatable, SmartBrainOwner<E
     protected final void registerGoals() {}
 
     @Override
-    public List<ExtendedSensor<EntEntity>> getSensors() {
+    public List<ExtendedSensor<Ent>> getSensors() {
         return ObjectArrayList.of(
                 new NearbyPlayersSensor<>()
         );
     }
 
     @Override
-    public BrainActivityGroup<EntEntity> getCoreTasks() {
+    public BrainActivityGroup<Ent> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
 
         );
     }
 
     @Override
-    public BrainActivityGroup<EntEntity> getIdleTasks() {
+    public BrainActivityGroup<Ent> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
 
         );
     }
 
     @Override
-    public BrainActivityGroup<EntEntity> getFightTasks() {
+    public BrainActivityGroup<Ent> getFightTasks() {
         return BrainActivityGroup.fightTasks(
 
         );

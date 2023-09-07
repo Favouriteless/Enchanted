@@ -22,22 +22,25 @@
  *
  */
 
-package com.favouriteless.enchanted.api.capabilities;
+package com.favouriteless.enchanted.client.render.entity;
 
-import com.favouriteless.enchanted.Enchanted;
-import net.minecraft.nbt.CompoundTag;
+import com.favouriteless.enchanted.client.EnchantedClientConfig;
+import net.minecraft.client.renderer.entity.CatRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.world.entity.animal.Cat;
 
-import java.util.UUID;
+public class FamiliarCatRenderer extends CatRenderer {
 
-public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
+	public static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/cat/all_black.png");
 
-    ResourceLocation LOCATION = Enchanted.location("familiar");
+	public FamiliarCatRenderer(Context context) {
+		super(context);
+	}
 
-    EntityType<?> getFamiliarType();
-    void setFamiliarType(EntityType<?> type);
-    UUID getFamiliarUUID();
-    void setFamiliarUUID(UUID uuid);
+	@Override
+	public ResourceLocation getTextureLocation(Cat entity) {
+		return EnchantedClientConfig.USE_ORIGINAL_CAT_TYPE.get() ? entity.getResourceLocation() : TEXTURE_LOCATION;
+	}
+	
 }

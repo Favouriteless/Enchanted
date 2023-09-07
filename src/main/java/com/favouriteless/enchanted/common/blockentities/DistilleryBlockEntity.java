@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
@@ -72,7 +73,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     private final RecipeWrapper recipeWrapper = new RecipeWrapper(inputCombined);
     private DistilleryRecipe currentRecipe;
-    private final List<BlockPos> potentialAltars = new ArrayList<>();
+    private final SimpleAltarPosHolder altarPosHolder;
 
     private boolean isBurning = false;
     private int cookTime = 0;
@@ -105,6 +106,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     public DistilleryBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state);
+        this.altarPosHolder = new SimpleAltarPosHolder(pos);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -112,7 +114,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             boolean isBurning = be.isBurning;
 
             if(level != null && !level.isClientSide) {
-                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.potentialAltars);
+                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder.getAltarPositions());
                 be.matchRecipe();
 
                 if(be.canDistill() && altar != null) {
@@ -268,7 +270,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        nbt.put("altarPos", altarPosHolder.serializeNBT());
         nbt.putBoolean("burnTime", isBurning);
         nbt.putInt("cookTime", cookTime);
         nbt.putInt("cookTimeTotal", cookTimeTotal);
@@ -280,7 +282,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+        altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
         isBurning = nbt.getBoolean("burnTime");
         cookTime = nbt.getInt("cookTime");
         cookTimeTotal = nbt.getInt("cookTimeTotal");
@@ -316,22 +318,8 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             outputHandler.invalidate();
     }
 
-
     @Override
-    public List<BlockPos> getAltarPositions() {
-        return potentialAltars;
+    public @NotNull IAltarPosHolder getAltarPosHolder() {
+        return altarPosHolder;
     }
-
-    @Override
-    public void removeAltar(BlockPos altarPos) {
-        potentialAltars.remove(altarPos);
-        this.setChanged();
-    }
-
-    @Override
-    public void addAltar(BlockPos altarPos) {
-        AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
-        this.setChanged();
-    }
-
 }

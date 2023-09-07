@@ -24,9 +24,9 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.RiteManager;
@@ -43,17 +43,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class ChalkGoldBlockEntity extends BlockEntity implements IAltarPowerConsumer {
 
-    private final List<BlockPos> potentialAltars = new ArrayList<>();
+    private final SimpleAltarPosHolder altarPosHolder;
     private AbstractRite currentRite = null;
 
     public ChalkGoldBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.CHALK_GOLD.get(), pos, state);
+        this.altarPosHolder = new SimpleAltarPosHolder(pos);
     }
 
     public void execute(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -113,29 +112,17 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IAltarPowerCons
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        AltarPowerHelper.savePosTag(potentialAltars, nbt);
+        nbt.put("altarPos", altarPosHolder.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+        altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
     }
 
     @Override
-    public List<BlockPos> getAltarPositions() {
-        return potentialAltars;
-    }
-
-    @Override
-    public void removeAltar(BlockPos altarPos) {
-        potentialAltars.remove(altarPos);
-        this.setChanged();
-    }
-
-    @Override
-    public void addAltar(BlockPos altarPos) {
-        AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
-        this.setChanged();
+    public @NotNull IAltarPosHolder getAltarPosHolder() {
+        return altarPosHolder;
     }
 }

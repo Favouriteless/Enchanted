@@ -26,6 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
@@ -56,8 +57,6 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer, MenuProvider {
 
@@ -69,7 +68,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
 	private SpinningWheelRecipe currentRecipe;
-	private final List<BlockPos> potentialAltars = new ArrayList<>();
+	private final SimpleAltarPosHolder altarPosHolder;
 	private boolean isSpinning = false;
 
 	public static final int SPIN_TIME_TOTAL = 400;
@@ -98,13 +97,14 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
 		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state);
+		this.altarPosHolder = new SimpleAltarPosHolder(pos);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
 		if(t instanceof SpinningWheelBlockEntity be) {
 			if(level != null) {
 				if(!level.isClientSide) {
-					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.potentialAltars);
+					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder.getAltarPositions());
 					be.matchRecipe();
 
 					if(be.canSpin() && be.currentRecipe.getPower() > 0 && altar != null) {
@@ -198,7 +198,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
-		AltarPowerHelper.savePosTag(potentialAltars, nbt);
+		nbt.put("altarPos", altarPosHolder.serializeNBT());
 		nbt.putInt("spinTime", spinTime);
 		nbt.put("input", input.serializeNBT());
 		nbt.put("output", output.serializeNBT());
@@ -207,7 +207,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+		altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
 		spinTime = nbt.getInt("spinTime");
 		input.deserializeNBT(nbt.getCompound("input"));
 		output.deserializeNBT(nbt.getCompound("output"));
@@ -256,20 +256,8 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	public List<BlockPos> getAltarPositions() {
-		return potentialAltars;
-	}
-
-	@Override
-	public void removeAltar(BlockPos altarPos) {
-		potentialAltars.remove(altarPos);
-		setChanged();
-	}
-
-	@Override
-	public void addAltar(BlockPos altarPos) {
-		AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
-		setChanged();
+	public @NotNull IAltarPosHolder getAltarPosHolder() {
+		return altarPosHolder;
 	}
 
 }

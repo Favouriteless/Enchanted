@@ -229,7 +229,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void addConsumer(IAltarPowerConsumer consumer) {
-        consumer.addAltar(worldPosition);
+        consumer.getAltarPosHolder().addAltar(worldPosition);
     }
 
     public double distanceTo(BlockPos pos) {

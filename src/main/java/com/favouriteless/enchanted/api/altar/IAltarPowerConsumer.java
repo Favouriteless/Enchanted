@@ -24,17 +24,57 @@
 
 package com.favouriteless.enchanted.api.altar;
 
+import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
+import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 /**
- * Use for marking a BlockEntity as a power consumer.
+ * Represents a BlockEntity which consumes altar power. Every {@link BlockEntity} which need to consume power from altars should
+ * implement this.
+ *
+ * <p>A {@link BlockEntity} implementing {@link IAltarPowerConsumer} will be automatically notified of nearby Altars.</p>
  */
 public interface IAltarPowerConsumer {
 
-    List<BlockPos> getAltarPositions();
-    void removeAltar(BlockPos altarPos);
-    void addAltar(BlockPos altarPos);
+    /**
+     * @return The {@link IAltarPosHolder} object containing this power consumer's positions.
+     */
+    @NotNull IAltarPosHolder getAltarPosHolder();
+
+
+
+    /**
+     * Holds and sorts the positions of every {@link AltarBlockEntity}
+     * this {@link IAltarPowerConsumer} is subscribed to.
+     *
+     * <p>See {@link SimpleAltarPosHolder} for the "default" implementation
+     * which sorts the provided positions by proximity.</p>
+     */
+    interface IAltarPosHolder extends INBTSerializable<ListTag> {
+
+        /**
+         * @return List of the BlockPos of every AltarBlockEntity this {@link IAltarPowerConsumer} is subscribed to.
+         */
+        List<BlockPos> getAltarPositions();
+
+        /**
+         * Remove a {@link BlockPos} from the list of available altar positions.
+         * @param altarPos position of the altar being removed from this holder.
+         */
+        void removeAltar(BlockPos altarPos);
+
+        /**
+         * Add a {@link BlockPos} to the list of available altar positions.
+         * @param altarPos position of the altar being added to this holder.
+         */
+        void addAltar(BlockPos altarPos);
+
+    }
 
 }

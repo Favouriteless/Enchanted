@@ -36,11 +36,11 @@ import java.util.List;
 
 public class AltarPowerHelper {
 
-	public static AltarBlockEntity tryGetAltar(Level world, List<BlockPos> potentialAltars) {
+	public static AltarBlockEntity tryGetAltar(Level level, List<BlockPos> potentialAltars) {
 		while(!potentialAltars.isEmpty()) {
-			if(world != null) {
+			if(level != null) {
 				BlockPos altarPos = potentialAltars.get(0);
-				BlockEntity te = world.getBlockEntity(altarPos);
+				BlockEntity te = level.getBlockEntity(altarPos);
 				if(te instanceof AltarBlockEntity) {
 					return (AltarBlockEntity) te;
 				}
@@ -75,37 +75,6 @@ public class AltarPowerHelper {
 			for(Tag inbt : posList) {
 				CompoundTag posNbt = (CompoundTag)inbt;
 				potentialAltars.add(new BlockPos(posNbt.getInt("xPos"), posNbt.getInt("yPos"), posNbt.getInt("zPos")));
-			}
-		}
-	}
-
-	public static void addAltarByClosest(List<BlockPos> potentialAltars, Level world, BlockPos pos, BlockPos altarPos) {
-		if(world != null) {
-			BlockEntity te = world.getBlockEntity(altarPos);
-			if(te instanceof AltarBlockEntity) {
-				AltarBlockEntity altar = (AltarBlockEntity) te;
-				if(potentialAltars.isEmpty()) {
-					potentialAltars.add(altarPos);
-				}
-				else if(!potentialAltars.contains(altarPos)) {
-					for(int i = 0; i < potentialAltars.size(); i++) {
-
-						BlockEntity te1 = world.getBlockEntity(potentialAltars.get(i));
-
-						if(te1 instanceof AltarBlockEntity) {
-							AltarBlockEntity currentAltar = (AltarBlockEntity) te1;
-
-							if(altar.distanceTo(pos) < currentAltar.distanceTo(pos)) {
-								potentialAltars.add(i, altarPos);
-								break;
-							}
-							else if(i == potentialAltars.size() - 1) {
-								potentialAltars.add(altarPos);
-								break;
-							}
-						}
-					}
-				}
 			}
 		}
 	}

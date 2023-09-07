@@ -124,7 +124,7 @@ public abstract class AbstractRite {
             if(amount > 0) {
                 BlockEntity te = level.getBlockEntity(pos);
                 if(te instanceof ChalkGoldBlockEntity) {
-                    List<BlockPos> potentialAltars = ((ChalkGoldBlockEntity) te).getAltarPositions();
+                    List<BlockPos> potentialAltars = ((ChalkGoldBlockEntity) te).getAltarPosHolder().getAltarPositions();
                     AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
 
                     if(altar != null) {

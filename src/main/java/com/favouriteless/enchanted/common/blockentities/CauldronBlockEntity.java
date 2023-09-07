@@ -30,6 +30,7 @@ import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
@@ -72,6 +73,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,6 +82,7 @@ import java.util.List;
 
 public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IAltarPowerConsumer {
 
+	private final SimpleAltarPosHolder altarPosHolder;
 	private final FluidTank tank;
 	private final LazyOptional<IFluidHandler> fluidHandler;
 
@@ -91,7 +94,6 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	private static final int BLENDING_MILLISECONDS = 500;
 	private final int cookTime;
 
-	private final List<BlockPos> potentialAltars = new ArrayList<>();
 	private List<T> potentialRecipes = new ArrayList<>();
 
 	protected ItemStack itemOut = ItemStack.EMPTY;
@@ -113,8 +115,9 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	public CauldronBlockEntity(BlockEntityType<? extends CauldronBlockEntity<?>> type, BlockPos pos, BlockState state, int bucketCapacity, int cookTime) {
 		super(type, pos, state);
-		tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
-		fluidHandler = LazyOptional.of(() -> tank);
+		this.altarPosHolder = new SimpleAltarPosHolder(pos);
+		this.tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
+		this.fluidHandler = LazyOptional.of(() -> tank);
 		this.cookTime = cookTime;
 	}
 
@@ -143,7 +146,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 								}
 								else {
 									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
-									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.potentialAltars);
+									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.getAltarPosHolder().getAltarPositions());
 									if(recipe.getPower() <= 0) {
 										blockEntity.setComplete();
 									}
@@ -408,13 +411,13 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			itemNbt.putInt("count", itemOut.getCount());
 			nbt.put("itemOut", itemNbt);
 		}
-		AltarPowerHelper.savePosTag(potentialAltars, nbt);
+		nbt.put("altarPos", altarPosHolder.serializeNBT());
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		AltarPowerHelper.loadPosTag(potentialAltars, nbt);
+		altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
 		setWater(nbt.getInt("waterAmount"));
 		targetRed = nbt.getInt("targetRed");
 		targetGreen = nbt.getInt("targetGreen");
@@ -524,12 +527,12 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	}
 
 	@Override
-	protected void setItems(NonNullList<ItemStack> pItems) {
-		inventoryContents = pItems;
+	protected void setItems(NonNullList<ItemStack> items) {
+		inventoryContents = items;
 	}
 
 	@Override
-	protected AbstractContainerMenu createMenu(int pId, Inventory pPlayer) {
+	protected AbstractContainerMenu createMenu(int id, Inventory player) {
 		return null;
 	}
 
@@ -539,19 +542,8 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	}
 
 	@Override
-	public List<BlockPos> getAltarPositions() {
-		return potentialAltars;
+	public @NotNull IAltarPosHolder getAltarPosHolder() {
+		return altarPosHolder;
 	}
 
-	@Override
-	public void removeAltar(BlockPos altarPos) {
-		potentialAltars.remove(altarPos);
-		this.setChanged();
-	}
-
-	@Override
-	public void addAltar(BlockPos altarPos) {
-		AltarPowerHelper.addAltarByClosest(potentialAltars, level, worldPosition, altarPos);
-		this.setChanged();
-	}
 }

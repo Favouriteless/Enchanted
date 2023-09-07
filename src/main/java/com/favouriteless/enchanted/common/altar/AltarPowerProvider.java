@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.api.altar;
+package com.favouriteless.enchanted.common.altar;
 
 public class AltarPowerProvider<T> {
 

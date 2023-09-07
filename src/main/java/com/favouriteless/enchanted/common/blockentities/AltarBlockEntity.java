@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
+import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
 import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;

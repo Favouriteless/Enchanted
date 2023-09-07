@@ -146,7 +146,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 								}
 								else {
 									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
-									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.getAltarPosHolder().getAltarPositions());
+									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.getAltarPosHolder());
 									if(recipe.getPower() <= 0) {
 										blockEntity.setComplete();
 									}

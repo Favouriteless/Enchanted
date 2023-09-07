@@ -114,7 +114,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             boolean isBurning = be.isBurning;
 
             if(level != null && !level.isClientSide) {
-                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder.getAltarPositions());
+                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder);
                 be.matchRecipe();
 
                 if(be.canDistill() && altar != null) {

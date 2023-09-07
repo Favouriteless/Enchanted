@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
+import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
 
 import java.util.ArrayList;
 import java.util.List;

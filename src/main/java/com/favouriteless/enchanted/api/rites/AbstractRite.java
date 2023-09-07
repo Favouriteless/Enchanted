@@ -122,10 +122,9 @@ public abstract class AbstractRite {
     protected boolean tryConsumePower(int amount) {
         if(level != null) {
             if(amount > 0) {
-                BlockEntity te = level.getBlockEntity(pos);
-                if(te instanceof ChalkGoldBlockEntity) {
-                    List<BlockPos> potentialAltars = ((ChalkGoldBlockEntity) te).getAltarPosHolder().getAltarPositions();
-                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, potentialAltars);
+                BlockEntity be = level.getBlockEntity(pos);
+                if(be instanceof ChalkGoldBlockEntity) {
+                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, ((ChalkGoldBlockEntity)be).getAltarPosHolder());
 
                     if(altar != null) {
                         if(altar.currentPower >= amount) {

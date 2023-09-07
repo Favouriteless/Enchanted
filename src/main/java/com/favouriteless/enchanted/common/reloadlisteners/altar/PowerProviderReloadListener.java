@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.reloadlisteners.altar;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.altar.AltarPowerProvider;
+import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
 import com.favouriteless.enchanted.common.init.registry.PowerProviderRegistry;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

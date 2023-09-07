@@ -24,59 +24,37 @@
 
 package com.favouriteless.enchanted.api.altar;
 
+import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer.IAltarPosHolder;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 
 public class AltarPowerHelper {
 
-	public static AltarBlockEntity tryGetAltar(Level level, List<BlockPos> potentialAltars) {
+	/**
+	 * Attempt to grab a {@link AltarBlockEntity} from an {@link IAltarPosHolder}. If one of the positions is for some
+	 * reason invalid, the position will be removed.
+	 *
+	 * @param level The level to look for altars in.
+	 * @param holder The {@link IAltarPosHolder} containing the positions which need checking.
+	 * @return The first valid {@link AltarBlockEntity} found in the positions provided by level
+	 */
+	public static AltarBlockEntity tryGetAltar(Level level, IAltarPosHolder holder) {
+		List<BlockPos> potentialAltars = holder.getAltarPositions();
 		while(!potentialAltars.isEmpty()) {
 			if(level != null) {
 				BlockPos altarPos = potentialAltars.get(0);
-				BlockEntity te = level.getBlockEntity(altarPos);
-				if(te instanceof AltarBlockEntity) {
-					return (AltarBlockEntity) te;
-				}
-				else {
+				BlockEntity be = level.getBlockEntity(altarPos);
+				if(be instanceof AltarBlockEntity altar)
+					return altar;
+				else
 					potentialAltars.remove(altarPos);
-				}
 			}
 		}
 		return null;
-	}
-
-	public static CompoundTag savePosTag(List<BlockPos> potentialAltars, CompoundTag nbt) {
-		ListTag listNbt = new ListTag();
-
-		for(BlockPos pos : potentialAltars) {
-			CompoundTag elementNbt = new CompoundTag();
-			elementNbt.putInt("xPos", pos.getX());
-			elementNbt.putInt("yPos", pos.getY());
-			elementNbt.putInt("zPos", pos.getZ());
-			listNbt.add(elementNbt);
-		}
-
-		nbt.put("altarPos", listNbt);
-		return nbt;
-	}
-
-	public static void loadPosTag(List<BlockPos> potentialAltars, CompoundTag nbt) {
-		if(nbt.contains("altarPos")) {
-			potentialAltars.clear();
-			ListTag posList = (ListTag)nbt.get("altarPos");
-
-			for(Tag inbt : posList) {
-				CompoundTag posNbt = (CompoundTag)inbt;
-				potentialAltars.add(new BlockPos(posNbt.getInt("xPos"), posNbt.getInt("yPos"), posNbt.getInt("zPos")));
-			}
-		}
 	}
 
 }

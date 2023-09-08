@@ -51,7 +51,6 @@ public class EnchantedTags {
         public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = BlockTags.create(Enchanted.location("mutandis_extremis_plants"));
         public static final TagKey<Block> MUTANDIS_PLANTS = BlockTags.create(Enchanted.location("mutandis_plants"));
         public static final TagKey<Block> PLANKS = BlockTags.create(Enchanted.location("planks"));
-        public static final TagKey<Block> POWER_CONSUMERS = BlockTags.create(Enchanted.location("power_consumers"));
         public static final TagKey<Block> RITE_FOREST_REPLACEABLE = BlockTags.create(Enchanted.location("rite_forest_replaceable"));
         public static final TagKey<Block> SAPLINGS = BlockTags.create(Enchanted.location("saplings"));
         public static final TagKey<Block> SLABS = BlockTags.create(Enchanted.location("slabs"));

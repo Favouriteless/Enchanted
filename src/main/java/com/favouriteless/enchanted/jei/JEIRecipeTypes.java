@@ -32,28 +32,28 @@ import net.minecraft.resources.ResourceLocation;
 
 public class JEIRecipeTypes {
 
-    private static final ResourceLocation locationOven = new ResourceLocation("enchanted", "witch_oven_category");
-    public static final RecipeType<WitchOvenRecipe> RECIPE_TYPE_WITCH_OVEN = new RecipeType<>(locationOven, WitchOvenRecipe.class);
+    private static final ResourceLocation LOCATION_WITCH_OVEN = new ResourceLocation("enchanted", "witch_oven_category");
+    public static final RecipeType<WitchOvenRecipe> RECIPE_TYPE_WITCH_OVEN = new RecipeType<>(LOCATION_WITCH_OVEN, WitchOvenRecipe.class);
 
-    private static final ResourceLocation locationDistillery = new ResourceLocation("enchanted", "distillery_category");
-    public static final RecipeType<DistilleryRecipe> RECIPE_TYPE_DISTILLERY = new RecipeType<>(locationDistillery, DistilleryRecipe.class);
+    private static final ResourceLocation LOCATION_DISTILLERY = new ResourceLocation("enchanted", "distillery_category");
+    public static final RecipeType<DistilleryRecipe> RECIPE_TYPE_DISTILLERY = new RecipeType<>(LOCATION_DISTILLERY, DistilleryRecipe.class);
 
-    private static final ResourceLocation locationSpinningWheel = new ResourceLocation("enchanted", "spinning_wheel_category");
-    public static final RecipeType<SpinningWheelRecipe> RECIPE_TYPE_SPINNING_WHEEL = new RecipeType<>(locationSpinningWheel, SpinningWheelRecipe.class);
+    private static final ResourceLocation LOCATION_SPINNING_WHEEL = new ResourceLocation("enchanted", "spinning_wheel_category");
+    public static final RecipeType<SpinningWheelRecipe> RECIPE_TYPE_SPINNING_WHEEL = new RecipeType<>(LOCATION_SPINNING_WHEEL, SpinningWheelRecipe.class);
 
-    private static final ResourceLocation locationWitchCauldron= new ResourceLocation("enchanted", "witch_cauldron_category");
-    public static final RecipeType<WitchCauldronRecipe> RECIPE_TYPE_WITCH_CAULDRON = new RecipeType<>(locationWitchCauldron, WitchCauldronRecipe.class);
+    private static final ResourceLocation LOCATION_WITCH_CAULDRON = new ResourceLocation("enchanted", "witch_cauldron_category");
+    public static final RecipeType<WitchCauldronRecipe> RECIPE_TYPE_WITCH_CAULDRON = new RecipeType<>(LOCATION_WITCH_CAULDRON, WitchCauldronRecipe.class);
 
-    private static final ResourceLocation locationKettle= new ResourceLocation("enchanted", "kettle_category");
-    public static final RecipeType<KettleRecipe> RECIPE_TYPE_KETTLE = new RecipeType<>(locationKettle, KettleRecipe.class);
+    private static final ResourceLocation LOCATION_KETTLE = new ResourceLocation("enchanted", "kettle_category");
+    public static final RecipeType<KettleRecipe> RECIPE_TYPE_KETTLE = new RecipeType<>(LOCATION_KETTLE, KettleRecipe.class);
 
-    private static final ResourceLocation locationRite= new ResourceLocation("enchanted", "rite_category");
-    public static final RecipeType<AbstractCreateItemRite> RECIPE_TYPE_RITE = new RecipeType<>(locationRite, AbstractCreateItemRite.class);
+    private static final ResourceLocation LOCATION_RITE = new ResourceLocation("enchanted", "rite_category");
+    public static final RecipeType<AbstractCreateItemRite> RECIPE_TYPE_RITE = new RecipeType<>(LOCATION_RITE, AbstractCreateItemRite.class);
 
-    private static final ResourceLocation locationMutandis= new ResourceLocation("enchanted", "mutandis_category");
-    public static final RecipeType<JEIMutandisRecipe> RECIPE_TYPE_MUTANDIS = new RecipeType<>(locationMutandis, JEIMutandisRecipe.class);
+    private static final ResourceLocation LOCATION_MUTANDIS = new ResourceLocation("enchanted", "mutandis_category");
+    public static final RecipeType<JEIMutandisRecipe> RECIPE_TYPE_MUTANDIS = new RecipeType<>(LOCATION_MUTANDIS, JEIMutandisRecipe.class);
 
-    private static final ResourceLocation locationMutandisExtremis = new ResourceLocation("enchanted", "mutandis_extremis_category");
-    public static final RecipeType<JEIMutandisRecipe> RECIPE_TYPE_MUTANDIS_EXTREMIS = new RecipeType<>(locationMutandisExtremis, JEIMutandisRecipe.class);
+    private static final ResourceLocation LOCATION_MUTANDIS_EXTREMIS = new ResourceLocation("enchanted", "mutandis_extremis_category");
+    public static final RecipeType<JEIMutandisRecipe> RECIPE_TYPE_MUTANDIS_EXTREMIS = new RecipeType<>(LOCATION_MUTANDIS_EXTREMIS, JEIMutandisRecipe.class);
 
 }

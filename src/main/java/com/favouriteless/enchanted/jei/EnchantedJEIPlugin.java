@@ -82,13 +82,13 @@ public class EnchantedJEIPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new WitchOvenCategory(registration.getJeiHelpers(), RECIPE_TYPE_WITCH_OVEN));
-        registration.addRecipeCategories(new DistilleryCategory(registration.getJeiHelpers(),RECIPE_TYPE_DISTILLERY));
-        registration.addRecipeCategories(new SpinningWheelCategory(registration.getJeiHelpers(),RECIPE_TYPE_SPINNING_WHEEL));
-        registration.addRecipeCategories(new WitchCauldronCategory(registration.getJeiHelpers(),RECIPE_TYPE_WITCH_CAULDRON));
-        registration.addRecipeCategories(new KettleCategory(registration.getJeiHelpers(),RECIPE_TYPE_KETTLE));
-        registration.addRecipeCategories(new RiteCategory(registration.getJeiHelpers(),RECIPE_TYPE_RITE));
-        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(),RECIPE_TYPE_MUTANDIS,new ItemStack(EnchantedItems.MUTANDIS.get()),new TranslatableComponent("jei.enchanted.mutandis")));
-        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(),RECIPE_TYPE_MUTANDIS_EXTREMIS,new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()),new TranslatableComponent("jei.enchanted.mutandis_extremis")));
+        registration.addRecipeCategories(new DistilleryCategory(registration.getJeiHelpers(), RECIPE_TYPE_DISTILLERY));
+        registration.addRecipeCategories(new SpinningWheelCategory(registration.getJeiHelpers(), RECIPE_TYPE_SPINNING_WHEEL));
+        registration.addRecipeCategories(new WitchCauldronCategory(registration.getJeiHelpers(), RECIPE_TYPE_WITCH_CAULDRON));
+        registration.addRecipeCategories(new KettleCategory(registration.getJeiHelpers(), RECIPE_TYPE_KETTLE));
+        registration.addRecipeCategories(new RiteCategory(registration.getJeiHelpers(), RECIPE_TYPE_RITE));
+        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(), RECIPE_TYPE_MUTANDIS,new ItemStack(EnchantedItems.MUTANDIS.get()),new TranslatableComponent("jei.enchanted.mutandis")));
+        registration.addRecipeCategories(new MutandisCategory(registration.getJeiHelpers(), RECIPE_TYPE_MUTANDIS_EXTREMIS,new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()),new TranslatableComponent("jei.enchanted.mutandis_extremis")));
     }
 
     @Override
@@ -147,12 +147,12 @@ public class EnchantedJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.SPINNING_WHEEL.get()), RECIPE_TYPE_SPINNING_WHEEL);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.WITCH_CAULDRON.get()), RECIPE_TYPE_WITCH_CAULDRON);
         registration.addRecipeCatalyst(new ItemStack(EnchantedItems.KETTLE.get()), RECIPE_TYPE_KETTLE);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_WHITE.get()),RECIPE_TYPE_RITE);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_GOLD.get()),RECIPE_TYPE_RITE);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_PURPLE.get()),RECIPE_TYPE_RITE);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_RED.get()),RECIPE_TYPE_RITE);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS.get()),RECIPE_TYPE_MUTANDIS);
-        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()),RECIPE_TYPE_MUTANDIS_EXTREMIS);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_WHITE.get()), RECIPE_TYPE_RITE);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_GOLD.get()), RECIPE_TYPE_RITE);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_PURPLE.get()), RECIPE_TYPE_RITE);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.CHALK_RED.get()), RECIPE_TYPE_RITE);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS.get()), RECIPE_TYPE_MUTANDIS);
+        registration.addRecipeCatalyst(new ItemStack(EnchantedItems.MUTANDIS_EXTREMIS.get()), RECIPE_TYPE_MUTANDIS_EXTREMIS);
         IModPlugin.super.registerRecipeCatalysts(registration);
     }
 

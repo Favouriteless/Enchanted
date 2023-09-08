@@ -120,7 +120,7 @@ public class RiteProtection extends AbstractRite {
             if(entity instanceof ItemEntity itemEntity) {
                 ItemStack stack = itemEntity.getItem();
                 if(stack.getItem() == EnchantedItems.BOUND_WAYSTONE.get()) {
-                    targetLevel = (ServerLevel)WaystoneHelper.getLevel(level, stack);
+                    targetLevel = (ServerLevel) WaystoneHelper.getLevel(level, stack);
                     targetPos = WaystoneHelper.getPos(stack);
                     consumeItemNoRequirement(itemEntity);
                     break;

@@ -46,31 +46,29 @@ public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
 	class FamiliarEntry {
 
 		private final FamiliarType<?, ?> type;
-		private final UUID uuid;
+		private UUID uuid;
 		private CompoundTag nbt;
 		private boolean isDismissed = false;
 
-		/**
-		 * Make sure that every entity passed into this implements IFamiliar. I know it's a bit scuffed, but I didn't have a good way to enforce this.
-		 */
 		public FamiliarEntry(FamiliarType<?, ?> type, Entity familiar) {
 			this.uuid = familiar.getUUID();
 			this.type = type;
-			this.nbt = new CompoundTag();
-			familiar.saveWithoutId(nbt);
-			this.nbt.remove("uuid"); // We do not want uuid to be persistent and most of the save/load stuff is private
+			setNbt(familiar.saveWithoutId(nbt));
 		}
 
 		public FamiliarEntry(FamiliarType<?, ?> type, UUID uuid, CompoundTag nbt, boolean isDismissed) {
 			this.uuid = uuid;
 			this.type = type;
-			this.nbt = nbt;
 			this.isDismissed = isDismissed;
-			this.nbt.remove("uuid"); // We do not want uuid to be persistent and most of the save/load stuff is private
+			setNbt(nbt);
 		}
 
 		public UUID getUUID() {
 			return uuid;
+		}
+
+		public void setUUID(UUID uuid) {
+			this.uuid = uuid;
 		}
 
 		public FamiliarType<?, ?> getType() {
@@ -82,7 +80,8 @@ public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
 		}
 
 		public void setNbt(CompoundTag nbt) {
-			this.nbt = nbt;
+			this.nbt = nbt.copy(); // Work on copy of nbt so we don't actually modify the entity.
+			this.nbt.remove("UUID"); // Never ever store uuid, we don't want it to get replicated.
 		}
 
 		public boolean isDismissed() {

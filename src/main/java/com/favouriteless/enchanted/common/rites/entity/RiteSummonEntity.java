@@ -25,15 +25,17 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.SummonForcer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 
 public class RiteSummonEntity extends AbstractRite {
 
@@ -56,10 +58,11 @@ public class RiteSummonEntity extends AbstractRite {
             level.playSound(null, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
             targetEntity.level.playSound(null, targetEntity.getX(), targetEntity.getX(), targetEntity.getY(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1.0F, 1.0F);
 
-            if(level != targetEntity.level) {
-                targetEntity.changeDimension(level);
-            }
-            targetEntity.teleportTo(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
+            Vec3 destination = new Vec3(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
+            if(level != targetEntity.level)
+                targetEntity.changeDimension(level, new SummonForcer(destination));
+            else
+                targetEntity.teleportTo(destination.x, destination.y, destination.z);
         }
         else {
             cancel();

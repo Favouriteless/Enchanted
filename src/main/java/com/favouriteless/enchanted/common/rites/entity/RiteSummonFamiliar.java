@@ -31,6 +31,7 @@ import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.SummonForcer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -65,10 +66,17 @@ public class RiteSummonFamiliar extends AbstractRite {
                 targetEntity.setPos(vec3);
                 level.addFreshEntity(targetEntity);
                 ((TamableAnimal)targetEntity).setPersistenceRequired();
+
+                entry.setUUID(targetEntity.getUUID()); // Update the UUID entry
             }
 
-            targetEntity.teleportTo(vec3.x, vec3.y, vec3.z);
-            level.playSound(null, targetEntity, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            if(targetEntity.getLevel() != level)
+                targetEntity.changeDimension(level, new SummonForcer(vec3));
+            else
+                targetEntity.teleportTo(vec3.x, vec3.y, vec3.z);
+
+            entry.setDismissed(false);
+            level.playSound(null, vec3.x, vec3.y, vec3.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
             teleportParticles(level, vec3.x, vec3.y, vec3.z);
         }
         else {

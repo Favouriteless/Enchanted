@@ -35,6 +35,9 @@ import net.minecraftforge.common.util.NonNullConsumer;
 
 public class FamiliarHelper {
 
+	/**
+	 * Attempt to dismiss a familiar. Dismissed familiars will discard themselves and passive bonuses will stop working.
+	 */
 	public static void dismiss(TamableAnimal entity) {
 		runIfCap(entity.getLevel(), cap -> {
 			cap.getFamiliarFor(entity.getOwnerUUID()).setDismissed(true);

@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.entities;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
 import net.minecraft.nbt.CompoundTag;
@@ -60,10 +61,13 @@ public class FamiliarCat extends Cat {
 	@Override
 	public void tick() {
 		super.tick();
-		if(!level.isClientSide && level.getGameTime() % 10 == 0) {
+		if(!level.isClientSide) {
 			FamiliarHelper.runIfCap(level, cap -> {
-				if(!getUUID().equals(cap.getFamiliarFor(getOwnerUUID()).getUUID()))
+				FamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
+				if(entry == null || !getUUID().equals(entry.getUUID())) {
 					discard();
+					Enchanted.LOGGER.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
+				}
 			});
 		}
 	}

@@ -22,39 +22,40 @@
  *
  */
 
-package com.favouriteless.enchanted.common.stateobserver;
+package com.favouriteless.enchanted.common.altar;
 
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * StateObserver implementation for {@link AltarBlockEntity}. This is used to notify every nearby {@link IPowerConsumer}
+ * of the {@link IPowerProvider} near them. Changes to the power/upgrades are also calculated in this StateObserver.
+ */
 public class AltarStateObserver extends AbstractStateObserver {
 
-    public AltarStateObserver(Level level, BlockPos pos, int radiusX, int radiusY, int radiusZ) {
-        super(level, pos, radiusX, radiusY, radiusZ);
+    public AltarStateObserver(Level level, BlockPos pos, int xRadius, int yRadius, int zRadius) {
+        super(level, pos, xRadius, yRadius, zRadius);
     }
 
     @Override
     protected void handleChanges() {
         if(!getLevel().isClientSide) {
             BlockEntity be = getLevel().getBlockEntity(getPos());
-            if (be instanceof AltarBlockEntity altar) {
+            if (be instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
 
                 for (StateChange change : getStateChangeSet().getChanges()) { // For all changes
                     if (altar.posWithinRange(change.pos(), EnchantedConfig.ALTAR_RANGE.get())) { // Change is relevant
-                        if(!change.oldState().is(change.newState().getBlock())) { // Block changed
-                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.POWER_CONSUMERS).contains(change.newState().getBlock())) {
-                                BlockEntity newBe = getLevel().getBlockEntity(change.pos());
-                                if(newBe instanceof IAltarPowerConsumer powerConsumer)
-                                    altar.addConsumer(powerConsumer);
-                            }
+                        if(!change.oldState().is(change.newState().getBlock())) { // Block actually changed
+                            if(getLevel().getBlockEntity(change.pos()) instanceof IPowerConsumer consumer)
+                                consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.
+
                             altar.removeBlock(change.oldState().getBlock());
                             altar.addBlock(change.newState().getBlock());
                         }
@@ -64,6 +65,7 @@ public class AltarStateObserver extends AbstractStateObserver {
                         }
                     }
                 }
+
             }
         }
     }

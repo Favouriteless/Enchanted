@@ -24,7 +24,7 @@
 
 package com.favouriteless.enchanted.api.rites;
 
-import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
+import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -124,13 +124,10 @@ public abstract class AbstractRite {
             if(amount > 0) {
                 BlockEntity be = level.getBlockEntity(pos);
                 if(be instanceof ChalkGoldBlockEntity) {
-                    AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, ((ChalkGoldBlockEntity)be).getAltarPosHolder());
+                    AltarBlockEntity altar = PowerHelper.tryGetAltar(level, ((ChalkGoldBlockEntity)be).getPosHolder());
 
                     if(altar != null) {
-                        if(altar.currentPower >= amount) {
-                            altar.currentPower -= amount;
-                            return true;
-                        }
+                        return altar.tryConsumePower(amount);
                     }
                 }
             }

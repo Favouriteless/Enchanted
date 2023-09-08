@@ -26,11 +26,11 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
-import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
@@ -80,9 +80,9 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IAltarPowerConsumer {
+public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IPowerConsumer {
 
-	private final SimpleAltarPosHolder altarPosHolder;
+	private final SimplePowerPosHolder altarPosHolder;
 	private final FluidTank tank;
 	private final LazyOptional<IFluidHandler> fluidHandler;
 
@@ -115,7 +115,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	public CauldronBlockEntity(BlockEntityType<? extends CauldronBlockEntity<?>> type, BlockPos pos, BlockState state, int bucketCapacity, int cookTime) {
 		super(type, pos, state);
-		this.altarPosHolder = new SimpleAltarPosHolder(pos);
+		this.altarPosHolder = new SimplePowerPosHolder(pos);
 		this.tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
 		this.fluidHandler = LazyOptional.of(() -> tank);
 		this.cookTime = cookTime;
@@ -146,12 +146,11 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 								}
 								else {
 									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
-									AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, blockEntity.getAltarPosHolder());
+									AltarBlockEntity altar = PowerHelper.tryGetAltar(level, blockEntity.getPosHolder());
 									if(recipe.getPower() <= 0) {
 										blockEntity.setComplete();
 									}
-									else if(altar != null && altar.currentPower > recipe.getPower()) {
-										altar.currentPower -= recipe.getPower();
+									else if(altar != null && altar.tryConsumePower(recipe.getPower())) {
 										blockEntity.setComplete();
 									}
 									else {
@@ -542,7 +541,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	}
 
 	@Override
-	public @NotNull IAltarPosHolder getAltarPosHolder() {
+	public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
 		return altarPosHolder;
 	}
 

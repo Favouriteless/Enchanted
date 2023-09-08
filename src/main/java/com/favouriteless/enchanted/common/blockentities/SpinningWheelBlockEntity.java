@@ -24,9 +24,9 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
@@ -58,7 +58,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer, MenuProvider {
+public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IPowerConsumer, MenuProvider {
 
 	private final ItemStackHandler input = new ItemStackHandler(3);
 	private final ItemStackHandler output = new ItemStackHandler(1);
@@ -68,7 +68,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
 	private SpinningWheelRecipe currentRecipe;
-	private final SimpleAltarPosHolder altarPosHolder;
+	private final SimplePowerPosHolder altarPosHolder;
 	private boolean isSpinning = false;
 
 	public static final int SPIN_TIME_TOTAL = 400;
@@ -97,20 +97,19 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
 		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state);
-		this.altarPosHolder = new SimpleAltarPosHolder(pos);
+		this.altarPosHolder = new SimplePowerPosHolder(pos);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
 		if(t instanceof SpinningWheelBlockEntity be) {
 			if(level != null) {
 				if(!level.isClientSide) {
-					AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder);
+					AltarBlockEntity altar = PowerHelper.tryGetAltar(level, be.altarPosHolder);
 					be.matchRecipe();
 
 					if(be.canSpin() && be.currentRecipe.getPower() > 0 && altar != null) {
 						double powerThisTick = (double)be.currentRecipe.getPower() / SPIN_TIME_TOTAL;
-						if(altar.currentPower > powerThisTick) {
-							altar.currentPower -= powerThisTick;
+						if(altar.tryConsumePower(powerThisTick)) {
 							be.spinTime++;
 
 							if(be.spinTime == SPIN_TIME_TOTAL) {
@@ -256,7 +255,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	public @NotNull IAltarPosHolder getAltarPosHolder() {
+	public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
 		return altarPosHolder;
 	}
 

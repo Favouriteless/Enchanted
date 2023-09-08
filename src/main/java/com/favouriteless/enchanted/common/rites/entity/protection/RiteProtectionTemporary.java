@@ -22,7 +22,7 @@
  *
  */
 
-package com.favouriteless.enchanted.common.rites.entity;
+package com.favouriteless.enchanted.common.rites.entity.protection;
 
 import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;

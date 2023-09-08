@@ -35,8 +35,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Represents a BlockEntity which consumes altar power. Every {@link BlockEntity} which need to consume power from altars should
- * implement this.
+ * Represents a {@link BlockEntity} which consumes altar power. Every {@link BlockEntity} which need to consume power
+ * from altars should implement this.
  *
  * <p>A {@link BlockEntity} implementing {@link IAltarPowerConsumer} will be automatically notified of nearby Altars.</p>
  */

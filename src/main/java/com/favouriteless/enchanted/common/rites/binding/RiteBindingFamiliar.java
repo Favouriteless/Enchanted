@@ -128,9 +128,10 @@ public class RiteBindingFamiliar extends AbstractRite {
 			if(entities.get(0) instanceof TamableAnimal animal) {
 				UUID ownerUUID = animal.getOwnerUUID();
 
-				if(!ownerUUID.equals(casterUUID)) {
+				if(ownerUUID != null && !ownerUUID.equals(casterUUID)) {
 					Player caster = level.getPlayerByUUID(casterUUID);
-					caster.displayClientMessage(new TextComponent("This creature does not trust you.").withStyle(ChatFormatting.RED), false);
+					if(caster != null)
+						caster.displayClientMessage(new TextComponent("This creature does not trust you.").withStyle(ChatFormatting.RED), false);
 					return false;
 				}
 			}

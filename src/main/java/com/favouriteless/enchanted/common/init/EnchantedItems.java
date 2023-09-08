@@ -65,7 +65,7 @@ public class EnchantedItems {
     public static final RegistryObject<Item> WITCH_CAULDRON = registerBlockItem("witch_cauldron", EnchantedBlocks.WITCH_CAULDRON);
     public static final RegistryObject<Item> KETTLE = registerBlockItem("kettle", EnchantedBlocks.KETTLE);
     public static final RegistryObject<Item> SPINNING_WHEEL = ITEMS.register("spinning_wheel", () -> new SpinningWheelBlockItem(defaultProperties()));
-    public static final RegistryObject<Item> POPPET_SHELF = registerBlockItemProperties("poppet_shelf", EnchantedBlocks.POPPET_SHELF, defaultProperties());
+    public static final RegistryObject<Item> POPPET_SHELF = registerBlockItem("poppet_shelf", EnchantedBlocks.POPPET_SHELF);
 
     public static final RegistryObject<Item> CHALICE = registerBlockItem("chalice", EnchantedBlocks.CHALICE);
     public static final RegistryObject<Item> CHALICE_FILLED = registerBlockItem("chalice_filled", EnchantedBlocks.CHALICE_FILLED);

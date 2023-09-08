@@ -38,7 +38,7 @@ public class AltarPowerHelper {
 	 * Attempt to grab a {@link AltarBlockEntity} from an {@link IAltarPosHolder}. If one of the positions is for some
 	 * reason invalid, the position will be removed.
 	 *
-	 * @param level The level to look for altars in.
+	 * @param level The {@link Level} to look for altars in.
 	 * @param holder The {@link IAltarPosHolder} containing the positions which need checking.
 	 * @return The first valid {@link AltarBlockEntity} found in the positions provided by level
 	 */

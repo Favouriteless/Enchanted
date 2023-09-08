@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.multiblock.IMultiBlockType;
-import com.favouriteless.enchanted.common.stateobserver.AltarStateObserver;
+import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.stateobserver.StateObserverManager;
 import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import net.minecraft.core.BlockPos;

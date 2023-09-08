@@ -30,7 +30,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.stateobserver.AltarStateObserver;
+import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.stateobserver.RiteOfProtectionObserver;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.rites.CirclePart;

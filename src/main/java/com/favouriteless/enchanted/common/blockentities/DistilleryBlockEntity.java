@@ -24,9 +24,9 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.api.altar.AltarPowerHelper;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
-import com.favouriteless.enchanted.common.altar.SimpleAltarPosHolder;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
@@ -60,7 +60,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IAltarPowerConsumer, MenuProvider {
+public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IPowerConsumer, MenuProvider {
 
     private final ItemStackHandler jar = new ItemStackHandler(1);
     private final ItemStackHandler input = new ItemStackHandler(2);
@@ -73,7 +73,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     private final RecipeWrapper recipeWrapper = new RecipeWrapper(inputCombined);
     private DistilleryRecipe currentRecipe;
-    private final SimpleAltarPosHolder altarPosHolder;
+    private final SimplePowerPosHolder altarPosHolder;
 
     private boolean isBurning = false;
     private int cookTime = 0;
@@ -106,7 +106,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     public DistilleryBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state);
-        this.altarPosHolder = new SimpleAltarPosHolder(pos);
+        this.altarPosHolder = new SimplePowerPosHolder(pos);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -114,12 +114,11 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             boolean isBurning = be.isBurning;
 
             if(level != null && !level.isClientSide) {
-                AltarBlockEntity altar = AltarPowerHelper.tryGetAltar(level, be.altarPosHolder);
+                AltarBlockEntity altar = PowerHelper.tryGetAltar(level, be.altarPosHolder);
                 be.matchRecipe();
 
                 if(be.canDistill() && altar != null) {
-                    if(altar.currentPower > 10.0D) {
-                        altar.currentPower -= 10.0D;
+                    if(altar.tryConsumePower(10.0D)) {
                         be.isBurning = true;
                         be.cookTime++;
 
@@ -319,7 +318,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     }
 
     @Override
-    public @NotNull IAltarPosHolder getAltarPosHolder() {
+    public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
         return altarPosHolder;
     }
 }

@@ -26,14 +26,14 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
-import com.favouriteless.enchanted.api.altar.IAltarPowerConsumer;
+import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.EnchantedData;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
-import com.favouriteless.enchanted.common.stateobserver.AltarStateObserver;
 import com.favouriteless.stateobserver.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +59,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AltarBlockEntity extends BlockEntity implements MenuProvider {
+public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
 
     private final double rechargeRate = EnchantedConfig.ALTAR_BASE_RECHARGE.get();
     private final AltarBlockData altarBlockData = new AltarBlockData();
@@ -67,7 +67,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     private double rechargeMultiplier = 1.0D;
     private double powerMultiplier = 1.0D;
     private double maxPower;
-    public double currentPower;
+    private double currentPower;
 
     private final ContainerData fields = new ContainerData() {
         @Override
@@ -204,10 +204,11 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
                 for (int y = 0; y < (range+2)*2; y++) {
                     for (int z = 0; z < (range+2)*2; z++) {
                         BlockPos currentPos = startingPos.offset(x, y, z);
-                        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.POWER_CONSUMERS).contains(level.getBlockState(currentPos).getBlock())) {
-                            addConsumer(((IAltarPowerConsumer) level.getBlockEntity(currentPos)));
-                        }
-                        else if(posWithinRange(currentPos, range)) {
+
+                        if(posWithinRange(currentPos, range)) {
+                            if(level.getBlockEntity(currentPos) instanceof IPowerConsumer consumer)
+                                consumer.getPosHolder().add(worldPosition); // Notify consumers that this altar exists.
+
                             addBlock(level.getBlockState(currentPos).getBlock());
                         }
                     }
@@ -226,10 +227,6 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             return (dx * dx) / (rx * rx) + (dy * dy) / (range * range) + (dz * dz) / (rz * rz) <= 1;
         }
         return false;
-    }
-
-    public void addConsumer(IAltarPowerConsumer consumer) {
-        consumer.getAltarPosHolder().addAltar(worldPosition);
     }
 
     public double distanceTo(BlockPos pos) {
@@ -311,6 +308,15 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new AltarMenu(id, this, fields);
+    }
+
+    @Override
+    public boolean tryConsumePower(double amount) {
+        if(this.currentPower > amount) {
+            currentPower -= amount;
+            return true;
+        }
+        return false;
     }
 
     public static class AltarBlockData implements INBTSerializable<CompoundTag> {

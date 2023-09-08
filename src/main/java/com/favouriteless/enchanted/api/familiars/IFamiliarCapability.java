@@ -53,7 +53,7 @@ public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
 		public FamiliarEntry(FamiliarType<?, ?> type, Entity familiar) {
 			this.uuid = familiar.getUUID();
 			this.type = type;
-			setNbt(familiar.saveWithoutId(nbt));
+			setNbt(familiar.saveWithoutId(new CompoundTag()));
 		}
 
 		public FamiliarEntry(FamiliarType<?, ?> type, UUID uuid, CompoundTag nbt, boolean isDismissed) {

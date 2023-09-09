@@ -27,12 +27,14 @@ package com.favouriteless.enchanted.common.rites.curse;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.*;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
@@ -46,10 +48,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class RiteCurseOfBlight extends AbstractRite {
 
@@ -62,8 +61,8 @@ public class RiteCurseOfBlight extends AbstractRite {
 
     public int blockTicks = 0;
 
-    public RiteCurseOfBlight() {
-        super(RiteTypes.CURSE_OF_BLIGHT.get(), 0, 0); // Power, power per tick
+    public RiteCurseOfBlight(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.REDSTONE_SOUP.get(), 1);
@@ -82,6 +81,8 @@ public class RiteCurseOfBlight extends AbstractRite {
 
     @Override
     protected void onTick() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(level != null) {
             if(ticks % TICKS_PER_BLOCK == 0) {
                 List<LivingEntity> entitiesHandled = new ArrayList<>();
@@ -92,7 +93,7 @@ public class RiteCurseOfBlight extends AbstractRite {
                         else {
                             MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
                             if(effect != null) {
-                                if(entity != level.getEntity(casterUUID))
+                                if(entity != level.getEntity(getCasterUUID()))
                                     entity.addEffect(new MobEffectInstance(effect, 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
                             }
                         }
@@ -101,19 +102,19 @@ public class RiteCurseOfBlight extends AbstractRite {
                 }
 
                 List<BlockPos> positionsHandled = new ArrayList<>();
-                for(BlockPos pos : positions) {
-                    if(this.pos.distToCenterSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) {
+                for(BlockPos _pos : positions) {
+                    if(pos.distToCenterSqr(_pos.getX() + 0.5D, _pos.getY() + 0.5D, _pos.getZ() + 0.5D) < blockTicks*blockTicks) {
                         if(Math.random() < EnchantedConfig.BLIGHT_DECAY_CHANCE.get()) {
-                            Block decayBlock = level.getBlockState(pos).getBlock();
+                            Block decayBlock = level.getBlockState(_pos).getBlock();
                             if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
                                 Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);
                                 if(block != null)
-                                    level.setBlockAndUpdate(pos, block.defaultBlockState());
+                                    level.setBlockAndUpdate(_pos, block.defaultBlockState());
                             }
                             else if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_PLANTS).contains(decayBlock))
-                                level.setBlockAndUpdate(pos, Blocks.DEAD_BUSH.defaultBlockState());
+                                level.setBlockAndUpdate(_pos, Blocks.DEAD_BUSH.defaultBlockState());
                         }
-                        positionsHandled.add(pos);
+                        positionsHandled.add(_pos);
                     }
                 }
 
@@ -135,6 +136,8 @@ public class RiteCurseOfBlight extends AbstractRite {
     }
 
     public Set<LivingEntity> getLivingEntities() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         Set<LivingEntity> entities = new HashSet<>();
         if(level != null) {
             for(Entity entity : level.getEntities().getAll())
@@ -146,6 +149,7 @@ public class RiteCurseOfBlight extends AbstractRite {
     }
 
     public Set<BlockPos> getBlockPosSet() {
+        BlockPos pos = getPos();
         Set<BlockPos> positions = new HashSet<>();
         for(int x = -BLIGHT_RADIUS; x < BLIGHT_RADIUS; x++) {
             for(int y = -BLIGHT_RADIUS; y < BLIGHT_RADIUS; y++) {

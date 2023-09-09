@@ -43,6 +43,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -226,6 +227,14 @@ public abstract class AbstractRite {
         return null;
     }
 
+    /**
+     * Attempt to grab the {@link ServerPlayer} with a {@link UUID} matching the one specified by casterUUID.
+     * @return The {@link ServerPlayer} matching the target's {@link UUID}, or null if none were found.
+     */
+    public ServerPlayer tryFindCaster() {
+        return level.getServer().getPlayerList().getPlayer(getCasterUUID());
+    }
+
     public ServerLevel getLevel() {
         return level;
     }
@@ -242,8 +251,18 @@ public abstract class AbstractRite {
         return targetUUID;
     }
 
+    protected void setTargetUUID(UUID uuid) {
+        this.targetUUID = uuid;
+    }
+
     public Entity getTargetEntity() {
         return targetEntity;
+    }
+
+    protected void setTargetEntity(Entity entity) {
+        this.targetEntity = entity;
+        if(entity != null)
+            this.targetUUID = entity.getUUID();
     }
 
     // -------------------------- METHODS BELOW THIS POINT ARE NOT NEEDED UNDER NORMAL CIRCUMSTANCES --------------------------

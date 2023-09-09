@@ -29,9 +29,10 @@ import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEn
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.common.rites.SummonForcer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -45,8 +46,8 @@ import java.util.UUID;
 
 public class RiteSummonFamiliar extends AbstractRite {
 
-    public RiteSummonFamiliar() {
-        super(RiteTypes.SUMMONING_FAMILIAR.get(), 1000, 0); // Power, power per tick
+    public RiteSummonFamiliar(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 1000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BREATH_OF_THE_GODDESS.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);
@@ -55,11 +56,17 @@ public class RiteSummonFamiliar extends AbstractRite {
 
     @Override
     public void execute() {
-        IFamiliarEntry entry = level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(casterUUID);
+        IFamiliarEntry entry = getLevel().getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(getCasterUUID());
 
         if(entry != null) {
+            ServerLevel level = getLevel();
+            BlockPos pos = getPos();
             Vec3 vec3 = Vec3.atCenterOf(pos);
-            targetEntity = checkForExisting(entry.getUUID());
+
+            setTargetUUID(entry.getUUID());
+
+            Entity targetEntity = tryFindTargetEntity();
+
             if(targetEntity == null) {
                 targetEntity = entry.getType().getTypeOut().create(level);
                 targetEntity.load(entry.getNbt());
@@ -88,15 +95,6 @@ public class RiteSummonFamiliar extends AbstractRite {
     @Override
     protected boolean checkAdditional() {
         return true;
-    }
-
-    protected Entity checkForExisting(UUID uuid) {
-        for(ServerLevel _level : level.getServer().getAllLevels()) {
-            Entity entity = _level.getEntity(uuid);
-            if(entity != null)
-                return entity;
-        }
-        return null;
     }
 
     protected void teleportParticles(ServerLevel world, double x, double y, double z) {

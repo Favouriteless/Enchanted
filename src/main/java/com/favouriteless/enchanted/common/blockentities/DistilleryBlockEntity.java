@@ -24,8 +24,9 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
-import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
@@ -73,7 +74,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     private final RecipeWrapper recipeWrapper = new RecipeWrapper(inputCombined);
     private DistilleryRecipe currentRecipe;
-    private final SimplePowerPosHolder altarPosHolder;
+    private final SimplePowerPosHolder posHolder;
 
     private boolean isBurning = false;
     private int cookTime = 0;
@@ -106,7 +107,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     public DistilleryBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state);
-        this.altarPosHolder = new SimplePowerPosHolder(pos);
+        this.posHolder = new SimplePowerPosHolder(pos);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
@@ -114,11 +115,11 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
             boolean isBurning = be.isBurning;
 
             if(level != null && !level.isClientSide) {
-                AltarBlockEntity altar = PowerHelper.tryGetPowerProvider(level, be.altarPosHolder);
+                IPowerProvider powerprovider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
                 be.matchRecipe();
 
-                if(be.canDistill() && altar != null) {
-                    if(altar.tryConsumePower(10.0D)) {
+                if(be.canDistill() && powerprovider != null) {
+                    if(powerprovider.tryConsumePower(10.0D)) {
                         be.isBurning = true;
                         be.cookTime++;
 
@@ -269,7 +270,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        nbt.put("altarPos", altarPosHolder.serializeNBT());
+        nbt.put("posHolder", posHolder.serializeNBT());
         nbt.putBoolean("burnTime", isBurning);
         nbt.putInt("cookTime", cookTime);
         nbt.putInt("cookTimeTotal", cookTimeTotal);
@@ -281,7 +282,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
+        posHolder.deserializeNBT(nbt.getList("posHolder", 10));
         isBurning = nbt.getBoolean("burnTime");
         cookTime = nbt.getInt("cookTime");
         cookTimeTotal = nbt.getInt("cookTimeTotal");
@@ -319,6 +320,6 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     @Override
     public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
-        return altarPosHolder;
+        return posHolder;
     }
 }

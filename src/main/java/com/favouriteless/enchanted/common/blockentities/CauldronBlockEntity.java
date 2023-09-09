@@ -26,8 +26,9 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
-import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
@@ -82,7 +83,7 @@ import java.util.List;
 
 public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends RandomizableContainerBlockEntity implements IPowerConsumer {
 
-	private final SimplePowerPosHolder altarPosHolder;
+	private final SimplePowerPosHolder posHolder;
 	private final FluidTank tank;
 	private final LazyOptional<IFluidHandler> fluidHandler;
 
@@ -115,7 +116,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	public CauldronBlockEntity(BlockEntityType<? extends CauldronBlockEntity<?>> type, BlockPos pos, BlockState state, int bucketCapacity, int cookTime) {
 		super(type, pos, state);
-		this.altarPosHolder = new SimplePowerPosHolder(pos);
+		this.posHolder = new SimplePowerPosHolder(pos);
 		this.tank = new FluidTank(FluidAttributes.BUCKET_VOLUME*bucketCapacity, (fluid) -> fluid.getFluid() == Fluids.WATER);
 		this.fluidHandler = LazyOptional.of(() -> tank);
 		this.cookTime = cookTime;
@@ -146,11 +147,11 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 								}
 								else {
 									CauldronTypeRecipe recipe = blockEntity.potentialRecipes.get(0);
-									AltarBlockEntity altar = PowerHelper.tryGetPowerProvider(level, blockEntity.getPosHolder());
+									IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, blockEntity.getPosHolder());
 									if(recipe.getPower() <= 0) {
 										blockEntity.setComplete();
 									}
-									else if(altar != null && altar.tryConsumePower(recipe.getPower())) {
+									else if(powerProvider != null && powerProvider.tryConsumePower(recipe.getPower())) {
 										blockEntity.setComplete();
 									}
 									else {
@@ -410,13 +411,13 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			itemNbt.putInt("count", itemOut.getCount());
 			nbt.put("itemOut", itemNbt);
 		}
-		nbt.put("altarPos", altarPosHolder.serializeNBT());
+		nbt.put("posHolder", posHolder.serializeNBT());
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
+		posHolder.deserializeNBT(nbt.getList("posHolder", 10));
 		setWater(nbt.getInt("waterAmount"));
 		targetRed = nbt.getInt("targetRed");
 		targetGreen = nbt.getInt("targetGreen");
@@ -542,7 +543,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	@Override
 	public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
-		return altarPosHolder;
+		return posHolder;
 	}
 
 }

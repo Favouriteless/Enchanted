@@ -26,14 +26,17 @@ package com.favouriteless.enchanted.common.rites.binding;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
-import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.api.familiars.FamiliarType;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.*;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -51,8 +54,8 @@ public class RiteBindingFamiliar extends AbstractRite {
 	public static final int START_SOUND = 175;
 	public static final Vec3 OFFSET = new Vec3(0.5D, 2.5D, 0.5D);
 
-	public RiteBindingFamiliar() {
-		super(RiteTypes.BINDING_FAMILIAR.get(), 8000, 0);
+	public RiteBindingFamiliar(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+		super(type, level, pos, caster, 8000, 0);
 		CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_WHITE.get());
 		ITEMS_REQUIRED.put(EnchantedItems.TEAR_OF_THE_GODDESS.get(), 1);
 		ITEMS_REQUIRED.put(EnchantedItems.ODOUR_OF_PURITY.get(), 1);
@@ -63,6 +66,9 @@ public class RiteBindingFamiliar extends AbstractRite {
 
 	@Override
 	protected void execute() {
+		ServerLevel level = getLevel();
+		BlockPos pos = getPos();
+		Entity targetEntity = getTargetEntity();
 		if(targetEntity != null) {
 			Vec3 newPos = new Vec3(OFFSET.x + pos.getX(), OFFSET.y + pos.getY(), OFFSET.z + pos.getZ());
 			targetEntity.setNoGravity(true);
@@ -85,6 +91,10 @@ public class RiteBindingFamiliar extends AbstractRite {
 			return;
 		}
 
+		ServerLevel level = getLevel();
+		BlockPos pos = getPos();
+		Entity targetEntity = getTargetEntity();
+		UUID casterUUID = getCasterUUID();
 		if(ticks == START_SOUND)
 			level.playSound(null, pos.getX() + OFFSET.x,  pos.getY() + OFFSET.y,  pos.getZ() + OFFSET.z, EnchantedSoundEvents.BIND_FAMILIAR.get(), SoundSource.MASTER, 1.5F, 1.0F);
 
@@ -117,25 +127,29 @@ public class RiteBindingFamiliar extends AbstractRite {
 	}
 
 	private boolean stillValid() {
-		return targetEntity != null && targetEntity.isAlive();
+		return getTargetEntity() != null && getTargetEntity().isAlive();
 	}
 
 	@Override
 	protected boolean checkAdditional() {
+		ServerLevel level = getLevel();
+		BlockPos pos = getPos();
+		UUID casterUUID = getCasterUUID();
+
 		List<Entity> entities = CirclePart.MEDIUM.getEntitiesInside(level, pos, entity -> FamiliarTypes.getByInput(entity.getType()) != null);
 
 		if(entities.size() > 0) {
 			if(entities.get(0) instanceof TamableAnimal animal) {
 				UUID ownerUUID = animal.getOwnerUUID();
 
-				if(ownerUUID != null && !ownerUUID.equals(casterUUID)) {
+				if(ownerUUID != null && !ownerUUID.equals(getCasterUUID())) {
 					Player caster = level.getPlayerByUUID(casterUUID);
 					if(caster != null)
 						caster.displayClientMessage(new TextComponent("This creature does not trust you.").withStyle(ChatFormatting.RED), false);
 					return false;
 				}
 			}
-			targetEntity = entities.get(0);
+			setTargetEntity(entities.get(0));
 			return true;
 		}
 		return false;

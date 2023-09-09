@@ -25,22 +25,26 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.util.WaystoneHelper;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.common.util.WaystoneHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.UUID;
+
 public class RiteTranspositionPlayerBlooded extends AbstractRite {
 
-    public RiteTranspositionPlayerBlooded() {
-        super(RiteTypes.TRANSPOSITION_PLAYER_BLOODED.get(), 0, 0); // Power, power per tick
+    public RiteTranspositionPlayerBlooded(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BLOODED_WAYSTONE.get(), 1);
     }
@@ -48,10 +52,12 @@ public class RiteTranspositionPlayerBlooded extends AbstractRite {
     @Override
     public void execute() {
         ItemStack stack = itemsConsumed.get(0);
-        Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
+        ServerLevel level = getLevel();
+        Player caster = level.getServer().getPlayerList().getPlayer(getCasterUUID());
 
         if(caster != null) {
-            targetEntity = WaystoneHelper.getEntity(level, stack);
+            setTargetEntity(WaystoneHelper.getEntity(level, stack));
+            Entity targetEntity = getTargetEntity();
 
             if(targetEntity != null) {
                 spawnParticles((ServerLevel)caster.level, caster.getX(), caster.getY(), caster.getZ());

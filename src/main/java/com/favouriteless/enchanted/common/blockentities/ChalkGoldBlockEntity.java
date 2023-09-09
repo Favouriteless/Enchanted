@@ -47,12 +47,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer {
 
-    private final SimplePowerPosHolder altarPosHolder;
+    private final SimplePowerPosHolder posHolder;
     private AbstractRite currentRite = null;
 
     public ChalkGoldBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.CHALK_GOLD.get(), pos, state);
-        this.altarPosHolder = new SimplePowerPosHolder(pos);
+        this.posHolder = new SimplePowerPosHolder(pos);
     }
 
     public void execute(BlockState state, Level _level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -77,12 +77,12 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
         }
     }
 
-    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState blockState, T t) {
         if(t instanceof ChalkGoldBlockEntity blockEntity) {
             if(level != null && blockEntity.currentRite != null) {
-                double dx = blockEntity.worldPosition.getX() + Math.random();
-                double dy = blockEntity.worldPosition.getY() + Math.random() * 0.3D;
-                double dz = blockEntity.worldPosition.getZ() + Math.random();
+                double dx = pos.getX() + Math.random();
+                double dy = pos.getY() + Math.random() * 0.3D;
+                double dz = pos.getZ() + Math.random();
                 ((ServerLevel) level).sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             }
         }
@@ -108,17 +108,17 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        nbt.put("altarPos", altarPosHolder.serializeNBT());
+        nbt.put("posHolder", posHolder.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
+        posHolder.deserializeNBT(nbt.getList("posHolder", 10));
     }
 
     @Override
     public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
-        return altarPosHolder;
+        return posHolder;
     }
 }

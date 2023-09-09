@@ -37,8 +37,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class RiteManager {
 
 	public static void addRite(AbstractRite rite) {
-		if(rite.level != null) {
-			RiteSavedData data = RiteSavedData.get(rite.level);
+		if(rite.getLevel() != null) {
+			RiteSavedData data = RiteSavedData.get(rite.getLevel());
 			data.ACTIVE_RITES.add(rite);
 			data.setDirty();
 		}

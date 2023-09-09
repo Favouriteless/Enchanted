@@ -24,22 +24,20 @@
 
 package com.favouriteless.enchanted.common.rites.world;
 
-import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Items;
 
-public class RiteFertilityCharged extends AbstractRite {
+import java.util.UUID;
 
-    public RiteFertilityCharged(RiteType<?> type, int power) {
-        super(type, power, 0);
-    }
+public class RiteFertilityCharged extends RiteFertility {
 
-    public RiteFertilityCharged() {
-        this(RiteTypes.FERTILITY_CHARGED.get(), 0); // Power, power per tick
+    public RiteFertilityCharged(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 0);
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
         ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);

@@ -24,6 +24,7 @@
 
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
@@ -68,7 +69,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
 	private SpinningWheelRecipe currentRecipe;
-	private final SimplePowerPosHolder altarPosHolder;
+	private final SimplePowerPosHolder posHolder;
 	private boolean isSpinning = false;
 
 	public static final int SPIN_TIME_TOTAL = 400;
@@ -97,19 +98,19 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
 		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state);
-		this.altarPosHolder = new SimplePowerPosHolder(pos);
+		this.posHolder = new SimplePowerPosHolder(pos);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
 		if(t instanceof SpinningWheelBlockEntity be) {
 			if(level != null) {
 				if(!level.isClientSide) {
-					AltarBlockEntity altar = PowerHelper.tryGetPowerProvider(level, be.altarPosHolder);
+					IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
 					be.matchRecipe();
 
-					if(be.canSpin() && be.currentRecipe.getPower() > 0 && altar != null) {
+					if(be.canSpin() && be.currentRecipe.getPower() > 0 && powerProvider != null) {
 						double powerThisTick = (double)be.currentRecipe.getPower() / SPIN_TIME_TOTAL;
-						if(altar.tryConsumePower(powerThisTick)) {
+						if(powerProvider.tryConsumePower(powerThisTick)) {
 							be.spinTime++;
 
 							if(be.spinTime == SPIN_TIME_TOTAL) {
@@ -197,7 +198,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
-		nbt.put("altarPos", altarPosHolder.serializeNBT());
+		nbt.put("posHolder", posHolder.serializeNBT());
 		nbt.putInt("spinTime", spinTime);
 		nbt.put("input", input.serializeNBT());
 		nbt.put("output", output.serializeNBT());
@@ -206,7 +207,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		altarPosHolder.deserializeNBT(nbt.getList("altarPos", 10));
+		posHolder.deserializeNBT(nbt.getList("posHolder", 10));
 		spinTime = nbt.getInt("spinTime");
 		input.deserializeNBT(nbt.getCompound("input"));
 		output.deserializeNBT(nbt.getCompound("output"));
@@ -256,7 +257,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	@Override
 	public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
-		return altarPosHolder;
+		return posHolder;
 	}
 
 }

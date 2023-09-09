@@ -26,11 +26,13 @@ package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.ImprisonmentCageParticle;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -38,10 +40,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class RiteImprisonment extends AbstractRite {
 
@@ -50,8 +49,8 @@ public class RiteImprisonment extends AbstractRite {
     public static final double TETHER_BREAK_RANGE = 1.0D;
     private final Set<Entity> tetheredMonsters = new HashSet<>();
 
-    public RiteImprisonment() {
-        super(RiteTypes.IMPRISONMENT.get(), 500, 3); // Power, power per tick
+    public RiteImprisonment(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.SLIME_BALL, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -59,12 +58,13 @@ public class RiteImprisonment extends AbstractRite {
 
     @Override
     public void execute() {
-        level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+        getLevel().playSound(null, getPos(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
     }
 
     @Override
     public void onTick() {
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
+        BlockPos pos = getPos();
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(getLevel(), pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             tetheredMonsters.addAll(currentEntities);
         }
@@ -82,7 +82,7 @@ public class RiteImprisonment extends AbstractRite {
         removeList.forEach(tetheredMonsters::remove);
 
         if(this.ticks % (ImprisonmentCageParticle.LIFETIME+15) == 0) { // 15 ticks for the fade time
-            level.sendParticles(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            getLevel().sendParticles(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 

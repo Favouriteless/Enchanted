@@ -26,13 +26,12 @@ package com.favouriteless.enchanted.common.rites.world;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -46,6 +45,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RiteSkyWrath extends AbstractRite {
 
@@ -56,12 +56,12 @@ public class RiteSkyWrath extends AbstractRite {
     private BlockPos targetPos = null;
     private Level targetLevel = null;
 
-    public RiteSkyWrath(RiteType<?> type, int power, int powerTick) {
-        super(type, power, powerTick);
+    public RiteSkyWrath(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, int powerTick) {
+        super(type, level, pos, caster, power, powerTick);
     }
 
-    public RiteSkyWrath() {
-        this(RiteTypes.SKY_WRATH.get(), 1000, 0); // Power, power per tick
+    public RiteSkyWrath(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        this(type, level, pos, caster, 1000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.IRON_SWORD, 1);
         ITEMS_REQUIRED.put(EnchantedItems.QUICKLIME.get(), 1);
@@ -69,6 +69,8 @@ public class RiteSkyWrath extends AbstractRite {
 
     @Override
     public void execute() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         detatchFromChalk();
         LAST_USE_TIME = System.currentTimeMillis();
         List<Entity> entities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> entity instanceof ItemEntity);
@@ -89,7 +91,8 @@ public class RiteSkyWrath extends AbstractRite {
                 }
                 else if(itemEntity.getItem().getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
                     if(itemEntity.getItem().hasTag()) {
-                        targetEntity = WaystoneHelper.getEntity(level, itemEntity.getItem());
+                        setTargetEntity(WaystoneHelper.getEntity(level, itemEntity.getItem()));
+                        Entity targetEntity = getTargetEntity();
                         if(targetEntity != null) {
                             targetPos = targetEntity.blockPosition();
                             targetLevel = targetEntity.level;
@@ -111,6 +114,8 @@ public class RiteSkyWrath extends AbstractRite {
 
     @Override
     public void onTick() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(ticks == START_RAINING) {
             level.setWeatherParameters(0, 6000, true, true);
         }
@@ -126,7 +131,7 @@ public class RiteSkyWrath extends AbstractRite {
     @Override
     protected boolean checkAdditional() {
         if(System.currentTimeMillis() - LAST_USE_TIME < EnchantedConfig.SKY_WRATH_COOLDOWN.get() * 1000) {
-            Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
+            Player caster = getLevel().getServer().getPlayerList().getPlayer(getCasterUUID());
             caster.displayClientMessage(new TextComponent("The sky is not ready to release lightning.").withStyle(ChatFormatting.RED), false);
             return false;
         }

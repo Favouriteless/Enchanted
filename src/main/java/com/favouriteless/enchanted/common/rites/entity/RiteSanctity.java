@@ -26,11 +26,13 @@ package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -39,13 +41,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RiteSanctity extends AbstractRite {
 
     public static final double REPULSE_FACTOR = 0.3D;
 
-    public RiteSanctity() {
-        super(RiteTypes.SANCTITY.get(), 500, 3); // Power, power per tick
+    public RiteSanctity(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 500, 3); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.FEATHER, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -53,11 +56,13 @@ public class RiteSanctity extends AbstractRite {
 
     @Override
     public void execute() {
-        level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
+        getLevel().playSound(null, getPos(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
     }
 
     @Override
     public void onTick() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {

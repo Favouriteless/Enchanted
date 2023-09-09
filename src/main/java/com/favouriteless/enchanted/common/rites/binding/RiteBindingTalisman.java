@@ -27,7 +27,6 @@ package com.favouriteless.enchanted.common.rites.binding;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
@@ -43,14 +42,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.UUID;
+
 public class RiteBindingTalisman extends AbstractRite {
 
-    protected RiteBindingTalisman(RiteType<?> type, int power) {
-        super(type, power, 0);
+    protected RiteBindingTalisman(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power) {
+        super(type, level, pos, caster, power, 0);
     }
 
-    public RiteBindingTalisman() {
-        this(RiteTypes.BINDING_TALISMAN.get(), 1000); // Power, power per tick
+    public RiteBindingTalisman(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        this(type, level, pos, caster, 1000); // Power, power per tick
         ITEMS_REQUIRED.put(EnchantedItems.CIRCLE_TALISMAN.get(), 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
     }
@@ -94,7 +95,7 @@ public class RiteBindingTalisman extends AbstractRite {
         for(ItemStack item : itemsConsumed) {
             if(item.getItem() == EnchantedItems.CIRCLE_TALISMAN.get() && item.hasTag()) { // If input talisman is already bound
                 cancel();
-                ServerPlayer player = getLevel().getServer().getPlayerList().getPlayer(getCasterUUID());
+                ServerPlayer player = tryFindCaster();
                 if(player != null)
                     player.displayClientMessage(new TextComponent("Talisman already contains a circle").withStyle(ChatFormatting.RED), false);
                 return false;

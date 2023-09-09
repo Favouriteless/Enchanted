@@ -25,11 +25,11 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
-import com.favouriteless.enchanted.common.util.WaystoneHelper;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -38,10 +38,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.UUID;
+
 public class RiteTranspositionPlayer extends AbstractRite {
 
-    public RiteTranspositionPlayer() {
-        super(RiteTypes.TRANSPOSITION_PLAYER.get(), 0, 0); // Power, power per tick
+    public RiteTranspositionPlayer(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.BOUND_WAYSTONE.get(), 1);
     }
@@ -49,7 +51,8 @@ public class RiteTranspositionPlayer extends AbstractRite {
     @Override
     public void execute() {
         ItemStack stack = itemsConsumed.get(0);
-        Player caster = level.getServer().getPlayerList().getPlayer(casterUUID);
+        ServerLevel level = getLevel();
+        Player caster = level.getServer().getPlayerList().getPlayer(getCasterUUID());
 
         if(caster != null) {
             BlockPos targetPos = WaystoneHelper.getPos(stack);

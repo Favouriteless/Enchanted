@@ -30,7 +30,6 @@ import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
@@ -51,6 +50,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RiteProtection extends AbstractRite {
 
@@ -60,14 +60,14 @@ public class RiteProtection extends AbstractRite {
     protected ServerLevel targetLevel = null;
     protected BlockPos targetPos = null;
 
-    public RiteProtection(RiteType<?> type, int power, int powerTick, int radius, Block block) {
-        super(type, power, powerTick);
+    public RiteProtection(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, int powerTick, int radius, Block block) {
+        super(type, level, pos, caster, power, powerTick);
         this.radius = radius;
         this.block = block;
     }
 
-    public RiteProtection() {
-        this(RiteTypes.PROTECTION.get(), 500, 4, 4, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
+    public RiteProtection(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        this(type, level, pos, caster, 500, 4, 4, EnchantedBlocks.PROTECTION_BARRIER.get()); // Power, power per tick, radius
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.OBSIDIAN, 1);
         ITEMS_REQUIRED.put(Items.REDSTONE, 1);
@@ -115,6 +115,8 @@ public class RiteProtection extends AbstractRite {
     }
 
     protected void findTargetPos() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         List<Entity> items = CirclePart.SMALL.getEntitiesInside(level, pos);
         for(Entity entity : items) {
             if(entity instanceof ItemEntity itemEntity) {
@@ -126,9 +128,9 @@ public class RiteProtection extends AbstractRite {
                     break;
                 }
                 else if(stack.getItem() == EnchantedItems.BLOODED_WAYSTONE.get()) {
-                    targetEntity = WaystoneHelper.getEntity(level, stack);
-                    targetLevel = (ServerLevel)targetEntity.getLevel();
-                    targetPos = targetEntity.blockPosition();
+                    setTargetEntity(WaystoneHelper.getEntity(level, stack));
+                    targetLevel = (ServerLevel)getTargetEntity().getLevel();
+                    targetPos = getTargetEntity().blockPosition();
                     consumeItemNoRequirement(itemEntity);
                     break;
                 }
@@ -169,7 +171,7 @@ public class RiteProtection extends AbstractRite {
 
     protected void getOrCreateObserver() {
         if(stateObserver == null)
-            stateObserver = (RiteOfProtectionObserver) StateObserverManager.getObserver(level, targetPos, AltarStateObserver.class);
+            stateObserver = (RiteOfProtectionObserver)StateObserverManager.getObserver(getLevel(), targetPos, AltarStateObserver.class);
         if(stateObserver == null)
             stateObserver = StateObserverManager.createObserver(new RiteOfProtectionObserver(targetLevel, targetPos, radius + 1, radius + 1, radius + 1, block));
     }

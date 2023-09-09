@@ -27,13 +27,14 @@ package com.favouriteless.enchanted.common.rites.world;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.*;
+import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
@@ -59,12 +60,12 @@ public class RiteFertility extends AbstractRite {
 
     public int blockTicks = 0;
 
-    public RiteFertility(RiteType<?> type, int power) {
-        super(type, power, 0);
+    public RiteFertility(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power) {
+        super(type, level, pos, caster, power, 0);
     }
 
-    public RiteFertility() {
-        this(RiteTypes.FERTILITY.get(), 3000); // Power, power per tick
+    public RiteFertility(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        this(type, level, pos, caster, 3000); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.SMALL, EnchantedBlocks.CHALK_WHITE.get());
         ITEMS_REQUIRED.put(Items.BONE_MEAL, 1);
         ITEMS_REQUIRED.put(EnchantedItems.HINT_OF_REBIRTH.get(), 1);
@@ -82,13 +83,15 @@ public class RiteFertility extends AbstractRite {
 
     @Override
     protected void onTick() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(level != null) {
             if(ticks % TICKS_PER_BLOCK == 0) {
                 List<LivingEntity> entitiesHandled = new ArrayList<>();
                 for(LivingEntity entity : entities) {
                     if(entity.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) { // Sqr distance is much faster to calculate
                         if(entity instanceof ZombieVillager villager)
-                            villager.startConverting(casterUUID, Enchanted.RANDOM.nextInt(2401) + 3600);
+                            villager.startConverting(getCasterUUID(), Enchanted.RANDOM.nextInt(2401) + 3600);
 
                         Collection<MobEffectInstance> effects = entity.getActiveEffects();
                         List<MobEffect> toRemove = new ArrayList<>();
@@ -105,13 +108,13 @@ public class RiteFertility extends AbstractRite {
                 }
 
                 List<BlockPos> positionsHandled = new ArrayList<>();
-                for(BlockPos pos : positions) {
-                    if(this.pos.distToCenterSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) {
-                        BlockState state = level.getBlockState(pos);
+                for(BlockPos _pos : positions) {
+                    if(pos.distToCenterSqr(_pos.getX() + 0.5D, _pos.getY() + 0.5D, _pos.getZ() + 0.5D) < blockTicks*blockTicks) {
+                        BlockState state = level.getBlockState(_pos);
                         if(state.getBlock() instanceof BonemealableBlock block)
                             if(Math.random() < EnchantedConfig.FERTILITY_BONE_MEAL_CHANCE.get())
-                                block.performBonemeal(level, level.random, pos, state);
-                        positionsHandled.add(pos);
+                                block.performBonemeal(level, level.random, _pos, state);
+                        positionsHandled.add(_pos);
                     }
                 }
 
@@ -134,6 +137,8 @@ public class RiteFertility extends AbstractRite {
 
     public Set<LivingEntity> getLivingEntities() {
         Set<LivingEntity> entities = new HashSet<>();
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(level != null) {
             for(Entity entity : level.getEntities().getAll())
                 if(entity instanceof LivingEntity livingEntity)
@@ -144,6 +149,7 @@ public class RiteFertility extends AbstractRite {
     }
 
     public Set<BlockPos> getBlockPosSet() {
+        BlockPos pos = getPos();
         Set<BlockPos> positions = new HashSet<>();
         for(int x = -RADIUS; x < RADIUS; x++) {
             for(int y = -RADIUS; y < RADIUS; y++) {

@@ -27,20 +27,24 @@ package com.favouriteless.enchanted.common.rites.entity;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.common.rites.SummonForcer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.UUID;
+
 public class RiteSummonEntity extends AbstractRite {
 
-    public RiteSummonEntity() {
-        super(RiteTypes.SUMMONING_ENTITY.get(), 3000, 0); // Power, power per tick
+    public RiteSummonEntity(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+        super(type, level, pos, caster, 3000, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_PURPLE.get());
         ITEMS_REQUIRED.put(EnchantedItems.WAYSTONE.get(), 1);
         ITEMS_REQUIRED.put(EnchantedItems.TAGLOCK_FILLED.get(), 1);
@@ -50,8 +54,12 @@ public class RiteSummonEntity extends AbstractRite {
 
     @Override
     public void execute() {
-        if(targetEntity == null)
-            targetEntity = tryFindTargetEntity();
+        if(getTargetEntity() == null)
+            tryFindTargetEntity();
+
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
+        Entity targetEntity = getTargetEntity();
         if(level != null && pos != null && targetEntity != null) {
             spawnParticles(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
             spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());

@@ -104,7 +104,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 		if(t instanceof SpinningWheelBlockEntity be) {
 			if(level != null) {
 				if(!level.isClientSide) {
-					AltarBlockEntity altar = PowerHelper.tryGetAltar(level, be.altarPosHolder);
+					AltarBlockEntity altar = PowerHelper.tryGetPowerProvider(level, be.altarPosHolder);
 					be.matchRecipe();
 
 					if(be.canSpin() && be.currentRecipe.getPower() > 0 && altar != null) {

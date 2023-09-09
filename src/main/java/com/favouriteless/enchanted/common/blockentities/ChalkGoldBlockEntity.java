@@ -55,26 +55,22 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
         this.altarPosHolder = new SimplePowerPosHolder(pos);
     }
 
-    public void execute(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!world.isClientSide) {
+    public void execute(BlockState state, Level _level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if(!level.isClientSide && _level instanceof ServerLevel level) {
             if (currentRite == null) {
 
-                AbstractRite rite = RiteTypes.riteAvailableAt(world, pos);
+                AbstractRite rite = RiteTypes.getRiteAt(level, pos, player.getUUID());
 
                 if (rite != null) {
                     currentRite = rite;
-                    currentRite.setLevel((ServerLevel)world);
-                    currentRite.setPos(pos);
-                    currentRite.setCaster(player);
-                    currentRite.setChalk(this);
                     RiteManager.addRite(currentRite);
                     currentRite.start();
                 } else {
-                    world.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 2f, 1f);
+                    level.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 2f, 1f);
                 }
             }
             else {
-                if(!currentRite.getStarting()) {
+                if(!currentRite.isStarting()) {
                     currentRite.stopExecuting();
                 }
             }

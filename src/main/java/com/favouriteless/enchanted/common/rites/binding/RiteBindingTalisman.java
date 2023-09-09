@@ -25,14 +25,16 @@
 package com.favouriteless.enchanted.common.rites.binding;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -72,6 +74,8 @@ public class RiteBindingTalisman extends AbstractRite {
             ItemStack talisman = new ItemStack(EnchantedItems.CIRCLE_TALISMAN.get(), 1, nbt);
             talisman.setTag(nbt);
 
+            ServerLevel level = getLevel();
+            BlockPos pos = getPos();
             level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, talisman));
             level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 1.0F, 1.0F);
             spawnMagicParticles();
@@ -90,7 +94,7 @@ public class RiteBindingTalisman extends AbstractRite {
         for(ItemStack item : itemsConsumed) {
             if(item.getItem() == EnchantedItems.CIRCLE_TALISMAN.get() && item.hasTag()) { // If input talisman is already bound
                 cancel();
-                ServerPlayer player = level.getServer().getPlayerList().getPlayer(casterUUID);
+                ServerPlayer player = getLevel().getServer().getPlayerList().getPlayer(getCasterUUID());
                 if(player != null)
                     player.displayClientMessage(new TextComponent("Talisman already contains a circle").withStyle(ChatFormatting.RED), false);
                 return false;
@@ -100,6 +104,8 @@ public class RiteBindingTalisman extends AbstractRite {
     }
 
     private byte testForCircle(CirclePart circle) {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(circle.match(level, pos, EnchantedBlocks.CHALK_WHITE.get())) return 1;
         if(circle.match(level, pos, EnchantedBlocks.CHALK_RED.get())) return 2;
         if(circle.match(level, pos, EnchantedBlocks.CHALK_PURPLE.get())) return 3;

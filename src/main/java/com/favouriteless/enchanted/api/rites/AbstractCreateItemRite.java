@@ -25,33 +25,40 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.common.rites.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.UUID;
+
 /**
- * Simple AbstractRite implementation for creating items with JEI compat
+ * Simple implementation of {@link AbstractRite} for creating and spawning a list of {@link ItemStack}s on execution.
+ *
+ * <p>Rites implementing this will automatically have compatibility for JEI.</p>
  */
 public abstract class AbstractCreateItemRite extends AbstractRite {
 
     private final SoundEvent createItemSound;
     private final ItemStack[] resultItems;
 
-    public AbstractCreateItemRite(RiteType<?> type, int power, SoundEvent createItemSound, ItemStack... resultItems) {
-        super(type, power, 0);
+    public AbstractCreateItemRite(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, SoundEvent createItemSound, ItemStack... resultItems) {
+        super(type, level, pos, caster, power, 0);
         this.createItemSound = createItemSound;
         this.resultItems = resultItems;
     }
 
     @Override
     public void execute() {
-        if(level != null && !level.isClientSide) {
+        if(getLevel() != null && !getLevel().isClientSide) {
+            BlockPos pos = getPos();
             for(ItemStack stack : getResultItems()) {
-                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
-                level.addFreshEntity(itemEntity);
+                ItemEntity itemEntity = new ItemEntity(getLevel(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
+                getLevel().addFreshEntity(itemEntity);
             }
-            level.playSound(null, pos, createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
+            getLevel().playSound(null, pos, createItemSound, SoundSource.MASTER, 0.5F, 1.0F);
             spawnMagicParticles();
         }
         stopExecuting();
@@ -59,7 +66,7 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
 
     /**
      * Use a copy of these itemstacks if making any changes.
-     * @return
+     * @return An array containing the {@link ItemStack}s created by this rite.
      */
     public ItemStack[] getResultItems() {
         for(int i = 0; i < resultItems.length; i++) {
@@ -69,15 +76,15 @@ public abstract class AbstractCreateItemRite extends AbstractRite {
     }
 
     /**
-     * For any custom nbt which needs to be added to the itemstacks at time of execution.
-     * @param index
-     * @param stack
+     * For any custom nbt which needs to be added to the {@link ItemStack}s at time of execution.
+     * @param index The index of the {@link ItemStack} within the result items array.
+     * @param stack The {@link ItemStack} being modified.
      */
     public void setupItemNbt(int index, ItemStack stack) {}
 
     /**
-     * Return true if JEI entry should display additional requirements message, including for entities.
-     * @return
+     * @return True if JEI entry should display additional requirements message, this includes the list of required
+     * entities.
      */
     public boolean hasAdditionalRequirements() {
         return false;

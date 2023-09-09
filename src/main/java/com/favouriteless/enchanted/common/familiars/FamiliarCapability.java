@@ -24,11 +24,12 @@
 
 package com.favouriteless.enchanted.common.familiars;
 
+import com.favouriteless.enchanted.api.familiars.FamiliarType;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
 import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.TamableAnimal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,15 +37,15 @@ import java.util.UUID;
 
 public class FamiliarCapability implements IFamiliarCapability {
 
-    private final Map<UUID, FamiliarEntry> familiars = new HashMap<>();
+    private final Map<UUID, IFamiliarEntry> familiars = new HashMap<>();
 
     @Override
-    public FamiliarEntry getFamiliarFor(UUID owner) {
+    public IFamiliarEntry getFamiliarFor(UUID owner) {
         return familiars.get(owner);
     }
 
     @Override
-    public void setFamiliar(UUID owner, FamiliarType<?, ?> type, Entity familiar) {
+    public void setFamiliar(UUID owner, FamiliarType<?, ?> type, TamableAnimal familiar) {
         familiars.put(owner, new FamiliarEntry(type, familiar));
     }
 
@@ -54,7 +55,7 @@ public class FamiliarCapability implements IFamiliarCapability {
 
         for(UUID uuid : familiars.keySet()) {
             CompoundTag tag = new CompoundTag();
-            FamiliarEntry entry = familiars.get(uuid);
+            IFamiliarEntry entry = familiars.get(uuid);
             tag.putUUID("uuid", entry.getUUID());
             tag.putString("type", FamiliarTypes.REGISTRY.get().getKey(entry.getType()).toString());
             tag.put("nbt", entry.getNbt());
@@ -68,7 +69,7 @@ public class FamiliarCapability implements IFamiliarCapability {
     public void deserializeNBT(CompoundTag nbt) {
         for(String key : nbt.getAllKeys()) {
             CompoundTag tag = nbt.getCompound(key);
-            FamiliarEntry entry = new FamiliarEntry(
+            IFamiliarEntry entry = new FamiliarEntry(
                     FamiliarTypes.REGISTRY.get().getValue(new ResourceLocation(tag.getString("type"))),
                     tag.getUUID("uuid"),
                     tag.getCompound("nbt"),

@@ -24,10 +24,12 @@
 
 package com.favouriteless.enchanted.api.rites;
 
+import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import com.mojang.math.Vector3f;
@@ -53,12 +55,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Base class for every Rite (circle magic ritual), containing all of the logic required to detect/find the correct rite
+ * as well as handling the creation/destruction of rites.
+ *
+ * <p>An {@link AbstractRite} needs to have a {@link RiteType}
+ * registered for the circles to be able to find it. This registry is located in {@link RiteTypes} but mods trying to
+ * implement this should create their own {@link DeferredRegister} for their Rites.</p>
+ *
+ * <p>Important methods for classes implementing {@link AbstractRite} have been moved towards the top of the class.</p>
+ */
 public abstract class AbstractRite {
 
     private final RiteType<?> riteType;
@@ -71,12 +84,11 @@ public abstract class AbstractRite {
 
     protected final List<ItemStack> itemsConsumed = new ArrayList<>();
 
-    public ServerLevel level; // World ritual started in
-    public BlockPos pos; // Position ritual started at
-    public UUID casterUUID; // Player who started ritual
-    public UUID targetUUID; // Target of the ritual
-    public String targetName; // Name of the target entity.
-    public Entity targetEntity;
+    private ServerLevel level; // The Level the rite started in/is saved in.
+    private BlockPos pos; // The position the rite started at/is saved at.
+    private UUID casterUUID; // UUID of the player who started the rite.
+    private UUID targetUUID; // The UUID of the rite's target. Only set if the rite inputs contained a filled taglock.
+    private Entity targetEntity; // The Entity the rite is targeting. Typically not set.
 
     private boolean isStarting = false;
     protected long ticks = 0;
@@ -86,11 +98,155 @@ public abstract class AbstractRite {
 
     public boolean isRemoved = false;
 
-    public AbstractRite(RiteType<?> type, int power, int powerTick) {
+    public AbstractRite(RiteType<?> type, ServerLevel level, BlockPos pos, UUID casterUUID, int power, int powerTick) {
+        this.level = level;
+        this.pos = pos;
         this.riteType = type;
+        this.casterUUID = casterUUID;
         this.POWER = power;
         this.POWER_TICK = powerTick;
+
+        if(level != null && pos != null) {
+            if(level.getBlockEntity(pos) instanceof ChalkGoldBlockEntity chalk)
+                this.chalk = chalk;
+        }
     }
+
+    /**
+     * Called after the rite has checked it's conditions in {@link AbstractRite#checkAdditional()} when the rite starts
+     * to be executed.
+     *
+     * <p>Override this to add effects which need to happen instantly such as spawning an item, spawning particles or
+     * setting up tick data.</p>
+     */
+    protected void execute() {}
+
+    /**
+     * Handles tick based effects of the Rite which are unrelated to startup or initialisation. Runs immediately after
+     * {@link AbstractRite#execute()} and once every tick.
+     *
+     * <p>Override this to add tick based effects to your rite.</p>
+     */
+    protected void onTick() {}
+
+    /**
+     * Handles behaviour which needs to happen when the rite stops executing, for example removing barrier blocks
+     * which were placed. This is the first method called when {@link AbstractRite#stopExecuting()} is called.
+     *
+     * <p>Override this for cleanup or anything else you need to do when the rite finishes.</p>
+     */
+    public void onStopExecuting() {}
+
+    /**
+     * Stops the rite from continuing to tick and detaches it from it's {@link ChalkGoldBlockEntity} so other rites can
+     * be started.
+     *
+     * <p>IMPORTANT: This needs to be called regardless of if your rite needs to tick or not. Always call this method,
+     * even if it's just at the end of {@link AbstractRite#execute()}</p>
+     */
+    public void stopExecuting() {
+        onStopExecuting();
+        detatchFromChalk();
+        this.isStarting = false;
+        this.isRemoved = true;
+    }
+
+    /**
+     * Cancel this rite and return the items used to start it.
+     *
+     * <p>Call this if your rite needs to be cancelled and restarted for some reason, for example if the {@link Entity}
+     * it was targetting is no longer valid.</p>
+     */
+    public void cancel() {
+        detatchFromChalk();
+        isStarting = false;
+        this.isRemoved = true;
+
+        while(!itemsConsumed.isEmpty()) {
+            ItemStack stack = itemsConsumed.get(0);
+            ItemEntity entity = new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
+            level.addFreshEntity(entity);
+            itemsConsumed.remove(stack);
+        }
+
+        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
+
+        Player player = level.getServer().getPlayerList().getPlayer(casterUUID);
+        if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
+
+        for(int i = 0; i < 25; i++) {
+            double dx = pos.getX() + Math.random();
+            double dy = pos.getY() + Math.random();
+            double dz = pos.getZ() + Math.random();
+            level.sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+        }
+    }
+
+    /**
+     * Override to add additional starting conditions to your rite such as checking if a target {@link Entity} is tamed.
+     * If false is returned, the rite will call {@link AbstractRite#cancel()} on itself automatically.
+     * @return True if the rite can continue execute, otherwise false.
+     */
+    protected boolean checkAdditional() {
+        return true;
+    }
+
+    /**
+     * Override this to save any additional info to the rite's nbt tag
+     * @param nbt
+     * @return Final nbt tag
+     */
+    protected void saveAdditional(CompoundTag nbt) {}
+
+    /**
+     * Override this to load any additional nbt info, return false if loading needs to fail for whatever reason.
+     * @param nbt
+     */
+    protected boolean loadAdditional(CompoundTag nbt, Level level) { return true; }
+
+    /**
+     * Attempt to grab the {@link Entity} with a {@link UUID} matching the one specified by targetUUID, which should
+     * automatically be set if the rite used a {@link TaglockFilledItem} in it's requirements.
+     * @return The entity matching the target's {@link UUID}, or null if none were found.
+     */
+    protected Entity tryFindTargetEntity() {
+        Entity target = level.getServer().getPlayerList().getPlayer(targetUUID);
+
+        if(target != null)
+            return target;
+        else {
+            for(ServerLevel serverWorld : level.getServer().getAllLevels()) {
+                target = serverWorld.getEntity(targetUUID);
+                if(target != null) {
+                    targetEntity = target;
+                    return target;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ServerLevel getLevel() {
+        return level;
+    }
+
+    public BlockPos getPos() {
+        return pos;
+    }
+
+    public UUID getCasterUUID() {
+        return casterUUID;
+    }
+
+    public UUID getTargetUUID() {
+        return targetUUID;
+    }
+
+    public Entity getTargetEntity() {
+        return targetEntity;
+    }
+
+    // -------------------------- METHODS BELOW THIS POINT ARE NOT NEEDED UNDER NORMAL CIRCUMSTANCES --------------------------
 
     public CompoundTag save() {
         CompoundTag nbt = new CompoundTag();
@@ -109,12 +265,14 @@ public abstract class AbstractRite {
     }
 
     public boolean load(CompoundTag nbt, Level level) {
-        setLevel(level.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension")))));
-        setPos(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
-        casterUUID = nbt.getUUID("caster");
-        if(nbt.contains("target")) targetUUID = nbt.getUUID("target");
-        ticks = nbt.getLong("ticks");
-        isAttached = nbt.getBoolean("isAttached");
+        this.level = level.getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("dimension"))));
+        this.pos = new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z"));
+        this.casterUUID = nbt.getUUID("caster");
+        this.ticks = nbt.getLong("ticks");
+        this.isAttached = nbt.getBoolean("isAttached");
+
+        if(nbt.contains("target"))
+            targetUUID = nbt.getUUID("target");
 
         return loadAdditional(nbt, level);
     }
@@ -124,10 +282,10 @@ public abstract class AbstractRite {
             if(amount > 0) {
                 BlockEntity be = level.getBlockEntity(pos);
                 if(be instanceof ChalkGoldBlockEntity) {
-                    AltarBlockEntity altar = PowerHelper.tryGetAltar(level, ((ChalkGoldBlockEntity)be).getPosHolder());
+                    IPowerProvider provider = PowerHelper.tryGetPowerProvider(level, ((ChalkGoldBlockEntity)be).getPosHolder());
 
-                    if(altar != null) {
-                        return altar.tryConsumePower(amount);
+                    if(provider != null) {
+                        return provider.tryConsumePower(amount);
                     }
                 }
             }
@@ -138,55 +296,26 @@ public abstract class AbstractRite {
         return false;
     }
 
-    /**
-     * Override this to save any additional info to the rite's nbt tag
-     * @param nbt
-     * @return Final nbt tag
-     */
-    protected void saveAdditional(CompoundTag nbt) {}
-
-    /**
-     * Override this to load any additional nbt info, return false if loading needs to fail for whatever reason.
-     * @param nbt
-     */
-    protected boolean loadAdditional(CompoundTag nbt, Level level) { return true; }
-
-    /**
-     * Initial effects of the rite, for example spawning an item or playing a sound
-     */
-    protected void execute() {}
-
-    /**
-     * Run tick based rite effects unrelated to starting up
-     */
-    protected void onTick() {}
-
-    /**
-     * Use for behaviour needed when rite stops.
-     */
-    public void onStopExecuting() {}
-
-    protected boolean checkAdditional() {
-        return true;
-    }
-
     public RiteType<?> getType() {
         return this.riteType;
     }
 
     public void tick() {
-        if(level != null && !level.isClientSide ) {
+        if(level != null) {
             if(isAttached && chalk == null) {
-                BlockEntity te = level.getBlockEntity(pos);
-                if(te instanceof ChalkGoldBlockEntity) {
-                    setChalk((ChalkGoldBlockEntity)te);
+                BlockEntity be = level.getBlockEntity(pos);
+                if(be instanceof ChalkGoldBlockEntity chalk) {
+                    this.chalk = chalk;
                     chalk.setRite(this);
+                }
+                else {
+                    stopExecuting(); // Stop executing rite if the chalk isn't found.
                 }
             }
 
 
             ticks++;
-            if (isStarting) {
+            if (isStarting && !isRemoved) {
                 if(ticks % 20 == 0) {
                     List<Entity> allEntities = level.getEntities(null, new AABB(pos.offset(-7, 0, -7), pos.offset(7, 1, 7)));
 
@@ -249,51 +378,12 @@ public abstract class AbstractRite {
     }
 
     protected void detatchFromChalk() {
-        BlockEntity te = level.getBlockEntity(pos);
-        if(te instanceof ChalkGoldBlockEntity chalk) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if(be instanceof ChalkGoldBlockEntity chalk) {
             if(chalk.getRite() == this)
                 chalk.clearRite();
         }
         isAttached = false;
-    }
-
-    /**
-     * Call this when the rite is finished
-     */
-    public void stopExecuting() {
-        onStopExecuting();
-        detatchFromChalk();
-        this.isStarting = false;
-        this.isRemoved = true;
-    }
-
-    public void cancel() {
-        isStarting = false;
-        this.isRemoved = true;
-
-        while(!itemsConsumed.isEmpty()) {
-            ItemStack stack = itemsConsumed.get(0);
-            ItemEntity entity = new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
-            level.addFreshEntity(entity);
-            itemsConsumed.remove(stack);
-        }
-
-        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
-
-        Player player = level.getServer().getPlayerList().getPlayer(casterUUID);
-        if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
-
-        for(int i = 0; i < 25; i++) {
-            double dx = pos.getX() + Math.random();
-            double dy = pos.getY() + Math.random();
-            double dz = pos.getZ() + Math.random();
-            level.sendParticles(new DustParticleOptions(new Vector3f(254 / 255F, 94 / 255F, 94 / 255F), 1.0F), dx, dy, dz, 1, 0.0F, 0.0F, 0.0F, 0.0F);
-        }
-
-        BlockEntity be = level.getBlockEntity(pos);
-        if(be instanceof ChalkGoldBlockEntity chalk) {
-            chalk.clearRite();
-        }
     }
 
     protected void consumeItem(ItemEntity entity) {
@@ -323,8 +413,7 @@ public abstract class AbstractRite {
         }
         if(item == EnchantedItems.TAGLOCK_FILLED.get() && stack.hasTag()) {
             this.targetUUID = stack.getTag().getUUID("entity");
-            this.targetName = stack.getTag().getString("entityName");
-            targetEntity = getTargetEntity();
+            targetEntity = tryFindTargetEntity();
         }
 
         playConsumeEffects(entity);
@@ -346,20 +435,6 @@ public abstract class AbstractRite {
             double dz = entity.position().z - 0.15D + (Math.random() * 0.3D);
             level.sendParticles(ParticleTypes.SMOKE, dx, dy, dz, 5, 0.0D, 0.0D, 0.0D, 0.0D);
         }
-    }
-
-    protected Entity getTargetEntity() {
-        Entity target = level.getServer().getPlayerList().getPlayer(targetUUID);
-
-        if(target != null)
-            return target;
-        else {
-            for(ServerLevel serverWorld : level.getServer().getAllLevels()) {
-                target = serverWorld.getEntity(targetUUID);
-                if(target != null) return target;
-            }
-        }
-        return null;
     }
 
     protected void consumeEntity(Entity entity) {
@@ -443,18 +518,6 @@ public abstract class AbstractRite {
         return diff;
     }
 
-    public void setLevel(ServerLevel level) {
-        this.level = level;
-    }
-
-    public void setPos(BlockPos pos) {
-        this.pos = pos;
-    }
-
-    public void setCaster(Player player) {
-        this.casterUUID = player.getUUID();
-    }
-
     public void start() {
         this.isStarting = true;
     }
@@ -468,12 +531,8 @@ public abstract class AbstractRite {
         }
     }
 
-    public boolean getStarting() {
+    public boolean isStarting() {
         return isStarting;
-    }
-
-    public void setChalk(ChalkGoldBlockEntity chalk) {
-        this.chalk = chalk;
     }
 
     public boolean hasCircle(CirclePart part, Block block) {

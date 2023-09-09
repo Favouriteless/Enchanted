@@ -27,7 +27,7 @@ package com.favouriteless.enchanted.common.rites.binding;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.familiars.FamiliarType;
+import com.favouriteless.enchanted.api.familiars.FamiliarType;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.*;
 import com.favouriteless.enchanted.common.rites.CirclePart;

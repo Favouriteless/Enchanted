@@ -148,7 +148,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 
 	@Override
 	public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
-		AbstractRite rite = RiteTypes.getByName(new ResourceLocation(lookup.apply(riteName).asString()));
+		AbstractRite rite = RiteTypes.getDefaultByName(new ResourceLocation(lookup.apply(riteName).asString()));
 		if(rite == null)
 			throw new IllegalStateException();
 		this.rite = rite;

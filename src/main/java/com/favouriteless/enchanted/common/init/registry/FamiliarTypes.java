@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.familiars.FamiliarType;
+import com.favouriteless.enchanted.api.familiars.FamiliarType;
 import com.favouriteless.enchanted.common.familiars.types.CatFamiliarType;
 import com.favouriteless.enchanted.core.util.RegistryHelper.Generify;
 import net.minecraft.world.entity.EntityType;

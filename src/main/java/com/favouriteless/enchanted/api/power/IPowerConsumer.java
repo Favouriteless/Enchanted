@@ -62,7 +62,7 @@ public interface IPowerConsumer {
         /**
          * <p>IMPORTANT: {@link IPowerProvider}s do not need to notify their subscribers when they are removed, you
          * should check that it still exists before trying to consume power. See
-         * {@link PowerHelper#tryGetAltar(Level, IPowerPosHolder)} for an example implementation of trying to grab a
+         * {@link PowerHelper#tryGetPowerProvider(Level, IPowerPosHolder)} for an example implementation of trying to grab a
          * provider.</p>
          *
          * @return List of the BlockPos of every AltarBlockEntity this {@link IPowerConsumer} is subscribed to.

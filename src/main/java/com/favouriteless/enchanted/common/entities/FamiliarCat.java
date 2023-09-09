@@ -26,7 +26,7 @@ package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
-import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -63,7 +63,7 @@ public class FamiliarCat extends Cat {
 		super.tick();
 		if(!level.isClientSide) {
 			FamiliarHelper.runIfCap(level, cap -> {
-				FamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
+				IFamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
 				if(entry == null || !getUUID().equals(entry.getUUID())) {
 					discard();
 					Enchanted.LOGGER.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
@@ -77,7 +77,7 @@ public class FamiliarCat extends Cat {
 		super.addAdditionalSaveData(nbt);
 		if(!level.isClientSide) {
 			FamiliarHelper.runIfCap(level, cap -> {
-				FamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
+				IFamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
 				if(entry != null)
 					entry.setNbt(nbt);
 			});

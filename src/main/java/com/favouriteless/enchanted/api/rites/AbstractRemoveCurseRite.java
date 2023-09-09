@@ -28,7 +28,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.curses.AbstractCurse;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
-import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseSavedData;
 import com.favouriteless.enchanted.common.curses.CurseType;
@@ -36,12 +36,19 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
- * Simple AbstractRite implementation for creating a curse removal
+ * Simple {@link AbstractRite} implementation for removing a curse from a player.
+ *
+ * <p>IMPORTANT: Rites implementing this should add a filled taglock to their requirements so the target's UUID can
+ * be grabbed.</p>
  */
 public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
@@ -49,31 +56,35 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
     public static final int START_SOUND = 190;
     private final CurseType curseType;
 
-    public AbstractRemoveCurseRite(RiteType<?> type, int power, int powerTick, CurseType curseType) {
-        super(type, power, powerTick);
+    public AbstractRemoveCurseRite(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, int powerTick, CurseType curseType) {
+        super(type, level, pos, caster, power, powerTick);
         this.curseType = curseType;
     }
 
     @Override
     protected void execute() {
-        if(targetUUID == null)
+        if(getTargetUUID() == null)
             cancel();
-        else
-            level.sendParticles(EnchantedParticles.REMOVE_CURSE_SEED.get(), pos.getX()+0.5D, pos.getY() + 2.5D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        else {
+            BlockPos pos = getPos();
+            getLevel().sendParticles(EnchantedParticles.REMOVE_CURSE_SEED.get(), pos.getX() + 0.5D, pos.getY() + 2.5D, pos.getZ() + 0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        }
     }
 
     @Override
     protected void onTick() {
+        ServerLevel level = getLevel();
+        BlockPos pos = getPos();
         if(ticks == START_SOUND) {
             level.playSound(null, pos, EnchantedSoundEvents.REMOVE_CURSE.get(), SoundSource.MASTER, 1.0F, 1.0F);
         }
         else if(ticks == RAISE) {
-            List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(targetUUID);
+            List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(getTargetUUID());
             if(curses != null) {
                 int casterLevel = 0;
 
-                IFamiliarCapability cap = level.getServer().getPlayerList().getPlayer(casterUUID).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
-                FamiliarEntry familiarEntry = cap.getFamiliarFor(casterUUID);
+                IFamiliarCapability cap = level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
+                IFamiliarEntry familiarEntry = cap.getFamiliarFor(getCasterUUID());
                 if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
                     casterLevel++;
 
@@ -95,4 +106,5 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             stopExecuting();
         }
     }
+
 }

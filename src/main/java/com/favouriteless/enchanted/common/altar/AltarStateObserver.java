@@ -26,7 +26,6 @@ package com.favouriteless.enchanted.common.altar;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
-import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
@@ -36,7 +35,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * StateObserver implementation for {@link AltarBlockEntity}. This is used to notify every nearby {@link IPowerConsumer}
- * of the {@link IPowerProvider} near them. Changes to the power/upgrades are also calculated in this StateObserver.
+ * of the {@link com.favouriteless.enchanted.api.power.IPowerProvider} near them. Changes to the power/upgrades are also calculated in this StateObserver.
  */
 public class AltarStateObserver extends AbstractStateObserver {
 

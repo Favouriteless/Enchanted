@@ -25,20 +25,30 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.function.Supplier;
+import java.util.UUID;
 
 public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteType<?>> {
 
-	private final Supplier<AbstractRite> supplier;
+	private final RiteFactory<T> factory;
 
-	public RiteType(Supplier<AbstractRite> supplier) {
-		this.supplier = supplier;
+	public RiteType(RiteFactory<T> factory) {
+		this.factory = factory;
 	}
 
-	public AbstractRite create() {
-		return this.supplier.get();
+	public T create(ServerLevel level, BlockPos pos, UUID caster) {
+		return this.factory.create(this, level, pos, caster);
+	}
+
+	public T create() {
+		return this.factory.create(this, null, null, null);
+	}
+
+	public interface RiteFactory<T extends AbstractRite> {
+		T create(RiteType<T> type, ServerLevel level, BlockPos pos, UUID caster);
 	}
 
 }

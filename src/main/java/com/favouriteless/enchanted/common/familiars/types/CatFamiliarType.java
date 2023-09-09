@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.familiars.types;
 
 import com.favouriteless.enchanted.common.entities.FamiliarCat;
-import com.favouriteless.enchanted.common.familiars.FamiliarType;
+import com.favouriteless.enchanted.api.familiars.FamiliarType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cat;

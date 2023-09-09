@@ -25,72 +25,96 @@
 package com.favouriteless.enchanted.api.familiars;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.familiars.FamiliarType;
+import com.favouriteless.enchanted.common.familiars.FamiliarEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.NonNullConsumer;
 
 import java.util.UUID;
 
+/**
+ * {@link IFamiliarCapability} is a {@link Level} capability used to store the familiar data for every player on a
+ * server.
+ *
+ * <p>{@link IFamiliarCapability} is only ever present on the OVERWORLD {@link ServerLevel}, see
+ * {@link FamiliarHelper#runIfCap(Level, NonNullConsumer)} for an easy method to grab the cap and run a consumer on it
+ * via specifying any {@link Level}.</p>
+ */
 public interface IFamiliarCapability extends INBTSerializable<CompoundTag> {
 
 	ResourceLocation LOCATION = Enchanted.location("familiars");
 
-	FamiliarEntry getFamiliarFor(UUID owner);
-	void setFamiliar(UUID owner, FamiliarType<?, ?> type, Entity familiar);
+	/**
+	 * Grab familiar entry owned by the player with the specified UUID.
+	 * @param owner The {@link UUID} of the player who owns the familiar.
+	 * @return The {@link FamiliarEntry} under the UUID of owner, or null if there is not one present.
+	 */
+	IFamiliarEntry getFamiliarFor(UUID owner);
 
 	/**
-	 * Represents the most recent familiar entity created for a player, "old" entities will discard themselves on load if they do not match this description.
+	 * Creates a {@link FamiliarEntry} from the supplied information and stores it under the {@link UUID} of owner.
+	 * @param owner The {@link UUID} of the owner of the familiar.
+	 * @param type The {@link FamiliarType} of the familiar.
+	 * @param familiar The familiar {@link Entity}.
 	 */
-	class FamiliarEntry {
+	void setFamiliar(UUID owner, FamiliarType<?, ?> type, TamableAnimal familiar);
 
-		private final FamiliarType<?, ?> type;
-		private UUID uuid;
-		private CompoundTag nbt;
-		private boolean isDismissed = false;
 
-		public FamiliarEntry(FamiliarType<?, ?> type, Entity familiar) {
-			this.uuid = familiar.getUUID();
-			this.type = type;
-			setNbt(familiar.saveWithoutId(new CompoundTag()));
-		}
 
-		public FamiliarEntry(FamiliarType<?, ?> type, UUID uuid, CompoundTag nbt, boolean isDismissed) {
-			this.uuid = uuid;
-			this.type = type;
-			this.isDismissed = isDismissed;
-			setNbt(nbt);
-		}
+	/**
+	 * Represents the most recent familiar created for a player, "old" entities should discard themselves on load if they
+	 * do not match this description.
+	 */
+	interface IFamiliarEntry {
 
-		public UUID getUUID() {
-			return uuid;
-		}
+		/**
+		 * @return The {@link FamiliarType} of the familiar stored in this entry.
+		 */
+		FamiliarType<?, ?> getType();
 
-		public void setUUID(UUID uuid) {
-			this.uuid = uuid;
-		}
+		/**
+		 * @return The {@link UUID} belonging to the familiar {@link TamableAnimal} this entry was created from. Familiars
+		 * not matching this should discard themselves when they load in.
+		 */
+		UUID getUUID();
 
-		public FamiliarType<?, ?> getType() {
-			return type;
-		}
+		/**
+		 * Sets {@link UUID} stored in this entry.
+		 *
+		 * @param uuid The {@link UUID} of the most recently bound or summoned familiar for this entry.
+		 */
+		void setUUID(UUID uuid);
 
-		public CompoundTag getNbt() {
-			return nbt;
-		}
+		/**
+		 * @return The {@link CompoundTag} containing the saved familiar's data, {@link UUID} will have been stripped
+		 * from the returned tag.
+		 */
+		CompoundTag getNbt();
 
-		public void setNbt(CompoundTag nbt) {
-			this.nbt = nbt.copy(); // Work on copy of nbt so we don't actually modify the entity.
-			this.nbt.remove("UUID"); // Never ever store uuid, we don't want it to get replicated.
-		}
+		/**
+		 * Sets the {@link CompoundTag} this entry is storing for the familiar's data.
+		 *
+		 * <p>Implementations of this should strip {@link UUID} from the provided {@link CompoundTag}.</p>
+		 */
+		void setNbt(CompoundTag nbt);
 
-		public boolean isDismissed() {
-			return isDismissed;
-		}
+		/**
+		 * Dismissed familiars should not provide their passive bonuses, when a familiar is manually dismissed or dies
+		 * this should be true.
+		 */
+		boolean isDismissed();
 
-		public void setDismissed(boolean value) {
-			this.isDismissed = value;
-		}
+		/**
+		 * Set the dismissed state of a familiar.
+		 * @param value If the familiar should be dismissed or not.
+		 */
+		void setDismissed(boolean value);
 
 	}
+
 }

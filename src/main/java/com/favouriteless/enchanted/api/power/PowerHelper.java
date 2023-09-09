@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.api.power;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer.IPowerPosHolder;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,23 +34,25 @@ import java.util.List;
 public class PowerHelper {
 
 	/**
-	 * Attempt to grab a {@link AltarBlockEntity} from an {@link IPowerPosHolder}. If one of the positions is for some
-	 * reason invalid, the position will be removed.
+	 * Attempt to grab a {@link com.favouriteless.enchanted.api.power.IPowerProvider} from an {@link IPowerPosHolder}.
+	 * If one of the positions is for some reason invalid, the position will be removed.
 	 *
 	 * @param level The {@link Level} to look for altars in.
 	 * @param holder The {@link IPowerPosHolder} containing the positions which need checking.
-	 * @return The first valid {@link AltarBlockEntity} found in the positions provided by level
+	 *
+	 * @return The first valid {@link com.favouriteless.enchanted.api.power.IPowerProvider} found in level in the
+	 * positions provided by holder.
 	 */
-	public static AltarBlockEntity tryGetAltar(Level level, IPowerPosHolder holder) {
-		List<BlockPos> potentialAltars = holder.getPositions();
-		while(!potentialAltars.isEmpty()) {
+	public static IPowerProvider tryGetPowerProvider(Level level, IPowerPosHolder holder) {
+		List<BlockPos> providers = holder.getPositions();
+		while(!providers.isEmpty()) {
 			if(level != null) {
-				BlockPos altarPos = potentialAltars.get(0);
-				BlockEntity be = level.getBlockEntity(altarPos);
-				if(be instanceof AltarBlockEntity altar)
-					return altar;
+				BlockPos pos = providers.get(0);
+				BlockEntity be = level.getBlockEntity(pos);
+				if(be instanceof IPowerProvider provider)
+					return provider;
 				else
-					potentialAltars.remove(altarPos);
+					providers.remove(pos);
 			}
 		}
 		return null;

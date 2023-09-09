@@ -51,7 +51,7 @@ public class RiteSummonEntity extends AbstractRite {
     @Override
     public void execute() {
         if(targetEntity == null)
-            targetEntity = getTargetEntity();
+            targetEntity = tryFindTargetEntity();
         if(level != null && pos != null && targetEntity != null) {
             spawnParticles(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D);
             spawnParticles((ServerLevel)targetEntity.level, targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());

@@ -90,7 +90,7 @@ public class RiteSavedData extends SavedData {
 		ListTag riteList = new ListTag();
 
 		for(AbstractRite rite : ACTIVE_RITES) {
-			if(!rite.isRemoved && !rite.getStarting()) {
+			if(!rite.isRemoved && !rite.isStarting()) {
 				riteList.add(rite.save());
 			}
 		}

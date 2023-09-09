@@ -41,7 +41,7 @@ public class EnchantedEntityTypes {
             .sized(0.4F, 0.7F).build(Enchanted.location("mandrake").toString()));
 
     public static final RegistryObject<EntityType<Ent>> ENT = ENTITY_TYPES.register("ent", () -> Builder.of(Ent::new, MobCategory.MONSTER)
-            .sized(2F, 3.5F).build(Enchanted.location("ent").toString()));
+            .sized(2F, 3.0F).build(Enchanted.location("ent").toString()));
 
     public static final RegistryObject<EntityType<Broomstick>> BROOMSTICK = ENTITY_TYPES.register("broomstick", () -> Builder.of(Broomstick::new, MobCategory.MISC)
             .sized(1.0F, 1.0F).clientTrackingRange(10).build(Enchanted.location("broomstick").toString()));

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.FamiliarEntry;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
@@ -55,7 +55,7 @@ public class RiteSummonFamiliar extends AbstractRite {
 
     @Override
     public void execute() {
-        FamiliarEntry entry = level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(casterUUID);
+        IFamiliarEntry entry = level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(casterUUID);
 
         if(entry != null) {
             Vec3 vec3 = Vec3.atCenterOf(pos);

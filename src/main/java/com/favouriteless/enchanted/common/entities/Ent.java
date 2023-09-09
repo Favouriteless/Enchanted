@@ -135,23 +135,12 @@ public class Ent extends Monster implements IAnimatable, SmartBrainOwner<Ent> {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "lowerBodyController", 0, this::lowerBodyPredicate));
-        data.addAnimationController(new AnimationController<>(this, "upperBodyController", 0, this::upperBodyPredicate));
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState lowerBodyPredicate(AnimationEvent<E> event) {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(true) {//if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_lower", EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            event.getController().clearAnimationCache();
-            return PlayState.STOP;
-        }
-    }
-
-    private <E extends IAnimatable> PlayState upperBodyPredicate(AnimationEvent<E> event) {
-        if(true) {//if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk_upper", EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walk", EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else {
             event.getController().clearAnimationCache();

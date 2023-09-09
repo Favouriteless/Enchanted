@@ -31,12 +31,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.util.NonNullConsumer;
 
 public class FamiliarHelper {
 
 	/**
-	 * Attempt to dismiss a familiar. Dismissed familiars will discard themselves and passive bonuses will stop working.
+	 * Attempt to dismiss a familiar. Dismissed familiars be discarded and passive bonuses will stop working.
 	 */
 	public static void dismiss(TamableAnimal entity) {
 		runIfCap(entity.getLevel(), cap -> {
@@ -51,6 +52,12 @@ public class FamiliarHelper {
 		});
 	}
 
+	/**
+	 * Helper method to run a consumer on {@link IFamiliarCapability} regardless of which level is specified. This will
+	 * only be present on the server and should always be present there.
+	 * @param level Any level, just need level access of some kind.
+	 * @param consumer Consumer to be run on the {@link LazyOptional#ifPresent(NonNullConsumer)} call.
+	 */
 	public static void runIfCap(Level level, NonNullConsumer<IFamiliarCapability> consumer) {
 		level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).ifPresent(consumer);
 	}

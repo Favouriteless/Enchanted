@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseType;
@@ -63,10 +62,12 @@ public abstract class AbstractCurseRite extends AbstractRite {
             int casterLevel = 0;
 
 
-            IFamiliarCapability cap = getLevel().getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
-            IFamiliarEntry familiarEntry = cap.getFamiliarFor(getCasterUUID());
-            if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
-                casterLevel++;
+            IFamiliarEntry familiarEntry = getLevel().getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(getCasterUUID());
+
+            if(familiarEntry != null) {
+                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
+                    casterLevel++;
+            }
 
             BlockPos pos = getPos();
             getLevel().sendParticles(EnchantedParticles.CURSE_SEED.get(), pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);

@@ -27,6 +27,7 @@ package com.favouriteless.enchanted.common.curses;
 import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
 import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class CurseOverheating extends AbstractRandomCurse {
@@ -37,7 +38,8 @@ public class CurseOverheating extends AbstractRandomCurse {
 
 	@Override
 	protected void execute() {
-		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.Biomes.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())) {
+		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.Biomes.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())
+		|| targetPlayer.getLevel().dimension() == Level.NETHER) {
 			int duration = 4;
 			for(int i = 0; i < level; i++) {
 				if(Math.random() < 0.75D)

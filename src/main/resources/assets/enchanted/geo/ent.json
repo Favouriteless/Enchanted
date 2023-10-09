@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "Body",
+					"name": "body",
 					"pivot": [0, 17, 0]
 				},
 				{
-					"name": "Abdomen",
-					"parent": "Body",
+					"name": "abdomen",
+					"parent": "body",
 					"pivot": [0, 17, 0],
 					"cubes": [
 						{"origin": [-6, 17, -3], "size": [12, 3, 6], "uv": [52, 13]},
@@ -34,8 +34,8 @@
 					]
 				},
 				{
-					"name": "Chest",
-					"parent": "Abdomen",
+					"name": "chest",
+					"parent": "abdomen",
 					"pivot": [0, 27, 0],
 					"cubes": [
 						{"origin": [-3, 35, -4], "size": [11, 4, 11], "uv": [0, 17]},
@@ -68,7 +68,7 @@
 				},
 				{
 					"name": "Head",
-					"parent": "Chest",
+					"parent": "chest",
 					"pivot": [0, 39, -3],
 					"cubes": [
 						{"origin": [-4, 38, -8], "size": [8, 8, 8], "uv": [32, 40]},
@@ -110,7 +110,7 @@
 				},
 				{
 					"name": "Arms",
-					"parent": "Chest",
+					"parent": "chest",
 					"pivot": [0, 37, 0]
 				},
 				{
@@ -197,13 +197,13 @@
 					]
 				},
 				{
-					"name": "Legs",
-					"parent": "Body",
+					"name": "legs",
+					"parent": "body",
 					"pivot": [0, 19, 0]
 				},
 				{
-					"name": "LegL",
-					"parent": "Legs",
+					"name": "legl",
+					"parent": "legs",
 					"pivot": [4, 19, 0],
 					"cubes": [
 						{"origin": [1.5, 8, 0.5], "size": [3, 6, 2], "uv": [113, 69]},
@@ -212,8 +212,8 @@
 					]
 				},
 				{
-					"name": "FootL",
-					"parent": "LegL",
+					"name": "footl",
+					"parent": "legl",
 					"pivot": [4, 10, 0],
 					"cubes": [
 						{"origin": [0.5, 6, -3.5], "size": [7, 6, 7], "uv": [21, 56]},
@@ -225,8 +225,8 @@
 					]
 				},
 				{
-					"name": "LegR",
-					"parent": "Legs",
+					"name": "legr",
+					"parent": "legs",
 					"pivot": [-4, 19, 0],
 					"cubes": [
 						{"origin": [-6.5, 8, -2.5], "size": [5, 11, 5], "uv": [60, 75]},
@@ -234,8 +234,8 @@
 					]
 				},
 				{
-					"name": "FootR",
-					"parent": "LegR",
+					"name": "footr",
+					"parent": "legr",
 					"pivot": [-4, 10, 0],
 					"cubes": [
 						{"origin": [-7.5, -0.025, -3.5], "size": [7, 10.025, 7], "uv": [0, 46]},

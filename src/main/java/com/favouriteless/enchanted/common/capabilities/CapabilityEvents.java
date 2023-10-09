@@ -66,7 +66,10 @@ public class CapabilityEvents {
 	public static void onAttachCapabilitiesLevel(AttachCapabilitiesEvent<Level> event) {
 		Level level = event.getObject();
 
-		event.addCapability(IFamiliarCapability.LOCATION, new SimplePersistentCapabilityProvider<>(EnchantedCapabilities.FAMILIAR, new FamiliarCapability()));
+		if(!level.isClientSide) {
+			if(level.dimension() == Level.OVERWORLD)
+				event.addCapability(IFamiliarCapability.LOCATION, new SimplePersistentCapabilityProvider<>(EnchantedCapabilities.FAMILIAR, new FamiliarCapability()));
+		}
 	}
 
 }

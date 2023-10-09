@@ -29,7 +29,7 @@ import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRender
 import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
-import com.favouriteless.enchanted.client.render.entity.EntRenderer;
+import com.favouriteless.enchanted.client.render.entity.ent.EntRenderer;
 import com.favouriteless.enchanted.client.render.entity.FamiliarCatRenderer;
 import com.favouriteless.enchanted.client.render.entity.SimpleAnimatedGeoRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;

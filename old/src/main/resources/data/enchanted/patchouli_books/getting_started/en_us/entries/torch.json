@@ -1,0 +1,16 @@
+{
+  "name": "Torch Upgrades",
+  "icon": "enchanted:candelabra",
+  "category": "enchanted:altars",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "One upgrade from the torch category may be placed on an altar, the benefits of each upgrade in this category are as follows:$(br2)$(bold)Torch$() +0.5x Recharge Rate$(br)$(bold)Candle$() +1x Recharge Rate$(br)$(bold)Candelabra$() +2x Recharge Rate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:candelabra"
+    }
+  ],
+  "read_by_default": true
+}

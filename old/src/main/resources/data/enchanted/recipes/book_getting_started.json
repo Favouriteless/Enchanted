@@ -1,0 +1,10 @@
+{
+  "type": "patchouli:shapeless_book_recipe",
+  "ingredients": [
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:book" },
+    { "item": "minecraft:feather" },
+    { "item": "enchanted:belladonna_seeds" }
+  ],
+  "book": "enchanted:getting_started"
+}

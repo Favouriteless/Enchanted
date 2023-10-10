@@ -1,0 +1,11 @@
+{
+  "type": "enchanted:witch_cauldron",
+  "ingredients": [
+    { "item": "minecraft:nether_wart" },
+    { "item": "enchanted:mutandis" }
+  ],
+  "result": { "item": "enchanted:mutandis_extremis", "count": 1 },
+  "power": 7000,
+  "cookingColour": { "red": 84, "green": 24, "blue": 24 },
+  "finalColour": { "red": 128, "green": 29, "blue": 29 }
+}

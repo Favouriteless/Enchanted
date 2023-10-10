@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#enchanted:mutandis_plants",
+    "enchanted:belladonna",
+    "enchanted:artichoke",
+    "enchanted:mandrake",
+    "enchanted:snowbell",
+    "minecraft:cactus",
+    "minecraft:wheat",
+    "minecraft:carrots",
+    "minecraft:potatoes",
+    "minecraft:sugar_cane"
+  ]
+}

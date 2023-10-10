@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:spinning_wheel",
+  "ingredients": [
+    { "item": "enchanted:poppet_infused" },
+    { "item": "enchanted:hint_of_rebirth" },
+    { "item": "minecraft:diamond_boots"}
+  ],
+  "result": { "item": "enchanted:armour_poppet_infused" },
+  "power": 1000
+}

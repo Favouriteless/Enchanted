@@ -1,0 +1,30 @@
+modLoader = "javafml"
+loaderVersion = "${forge_loader_version_range}"
+license = "${license}
+
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+
+[[mods]] #mandatory
+modId = "${mod_id}"
+version = "${version}
+displayName = "${mod_name}"
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+logoFile = "${mod_id}.png" #optional
+credits = "Heavily inspired by Emoniph's Witchery mod" #optional
+authors = "${mod_author}" #optional
+description = '''${description}''' #mandatory
+
+[[dependencies.${mod_id}]]
+modId = "forge"
+mandatory = true
+versionRange = "${forge_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

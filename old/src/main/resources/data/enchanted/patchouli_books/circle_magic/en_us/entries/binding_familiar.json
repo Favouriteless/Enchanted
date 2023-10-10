@@ -1,0 +1,17 @@
+{
+  "name": "Familiar",
+  "icon": "enchanted:arthana",
+  "category": "enchanted:binding",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Familiar",
+      "text": "Use this rite to bind a familiar to yourself, which can give bonuses to witches. The Familiars chapter in The Art of Witchcraft discusses familiars in more detail."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:binding_familiar"
+    }
+  ],
+  "read_by_default": true
+}

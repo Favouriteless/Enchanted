@@ -1,0 +1,6 @@
+{
+  "name": "Common Magical Plants",
+  "description": "This section details commonly found plants which do not require mutations or magicks to acquire.",
+  "icon": "enchanted:textures/item/belladonna_flower.png",
+  "sortnum": 0
+}

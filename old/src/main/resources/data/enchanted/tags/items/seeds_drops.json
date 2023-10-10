@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "enchanted:artichoke_seeds",
+    "enchanted:belladonna_seeds",
+    "enchanted:mandrake_seeds",
+    "enchanted:snowbell_seeds",
+    "enchanted:wolfsbane_seeds",
+    "enchanted:garlic"
+  ]
+}

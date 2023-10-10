@@ -1,0 +1,17 @@
+{
+  "name": "Broiling",
+  "icon": "minecraft:beef",
+  "category": "enchanted:world",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Broiling",
+      "text": "Rapidly cook all raw foods within the circle $(br2)As the heat is so intense, there is a chance that some of the food may burn."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:broiling"
+    }
+  ],
+  "read_by_default": true
+}

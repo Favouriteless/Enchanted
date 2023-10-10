@@ -1,0 +1,18 @@
+{
+  "name": "Poppet Shelf",
+  "icon": "enchanted:poppet_shelf",
+  "category": "enchanted:creating_poppets",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The poppet shelf allows a witch to use poppets without being forced to hold them in their own inventory. This works across dimensions and can be extremely powerful."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:poppet_shelf"
+    }
+  ],
+  "read_by_default": false,
+  "priority": false,
+  "sortnum": -1
+}

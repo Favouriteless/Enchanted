@@ -1,0 +1,25 @@
+{
+  "name": "Alder Tree",
+  "icon": "enchanted:textures/block/alder_sapling.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Alder trees, of the Alnus genus, are monoecious trees distributed throughout the north temperature zone thought to bleed when cut as the white wood can turn red.$(br2)This tree is thought to be both a bringer of misfortune and a repellent of negativity.$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:alder_sapling"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

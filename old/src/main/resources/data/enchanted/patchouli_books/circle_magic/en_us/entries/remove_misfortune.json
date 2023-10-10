@@ -1,0 +1,18 @@
+{
+  "name": "Cleanse Misfortune",
+  "icon": "minecraft:ender_eye",
+  "category": "enchanted:curses",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Cleanse Misfortune",
+      "text": "Cleanse the targeted being of misfortune. $(br2)If the caster is not skilled enough to break the curse there is a chance it may make things worse."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:remove_misfortune"
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 3
+}

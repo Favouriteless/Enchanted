@@ -1,0 +1,17 @@
+{
+  "name": "Imprisonment",
+  "icon": "minecraft:iron_bars",
+  "category": "enchanted:creature",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Imprisonment",
+      "text": "Prevent monsters from leaving the circle. $(br2)While effective, this barrier is certainly not impenetrable. High speeds or teleportation can cause a monster to escape. $(br2)Requires an additional 3 power per tick"
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:imprisonment"
+    }
+  ],
+  "read_by_default": true
+}

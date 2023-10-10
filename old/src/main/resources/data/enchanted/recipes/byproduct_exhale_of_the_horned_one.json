@@ -1,0 +1,7 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": {
+    "item": "minecraft:oak_sapling"
+  },
+  "result": { "item": "enchanted:exhale_of_the_horned_one", "count": 1 }
+}

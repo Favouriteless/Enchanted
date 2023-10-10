@@ -1,0 +1,17 @@
+{
+  "name": "Transpose Iron",
+  "icon": "minecraft:raw_iron",
+  "category": "enchanted:transposition",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Transpose Iron",
+      "text": "Transpose all useful iron from underneath the circle to the surface, leaving behind the stone."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:transposition_iron"
+    }
+  ],
+  "read_by_default": true
+}

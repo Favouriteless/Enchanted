@@ -1,0 +1,16 @@
+{
+  "name": "Attuned Stone",
+  "icon": "enchanted:attuned_stone",
+  "category": "enchanted:crafting_materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The attuned stone is a diamond which has been modified to have a greater magical affinity. It can be charged to be used as a portable container for Altar Power, allowing the user to cast circle magic without an altar being present, and is also used in the creation of a lot of magical tools."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:attuned_stone"
+    }
+  ],
+  "read_by_default": true
+}

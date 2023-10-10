@@ -1,0 +1,24 @@
+{
+  "name": "Casting Curses",
+  "icon": "minecraft:wither_rose",
+  "category": "enchanted:curses",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Casting Curses",
+      "text": "Curses at their core are the same as any other circle magic, however the level of the curse is increased by the skill of the caster. Witches and warlocks with a cat familiar or those who perform the rite with a coven will be more skilled at cursing others."
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Removing Curses",
+      "text": "The only known ways to lift a curse from an afflicted person are to perform the appropriate rite of curse removal or through divine intervention by the Goddess via a statue."
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Mitigating Curses",
+      "text": "The clothing worn by witch hunters is known to mitigate most of the effects caused by curses, and voodoo protection poppets are also thought to have some effect at blocking low level curses."
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 1
+}

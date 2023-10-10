@@ -1,0 +1,22 @@
+{
+  "type": "enchanted:grass_seeds",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:grass"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:tall_grass"
+        }
+      ]
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.1
+    }
+  ]
+}

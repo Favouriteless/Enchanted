@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:spinning_wheel",
+  "ingredients": [
+    { "item": "enchanted:poppet" },
+    { "item": "enchanted:hint_of_rebirth" },
+    { "item": "minecraft:diamond_sword" }
+  ],
+  "result": { "item": "enchanted:tool_poppet" },
+  "power": 500
+}

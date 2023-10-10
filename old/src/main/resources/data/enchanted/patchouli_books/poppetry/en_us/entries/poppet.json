@@ -1,0 +1,18 @@
+{
+  "name": "Poppets",
+  "icon": "enchanted:poppet",
+  "category": "enchanted:creating_poppets",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A poppet is the a doll made to represent another person. This doll can then be woven together with magickal items to gain an effect, before being bound to a player by using the poppet while the a taglock kit is in the off-hand.$(br2)$(bold)Basic poppets have a 30% chance to fail.$()"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:poppet"
+    }
+  ],
+  "read_by_default": false,
+  "priority": false,
+  "sortnum": -1
+}

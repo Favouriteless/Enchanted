@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#enchanted:logs",
+    "#enchanted:planks",
+    "#enchanted:wooden_slabs",
+    "#enchanted:wooden_stairs",
+    "enchanted:spinning_wheel"
+  ]
+}

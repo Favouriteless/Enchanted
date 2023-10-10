@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "id": "enchanted",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft",
+        "sources": "https://github.com/Favouriteless/Enchanted"
+    },
+    "license": "${license}",
+    "icon": "assets/modid/${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.favouriteless.enchanted.EnchantedFabric"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14",
+        "fabric": "*",
+        "minecraft": "1.18.2",
+        "java": ">=17"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
+}
+  

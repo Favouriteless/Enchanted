@@ -1,0 +1,76 @@
+{
+  "processor": "com.favouriteless.enchanted.api.patchouli.processors.DistilleryRecipeProcessor",
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "Distillation",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:image",
+      "image": "enchanted:textures/patchouli/distillery_background.png",
+      "width": 75,
+      "height": 113,
+      "texture_width": 128,
+      "texture_height": 128,
+      "x": 21,
+      "y": 22
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#in0",
+      "framed": true,
+      "x": 51,
+      "y": 23
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#in1",
+      "framed": true,
+      "x": 41,
+      "y": 45
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#in2",
+      "framed": true,
+      "x": 61,
+      "y": 45
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#out0",
+      "framed": true,
+      "x": 22,
+      "y": 118
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#out1",
+      "framed": true,
+      "x": 41,
+      "y": 118
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#out2",
+      "framed": true,
+      "x": 60,
+      "y": 118
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#out3",
+      "framed": true,
+      "x": 79,
+      "y": 118
+    }
+  ]
+}

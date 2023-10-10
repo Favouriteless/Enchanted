@@ -1,0 +1,25 @@
+{
+  "name": "Belladonna Flowers",
+  "icon": "enchanted:textures/item/belladonna_flower.png",
+  "category": "enchanted:common_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Atropa Belladonna, commonly known as deadly nightshade, is a poisonous member of the Solanaceae family. $(br2)The foliage and berries of this plant are known to be extremely toxic to humans and should be handled with care.$(br2)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:belladonna[age=4]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

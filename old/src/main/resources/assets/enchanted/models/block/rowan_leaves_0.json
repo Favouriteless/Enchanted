@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "enchanted:block/rowan_leaves_0"
+  }
+}

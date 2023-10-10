@@ -1,0 +1,25 @@
+{
+  "name": "Hawthorn Tree",
+  "icon": "enchanted:textures/block/hawthorn_sapling.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.$(br2)In addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires.$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:hawthorn_sapling"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

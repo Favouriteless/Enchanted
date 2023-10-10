@@ -1,0 +1,12 @@
+{
+  "name": "Glowstone Dust",
+  "icon": "minecraft:glowstone_dust",
+  "category": "enchanted:distillation",
+  "pages": [
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_blaze_powder_gunpowder"
+    }
+  ],
+  "read_by_default": true
+}

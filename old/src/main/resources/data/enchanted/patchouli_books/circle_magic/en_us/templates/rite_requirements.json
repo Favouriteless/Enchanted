@@ -1,0 +1,26 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "Magic Circle",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "com.favouriteless.enchanted.api.patchouli.components.RiteRequirementsComponent",
+      "x": 58,
+      "y": 75,
+      "rite": "#rite",
+      "itemsFirstCircle": 5,
+      "startRadius": 13,
+      "scale": 0.6
+    }
+  ]
+}

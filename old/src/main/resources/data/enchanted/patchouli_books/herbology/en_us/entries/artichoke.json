@@ -1,0 +1,25 @@
+{
+  "name": "Water Artichoke",
+  "icon": "enchanted:textures/item/artichoke.png",
+  "category": "enchanted:common_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This subspecies of the common Artichoke only grows on still water. Unlike it's green cousin, it is not considered edible.$(br2)Consumption of this plant will satiate hunger but empty your stomach.$(br2)$(br)$(bold)Procurement:$()$(br)Known to be dropped by Tall Grass"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:artichoke[age=4]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

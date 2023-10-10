@@ -1,0 +1,17 @@
+{
+  "name": "Broom Infusion",
+  "icon": "enchanted:enchanted_broomstick",
+  "category": "enchanted:infusion",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Broom Infusion",
+      "text": "Imbue a standard broom with the power of flight, allowing the witch or warlock to ride it.$(br2)Default controls are WASD, Space/LControl and C/V."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:infusion_broom"
+    }
+  ],
+  "read_by_default": true
+}

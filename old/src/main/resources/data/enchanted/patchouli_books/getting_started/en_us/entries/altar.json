@@ -1,0 +1,39 @@
+{
+  "name": "Altars",
+  "icon": "enchanted:altar",
+  "category": "enchanted:altars",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The altar is an essential device used by Witches and Warlocks to collect magical energy from nature around them. Six altar blocks must be placed in a 3x2 rectangle to form a valid altar.$(br2)An altar may be upgraded by placing specific items on top of it, these are detailed in the rest of the chapter."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "a": "enchanted:altar[formed=p000,facing_x=true]",
+          "0": "enchanted:altar[formed=p100,facing_x=true]",
+          "c": "enchanted:altar[formed=p200,facing_x=true]",
+          "d": "enchanted:altar[formed=p001,facing_x=true]",
+          "e": "enchanted:altar[formed=p101,facing_x=true]",
+          "f": "enchanted:altar[formed=p201,facing_x=true]",
+          "g": "enchanted:chalice_filled",
+          "h": "minecraft:player_head",
+          "t": "enchanted:candelabra"
+        },
+        "pattern": [
+          [ "g h"," t " ],
+          [ "a0c","def" ]
+        ]
+      }
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:altar",
+      "text": "See Witchcraft: Extraction in the Additional Resources chapter to find out more about these materials."
+    }
+  ],
+  "read_by_default": false,
+  "priority": true
+}

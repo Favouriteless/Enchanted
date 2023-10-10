@@ -1,0 +1,35 @@
+{
+  "name": "Protection",
+  "icon": "minecraft:shield",
+  "category": "enchanted:creature",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Protection",
+      "text": "Summon an impenetrable dome which can only be passed through by sneaking players. $(br2)A bound or blooded waystone may be used to target a different position. $(br2)Requires an additional 4 power per tick."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:protection"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Protection (Large)",
+      "text": "Summon an impenetrable dome which can only be passed through by sneaking players. $(br2)A bound or blooded waystone may be used to target a different position.  $(br2)Requires an additional 6 power per tick."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:protection_large"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Protection (Temporary)",
+      "text": "Summon an impenetrable dome which cannot be passed through by anything for 60 seconds. $(br2)A bound or blooded waystone may be used to target a different position. "
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:protection_temporary"
+    }
+  ],
+  "read_by_default": true
+}

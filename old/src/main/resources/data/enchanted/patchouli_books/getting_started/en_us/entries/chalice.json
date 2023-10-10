@@ -1,0 +1,16 @@
+{
+  "name": "Chalice Upgrades",
+  "icon": "enchanted:chalice_filled",
+  "category": "enchanted:altars",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A chalice may be placed on an altar to increase both power capacity. $(br2)$(bold)Chalice$() +1x Power Capacity$(br)$(bold)Filled Chalice$() +2x Power Capacity.$(br2)A chalice may be filled by using Redstone Soup on it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:chalice"
+    }
+  ],
+  "read_by_default": true
+}

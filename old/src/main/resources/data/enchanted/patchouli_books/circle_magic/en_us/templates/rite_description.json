@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#rite_name",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:text",
+      "text": "#text",
+      "x": 0,
+      "y": 22
+    }
+  ]
+}

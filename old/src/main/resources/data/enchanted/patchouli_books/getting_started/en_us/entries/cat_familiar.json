@@ -1,0 +1,16 @@
+{
+  "name": "Cat",
+  "icon": "enchanted:textures/patchouli/black_cat.png",
+  "category": "enchanted:familiars",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Cats are the most common familiar you might see around Witches. Having a cat familiar increases the potency of curses, and the removal of curses.$(br2)Cats can be found and tamed in villages and swamp huts."
+    },
+    {
+      "type": "patchouli:image",
+      "images": [ "enchanted:textures/patchouli/black_cat.png" ]
+    }
+  ],
+  "read_by_default": true
+}

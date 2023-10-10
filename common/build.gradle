@@ -1,34 +1,24 @@
-plugins {
-    id 'idea'
-    id 'java'
-    id 'maven-publish'
-    id 'org.spongepowered.gradle.vanilla'
+architectury {
+    common(rootProject.enabled_platforms.split(","))
 }
-base {
-    archivesName = "${mod_name}-common-${minecraft_version}"
-}
-minecraft {
-    version(minecraft_version)
-    if(file("src/main/resources/${mod_id}.accesswidener").exists()){
-        accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
-    }
+
+loom {
+    accessWidenerPath = file("src/main/resources/enchanted.accesswidener")
 }
 
 dependencies {
-     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 }
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifactId base.archivesName.get()
+        mavenCommon(MavenPublication) {
+            artifactId = rootProject.archives_base_name
             from components.java
         }
     }
+
     repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
-        }
     }
 }

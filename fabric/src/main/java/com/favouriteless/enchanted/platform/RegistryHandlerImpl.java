@@ -10,9 +10,9 @@ import java.util.function.Supplier;
 public class RegistryHandlerImpl extends RegistryHandler.Impl {
 
 	@Override
-	public <T> Supplier<T> register(Registry<? super T> registry, String name, T entry) {
-		T obj = Registry.register(registry, Enchanted.location(name), entry);
-		return () -> obj;
+	public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
+		Registry.register(registry, Enchanted.location(name), entry.get());
+		return entry;
 	}
 
 	@Override

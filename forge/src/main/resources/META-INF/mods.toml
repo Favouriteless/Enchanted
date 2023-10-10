@@ -1,30 +1,27 @@
 modLoader = "javafml"
-loaderVersion = "${forge_loader_version_range}"
-license = "${license}"
+loaderVersion = "[40,)"
+license = "All Rights Reserved"
 
-#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
-
-[[mods]] #mandatory
-modId = "${mod_id}"
+[[mods]]
+modId = "enchanted"
 version = "${version}"
 displayName = "${mod_name}"
-#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
-#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
-logoFile = "${mod_id}.png" #optional
-credits = "Heavily inspired by Emoniph's Witchery mod" #optional
-authors = "${mod_author}" #optional
-description = '''${description}''' #mandatory
+credits = "Heavily inspired by Emoniph's Witchery mod"
+authors = "Favouriteless"
+description = '''Enchanted is your mod for all things occult or witchcraft. A modernized attempt at Emoniph's Witchery.'''
+logoFile = "icon.png"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft" #optional
 
-[[dependencies.${mod_id}]]
-modId = "forge"
-mandatory = true
-versionRange = "${forge_version_range}"
-ordering = "NONE"
-side = "BOTH"
+[[dependencies.enchanted]]
+    modId = "forge"
+    mandatory = true
+    versionRange = "[40,)"
+    ordering = "NONE"
+    side = "BOTH"
 
-[[dependencies.${mod_id}]]
-modId = "minecraft"
-mandatory = true
-versionRange = "${minecraft_version_range}"
-ordering = "NONE"
-side = "BOTH"
+[[dependencies.enchanted]]
+    modId = "minecraft"
+    mandatory = true
+    versionRange = "[1.18.2,)"
+    ordering = "NONE"
+    side = "BOTH"

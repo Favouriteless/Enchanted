@@ -20,7 +20,7 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 	private static final RegistryMap registryMap = new RegistryMap();
 
 	@Override
-	public <T> Supplier<T> register(Registry<? super T> registry, String name, T entry) {
+	public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
 		return registryMap.register(registry, name, entry);
 	}
 
@@ -36,7 +36,7 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 		private final Map<ResourceLocation, DeferredRegister<?>> registries = new HashMap<>();
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		private <T> RegistryObject<T> register(Registry<? super T> registry, String name, T entry) {
+		private <T> RegistryObject<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
 			DeferredRegister<T> reg = (DeferredRegister<T>)registries.computeIfAbsent(registry.key().location(), (key) -> {
 				ForgeRegistry forgeReg = RegistryManager.ACTIVE.getRegistry(key);
 
@@ -49,7 +49,7 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 				return defReg;
 			});
 
-			return reg != null ? reg.register(name, () -> entry) : null;
+			return reg != null ? reg.register(name, entry) : null;
 		}
 
 	}

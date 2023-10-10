@@ -11,7 +11,7 @@ public class RegistryHandler {
 
 	private static Impl INSTANCE = null; // Singleton instance.
 
-	public static <T> Supplier<T> register(Registry<? super T> registry, String name, T entry) {
+	public static <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
 		return INSTANCE.register(registry, name, entry);
 	}
 
@@ -27,7 +27,7 @@ public class RegistryHandler {
 			INSTANCE = this;
 		}
 
-		public abstract <T> Supplier<T> register(Registry<? super T> registry, String name, T entry);
+		public abstract <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry);
 		public abstract CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier);
 
 	}

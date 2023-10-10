@@ -11,6 +11,10 @@ public class Enchanted {
     public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {
+
+    }
+
+    public static void loadRegistries() {
         EnchantedItems.load();
     }
 

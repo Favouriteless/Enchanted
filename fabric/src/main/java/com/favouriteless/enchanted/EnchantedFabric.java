@@ -9,6 +9,7 @@ public class EnchantedFabric implements ModInitializer {
     public void onInitialize() {
         new RegistryHandlerImpl();
         Enchanted.init();
+        Enchanted.loadRegistries();
     }
 
 }

@@ -1,12 +1,12 @@
 modLoader = "javafml"
 loaderVersion = "${forge_loader_version_range}"
-license = "${license}
+license = "${license}"
 
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 
 [[mods]] #mandatory
 modId = "${mod_id}"
-version = "${version}
+version = "${version}"
 displayName = "${mod_name}"
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional

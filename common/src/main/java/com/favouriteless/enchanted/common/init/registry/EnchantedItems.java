@@ -25,7 +25,7 @@ public class EnchantedItems {
 	public static final Supplier<Item> DISTILLERY = registerBlockItem("distillery", EnchantedBlocks.DISTILLERY);
 	public static final Supplier<Item> WITCH_CAULDRON = registerBlockItem("witch_cauldron", EnchantedBlocks.WITCH_CAULDRON);
 	public static final Supplier<Item> KETTLE = registerBlockItem("kettle", EnchantedBlocks.KETTLE);
-	public static final Supplier<Item> SPINNING_WHEEL = register("spinning_wheel", new SpinningWheelBlockItem(defaultProperties()));
+	public static final Supplier<Item> SPINNING_WHEEL = register("spinning_wheel", () -> new SpinningWheelBlockItem(defaultProperties()));
 	public static final Supplier<Item> POPPET_SHELF = registerBlockItem("poppet_shelf", EnchantedBlocks.POPPET_SHELF);
 
 	public static final Supplier<Item> CHALICE = registerBlockItem("chalice", EnchantedBlocks.CHALICE);
@@ -55,7 +55,7 @@ public class EnchantedItems {
 
 	public static final Supplier<Item> WICKER_BUNDLE = registerBlockItem("wicker_bundle", EnchantedBlocks.WICKER_BUNDLE);
 
-	public static final Supplier<Item> ARTICHOKE_SEEDS = register("artichoke_seeds", new ArtichokeSeedsItem(EnchantedBlocks.ARTICHOKE.get(), defaultProperties()));
+	public static final Supplier<Item> ARTICHOKE_SEEDS = register("artichoke_seeds",  () -> new ArtichokeSeedsItem(EnchantedBlocks.ARTICHOKE.get(), defaultProperties()));
 	public static final Supplier<Item> BELLADONNA_SEEDS = registerBlockNamedItem("belladonna_seeds", EnchantedBlocks.BELLADONNA);
 	public static final Supplier<Item> MANDRAKE_SEEDS = registerBlockNamedItem("mandrake_seeds", EnchantedBlocks.MANDRAKE);
 	public static final Supplier<Item> MANDRAKE_ROOT = registerItem("mandrake_root");
@@ -72,25 +72,25 @@ public class EnchantedItems {
 	public static final Supplier<Item> WOLFSBANE_FLOWER = registerItem("wolfsbane_flower");
 	public static final Supplier<Item> BLOOD_POPPY = registerBlockItem("blood_poppy", EnchantedBlocks.BLOOD_POPPY);
 
-	public static final Supplier<Item> ANOINTING_PASTE = register("anointing_paste", new AnointingPasteItem(defaultProperties()));
-	public static final Supplier<Item> MUTANDIS = register("mutandis", new MutandisItem(EnchantedTags.Blocks.MUTANDIS_PLANTS, defaultProperties()));
-	public static final Supplier<Item> MUTANDIS_EXTREMIS = register("mutandis_extremis", new MutandisItem(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS, defaultProperties()));
-	public static final Supplier<Item> TAGLOCK = register("taglock", new TaglockItem(defaultProperties()));
-	public static final Supplier<Item> TAGLOCK_FILLED =  register("taglock_filled", new TaglockFilledItem(new Properties()));
+	public static final Supplier<Item> ANOINTING_PASTE = register("anointing_paste",  () -> new AnointingPasteItem(defaultProperties()));
+	public static final Supplier<Item> MUTANDIS = register("mutandis",  () -> new MutandisItem(EnchantedTags.Blocks.MUTANDIS_PLANTS, defaultProperties()));
+	public static final Supplier<Item> MUTANDIS_EXTREMIS = register("mutandis_extremis",  () -> new MutandisItem(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS, defaultProperties()));
+	public static final Supplier<Item> TAGLOCK = register("taglock",  () -> new TaglockItem(defaultProperties()));
+	public static final Supplier<Item> TAGLOCK_FILLED =  register("taglock_filled",  () -> new TaglockFilledItem(new Properties()));
 
 //	public static final Supplier<Item> CHALK_GOLD = registerChalkItem("chalk_gold", EnchantedBlocks.CHALK_GOLD, 3);
 //	public static final Supplier<Item> CHALK_WHITE = registerChalkItem("chalk_white", EnchantedBlocks.CHALK_WHITE, 40);
 //	public static final Supplier<Item> CHALK_RED = registerChalkItem("chalk_red", EnchantedBlocks.CHALK_RED, 40);
 //	public static final Supplier<Item> CHALK_PURPLE = registerChalkItem("chalk_purple", EnchantedBlocks.CHALK_PURPLE, 40);
 	public static final Supplier<Item> ARTHANA = registerSwordItem("arthana", Tiers.GOLD, 3, -2.4F);
-	public static final Supplier<Item> EARMUFFS = register("earmuffs", new EarmuffsItem(defaultProperties()));
+	public static final Supplier<Item> EARMUFFS = register("earmuffs",  () -> new EarmuffsItem(defaultProperties()));
 
-	public static final Supplier<Item> CIRCLE_TALISMAN = register("circle_talisman", new CircleTalismanItem(defaultProperties().stacksTo(1)));
+	public static final Supplier<Item> CIRCLE_TALISMAN = register("circle_talisman",  () -> new CircleTalismanItem(defaultProperties().stacksTo(1)));
 	public static final Supplier<Item> WAYSTONE = registerItem("waystone");
 	public static final Supplier<Item> BOUND_WAYSTONE = registerItemNoTab("bound_waystone");
-	public static final Supplier<Item> BLOODED_WAYSTONE = register("blooded_waystone", new BloodedWaystoneItem(new Properties()));
-	public static final Supplier<Item> BROOM = register("broom", new BroomItem(defaultProperties()));
-	public static final Supplier<Item> ENCHANTED_BROOMSTICK = register("enchanted_broomstick", new BroomstickItem(defaultProperties()));
+	public static final Supplier<Item> BLOODED_WAYSTONE = register("blooded_waystone",  () -> new BloodedWaystoneItem(new Properties()));
+	public static final Supplier<Item> BROOM = register("broom",  () -> new BroomItem(defaultProperties()));
+	public static final Supplier<Item> ENCHANTED_BROOMSTICK = register("enchanted_broomstick",  () -> new BroomstickItem(defaultProperties()));
 
 	public static final Supplier<Item> DEMON_HEART = registerItem("demon_heart");
 
@@ -114,7 +114,7 @@ public class EnchantedItems {
 	public static final Supplier<Item> PURIFIED_MILK = registerItem("purified_milk");
 	public static final Supplier<Item> REEK_OF_MISFORTUNE = registerItem("reek_of_misfortune");
 	public static final Supplier<Item> ATTUNED_STONE = registerItem("attuned_stone");
-	public static final Supplier<Item> ATTUNED_STONE_CHARGED = register("attuned_stone_charged", new SimpleFoiledItem(defaultProperties()));
+	public static final Supplier<Item> ATTUNED_STONE_CHARGED = register("attuned_stone_charged",  () -> new SimpleFoiledItem(defaultProperties()));
 	public static final Supplier<Item> GYPSUM = registerItem("gypsum");
 	public static final Supplier<Item> QUICKLIME = registerItem("quicklime");
 	public static final Supplier<Item> REFINED_EVIL = registerItem("refined_evil");
@@ -134,7 +134,7 @@ public class EnchantedItems {
 
 	public static final Supplier<Item> BREW_OF_THE_GROTESQUE = registerItem("brew_of_the_grotesque");
 	public static final Supplier<Item> BREW_OF_SPROUTING = registerItem("brew_of_sprouting");
-	public static final Supplier<Item> BREW_OF_LOVE = register("brew_of_love", new LoveBrewItem(defaultProperties()));
+	public static final Supplier<Item> BREW_OF_LOVE = register("brew_of_love",  () -> new LoveBrewItem(defaultProperties()));
 	public static final Supplier<Item> BREW_OF_THE_DEPTHS = registerBrew("brew_of_the_depths", MobEffects.WATER_BREATHING, 6000, 0);
 
 	public static final Supplier<Item> GHOST_OF_THE_LIGHT = registerBrew("ghost_of_the_light", MobEffects.POISON, 1200, 1);
@@ -172,8 +172,8 @@ public class EnchantedItems {
 
 
 
-	private static Supplier<Item> register(String name, Item item) {
-		return RegistryHandler.register(Registry.ITEM, name, () -> item);
+	private static <T extends Item> Supplier<T> register(String name, Supplier<T> itemSupplier) {
+		return RegistryHandler.register(Registry.ITEM, name, itemSupplier);
 	}
 
 	private static Properties defaultProperties() {
@@ -181,15 +181,15 @@ public class EnchantedItems {
 	}
 
 	private static Supplier<Item> registerItem(String name) {
-		return register(name, new Item(defaultProperties()));
+		return register(name, () -> new Item(defaultProperties()));
 	}
 
 	private static Supplier<Item> registerItemNoTab(String name) {
-		return register(name, new Item(new Properties()));
+		return register(name, () -> new Item(new Properties()));
 	}
 
 	private static Supplier<Item> registerItem(String name, Properties properties) {
-		return register(name, new Item(properties));
+		return register(name, () -> new Item(properties));
 	}
 
 //	private static Supplier<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int backgroundColour, int highlightColour) {
@@ -197,23 +197,23 @@ public class EnchantedItems {
 //	}
 
 	private static Supplier<Item> registerBlockItem(String name, Supplier<? extends Block> block) {
-		return register(name, new BlockItem(block.get(), defaultProperties()));
+		return register(name, () -> new BlockItem(block.get(), defaultProperties()));
 	}
 
 	private static Supplier<Item> registerBlockItemProperties(String name, Supplier<? extends Block> block, Properties properties) {
-		return register(name, new BlockItem(block.get(), properties));
+		return register(name, () -> new BlockItem(block.get(), properties));
 	}
 
 	private static Supplier<Item> registerBlockNamedItem(String name, Supplier<? extends Block> block) {
-		return register(name, new ItemNameBlockItem(block.get(), defaultProperties()));
+		return register(name, () -> new ItemNameBlockItem(block.get(), defaultProperties()));
 	}
 
 	private static Supplier<Item> registerFoodItem(String name, int nutrition) {
-		return register(name, new Item(defaultProperties().food(new FoodProperties.Builder().nutrition(nutrition).build())));
+		return register(name, () -> new Item(defaultProperties().food(new FoodProperties.Builder().nutrition(nutrition).build())));
 	}
 
 	private static Supplier<Item> registerFoodItem(String name, int nutrition, MobEffect effect, int duration, int amplification, float chance) {
-		return register(name, new Item(defaultProperties().food(new FoodProperties.Builder().nutrition(nutrition).effect(new MobEffectInstance(effect, duration, amplification), chance).build())));
+		return register(name, () -> new Item(defaultProperties().food(new FoodProperties.Builder().nutrition(nutrition).effect(new MobEffectInstance(effect, duration, amplification), chance).build())));
 	}
 
 //	private static Supplier<Item> registerChalkItem(String name, Supplier<? extends Block> block, int durability) {
@@ -221,11 +221,11 @@ public class EnchantedItems {
 //	}
 
 	private static Supplier<Item> registerSwordItem(String name, Tier tier, int attackDamageModifier, float attackSpeedModifier) {
-		return register(name, new SwordItem(tier, attackDamageModifier, attackSpeedModifier, defaultProperties()));
+		return register(name, () -> new SwordItem(tier, attackDamageModifier, attackSpeedModifier, defaultProperties()));
 	}
 
 	private static Supplier<Item> registerBrew(String name, MobEffect effect, int duration, int amplifier) {
-		return register(name, new SimpleEffectBrewItem(effect, duration, amplifier, defaultProperties()));
+		return register(name, () -> new SimpleEffectBrewItem(effect, duration, amplifier, defaultProperties()));
 	}
 
 //	private static Supplier<Item> registerItemProtectionPoppet(String name, float failRate, int durability, float damageMultiplier, PoppetColour colour) {

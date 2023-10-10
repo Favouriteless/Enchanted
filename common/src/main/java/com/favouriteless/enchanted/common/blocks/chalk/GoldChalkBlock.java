@@ -1,5 +1,7 @@
 package com.favouriteless.enchanted.common.blocks.chalk;
 
+import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,8 +40,8 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if(state != newState) {
-            ChalkGoldBlockEntity te = (ChalkGoldBlockEntity)level.getBlockEntity(pos);
-            te.clearRite();
+            if(level.getBlockEntity(pos) instanceof ChalkGoldBlockEntity be)
+                be.clearRite();
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
@@ -56,7 +58,8 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        ((ChalkGoldBlockEntity) level.getBlockEntity(pos)).execute(state, level, pos, player, hand, hit);
+        if(level.getBlockEntity(pos) instanceof ChalkGoldBlockEntity be)
+            be.execute(state, level, pos, player, hand, hit);
         return InteractionResult.SUCCESS;
     }
 
@@ -65,4 +68,5 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return type == EnchantedBlockEntityTypes.CHALK_GOLD.get() ? ChalkGoldBlockEntity::tick : null;
     }
+
 }

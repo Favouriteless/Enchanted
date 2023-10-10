@@ -1,40 +1,16 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.rites;
 
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,54 +91,54 @@ public enum CirclePart {
         }
     }
 
-    public boolean match(Level world, BlockPos centerPos, Block block) {
+    public boolean match(Level level, BlockPos centerPos, Block block) {
         for(BlockPos pos : circlePoints) {
-            if(!world.getBlockState(centerPos.offset(pos)).is(block)) {
+            if(!level.getBlockState(centerPos.offset(pos)).is(block)) {
                 return false;
             }
         }
         return true;
     }
 
-    public void destroy(Level world, BlockPos centerPos) {
+    public void destroy(Level level, BlockPos centerPos) {
         for(BlockPos pos : circlePoints) {
-            world.setBlockAndUpdate(centerPos.offset(pos), Blocks.AIR.defaultBlockState());
+            level.setBlockAndUpdate(centerPos.offset(pos), Blocks.AIR.defaultBlockState());
         }
     }
 
-    public boolean canPlace(Level world, BlockPos centerPos) {
+    public boolean canPlace(Level level, BlockPos centerPos) {
         for(BlockPos pos : circlePoints) {
-            if(!world.getBlockState(centerPos.offset(pos)).isAir() || !EnchantedBlocks.CHALK_WHITE.get().canSurvive(null, world, centerPos.offset(pos))) { // Not air or chalk can't survive
+            if(!level.getBlockState(centerPos.offset(pos)).isAir() || !EnchantedBlocks.CHALK_WHITE.get().canSurvive(null, level, centerPos.offset(pos))) { // Not air or chalk can't survive
                 return false;
             }
         }
         return true;
     }
 
-    public void place(Level world, BlockPos centerPos, Block block, UseOnContext context) {
+    public void place(Level level, BlockPos centerPos, Block block, UseOnContext context) {
         for(BlockPos pos : circlePoints) {
-            world.setBlockAndUpdate(centerPos.offset(pos), block.getStateForPlacement(new BlockPlaceContext(context)));
+            level.setBlockAndUpdate(centerPos.offset(pos), block.getStateForPlacement(new BlockPlaceContext(context)));
         }
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos) {
+    public List<Entity> getEntitiesInside(Level level, BlockPos centerPos) {
         List<Entity> outlist = new ArrayList<>();
 
         for(AABB aabb : insideBoxes) {
-            outlist.addAll(world.getEntities((Entity) null, aabb.move(centerPos), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
+            outlist.addAll(level.getEntities((Entity) null, aabb.move(centerPos), entity -> !outlist.contains(entity))); // Add all entities which aren't already added
         }
 
         return outlist;
     }
 
-    public List<Entity> getEntitiesInside(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
-        List<Entity> outlist = getEntitiesInside(world, centerPos);
+    public List<Entity> getEntitiesInside(Level level, BlockPos centerPos, Predicate<Entity> predicate) {
+        List<Entity> outlist = getEntitiesInside(level, centerPos);
         outlist.removeIf(entity -> !predicate.test(entity));
         return outlist;
     }
 
-    public Entity getClosestEntity(Level world, BlockPos centerPos) {
-        return closest(getEntitiesInside(world, centerPos), centerPos);
+    public Entity getClosestEntity(Level level, BlockPos centerPos) {
+        return closest(getEntitiesInside(level, centerPos), centerPos);
     }
 
     public Entity closest(List<Entity> entities, BlockPos pos) {
@@ -180,8 +156,8 @@ public enum CirclePart {
         return entity;
     }
 
-    public Entity getClosestEntity(Level world, BlockPos centerPos, Predicate<Entity> predicate) {
-        List<Entity> entities = getEntitiesInside(world, centerPos);
+    public Entity getClosestEntity(Level level, BlockPos centerPos, Predicate<Entity> predicate) {
+        List<Entity> entities = getEntitiesInside(level, centerPos);
         entities.removeIf(entity -> !predicate.test(entity));
 
         return closest(entities, centerPos);

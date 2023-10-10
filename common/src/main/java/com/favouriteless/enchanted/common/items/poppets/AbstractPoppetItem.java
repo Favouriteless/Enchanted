@@ -1,32 +1,8 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.items.poppets;
 
-import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.PoppetColour;
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
+import com.favouriteless.enchanted.common.poppet.PoppetColour;
 import com.favouriteless.enchanted.common.poppet.PoppetHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -60,7 +36,7 @@ public abstract class AbstractPoppetItem extends Item {
 		return this.failRate;
 	}
 
-	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> toolTip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level level, List<Component> toolTip, TooltipFlag flag) {
 		toolTip.add(new TextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(ChatFormatting.RED));
 		if(PoppetHelper.isBound(stack)) {
 			toolTip.add(new TextComponent(PoppetHelper.getBoundName(stack)).withStyle(ChatFormatting.GRAY));
@@ -68,13 +44,13 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity entity) {
 		if(entity instanceof Player player) {
 			ItemStack taglockStack = player.getOffhandItem();
 
 			if(taglockStack.getItem() instanceof TaglockFilledItem) {
 				CompoundTag nbt = taglockStack.getOrCreateTag();
-				Player target = world.getPlayerByUUID(nbt.getUUID("entity"));
+				Player target = level.getPlayerByUUID(nbt.getUUID("entity"));
 
 				if(target != null) {
 					PoppetHelper.bind(itemStack, target);
@@ -87,20 +63,20 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		if(hand == InteractionHand.MAIN_HAND) {
 			if(!PoppetHelper.isBound(player.getMainHandItem())) {
 				ItemStack taglockStack = player.getOffhandItem();
 				if(taglockStack.getItem() instanceof TaglockFilledItem) {
 					CompoundTag nbt = taglockStack.getOrCreateTag();
-					Player target = world.getPlayerByUUID(nbt.getUUID("entity"));
+					Player target = level.getPlayerByUUID(nbt.getUUID("entity"));
 
 					if(target != null)
 						player.startUsingItem(hand);
 				}
 			}
 		}
-		return super.use(world, player, hand);
+		return super.use(level, player, hand);
 	}
 
 	@Override

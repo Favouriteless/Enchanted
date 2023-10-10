@@ -1,5 +1,6 @@
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

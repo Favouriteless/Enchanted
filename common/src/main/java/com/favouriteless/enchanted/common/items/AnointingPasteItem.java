@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -42,4 +43,5 @@ public class AnointingPasteItem extends Item {
             level.addParticle(ParticleTypes.WITCH, pos.getX()-0.5D + x, pos.getY() + y, pos.getZ()-0.5D + z, 0.0D, 0.0D, 0.0D);
         }
     }
+
 }

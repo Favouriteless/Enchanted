@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.blocks.altar;
 
-
+import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.multiblock.MultiBlockTools;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
@@ -38,17 +39,15 @@ public class AltarBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if(!world.isClientSide()) {
+        if(!world.isClientSide())
             MultiBlockTools.formMultiblock(AltarMultiBlock.INSTANCE, world, pos);
-        }
     }
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if(!world.isClientSide()) {
-            if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
+            if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED)
                 MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
-            }
         }
         super.onRemove(state, world, pos, newState, isMoving);
     }
@@ -60,17 +59,16 @@ public class AltarBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-            if (!world.isClientSide) {
-                BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(world, pos, state);
-                BlockState cornerState = world.getBlockState(cornerPos);
+            if (!level.isClientSide) {
+                BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(level, pos, state);
+                BlockState cornerState = level.getBlockState(cornerPos);
 
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
-                    BlockEntity blockEntity = world.getBlockEntity(cornerPos);
-                    if (blockEntity instanceof AltarBlockEntity) {
+                    BlockEntity blockEntity = level.getBlockEntity(cornerPos);
+                    if (blockEntity instanceof AltarBlockEntity)
                         NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)blockEntity, blockEntity.getBlockPos());
-                    }
                 }
                 return InteractionResult.CONSUME;
             }

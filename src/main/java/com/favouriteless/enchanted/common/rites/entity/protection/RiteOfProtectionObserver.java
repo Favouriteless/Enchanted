@@ -24,13 +24,13 @@
 
 package com.favouriteless.enchanted.common.rites.entity.protection;
 
-import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
+import com.favouriteless.stateobserver.api.StateObserver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class RiteOfProtectionObserver extends AbstractStateObserver {
+public class RiteOfProtectionObserver extends StateObserver {
 
 	public final Block block;
 

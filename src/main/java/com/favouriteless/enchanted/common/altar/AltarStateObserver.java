@@ -27,8 +27,8 @@ package com.favouriteless.enchanted.common.altar;
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
-import com.favouriteless.stateobserver.api.AbstractStateObserver;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
+import com.favouriteless.stateobserver.api.StateObserver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * StateObserver implementation for {@link AltarBlockEntity}. This is used to notify every nearby {@link IPowerConsumer}
  * of the {@link com.favouriteless.enchanted.api.power.IPowerProvider} near them. Changes to the power/upgrades are also calculated in this StateObserver.
  */
-public class AltarStateObserver extends AbstractStateObserver {
+public class AltarStateObserver extends StateObserver {
 
     public AltarStateObserver(Level level, BlockPos pos, int xRadius, int yRadius, int zRadius) {
         super(level, pos, xRadius, yRadius, zRadius);
@@ -78,4 +78,5 @@ public class AltarStateObserver extends AbstractStateObserver {
     public void onRemove() {
 
     }
+
 }

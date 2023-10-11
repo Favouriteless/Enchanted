@@ -171,7 +171,7 @@ public class RiteProtection extends AbstractRite {
 
     protected void getOrCreateObserver() {
         if(stateObserver == null)
-            stateObserver = (RiteOfProtectionObserver)StateObserverManager.getObserver(getLevel(), targetPos, AltarStateObserver.class);
+            stateObserver = StateObserverManager.getObserver(getLevel(), targetPos, RiteOfProtectionObserver.class);
         if(stateObserver == null)
             stateObserver = StateObserverManager.createObserver(new RiteOfProtectionObserver(targetLevel, targetPos, radius + 1, radius + 1, radius + 1, block));
     }

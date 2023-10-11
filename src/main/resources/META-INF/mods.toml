@@ -22,7 +22,7 @@ Enchanted is your mod for all things occult or witchcraft. A modernized attempt 
 [[dependencies.enchanted]]
     modId="stateobserver"
     mandatory=true
-    versionRange="[1.1.0,]"
+    versionRange="[1.2.1,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.enchanted]]

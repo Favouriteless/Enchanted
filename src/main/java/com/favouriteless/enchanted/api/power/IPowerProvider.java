@@ -26,14 +26,14 @@ package com.favouriteless.enchanted.api.power;
 
 import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
-import com.favouriteless.stateobserver.api.AbstractStateObserver;
+import com.favouriteless.stateobserver.api.StateObserver;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Represents a {@link BlockEntity} which produces power. Every {@link BlockEntity} which needs to produce power should
  * implement this.
  *
- * <p>A {@link BlockEntity} implementing {@link IPowerProvider} should also use a {@link AbstractStateObserver} to
+ * <p>A {@link BlockEntity} implementing {@link IPowerProvider} should also use a {@link StateObserver} to
  * notify nearby {@link IPowerConsumer}s when it is created or loaded, and when those consumers are placed.</p>
  *
  * <p>See {@link AltarBlockEntity} and {@link AltarStateObserver} for an example implementation of a power provider.</p>

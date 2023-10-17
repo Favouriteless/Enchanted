@@ -1,27 +1,28 @@
 modLoader = "javafml"
-loaderVersion = "[40,)"
-license = "All Rights Reserved"
+loaderVersion = "${forge_loader_version_range}"
+license = "${license}"
+
 
 [[mods]]
-modId = "enchanted"
+modId = "${mod_id}"
 version = "${version}"
 displayName = "${mod_name}"
+displayURL= "https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft"
+logoFile = "${mod_id}.png"
 credits = "Heavily inspired by Emoniph's Witchery mod"
-authors = "Favouriteless"
-description = '''Enchanted is your mod for all things occult or witchcraft. A modernized attempt at Emoniph's Witchery.'''
-logoFile = "icon.png"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft" #optional
+authors = "${mod_author}"
+description = '''${description}'''
 
-[[dependencies.enchanted]]
+[[dependencies.${mod_id}]]
     modId = "forge"
     mandatory = true
-    versionRange = "[40,)"
+    versionRange = "${forge_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.enchanted]]
+[[dependencies.${mod_id}]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.18.2,)"
+    versionRange = "${minecraft_version_range}"
     ordering = "NONE"
     side = "BOTH"

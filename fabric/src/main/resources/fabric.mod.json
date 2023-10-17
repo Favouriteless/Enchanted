@@ -1,32 +1,36 @@
 {
-  "schemaVersion": 1,
-  "id": "enchanted",
-  "version": "${version}",
-  "name": "Enchanted",
-  "description": "Enchanted is your mod for all things occult or witchcraft. A modernized attempt at Emoniph's Witchery.",
-  "authors": [
-    "Favouriteless"
-  ],
-  "contact": {
+    "schemaVersion": 1,
+    "id": "enchanted",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
         "homepage": "https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft",
         "sources": "https://github.com/Favouriteless/Enchanted"
-  },
-  "license": "All Rights Reserved",
-  "icon": "assets/enchanted/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-        "com.favouriteless.enchanted.EnchantedFabric"
-    ]
-  },
-  "mixins": [
-	"enchanted.mixins.json",
-	"enchanted.fabric.mixins.json"
-  ],
-  "depends": {
-	"fabricloader": ">=0.14",
-    "fabric": "*",
-    "minecraft": "1.18.2",
-	"java": ">=17"
-  }
+    },
+    "license": "${license}",
+    "icon": "assets/${mod_id}/${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.favouriteless.enchanted.EnchantedFabric"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14",
+        "fabric": "*",
+        "minecraft": "1.20",
+        "java": ">=17"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
 }
+  

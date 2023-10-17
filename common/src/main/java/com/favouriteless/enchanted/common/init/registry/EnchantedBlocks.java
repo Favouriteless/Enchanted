@@ -121,4 +121,6 @@ public class EnchantedBlocks {
         return new RotatedPillarBlock(Properties.of(Material.WOOD, (sideColor) -> sideColor.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor).strength(2.0F).sound(SoundType.WOOD));
     }
 
+    public static void load() {} // Method which exists purely to load the class.
+
 }

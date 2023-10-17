@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;

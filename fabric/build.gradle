@@ -13,7 +13,10 @@ dependencies {
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modRuntimeOnly "vazkii.patchouli:Patchouli:1.18.2-71"
+    modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    modRuntimeOnly "com.favouriteless:StateObserver-fabric-1.19.2:${stateobserver_version}"
+    modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-1.19:${geckolib_version_fabric}"
+    modRuntimeOnly "net.tslat.smartbrainlib:SmartBrainLib-fabric-1.19.2:${sbl_version}"
 
 
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'

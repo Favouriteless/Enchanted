@@ -75,7 +75,10 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     compileOnly project(":common")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    runtimeOnly fg.deobf("com.favouriteless:StateObserver-forge-1.19.2:${stateobserver_version}")
+    runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}")
+    runtimeOnly fg.deobf("net.tslat.smartbrainlib:SmartBrainLib-forge-1.19.2:${sbl_version}")
 
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }

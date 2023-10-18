@@ -1,6 +1,10 @@
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.RiteManager;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;

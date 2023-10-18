@@ -1,16 +1,24 @@
 package com.favouriteless.enchanted.common.rites;
 
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.UUID;
 
-public class RiteType<T extends AbstractRite> extends ForgeRegistryEntry<RiteType<?>> {
+public class RiteType<T extends AbstractRite> {
 
+	private final ResourceLocation id;
 	private final RiteFactory<T> factory;
 
-	public RiteType(RiteFactory<T> factory) {
+	public RiteType(ResourceLocation id, RiteFactory<T> factory) {
+		this.id = id;
 		this.factory = factory;
+	}
+
+	public ResourceLocation getId() {
+		return id;
 	}
 
 	public T create(ServerLevel level, BlockPos pos, UUID caster) {

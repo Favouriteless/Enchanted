@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -31,36 +7,38 @@ import com.favouriteless.enchanted.common.curses.CurseOverheating;
 import com.favouriteless.enchanted.common.curses.CurseSinking;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
+
 
 public class CurseTypes {
 
-    public static final DeferredRegister<CurseType> CURSE_TYPES = DeferredRegister.create(Enchanted.location("curses"), Enchanted.MOD_ID);
-    public static final Supplier<IForgeRegistry<CurseType>> REGISTRY = CURSE_TYPES.makeRegistry(Generify.<CurseType>from(CurseType.class), RegistryBuilder::new);
+    private static final Map<ResourceLocation, CurseType<?>> CURSE_TYPES = new HashMap<>();
 
-    public static final RegistryObject<CurseType> MISFORTUNE = CURSE_TYPES.register("misfortune", () -> new CurseType(CurseMisfortune::new));
-    public static final RegistryObject<CurseType> SINKING = CURSE_TYPES.register("sinking", () -> new CurseType(CurseSinking::new));
-    public static final RegistryObject<CurseType> OVERHEATING = CURSE_TYPES.register("overheating", () -> new CurseType(CurseOverheating::new));
+    public static final CurseType<CurseMisfortune> MISFORTUNE = register("misfortune", CurseMisfortune::new);
+    public static final CurseType<CurseSinking> SINKING = register("sinking", CurseSinking::new);
+    public static final CurseType<CurseOverheating> OVERHEATING = register("overheating", CurseOverheating::new);
 
 
-    public static AbstractCurse getByName(ResourceLocation loc) {
-        for(RegistryObject<CurseType> registryObject : CURSE_TYPES.getEntries()) {
-            if(registryObject.getId().equals(loc))
-                return registryObject.get().create();
-        }
-        return null;
+
+    /**
+     * Register a {@link CurseType} to be used by Enchanted.
+     */
+    public static <T extends AbstractCurse> CurseType<T> register(ResourceLocation id, Supplier<T> curseSupplier) {
+        CurseType<T> riteType = new CurseType<>(id, curseSupplier);
+        CURSE_TYPES.put(id, riteType);
+        return riteType;
     }
 
-    private static class Generify {
+    private static <T extends AbstractCurse> CurseType<T> register(String id, Supplier<T> curseSupplier) {
+        return register(Enchanted.location(id), curseSupplier);
+    }
 
-        @SuppressWarnings("unchecked")
-        public static <T extends IForgeRegistryEntry<T>> Class<T> from(Class<? super T> cls)
-        {
-            return (Class<T>) cls;
-        }
-
+    public static AbstractCurse getInstance(ResourceLocation id) {
+        CurseType<?> type = CURSE_TYPES.get(id);
+        return type != null ? type.create() : null;
     }
 
 }

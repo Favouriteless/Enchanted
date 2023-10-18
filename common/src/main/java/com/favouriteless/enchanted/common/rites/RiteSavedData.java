@@ -1,15 +1,18 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.storage.DimensionDataStorage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RiteSavedData extends SavedData {
 
@@ -41,7 +44,7 @@ public class RiteSavedData extends SavedData {
 		for(int i = 0; i < riteList.size(); i++) {
 			CompoundTag riteNbt = riteList.getCompound(i);
 			String typeString = riteNbt.getString("type");
-			RiteType<?> type = RiteTypes.REGISTRY.get().getValue(new ResourceLocation(typeString));
+			RiteType<?> type = RiteTypes.get(new ResourceLocation(typeString));
 
 			if(type != null) {
 				AbstractRite rite = type.create();

@@ -14,76 +14,88 @@ import com.favouriteless.enchanted.common.rites.processing.RiteBroilingCharged;
 import com.favouriteless.enchanted.common.rites.processing.RiteChargingStone;
 import com.favouriteless.enchanted.common.rites.processing.RiteInfusionBroom;
 import com.favouriteless.enchanted.common.rites.world.*;
-import com.favouriteless.enchanted.core.util.RegistryHelper.Generify;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
-import net.minecraftforge.registries.RegistryObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class RiteTypes {
 
-    public static final DeferredRegister<RiteType<?>> RITE_TYPES = DeferredRegister.create(Enchanted.location("rites"), Enchanted.MOD_ID);
-    public static final Supplier<IForgeRegistry<RiteType<?>>> REGISTRY = RITE_TYPES.makeRegistry(Generify.<RiteType<?>>from(RiteType.class), RegistryBuilder::new);
+    private static final Map<ResourceLocation, RiteType<?>> RITE_TYPES = new HashMap<>();
 
-    public static final RegistryObject<RiteType<?>> BINDING_TALISMAN = RITE_TYPES.register("binding_talisman", () -> new RiteType<>(RiteBindingTalisman::new));
-    public static final RegistryObject<RiteType<?>> BINDING_TALISMAN_CHARGED = RITE_TYPES.register("binding_talisman_charged", () -> new RiteType<>(RiteBindingTalismanCharged::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE = RITE_TYPES.register("binding_waystone", () -> new RiteType<>(RiteBindingWaystone::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_CHARGED = RITE_TYPES.register("binding_waystone_charged", () -> new RiteType<>(RiteBindingWaystoneCharged::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE = RITE_TYPES.register("binding_waystone_duplicate", () -> new RiteType<>(RiteBindingWaystoneDuplicate::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_DUPLICATE_CHARGED = RITE_TYPES.register("binding_waystone_duplicate_charged", () -> new RiteType<>(RiteBindingWaystoneDuplicateCharged::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER = RITE_TYPES.register("binding_waystone_player", () -> new RiteType<>(RiteBindingWaystonePlayer::new));
-    public static final RegistryObject<RiteType<?>> BINDING_WAYSTONE_PLAYER_CHARGED = RITE_TYPES.register("binding_waystone_player_charged", () -> new RiteType<>(RiteBindingWaystonePlayerCharged::new));
-    public static final RegistryObject<RiteType<?>> BINDING_FAMILIAR = RITE_TYPES.register("binding_familiar", () -> new RiteType<>(RiteBindingFamiliar::new));
-    public static final RegistryObject<RiteType<?>> BROILING = RITE_TYPES.register("broiling", () -> new RiteType<>(RiteBroiling::new));
-    public static final RegistryObject<RiteType<?>> BROILING_CHARGED = RITE_TYPES.register("broiling_charged", () -> new RiteType<>(RiteBroilingCharged::new));
-    public static final RegistryObject<RiteType<?>> CHARGING_STONE = RITE_TYPES.register("charging_stone", () -> new RiteType<>(RiteChargingStone::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_BLIGHT = RITE_TYPES.register("curse_of_blight", () -> new RiteType<>(RiteCurseOfBlight::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_MISFORTUNE = RITE_TYPES.register("curse_of_misfortune", () -> new RiteType<>(RiteCurseMisfortune::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_OVERHEATING = RITE_TYPES.register("curse_of_overheating", () -> new RiteType<>(RiteCurseOverheating::new));
-    public static final RegistryObject<RiteType<?>> CURSE_OF_SINKING = RITE_TYPES.register("curse_of_sinking", () -> new RiteType<>(RiteCurseSinking::new));
-    public static final RegistryObject<RiteType<?>> FERTILITY = RITE_TYPES.register("fertility", () -> new RiteType<>(RiteFertility::new));
-    public static final RegistryObject<RiteType<?>> FERTILITY_CHARGED = RITE_TYPES.register("fertility_charged", () -> new RiteType<>(RiteFertilityCharged::new));
-    public static final RegistryObject<RiteType<?>> FOREST = RITE_TYPES.register("forest", () -> new RiteType<>(RiteForest::new));
-    public static final RegistryObject<RiteType<?>> IMPRISONMENT = RITE_TYPES.register("imprisonment", () -> new RiteType<>(RiteImprisonment::new));
-    public static final RegistryObject<RiteType<?>> INFUSION_BROOM = RITE_TYPES.register("infusion_broom", () -> new RiteType<>(RiteInfusionBroom::new));
-    public static final RegistryObject<RiteType<?>> PROTECTION = RITE_TYPES.register("protection", () -> new RiteType<>(RiteProtection::new));
-    public static final RegistryObject<RiteType<?>> PROTECTION_LARGE = RITE_TYPES.register("protection_large", () -> new RiteType<>(RiteProtectionLarge::new));
-    public static final RegistryObject<RiteType<?>> PROTECTION_TEMPORARY = RITE_TYPES.register("protection_temporary", () -> new RiteType<>(RiteProtectionTemporary::new));
-    public static final RegistryObject<RiteType<?>> REMOVE_MISFORTUNE = RITE_TYPES.register("remove_misfortune", () -> new RiteType<>(RiteRemoveMisfortune::new));
-    public static final RegistryObject<RiteType<?>> REMOVE_OVERHEATING = RITE_TYPES.register("remove_overheating", () -> new RiteType<>(RiteRemoveOverheating::new));
-    public static final RegistryObject<RiteType<?>> REMOVE_SINKING = RITE_TYPES.register("remove_sinking", () -> new RiteType<>(RiteRemoveSinking::new));
-    public static final RegistryObject<RiteType<?>> SANCTITY = RITE_TYPES.register("sanctity", () -> new RiteType<>(RiteSanctity::new));
-    public static final RegistryObject<RiteType<?>> SKY_WRATH = RITE_TYPES.register("sky_wrath", () -> new RiteType<>(RiteSkyWrath::new));
-    public static final RegistryObject<RiteType<?>> SKY_WRATH_CHARGED = RITE_TYPES.register("sky_wrath_charged", () -> new RiteType<>(RiteSkyWrathCharged::new));
-    public static final RegistryObject<RiteType<?>> SUMMONING_ENTITY = RITE_TYPES.register("summoning_entity", () -> new RiteType<>(RiteSummonEntity::new));
-    public static final RegistryObject<RiteType<?>> SUMMONING_FAMILIAR = RITE_TYPES.register("summoning_familiar", () -> new RiteType<>(RiteSummonFamiliar::new));
-    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE = RITE_TYPES.register("total_eclipse", () -> new RiteType<>(RiteTotalEclipse::new));
-    public static final RegistryObject<RiteType<?>> TOTAL_ECLIPSE_CHARGED = RITE_TYPES.register("total_eclipse_charged", () -> new RiteType<>(RiteTotalEclipseCharged::new));
-    public static final RegistryObject<RiteType<?>> TRANSPOSITION_IRON = RITE_TYPES.register("transposition_iron", () -> new RiteType<>(RiteTranspositionIron::new));
-    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER = RITE_TYPES.register("transposition_player", () -> new RiteType<>(RiteTranspositionPlayer::new));
-    public static final RegistryObject<RiteType<?>> TRANSPOSITION_PLAYER_BLOODED = RITE_TYPES.register("transposition_player_blooded", () -> new RiteType<>(RiteTranspositionPlayerBlooded::new));
+    public static final RiteType<RiteBindingTalisman> BINDING_TALISMAN = register("binding_talisman", RiteBindingTalisman::new);
+    public static final RiteType<RiteBindingTalismanCharged> BINDING_TALISMAN_CHARGED = register("binding_talisman_charged", RiteBindingTalismanCharged::new);
+    public static final RiteType<RiteBindingWaystone> BINDING_WAYSTONE = register("binding_waystone", RiteBindingWaystone::new);
+    public static final RiteType<RiteBindingWaystoneCharged> BINDING_WAYSTONE_CHARGED = register("binding_waystone_charged", RiteBindingWaystoneCharged::new);
+    public static final RiteType<RiteBindingWaystoneDuplicate> BINDING_WAYSTONE_DUPLICATE = register("binding_waystone_duplicate", RiteBindingWaystoneDuplicate::new);
+    public static final RiteType<RiteBindingWaystoneDuplicateCharged> BINDING_WAYSTONE_DUPLICATE_CHARGED = register("binding_waystone_duplicate_charged", RiteBindingWaystoneDuplicateCharged::new);
+    public static final RiteType<RiteBindingWaystonePlayer> BINDING_WAYSTONE_PLAYER = register("binding_waystone_player", RiteBindingWaystonePlayer::new);
+    public static final RiteType<RiteBindingWaystonePlayerCharged> BINDING_WAYSTONE_PLAYER_CHARGED = register("binding_waystone_player_charged", RiteBindingWaystonePlayerCharged::new);
+    public static final RiteType<RiteBindingFamiliar> BINDING_FAMILIAR = register("binding_familiar", RiteBindingFamiliar::new);
+    public static final RiteType<RiteBroiling> BROILING = register("broiling", RiteBroiling::new);
+    public static final RiteType<RiteBroilingCharged> BROILING_CHARGED = register("broiling_charged", RiteBroilingCharged::new);
+    public static final RiteType<RiteChargingStone> CHARGING_STONE = register("charging_stone", RiteChargingStone::new);
+    public static final RiteType<RiteCurseOfBlight> CURSE_OF_BLIGHT = register("curse_of_blight", RiteCurseOfBlight::new);
+    public static final RiteType<RiteCurseMisfortune> CURSE_OF_MISFORTUNE = register("curse_of_misfortune", RiteCurseMisfortune::new);
+    public static final RiteType<RiteCurseOverheating> CURSE_OF_OVERHEATING = register("curse_of_overheating", RiteCurseOverheating::new);
+    public static final RiteType<RiteCurseSinking> CURSE_OF_SINKING = register("curse_of_sinking", RiteCurseSinking::new);
+    public static final RiteType<RiteFertility> FERTILITY = register("fertility", RiteFertility::new);
+    public static final RiteType<RiteFertilityCharged> FERTILITY_CHARGED = register("fertility_charged", RiteFertilityCharged::new);
+    public static final RiteType<RiteForest> FOREST = register("forest", RiteForest::new);
+    public static final RiteType<RiteImprisonment> IMPRISONMENT = register("imprisonment", RiteImprisonment::new);
+    public static final RiteType<RiteInfusionBroom> INFUSION_BROOM = register("infusion_broom", RiteInfusionBroom::new);
+    public static final RiteType<RiteProtection> PROTECTION = register("protection", RiteProtection::new);
+    public static final RiteType<RiteProtectionLarge> PROTECTION_LARGE = register("protection_large", RiteProtectionLarge::new);
+    public static final RiteType<RiteProtectionTemporary> PROTECTION_TEMPORARY = register("protection_temporary", RiteProtectionTemporary::new);
+    public static final RiteType<RiteRemoveMisfortune> REMOVE_MISFORTUNE = register("remove_misfortune", RiteRemoveMisfortune::new);
+    public static final RiteType<RiteRemoveOverheating> REMOVE_OVERHEATING = register("remove_overheating", RiteRemoveOverheating::new);
+    public static final RiteType<RiteRemoveSinking> REMOVE_SINKING = register("remove_sinking", RiteRemoveSinking::new);
+    public static final RiteType<RiteSanctity> SANCTITY = register("sanctity", RiteSanctity::new);
+    public static final RiteType<RiteSkyWrath> SKY_WRATH = register("sky_wrath", RiteSkyWrath::new);
+    public static final RiteType<RiteSkyWrathCharged> SKY_WRATH_CHARGED = register("sky_wrath_charged", RiteSkyWrathCharged::new);
+    public static final RiteType<RiteSummonEntity> SUMMONING_ENTITY = register("summoning_entity", RiteSummonEntity::new);
+    public static final RiteType<RiteSummonFamiliar> SUMMONING_FAMILIAR = register("summoning_familiar", RiteSummonFamiliar::new);
+    public static final RiteType<RiteTotalEclipse> TOTAL_ECLIPSE = register("total_eclipse", RiteTotalEclipse::new);
+    public static final RiteType<RiteTotalEclipseCharged> TOTAL_ECLIPSE_CHARGED = register("total_eclipse_charged", RiteTotalEclipseCharged::new);
+    public static final RiteType<RiteTranspositionIron> TRANSPOSITION_IRON = register("transposition_iron", RiteTranspositionIron::new);
+    public static final RiteType<RiteTranspositionPlayer> TRANSPOSITION_PLAYER = register("transposition_player", RiteTranspositionPlayer::new);
+    public static final RiteType<RiteTranspositionPlayerBlooded> TRANSPOSITION_PLAYER_BLOODED = register("transposition_player_blooded", RiteTranspositionPlayerBlooded::new);
 
+    /**
+     * Register a {@link RiteType} to be used by Enchanted.
+     */
+    public static <T extends AbstractRite> RiteType<T> register(ResourceLocation id, RiteType.RiteFactory<T> factory) {
+        RiteType<T> riteType = new RiteType<>(id, factory);
+        RITE_TYPES.put(id, riteType);
+        return riteType;
+    }
+
+    private static <T extends AbstractRite> RiteType<T> register(String id, RiteType.RiteFactory<T> factory) {
+        return register(Enchanted.location(id), factory);
+    }
+
+    public static RiteType<?> get(ResourceLocation id) {
+        return RITE_TYPES.get(id);
+    }
 
     /**
      * Attempt to create a rite instance in the specified {@link ServerLevel} at the specified {@link BlockPos} if the
      * requirements for the rite are met at that position.
+     *
      * @param level The {@link ServerLevel} to create the Rite in.
      * @param pos The {@link BlockPos} to create the Rite at.
-     * @return An instance of the {@link AbstractRite} implementation which has it's requirements met at level, pos. Or
+     *
+     * @return An instance of the {@link AbstractRite} implementation which has its requirements met at level, pos. Or
      * if no rites have their requirements met, null.
      */
     public static AbstractRite getRiteAt(ServerLevel level, BlockPos pos, UUID caster) {
         AbstractRite currentRite = null;
         int currentDiff = Integer.MAX_VALUE;
 
-        for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
-            RiteType<?> type = registryObject.get();
+        for(RiteType<?> type : RITE_TYPES.values()) {
             AbstractRite rite = type.create(level, pos, caster);
             int diff = rite.differenceAt(level, pos);
             if(diff != -1 && diff < currentDiff) {
@@ -97,12 +109,9 @@ public class RiteTypes {
     /**
      * This method is only used by patchouli and/or JEI to grab the requirements of a rite.
      */
-    public static AbstractRite getDefaultByName(ResourceLocation loc) {
-        for(RegistryObject<RiteType<?>> registryObject : RITE_TYPES.getEntries()) {
-            if(registryObject.getId().equals(loc))
-                return registryObject.get().create();
-        }
-        return null;
+    public static AbstractRite getDefaultByName(ResourceLocation id) {
+        RiteType<?> type = RITE_TYPES.get(id);
+        return type != null ? type.create() : null;
     }
 
 }

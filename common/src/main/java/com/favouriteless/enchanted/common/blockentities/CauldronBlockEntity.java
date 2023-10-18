@@ -2,6 +2,7 @@ package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.util.PlayerInventoryHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

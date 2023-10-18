@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "com.favouriteless.enchanted.EnchantedFabric"
+        ],
+        "client": [
+            "com.favouriteless.enchanted.client.EnchantedFabricClient"
         ]
     },
     "mixins": [

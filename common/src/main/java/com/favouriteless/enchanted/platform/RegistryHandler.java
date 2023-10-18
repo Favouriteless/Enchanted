@@ -19,8 +19,6 @@ public class RegistryHandler {
 		return INSTANCE.registerTab(Enchanted.MOD_ID + "." + name, iconSupplier);
 	}
 
-
-
 	public abstract static class Impl {
 
 		protected Impl() {

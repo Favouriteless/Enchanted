@@ -27,8 +27,7 @@ package com.favouriteless.enchanted.api.rites;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
@@ -39,7 +38,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -56,7 +55,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,7 +171,7 @@ public abstract class AbstractRite {
         level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE, SoundSource.MASTER, 1.0F, 1.0F);
 
         Player player = level.getServer().getPlayerList().getPlayer(casterUUID);
-        if(player != null) player.displayClientMessage(new TextComponent("Rite failed.").withStyle(ChatFormatting.RED), false);
+        if(player != null) player.displayClientMessage(Component.literal("Rite failed.").withStyle(ChatFormatting.RED), false);
 
         for(int i = 0; i < 25; i++) {
             double dx = pos.getX() + Math.random();
@@ -426,7 +424,10 @@ public abstract class AbstractRite {
         }
         else { // Too much
             ITEMS_REQUIRED.remove(item);
-            itemsConsumed.add(new ItemStack(item, amountNeeded, stack.getTag()));
+
+            ItemStack consumed = new ItemStack(item, amountNeeded);
+            consumed.setTag(stack.getTag());
+            itemsConsumed.add(consumed);
             stack.shrink(amountNeeded);
             entity.setItem(stack);
         }

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "side": "enchanted:block/rowan_log",
-    "end": "enchanted:block/rowan_log_top"
-  }
-}

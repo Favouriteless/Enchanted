@@ -1,13 +1,18 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.api.ISerializable;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
+import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.menus.AltarMenu;
+import com.favouriteless.stateobserver.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -96,7 +101,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         super.onLoad();
         if(!level.isClientSide) {
             if(stateObserver == null)
-                stateObserver = (AltarStateObserver)StateObserverManager.getObserver(level, worldPosition, AltarStateObserver.class);
+                stateObserver = StateObserverManager.getObserver(level, worldPosition, AltarStateObserver.class);
             if(stateObserver == null) {
                 int range = EnchantedConfig.ALTAR_RANGE.get();
                 stateObserver = StateObserverManager.createObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
@@ -268,7 +273,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.enchanted.altar");
+        return Component.translatable("container.enchanted.altar");
     }
 
     @Nullable
@@ -286,7 +291,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         return false;
     }
 
-    public static class AltarBlockData implements INBTSerializable<CompoundTag> {
+    public static class AltarBlockData implements ISerializable<CompoundTag> {
         public Map<Block, Integer> blockCounts = new HashMap<>();
         public Map<TagKey<Block>, Integer> tagCounts = new HashMap<>();
 
@@ -400,7 +405,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     }
 
-    public static class AltarUpgradeData implements INBTSerializable<CompoundTag> {
+    public static class AltarUpgradeData implements ISerializable<CompoundTag> {
         public final Map<String, Map<AltarUpgrade, Integer>> upgradesByType = new HashMap<>();
 
         public AltarUpgradeData() {

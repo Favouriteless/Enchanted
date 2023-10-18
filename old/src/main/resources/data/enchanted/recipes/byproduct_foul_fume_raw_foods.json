@@ -1,7 +1,0 @@
-{
-  "type": "enchanted:witch_oven",
-  "ingredient": {
-    "tag": "enchanted:raw_foods"
-  },
-  "result": { "item": "enchanted:foul_fume", "count": 1 }
-}

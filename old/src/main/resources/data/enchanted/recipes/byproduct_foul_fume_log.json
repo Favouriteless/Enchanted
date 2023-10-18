@@ -1,7 +1,0 @@
-{
-  "type": "enchanted:witch_oven",
-  "ingredient": {
-    "tag": "minecraft:logs_that_burn"
-  },
-  "result": { "item": "enchanted:foul_fume", "count": 1 }
-}

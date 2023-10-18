@@ -1,7 +1,0 @@
-{
-  "type": "enchanted:witch_oven",
-  "ingredient": {
-    "item": "minecraft:jungle_sapling"
-  },
-  "result": { "item": "enchanted:foul_fume", "count": 1 }
-}

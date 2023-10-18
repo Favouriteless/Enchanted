@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -37,8 +13,6 @@ import net.minecraft.world.entity.player.Inventory;
 import java.awt.*;
 
 public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMenu> {
-
-    private SpinningWheelMenu container;
 
     private static final ResourceLocation TEXTURE = Enchanted.location("textures/gui/spinning_wheel.png");
 
@@ -58,56 +32,53 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMe
     public static final int WHEEL_FRAME2_V = 74;
     public static final int WHEEL_SIZE = 34;
 
-    public SpinningWheelScreen(SpinningWheelMenu container, Inventory playerInventory, Component title) {
-        super(container, playerInventory, title);
-        this.container = container;
+    public SpinningWheelScreen(SpinningWheelMenu menu, Inventory playerInventory, Component title) {
+        super(menu, playerInventory, title);
 
         imageWidth = 176;
         imageHeight = 166;
     }
 
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(PoseStack poseStack, int xMouse, int yMouse, float partialTicks) {
+        this.renderBackground(poseStack);
+        super.render(poseStack, xMouse, yMouse, partialTicks);
+        this.renderTooltip(poseStack, xMouse, yMouse);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
 
-        int edgeSpacingX = (this.width - this.imageWidth) / 2;
-        int edgeSpacingY = (this.height - this.imageHeight) / 2;
-        this.blit(matrixStack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+        int edgeSpacingX = (width - imageWidth) / 2;
+        int edgeSpacingY = (height - imageHeight) / 2;
+        blit(poseStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
-        double progression = (double)container.getData().get(0) / container.getData().get(1);
+        double progression = (double)menu.getData().get(0) / menu.getData().get(1);
 
         int barSize = (int)Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
-        if(container.getSlot(1).hasItem())
-            this.blit(matrixStack, this.leftPos + BAR0_XPOS, this.topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR0_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
-        if(container.getSlot(2).hasItem())
-            this.blit(matrixStack, this.leftPos + BAR1_XPOS, this.topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR1_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
+        if(menu.getSlot(1).hasItem())
+            blit(poseStack, leftPos + BAR0_XPOS, topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR0_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
+        if(menu.getSlot(2).hasItem())
+            blit(poseStack, leftPos + BAR1_XPOS, topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR1_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
 
         if(progression > 0.1D) { // If over 10%, spin wheel
 
             int frame = (int)Math.round((progression - 0.1D) * 200) % 3;
 
-            if(frame == 0) {
-                this.blit(matrixStack, this.leftPos + WHEEL_XPOS, this.topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME2_V, WHEEL_SIZE, WHEEL_SIZE);
-            }
-            else if(frame == 2) {
-                this.blit(matrixStack, this.leftPos + WHEEL_XPOS, this.topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME1_V, WHEEL_SIZE, WHEEL_SIZE);
-            }
+            if(frame == 0)
+                blit(poseStack, leftPos + WHEEL_XPOS, topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME2_V, WHEEL_SIZE, WHEEL_SIZE);
+            else if(frame == 2)
+                blit(poseStack, leftPos + WHEEL_XPOS, topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME1_V, WHEEL_SIZE, WHEEL_SIZE);
         }
 
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        this.font.draw(matrixStack, this.title, (float)(this.imageWidth / 2 - this.font.width(title) / 2), (float)this.titleLabelY, Color.DARK_GRAY.getRGB());
-        this.font.draw(matrixStack, minecraft.player.getInventory().getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, Color.DARK_GRAY.getRGB());
+    protected void renderLabels(PoseStack poseStack, int xMouse, int yMouse) {
+        font.draw(poseStack, title, (float)(imageWidth / 2 - font.width(title) / 2), titleLabelY, Color.DARK_GRAY.getRGB());
+        font.draw(poseStack, minecraft.player.getInventory().getDisplayName(), inventoryLabelX, inventoryLabelY, Color.DARK_GRAY.getRGB());
     }
 
 }

@@ -1,5 +1,7 @@
 package com.favouriteless.enchanted.common.items.brews;
 
+import com.favouriteless.enchanted.common.entities.ThrowableBrew;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;

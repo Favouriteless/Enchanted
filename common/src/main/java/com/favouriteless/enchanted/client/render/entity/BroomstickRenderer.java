@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.render.entity;
 
 
@@ -50,27 +26,27 @@ public class BroomstickRenderer extends EntityRenderer<Broomstick> {
 	}
 
 	@Override
-	public void render(Broomstick entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
-		matrix.pushPose();
+	public void render(Broomstick broomstick, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+		poseStack.pushPose();
 
-		matrix.translate(0.0D, 0.7D, 0.0D);
-		matrix.mulPose(Vector3f.YP.rotationDegrees(180.0F - yaw));
-		matrix.mulPose(Vector3f.XP.rotationDegrees(180.0F - Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
+		poseStack.translate(0.0D, 0.7D, 0.0D);
+		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - yaw));
+		poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F - Mth.lerp(partialTicks, broomstick.xRotO, broomstick.getXRot())));
 
-		float f = entity.getHurtTime() - partialTicks;
-		float f1 = entity.getDamage() - partialTicks;
+		float f = broomstick.getHurtTime() - partialTicks;
+		float f1 = broomstick.getDamage() - partialTicks;
 		if (f1 < 0.0F) {
 			f1 = 0.0F;
 		}
 		if (f > 0.0F) {
-			matrix.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)entity.getHurtDir()));
+			poseStack.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)broomstick.getHurtDir()));
 		}
 
-		VertexConsumer ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
-		this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		matrix.popPose();
+		VertexConsumer ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(broomstick)));
+		this.model.renderToBuffer(poseStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		poseStack.popPose();
 
-		super.render(entity, yaw, partialTicks, matrix, buffer, packedLight);
+		super.render(broomstick, yaw, partialTicks, poseStack, buffer, packedLight);
 	}
 
 	@Override

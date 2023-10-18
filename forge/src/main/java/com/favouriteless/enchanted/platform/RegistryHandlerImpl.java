@@ -1,10 +1,18 @@
 package com.favouriteless.enchanted.platform;
 
 import com.favouriteless.enchanted.Enchanted;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -25,11 +33,19 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 	}
 
 	@Override
+	public <T extends Entity> void registerEntityRenderer(EntityType<T> type, EntityRendererProvider<T> constructor) {
+		EntityRenderers.register(type, constructor);
+	}
+
+	@Override
+	public <T extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<T> type, BlockEntityRendererProvider<T> constructor) {
+		BlockEntityRenderers.register(type, constructor);
+	}
+
+	@Override
 	public CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier) {
 		return null;
 	}
-
-
 
 	private static class RegistryMap {
 

@@ -1,10 +1,12 @@
 package com.favouriteless.enchanted.common.items;
 
+import com.favouriteless.enchanted.common.entities.Broomstick;
+import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 
 public class BroomstickItem extends Item {

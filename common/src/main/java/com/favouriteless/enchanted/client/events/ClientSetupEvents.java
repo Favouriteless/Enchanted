@@ -52,42 +52,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
 public class ClientSetupEvents {
-
-	@SubscribeEvent
-	public static void clientSetup(FMLClientSetupEvent event) {
-		MenuScreens.register(EnchantedMenus.WITCH_OVEN.get(), WitchOvenScreen::new);
-		MenuScreens.register(EnchantedMenus.DISTILLERY.get(), DistilleryScreen::new);
-		MenuScreens.register(EnchantedMenus.ALTAR.get(), AltarScreen::new);
-		MenuScreens.register(EnchantedMenus.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
-		MenuScreens.register(EnchantedMenus.POPPET_SHELF.get(), PoppetShelfScreen::new);
-
-		EnchantedBlocks.initRender();
-		EnchantedKeybinds.registerKeybinds();
-	}
-
-	@SubscribeEvent
-	public static void registerBlockColors(ColorHandlerEvent.Block event) {
-		event.getBlockColors().register((a, b, c, d) -> 0xF0F0F0, EnchantedBlocks.CHALK_WHITE.get());
-		event.getBlockColors().register((a, b, c, d) -> 0x801818, EnchantedBlocks.CHALK_RED.get());
-		event.getBlockColors().register((a, b, c, d) -> 0x4F2F78, EnchantedBlocks.CHALK_PURPLE.get());
-	}
-
-	@SubscribeEvent
-	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(EnchantedEntityTypes.MANDRAKE.get(), context -> new SimpleAnimatedGeoRenderer<>(context, "mandrake"));
-		event.registerEntityRenderer(EnchantedEntityTypes.ENT.get(), EntRenderer::new);
-		event.registerEntityRenderer(EnchantedEntityTypes.BROOMSTICK.get(), BroomstickRenderer::new);
-		event.registerEntityRenderer(EnchantedEntityTypes.THROWABLE_BREW.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(EnchantedEntityTypes.FAMILIAR_CAT.get(), FamiliarCatRenderer::new);
-
-		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.WITCH_CAULDRON.get(), dispatcher -> new CauldronWaterRenderer<>(10));
-		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.KETTLE.get(), dispatcher -> new CauldronWaterRenderer<>(8));
-		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
-		event.registerBlockEntityRenderer(EnchantedBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
-
-	}
 
 	@SubscribeEvent
 	public static void registerLayerDefinitions(RegisterLayerDefinitions event) {

@@ -1,51 +1,27 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles.types;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
 public class TwoToneColouredParticleType extends ParticleType<TwoToneColouredParticleType.TwoToneColouredData> {
     public static final Codec<TwoToneColouredData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("particle_type").forGetter(data -> data.particleType.getRegistryName().toString()),
+            Codec.STRING.fieldOf("particle_type").forGetter(data -> Registry.PARTICLE_TYPE.getKey(data.particleType).toString()),
             Codec.INT.fieldOf("red0").forGetter(data -> data.red),
             Codec.INT.fieldOf("green0").forGetter(data -> data.green),
             Codec.INT.fieldOf("blue0").forGetter(data -> data.blue),
             Codec.INT.fieldOf("red1").forGetter(data -> data.red1),
             Codec.INT.fieldOf("green1").forGetter(data -> data.green1),
             Codec.INT.fieldOf("blue1").forGetter(data -> data.blue1)
-    ).apply(instance, (type, red, green, blue, red1, green1, blue1) -> new TwoToneColouredData((ParticleType<TwoToneColouredData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), red, green, blue, red1, green1, blue1)));
+    ).apply(instance, (type, red, green, blue, red1, green1, blue1) -> new TwoToneColouredData((ParticleType<TwoToneColouredData>)Registry.PARTICLE_TYPE.get(new ResourceLocation(type)), red, green, blue, red1, green1, blue1)));
 
     public TwoToneColouredParticleType(boolean alwaysShow) {
         super(alwaysShow, TwoToneColouredData.DESERIALIZER);
@@ -58,7 +34,7 @@ public class TwoToneColouredParticleType extends ParticleType<TwoToneColouredPar
 
     public static class TwoToneColouredData implements ParticleOptions {
 
-        public static final Deserializer<TwoToneColouredData> DESERIALIZER = new Deserializer<TwoToneColouredData>() {
+        public static final Deserializer<TwoToneColouredData> DESERIALIZER = new Deserializer<>() {
             public TwoToneColouredData fromCommand(ParticleType<TwoToneColouredData> particleType, StringReader reader) throws CommandSyntaxException {
                 reader.expect(' ');
                 int red = reader.readInt();
@@ -102,7 +78,7 @@ public class TwoToneColouredParticleType extends ParticleType<TwoToneColouredPar
 
         @Override
         public String writeToString() {
-            return String.format(Locale.ROOT, "%s Primary: %d %d %d Secondary: %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), red, green, blue, red1, green1, blue1);
+            return String.format(Locale.ROOT, "%s Primary: %d %d %d Secondary: %d %d %d", Registry.PARTICLE_TYPE.getKey(getType()), red, green, blue, red1, green1, blue1);
         }
 
         @Override

@@ -18,7 +18,7 @@ dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 
-    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
     compileOnly "com.favouriteless:StateObserver-common-1.19.2:${stateobserver_version}"
     compileOnly "net.tslat.smartbrainlib:SmartBrainLib-common-1.19.2:${sbl_version}"
     implementation "software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}"

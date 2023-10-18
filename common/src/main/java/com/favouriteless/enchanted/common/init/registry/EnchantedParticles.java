@@ -1,79 +1,53 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.client.particles.types.*;
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
+import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
 import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
-import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
 import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
+import com.favouriteless.enchanted.platform.RegistryHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.item.Item;
 
-@Mod.EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
+import java.util.function.Supplier;
+
 public class EnchantedParticles {
 
-    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Enchanted.MOD_ID);
 
-    public static final RegistryObject<ParticleType<SimpleColouredData>> BOILING = PARTICLE_TYPES.register("boiling", () -> new SimpleColouredParticleType(false));
-    public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_BREW = PARTICLE_TYPES.register("cauldron_brew", () -> new SimpleColouredParticleType(false));
-    public static final RegistryObject<ParticleType<SimpleColouredData>> CAULDRON_COOK = PARTICLE_TYPES.register("cauldron_cook", () -> new SimpleColouredParticleType(false));
-    public static final RegistryObject<ParticleType<SimpleColouredData>> KETTLE_COOK = PARTICLE_TYPES.register("kettle_cook", () -> new SimpleColouredParticleType(false));
-    public static final RegistryObject<ParticleType<CircleMagicData>> CIRCLE_MAGIC = PARTICLE_TYPES.register("circle_magic", () -> new CircleMagicParticleType(false));
-    public static final RegistryObject<ParticleType<TwoToneColouredData>> POPPET = PARTICLE_TYPES.register("poppet", () -> new TwoToneColouredParticleType(false));
-    public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE = PARTICLE_TYPES.register("imprisonment_cage", () -> new SimpleParticleType(false));
-    public static final RegistryObject<ParticleType<DelayedActionData>> SKY_WRATH = PARTICLE_TYPES.register("sky_wrath", () -> new DelayedActionParticleType(false));
-    public static final RegistryObject<ParticleType<DelayedActionData>> REMOVE_CURSE = PARTICLE_TYPES.register("remove_curse", () -> new DelayedActionParticleType(false));
-    public static final RegistryObject<ParticleType<CircleMagicData>> CURSE_BLIGHT = PARTICLE_TYPES.register("curse_blight", () -> new CircleMagicParticleType(false));
-    public static final RegistryObject<ParticleType<CircleMagicData>> FERTILITY = PARTICLE_TYPES.register("fertility", () -> new CircleMagicParticleType(false));
-    public static final RegistryObject<SimpleParticleType> PROTECTION = PARTICLE_TYPES.register("protection", () -> new SimpleParticleType(false));
-    public static final RegistryObject<ParticleType<DelayedActionData>> BIND_FAMILIAR = PARTICLE_TYPES.register("bind_familiar", () -> new DelayedActionParticleType(false));
+    public static final Supplier<ParticleType<SimpleColouredData>> BOILING = register("boiling", () -> new SimpleColouredParticleType(false));
+    public static final Supplier<ParticleType<SimpleColouredData>> CAULDRON_BREW = register("cauldron_brew", () -> new SimpleColouredParticleType(false));
+    public static final Supplier<ParticleType<SimpleColouredData>> CAULDRON_COOK = register("cauldron_cook", () -> new SimpleColouredParticleType(false));
+    public static final Supplier<ParticleType<SimpleColouredData>> KETTLE_COOK = register("kettle_cook", () -> new SimpleColouredParticleType(false));
+    public static final Supplier<ParticleType<CircleMagicData>> CIRCLE_MAGIC = register("circle_magic", () -> new CircleMagicParticleType(false));
+    public static final Supplier<ParticleType<TwoToneColouredData>> POPPET = register("poppet", () -> new TwoToneColouredParticleType(false));
+    public static final Supplier<SimpleParticleType> IMPRISONMENT_CAGE = register("imprisonment_cage", () -> new SimpleParticleType(false));
+    public static final Supplier<ParticleType<DelayedActionData>> SKY_WRATH = register("sky_wrath", () -> new DelayedActionParticleType(false));
+    public static final Supplier<ParticleType<DelayedActionData>> REMOVE_CURSE = register("remove_curse", () -> new DelayedActionParticleType(false));
+    public static final Supplier<ParticleType<CircleMagicData>> CURSE_BLIGHT = register("curse_blight", () -> new CircleMagicParticleType(false));
+    public static final Supplier<ParticleType<CircleMagicData>> FERTILITY = register("fertility", () -> new CircleMagicParticleType(false));
+    public static final Supplier<SimpleParticleType> PROTECTION = register("protection", () -> new SimpleParticleType(false));
+    public static final Supplier<ParticleType<DelayedActionData>> BIND_FAMILIAR = register("bind_familiar", () -> new DelayedActionParticleType(false));
 
 
-    public static final RegistryObject<SimpleParticleType> IMPRISONMENT_CAGE_SEED = PARTICLE_TYPES.register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> TRANSPOSITION_IRON_SEED = PARTICLE_TYPES.register("transposition_iron_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> BROILING_SEED = PARTICLE_TYPES.register("broiling_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> SKY_WRATH_SEED = PARTICLE_TYPES.register("sky_wrath_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> CURSE_SEED = PARTICLE_TYPES.register("curse_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> CURSE_BLIGHT_SEED = PARTICLE_TYPES.register("curse_blight_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> REMOVE_CURSE_SEED = PARTICLE_TYPES.register("remove_curse_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> FERTILITY_SEED = PARTICLE_TYPES.register("fertility_seed", () -> new SimpleParticleType(false));
-    public static final RegistryObject<ParticleType<DoubleParticleData>> PROTECTION_SEED = PARTICLE_TYPES.register("protection_seed", () -> new DoubleParticleType(false));
-    public static final RegistryObject<SimpleParticleType> BIND_FAMILIAR_SEED = PARTICLE_TYPES.register("bind_familiar_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> IMPRISONMENT_CAGE_SEED = register("imprisonment_cage_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> TRANSPOSITION_IRON_SEED = register("transposition_iron_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> BROILING_SEED = register("broiling_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> SKY_WRATH_SEED = register("sky_wrath_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> CURSE_SEED = register("curse_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> CURSE_BLIGHT_SEED = register("curse_blight_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> REMOVE_CURSE_SEED = register("remove_curse_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> FERTILITY_SEED = register("fertility_seed", () -> new SimpleParticleType(false));
+    public static final Supplier<ParticleType<DoubleParticleData>> PROTECTION_SEED = register("protection_seed", () -> new DoubleParticleType(false));
+    public static final Supplier<SimpleParticleType> BIND_FAMILIAR_SEED = register("bind_familiar_seed", () -> new SimpleParticleType(false));
+
+    private static <T extends ParticleType<?>> Supplier<T> register(String name, Supplier<T> particleTypeSupplier) {
+        return RegistryHandler.register(Registry.PARTICLE_TYPE, name, particleTypeSupplier);
+    }
 
     @SubscribeEvent
     public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {

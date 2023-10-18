@@ -1,44 +1,20 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles.types;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
 public class CircleMagicParticleType extends ParticleType<CircleMagicParticleType.CircleMagicData> {
 	public static final Codec<CircleMagicData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			Codec.STRING.fieldOf("particle_type").forGetter(data -> data.particleType.getRegistryName().toString()),
+			Codec.STRING.fieldOf("particle_type").forGetter(data -> Registry.PARTICLE_TYPE.getKey(data.particleType).toString()),
 			Codec.INT.fieldOf("red").forGetter(data -> data.red),
 			Codec.INT.fieldOf("green").forGetter(data -> data.green),
 			Codec.INT.fieldOf("blue").forGetter(data -> data.blue),
@@ -46,7 +22,7 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 			Codec.DOUBLE.fieldOf("centerY").forGetter(data -> data.centerY),
 			Codec.DOUBLE.fieldOf("centerZ").forGetter(data -> data.centerZ),
 			Codec.DOUBLE.fieldOf("radius").forGetter(data -> data.radius)
-	).apply(instance, (type, red, green, blue, centerX, centerY, centerZ, radius) -> new CircleMagicData((ParticleType<CircleMagicData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), red, green, blue, centerX, centerY, centerZ, radius)));
+	).apply(instance, (type, red, green, blue, centerX, centerY, centerZ, radius) -> new CircleMagicData((ParticleType<CircleMagicData>)Registry.PARTICLE_TYPE.get(new ResourceLocation(type)), red, green, blue, centerX, centerY, centerZ, radius)));
 
 	public CircleMagicParticleType(boolean alwaysShow) {
 		super(alwaysShow, CircleMagicData.DESERIALIZER);
@@ -59,30 +35,30 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 
 	public static class CircleMagicData implements ParticleOptions {
 
-		public static final Deserializer<CircleMagicData> DESERIALIZER = new Deserializer<CircleMagicData>() {
-			public CircleMagicData fromCommand(ParticleType<CircleMagicData> particleType, StringReader reader) throws CommandSyntaxException {
-				reader.expect(' ');
-				int red = reader.readInt();
-				reader.expect(' ');
-				int green = reader.readInt();
-				reader.expect(' ');
-				int blue = reader.readInt();
-				reader.expect(' ');
-				double radius = reader.readDouble();
-				reader.expect(' ');
-				double centerX = reader.readDouble();
-				reader.expect(' ');
-				double centerY = reader.readDouble();
-				reader.expect(' ');
-				double centerZ = reader.readDouble();
+		public static final Deserializer<CircleMagicData> DESERIALIZER = new Deserializer<>() {
+            public CircleMagicData fromCommand(ParticleType<CircleMagicData> particleType, StringReader reader) throws CommandSyntaxException {
+                reader.expect(' ');
+                int red = reader.readInt();
+                reader.expect(' ');
+                int green = reader.readInt();
+                reader.expect(' ');
+                int blue = reader.readInt();
+                reader.expect(' ');
+                double radius = reader.readDouble();
+                reader.expect(' ');
+                double centerX = reader.readDouble();
+                reader.expect(' ');
+                double centerY = reader.readDouble();
+                reader.expect(' ');
+                double centerZ = reader.readDouble();
 
-				return new CircleMagicData(particleType, red, green, blue, centerX, centerY, centerZ, radius);
-			}
+                return new CircleMagicData(particleType, red, green, blue, centerX, centerY, centerZ, radius);
+            }
 
-			public CircleMagicData fromNetwork(ParticleType<CircleMagicData> particleType, FriendlyByteBuf buffer) {
-				return new CircleMagicData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
-			}
-		};
+            public CircleMagicData fromNetwork(ParticleType<CircleMagicData> particleType, FriendlyByteBuf buffer) {
+                return new CircleMagicData(particleType, buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+            }
+        };
 
 		private final ParticleType<CircleMagicData> particleType;
 		private final int red;
@@ -107,7 +83,7 @@ public class CircleMagicParticleType extends ParticleType<CircleMagicParticleTyp
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %d %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), red, green, blue);
+			return String.format(Locale.ROOT, "%s %d %d %d", Registry.PARTICLE_TYPE.getKey(getType()), red, green, blue);
 		}
 
 		@Override

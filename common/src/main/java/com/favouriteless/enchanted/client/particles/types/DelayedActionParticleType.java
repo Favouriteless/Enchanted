@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles.types;
 
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
@@ -29,22 +5,22 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
 public class DelayedActionParticleType extends ParticleType<DelayedActionData> {
 	public static final Codec<DelayedActionData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			Codec.STRING.fieldOf("particle_type").forGetter(data -> data.particleType.getRegistryName().toString()),
+			Codec.STRING.fieldOf("particle_type").forGetter(data -> Registry.PARTICLE_TYPE.getKey(data.particleType).toString()),
 			Codec.DOUBLE.fieldOf("centerX").forGetter(data -> data.centerX),
 			Codec.DOUBLE.fieldOf("centerY").forGetter(data -> data.centerY),
 			Codec.DOUBLE.fieldOf("centerZ").forGetter(data -> data.centerZ),
 			Codec.INT.fieldOf("actionTicks").forGetter(data -> data.actionTicks)
-	).apply(instance, (type, centerX, centerY, centerZ, actionTicks) -> new DelayedActionData((ParticleType<DelayedActionData>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), centerX, centerY, centerZ, actionTicks)));
+	).apply(instance, (type, centerX, centerY, centerZ, actionTicks) -> new DelayedActionData((ParticleType<DelayedActionData>)Registry.PARTICLE_TYPE.get(new ResourceLocation(type)), centerX, centerY, centerZ, actionTicks)));
 
 	public DelayedActionParticleType(boolean alwaysShow) {
 		super(alwaysShow, DelayedActionData.DESERIALIZER);
@@ -93,7 +69,7 @@ public class DelayedActionParticleType extends ParticleType<DelayedActionData> {
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s", ForgeRegistries.PARTICLE_TYPES.getKey(getType()));
+			return String.format(Locale.ROOT, "%s", Registry.PARTICLE_TYPE.getKey(getType()));
 		}
 
 		@Override

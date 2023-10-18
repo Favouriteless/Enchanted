@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
@@ -39,8 +15,8 @@ public class CircleMagicParticle extends TextureSheetParticle {
     private final double xStart;
     private final double zStart;
 
-    protected CircleMagicParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue, double xStart, double zStart, double radius) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+    protected CircleMagicParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue, double xStart, double zStart, double radius) {
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = red/255F;
         this.gCol = green/255F;
         this.bCol = blue/255F;
@@ -62,12 +38,12 @@ public class CircleMagicParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
+        xo = x;
+        yo = y;
+        zo = z;
         if(age++ >= lifetime) {
-            this.alpha -= 0.01F;
-            if(this.alpha <= 0) {
+            alpha -= 0.01F;
+            if(alpha <= 0) {
                 remove();
             }
         }
@@ -82,10 +58,10 @@ public class CircleMagicParticle extends TextureSheetParticle {
                 sin * (x - xStart) + cos * (z - zStart)
         ).normalize().scale(radius).add(xStart, 0, zStart);
 
-        this.xd = newPos.x - this.x;
-        this.zd = newPos.z - this.z;
+        xd = newPos.x - x;
+        zd = newPos.z - z;
 
-        this.move(xd, yd, zd);
+        move(xd, yd, zd);
     }
 
     @Override
@@ -103,8 +79,8 @@ public class CircleMagicParticle extends TextureSheetParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(CircleMagicData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            CircleMagicParticle particle = new CircleMagicParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue(), data.getCenterX(), data.getCenterZ(), data.getRadius());
+        public Particle createParticle(CircleMagicData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            CircleMagicParticle particle = new CircleMagicParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue(), data.getCenterX(), data.getCenterZ(), data.getRadius());
             particle.pickSprite(sprites);
             return particle;
         }

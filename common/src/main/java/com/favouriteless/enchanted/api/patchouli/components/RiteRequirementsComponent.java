@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.api.patchouli.components;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -29,19 +5,19 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
-import com.favouriteless.enchanted.core.util.Vector2i;
+import com.favouriteless.enchanted.common.util.Vector2i;
 import com.google.gson.annotations.SerializedName;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.world.level.block.Block;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TextComponent;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
@@ -50,6 +26,7 @@ import vazkii.patchouli.client.book.gui.BookTextRenderer;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookEntry;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,12 +35,12 @@ import java.util.function.UnaryOperator;
 
 public class RiteRequirementsComponent implements ICustomComponent {
 
-	public transient static final String PATH = "textures/patchouli/";
-	public transient static final String FILE_END = ".png";
-	public transient static final int IMAGE_SIZE = 110;
-	public transient static final int TEXTURE_SIZE = 128;
-	public transient static final float IMAGE_OFFSET = IMAGE_SIZE/2F;
-	public transient static final HashMap<Block, String> BLOCK_IMAGES = new HashMap<>();
+	public static final String PATH = "textures/patchouli/";
+	public static final String FILE_END = ".png";
+	public static final int IMAGE_SIZE = 110;
+	public static final int TEXTURE_SIZE = 128;
+	public static final float IMAGE_OFFSET = IMAGE_SIZE/2F;
+	public static final HashMap<Block, String> BLOCK_IMAGES = new HashMap<>();
 
 	static {
 		BLOCK_IMAGES.put(EnchantedBlocks.CHALK_WHITE.get(), PATH + "white");
@@ -95,7 +72,6 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	@Override
 	public void render(PoseStack matrix, IComponentRenderContext context, float partialticks, int mouseX, int mouseY) {
 		if(rite != null && context.getGui() instanceof GuiBook gui) {
-
 			for(ResourceLocation resourceLocation : circleImages) {
 				renderCircle(matrix, resourceLocation);
 			}
@@ -111,7 +87,7 @@ public class RiteRequirementsComponent implements ICustomComponent {
 	public void onDisplayed(IComponentRenderContext context) {
 		Screen gui = context.getGui();
 		if(gui instanceof GuiBookEntry entry) {
-			this.powerTextRenderer = new BookTextRenderer(entry, new TextComponent(rite.POWER + " Power Required"), 2, 140, 116, 9, 0x000000);
+			this.powerTextRenderer = new BookTextRenderer(entry, Component.literal(rite.POWER + " Power Required"), 2, 140, 116, 9, 0x000000);
 		}
 	}
 

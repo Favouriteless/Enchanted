@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
@@ -35,16 +11,16 @@ public class SkyWrathParticle extends TextureSheetParticle {
 	private static final double ATTRACT_SPEED = 0.02D;
 	private static final double ORBIT_SPEED = 20.0D;
 
-	private final double centerX;
-	private final double centerY;
-	private final double centerZ;
+	private final double xCenter;
+	private final double yCenter;
+	private final double zCenter;
 	private final int explodeTicks;
 
-	protected SkyWrathParticle(ClientLevel level, double x, double y, double z, double centerX, double centerY, double centerZ, int explodeTicks) {
+	protected SkyWrathParticle(ClientLevel level, double x, double y, double z, double xCenter, double yCenter, double zCenter, int explodeTicks) {
 		super(level, x, y, z);
-		this.centerX = centerX;
-		this.centerY = centerY;
-		this.centerZ = centerZ;
+		this.xCenter = xCenter;
+		this.yCenter = yCenter;
+		this.zCenter = zCenter;
 		this.explodeTicks = explodeTicks;
 		this.alpha = 0.0F;
 		this.hasPhysics = false;
@@ -52,9 +28,9 @@ public class SkyWrathParticle extends TextureSheetParticle {
 
 	@Override
 	public void tick() {
-		this.xo = this.x;
-		this.yo = this.y;
-		this.zo = this.z;
+		xo = x;
+		yo = y;
+		zo = z;
 
 		if(age < explodeTicks) {
 			if(alpha < 1.0F) {
@@ -62,7 +38,7 @@ public class SkyWrathParticle extends TextureSheetParticle {
 				if(alpha > 1.0F)
 					alpha = 1.0F;
 			}
-			Vec3 relativePos = new Vec3(x - centerX, y - centerY, z - centerZ);
+			Vec3 relativePos = new Vec3(x - xCenter, y - yCenter, z - zCenter);
 			double radius = relativePos.length() - ATTRACT_SPEED;
 			double a = Math.toRadians(ORBIT_SPEED);
 			Vec3 rotatedRelativePos = new Vec3(
@@ -70,18 +46,18 @@ public class SkyWrathParticle extends TextureSheetParticle {
 					relativePos.y,
 					relativePos.z*Math.sin(a) + relativePos.x*Math.cos(a)
 			);
-			Vec3 newPos = rotatedRelativePos.normalize().scale(radius).add(new Vec3(centerX, centerY, centerZ));
-			this.x = newPos.x();
-			this.y = newPos.y();
-			this.z = newPos.z();
+			Vec3 newPos = rotatedRelativePos.normalize().scale(radius).add(new Vec3(xCenter, yCenter, zCenter));
+			x = newPos.x();
+			y = newPos.y();
+			z = newPos.z();
 		}
 		else {
-			Vec3 velocity = new Vec3(x - centerX, y - centerY, z - centerZ).normalize().scale(EXPLODE_SPEED);
-			this.xd = velocity.x();
-			this.yd = velocity.y();
-			this.zd = velocity.z();
-			this.move(xd, yd, zd);
-			this.alpha -= 0.06F;
+			Vec3 velocity = new Vec3(x - xCenter, y - yCenter, z - zCenter).normalize().scale(EXPLODE_SPEED);
+			xd = velocity.x();
+			yd = velocity.y();
+			zd = velocity.z();
+			move(xd, yd, zd);
+			alpha -= 0.06F;
 
 			if(alpha < 0.0F)
 				remove();
@@ -108,4 +84,5 @@ public class SkyWrathParticle extends TextureSheetParticle {
 			return particle;
 		}
 	}
+
 }

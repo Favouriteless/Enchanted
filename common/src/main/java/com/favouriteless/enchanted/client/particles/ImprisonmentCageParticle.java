@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -33,8 +9,8 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 
 	public static final int LIFETIME = 40;
 
-	protected ImprisonmentCageParticle(ClientLevel pLevel, double pX, double pY, double pZ) {
-		super(pLevel, pX, pY, pZ);
+	protected ImprisonmentCageParticle(ClientLevel level, double x, double y, double z) {
+		super(level, x, y, z);
 		this.lifetime = LIFETIME;
 		this.quadSize = 0.1F;
 		this.alpha = 0.0F;
@@ -43,14 +19,13 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 
 	@Override
 	public void tick() {
-		this.xo = this.x;
-		this.yo = this.y;
-		this.zo = this.z;
+		xo = x;
+		yo = y;
+		zo = z;
 		if(age++ >= lifetime) {
 			alpha -= 0.02F;
-			if(alpha <= 0) {
+			if(alpha <= 0)
 				remove();
-			}
 		}
 		else if(alpha < 1.0F) {
 			alpha += 0.04F;
@@ -60,10 +35,10 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public int getLightColor(float pPartialTick) {
-		float f = ((float)this.age + pPartialTick) / (float)this.lifetime;
+	public int getLightColor(float partialTick) {
+		float f = ((float)age + partialTick) / (float)lifetime;
 		f = Mth.clamp(f, 0.0F, 1.0F);
-		int i = super.getLightColor(pPartialTick);
+		int i = super.getLightColor(partialTick);
 		int j = i & 255;
 		int k = i >> 16 & 255;
 		j += (int)(f * 15.0F * 16.0F);
@@ -86,8 +61,8 @@ public class ImprisonmentCageParticle extends TextureSheetParticle {
 			this.sprite = sprites;
 		}
 
-		public Particle createParticle(SimpleParticleType type, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-			ImprisonmentCageParticle particle = new ImprisonmentCageParticle(level, pX, pY, pZ);
+		public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			ImprisonmentCageParticle particle = new ImprisonmentCageParticle(level, x, y, z);
 			particle.pickSprite(this.sprite);
 			particle.scale(0.5F);
 			return particle;

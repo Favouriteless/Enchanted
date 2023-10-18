@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -33,8 +9,8 @@ import javax.annotation.Nullable;
 
 public class CauldronBrewParticle extends TextureSheetParticle {
 
-    protected CauldronBrewParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+    protected CauldronBrewParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = Math.min((red + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
         this.gCol = Math.min((green + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
         this.bCol = Math.min((blue + Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
@@ -50,24 +26,23 @@ public class CauldronBrewParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
+        xo = x;
+        yo = y;
+        zo = z;
         if (lifetime-- <= 0) {
             remove();
         } else {
             yd -= gravity;
-            this.move(xd, yd, zd);
-            this.xd *= 0.93D;
-            this.yd *= 0.93D;
-            this.zd *= 0.93D;
+            move(xd, yd, zd);
+            xd *= 0.93D;
+            yd *= 0.93D;
+            zd *= 0.93D;
 
             if(onGround) {
-                this.alpha -= 0.1F;
+                alpha -= 0.1F;
 
-                if(this.alpha <= 0) {
+                if(alpha <= 0)
                     remove();
-                }
             }
         }
     }
@@ -81,16 +56,17 @@ public class CauldronBrewParticle extends TextureSheetParticle {
 
         private final SpriteSet sprites;
 
-        public Factory(SpriteSet pSprites) {
-            this.sprites = pSprites;
+        public Factory(SpriteSet sprites) {
+            this.sprites = sprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            CauldronBrewParticle particle = new CauldronBrewParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
+        public Particle createParticle(SimpleColouredParticleType.SimpleColouredData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            CauldronBrewParticle particle = new CauldronBrewParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;
         }
     }
+
 }

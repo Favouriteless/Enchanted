@@ -1,12 +1,23 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
+import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
+import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
+import com.favouriteless.enchanted.common.curses.CurseManager;
+import com.favouriteless.enchanted.common.curses.CurseSavedData;
+import com.favouriteless.enchanted.common.curses.CurseType;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
+import com.favouriteless.enchanted.common.init.registry.FamiliarTypes;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
 import java.util.UUID;
 
 /**

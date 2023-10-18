@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -43,8 +19,8 @@ public class CauldronCookParticle extends TextureSheetParticle {
 
     private double currentRadius;
 
-    protected CauldronCookParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+    protected CauldronCookParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int red, int green, int blue) {
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         this.rCol = Math.min((red + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
         this.gCol = Math.min((green + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
         this.bCol = Math.min((blue + Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
@@ -65,24 +41,24 @@ public class CauldronCookParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
+        xo = x;
+        yo = y;
+        zo = z;
         if (age++ >= lifetime) {
-            this.alpha -= 0.1F;
-            if(this.alpha <= 0) {
+            alpha -= 0.1F;
+            if(alpha <= 0) {
                 remove();
             }
         }
 
         if(age >= circleStart) {
             if(age == circleStart) { // Just started rotating
-                this.xd = 0;
-                this.yd = 0;
-                this.zd = 0;
+                xd = 0;
+                yd = 0;
+                zd = 0;
                 double xOffset = x - xStart;
                 double zOffset = z - zStart;
-                this.currentRadius = Math.sqrt((xOffset * xOffset) + (zOffset * zOffset));
+                currentRadius = Math.sqrt((xOffset * xOffset) + (zOffset * zOffset));
             }
 
             currentRadius += RADIUS_INCREASE;
@@ -96,10 +72,10 @@ public class CauldronCookParticle extends TextureSheetParticle {
                     sin * (x - xStart) + cos * (z - zStart)
             ).normalize().scale(currentRadius).add(xStart, 0.0D, zStart);
 
-            this.x = newPos.x;
-            this.z = newPos.z;
+            x = newPos.x;
+            z = newPos.z;
         }
-        this.move(xd, yd, zd);
+        move(xd, yd, zd);
     }
 
     @Override
@@ -111,16 +87,17 @@ public class CauldronCookParticle extends TextureSheetParticle {
 
         private final SpriteSet sprites;
 
-        public Factory(SpriteSet pSprites) {
-            this.sprites = pSprites;
+        public Factory(SpriteSet sprites) {
+            this.sprites = sprites;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleColouredData data, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            CauldronCookParticle particle = new CauldronCookParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
+        public Particle createParticle(SimpleColouredData data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            CauldronCookParticle particle = new CauldronCookParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(), data.getGreen(), data.getBlue());
             particle.pickSprite(sprites);
             return particle;
         }
     }
+
 }

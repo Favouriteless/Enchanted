@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.client.particles;
 
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -38,8 +14,8 @@ public class CurseSeedParticle extends NoRenderParticle {
 	private static final double Y_INCREMENT = 0.2D;
 	private double yOffset = 0.0D;
 
-	protected CurseSeedParticle(ClientLevel pLevel, double x, double y, double z) {
-		super(pLevel, x, y, z);
+	protected CurseSeedParticle(ClientLevel level, double x, double y, double z) {
+		super(level, x, y, z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -60,16 +36,16 @@ public class CurseSeedParticle extends NoRenderParticle {
 			yOffset += Y_INCREMENT;
 		}
 		else
-			this.remove();
+			remove();
 	}
 
 	public static class Factory implements ParticleProvider<SimpleParticleType> {
 
-		public Factory(SpriteSet sprites) {
-		}
+		public Factory(SpriteSet sprites) {}
 
 		public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			return new CurseSeedParticle(level, x, y, z);
 		}
 	}
+
 }

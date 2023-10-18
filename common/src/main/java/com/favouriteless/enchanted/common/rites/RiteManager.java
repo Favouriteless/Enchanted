@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.rites;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.rites.AbstractRite;
 import net.minecraft.world.level.Level;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)

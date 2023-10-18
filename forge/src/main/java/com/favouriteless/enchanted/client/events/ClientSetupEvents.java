@@ -9,10 +9,13 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.platform.ClientRegistryHandlerImpl;
+import com.favouriteless.enchanted.platform.RegistryHandlerImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -75,5 +78,11 @@ public class ClientSetupEvents {
 		event.register(EnchantedParticles.BIND_FAMILIAR_SEED.get(), BindFamiliarSeedParticle.Factory::new);
 		event.register(EnchantedParticles.BIND_FAMILIAR.get(), BindFamiliarParticle.Factory::new);
 	}
+
+	@SubscribeEvent
+	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
+        for (SimpleJsonResourceReloadListener loader : RegistryHandlerImpl.DATA_LOADERS.getLoaders())
+            event.addListener(loader);
+    }
 
 }

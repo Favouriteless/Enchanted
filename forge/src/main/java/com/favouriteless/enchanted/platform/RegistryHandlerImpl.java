@@ -3,6 +3,8 @@ package com.favouriteless.enchanted.platform;
 import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -11,12 +13,15 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class RegistryHandlerImpl extends RegistryHandler.Impl {
 
+	public static final DataLoaderRegister DATA_LOADERS = new DataLoaderRegister();
 	private static final RegistryMap registryMap = new RegistryMap();
 
 	@Override
@@ -25,9 +30,29 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 	}
 
 	@Override
+	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
+		DATA_LOADERS.dataLoaders.add(loader);
+	}
+
+	@Override
 	public CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier) {
 		return null;
 	}
+
+	@Override
+	public DamageSource getDamageSource(String id, boolean bypassArmour, boolean bypassMagic, boolean bypassInvul, boolean isMagic) {
+		DamageSource source = new DamageSource(id);
+		if(bypassArmour)
+			source.bypassArmor();
+		if(bypassMagic)
+			source.bypassMagic();
+		if(bypassInvul)
+			source.bypassInvul();
+		if(isMagic)
+			source.setMagic();
+		return source;
+	}
+
 
 	private static class RegistryMap {
 
@@ -48,6 +73,16 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 			});
 
 			return reg != null ? reg.register(name, entry) : null;
+		}
+
+	}
+
+	public static class DataLoaderRegister {
+
+		private final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>(); // Doing no setter means only the RegistrationImpl class can get access to registering more loaders.
+
+		public List<SimpleJsonResourceReloadListener> getLoaders() {
+			return dataLoaders;
 		}
 
 	}

@@ -1,9 +1,11 @@
 package com.favouriteless.enchanted.common.altar;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
 import com.favouriteless.stateobserver.api.StateObserver;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,7 +27,7 @@ public class AltarStateObserver extends StateObserver {
             if (be instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
 
                 for (StateChange change : getStateChangeSet().getChanges()) { // For all changes
-                    if (altar.posWithinRange(change.pos(), EnchantedConfig.ALTAR_RANGE.get())) { // Change is relevant
+                    if (altar.posWithinRange(change.pos(), AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarRange)) { // Change is relevant
                         if(!change.oldState().is(change.newState().getBlock())) { // Block actually changed
                             if(getLevel().getBlockEntity(change.pos()) instanceof IPowerConsumer consumer)
                                 consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.

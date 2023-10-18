@@ -190,11 +190,12 @@ public class Ent extends Monster implements IAnimatable, IAnimationTickable, Sma
         tickBrain(this);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 400.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.15D)
-                .add(Attributes.ATTACK_DAMAGE, 1.0D);
+                .add(Attributes.ATTACK_DAMAGE, 1.0D)
+                .build();
     }
 
     @Override

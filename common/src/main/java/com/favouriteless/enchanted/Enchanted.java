@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted;
 
-import com.favouriteless.enchanted.common.CommonConfig;
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -23,11 +23,14 @@ public class Enchanted {
     }
 
     public static void loadRegistries() {
+        EnchantedSoundEvents.load();
         EnchantedItems.load();
         EnchantedBlocks.load();
         EnchantedEntityTypes.load();
         EnchantedBlockEntityTypes.load();
         EnchantedMenus.load();
+        EnchantedRecipeTypes.load();
+        EnchantedData.load();
     }
 
     public static ResourceLocation location(String path) {

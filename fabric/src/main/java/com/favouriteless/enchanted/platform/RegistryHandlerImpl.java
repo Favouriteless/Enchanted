@@ -1,17 +1,15 @@
 package com.favouriteless.enchanted.platform;
 
 import com.favouriteless.enchanted.Enchanted;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.favouriteless.enchanted.mixin.fabric.DamageSourceAccessor;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.core.Registry;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;
 
@@ -24,18 +22,40 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 	}
 
 	@Override
-	public <T extends Entity> void registerEntityRenderer(EntityType<T> type, EntityRendererProvider<T> constructor) {
-		EntityRendererRegistry.register(type, constructor);
-	}
-
-	@Override
-	public <T extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<T> type, BlockEntityRendererProvider<T> constructor) {
-		BlockEntityRenderers.register(type, constructor);
+	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
+		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
 	}
 
 	@Override
 	public CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier) {
 		return null;
+	}
+
+	@Override
+	public DamageSource getDamageSource(String id, boolean bypassArmour, boolean bypassMagic, boolean bypassInvul, boolean isMagic) {
+		DamageSource source = new EnchantedDamageSource(id);
+		DamageSourceAccessor accessor = (DamageSourceAccessor)source;
+
+		if(bypassArmour)
+			accessor.setBypassArmor();
+		if(bypassMagic)
+			accessor.setBypassMagic();
+		if(bypassInvul)
+			accessor.setBypassInvul();
+		if(isMagic)
+			accessor.setMagic();
+
+		return source;
+	}
+
+
+
+	private static class EnchantedDamageSource extends DamageSource {
+
+		public EnchantedDamageSource(String string) {
+			super(string);
+		}
+
 	}
 
 }

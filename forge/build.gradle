@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle'
     id 'org.spongepowered.mixin'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 base {
     archivesName = "${mod_name}-forge-${minecraft_version}"
@@ -15,7 +16,7 @@ mixin {
 }
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
+    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
 
     copyIdeResources = true //Calls processResources when in dev
 
@@ -77,10 +78,11 @@ dependencies {
     compileOnly project(":common")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     runtimeOnly fg.deobf("com.favouriteless:StateObserver-forge-1.19.2:${stateobserver_version}")
-    runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}")
-    runtimeOnly fg.deobf("net.tslat.smartbrainlib:SmartBrainLib-forge-1.19.2:${sbl_version}")
-
     runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
+
+    implementation fg.deobf("net.tslat.smartbrainlib:SmartBrainLib-forge-1.19.2:${sbl_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}")
+
 
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }

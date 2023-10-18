@@ -1,12 +1,14 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.ISerializable;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
 import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
+import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.favouriteless.stateobserver.StateObserverManager;

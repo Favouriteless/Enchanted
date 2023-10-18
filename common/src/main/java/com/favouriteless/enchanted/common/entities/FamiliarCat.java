@@ -91,12 +91,13 @@ public class FamiliarCat extends Cat {
 			FamiliarHelper.dismiss(this);
 	}
 
-	public static AttributeSupplier.Builder createAttributes() {
+	public static AttributeSupplier createCatAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 50.0D)
 				.add(Attributes.ARMOR, 5.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.3F)
-				.add(Attributes.ATTACK_DAMAGE, 3.0D);
+				.add(Attributes.ATTACK_DAMAGE, 3.0D)
+				.build();
 	}
 
 	@Override

@@ -1,13 +1,14 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.EnchantedClient;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.client.screens.*;
-import com.favouriteless.enchanted.common.init.EnchantedKeybinds;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.platform.ClientRegistryHandlerImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -22,20 +23,15 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
+		new ClientRegistryHandlerImpl();
+		EnchantedClient.init();
+		registerMenuScreens();
+
 		event.enqueueWork(() -> {
 			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("small"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("small") * 0.3F : 0F);
 			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("medium"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("medium") * 0.3F : 0F);
 			ItemProperties.register(EnchantedItems.CIRCLE_TALISMAN.get(), Enchanted.location("large"), (stack, world, living, seed) -> stack.hasTag() ? stack.getTag().getByte("large") * 0.3F : 0F);
 		});
-
-		MenuScreens.register(EnchantedMenus.WITCH_OVEN.get(), WitchOvenScreen::new);
-		MenuScreens.register(EnchantedMenus.DISTILLERY.get(), DistilleryScreen::new);
-		MenuScreens.register(EnchantedMenus.ALTAR.get(), AltarScreen::new);
-		MenuScreens.register(EnchantedMenus.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
-		MenuScreens.register(EnchantedMenus.POPPET_SHELF.get(), PoppetShelfScreen::new);
-
-		EnchantedBlocks.initRender();
-		EnchantedKeybinds.registerKeybinds();
 	}
 
 	@SubscribeEvent
@@ -43,6 +39,14 @@ public class ClientSetupEvents {
 		event.register((a, b, c, d) -> 0xF0F0F0, EnchantedBlocks.CHALK_WHITE.get());
 		event.register((a, b, c, d) -> 0x801818, EnchantedBlocks.CHALK_RED.get());
 		event.register((a, b, c, d) -> 0x4F2F78, EnchantedBlocks.CHALK_PURPLE.get());
+	}
+
+	public static void registerMenuScreens() {
+		MenuScreens.register(EnchantedMenus.WITCH_OVEN.get(), WitchOvenScreen::new);
+		MenuScreens.register(EnchantedMenus.DISTILLERY.get(), DistilleryScreen::new);
+		MenuScreens.register(EnchantedMenus.ALTAR.get(), AltarScreen::new);
+		MenuScreens.register(EnchantedMenus.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+		MenuScreens.register(EnchantedMenus.POPPET_SHELF.get(), PoppetShelfScreen::new);
 	}
 
 	@SubscribeEvent

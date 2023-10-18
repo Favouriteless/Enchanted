@@ -1,7 +1,6 @@
 package com.favouriteless.enchanted;
 
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +19,9 @@ public class Enchanted {
     public static void loadRegistries() {
         EnchantedItems.load();
         EnchantedBlocks.load();
+        EnchantedEntityTypes.load();
+        EnchantedBlockEntityTypes.load();
+        EnchantedMenus.load();
     }
 
     public static ResourceLocation location(String path) {

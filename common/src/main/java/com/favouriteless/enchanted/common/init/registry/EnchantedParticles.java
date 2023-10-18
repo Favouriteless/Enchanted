@@ -44,4 +44,6 @@ public class EnchantedParticles {
         return RegistryHandler.register(Registry.PARTICLE_TYPE, name, particleTypeSupplier);
     }
 
+    public static void load() {} // Method which exists purely to load the class.
+
 }

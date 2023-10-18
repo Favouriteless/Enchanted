@@ -40,8 +40,12 @@ public class EnchantedBlockEntityTypes {
     public static final Supplier<BlockEntityType<PoppetShelfBlockEntity>> POPPET_SHELF = register("poppet_shelf",
             () -> BlockEntityType.Builder.of(PoppetShelfBlockEntity::new, EnchantedBlocks.POPPET_SHELF.get()).build(Enchanted.location("poppet_shelf")));
 
+
+
     private static <T extends EntityType<?>> Supplier<T> register(String name, Supplier<T> entityTypeSupplier) {
         return RegistryHandler.register(Registry.ENTITY_TYPE, name, entityTypeSupplier);
     }
+
+    public static void load() {} // Method which exists purely to load the class.
 
 }

@@ -33,4 +33,6 @@ public class EnchantedEntityTypes {
         return RegistryHandler.register(Registry.ENTITY_TYPE, name, entityTypeSupplier);
     }
 
+    public static void load() {} // Method which exists purely to load the class.
+
 }

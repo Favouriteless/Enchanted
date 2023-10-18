@@ -1,12 +1,13 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.menus.PoppetShelfMenu;
 import com.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
+import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +28,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 
 	@Override
 	public Component getDisplayName() {
-		return new TranslatableComponent("container.enchanted.poppet_shelf");
+		return Component.translatable("container.enchanted.poppet_shelf");
 	}
 
 	@Nullable

@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.Enchanted;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 
-@Config(name= Enchanted.MOD_ID)
+@Config(name=Enchanted.MOD_ID)
 public class CommonConfig implements ConfigData {
     
     public int altarRange = 16;

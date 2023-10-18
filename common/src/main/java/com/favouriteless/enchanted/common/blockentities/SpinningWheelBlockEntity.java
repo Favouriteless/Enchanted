@@ -1,37 +1,19 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
+import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -173,7 +155,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 
 	@Override
 	public Component getDisplayName() {
-		return new TranslatableComponent("container.enchanted.spinning_wheel");
+		return Component.translatable("container.enchanted.spinning_wheel");
 	}
 
 	@Nullable

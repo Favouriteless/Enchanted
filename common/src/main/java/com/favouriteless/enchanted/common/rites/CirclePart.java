@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.common.rites;
 
-
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +14,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-
 
 public enum CirclePart {
     SMALL(

@@ -99,23 +99,23 @@ public class EnchantedTags {
         return TagKey.create(registry, name);
     }
 
-    private static TagKey<Item> createItemTag(ResourceLocation name) {
+    public static TagKey<Item> createItemTag(ResourceLocation name) {
         return createTag(Registry.ITEM_REGISTRY, name);
     }
 
-    private static TagKey<Block> createBlockTag(ResourceLocation name) {
+    public static TagKey<Block> createBlockTag(ResourceLocation name) {
         return createTag(Registry.BLOCK_REGISTRY, name);
     }
 
-    private static TagKey<EntityType<?>> createEntityTag(ResourceLocation name) {
+    public static TagKey<EntityType<?>> createEntityTag(ResourceLocation name) {
         return createTag(Registry.ENTITY_TYPE_REGISTRY, name);
     }
 
-    private static TagKey<Biome> createBiomeTag(ResourceLocation name) {
+    public static TagKey<Biome> createBiomeTag(ResourceLocation name) {
         return createTag(Registry.BIOME_REGISTRY, name);
     }
 
-    private static TagKey<MobEffect> createEffectTag(ResourceLocation name) {
+    public static TagKey<MobEffect> createEffectTag(ResourceLocation name) {
         return createTag(Registry.MOB_EFFECT_REGISTRY, name);
     }
 

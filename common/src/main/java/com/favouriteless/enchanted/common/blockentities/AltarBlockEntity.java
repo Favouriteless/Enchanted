@@ -9,11 +9,13 @@ import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
 import com.favouriteless.enchanted.common.altar.AltarStateObserver;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.EnchantedData;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.favouriteless.stateobserver.StateObserverManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -311,7 +313,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             CompoundTag tagNbt = new CompoundTag();
 
             for(Block block : blockCounts.keySet()) {
-                blockNbt.putInt(block.getRegistryName().toString(), blockCounts.get(block));
+                blockNbt.putInt(Registry.BLOCK.getKey(block).toString(), blockCounts.get(block));
             }
             for(TagKey<Block> tag : tagCounts.keySet()) {
                 tagNbt.putInt(tag.location().toString(), tagCounts.get(tag));
@@ -327,10 +329,10 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             CompoundTag tagNbt = (CompoundTag)nbt.get("tagsAmount");
 
             for(String name : blockNbt.getAllKeys()) {
-                blockCounts.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name)), blockNbt.getInt(name));
+                blockCounts.put(Registry.BLOCK.get(new ResourceLocation(name)), blockNbt.getInt(name));
             }
             for(String name : tagNbt.getAllKeys()) {
-                tagCounts.put(BlockTags.create(new ResourceLocation(name)), tagNbt.getInt(name));
+                tagCounts.put(EnchantedTags.createBlockTag(new ResourceLocation(name)), tagNbt.getInt(name));
             }
 
         }
@@ -430,7 +432,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
                 Map<AltarUpgrade, Integer> map = upgradesByType.get(type);
                 for(AltarUpgrade upgrade : map.keySet()) {
-                    typeTag.putInt(upgrade.block().getRegistryName().toString(), map.get(upgrade));
+                    typeTag.putInt(Registry.BLOCK.getKey(upgrade.block()).toString(), map.get(upgrade));
                 }
                 nbt.put(type, typeTag);
             }
@@ -439,7 +441,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
         public void deserializeNBT(CompoundTag nbt) {
             for(String type : nbt.getAllKeys()) {
-                upgradesByType.get(type).replaceAll((key, value) -> nbt.getInt(key.block().getRegistryName().toString()));
+                upgradesByType.get(type).replaceAll((key, value) -> nbt.getInt(Registry.BLOCK.getKey(key.block()).toString()));
             }
         }
 

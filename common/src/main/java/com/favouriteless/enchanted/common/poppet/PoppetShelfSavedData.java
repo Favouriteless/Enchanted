@@ -52,7 +52,7 @@ public class PoppetShelfSavedData extends SavedData {
 			data.SHELF_STORAGE.put(identifier, inventory);
 			data.setupPoppetUUIDs(identifier, inventory);
 		}
-		Enchanted.LOGGER.info("Loaded poppet shelves successfully");
+		Enchanted.LOG.info("Loaded poppet shelves successfully");
 		return data;
 	}
 
@@ -64,7 +64,7 @@ public class PoppetShelfSavedData extends SavedData {
 			inventory.save(tag);
 			nbt.put(identifier, tag);
 		}
-		Enchanted.LOGGER.info("Saved poppet shelves successfully");
+		Enchanted.LOG.info("Saved poppet shelves successfully");
 		return nbt;
 	}
 

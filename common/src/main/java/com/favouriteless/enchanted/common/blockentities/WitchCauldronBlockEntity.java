@@ -1,10 +1,13 @@
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.recipes.WitchCauldronRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronRecipe> {
@@ -46,6 +49,6 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.witch_cauldron");
+        return Component.translatable("container.witch_cauldron");
     }
 }

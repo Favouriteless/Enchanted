@@ -5,12 +5,13 @@ import com.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import com.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -264,7 +265,7 @@ public class WitchOvenBlockEntity extends ProcessingBlockEntityBase implements M
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.enchanted.witch_oven");
+        return Component.translatable("container.enchanted.witch_oven");
     }
 
     @Nullable

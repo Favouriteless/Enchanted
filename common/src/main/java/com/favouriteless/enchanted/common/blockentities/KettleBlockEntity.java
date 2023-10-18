@@ -1,10 +1,13 @@
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class KettleBlockEntity extends CauldronBlockEntity<KettleRecipe> {
@@ -48,6 +51,7 @@ public class KettleBlockEntity extends CauldronBlockEntity<KettleRecipe> {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.enchanted.kettle");
+        return Component.translatable("container.enchanted.kettle");
     }
+
 }

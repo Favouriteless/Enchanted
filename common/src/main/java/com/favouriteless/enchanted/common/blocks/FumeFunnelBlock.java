@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
@@ -30,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -47,8 +24,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 public class FumeFunnelBlock extends Block {
 
@@ -71,11 +46,11 @@ public class FumeFunnelBlock extends Block {
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return state.getValue(TYPE) == 1 ?
                 switch(state.getValue(FACING)) {
-            default -> SHAPE_TOP_NORTH;
-            case SOUTH -> SHAPE_TOP_SOUTH;
-            case EAST -> SHAPE_TOP_EAST;
-            case WEST -> SHAPE_TOP_WEST;
-        } : SHAPE;
+                    default -> SHAPE_TOP_NORTH;
+                    case SOUTH -> SHAPE_TOP_SOUTH;
+                    case EAST -> SHAPE_TOP_EAST;
+                    case WEST -> SHAPE_TOP_WEST;
+                } : SHAPE;
     }
 
     public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
@@ -147,23 +122,24 @@ public class FumeFunnelBlock extends Block {
         return RenderShape.MODEL;
     }
 
-     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    @Override
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
             if (state.getValue(TYPE) != 1) {
-                if (rand.nextInt(8) == 0) {
+                if (random.nextInt(8) == 0) {
                     double d0 = (double) pos.getX() + 0.5D;
                     double d1 = (double) pos.getY();
                     double d2 = (double) pos.getZ() + 0.5D;
-                    if (rand.nextDouble() < 0.1D) {
+                    if (random.nextDouble() < 0.1D) {
                         world.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
                     }
 
                     Direction direction = state.getValue(FACING);
                     Direction.Axis direction$axis = direction.getAxis();
                     double d3 = 0.52D;
-                    double d4 = rand.nextDouble() * 0.6D - 0.3D;
+                    double d4 = random.nextDouble() * 0.6D - 0.3D;
                     double d5 = direction$axis == Direction.Axis.X ? (double) direction.getStepX() * 0.49D : d4;
-                    double d6 = rand.nextDouble() * 6.0D / 16.0D;
+                    double d6 = random.nextDouble() * 6.0D / 16.0D;
                     double d7 = direction$axis == Direction.Axis.Z ? (double) direction.getStepZ() * 0.49D : d4;
                     world.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
                     world.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);

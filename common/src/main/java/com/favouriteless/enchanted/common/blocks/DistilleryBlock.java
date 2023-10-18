@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
@@ -47,7 +23,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
 import java.util.stream.Stream;
 
 public class DistilleryBlock extends SimpleContainerBlockBase {
@@ -100,11 +75,10 @@ public class DistilleryBlock extends SimpleContainerBlockBase {
         return RenderShape.MODEL;
     }
 
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) { }
-
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return type == EnchantedBlockEntityTypes.DISTILLERY.get() ? DistilleryBlockEntity::tick : null;
     }
+
 }

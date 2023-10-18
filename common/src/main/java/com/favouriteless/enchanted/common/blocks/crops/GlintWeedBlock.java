@@ -27,4 +27,5 @@ public class GlintWeedBlock extends AbstractSpreadingBlock {
     public boolean canSpreadOn(Block block) {
         return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.SAND;
     }
+
 }

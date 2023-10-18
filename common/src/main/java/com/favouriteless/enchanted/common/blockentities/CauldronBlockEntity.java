@@ -1,12 +1,22 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
+import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
+import com.favouriteless.enchanted.common.CommonConfig;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.common.util.PlayerInventoryHelper;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
@@ -243,9 +253,8 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			matchRecipes();
 
 			if (potentialRecipes.isEmpty()) {
-				if(EnchantedConfig.CAULDRON_ITEM_SPOIL.get()) {
+				if(AutoConfig.getConfigHolder(CommonConfig.class).getConfig().cauldronItemSpoil)
 					setFailed();
-				}
 				else {
 					inventoryContents.remove(itemEntity.getItem());
 					matchRecipes();
@@ -364,7 +373,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		ContainerHelper.saveAllItems(nbt, inventoryContents);
 		if(itemOut != ItemStack.EMPTY) {
 			CompoundTag itemNbt = new CompoundTag();
-			itemNbt.putString("item", itemOut.getItem().getRegistryName().toString());
+			itemNbt.putString("item", Registry.ITEM.getKey(itemOut.getItem()).toString());
 			itemNbt.putInt("count", itemOut.getCount());
 			nbt.put("itemOut", itemNbt);
 		}
@@ -393,7 +402,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 		if(nbt.contains("itemOut")) {
 			CompoundTag itemNbt = (CompoundTag)nbt.get("itemOut");
-			itemOut = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
+			itemOut = new ItemStack(Registry.ITEM.get(new ResourceLocation(itemNbt.getString("item"))), itemNbt.getInt("count"));
 		}
 	}
 

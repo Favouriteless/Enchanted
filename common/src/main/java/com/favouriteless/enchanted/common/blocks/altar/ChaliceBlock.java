@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.common.blocks.altar;
 
-
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.mojang.math.Vector3f;
@@ -8,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,8 +21,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 public class ChaliceBlock extends Block {
 
@@ -66,7 +64,7 @@ public class ChaliceBlock extends Block {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if(isFilled) {
             double x = pos.getX() + 0.4D + random.nextDouble() * 0.2D;
             double y = pos.getY() + 0.5D;
@@ -74,4 +72,5 @@ public class ChaliceBlock extends Block {
             level.addParticle(new DustParticleOptions(new Vector3f(3.6F, 0.2F, 0.0F), 0.6F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
+    
 }

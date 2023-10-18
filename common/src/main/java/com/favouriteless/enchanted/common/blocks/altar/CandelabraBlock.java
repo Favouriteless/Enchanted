@@ -2,14 +2,13 @@ package com.favouriteless.enchanted.common.blocks.altar;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 public class CandelabraBlock extends AltarDecorationBlock {
 
@@ -23,7 +22,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         // North
         if(random.nextInt(10) > 7) {
             double x = pos.getX() + 0.475D + random.nextDouble() * 0.05D;
@@ -65,4 +64,5 @@ public class CandelabraBlock extends AltarDecorationBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
+
 }

@@ -51,4 +51,5 @@ public class RiteTotalEclipse extends AbstractRite {
         caster.displayClientMessage(Component.literal("The moon is not ready to be called forth.").withStyle(ChatFormatting.RED), false);
         return false;
     }
+
 }

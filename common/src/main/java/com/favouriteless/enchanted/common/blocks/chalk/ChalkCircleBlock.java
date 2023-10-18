@@ -2,6 +2,7 @@ package com.favouriteless.enchanted.common.blocks.chalk;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -34,8 +35,8 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
         return defaultBlockState().setValue(GLYPH, random.nextInt(48));
     }
 
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
-
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if(this.particleType != null) {
             if(random.nextInt(6) == 1) {
                 double dx = random.nextDouble();
@@ -44,7 +45,6 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
                 level.addParticle(particleType, pos.getX() + dx, pos.getY() + 0.1D, pos.getZ() + dz, 0, 0, 0);
             }
         }
-
     }
 
 }

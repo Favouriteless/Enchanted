@@ -1,5 +1,6 @@
 package com.favouriteless.enchanted.common.entities;
 
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -69,7 +70,7 @@ public class Mandrake extends Monster implements IAnimatable {
     }
 
     @Override
-    protected boolean shouldDropExperience() {
+    public boolean shouldDropExperience() {
         return false;
     }
 
@@ -116,7 +117,6 @@ public class Mandrake extends Monster implements IAnimatable {
         @Override
         public void tick() {
             if(--this.ticksUntilNextAttack <= 0) {
-
                 List<LivingEntity> entitiesInRange = mob.level.getEntitiesOfClass(LivingEntity.class,
                         new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
                                 this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof Mandrake) );

@@ -1,12 +1,18 @@
 package com.favouriteless.enchanted.common.blockentities;
 
+import com.favouriteless.enchanted.api.power.IPowerConsumer;
+import com.favouriteless.enchanted.api.power.IPowerProvider;
+import com.favouriteless.enchanted.api.power.PowerHelper;
+import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.menus.DistilleryMenu;
+import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -220,7 +226,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.enchanted.distillery");
+        return Component.translatable("container.enchanted.distillery");
     }
 
     @Nullable

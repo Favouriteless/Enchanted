@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.rites.binding;
 
 import com.favouriteless.enchanted.Enchanted;
@@ -35,6 +11,7 @@ import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -117,7 +94,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 
 				FamiliarHelper.runIfCap(level, cap -> {
 					cap.setFamiliar(casterUUID, type, familiar);
-					Enchanted.LOGGER.info(String.format("Familiar of type %s bound to %s", FamiliarTypes.REGISTRY.get().getKey(type).toString(), casterUUID));
+					Enchanted.LOG.info(String.format("Familiar of type %s bound to %s", FamiliarTypes.REGISTRY.get().getKey(type).toString(), casterUUID));
 					level.addFreshEntity(familiar);
 					targetEntity.discard();
 				});
@@ -145,7 +122,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 				if(ownerUUID != null && !ownerUUID.equals(getCasterUUID())) {
 					Player caster = level.getPlayerByUUID(casterUUID);
 					if(caster != null)
-						caster.displayClientMessage(new TextComponent("This creature does not trust you.").withStyle(ChatFormatting.RED), false);
+						caster.displayClientMessage(Component.literal("This creature does not trust you.").withStyle(ChatFormatting.RED), false);
 					return false;
 				}
 			}

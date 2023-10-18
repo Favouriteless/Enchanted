@@ -1,38 +1,15 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.rites.world;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -49,7 +26,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +33,7 @@ import java.util.UUID;
 
 public class RiteForest extends AbstractRite {
 
-    private final int treeCount = EnchantedConfig.FOREST_TREE_COUNT.get();
+    private final int treeCount = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().forestTreeCount;
     private int treesPlaced = 0;
     private int tries = 0;
     private final List<BlockPos> usedPositions = new ArrayList<>();
@@ -99,11 +75,11 @@ public class RiteForest extends AbstractRite {
         if(ticks % 20 == 0) {
             ServerLevel level = getLevel();
             BlockPos pos = getPos();
-
+            CommonConfig config = AutoConfig.getConfigHolder(CommonConfig.class).getConfig();
             if(level != null) {
-                Vec3 randomPos = new Vec3(Enchanted.RANDOM.nextGaussian(), 0, Enchanted.RANDOM.nextGaussian()).normalize().scale(Math.cbrt(Math.random()) * EnchantedConfig.FOREST_RADIUS.get());
-                int minHeight = Math.max(level.getMinBuildHeight(), pos.getY() - EnchantedConfig.FOREST_RADIUS.get() / 2);
-                int maxHeight = Math.min(level.getMaxBuildHeight(), pos.getY() + EnchantedConfig.FOREST_RADIUS.get() / 2);
+                Vec3 randomPos = new Vec3(Enchanted.RANDOM.nextGaussian(), 0, Enchanted.RANDOM.nextGaussian()).normalize().scale(Math.cbrt(Math.random()) * config.forestRadius);
+                int minHeight = Math.max(level.getMinBuildHeight(), pos.getY() - config.forestRadius / 2);
+                int maxHeight = Math.min(level.getMaxBuildHeight(), pos.getY() + config.forestRadius / 2);
 
                 for(int y = minHeight; y < maxHeight; y++) {
                     BlockPos treePos = new BlockPos((int) Math.round(randomPos.x()) + pos.getX(), y, (int) Math.round(randomPos.z()) + pos.getZ());

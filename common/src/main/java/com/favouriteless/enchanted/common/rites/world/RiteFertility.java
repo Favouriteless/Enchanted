@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.rites.world;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
@@ -33,6 +33,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -112,7 +113,7 @@ public class RiteFertility extends AbstractRite {
                     if(pos.distToCenterSqr(_pos.getX() + 0.5D, _pos.getY() + 0.5D, _pos.getZ() + 0.5D) < blockTicks*blockTicks) {
                         BlockState state = level.getBlockState(_pos);
                         if(state.getBlock() instanceof BonemealableBlock block)
-                            if(Math.random() < EnchantedConfig.FERTILITY_BONE_MEAL_CHANCE.get())
+                            if(Math.random() < AutoConfig.getConfigHolder(CommonConfig.class).getConfig().fertilityBonemealChance)
                                 block.performBonemeal(level, level.random, _pos, state);
                         positionsHandled.add(_pos);
                     }

@@ -1,7 +1,8 @@
 package com.favouriteless.enchanted.mixin;
 
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.poppet.PoppetEvents;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,7 +17,7 @@ public class MixinLivingEntity {
 
 	@Inject(method="checkTotemDeathProtection", at=@At("HEAD"), cancellable=true)
 	private void checkTotemDeathProtection(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-		if(EnchantedConfig.DISABLE_TOTEMS.get()) {
+		if(AutoConfig.getConfigHolder(CommonConfig.class).getConfig().disableTotems) {
 			cir.setReturnValue(false);
 		}
 	}

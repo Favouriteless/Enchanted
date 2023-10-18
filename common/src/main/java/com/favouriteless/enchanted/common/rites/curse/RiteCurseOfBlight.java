@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.common.rites.curse;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
@@ -33,6 +33,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -83,12 +84,13 @@ public class RiteCurseOfBlight extends AbstractRite {
     protected void onTick() {
         ServerLevel level = getLevel();
         BlockPos pos = getPos();
+        CommonConfig config = AutoConfig.getConfigHolder(CommonConfig.class).getConfig();
         if(level != null) {
             if(ticks % TICKS_PER_BLOCK == 0) {
                 List<LivingEntity> entitiesHandled = new ArrayList<>();
                 for(LivingEntity entity : entities) {
                     if(entity.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) { // Sqr distance is much faster to calculate
-                        if(entity instanceof Villager villager && Math.random() < EnchantedConfig.BLIGHT_ZOMBIE_CHANCE.get())
+                        if(entity instanceof Villager villager && Math.random() < config.blightZombieChance)
                             villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
                         else {
                             MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
@@ -104,7 +106,7 @@ public class RiteCurseOfBlight extends AbstractRite {
                 List<BlockPos> positionsHandled = new ArrayList<>();
                 for(BlockPos _pos : positions) {
                     if(pos.distToCenterSqr(_pos.getX() + 0.5D, _pos.getY() + 0.5D, _pos.getZ() + 0.5D) < blockTicks*blockTicks) {
-                        if(Math.random() < EnchantedConfig.BLIGHT_DECAY_CHANCE.get()) {
+                        if(Math.random() < config.blightDecayChance) {
                             Block decayBlock = level.getBlockState(_pos).getBlock();
                             if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
                                 Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);

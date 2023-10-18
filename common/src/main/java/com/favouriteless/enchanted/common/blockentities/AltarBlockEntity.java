@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.blockentities;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.ISerializable;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.common.altar.AltarPowerProvider;
@@ -10,6 +10,7 @@ import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.menus.AltarMenu;
 import com.favouriteless.stateobserver.StateObserverManager;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
 
-    private final double rechargeRate = EnchantedConfig.ALTAR_BASE_RECHARGE.get();
+    private final double rechargeRate = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarBaseRecharge;
     private final AltarBlockData altarBlockData = new AltarBlockData();
     private final AltarUpgradeData altarUpgradeData = new AltarUpgradeData();
     private double rechargeMultiplier = 1.0D;
@@ -103,7 +104,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             if(stateObserver == null)
                 stateObserver = StateObserverManager.getObserver(level, worldPosition, AltarStateObserver.class);
             if(stateObserver == null) {
-                int range = EnchantedConfig.ALTAR_RANGE.get();
+                int range = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarRange;
                 stateObserver = StateObserverManager.createObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
             }
             facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
@@ -166,7 +167,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     private void recalculateBlocks() {
         if(level != null && !level.isClientSide) {
-            int range = EnchantedConfig.ALTAR_RANGE.get();
+            int range = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarRange;
             BlockPos startingPos = facingX ?
                     new BlockPos(centerPos.add(-(range+4), -(range+2), -(range+2))) :
                     new BlockPos(centerPos.add(-(range+2), -(range+2), -(range+4)));

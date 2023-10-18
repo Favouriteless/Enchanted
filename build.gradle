@@ -56,6 +56,10 @@ subprojects {
             name = "SmartBrainLib"
             url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
         }
+        maven {
+            name = "Cloth Config"
+            url = "https://maven.shedaniel.me/"
+        }
         flatDir {
             dirs '../lib'
         }

@@ -25,7 +25,7 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
 import net.minecraft.ChatFormatting;
@@ -62,7 +62,7 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public static void onItemTooltip(ItemTooltipEvent event) {
-		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && EnchantedConfig.DISABLE_TOTEMS.get()) {
+		if(event.getItemStack().getItem() == Items.TOTEM_OF_UNDYING && CommonConfig.disableTotems.get()) {
 			event.getToolTip().add(new TextComponent("Totems are disabled (Enchanted config)").withStyle(ChatFormatting.RED));
 		}
 	}

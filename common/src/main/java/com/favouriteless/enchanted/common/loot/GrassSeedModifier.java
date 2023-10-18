@@ -25,9 +25,10 @@
 package com.favouriteless.enchanted.common.loot;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags.Items;
 import com.google.gson.JsonObject;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +51,7 @@ public class GrassSeedModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if(EnchantedConfig.HOE_ONLY_SEEDS.get() && !(context.getParam(LootContextParams.TOOL).getItem() instanceof HoeItem))
+        if(AutoConfig.getConfigHolder(CommonConfig.class).getConfig().hoeOnlySeeds && !(context.getParam(LootContextParams.TOOL).getItem() instanceof HoeItem))
             return generatedLoot;
 
         ForgeRegistries.ITEMS.tags().getTag(Items.SEEDS_DROPS).getRandomElement(Enchanted.RANDOM).ifPresent(item -> {

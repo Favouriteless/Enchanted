@@ -21,7 +21,8 @@ dependencies {
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
     compileOnly "com.favouriteless:StateObserver-common-1.19.2:${stateobserver_version}"
     compileOnly "net.tslat.smartbrainlib:SmartBrainLib-common-1.19.2:${sbl_version}"
-    implementation "software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}"
+    compileOnly "me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}"
+    compileOnly "software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}"
 
 }
 

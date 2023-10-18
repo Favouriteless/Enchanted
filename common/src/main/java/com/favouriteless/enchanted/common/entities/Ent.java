@@ -25,8 +25,9 @@
 package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.EnchantedConfig;
+import com.favouriteless.enchanted.common.CommonConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -200,7 +201,7 @@ public class Ent extends Monster implements IAnimatable, IAnimationTickable, Sma
     public boolean hurt(DamageSource source, float amount) { // If using an axe take bonus damage
         if(source.getEntity() instanceof LivingEntity entity)
             if(entity.getMainHandItem().getItem() instanceof AxeItem)
-                return super.hurt(source, (float)(amount * EnchantedConfig.ENT_AXE_MULTIPLIER.get()));
+                return super.hurt(source, (float)(amount * AutoConfig.getConfigHolder(CommonConfig.class).getConfig().entAxeMultiplier));
         return super.hurt(source, amount);
     }
 
@@ -212,11 +213,6 @@ public class Ent extends Monster implements IAnimatable, IAnimationTickable, Sma
     @Override
     public Fallsounds getFallSounds() {
         return new Fallsounds(SoundEvents.GENERIC_SMALL_FALL, SoundEvents.GENERIC_BIG_FALL);
-    }
-
-    @Override
-    protected boolean shouldDropExperience() {
-        return true;
     }
 
     @Override

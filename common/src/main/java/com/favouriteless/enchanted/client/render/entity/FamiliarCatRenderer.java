@@ -1,19 +1,17 @@
 package com.favouriteless.enchanted.client.render.entity;
 
-import com.favouriteless.enchanted.client.EnchantedClientConfig;
+import com.favouriteless.enchanted.client.ClientConfig;
 import com.favouriteless.enchanted.common.entities.FamiliarCat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.CatCollarLayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
@@ -27,7 +25,7 @@ public class FamiliarCatRenderer extends MobRenderer<FamiliarCat, CatModel<Famil
 
 	@Override
 	public ResourceLocation getTextureLocation(FamiliarCat cat) {
-		return EnchantedClientConfig.USE_ORIGINAL_CAT_TYPE.get() ? cat.getResourceLocation() : TEXTURE_LOCATION;
+		return AutoConfig.getConfigHolder(ClientConfig.class).getConfig().familiarUseOriginalCatType ? cat.getResourceLocation() : TEXTURE_LOCATION;
 	}
 
 	@Override

@@ -20,7 +20,7 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:${geckolib_version_fabric}"
     modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-1.19.2:${sbl_version}"
 
-    modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC"
     modRuntimeOnly "com.favouriteless:StateObserver-fabric-1.19.2:${stateobserver_version}"
     modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") { exclude(group: "net.fabricmc.fabric-api") }
 

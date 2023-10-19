@@ -6,7 +6,6 @@ import com.favouriteless.enchanted.common.init.registry.PowerProviderRegistry;
 import com.favouriteless.enchanted.common.loot.ArthanaLootReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.AltarUpgradeReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.PowerProviderReloadListener;
-import com.favouriteless.enchanted.platform.RegistryHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

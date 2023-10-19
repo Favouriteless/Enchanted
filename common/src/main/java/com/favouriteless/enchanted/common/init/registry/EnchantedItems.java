@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.items.*;
 import com.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import com.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -173,7 +173,7 @@ public class EnchantedItems {
 
 
 	private static <T extends Item> Supplier<T> register(String name, Supplier<T> itemSupplier) {
-		return RegistryHandler.register(Registry.ITEM, name, itemSupplier);
+		return Services.COMMON_REGISTRY.register(Registry.ITEM, name, itemSupplier);
 	}
 
 	private static Properties defaultProperties() {
@@ -291,7 +291,7 @@ public class EnchantedItems {
 
 
 
-	public static final CreativeModeTab TAB = RegistryHandler.registerTab("main", ATTUNED_STONE_CHARGED);
+	public static final CreativeModeTab TAB = Services.COMMON_REGISTRY.registerTab("main", ATTUNED_STONE_CHARGED);
 /*	public static final CreativeModeTab TAB = new CreativeModeTab(Enchanted.MOD_ID + ".main") {
 
 		@Override

@@ -8,8 +8,8 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.platform.ClientRegistryHandlerImpl;
-import com.favouriteless.enchanted.platform.RegistryHandlerImpl;
+import com.favouriteless.enchanted.platform.ForgeClientRegistryHelper;
+import com.favouriteless.enchanted.platform.ForgeCommonRegistryHelper;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -26,7 +26,7 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
-		new ClientRegistryHandlerImpl();
+		new ForgeClientRegistryHelper();
 		EnchantedClient.init();
 		registerMenuScreens();
 
@@ -81,7 +81,7 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        for (SimpleJsonResourceReloadListener loader : RegistryHandlerImpl.DATA_LOADERS.getLoaders())
+        for (SimpleJsonResourceReloadListener loader : ForgeCommonRegistryHelper.DATA_LOADERS.getLoaders())
             event.addListener(loader);
     }
 

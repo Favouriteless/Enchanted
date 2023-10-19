@@ -2,6 +2,7 @@ package com.favouriteless.enchanted.platform;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.mixin.fabric.DamageSourceAccessor;
+import com.favouriteless.enchanted.platform.services.ICommonRegistryHelper;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.SoundType;
 
 import java.util.function.Supplier;
 
-public class RegistryHandlerImpl extends RegistryHandler.Impl {
+public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 
 	@Override
 	public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {

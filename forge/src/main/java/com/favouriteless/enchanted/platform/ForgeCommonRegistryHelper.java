@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.platform;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.platform.services.ICommonRegistryHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class RegistryHandlerImpl extends RegistryHandler.Impl {
+public class ForgeCommonRegistryHelper implements ICommonRegistryHelper {
 
 	public static final DataLoaderRegister DATA_LOADERS = new DataLoaderRegister();
 	private static final RegistryMap registryMap = new RegistryMap();

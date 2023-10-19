@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.sounds.SoundEvent;
 
@@ -22,7 +22,7 @@ public class EnchantedSoundEvents {
 
 
 	private static <T extends SoundEvent> Supplier<T> register(String name, Supplier<T> soundSupplier) {
-		return RegistryHandler.register(Registry.SOUND_EVENT, name, soundSupplier);
+		return Services.COMMON_REGISTRY.register(Registry.SOUND_EVENT, name, soundSupplier);
 	}
 
 	public static void load() {} // Method which exists purely to load the class.

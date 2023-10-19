@@ -1,7 +1,6 @@
 package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
-import com.favouriteless.enchanted.platform.RegistryHandler;
 import net.minecraft.world.level.block.SoundType;
 
 public class EnchantedSoundTypes {

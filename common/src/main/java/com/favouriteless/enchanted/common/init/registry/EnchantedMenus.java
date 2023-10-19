@@ -1,10 +1,9 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.common.menus.*;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
 
@@ -19,7 +18,7 @@ public class EnchantedMenus {
 
 
     private static <T extends MenuType<?>> Supplier<T> register(String name, Supplier<T> menuTypeSupplier) {
-        return RegistryHandler.register(Registry.MENU, name, menuTypeSupplier);
+        return Services.COMMON_REGISTRY.register(Registry.MENU, name, menuTypeSupplier);
     }
 
     public static void load() {} // Method which exists purely to load the class.

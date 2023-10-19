@@ -4,7 +4,6 @@ import com.favouriteless.enchanted.common.entities.Ent;
 import com.favouriteless.enchanted.common.entities.FamiliarCat;
 import com.favouriteless.enchanted.common.entities.Mandrake;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
-import com.favouriteless.enchanted.platform.RegistryHandlerImpl;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +16,6 @@ import net.minecraftforge.registries.RegisterEvent;
 public class EnchantedForge {
     
     public EnchantedForge() {
-        new RegistryHandlerImpl();
         Enchanted.init();
     }
 

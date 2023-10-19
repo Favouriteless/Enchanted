@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.common.recipes.*;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -28,7 +28,7 @@ public class EnchantedRecipeTypes {
 
     
     private static <T extends RecipeSerializer<?>> Supplier<T> register(String name, Supplier<T> serializerSupplier) {
-        return RegistryHandler.register(Registry.RECIPE_SERIALIZER, name, serializerSupplier);
+        return Services.COMMON_REGISTRY.register(Registry.RECIPE_SERIALIZER, name, serializerSupplier);
     }
 
     public static void load() {} // Method which exists purely to load the class.

@@ -6,7 +6,7 @@ import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleT
 import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 
@@ -41,7 +41,7 @@ public class EnchantedParticles {
     public static final Supplier<SimpleParticleType> BIND_FAMILIAR_SEED = register("bind_familiar_seed", () -> new SimpleParticleType(false));
 
     private static <T extends ParticleType<?>> Supplier<T> register(String name, Supplier<T> particleTypeSupplier) {
-        return RegistryHandler.register(Registry.PARTICLE_TYPE, name, particleTypeSupplier);
+        return Services.COMMON_REGISTRY.register(Registry.PARTICLE_TYPE, name, particleTypeSupplier);
     }
 
     public static void load() {} // Method which exists purely to load the class.

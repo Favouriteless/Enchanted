@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.*;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.Builder;
@@ -30,7 +30,7 @@ public class EnchantedEntityTypes {
 
 
     private static <T extends EntityType<?>> Supplier<T> register(String name, Supplier<T> entityTypeSupplier) {
-        return RegistryHandler.register(Registry.ENTITY_TYPE, name, entityTypeSupplier);
+        return Services.COMMON_REGISTRY.register(Registry.ENTITY_TYPE, name, entityTypeSupplier);
     }
 
     public static void load() {} // Method which exists purely to load the class.

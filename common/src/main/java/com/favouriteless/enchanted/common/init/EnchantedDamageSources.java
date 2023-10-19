@@ -1,7 +1,6 @@
 package com.favouriteless.enchanted.common.init;
 
 
-import com.favouriteless.enchanted.platform.RegistryHandler;
 import net.minecraft.world.damagesource.DamageSource;
 
 public class EnchantedDamageSources {

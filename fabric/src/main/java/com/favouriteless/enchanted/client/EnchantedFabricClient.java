@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
-import com.favouriteless.enchanted.platform.ClientRegistryHandlerImpl;
+import com.favouriteless.enchanted.platform.FabricClientRegistryHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.gui.screens.MenuScreens;
 
@@ -10,7 +10,7 @@ public class EnchantedFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        new ClientRegistryHandlerImpl();
+        new FabricClientRegistryHelper();
         EnchantedClient.init();
         FabricClientRegistry.registerBlockColors();
         FabricClientRegistry.registerParticles();

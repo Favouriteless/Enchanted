@@ -8,7 +8,7 @@ import com.favouriteless.enchanted.common.blocks.chalk.*;
 import com.favouriteless.enchanted.common.blocks.crops.*;
 import com.favouriteless.enchanted.common.init.EnchantedMaterials;
 import com.favouriteless.enchanted.common.world.features.EnchantedTreeGrower;
-import com.favouriteless.enchanted.platform.RegistryHandler;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -110,7 +110,7 @@ public class EnchantedBlocks {
     //-------------------------------------------------------- UTILITY FUNCTIONS FOR CREATING BLOCKS --------------------------------------------------------
 
     private static <T extends Block> Supplier<T> register(String name, Supplier<T> blockSupplier) {
-        return RegistryHandler.register(Registry.BLOCK, name, blockSupplier);
+        return Services.COMMON_REGISTRY.register(Registry.BLOCK, name, blockSupplier);
     }
 
     private static ToIntFunction<BlockState> getLightValueLit(int lightValue) {

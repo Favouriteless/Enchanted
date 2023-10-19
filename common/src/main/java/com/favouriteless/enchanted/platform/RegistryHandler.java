@@ -4,9 +4,11 @@ import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
 
 import java.util.function.Supplier;
 
@@ -30,6 +32,10 @@ public class RegistryHandler {
 		return INSTANCE.getDamageSource(id, bypassArmour, bypassMagic, bypassInvul, isMagic);
 	}
 
+	public static SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound) {
+		return INSTANCE.getSoundType(volume, pitch, breakSound, stepSound, placeSound, hitSound, fallSound);
+	}
+
 	public abstract static class Impl {
 
 		protected Impl() {
@@ -40,6 +46,7 @@ public class RegistryHandler {
 		public abstract void register(ResourceLocation id, SimpleJsonResourceReloadListener loader);
 		public abstract CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier);
 		public abstract DamageSource getDamageSource(String id, boolean bypassArmour, boolean bypassMagic, boolean bypassInvul, boolean isMagic);
+		public abstract SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound);
 
 	}
 

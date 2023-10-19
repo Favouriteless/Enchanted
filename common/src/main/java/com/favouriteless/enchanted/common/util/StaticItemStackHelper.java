@@ -20,11 +20,6 @@ public class StaticItemStackHelper {
 
 	/**
 	 * Similar to InventoryHelper#dropContents but works with copies of the itemstacks instead.
-	 * @param level
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param inventory
 	 */
 	public static void dropContentsNoChange(Level level, double x, double y, double z, Container inventory) {
 		for(int i = 0; i < inventory.getContainerSize(); ++i) {
@@ -43,7 +38,6 @@ public class StaticItemStackHelper {
 				level.addFreshEntity(entity);
 			}
 		}
-
 	}
 
 }

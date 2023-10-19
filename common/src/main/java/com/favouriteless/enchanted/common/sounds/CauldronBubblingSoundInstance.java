@@ -1,32 +1,9 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.sounds;
 
 import com.favouriteless.enchanted.common.blockentities.CauldronBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
 
 public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance {
@@ -34,7 +11,7 @@ public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance
 	private final CauldronBlockEntity<?> blockEntity;
 
 	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> blockEntity) {
-		super(EnchantedSoundEvents.CAULDRON_BUBBLING.get(), SoundSource.BLOCKS);
+		super(EnchantedSoundEvents.CAULDRON_BUBBLING.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 		this.blockEntity = blockEntity;
 		this.looping = true;
 		this.delay = 0;
@@ -54,9 +31,8 @@ public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance
 
 	@Override
 	public void tick() {
-		if(blockEntity.isRemoved()) {
+		if(blockEntity.isRemoved())
 			stop();
-		}
 		else {
 			if(blockEntity.isHot()) {
 				if(volume < 1.0F)

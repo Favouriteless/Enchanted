@@ -4,9 +4,12 @@ import com.favouriteless.enchanted.Enchanted;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -51,6 +54,11 @@ public class RegistryHandlerImpl extends RegistryHandler.Impl {
 		if(isMagic)
 			source.setMagic();
 		return source;
+	}
+
+	@Override
+	public SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound) {
+		return new ForgeSoundType(volume, pitch, breakSound, stepSound, placeSound, hitSound, fallSound);
 	}
 
 

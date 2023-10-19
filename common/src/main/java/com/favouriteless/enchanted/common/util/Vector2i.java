@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.util;
 
 public class Vector2i {
+
 	public int x;
 	public int y;
 
@@ -8,4 +9,5 @@ public class Vector2i {
 		this.x = x;
 		this.y = y;
 	}
+
 }

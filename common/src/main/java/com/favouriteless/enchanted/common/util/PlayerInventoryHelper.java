@@ -8,13 +8,10 @@ public class PlayerInventoryHelper {
 
     /**
      * Attempts to put an item into the given player's inventory, spawns it on the floor if the item does not fit
-     * @param player
-     * @param item
      */
     public static void tryGiveItem(Player player, ItemStack item) {
-        if(player != null && !player.getInventory().add(item)) {
+        if(player != null && !player.getInventory().add(item))
             player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), item));
-        }
     }
 
 }

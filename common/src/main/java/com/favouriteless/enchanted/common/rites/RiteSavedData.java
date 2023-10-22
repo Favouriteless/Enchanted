@@ -25,9 +25,9 @@ public class RiteSavedData extends SavedData {
 		this.level = world;
 	}
 
-	public static RiteSavedData get(Level world) {
-		if (world instanceof ServerLevel) {
-			ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
+	public static RiteSavedData get(Level level) {
+		if (level instanceof ServerLevel) {
+			ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
 
 			DimensionDataStorage storage = overworld.getDataStorage();
 			return storage.computeIfAbsent((nbt) -> RiteSavedData.load(overworld, nbt), () -> new RiteSavedData(overworld), NAME);

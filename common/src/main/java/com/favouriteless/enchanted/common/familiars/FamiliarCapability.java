@@ -26,7 +26,7 @@ public class FamiliarCapability implements IFamiliarCapability {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serialize() {
         CompoundTag nbt = new CompoundTag();
 
         for(UUID uuid : familiars.keySet()) {
@@ -42,7 +42,7 @@ public class FamiliarCapability implements IFamiliarCapability {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserialize(CompoundTag nbt) {
         for(String key : nbt.getAllKeys()) {
             CompoundTag tag = nbt.getCompound(key);
             IFamiliarEntry entry = new FamiliarEntry(

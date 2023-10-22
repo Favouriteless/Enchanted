@@ -167,7 +167,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
-		nbt.put("posHolder", posHolder.serializeNBT());
+		nbt.put("posHolder", posHolder.serialize());
 		nbt.putInt("spinTime", spinTime);
 		nbt.put("input", input.serializeNBT());
 		nbt.put("output", output.serializeNBT());
@@ -176,7 +176,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		posHolder.deserializeNBT(nbt.getList("posHolder", 10));
+		posHolder.deserialize(nbt.getList("posHolder", 10));
 		spinTime = nbt.getInt("spinTime");
 		input.deserializeNBT(nbt.getCompound("input"));
 		output.deserializeNBT(nbt.getCompound("output"));

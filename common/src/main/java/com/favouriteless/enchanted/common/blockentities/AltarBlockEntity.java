@@ -19,7 +19,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -127,8 +126,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         nbt.putDouble("maxPower", maxPower);
         nbt.putDouble("powerMultiplier", powerMultiplier);
         nbt.putDouble("rechargeMultiplier", rechargeMultiplier);
-        nbt.put("blockData", altarBlockData.serializeNBT());
-        nbt.put("upgradeData", altarUpgradeData.serializeNBT());
+        nbt.put("blockData", altarBlockData.serialize());
+        nbt.put("upgradeData", altarUpgradeData.serialize());
     }
 
     @Override
@@ -140,8 +139,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         powerMultiplier = nbt.getDouble("powerMultiplier");
         rechargeMultiplier = nbt.getDouble("rechargeMultiplier");
         if(nbt.contains("blockData") && nbt.contains("upgradeData")) {
-            altarBlockData.deserializeNBT((CompoundTag) nbt.get("blockData"));
-            altarUpgradeData.deserializeNBT((CompoundTag) nbt.get("upgradeData"));
+            altarBlockData.deserialize((CompoundTag) nbt.get("blockData"));
+            altarUpgradeData.deserialize((CompoundTag) nbt.get("upgradeData"));
         }
         else
             Enchanted.LOG.info(String.format("Failed to load power block data for altar at x:%s y:%s z:%s", getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ()));
@@ -307,7 +306,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
                 tagCounts.put(provider.getKey(), 0);
         }
 
-        public CompoundTag serializeNBT() {
+        public CompoundTag serialize() {
             CompoundTag nbt = new CompoundTag();
             CompoundTag blockNbt = new CompoundTag();
             CompoundTag tagNbt = new CompoundTag();
@@ -324,7 +323,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             return nbt;
         }
 
-        public void deserializeNBT(CompoundTag nbt) {
+        public void deserialize(CompoundTag nbt) {
             CompoundTag blockNbt = (CompoundTag)nbt.get("blocksAmount");
             CompoundTag tagNbt = (CompoundTag)nbt.get("tagsAmount");
 
@@ -424,7 +423,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             }
         }
 
-        public CompoundTag serializeNBT() {
+        public CompoundTag serialize() {
             CompoundTag nbt = new CompoundTag();
 
             for(String type : upgradesByType.keySet()) {
@@ -439,7 +438,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
             return nbt;
         }
 
-        public void deserializeNBT(CompoundTag nbt) {
+        public void deserialize(CompoundTag nbt) {
             for(String type : nbt.getAllKeys()) {
                 upgradesByType.get(type).replaceAll((key, value) -> nbt.getInt(Registry.BLOCK.getKey(key.block()).toString()));
             }

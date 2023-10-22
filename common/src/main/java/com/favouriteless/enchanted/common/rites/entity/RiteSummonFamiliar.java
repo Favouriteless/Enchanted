@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;

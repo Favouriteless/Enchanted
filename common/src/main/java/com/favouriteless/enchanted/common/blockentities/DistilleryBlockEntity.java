@@ -238,7 +238,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        nbt.put("posHolder", posHolder.serializeNBT());
+        nbt.put("posHolder", posHolder.serialize());
         nbt.putBoolean("burnTime", isBurning);
         nbt.putInt("cookTime", cookTime);
         nbt.putInt("cookTimeTotal", cookTimeTotal);
@@ -250,7 +250,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        posHolder.deserializeNBT(nbt.getList("posHolder", 10));
+        posHolder.deserialize(nbt.getList("posHolder", 10));
         isBurning = nbt.getBoolean("burnTime");
         cookTime = nbt.getInt("cookTime");
         cookTimeTotal = nbt.getInt("cookTimeTotal");

@@ -25,7 +25,6 @@
 package com.favouriteless.enchanted.common.capabilities.bed;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;

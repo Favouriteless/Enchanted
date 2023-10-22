@@ -83,13 +83,13 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
     @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        nbt.put("posHolder", posHolder.serializeNBT());
+        nbt.put("posHolder", posHolder.serialize());
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        posHolder.deserializeNBT(nbt.getList("posHolder", 10));
+        posHolder.deserialize(nbt.getList("posHolder", 10));
     }
 
     @Override

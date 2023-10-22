@@ -24,7 +24,6 @@
 
 package com.favouriteless.enchanted.common.capabilities.bed;
 
-import com.favouriteless.enchanted.api.capabilities.IBedCapability;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.UUID;

@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.api.familiars;
 
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

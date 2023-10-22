@@ -54,7 +54,7 @@ public class SimplePowerPosHolder implements IPowerPosHolder {
 	}
 
 	@Override
-	public ListTag serializeNBT() {
+	public ListTag serialize() {
 		ListTag nbt = new ListTag();
 		for(BlockPos pos : altars) {
 			CompoundTag posTag = new CompoundTag();
@@ -67,7 +67,7 @@ public class SimplePowerPosHolder implements IPowerPosHolder {
 	}
 
 	@Override
-	public void deserializeNBT(ListTag nbt) {
+	public void deserialize(ListTag nbt) {
 		for(Tag tag : nbt) {
 			CompoundTag posTag = (CompoundTag)tag;
 			altars.add(new BlockPos(posTag.getInt("x"), posTag.getInt("y"), posTag.getInt("z")));

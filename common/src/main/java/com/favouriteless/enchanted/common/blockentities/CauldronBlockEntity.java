@@ -377,13 +377,13 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			itemNbt.putInt("count", itemOut.getCount());
 			nbt.put("itemOut", itemNbt);
 		}
-		nbt.put("posHolder", posHolder.serializeNBT());
+		nbt.put("posHolder", posHolder.serialize());
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		posHolder.deserializeNBT(nbt.getList("posHolder", 10));
+		posHolder.deserialize(nbt.getList("posHolder", 10));
 		setWater(nbt.getInt("waterAmount"));
 		targetRed = nbt.getInt("targetRed");
 		targetGreen = nbt.getInt("targetGreen");

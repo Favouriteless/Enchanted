@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.api.rites;
 
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseType;

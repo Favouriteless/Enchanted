@@ -25,8 +25,6 @@
 package com.favouriteless.enchanted.common.capabilities;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.capabilities.EnchantedCapabilities;
-import com.favouriteless.enchanted.api.capabilities.IBedCapability;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
 import com.favouriteless.enchanted.common.capabilities.bed.BedCapability;
 import com.favouriteless.enchanted.common.familiars.FamiliarCapability;

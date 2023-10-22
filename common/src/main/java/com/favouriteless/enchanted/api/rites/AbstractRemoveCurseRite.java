@@ -14,24 +14,25 @@ import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Simple {@link AbstractRite} implementation for removing a curse from a player.
+ * Simple {@link AbstractRite} implementation for removing a {@link Curse} from a {@link Player}.
  *
- * <p>IMPORTANT: Rites implementing this should add a filled taglock to their requirements so the target's UUID can
- * be grabbed.</p>
+ * <p>IMPORTANT: Rites implementing this should add a filled taglock to their requirements so the target's {@link UUID}
+ * can be grabbed.</p>
  */
 public abstract class AbstractRemoveCurseRite extends AbstractRite {
 
     public static final int RAISE = 300;
     public static final int START_SOUND = 190;
-    private final CurseType curseType;
+    private final CurseType<?> curseType;
 
-    public AbstractRemoveCurseRite(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, int powerTick, CurseType curseType) {
+    public AbstractRemoveCurseRite(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster, int power, int powerTick, CurseType<?> curseType) {
         super(type, level, pos, caster, power, powerTick);
         this.curseType = curseType;
     }

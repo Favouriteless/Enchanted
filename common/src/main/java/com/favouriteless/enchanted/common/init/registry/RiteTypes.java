@@ -38,7 +38,7 @@ public class RiteTypes {
     public static final RiteType<RiteBroiling> BROILING = register("broiling", RiteBroiling::new);
     public static final RiteType<RiteBroilingCharged> BROILING_CHARGED = register("broiling_charged", RiteBroilingCharged::new);
     public static final RiteType<RiteChargingStone> CHARGING_STONE = register("charging_stone", RiteChargingStone::new);
-    public static final RiteType<RiteCurseOfBlight> CURSE_OF_BLIGHT = register("curse_of_blight", RiteCurseOfBlight::new);
+    public static final RiteType<RiteCurseBlight> CURSE_OF_BLIGHT = register("curse_of_blight", RiteCurseBlight::new);
     public static final RiteType<RiteCurseMisfortune> CURSE_OF_MISFORTUNE = register("curse_of_misfortune", RiteCurseMisfortune::new);
     public static final RiteType<RiteCurseOverheating> CURSE_OF_OVERHEATING = register("curse_of_overheating", RiteCurseOverheating::new);
     public static final RiteType<RiteCurseSinking> CURSE_OF_SINKING = register("curse_of_sinking", RiteCurseSinking::new);

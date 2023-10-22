@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.*;
 
-public class RiteCurseOfBlight extends AbstractRite {
+public class RiteCurseBlight extends AbstractRite {
 
     public static final int BLIGHT_RADIUS = 50;
     public static final int BLIGHT_RADIUS_SQ = BLIGHT_RADIUS*BLIGHT_RADIUS;
@@ -37,7 +37,7 @@ public class RiteCurseOfBlight extends AbstractRite {
 
     public int blockTicks = 0;
 
-    public RiteCurseOfBlight(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
+    public RiteCurseBlight(RiteType<?> type, ServerLevel level, BlockPos pos, UUID caster) {
         super(type, level, pos, caster, 0, 0); // Power, power per tick
         CIRCLES_REQUIRED.put(CirclePart.MEDIUM, EnchantedBlocks.CHALK_RED.get());
         ITEMS_REQUIRED.put(EnchantedItems.ATTUNED_STONE_CHARGED.get(), 1);

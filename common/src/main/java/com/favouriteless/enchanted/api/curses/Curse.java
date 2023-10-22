@@ -11,13 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
- * {@link Curse} is the base class used for all curses in Enchanted, every curse will extend this. Curses must then be
- * registered using {@link CurseTypes#register(ResourceLocation, Supplier)} so the mod is able to know it exists.
+ * {@link Curse} is the base class used for all curses in Enchanted. A curse is an effect which attaches itself to a
+ * {@link Player} and acts upon that player while being ticked. Curses must then be registered using
+ * {@link CurseTypes#register(ResourceLocation, Supplier)} so the mod is able to know it exists.
  *
  * <p>See {@link RandomCurse} and {@link CurseMisfortune} for examples of how a curse can be implemented.</p>
  */
@@ -41,13 +43,15 @@ public abstract class Curse {
         this.type = type;
     }
 
+    /**
+     * Do not override tick in implementations of {@link Curse}. This is used to handle logic for the whispering sounds
+     * and targeting. Override {@link Curse#onTick()} instead to add custom tick effects.
+     */
     public void tick(ServerLevel level) { // Ticks with level purely for level access, do not save this anywhere.
-        if(targetPlayer == null || targetPlayer.isRemoved()) {
+        if(targetPlayer == null || targetPlayer.isRemoved())
             targetPlayer = level.getServer().getPlayerList().getPlayer(targetUUID);
-        }
-        if(targetPlayer != null) {
+        if(targetPlayer != null)
             onTick();
-        }
 
         long timeSinceWhisper = ticks - lastWhisper;
         if(timeSinceWhisper > MAX_WHISPER_TIME*20L)
@@ -58,6 +62,9 @@ public abstract class Curse {
         ticks++;
     }
 
+    /**
+     * Override onTick to add custom effects to ticks for a {@link Curse}.
+     */
     protected abstract void onTick();
 
     private void whisper() {
@@ -121,8 +128,6 @@ public abstract class Curse {
 
     protected void loadAdditional(CompoundTag nbt) {}
 
-    public void onRemove(ServerLevel level) {
-
-    }
+    public void onRemove(ServerLevel level) {}
 
 }

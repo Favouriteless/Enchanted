@@ -1,36 +1,14 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
+import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.common.rites.RiteType.RiteFactory;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -62,12 +40,11 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Base class for every Rite (circle magic ritual), containing all of the logic required to detect/find the correct rite
+ * Base class for every Rite (circle magic ritual), containing all the logic required to detect/find the correct rite
  * as well as handling the creation/destruction of rites.
  *
- * <p>An {@link AbstractRite} needs to have a {@link RiteType}
- * registered for the circles to be able to find it. This registry is located in {@link RiteTypes} but mods trying to
- * implement this should create their own {@link DeferredRegister} for their Rites.</p>
+ * <p>An {@link AbstractRite} needs to have a {@link RiteType} registered for the circles to be able to find it. Use
+ * {@link RiteTypes#register(ResourceLocation, RiteFactory)} to do so.</p>
  *
  * <p>Important methods for classes implementing {@link AbstractRite} have been moved towards the top of the class.</p>
  */
@@ -87,7 +64,7 @@ public abstract class AbstractRite {
     private BlockPos pos; // The position the rite started at/is saved at.
     private UUID casterUUID; // UUID of the player who started the rite.
     private UUID targetUUID; // The UUID of the rite's target. Only set if the rite inputs contained a filled taglock.
-    private Entity targetEntity; // The Entity the rite is targeting. Typically not set.
+    private Entity targetEntity; // The Entity the rite is targeting. Typically, not set.
 
     private boolean isStarting = false;
     protected long ticks = 0;
@@ -112,7 +89,7 @@ public abstract class AbstractRite {
     }
 
     /**
-     * Called after the rite has checked it's conditions in {@link AbstractRite#checkAdditional()} when the rite starts
+     * Called after the rite has checked its conditions in {@link AbstractRite#checkAdditional()} when the rite starts
      * to be executed.
      *
      * <p>Override this to add effects which need to happen instantly such as spawning an item, spawning particles or
@@ -184,7 +161,7 @@ public abstract class AbstractRite {
     /**
      * Override to add additional starting conditions to your rite such as checking if a target {@link Entity} is tamed.
      * If false is returned, the rite will call {@link AbstractRite#cancel()} on itself automatically.
-     * @return True if the rite can continue execute, otherwise false.
+     * @return True if the rite can continue to execute, otherwise false.
      */
     protected boolean checkAdditional() {
         return true;
@@ -205,7 +182,7 @@ public abstract class AbstractRite {
 
     /**
      * Attempt to grab the {@link Entity} with a {@link UUID} matching the one specified by targetUUID, which should
-     * automatically be set if the rite used a {@link TaglockFilledItem} in it's requirements.
+     * automatically be set if the rite used a {@link TaglockFilledItem} in its requirements.
      * @return The entity matching the target's {@link UUID}, or null if none were found.
      */
     protected Entity tryFindTargetEntity() {
@@ -267,7 +244,7 @@ public abstract class AbstractRite {
 
     public CompoundTag save() {
         CompoundTag nbt = new CompoundTag();
-        nbt.putString("type", getType().getRegistryName().toString());
+        nbt.putString("type", getType().getId().toString());
         nbt.putString("dimension", level.dimension().location().toString());
         nbt.putInt("x", pos.getX());
         nbt.putInt("y", pos.getY());

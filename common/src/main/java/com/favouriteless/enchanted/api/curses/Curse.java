@@ -1,25 +1,33 @@
 package com.favouriteless.enchanted.api.curses;
 
-import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
+import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.curses.CurseMisfortune;
 import com.favouriteless.enchanted.common.curses.CurseType;
+import com.favouriteless.enchanted.common.init.registry.CurseTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
- * Curses base class
+ * {@link Curse} is the base class used for all curses in Enchanted, every curse will extend this. Curses must then be
+ * registered using {@link CurseTypes#register(ResourceLocation, Supplier)} so the mod is able to know it exists.
+ *
+ * <p>See {@link RandomCurse} and {@link CurseMisfortune} for examples of how a curse can be implemented.</p>
  */
-public abstract class AbstractCurse {
+public abstract class Curse {
 
     public static final int MIN_WHISPER_TIME = 120;
     public static final int MAX_WHISPER_TIME = 240;
     public static final double WHISPER_CHANCE = 1.0D / ((MAX_WHISPER_TIME - MIN_WHISPER_TIME)*20);
 
-    public final CurseType type;
+    public final CurseType<?> type;
     protected UUID targetUUID;
     protected UUID casterUUID;
     protected int level;
@@ -29,7 +37,7 @@ public abstract class AbstractCurse {
     protected long ticks = 0;
     private long lastWhisper = 0;
 
-    public AbstractCurse(CurseType type) {
+    public Curse(CurseType<?> type) {
         this.type = type;
     }
 
@@ -55,11 +63,11 @@ public abstract class AbstractCurse {
     private void whisper() {
         if(targetPlayer != null) {
             lastWhisper = ticks;
-            targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 0.3F, (float) Math.random() * 0.15F + 0.85F));
+            targetPlayer.connection.send(new ClientboundSoundEntityPacket(EnchantedSoundEvents.CURSE_WHISPER.get(), SoundSource.AMBIENT, targetPlayer, 0.3F, (float) Math.random() * 0.15F + 0.85F, Enchanted.RANDOM.nextLong()));
         }
     }
 
-    public CurseType getType() {
+    public CurseType<?> getType() {
         return type;
     }
 
@@ -93,7 +101,7 @@ public abstract class AbstractCurse {
     }
 
     public void save(CompoundTag nbt) {
-        nbt.putString("type", type.getRegistryName().toString());
+        nbt.putString("type", type.getId().toString());
         nbt.putUUID("target", targetUUID);
         nbt.putUUID("caster", casterUUID);
         nbt.putLong("ticks", ticks);

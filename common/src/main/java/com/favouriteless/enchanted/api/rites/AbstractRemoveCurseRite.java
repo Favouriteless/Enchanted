@@ -1,11 +1,11 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.Curse;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
-import com.favouriteless.enchanted.common.curses.CurseSavedData;
+import com.favouriteless.enchanted.api.curses.CurseSavedData;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
@@ -54,7 +54,7 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             level.playSound(null, pos, EnchantedSoundEvents.REMOVE_CURSE.get(), SoundSource.MASTER, 1.0F, 1.0F);
         }
         else if(ticks == RAISE) {
-            List<AbstractCurse> curses = CurseSavedData.get(level).curses.get(getTargetUUID());
+            List<Curse> curses = CurseSavedData.get(level).entries.get(getTargetUUID());
             if(curses != null) {
                 int casterLevel = 0;
 
@@ -64,7 +64,7 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
                     casterLevel++;
 
 
-                for(AbstractCurse curse : curses) {
+                for(Curse curse : curses) {
                     if(curse.getType() == curseType) {
                         int diff = casterLevel - curse.getLevel();
 

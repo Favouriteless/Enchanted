@@ -3,14 +3,17 @@ package com.favouriteless.enchanted.api.curses;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.nbt.CompoundTag;
 
-public abstract class AbstractRandomCurse extends AbstractCurse {
+/**
+ * An implementation of {@link Curse} which triggers randomly between a specified range of seconds.
+ */
+public abstract class RandomCurse extends Curse {
 
 	private final int minTime;
 	private final int maxTime;
 	private final double chance;
 	private long lastUseTick = 0;
 
-	public AbstractRandomCurse(CurseType type, int minTime, int maxTime) {
+	public RandomCurse(CurseType<?> type, int minTime, int maxTime) {
 		super(type);
 		this.minTime = minTime;
 		this.maxTime = maxTime;

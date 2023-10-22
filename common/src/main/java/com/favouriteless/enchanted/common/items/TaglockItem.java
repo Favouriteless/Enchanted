@@ -16,7 +16,6 @@ import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,8 +36,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.UUID;
 
 public class TaglockItem extends Item {
-
-    private static final RandomSource random = RandomSource.create();
 
     public TaglockItem(Properties properties) {
         super(properties);
@@ -132,7 +129,7 @@ public class TaglockItem extends Item {
             }
 
             // Send sound packet to player
-            player.connection.send(new ClientboundSoundPacket(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, random.nextLong()));
+            player.connection.send(new ClientboundSoundPacket(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, Enchanted.RANDOM.nextLong()));
             stack.shrink(1);
         }
     }

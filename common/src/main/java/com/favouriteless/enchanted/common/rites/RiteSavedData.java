@@ -57,7 +57,6 @@ public class RiteSavedData extends SavedData {
 			else
 				Enchanted.LOG.error(String.format("Invalid rite type %s found in world save. Rite will not be loaded.", typeString));
 		}
-		Enchanted.LOG.info("Loaded active rites successfully");
 		return data;
 	}
 

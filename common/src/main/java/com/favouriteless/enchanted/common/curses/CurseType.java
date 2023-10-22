@@ -1,11 +1,11 @@
 package com.favouriteless.enchanted.common.curses;
 
-import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.Curse;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
-public class CurseType<T extends AbstractCurse> {
+public class CurseType<T extends Curse> {
 
 	private final ResourceLocation id;
 	private final Supplier<T> supplier;
@@ -17,6 +17,10 @@ public class CurseType<T extends AbstractCurse> {
 
 	public T create() {
 		return this.supplier.get();
+	}
+
+	public ResourceLocation getId() {
+		return id;
 	}
 
 }

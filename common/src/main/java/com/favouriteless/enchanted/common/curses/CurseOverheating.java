@@ -1,11 +1,11 @@
 package com.favouriteless.enchanted.common.curses;
 
-import com.favouriteless.enchanted.api.curses.AbstractRandomCurse;
+import com.favouriteless.enchanted.api.curses.RandomCurse;
+import com.favouriteless.enchanted.common.init.EnchantedTags.Biomes;
 import com.favouriteless.enchanted.common.init.registry.CurseTypes;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.world.level.Level;
 
-public class CurseOverheating extends AbstractRandomCurse {
+public class CurseOverheating extends RandomCurse<CurseOverheating> {
 
 	public CurseOverheating() {
 		super(CurseTypes.OVERHEATING, 30, 90); // Executes once every 0.5-1.5 minutes
@@ -13,7 +13,7 @@ public class CurseOverheating extends AbstractRandomCurse {
 
 	@Override
 	protected void execute() {
-		if(ForgeRegistries.BIOMES.tags().getTag(EnchantedTags.Biomes.OVERHEATING_BIOMES).contains(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).value())
+		if(targetPlayer.getLevel().getBiome(targetPlayer.blockPosition()).is(Biomes.OVERHEATING_BIOMES)
 		|| targetPlayer.getLevel().dimension() == Level.NETHER) {
 			int duration = 4;
 			for(int i = 0; i < level; i++) {

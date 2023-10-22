@@ -1,12 +1,12 @@
 package com.favouriteless.enchanted.common.curses;
 
-import com.favouriteless.enchanted.api.curses.AbstractCurse;
+import com.favouriteless.enchanted.api.curses.Curse;
 import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
 import net.minecraft.server.level.ServerLevel;
 
-public class CurseSinking extends AbstractCurse {
+public class CurseSinking extends Curse {
 
 	public boolean wasSwimming = false;
 	public boolean wasFlying = false;

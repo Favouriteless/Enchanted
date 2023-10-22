@@ -6,6 +6,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ public class Enchanted {
     public static final String MOD_ID = "enchanted";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
     public static final Random RANDOM = new Random();
+    public static final RandomSource RANDOMSOURCE = RandomSource.create();
 
     public static void init() {
         AutoConfig.register(EnchantedConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));

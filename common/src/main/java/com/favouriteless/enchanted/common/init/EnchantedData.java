@@ -1,13 +1,16 @@
 package com.favouriteless.enchanted.common.init;
 
+import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.registry.AltarUpgradeRegistry;
 import com.favouriteless.enchanted.common.init.registry.ArthanaLootRegistry;
 import com.favouriteless.enchanted.common.init.registry.PowerProviderRegistry;
 import com.favouriteless.enchanted.common.loot.ArthanaLootReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.AltarUpgradeReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.PowerProviderReloadListener;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -22,10 +25,14 @@ public class EnchantedData {
 
 
     static {
-        RegistryHandler.register("altar_blocks", new PowerProviderReloadListener<>("altar/blocks", EnchantedData::createBlockKey, EnchantedData.POWER_BLOCKS));
-        RegistryHandler.register("altar_tags", new PowerProviderReloadListener<>("altar/tags", EnchantedData::createBlockTagKey, EnchantedData.POWER_TAGS));
-        RegistryHandler.register("altar_upgrade", new AltarUpgradeReloadListener());
-        RegistryHandler.register("arthana_loot", new ArthanaLootReloadListener());
+        register("altar_blocks", new PowerProviderReloadListener<>("altar/blocks", EnchantedData::createBlockKey, EnchantedData.POWER_BLOCKS));
+        register("altar_tags", new PowerProviderReloadListener<>("altar/tags", EnchantedData::createBlockTagKey, EnchantedData.POWER_TAGS));
+        register("altar_upgrade", new AltarUpgradeReloadListener());
+        register("arthana_loot", new ArthanaLootReloadListener());
+    }
+
+    public static void register(String id, SimpleJsonResourceReloadListener reloadListener) {
+        Services.COMMON_REGISTRY.register(Enchanted.location(id), reloadListener);
     }
 
     private static Block createBlockKey(ResourceLocation key) {

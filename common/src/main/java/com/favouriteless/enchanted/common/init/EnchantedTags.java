@@ -67,6 +67,7 @@ public class EnchantedTags {
         public static final TagKey<Item> HOES = createItemTag(Enchanted.location("hoes"));
         public static final TagKey<Item> LEAVES = createItemTag(Enchanted.location("leaves"));
         public static final TagKey<Item> LOGS = createItemTag(Enchanted.location("logs"));
+        public static final TagKey<Item> ORES = createItemTag(Enchanted.location("ores"));
         public static final TagKey<Item> PLANKS = createItemTag(Enchanted.location("planks"));
         public static final TagKey<Item> RAW_FOODS = createItemTag(Enchanted.location("raw_foods"));
         public static final TagKey<Item> SAPLINGS = createItemTag(Enchanted.location("saplings"));

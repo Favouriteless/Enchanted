@@ -4,13 +4,19 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.mixin.fabric.DamageSourceAccessor;
 import com.favouriteless.enchanted.platform.services.ICommonRegistryHelper;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Registry;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.SoundType;
+import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.function.Supplier;
 
@@ -20,6 +26,11 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
 		Registry.register(registry, Enchanted.location(name), entry.get());
 		return entry;
+	}
+
+	@Override
+	public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, TriFunction<Integer, Inventory, FriendlyByteBuf, T> create) {
+		return register(Registry.MENU, name, () -> new ExtendedScreenHandlerType<>(create::apply));
 	}
 
 	@Override

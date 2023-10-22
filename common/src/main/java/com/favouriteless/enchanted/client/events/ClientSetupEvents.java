@@ -24,26 +24,10 @@
 
 package com.favouriteless.enchanted.client.events;
 
-import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
-import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
-import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
-import com.favouriteless.enchanted.client.render.entity.ent.EntRenderer;
-import com.favouriteless.enchanted.client.render.entity.FamiliarCatRenderer;
-import com.favouriteless.enchanted.client.render.entity.SimpleAnimatedGeoRenderer;
 import com.favouriteless.enchanted.client.render.model.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
-import com.favouriteless.enchanted.client.screens.*;
-import com.favouriteless.enchanted.common.init.*;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
-import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;

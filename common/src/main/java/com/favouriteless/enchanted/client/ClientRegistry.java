@@ -1,16 +1,15 @@
 package com.favouriteless.enchanted.client;
 
-import com.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
-import com.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
-import com.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
-import com.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
-import com.favouriteless.enchanted.client.render.entity.FamiliarCatRenderer;
-import com.favouriteless.enchanted.client.render.entity.SimpleAnimatedGeoRenderer;
+import com.favouriteless.enchanted.client.render.blockentity.*;
+import com.favouriteless.enchanted.client.render.entity.*;
 import com.favouriteless.enchanted.client.render.entity.ent.EntRenderer;
+import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
 import com.favouriteless.enchanted.platform.Services;
 import com.favouriteless.enchanted.platform.services.IClientRegistryHelper;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 
 public class ClientRegistry {
@@ -30,6 +29,13 @@ public class ClientRegistry {
         registry.register(EnchantedBlockEntityTypes.KETTLE.get(), context -> new CauldronWaterRenderer<>(8));
         registry.register(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
         registry.register(EnchantedBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
+
+        // MenuScreens
+        MenuScreens.register(EnchantedMenuTypes.WITCH_OVEN.get(), WitchOvenScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.DISTILLERY.get(), DistilleryScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.ALTAR.get(), AltarScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.POPPET_SHELF.get(), PoppetShelfScreen::new);
     }
 
 }

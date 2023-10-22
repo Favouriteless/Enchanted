@@ -1,11 +1,16 @@
 package com.favouriteless.enchanted.platform.services;
 
 import net.minecraft.core.Registry;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.SoundType;
+import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.function.Supplier;
 
@@ -22,6 +27,16 @@ public interface ICommonRegistryHelper {
      */
     <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry);
 
+    /**
+     * Create a {@link MenuType} and register it via {@link ICommonRegistryHelper#register(Registry, String, Supplier)}.
+     * This is necessary because Forge and Fabric implement their extra data differently when opening a Menu.
+     *
+     * @param create TriFunction used to create the menu, on Fabric this matches ExtendedScreenHandlerType, on Forge it
+     *               matches IForgeMenuType.
+     *
+     * @return A {@link Supplier} for a {@link MenuType} implementation, depending on the platform.
+     */
+    <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, TriFunction<Integer, Inventory, FriendlyByteBuf, T> create);
 
     /**
      * Register a {@link SimpleJsonResourceReloadListener}, necessary because Fabric requires ReloadListeners to provide
@@ -63,6 +78,7 @@ public interface ICommonRegistryHelper {
      *
      * @return A new instance of {@link SoundType} with the provided properties.
      */
-    SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound);
+    SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound,
+                           Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound);
 
 }

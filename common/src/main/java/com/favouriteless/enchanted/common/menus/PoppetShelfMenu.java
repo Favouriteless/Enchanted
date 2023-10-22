@@ -1,45 +1,22 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
-import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
+import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
+import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
+import com.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 
-public class PoppetShelfMenu extends MenuBase {
+public class PoppetShelfMenu extends MenuBase<PoppetShelfBlockEntity> {
 
 	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity blockEntity) {
-		super(EnchantedMenus.POPPET_SHELF.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
+		super(EnchantedMenuTypes.POPPET_SHELF.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
 
 		for(int i = 0; i < blockEntity.getInventory().getContainerSize(); i++)
 			addSlot(new PoppetSlot(blockEntity.getInventory(), i, 47 + i*22, 18));
@@ -48,7 +25,7 @@ public class PoppetShelfMenu extends MenuBase {
 	}
 
 	public PoppetShelfMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, (PoppetShelfBlockEntity) getBlockEntity(playerInventory, data, PoppetShelfBlockEntity.class));
+		this(windowId, playerInventory, MenuUtils.getBlockEntity(playerInventory, data, PoppetShelfBlockEntity.class));
 	}
 
 	@Override

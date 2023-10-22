@@ -31,7 +31,7 @@ public class Enchanted {
         EnchantedBlocks.load();
         EnchantedEntityTypes.load();
         EnchantedBlockEntityTypes.load();
-        EnchantedMenus.load();
+        EnchantedMenuTypes.load();
         EnchantedRecipeTypes.load();
         EnchantedData.load();
     }

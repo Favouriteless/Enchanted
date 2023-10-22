@@ -47,8 +47,8 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     private final ContainerData fields = new ContainerData() {
         @Override
-        public int get(int pIndex) {
-            return switch(pIndex) {
+        public int get(int index) {
+            return switch(index) {
                 case 0 -> (int) Math.round(currentPower);
                 case 1 -> (int) Math.round(maxPower);
                 case 2 -> (int) Math.round(rechargeMultiplier);
@@ -57,14 +57,14 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         }
 
         @Override
-        public void set(int pIndex, int pValue) {
-            switch(pIndex) {
+        public void set(int index, int value) {
+            switch(index) {
                 case 0:
-                    currentPower = pValue;
+                    currentPower = value;
                 case 1:
-                    maxPower = pValue;
+                    maxPower = value;
                 case 2:
-                    rechargeMultiplier = pValue;
+                    rechargeMultiplier = value;
             }
         }
 

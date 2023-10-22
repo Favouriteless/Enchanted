@@ -2,14 +2,15 @@ package com.favouriteless.enchanted.common.menus;
 
 import com.favouriteless.enchanted.common.blockentities.ProcessingBlockEntityBase;
 import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
+import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedMenus;
+import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
 import com.favouriteless.enchanted.common.menus.slots.SlotFuel;
 import com.favouriteless.enchanted.common.menus.slots.SlotInput;
 import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;
 import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
+import com.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,15 +21,13 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
 
-public class WitchOvenMenu extends MenuBase {
+public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
     private final ContainerData data;
 
     public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity be, ContainerData data) {
-        super(EnchantedMenus.WITCH_OVEN.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get());
+        super(EnchantedMenuTypes.WITCH_OVEN.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get());
         this.data = data;
 
         addSlot(new SlotInput(be.getInputInventory(), 0, 53, 17)); // Ingredient input
@@ -42,7 +41,7 @@ public class WitchOvenMenu extends MenuBase {
     }
 
     public WitchOvenMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
-        this(id, playerInventory, (WitchOvenBlockEntity)getBlockEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
+        this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
     }
 
     @Override
@@ -91,7 +90,7 @@ public class WitchOvenMenu extends MenuBase {
 
     public boolean hasRecipe(ItemStack item) {
         if(blockEntity.getLevel() != null)
-            return !ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).contains(item.getItem()) &&
+            return !item.is(EnchantedTags.Items.ORES) &&
                     blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), blockEntity.getLevel()).isPresent();
         return false;
     }

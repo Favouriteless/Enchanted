@@ -3,6 +3,7 @@ package com.favouriteless.enchanted.client.client_handlers.entities;
 import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.favouriteless.enchanted.common.init.EnchantedKeybinds;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 
@@ -11,13 +12,14 @@ public class BroomstickEntityClientHandler {
 	public static void controlBroom(Broomstick broom) {
 		if(broom.isVehicle()) {
 			LocalPlayer player = Minecraft.getInstance().player;
+			Options options = Minecraft.getInstance().options;
 
-			broom.setInputAcceleration(EnchantedKeybinds.BROOM_FORWARD.isDown(), EnchantedKeybinds.BROOM_BACKWARD.isDown());
-			broom.setInputClimb(EnchantedKeybinds.BROOM_UP.isDown(), EnchantedKeybinds.BROOM_DOWN.isDown());
+			broom.setInputAcceleration(options.keyUp.isDown(), options.keyDown.isDown());
+			broom.setInputClimb(options.keyJump.isDown(), options.keyShift.isDown());
 
-			if(EnchantedKeybinds.BROOM_TURN_LEFT.isDown())
+			if(options.keyLeft.isDown())
 				broom.setDeltaRotY(broom.getDeltaRotY()-1);
-			if(EnchantedKeybinds.BROOM_TURN_RIGHT.isDown())
+			if(options.keyRight.isDown())
 				broom.setDeltaRotY(broom.getDeltaRotY()+1);
 
 			boolean flag = false;
@@ -41,9 +43,8 @@ public class BroomstickEntityClientHandler {
 
 			broom.setYRot(broom.getYRot() + broom.getDeltaRotY());
 			broom.setXRot(Mth.clamp(broom.getXRot() + broom.getDeltaRotX(), -30.0F, 30.0F));
-			if(broom.hasPassenger(player)) {
+			if(broom.hasPassenger(player))
 				player.setYRot(player.getYRot() + broom.getDeltaRotY());
-			}
 
 			broom.setDeltaMovement(broom.getNewDeltaMovement());
 		}

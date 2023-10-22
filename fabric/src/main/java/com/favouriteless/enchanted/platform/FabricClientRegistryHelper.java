@@ -2,6 +2,7 @@ package com.favouriteless.enchanted.platform;
 
 import com.favouriteless.enchanted.platform.services.IClientRegistryHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -20,6 +21,11 @@ public class FabricClientRegistryHelper implements IClientRegistryHelper {
 	@Override
 	public <T extends BlockEntity> void register(BlockEntityType<T> type, BlockEntityRendererProvider<T> constructor) {
 		BlockEntityRenderers.register(type, constructor);
+	}
+
+	@Override
+	public KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext) {
+		return new KeyMapping(name, keyCode, category);
 	}
 
 }

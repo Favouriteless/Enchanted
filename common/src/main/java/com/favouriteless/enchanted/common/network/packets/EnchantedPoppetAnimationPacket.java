@@ -27,7 +27,6 @@ package com.favouriteless.enchanted.common.network.packets;
 import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
-import com.favouriteless.enchanted.common.init.PoppetColour;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
 import com.favouriteless.enchanted.common.poppet.PoppetHelper.PoppetResult;

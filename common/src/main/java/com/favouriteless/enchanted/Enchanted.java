@@ -20,6 +20,7 @@ public class Enchanted {
     public static void init() {
         AutoConfig.register(EnchantedConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
         loadRegistries();
+        EnchantedItems.registerCompostables();
     }
 
     public static void loadRegistries() {

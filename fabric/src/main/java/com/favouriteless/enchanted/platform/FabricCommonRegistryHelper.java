@@ -10,8 +10,6 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 
 import java.util.function.Supplier;
@@ -27,11 +25,6 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	@Override
 	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
 		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
-	}
-
-	@Override
-	public CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier) {
-		return null;
 	}
 
 	@Override
@@ -55,6 +48,7 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	public SoundType getSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound) {
 		return new SoundType(volume, pitch, breakSound.get(), stepSound.get(), placeSound.get(), hitSound.get(), fallSound.get());
 	}
+
 
 
 	private static class EnchantedDamageSource extends DamageSource {

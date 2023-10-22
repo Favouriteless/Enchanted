@@ -46,9 +46,8 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
                 }
             }
             else {
-                if(!currentRite.isStarting()) {
+                if(!currentRite.isStarting())
                     currentRite.stopExecuting();
-                }
             }
         }
     }

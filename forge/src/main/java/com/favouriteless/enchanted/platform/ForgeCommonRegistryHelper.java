@@ -7,8 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,11 +34,6 @@ public class ForgeCommonRegistryHelper implements ICommonRegistryHelper {
 	@Override
 	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
 		DATA_LOADERS.dataLoaders.add(loader);
-	}
-
-	@Override
-	public CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier) {
-		return null;
 	}
 
 	@Override

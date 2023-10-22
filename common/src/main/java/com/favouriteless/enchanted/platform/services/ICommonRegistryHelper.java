@@ -5,8 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 
 import java.util.function.Supplier;
@@ -24,6 +22,7 @@ public interface ICommonRegistryHelper {
      */
     <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry);
 
+
     /**
      * Register a {@link SimpleJsonResourceReloadListener}, necessary because Fabric requires ReloadListeners to provide
      * an ID (god knows why).
@@ -35,8 +34,6 @@ public interface ICommonRegistryHelper {
      * @param loader An instance of the ReloadListener.
      */
     void register(ResourceLocation id, SimpleJsonResourceReloadListener loader);
-
-    CreativeModeTab registerTab(String id, Supplier<Item> iconSupplier);
 
     /**
      * Create a new {@link DamageSource}, necessary because Forge transforms constructor to public, but Fabric does not

@@ -8,7 +8,7 @@ public class EnchantedClient {
     public static void init() {
         ClientRegistry.register();
         EnchantedBlocks.initRender();
-        EnchantedKeybinds.registerKeybinds();
+        EnchantedKeybinds.load();
     }
 
 }

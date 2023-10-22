@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarType;
-import com.favouriteless.enchanted.common.familiars.types.CatFamiliarType;
+import com.favouriteless.enchanted.common.familiars.CatFamiliarType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
@@ -14,7 +14,7 @@ public class FamiliarTypes {
 
 	private static final Map<ResourceLocation, FamiliarType<?, ?>> FAMILIAR_TYPES = new HashMap<>();
 
-	public static final FamiliarType<?, ?> CAT = register("cat", new CatFamiliarType());
+	public static final FamiliarType<?, ?> CAT = register("cat", new CatFamiliarType(Enchanted.location("cat")));
 
 
 

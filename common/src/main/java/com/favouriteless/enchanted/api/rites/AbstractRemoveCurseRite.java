@@ -2,10 +2,10 @@ package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.Curse;
-import com.favouriteless.enchanted.api.familiars.IFamiliarCapability;
+import com.favouriteless.enchanted.api.curses.CurseSavedData;
+import com.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
-import com.favouriteless.enchanted.api.curses.CurseSavedData;
 import com.favouriteless.enchanted.common.curses.CurseType;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.init.registry.EnchantedSoundEvents;
@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.UUID;
@@ -59,9 +58,9 @@ public abstract class AbstractRemoveCurseRite extends AbstractRite {
             if(curses != null) {
                 int casterLevel = 0;
 
-                IFamiliarCapability cap = level.getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null);
-                IFamiliarEntry familiarEntry = cap.getFamiliarFor(getCasterUUID());
-                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
+                FamiliarSavedData data = FamiliarSavedData.get(level);
+                IFamiliarEntry familiarEntry = data.getEntry(getCasterUUID());
+                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT)
                     casterLevel++;
 
 

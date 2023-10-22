@@ -45,7 +45,7 @@ public class BedTaglockSavedData extends SavedData {
         if(level instanceof ServerLevel serverLevel)
             return serverLevel.getDataStorage().computeIfAbsent(BedTaglockSavedData::load, BedTaglockSavedData::new, NAME);
         else
-            throw new RuntimeException("Game attempted to load serverside rite data from a clientside world.");
+            throw new RuntimeException("Game attempted to load serverside taglock (bed) data from a clientside world.");
     }
 
     // -------------------- IMPLEMENTATION  DETAILS BELOW THIS POINT, NOT NEEDED FOR API USERS --------------------

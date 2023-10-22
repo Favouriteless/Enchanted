@@ -2,7 +2,6 @@ package com.favouriteless.enchanted.api.familiars;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.ISerializable;
-import com.favouriteless.enchanted.common.familiars.FamiliarEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

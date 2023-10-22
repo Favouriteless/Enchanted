@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.rites.binding;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
+import com.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import com.favouriteless.enchanted.api.familiars.FamiliarType;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.*;
@@ -90,12 +90,13 @@ public class RiteBindingFamiliar extends AbstractRite {
 				familiar.setCustomName(targetEntity.getCustomName());
 				familiar.setPersistenceRequired();
 
-				FamiliarHelper.runIfCap(level, cap -> {
-					cap.setFamiliar(casterUUID, type, familiar);
-					Enchanted.LOG.info(String.format("Familiar of type %s bound to %s", FamiliarTypes.REGISTRY.get().getKey(type).toString(), casterUUID));
-					level.addFreshEntity(familiar);
-					targetEntity.discard();
-				});
+				FamiliarSavedData data = FamiliarSavedData.get(level);
+				data.setFamiliar(casterUUID, type, familiar);
+				data.setDirty();
+
+				Enchanted.LOG.info(String.format("Familiar of type %s bound to %s", type.getId().toString(), casterUUID));
+				level.addFreshEntity(familiar);
+				targetEntity.discard();
 			}
 			stopExecuting();
 		}
@@ -113,7 +114,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 
 		List<Entity> entities = CirclePart.MEDIUM.getEntitiesInside(level, pos, entity -> FamiliarTypes.getByInput(entity.getType()) != null);
 
-		if(entities.size() > 0) {
+		if(!entities.isEmpty()) {
 			if(entities.get(0) instanceof TamableAnimal animal) {
 				UUID ownerUUID = animal.getOwnerUUID();
 

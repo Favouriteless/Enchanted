@@ -1,18 +1,21 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "com.favouriteless.enchanted.mixin.fabric",
-    "refmap": "${mod_id}.refmap.json",
-    "compatibilityLevel": "JAVA_17",
-    "mixins": [
-        "DamageSourceAccessor"
-    ],
-    "client": [
-    ],
-    "server": [
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.favouriteless.enchanted.mixin.fabric",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DamageSourceAccessor",
+    "LivingEntityMixin",
+    "PlayerMixin"
+  ],
+  "client": [
+    "MultiPlayerGameModeMixin"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
   }
   

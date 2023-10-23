@@ -4,6 +4,7 @@ import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.init.EnchantedTags.MobEffects;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
@@ -11,6 +12,8 @@ import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,6 +26,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
 
@@ -68,11 +72,14 @@ public class RiteCurseBlight extends AbstractRite {
                         if(entity instanceof Villager villager && Math.random() < config.blightZombieChance)
                             villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
                         else {
-                            MobEffect effect = ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOM).orElse(null);
-                            if(effect != null) {
-                                if(entity != level.getEntity(getCasterUUID()))
-                                    entity.addEffect(new MobEffectInstance(effect, 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
+                            Holder<MobEffect> effectHolder = Registry.MOB_EFFECT.getOrCreateTag(MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOMSOURCE).orElse(null);
+                            if(effectHolder == null) {
+                                Enchanted.LOG.error("Curse of Blight could not find any valid debuff effects! Check the enchanted:blight_effects tag.");
+                                stopExecuting();
+                                return;
                             }
+                            if (entity != level.getEntity(getCasterUUID()))
+                                entity.addEffect(new MobEffectInstance(effectHolder.value(), 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
                         }
                         entitiesHandled.add(entity);
                     }
@@ -82,13 +89,17 @@ public class RiteCurseBlight extends AbstractRite {
                 for(BlockPos _pos : positions) {
                     if(pos.distToCenterSqr(_pos.getX() + 0.5D, _pos.getY() + 0.5D, _pos.getZ() + 0.5D) < blockTicks*blockTicks) {
                         if(Math.random() < config.blightDecayChance) {
-                            Block decayBlock = level.getBlockState(_pos).getBlock();
-                            if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS).contains(decayBlock)) {
-                                Block block = ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOM).orElse(null);
-                                if(block != null)
-                                    level.setBlockAndUpdate(_pos, block.defaultBlockState());
+                            BlockState decayState = level.getBlockState(_pos);
+                            if(decayState.is(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS)) {
+                                Holder<Block> blockHolder = Registry.BLOCK.getOrCreateTag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOMSOURCE).orElse(null);
+                                if(blockHolder == null) {
+                                    Enchanted.LOG.error("Curse of Blight could not find any valid blocks to decay into! Check the enchanted:blight_decay_blocks tag.");
+                                    stopExecuting();
+                                    return;
+                                }
+                                level.setBlockAndUpdate(_pos, blockHolder.value().defaultBlockState());
                             }
-                            else if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_PLANTS).contains(decayBlock))
+                            else if(decayState.is(EnchantedTags.Blocks.BLIGHT_DECAYABLE_PLANTS))
                                 level.setBlockAndUpdate(_pos, Blocks.DEAD_BUSH.defaultBlockState());
                         }
                         positionsHandled.add(_pos);
@@ -117,7 +128,7 @@ public class RiteCurseBlight extends AbstractRite {
         BlockPos pos = getPos();
         Set<LivingEntity> entities = new HashSet<>();
         if(level != null) {
-            for(Entity entity : level.getEntities().getAll())
+            for(Entity entity : level.getAllEntities()) // Don't use AABB here since it would just result in all entities being checked twice anyway.
                 if(entity instanceof LivingEntity livingEntity)
                     if(entity.distanceToSqr(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D) <= BLIGHT_RADIUS_SQ) // If within circle
                         entities.add(livingEntity);

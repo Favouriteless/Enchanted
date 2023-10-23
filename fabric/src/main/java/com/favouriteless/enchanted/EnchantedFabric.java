@@ -1,5 +1,6 @@
 package com.favouriteless.enchanted;
 
+import com.favouriteless.enchanted.common.FabricCommonEvents;
 import com.favouriteless.enchanted.common.entities.Ent;
 import com.favouriteless.enchanted.common.entities.FamiliarCat;
 import com.favouriteless.enchanted.common.entities.Mandrake;
@@ -13,6 +14,7 @@ public class EnchantedFabric implements ModInitializer {
     public void onInitialize() {
         Enchanted.init();
         registerEntityAttributes();
+        FabricCommonEvents.register();
     }
 
     private static void registerEntityAttributes() {

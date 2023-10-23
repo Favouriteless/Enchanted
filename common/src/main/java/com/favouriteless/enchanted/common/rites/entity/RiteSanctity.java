@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.types.CircleMagicParticleType.CircleMagicData;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.init.EnchantedTags.EntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
@@ -38,7 +38,7 @@ public class RiteSanctity extends AbstractRite {
     public void onTick() {
         ServerLevel level = getLevel();
         BlockPos pos = getPos();
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(level, pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(getLevel(), pos, entity -> entity.getType().is(EntityTypes.MONSTERS));
         if(!currentEntities.isEmpty()) {
             for(Entity entity : currentEntities) {
                 Vec3 opposingVector = entity.position().subtract(pos.getX()+0.5D, entity.position().y(), pos.getZ()+0.5D);

@@ -4,7 +4,6 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
@@ -21,7 +20,7 @@ public class TaglockFilledItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag flag) {
         if(stack.hasTag()) {
-            tooltip.add(new TextComponent(stack.getTag().getString("entityName")).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.literal(stack.getTag().getString("entityName")).withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, pLevel, tooltip, flag);
     }

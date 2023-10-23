@@ -1,6 +1,8 @@
 package com.favouriteless.enchanted.common.init.registry;
 
 import com.favouriteless.enchanted.common.blocks.*;
+import com.favouriteless.enchanted.common.blocks.access.EnchantedSaplingBlock;
+import com.favouriteless.enchanted.common.blocks.access.EnchantedStairBlock;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.blocks.altar.*;
 import com.favouriteless.enchanted.common.blocks.cauldrons.*;
@@ -66,25 +68,25 @@ public class EnchantedBlocks {
     public static final Supplier<RotatedPillarBlock> WICKER_BUNDLE = register("wicker_bundle",() -> new HayBlock(Properties.copy(Blocks.HAY_BLOCK)));
 
     public static final Supplier<Block> ROWAN_PLANKS = register("rowan_planks",() -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final Supplier<StairBlock> ROWAN_STAIRS = register("rowan_stairs",() -> new StairBlock(ROWAN_PLANKS.get().defaultBlockState(), Properties.copy(ROWAN_PLANKS.get())));
+    public static final Supplier<StairBlock> ROWAN_STAIRS = register("rowan_stairs",() -> new EnchantedStairBlock(ROWAN_PLANKS.get().defaultBlockState(), Properties.copy(ROWAN_PLANKS.get())));
     public static final Supplier<SlabBlock> ROWAN_SLAB = register("rowan_slab",() -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final Supplier<RotatedPillarBlock> ROWAN_LOG = register("rowan_log", () -> log(MaterialColor.WOOD, MaterialColor.PODZOL));
     public static final Supplier<Block> ROWAN_LEAVES = register("rowan_leaves",() -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final Supplier<SaplingBlock> ROWAN_SAPLING = register("rowan_sapling",() -> new SaplingBlock(new EnchantedTreeGrower("rowan_tree"), Properties.copy(Blocks.OAK_SAPLING)));
+    public static final Supplier<SaplingBlock> ROWAN_SAPLING = register("rowan_sapling",() -> new EnchantedSaplingBlock(new EnchantedTreeGrower("rowan_tree"), Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final Supplier<Block> HAWTHORN_PLANKS = register("hawthorn_planks",() -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final Supplier<StairBlock> HAWTHORN_STAIRS = register("hawthorn_stairs",() -> new StairBlock(HAWTHORN_PLANKS.get().defaultBlockState(), Properties.copy(HAWTHORN_PLANKS.get())));
+    public static final Supplier<StairBlock> HAWTHORN_STAIRS = register("hawthorn_stairs",() -> new EnchantedStairBlock(HAWTHORN_PLANKS.get().defaultBlockState(), Properties.copy(HAWTHORN_PLANKS.get())));
     public static final Supplier<SlabBlock> HAWTHORN_SLAB = register("hawthorn_slab",() -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final Supplier<RotatedPillarBlock> HAWTHORN_LOG = register("hawthorn_log", () -> log(MaterialColor.CLAY, MaterialColor.CLAY));
     public static final Supplier<Block> HAWTHORN_LEAVES = register("hawthorn_leaves",() -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final Supplier<SaplingBlock> HAWTHORN_SAPLING = register("hawthorn_sapling",() -> new SaplingBlock(new EnchantedTreeGrower("hawthorn_tree"), Properties.copy(Blocks.OAK_SAPLING)));
+    public static final Supplier<SaplingBlock> HAWTHORN_SAPLING = register("hawthorn_sapling",() -> new EnchantedSaplingBlock(new EnchantedTreeGrower("hawthorn_tree"), Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final Supplier<Block> ALDER_PLANKS = register("alder_planks",() -> new Block(Properties.copy(Blocks.OAK_PLANKS)));
-    public static final Supplier<StairBlock> ALDER_STAIRS = register("alder_stairs",() -> new StairBlock(ALDER_PLANKS.get().defaultBlockState(), Properties.copy(ALDER_PLANKS.get())));
+    public static final Supplier<StairBlock> ALDER_STAIRS = register("alder_stairs",() -> new EnchantedStairBlock(ALDER_PLANKS.get().defaultBlockState(), Properties.copy(ALDER_PLANKS.get())));
     public static final Supplier<SlabBlock> ALDER_SLAB = register("alder_slab",() -> new SlabBlock(Properties.copy(Blocks.OAK_SLAB)));
     public static final Supplier<RotatedPillarBlock> ALDER_LOG = register("alder_log", () -> log(MaterialColor.WOOD, MaterialColor.CLAY));
     public static final Supplier<Block> ALDER_LEAVES = register("alder_leaves",() -> new LeavesBlock(Properties.copy(Blocks.OAK_LEAVES)));
-    public static final Supplier<SaplingBlock> ALDER_SAPLING = register("alder_sapling",() -> new SaplingBlock(new EnchantedTreeGrower("alder_tree"), Properties.copy(Blocks.OAK_SAPLING)));
+    public static final Supplier<SaplingBlock> ALDER_SAPLING = register("alder_sapling",() -> new EnchantedSaplingBlock(new EnchantedTreeGrower("alder_tree"), Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final Supplier<CropsBlockAgeFive> BELLADONNA = register("belladonna",() -> new BelladonnaBlock(Properties.copy(Blocks.WHEAT)));
     public static final Supplier<CropsBlockAgeFive> SNOWBELL = register("snowbell",() -> new SnowbellBlock(Properties.copy(Blocks.WHEAT)));

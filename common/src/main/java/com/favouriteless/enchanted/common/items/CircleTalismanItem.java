@@ -5,7 +5,7 @@ import com.favouriteless.enchanted.common.rites.CirclePart;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -56,7 +56,7 @@ public class CircleTalismanItem extends Item {
 					}
 
 					if(context.getPlayer() != null) {
-						context.getPlayer().displayClientMessage(new TextComponent("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
+						context.getPlayer().displayClientMessage(Component.literal("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
 						return InteractionResult.PASS;
 					}
 				}

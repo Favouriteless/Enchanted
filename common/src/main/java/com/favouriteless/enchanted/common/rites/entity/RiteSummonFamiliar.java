@@ -1,5 +1,6 @@
 package com.favouriteless.enchanted.common.rites.entity;
 
+import com.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.EnchantedItems;
@@ -32,7 +33,7 @@ public class RiteSummonFamiliar extends AbstractRite {
 
     @Override
     public void execute() {
-        IFamiliarEntry entry = getLevel().getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(getCasterUUID());
+        IFamiliarEntry entry = FamiliarSavedData.get(getLevel()).getEntry(getCasterUUID());
 
         if(entry != null) {
             ServerLevel level = getLevel();

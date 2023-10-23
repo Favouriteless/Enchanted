@@ -25,17 +25,18 @@
 package com.favouriteless.enchanted.common.rites.world;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
-import com.favouriteless.enchanted.common.init.EnchantedItems;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.CommonConfig;
+import com.favouriteless.enchanted.common.init.EnchantedTags.MobEffects;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.mixin.ZombieVillagerAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,7 +48,6 @@ import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -93,12 +93,13 @@ public class RiteFertility extends AbstractRite {
                 for(LivingEntity entity : entities) {
                     if(entity.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) < blockTicks*blockTicks) { // Sqr distance is much faster to calculate
                         if(entity instanceof ZombieVillager villager)
-                            villager.startConverting(getCasterUUID(), Enchanted.RANDOM.nextInt(2401) + 3600);
+                            ((ZombieVillagerAccessor)villager).startConverting(getCasterUUID(), Enchanted.RANDOM.nextInt(2401) + 3600);
 
                         Collection<MobEffectInstance> effects = entity.getActiveEffects();
                         List<MobEffect> toRemove = new ArrayList<>();
                         for(MobEffectInstance effect : effects) {
-                            if(ForgeRegistries.MOB_EFFECTS.tags().getTag(EnchantedTags.MobEffects.FERTILITY_CURE_EFFECTS).contains(effect.getEffect()))
+
+                            if(Registry.MOB_EFFECT.getHolder(MobEffect.getId(effect.getEffect())).get().is(MobEffects.FERTILITY_CURE_EFFECTS))
                                 toRemove.add(effect.getEffect());
                         }
                         for(MobEffect effect : toRemove) {
@@ -142,7 +143,7 @@ public class RiteFertility extends AbstractRite {
         ServerLevel level = getLevel();
         BlockPos pos = getPos();
         if(level != null) {
-            for(Entity entity : level.getEntities().getAll())
+            for(Entity entity : level.getAllEntities())
                 if(entity instanceof LivingEntity livingEntity)
                     if(entity.distanceToSqr(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D) <= RADIUS_SQ) // If within circle
                         entities.add(livingEntity);

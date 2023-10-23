@@ -1,7 +1,9 @@
 package com.favouriteless.enchanted.common.items;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.init.EnchantedTags.Blocks;
+import net.minecraft.core.HolderSet.Named;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -24,24 +26,30 @@ public class MutandisItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if(ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_PLANTS).stream().allMatch(block -> ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(block)))
-            return InteractionResult.FAIL; // If all whitelisted plants are blacklisted
-
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-        if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(state.getBlock()) && ForgeRegistries.BLOCKS.tags().getTag(validBlocks).contains(state.getBlock())) {
-            Level world = context.getLevel();
-            if(!world.isClientSide) {
+
+        Named<Block> blacklistTag = Registry.BLOCK.getOrCreateTag(Blocks.MUTANDIS_BLACKLIST);
+        Named<Block> validTag = Registry.BLOCK.getOrCreateTag(validBlocks);
+
+        if(validTag.size() == 0 || validTag.stream().allMatch(blacklistTag::contains)) { // This check prevents the while loop below from becoming infinite.
+            Enchanted.LOG.error("Mutandis tag is invalid! This means the tag is empty, or every item in it is blacklisted.");
+            return InteractionResult.FAIL;
+        }
+
+        if(!state.is(blacklistTag) && state.is(validTag)) {
+            Level level = context.getLevel();
+            if(!level.isClientSide) {
 
                 BlockState newState = null;
                 while(newState == null) {
-                    Block newBlock = ForgeRegistries.BLOCKS.tags().getTag(validBlocks).getRandomElement(Enchanted.RANDOM).get();
-                    if(!ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).contains(newBlock)) {
-                        newState = newBlock.defaultBlockState();
-                    }
+                    // This CAN throw an NPE, but it shouldn't as the above check ensures that validTag does have values it can use.
+                    BlockState _state = validTag.getRandomElement(Enchanted.RANDOMSOURCE).orElse(null).value().defaultBlockState();
+                    if(!_state.is(Blocks.MUTANDIS_BLACKLIST))
+                        newState = _state;
                 }
 
-                world.setBlockAndUpdate(context.getClickedPos(), newState);
-                world.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.setBlockAndUpdate(context.getClickedPos(), newState);
+                level.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
                 if(!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
                 return InteractionResult.CONSUME;
             }
@@ -50,7 +58,7 @@ public class MutandisItem extends Item {
                     double dx = context.getClickedPos().getX() + Math.random();
                     double dy = context.getClickedPos().getY() + Math.random();
                     double dz = context.getClickedPos().getZ() + Math.random();
-                    world.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0.0D, 0.0D, 0.0D);
+                    level.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0.0D, 0.0D, 0.0D);
                 }
                 return InteractionResult.SUCCESS;
             }

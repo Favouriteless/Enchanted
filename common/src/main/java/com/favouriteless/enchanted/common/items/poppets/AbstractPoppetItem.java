@@ -7,7 +7,6 @@ import com.favouriteless.enchanted.common.poppet.PoppetHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +17,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AbstractPoppetItem extends Item {
@@ -37,9 +35,9 @@ public abstract class AbstractPoppetItem extends Item {
 	}
 
 	public void appendHoverText(ItemStack stack, Level level, List<Component> toolTip, TooltipFlag flag) {
-		toolTip.add(new TextComponent((int)(failRate * 100) + "% Chance to fail").withStyle(ChatFormatting.RED));
+		toolTip.add(Component.literal((int)(failRate * 100) + "% Chance to fail").withStyle(ChatFormatting.RED));
 		if(PoppetHelper.isBound(stack)) {
-			toolTip.add(new TextComponent(PoppetHelper.getBoundName(stack)).withStyle(ChatFormatting.GRAY));
+			toolTip.add(Component.literal(PoppetHelper.getBoundName(stack)).withStyle(ChatFormatting.GRAY));
 		}
 	}
 

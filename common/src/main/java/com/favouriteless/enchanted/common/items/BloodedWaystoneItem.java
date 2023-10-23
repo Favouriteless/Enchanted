@@ -3,7 +3,6 @@ package com.favouriteless.enchanted.common.items;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,7 +22,7 @@ public class BloodedWaystoneItem extends Item {
         if(stack.hasTag()) {
             CompoundTag nbt = stack.getTag();
             if(nbt.contains("displayName"))
-                tooltip.add(new TextComponent(nbt.getString("displayName")).withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(nbt.getString("displayName")).withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, level, tooltip, flag);
     }

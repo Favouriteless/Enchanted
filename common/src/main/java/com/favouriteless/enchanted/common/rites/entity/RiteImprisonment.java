@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.rites.entity;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.ImprisonmentCageParticle;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.init.EnchantedTags.EntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
@@ -39,7 +39,7 @@ public class RiteImprisonment extends AbstractRite {
     @Override
     public void onTick() {
         BlockPos pos = getPos();
-        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(getLevel(), pos, entity -> ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entity.getType()));
+        List<Entity> currentEntities = CirclePart.SMALL.getEntitiesInside(getLevel(), pos, entity -> entity.getType().is(EntityTypes.MONSTERS));
         if(!currentEntities.isEmpty()) {
             tetheredMonsters.addAll(currentEntities);
         }

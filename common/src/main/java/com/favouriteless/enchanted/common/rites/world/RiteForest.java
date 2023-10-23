@@ -9,6 +9,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
+import com.favouriteless.enchanted.mixin.SaplingBlockAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -85,9 +86,9 @@ public class RiteForest extends AbstractRite {
                     BlockPos treePos = new BlockPos((int) Math.round(randomPos.x()) + pos.getX(), y, (int) Math.round(randomPos.z()) + pos.getZ());
                     if(notNearUsed(treePos)) {
                         BlockState state = level.getBlockState(treePos);
-                        if(state.isAir() || ForgeRegistries.BLOCKS.tags().getTag(EnchantedTags.Blocks.RITE_FOREST_REPLACEABLE).contains(state.getBlock())) {
+                        if(state.isAir() || state.is(EnchantedTags.Blocks.RITE_FOREST_REPLACEABLE)) {
                             if(saplingBlock.canSurvive(saplingBlock.defaultBlockState(), level, treePos)) {
-                                if(saplingBlock.treeGrower.growTree(level, level.getChunkSource().getGenerator(), treePos, state, Enchanted.RANDOM)) {
+                                if(((SaplingBlockAccessor)saplingBlock).getTreeGrower().growTree(level, level.getChunkSource().getGenerator(), treePos, state, Enchanted.RANDOMSOURCE)) {
                                     treesPlaced++;
                                     level.playSound(null, pos, SoundEvents.FUNGUS_PLACE, SoundSource.MASTER, 3.0F, 1.0F);
                                     usedPositions.add(treePos);

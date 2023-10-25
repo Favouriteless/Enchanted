@@ -10,7 +10,8 @@
     "PlayerMixin"
   ],
   "client": [
-    "MultiPlayerGameModeMixin"
+    "MultiPlayerGameModeMixin",
+    "SoundEngineMixin"
   ],
   "server": [
   ],

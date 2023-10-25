@@ -10,6 +10,7 @@
     "ZombieVillagerAccessor"
   ],
   "client": [
+    "AbstractSoundInstanceAccessor",
     "LocalPlayerMixin"
   ],
   "server": [

@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
 
-public class StaticJSONHelper {
+public class JSONHelper {
 
     public static NonNullList<ItemStack> readItemStackList(JsonArray array) {
         NonNullList<ItemStack> nonnulllist = NonNullList.create();

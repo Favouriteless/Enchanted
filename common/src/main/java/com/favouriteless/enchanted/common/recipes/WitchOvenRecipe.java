@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
+import com.favouriteless.enchanted.common.util.CraftingHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +76,7 @@ public class WitchOvenRecipe implements Recipe<Container> {
     }
 
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<WitchOvenRecipe> {
+    public static class Serializer implements RecipeSerializer<WitchOvenRecipe> {
 
         @Override
         public WitchOvenRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
@@ -97,7 +98,7 @@ public class WitchOvenRecipe implements Recipe<Container> {
         @Override
         public void toNetwork(FriendlyByteBuf buffer, WitchOvenRecipe recipe) {
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeItemStack(recipe.getResultItem(), true);
+            buffer.writeItem(recipe.getResultItem());
         }
 
     }

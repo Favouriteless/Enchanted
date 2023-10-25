@@ -7,7 +7,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class StaticItemStackHelper {
+public class ItemStackHelper {
 
 	public static boolean canStack(ItemStack original, ItemStack other) {
 		if(original.isStackable())

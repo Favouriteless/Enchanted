@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.util.StaticJSONHelper;
+import com.favouriteless.enchanted.common.util.JSONHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -100,12 +100,12 @@ public class DistilleryRecipe implements Recipe<Container> {
 
 
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DistilleryRecipe> {
+    public static class Serializer implements RecipeSerializer<DistilleryRecipe> {
 
         @Override
         public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
-            NonNullList<ItemStack> itemsOut = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "result"));
+            NonNullList<ItemStack> itemsIn = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
+            NonNullList<ItemStack> itemsOut = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "result"));
             int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
 
             return new DistilleryRecipe(recipeId, itemsIn, itemsOut, cookTime);

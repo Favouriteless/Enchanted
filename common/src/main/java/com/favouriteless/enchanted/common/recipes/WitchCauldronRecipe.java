@@ -1,14 +1,15 @@
 package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.util.StaticJSONHelper;
+import com.favouriteless.enchanted.common.util.CraftingHelper;
+import com.favouriteless.enchanted.common.util.JSONHelper;
 import com.google.gson.JsonObject;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 
@@ -25,16 +26,16 @@ public class WitchCauldronRecipe extends CauldronTypeRecipe {
 
 
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<WitchCauldronRecipe> {
+    public static class Serializer implements RecipeSerializer<WitchCauldronRecipe> {
 
         @Override
         public WitchCauldronRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
+            NonNullList<ItemStack> itemsIn = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
             ItemStack itemOut = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             int power = GsonHelper.getAsInt(json, "power");
-            int[] cookingColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "cookingColour"));
-            int[] finalColour = StaticJSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "finalColour"));
+            int[] cookingColour = JSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "cookingColour"));
+            int[] finalColour = JSONHelper.deserializeColour(GsonHelper.getAsJsonObject(json, "finalColour"));
 
             return new WitchCauldronRecipe(recipeId, itemsIn, itemOut, power, cookingColour, finalColour);
         }

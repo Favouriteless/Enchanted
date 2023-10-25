@@ -1,7 +1,8 @@
 package com.favouriteless.enchanted.common.recipes;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
-import com.favouriteless.enchanted.common.util.StaticJSONHelper;
+import com.favouriteless.enchanted.common.util.CraftingHelper;
+import com.favouriteless.enchanted.common.util.JSONHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -98,11 +99,11 @@ public class SpinningWheelRecipe implements Recipe<Container> {
         return power;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SpinningWheelRecipe> {
+    public static class Serializer implements RecipeSerializer<SpinningWheelRecipe> {
 
         @Override
         public SpinningWheelRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            NonNullList<ItemStack> itemsIn = StaticJSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
+            NonNullList<ItemStack> itemsIn = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
             ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
             int power = GsonHelper.getAsInt(json, "power", 0);
 

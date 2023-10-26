@@ -2,6 +2,7 @@ package com.favouriteless.enchanted;
 
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.favouriteless.enchanted.common.init.registry.*;
+import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
@@ -21,6 +22,7 @@ public class Enchanted {
 
     public static void init() {
         AutoConfig.register(EnchantedConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
+        EnchantedPackets.register();
         loadRegistries();
         EnchantedItems.registerCompostables();
     }

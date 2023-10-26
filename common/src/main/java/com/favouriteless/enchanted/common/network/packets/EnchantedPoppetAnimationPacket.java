@@ -1,27 +1,3 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.network.packets;
 
 import com.favouriteless.enchanted.client.particles.types.TwoToneColouredParticleType.TwoToneColouredData;
@@ -29,14 +5,13 @@ import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;
 import com.favouriteless.enchanted.common.network.EnchantedPacket;
+import com.favouriteless.enchanted.common.poppet.PoppetColour;
 import com.favouriteless.enchanted.common.poppet.PoppetHelper.PoppetResult;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
-
-import java.util.function.Supplier;
 
 public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 
@@ -58,27 +33,28 @@ public class EnchantedPoppetAnimationPacket implements EnchantedPacket {
 	}
 
 	public static EnchantedPoppetAnimationPacket decode(FriendlyByteBuf buffer) {
-		return new EnchantedPoppetAnimationPacket(buffer.readEnum(PoppetResult.class), buffer.readItem(), buffer.readInt());
+		return new EnchantedPoppetAnimationPacket(
+				buffer.readEnum(PoppetResult.class),
+				buffer.readItem(),
+				buffer.readInt()
+		);
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
+	public void handle(ServerPlayer sender) {
 		Minecraft mc = Minecraft.getInstance();
-
 		Entity entity = mc.level.getEntity(entityId);
-		if(mc.level.isClientSide) {
+		if(entity != null) {
 			if(item.getItem() instanceof AbstractPoppetItem) {
 				PoppetColour poppetColour = ((AbstractPoppetItem)item.getItem()).colour;
 				mc.particleEngine.createTrackingEmitter(entity, new TwoToneColouredData(EnchantedParticles.POPPET.get(),
 						poppetColour.rPrimary, poppetColour.gPrimary, poppetColour.gSecondary,
 						poppetColour.rSecondary, poppetColour.gSecondary, poppetColour.bSecondary), 40);
 
-				if(entity == mc.player) {
+				if(entity == mc.player)
 					PoppetAnimationManager.startAnimation(result, item);
-				}
 			}
 		}
-		context.get().setPacketHandled(true);
 	}
 
 }

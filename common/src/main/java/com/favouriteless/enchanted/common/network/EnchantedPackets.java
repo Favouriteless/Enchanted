@@ -1,63 +1,14 @@
-/*
- *
- *   Copyright (c) 2023. Favouriteless
- *   Enchanted, a minecraft mod.
- *   GNU GPLv3 License
- *
- *       This file is part of Enchanted.
- *
- *       Enchanted is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published by
- *       the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
- *
- *       Enchanted is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with Enchanted.  If not, see <https://www.gnu.org/licenses/>.
- *
- *
- */
-
 package com.favouriteless.enchanted.common.network;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.network.packets.EnchantedPoppetAnimationPacket;
 import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.simple.SimpleChannel;
+import com.favouriteless.enchanted.platform.Services;
 
 public class EnchantedPackets {
 
-	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-			Enchanted.location("main"),
-			() -> PROTOCOL_VERSION,
-			PROTOCOL_VERSION::equals,
-			PROTOCOL_VERSION::equals
-	);
-
-	public static void registerPackets() {
-		int id = 0;
-		INSTANCE.registerMessage(id++, EnchantedPoppetAnimationPacket.class, EnchantedPoppetAnimationPacket::encode, EnchantedPoppetAnimationPacket::decode, EnchantedPoppetAnimationPacket::handle);
-		INSTANCE.registerMessage(id++, EnchantedSinkingCursePacket.class, EnchantedSinkingCursePacket::encode, EnchantedSinkingCursePacket::decode, EnchantedSinkingCursePacket::handle);
-	}
-
-	public static void sendToPlayer(EnchantedPacket packet, ServerPlayer player) {
-		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
-	}
-
-	public static void sendToAllPlayers(EnchantedPacket packet) {
-		INSTANCE.send(PacketDistributor.ALL.noArg(), packet);
-	}
-
-	public static void sendToServer(EnchantedPacket packet) {
-		INSTANCE.sendToServer(packet);
-	}
+    public static void register() {
+        Services.NETWORK.register("poppet_animation", EnchantedPoppetAnimationPacket.class, EnchantedPoppetAnimationPacket::decode);
+        Services.NETWORK.register("sinking", EnchantedSinkingCursePacket.class, EnchantedSinkingCursePacket::decode);
+    }
 
 }

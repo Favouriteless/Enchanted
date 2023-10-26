@@ -27,7 +27,6 @@ package com.favouriteless.enchanted.common.curses;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.curses.Curse;
 import com.favouriteless.enchanted.api.curses.CurseSavedData;
-import com.favouriteless.enchanted.common.network.EnchantedPackets;
 import com.favouriteless.enchanted.common.network.packets.EnchantedSinkingCursePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.client.events;
+package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.EnchantedClient;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
-public class ClientSetupEvents {
+public class ClientSetupEventsForge {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {

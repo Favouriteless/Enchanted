@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.client;
 
-import com.favouriteless.enchanted.client.events.ClientEventsFabric;
 import com.favouriteless.enchanted.platform.FabricClientRegistryHelper;
 import net.fabricmc.api.ClientModInitializer;
 

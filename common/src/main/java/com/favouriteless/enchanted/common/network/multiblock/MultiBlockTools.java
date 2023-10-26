@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.multiblock;
+package com.favouriteless.enchanted.common.network.multiblock;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

@@ -1,8 +1,8 @@
-package com.favouriteless.enchanted.common.rites;
+package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
+import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;

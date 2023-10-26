@@ -1,10 +1,10 @@
 package com.favouriteless.enchanted.common.rites;
 
-import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
+import com.favouriteless.enchanted.api.rites.RiteSavedData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
-@EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.FORGE)
 public class RiteManager {
 
 	public static void addRite(AbstractRite rite) {
@@ -15,16 +15,14 @@ public class RiteManager {
 		}
 	}
 
-	@SubscribeEvent
-	public static void onWorldTick(WorldTickEvent event) {
-		if(event.phase == Phase.START && !event.world.isClientSide && event.world.dimension() == Level.OVERWORLD) {
-			RiteSavedData data = RiteSavedData.get(event.world);
-
+	public static void tick(ServerLevel level) {
+		if(level.dimension() == Level.OVERWORLD) {
+			RiteSavedData data = RiteSavedData.get(level);
 			data.ACTIVE_RITES.removeIf(rite -> rite.isRemoved);
-			for(AbstractRite rite : data.ACTIVE_RITES) {
-				rite.tick();
-			}
 			data.setDirty();
+
+			for(AbstractRite rite : data.ACTIVE_RITES)
+				rite.tick();
 		}
 	}
 

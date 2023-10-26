@@ -4,6 +4,7 @@ import com.favouriteless.enchanted.common.effects.EffectEvents;
 import com.favouriteless.enchanted.common.poppet.PoppetEvents;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,8 @@ public class CommonEventsFabric {
     public static void register() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(((entity, source, amount) -> !PoppetEvents.onLivingEntityHurt(entity, amount, source)));
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(((entity, source, amount) -> !EffectEvents.onLivingHurt(entity, source, amount)));
+        ServerTickEvents.START_WORLD_TICK.register(CommonEvents::onLevelTick);
+
 
         EntitySleepEvents.START_SLEEPING.register((entity, pos) -> {
             if(entity instanceof Player player)

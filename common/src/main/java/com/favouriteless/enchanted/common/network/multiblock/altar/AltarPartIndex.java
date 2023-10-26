@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.multiblock.altar;
+package com.favouriteless.enchanted.common.network.multiblock.altar;
 
 import net.minecraft.util.StringRepresentable;
 

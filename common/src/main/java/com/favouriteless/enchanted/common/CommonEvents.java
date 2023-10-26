@@ -2,8 +2,13 @@ package com.favouriteless.enchanted.common;
 
 import com.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
 import com.favouriteless.enchanted.api.taglock.IBedTaglock;
+import com.favouriteless.enchanted.common.curses.CurseManager;
+import com.favouriteless.enchanted.common.rites.RiteManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BedBlockEntity;
 
 public class CommonEvents {
@@ -18,6 +23,23 @@ public class CommonEvents {
                 data.setDirty();
             }
         }
+    }
+
+    public static void onLevelTick(Level level) {
+        if(level instanceof ServerLevel serverLevel) {
+            CurseManager.tick(serverLevel);
+            RiteManager.tick(serverLevel);
+        }
+    }
+
+    public static void onPlayerLoggedIn(Player player) {
+        if(player instanceof ServerPlayer serverPlayer)
+            CurseManager.playerLoggedIn(serverPlayer);
+    }
+
+    public static void onPlayerLoggedOut(Player player) {
+        if(player instanceof ServerPlayer serverPlayer)
+            CurseManager.playerLoggedOut(serverPlayer);
     }
 
 }

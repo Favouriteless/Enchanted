@@ -2,9 +2,9 @@ package com.favouriteless.enchanted.common.blocks.altar;
 
 import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.multiblock.MultiBlockTools;
-import com.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
-import com.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
+import com.favouriteless.enchanted.common.network.multiblock.MultiBlockTools;
+import com.favouriteless.enchanted.common.network.multiblock.altar.AltarMultiBlock;
+import com.favouriteless.enchanted.common.network.multiblock.altar.AltarPartIndex;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;

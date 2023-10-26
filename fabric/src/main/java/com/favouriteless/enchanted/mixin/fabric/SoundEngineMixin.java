@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.mixin.fabric;
 
-import com.favouriteless.enchanted.client.events.ClientEvents;
+import com.favouriteless.enchanted.client.ClientEvents;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEngine;
 import org.spongepowered.asm.mixin.Mixin;

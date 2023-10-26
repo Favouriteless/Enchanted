@@ -1,5 +1,6 @@
 package com.favouriteless.enchanted.client.events;
 
+import com.favouriteless.enchanted.client.ClientEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;

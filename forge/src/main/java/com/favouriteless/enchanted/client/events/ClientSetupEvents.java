@@ -8,8 +8,11 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.platform.ForgeClientRegistryHelper;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -17,6 +20,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.function.Supplier;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
 public class ClientSetupEvents {
@@ -68,9 +74,14 @@ public class ClientSetupEvents {
 
 	@SubscribeEvent
 	public static void onRegisterKeybinds(RegisterKeyMappingsEvent event) {
-		for(KeyMapping mapping : ForgeClientRegistryHelper.KEY_MAPPINGS) {
+		for(KeyMapping mapping : ForgeClientRegistryHelper.KEY_MAPPINGS)
 			event.register(mapping);
-		}
+	}
+
+	@SubscribeEvent
+	public static void onRegisterLayerDefinitions(RegisterLayerDefinitions event) {
+		for(Pair<ModelLayerLocation, Supplier<LayerDefinition>> pair : ForgeClientRegistryHelper.LAYER_DEFINITIONS)
+			event.registerLayerDefinition(pair.getKey(), pair.getValue());
 	}
 
 }

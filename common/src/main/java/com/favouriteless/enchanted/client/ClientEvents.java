@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.client.events;
+package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.EnchantedConfig;
 import com.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;

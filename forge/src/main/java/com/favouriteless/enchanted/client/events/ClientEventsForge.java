@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.client.events;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.client.ClientEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;

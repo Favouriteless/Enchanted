@@ -1,6 +1,8 @@
 package com.favouriteless.enchanted.platform.services;
 
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -9,6 +11,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+
+import java.util.function.Supplier;
 
 public interface IClientRegistryHelper {
 
@@ -39,6 +43,12 @@ public interface IClientRegistryHelper {
      */
     KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext);
 
+    /**
+     * Register a LayerDefinition
+     * @param layerLocation Location for the layer.
+     * @param supplier The layer to be registered.
+     */
+    void register(ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier);
 
 
     /**

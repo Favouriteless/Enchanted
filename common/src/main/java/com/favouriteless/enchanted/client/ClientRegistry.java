@@ -3,6 +3,9 @@ package com.favouriteless.enchanted.client;
 import com.favouriteless.enchanted.client.render.blockentity.*;
 import com.favouriteless.enchanted.client.render.entity.*;
 import com.favouriteless.enchanted.client.render.entity.ent.EntRenderer;
+import com.favouriteless.enchanted.client.render.model.BroomstickModel;
+import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
+import com.favouriteless.enchanted.client.render.model.armor.EarmuffsModel;
 import com.favouriteless.enchanted.client.screens.*;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedEntityTypes;
@@ -36,6 +39,11 @@ public class ClientRegistry {
         MenuScreens.register(EnchantedMenuTypes.ALTAR.get(), AltarScreen::new);
         MenuScreens.register(EnchantedMenuTypes.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
         MenuScreens.register(EnchantedMenuTypes.POPPET_SHELF.get(), PoppetShelfScreen::new);
+
+        // Layer definitions
+        registry.register(ModelLayerLocations.BROOMSTICK, BroomstickModel::createLayerDefinition);
+        registry.register(ModelLayerLocations.SPINNING_WHEEL, SpinningWheelRenderer::createLayerDefinition);
+        registry.register(ModelLayerLocations.EARMUFFS, EarmuffsModel::createLayerDefinition);
     }
 
 }

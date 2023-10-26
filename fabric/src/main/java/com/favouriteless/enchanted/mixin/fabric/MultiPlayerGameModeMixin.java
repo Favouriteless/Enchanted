@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.mixin.fabric;
 
-import com.favouriteless.enchanted.common.FabricCommonEvents;
+import com.favouriteless.enchanted.common.CommonEventsFabric;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
@@ -22,6 +22,6 @@ public class MultiPlayerGameModeMixin {
     private void itemBreakUseItem(InteractionHand interactionHand, Player player, MutableObject mutableObject, int i, CallbackInfoReturnable<Packet> cir,
                          ServerboundUseItemPacket serverboundUseItemPacket, ItemStack itemStack, InteractionResultHolder<ItemStack> interactionResultHolder, ItemStack itemStack2) {
         if(itemStack2.isEmpty())
-            FabricCommonEvents.playerDestroyItemEvent(player, itemStack, interactionHand);
+            CommonEventsFabric.playerDestroyItemEvent(player, itemStack, interactionHand);
     }
 }

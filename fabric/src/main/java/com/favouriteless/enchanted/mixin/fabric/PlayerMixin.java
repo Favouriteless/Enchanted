@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.mixin.fabric;
 
-import com.favouriteless.enchanted.common.FabricCommonEvents;
+import com.favouriteless.enchanted.common.CommonEventsFabric;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -23,21 +23,21 @@ public class PlayerMixin {
 
     @Inject(method="method_20266", at=@At("HEAD"), locals=LocalCapture.CAPTURE_FAILHARD)
     private static void itemBreakHurtCurrentlyUsedShieldLambda(InteractionHand hand, Player player, CallbackInfo ci) {
-        FabricCommonEvents.playerDestroyItemEvent(player, player.getUseItem(), hand);
+        CommonEventsFabric.playerDestroyItemEvent(player, player.getUseItem(), hand);
     }
 
     @Inject(method="interactOn", at=@At(value="RETURN", ordinal=1), locals=LocalCapture.CAPTURE_FAILHARD)
     private void itemBreakInteractOn(Entity entityToInteractOn, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir,
                                      ItemStack itemStack, ItemStack itemStack2) {
         if(!abilities.instabuild && itemStack.isEmpty())
-            FabricCommonEvents.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
+            CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
     }
 
     @Inject(method="interactOn", at=@At(value="INVOKE", target="Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"), locals=LocalCapture.CAPTURE_FAILHARD)
     private void itemBreakInteractOn1(Entity entityToInteractOn, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir,
                                      ItemStack itemStack, ItemStack itemStack2) {
         if(!abilities.instabuild && itemStack.isEmpty())
-            FabricCommonEvents.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
+            CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
     }
 
     @Inject(method="attack", at=@At(value="INVOKE", target="Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"), locals=LocalCapture.CAPTURE_FAILHARD)
@@ -54,7 +54,7 @@ public class PlayerMixin {
         else
             original = itemStack2.copy();
 
-        FabricCommonEvents.playerDestroyItemEvent((Player)(Object)this, original, InteractionHand.MAIN_HAND);
+        CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, original, InteractionHand.MAIN_HAND);
     }
 
 }

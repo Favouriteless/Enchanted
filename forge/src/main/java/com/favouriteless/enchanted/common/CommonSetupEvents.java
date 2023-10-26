@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.events;
+package com.favouriteless.enchanted.common;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.platform.ForgeCommonRegistryHelper;

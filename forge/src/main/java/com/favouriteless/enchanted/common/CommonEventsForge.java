@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.CommonEvents;
+import com.favouriteless.enchanted.common.effects.EffectEvents;
 import com.favouriteless.enchanted.common.poppet.PoppetEvents;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
@@ -20,8 +20,14 @@ public class CommonEventsForge {
 
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
-        if(PoppetEvents.onLivingEntityHurt(event.getEntity(), event.getAmount(), event.getSource()))
+        if(EffectEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getAmount())) {
             event.setCanceled(true);
+            return;
+        }
+        if(PoppetEvents.onLivingEntityHurt(event.getEntity(), event.getAmount(), event.getSource())) {
+            event.setCanceled(true);
+            return;
+        }
     }
 
     @SubscribeEvent

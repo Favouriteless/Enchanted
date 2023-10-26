@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common;
 
-import com.favouriteless.enchanted.common.CommonEvents;
+import com.favouriteless.enchanted.common.effects.EffectEvents;
 import com.favouriteless.enchanted.common.poppet.PoppetEvents;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -18,6 +18,7 @@ public class CommonEventsFabric {
 
     public static void register() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(((entity, source, amount) -> !PoppetEvents.onLivingEntityHurt(entity, amount, source)));
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(((entity, source, amount) -> !EffectEvents.onLivingHurt(entity, source, amount)));
 
         EntitySleepEvents.START_SLEEPING.register((entity, pos) -> {
             if(entity instanceof Player player)

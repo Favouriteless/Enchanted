@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.blocks.entity.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -57,7 +58,7 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
 
 
         // Draw fuel remaining bar
-        if (menu.getData().get(0) > 0) {
+        if (menu.getBlockEntity().getBurnDuration() > 0) {
             int burnLeftScaled = getBurnLeftScaled();
             blit(poseStack, leftPos + FLAME_XPOS, topPos + FLAME_YPOS + 12 - burnLeftScaled, FLAME_ICON_U, FLAME_ICON_V - burnLeftScaled, FLAME_SIZE, burnLeftScaled + 1);
         }
@@ -71,19 +72,22 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
     }
 
     public int getBurnLeftScaled() {
-        int maxBurnTime = menu.getData().get(1);
-        int burnTime = menu.getData().get(0);
-        if (maxBurnTime == 0) {
-            maxBurnTime = 200;
-        }
+        WitchOvenBlockEntity be = menu.getBlockEntity();
+        int burnDuration = be.getBurnDuration();
+        int burnProgress = be.getBurnProgress();
 
-        return burnTime * 13 / maxBurnTime;
+        if (burnDuration == 0)
+            burnDuration = 200;
+
+        return burnProgress * 13 / burnDuration;
     }
 
     public int getCookProgressionScaled() {
-        int cookTime = menu.getData().get(2);
-        int cookTimeTotal = menu.getData().get(3);
-        return cookTimeTotal != 0 && cookTime != 0 ? cookTime * COOK_BAR_WIDTH / cookTimeTotal : 0;
+        WitchOvenBlockEntity be = menu.getBlockEntity();
+        int cookProgress = be.getCookProgress();
+        int cookDuration = be.getCookDuration();
+
+        return cookDuration != 0 && cookProgress != 0 ? cookProgress * COOK_BAR_WIDTH / cookDuration : 0;
     }
 
 }

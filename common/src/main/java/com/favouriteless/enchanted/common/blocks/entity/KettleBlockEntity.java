@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;

@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity.AltarUpgrade;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity.AltarUpgrade;
 
 import java.util.ArrayList;
 import java.util.List;

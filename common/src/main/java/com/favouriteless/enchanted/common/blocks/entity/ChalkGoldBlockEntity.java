@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.api.rites.AbstractRite;
@@ -32,7 +32,7 @@ public class ChalkGoldBlockEntity extends BlockEntity implements IPowerConsumer 
     }
 
     public void execute(BlockState state, Level _level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!level.isClientSide && _level instanceof ServerLevel level) {
+        if(!_level.isClientSide && _level instanceof ServerLevel level) {
             if (currentRite == null) {
 
                 AbstractRite rite = RiteTypes.getRiteAt(level, pos, player.getUUID());

@@ -94,7 +94,7 @@ public class FamiliarSavedData extends SavedData {
 
 
 
-    private static class FamiliarEntry implements IFamiliarEntry {
+    public static class FamiliarEntry implements IFamiliarEntry {
 
         private final FamiliarType<?, ?> type;
         private UUID uuid;

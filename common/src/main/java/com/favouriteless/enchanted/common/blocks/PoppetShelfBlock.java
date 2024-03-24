@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import com.favouriteless.enchanted.common.util.ItemStackHelper;
 import net.minecraft.world.level.block.Block;

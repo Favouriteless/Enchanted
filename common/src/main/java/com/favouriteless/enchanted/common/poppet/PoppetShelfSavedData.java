@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.poppet;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;

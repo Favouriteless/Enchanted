@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class MenuBase<T extends BlockEntity> extends AbstractContainerMenu {
 
-	protected T blockEntity;
+	protected final T blockEntity;
 	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
@@ -36,6 +36,10 @@ public abstract class MenuBase<T extends BlockEntity> extends AbstractContainerM
 		for (int x = 0; x < 9; x++) { // Hotbar
 			addSlot(new Slot(playerInventory, x, 8 + (18 * x), yStart + 58));
 		}
+	}
+
+	public T getBlockEntity() {
+		return blockEntity;
 	}
 
 }

@@ -29,17 +29,16 @@ public class DistilleryRecipeProcessor implements IComponentProcessor {
 	@Override
 	public IVariable process(String key) {
 
+		int index = Integer.parseInt(String.valueOf(key.charAt(key.length() - 1)));
 		if(key.startsWith("in")) {
-			int index = Integer.parseInt(String.valueOf(key.charAt(key.length()-1)));
-			NonNullList<ItemStack> stacks = recipe.getItemsIn();
+            NonNullList<ItemStack> stacks = recipe.getItemsIn();
 			if(index >= 0 && index < stacks.size()) {
 				return IVariable.from(stacks.get(index));
 			}
 			return IVariable.from(ItemStack.EMPTY);
 		}
 		else if(key.startsWith("out")) {
-			int index = Integer.parseInt(String.valueOf(key.charAt(key.length()-1)));
-			NonNullList<ItemStack> stacks = recipe.getItemsOut();
+            NonNullList<ItemStack> stacks = recipe.getItemsOut();
 			if(index >= 0 && index < stacks.size()) {
 				return IVariable.from(stacks.get(index));
 			}

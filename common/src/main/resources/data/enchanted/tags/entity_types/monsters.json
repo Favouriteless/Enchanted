@@ -12,8 +12,12 @@
     "minecraft:guardian",
     "minecraft:hoglin",
     "minecraft:husk",
+    "minecraft:illusioner",
     "minecraft:magma_cube",
     "minecraft:phantom",
+    "minecraft:piglin",
+    "minecraft:piglin_brute",
+    "minecraft:pillager",
     "minecraft:ravager",
     "minecraft:shulker",
     "minecraft:silverfish",
@@ -25,6 +29,7 @@
     "minecraft:zombie",
     "minecraft:zombie_villager",
     "minecraft:wither_skeleton",
+    "minecraft:witch",
     "minecraft:zoglin",
     "minecraft:zombified_piglin"
   ]

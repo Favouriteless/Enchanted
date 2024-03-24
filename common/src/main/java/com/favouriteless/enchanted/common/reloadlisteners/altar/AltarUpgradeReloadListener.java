@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.reloadlisteners.altar;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity.AltarUpgrade;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity.AltarUpgrade;
 import com.favouriteless.enchanted.common.init.EnchantedData;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

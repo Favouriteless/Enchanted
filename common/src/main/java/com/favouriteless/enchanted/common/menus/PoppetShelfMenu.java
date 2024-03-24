@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.blockentities.PoppetShelfBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
 import com.favouriteless.enchanted.common.items.poppets.AbstractPoppetItem;

@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
-import com.favouriteless.enchanted.common.blockentities.ChalkGoldBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.ChalkGoldBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.RiteTypes;
 import com.favouriteless.enchanted.common.items.TaglockFilledItem;

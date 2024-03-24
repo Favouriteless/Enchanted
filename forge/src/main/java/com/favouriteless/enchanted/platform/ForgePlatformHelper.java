@@ -4,9 +4,13 @@ import com.favouriteless.enchanted.platform.services.IPlatformHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 public class ForgePlatformHelper implements IPlatformHelper {
 
@@ -28,6 +32,21 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public void openMenuScreen(ServerPlayer player, MenuProvider provider, BlockPos pos) {
         NetworkHooks.openScreen(player, provider, pos);
+    }
+
+    @Override
+    public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType) {
+        return ForgeHooks.getBurnTime(stack, recipeType);
+    }
+
+    @Override
+    public boolean hasCraftingRemainingItem(ItemStack item) {
+        return item.hasCraftingRemainingItem();
+    }
+
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack item) {
+        return item.getCraftingRemainingItem();
     }
 
 }

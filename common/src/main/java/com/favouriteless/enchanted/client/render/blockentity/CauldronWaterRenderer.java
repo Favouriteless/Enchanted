@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.client.render.blockentity;
 
-import com.favouriteless.enchanted.common.blockentities.CauldronBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.CauldronBlockEntity;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

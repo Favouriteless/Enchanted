@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks.cauldrons;
 
-import com.favouriteless.enchanted.common.blockentities.KettleBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.KettleBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

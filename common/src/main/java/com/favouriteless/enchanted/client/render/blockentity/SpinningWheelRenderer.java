@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.client.render.blockentity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

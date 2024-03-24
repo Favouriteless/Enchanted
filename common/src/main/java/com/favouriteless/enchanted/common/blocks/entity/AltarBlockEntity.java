@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.ISerializable;
@@ -80,43 +80,44 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     private boolean firstLoad = true;
     private int ticksAlive = 0;
+    private boolean firstTick = true;
 
     public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(EnchantedBlockEntityTypes.ALTAR.get(), pos, state);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T t) {
-        if(t instanceof AltarBlockEntity blockEntity) {
+        if(t instanceof AltarBlockEntity be) {
             if(level != null && !level.isClientSide) {
-                if(blockEntity.ticksAlive % 20 == 0) {
-                    blockEntity.stateObserver.checkChanges();
+                if(be.firstTick) // Can't use onLoad here because it's forge exclusive.
+                    be.firstTick();
+
+                if(be.ticksAlive % 20 == 0) {
+                    be.stateObserver.checkChanges();
                 }
-                if(blockEntity.currentPower <= blockEntity.maxPower)
-                    blockEntity.currentPower += blockEntity.rechargeRate * blockEntity.rechargeMultiplier;
-                if(blockEntity.currentPower > blockEntity.maxPower)
-                    blockEntity.currentPower = blockEntity.maxPower;
-                blockEntity.ticksAlive++;
+                if(be.currentPower <= be.maxPower)
+                    be.currentPower += be.rechargeRate * be.rechargeMultiplier;
+                if(be.currentPower > be.maxPower)
+                    be.currentPower = be.maxPower;
+                be.ticksAlive++;
             }
         }
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if(!level.isClientSide) {
-            if(stateObserver == null)
-                stateObserver = StateObserverManager.getObserver(level, worldPosition, AltarStateObserver.class);
-            if(stateObserver == null) {
-                int range = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarRange;
-                stateObserver = StateObserverManager.createObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
-            }
-            facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
-            centerPos = facingX ?
-                    Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
-                    Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
-            if(firstLoad)
-                recalculatePower();
+    public void firstTick() {
+        if(stateObserver == null)
+            stateObserver = StateObserverManager.getObserver(level, worldPosition, AltarStateObserver.class);
+        if(stateObserver == null) {
+            int range = AutoConfig.getConfigHolder(CommonConfig.class).getConfig().altarRange;
+            stateObserver = StateObserverManager.createObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
         }
+        facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
+        centerPos = facingX ?
+                Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
+                Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
+        if(firstLoad)
+            recalculatePower();
+        firstTick = false;
     }
 
     @Override
@@ -341,7 +342,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
             if(amount == null) { // Not in blocks
                 for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.POWER_TAGS.getAll()) { // For all tag power providers
-                    if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
+                    if(block.builtInRegistryHolder().is(provider.getKey())) { // If block part of provider tag
                         amount = tagCounts.get(provider.getKey());
                         tagCounts.replace(provider.getKey(), tagCounts.get(provider.getKey()) + 1);
                         return amount < provider.getLimit() ? provider.getPower() : 0; // Return 0 if above limit
@@ -362,7 +363,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
             if(amount == null) { // Not in blocks
                 for(AltarPowerProvider<TagKey<Block>> provider : EnchantedData.POWER_TAGS.getAll()) { // For all tag power providers
-                    if(ForgeRegistries.BLOCKS.tags().getTag(provider.getKey()).contains(block)) { // If block part of provider tag
+                    if(block.builtInRegistryHolder().is(provider.getKey())) { // If block part of provider tag
                         amount = tagCounts.get(provider.getKey());
                         tagCounts.replace(provider.getKey(), tagCounts.get(provider.getKey()) - 1);
 
@@ -520,7 +521,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
         public void reset() {
             for(Map<AltarUpgrade, Integer> map : upgradesByType.values()) {
-                map.replaceAll((key, value) -> value = 0);
+                map.replaceAll((key, value) -> 0);
             }
         }
 

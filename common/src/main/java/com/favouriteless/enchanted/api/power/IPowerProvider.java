@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.api.power;
 
 import com.favouriteless.enchanted.common.altar.AltarStateObserver;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import com.favouriteless.stateobserver.api.StateObserver;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

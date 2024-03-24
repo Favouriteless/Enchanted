@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
 import com.favouriteless.enchanted.common.util.MenuUtils;

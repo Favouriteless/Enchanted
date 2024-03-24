@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implements IPowerConsumer, MenuProvider {
+public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider {
 
 	private final ItemStackHandler input = new ItemStackHandler(3);
 	private final ItemStackHandler output = new ItemStackHandler(1);
@@ -154,7 +154,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	public Component getDisplayName() {
+	public @NotNull Component getDisplayName() {
 		return Component.translatable("container.enchanted.spinning_wheel");
 	}
 
@@ -165,7 +165,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag nbt) {
+	public void saveAdditional(@NotNull CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		nbt.put("posHolder", posHolder.serialize());
 		nbt.putInt("spinTime", spinTime);
@@ -174,7 +174,7 @@ public class SpinningWheelBlockEntity extends ProcessingBlockEntityBase implemen
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		posHolder.deserialize(nbt.getList("posHolder", 10));
 		spinTime = nbt.getInt("spinTime");

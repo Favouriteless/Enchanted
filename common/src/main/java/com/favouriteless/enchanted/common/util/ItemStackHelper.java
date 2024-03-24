@@ -1,12 +1,16 @@
 package com.favouriteless.enchanted.common.util;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+/**
+ * Util class for functions related to {@link ItemStack}.
+ */
 public class ItemStackHelper {
 
 	public static boolean canStack(ItemStack original, ItemStack other) {
@@ -38,6 +42,15 @@ public class ItemStackHelper {
 				level.addFreshEntity(entity);
 			}
 		}
+	}
+
+	/**
+	 * Check if a given {@link ItemStack} is furnace fuel or not.
+	 * @param stack The {@link ItemStack} to be checked.
+	 * @return True if stack's burn value > 0.
+	 */
+	public static boolean isFuel(ItemStack stack) {
+		return Services.PLATFORM.getBurnTime(stack, null) > 0;
 	}
 
 }

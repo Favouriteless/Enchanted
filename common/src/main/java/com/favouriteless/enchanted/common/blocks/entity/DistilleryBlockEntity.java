@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.api.power.IPowerProvider;
@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements IPowerConsumer, MenuProvider {
+public class DistilleryBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider {
 
     private final ItemStackHandler jar = new ItemStackHandler(1);
     private final ItemStackHandler input = new ItemStackHandler(2);
@@ -225,7 +225,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     }
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return Component.translatable("container.enchanted.distillery");
     }
 
@@ -236,7 +236,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
+    public void saveAdditional(@NotNull CompoundTag nbt) {
         super.saveAdditional(nbt);
         nbt.put("posHolder", posHolder.serialize());
         nbt.putBoolean("burnTime", isBurning);
@@ -248,7 +248,7 @@ public class DistilleryBlockEntity extends ProcessingBlockEntityBase implements 
     }
 
     @Override
-    public void load(CompoundTag nbt) {
+    public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         posHolder.deserialize(nbt.getList("posHolder", 10));
         isBurning = nbt.getBoolean("burnTime");

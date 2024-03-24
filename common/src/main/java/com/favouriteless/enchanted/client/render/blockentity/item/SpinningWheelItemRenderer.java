@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.client.render.blockentity.item;
 
-import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.common.network.multiblock.altar;
 
 import com.favouriteless.enchanted.common.altar.AltarStateObserver;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.network.multiblock.IMultiBlockType;

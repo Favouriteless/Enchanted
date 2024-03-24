@@ -1,10 +1,10 @@
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.blockentities.SpinningWheelBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
-import com.favouriteless.enchanted.common.menus.slots.SlotInput;
-import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
+import com.favouriteless.enchanted.common.menus.slots.NonJarInputSlot;
+import com.favouriteless.enchanted.common.menus.slots.OutputSlot;
 import com.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,10 +23,10 @@ public class SpinningWheelMenu extends MenuBase<SpinningWheelBlockEntity> {
 		super(EnchantedMenuTypes.SPINNING_WHEEL.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.SPINNING_WHEEL.get());
 		this.data = data;
 
-		addSlot(new SlotInput(be.getInputInventory(), 0, 45, 23)); // Main input
-		addSlot(new SlotInput(be.getInputInventory(), 1, 33, 47)); // Ingredient input
-		addSlot(new SlotInput(be.getInputInventory(), 2, 57, 47)); // Ingredient input
-		addSlot(new SlotOutput(be.getOutputInventory(), 0, 130, 35)); // Spinning wheel output
+		addSlot(new NonJarInputSlot(be.getInputInventory(), 0, 45, 23)); // Main input
+		addSlot(new NonJarInputSlot(be.getInputInventory(), 1, 33, 47)); // Ingredient input
+		addSlot(new NonJarInputSlot(be.getInputInventory(), 2, 57, 47)); // Ingredient input
+		addSlot(new OutputSlot(be.getOutputInventory(), 0, 130, 35)); // Spinning wheel output
 
 		addInventorySlots(playerInventory, 8, 84);
 		addDataSlots(data);

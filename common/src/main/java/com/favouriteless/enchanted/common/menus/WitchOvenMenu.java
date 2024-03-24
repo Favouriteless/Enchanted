@@ -1,15 +1,14 @@
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.blockentities.ProcessingBlockEntityBase;
-import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
-import com.favouriteless.enchanted.common.init.EnchantedTags;
+import com.favouriteless.enchanted.common.blocks.entity.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
-import com.favouriteless.enchanted.common.menus.slots.SlotFuel;
-import com.favouriteless.enchanted.common.menus.slots.SlotInput;
-import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;
-import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
+import com.favouriteless.enchanted.common.menus.slots.FuelSlot;
+import com.favouriteless.enchanted.common.menus.slots.JarInputSlot;
+import com.favouriteless.enchanted.common.menus.slots.NonJarInputSlot;
+import com.favouriteless.enchanted.common.menus.slots.OutputSlot;
+import com.favouriteless.enchanted.common.util.ItemStackHelper;
 import com.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
@@ -21,20 +20,19 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
-    private final ContainerData data;
-
     public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity be, ContainerData data) {
         super(EnchantedMenuTypes.WITCH_OVEN.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get());
-        this.data = data;
 
-        addSlot(new SlotInput(be.getInputInventory(), 0, 53, 17)); // Ingredient input
-        addSlot(new SlotFuel(be.getFuelInventory(), 0, 80, 53)); // Fuel Slot
-        addSlot(new SlotOutput(be.getOutputInventory(), 0, 107, 17)); // Smelting output
-        addSlot(new SlotJarInput(be.getJarInventory(), 0, 53, 53)); // Jar input
-        addSlot(new SlotOutput(be.getOutputInventory(), 1, 107, 53)); // Jar output
+        addSlot(new NonJarInputSlot(be, 0, 53, 17)); // Ingredient input
+        addSlot(new FuelSlot(be, 0, 80, 53)); // Fuel Slot
+        addSlot(new OutputSlot(be, 0, 107, 17)); // Smelting output
+        addSlot(new JarInputSlot(be, 0, 53, 53)); // Jar input
+        addSlot(new OutputSlot(be, 1, 107, 53)); // Jar output
 
         addInventorySlots(playerInventory, 8, 84);
         addDataSlots(data);
@@ -45,7 +43,8 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         Slot slot = slots.get(index);
         if (slot.hasItem()) {
             ItemStack slotItem = slot.getItem();
@@ -58,7 +57,7 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
                 if(!moveItemStackTo(slotItem, 0, 1, false))
                     return ItemStack.EMPTY;
             }
-            else if(ProcessingBlockEntityBase.isFuel(slotItem)) { // Item is fuel
+            else if(ItemStackHelper.isFuel(slotItem)) { // Item is fuel
                 if(!moveItemStackTo(slotItem, 1, 2, false))
                     return ItemStack.EMPTY;
             }
@@ -85,18 +84,12 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
             slot.onTake(player, slotItem);
         }
-        return super.quickMoveStack(player, index);
+        return ItemStack.EMPTY;
     }
 
-    public boolean hasRecipe(ItemStack item) {
-        if(blockEntity.getLevel() != null)
-            return !item.is(EnchantedTags.Items.ORES) &&
-                    blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), blockEntity.getLevel()).isPresent();
-        return false;
-    }
-
-    public ContainerData getData() {
-        return data;
+    protected boolean hasRecipe(ItemStack item) {
+        Level level = getBlockEntity().getLevel();
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(item), level).isPresent();
     }
 
 }

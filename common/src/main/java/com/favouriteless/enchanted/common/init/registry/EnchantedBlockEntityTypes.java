@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.common.init.registry;
 
-import com.favouriteless.enchanted.common.blockentities.*;
+import com.favouriteless.enchanted.common.blocks.entity.*;
+import com.favouriteless.enchanted.common.entity.*;
 import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.entity.BlockEntity;

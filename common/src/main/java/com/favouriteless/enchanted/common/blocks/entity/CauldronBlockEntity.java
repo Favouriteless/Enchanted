@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.common.blockentities;
+package com.favouriteless.enchanted.common.blocks.entity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.power.IPowerConsumer;

@@ -1,12 +1,12 @@
 package com.favouriteless.enchanted.common.menus;
 
-import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
-import com.favouriteless.enchanted.common.menus.slots.SlotInput;
-import com.favouriteless.enchanted.common.menus.slots.SlotJarInput;
-import com.favouriteless.enchanted.common.menus.slots.SlotOutput;
+import com.favouriteless.enchanted.common.menus.slots.NonJarInputSlot;
+import com.favouriteless.enchanted.common.menus.slots.JarInputSlot;
+import com.favouriteless.enchanted.common.menus.slots.OutputSlot;
 import com.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,14 +25,14 @@ public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
         super(EnchantedMenuTypes.DISTILLERY.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.DISTILLERY.get());
         this.data = data;
 
-        addSlot(new SlotJarInput(be.getJarInventory(), 0, 32, 35)); // Jar input
-        addSlot(new SlotInput(be.getInputInventory(), 0, 54, 25)); // Ingredient input
-        addSlot(new SlotInput(be.getInputInventory(), 1, 54, 45)); // Ingredient input
-        addSlot(new SlotOutput(be.getOutputInventory(), 0, 127, 7)); // Distillery output
-        addSlot(new SlotOutput(be.getOutputInventory(), 1, 127, 26)); // Distillery output
-        addSlot(new SlotOutput(be.getOutputInventory(), 2, 127, 45)); // Distillery output
+        addSlot(new JarInputSlot(be.getJarInventory(), 0, 32, 35)); // Jar input
+        addSlot(new NonJarInputSlot(be.getInputInventory(), 0, 54, 25)); // Ingredient input
+        addSlot(new NonJarInputSlot(be.getInputInventory(), 1, 54, 45)); // Ingredient input
+        addSlot(new OutputSlot(be.getOutputInventory(), 0, 127, 7)); // Distillery output
+        addSlot(new OutputSlot(be.getOutputInventory(), 1, 127, 26)); // Distillery output
+        addSlot(new OutputSlot(be.getOutputInventory(), 2, 127, 45)); // Distillery output
 
-        addSlot(new SlotOutput(be.getOutputInventory(), 3, 127, 64)); // Distillery output
+        addSlot(new OutputSlot(be.getOutputInventory(), 3, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
         addDataSlots(data);

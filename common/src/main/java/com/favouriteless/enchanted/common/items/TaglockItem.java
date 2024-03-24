@@ -3,7 +3,7 @@ package com.favouriteless.enchanted.common.items;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
 import com.favouriteless.enchanted.api.taglock.IBedTaglock;
-import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
 import com.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import com.favouriteless.enchanted.common.init.EnchantedTags.EntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;

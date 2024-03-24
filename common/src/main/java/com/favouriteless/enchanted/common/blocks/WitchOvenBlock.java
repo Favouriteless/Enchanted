@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.blockentities.WitchOvenBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.WitchOvenBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -105,6 +105,6 @@ public class WitchOvenBlock extends SimpleContainerBlockBase {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return type == EnchantedBlockEntityTypes.WITCH_OVEN.get() ? WitchOvenBlockEntity::tick : null;
+        return type == EnchantedBlockEntityTypes.WITCH_OVEN.get() && !level.isClientSide ? WitchOvenBlockEntity::serverTick : null;
     }
 }

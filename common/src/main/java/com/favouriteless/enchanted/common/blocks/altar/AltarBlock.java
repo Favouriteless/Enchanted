@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks.altar;
 
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import com.favouriteless.enchanted.common.network.multiblock.MultiBlockTools;
 import com.favouriteless.enchanted.common.network.multiblock.altar.AltarMultiBlock;

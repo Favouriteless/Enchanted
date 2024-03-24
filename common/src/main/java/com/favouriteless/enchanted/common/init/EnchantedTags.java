@@ -61,20 +61,17 @@ public class EnchantedTags {
     public static class Items {
         public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = createItemTag(Enchanted.location("armour_poppet_blacklist"));
         public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = createItemTag(Enchanted.location("armour_poppet_whitelist"));
-        public static final TagKey<Item> AXES = createItemTag(Enchanted.location("axes"));
         public static final TagKey<Item> CHALICES = createItemTag(Enchanted.location("chalices"));
         public static final TagKey<Item> CHALKS = createItemTag(Enchanted.location("chalks"));
-        public static final TagKey<Item> HOES = createItemTag(Enchanted.location("hoes"));
         public static final TagKey<Item> LEAVES = createItemTag(Enchanted.location("leaves"));
         public static final TagKey<Item> LOGS = createItemTag(Enchanted.location("logs"));
-        public static final TagKey<Item> ORES = createItemTag(Enchanted.location("ores"));
         public static final TagKey<Item> PLANKS = createItemTag(Enchanted.location("planks"));
-        public static final TagKey<Item> RAW_FOODS = createItemTag(Enchanted.location("raw_foods"));
         public static final TagKey<Item> SAPLINGS = createItemTag(Enchanted.location("saplings"));
         public static final TagKey<Item> SEEDS_DROPS = createItemTag(Enchanted.location("seeds_drops"));
         public static final TagKey<Item> STAIRS = createItemTag(Enchanted.location("stairs"));
         public static final TagKey<Item> TOOL_POPPET_BLACKLIST = createItemTag(Enchanted.location("tool_poppet_blacklist"));
         public static final TagKey<Item> TOOL_POPPET_WHITELIST = createItemTag(Enchanted.location("tool_poppet_whitelist"));
+        public static final TagKey<Item> WITCH_OVEN_BLACKLIST = createItemTag(Enchanted.location("witch_oven_blacklist"));
         public static final TagKey<Item> WOODEN_SLABS = createItemTag(Enchanted.location("wooden_slabs"));
         public static final TagKey<Item> WOODEN_STAIRS = createItemTag(Enchanted.location("wooden_stairs"));
     }

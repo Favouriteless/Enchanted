@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks.crops;
 
-import com.favouriteless.enchanted.common.blockentities.BloodPoppyBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;

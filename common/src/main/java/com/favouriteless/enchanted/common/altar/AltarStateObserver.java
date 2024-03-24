@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.common.altar;
 
 import com.favouriteless.enchanted.api.power.IPowerConsumer;
 import com.favouriteless.enchanted.common.CommonConfig;
-import com.favouriteless.enchanted.common.blockentities.AltarBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import com.favouriteless.stateobserver.api.StateChangeSet.StateChange;
 import com.favouriteless.stateobserver.api.StateObserver;
 import me.shedaniel.autoconfig.AutoConfig;

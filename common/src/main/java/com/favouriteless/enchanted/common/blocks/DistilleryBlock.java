@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.common.blocks;
 
-import com.favouriteless.enchanted.common.blockentities.DistilleryBlockEntity;
+import com.favouriteless.enchanted.common.blocks.entity.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

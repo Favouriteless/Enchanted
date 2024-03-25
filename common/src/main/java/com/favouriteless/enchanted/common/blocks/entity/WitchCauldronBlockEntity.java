@@ -43,12 +43,12 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
     @Override
     protected void matchRecipes() {
         if (level != null)
-            setPotentialRecipes(level.getRecipeManager()
-                    .getRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON, this, level));
+            setPotentialRecipes(level.getRecipeManager().getRecipesFor(EnchantedRecipeTypes.WITCH_CAULDRON, this, level));
     }
 
     @Override
     protected Component getDefaultName() {
         return Component.translatable("container.witch_cauldron");
     }
+
 }

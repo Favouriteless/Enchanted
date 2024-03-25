@@ -44,7 +44,7 @@ public abstract class CauldronBlockBase extends Block implements EntityBlock {
 			}
 			else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {
 				if (!world.isClientSide) {
-					if (cauldron.removeWater(FluidAttributes.BUCKET_VOLUME)) {
+					if (cauldron.removeWater(1000)) {
 						world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 						stack.shrink(1);
 						PlayerInventoryHelper.tryGiveItem(player, new ItemStack(Items.WATER_BUCKET));
@@ -54,7 +54,7 @@ public abstract class CauldronBlockBase extends Block implements EntityBlock {
 			}
 			else if (stack.getItem() == Items.WATER_BUCKET) {
 				if (!world.isClientSide) {
-					if (cauldron.addWater(FluidAttributes.BUCKET_VOLUME)) {
+					if (cauldron.addWater(1000)) {
 						world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 						if (!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
 					}

@@ -45,8 +45,7 @@ public class KettleBlockEntity extends CauldronBlockEntity<KettleRecipe> {
     @Override
     protected void matchRecipes() {
         if (level != null)
-            setPotentialRecipes(level.getRecipeManager()
-                    .getRecipesFor(EnchantedRecipeTypes.KETTLE, this, level));
+            setPotentialRecipes(level.getRecipeManager().getRecipesFor(EnchantedRecipeTypes.KETTLE, this, level));
     }
 
     @Override

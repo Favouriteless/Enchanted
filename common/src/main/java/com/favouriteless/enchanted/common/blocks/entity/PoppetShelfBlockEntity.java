@@ -6,7 +6,6 @@ import com.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
 import com.favouriteless.enchanted.common.poppet.PoppetShelfManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
@@ -51,21 +50,16 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		getInventory().load(pkt.getTag());
+	public void load(CompoundTag nbt) {
+		if(nbt.contains("items"))
+			getInventory().load(nbt);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
-		CompoundTag nbt = super.getUpdateTag();
+		CompoundTag nbt = new CompoundTag();
 		getInventory().save(nbt);
 		return nbt;
-	}
-
-	@Override
-	public void handleUpdateTag( CompoundTag tag) {
-		super.handleUpdateTag(tag);
-		getInventory().load(tag);
 	}
 
 	/**

@@ -13,8 +13,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public class DistilleryRecipe implements Recipe<Container> {
 
@@ -35,12 +34,24 @@ public class DistilleryRecipe implements Recipe<Container> {
         this.cookTime = cookTime;
     }
 
+    /**
+     * @return A {@link NonNullList} containing copies of this recipe's outputs.
+     */
     public NonNullList<ItemStack> getItemsOut() {
-        return itemsOut;
+        NonNullList<ItemStack> out = NonNullList.createWithCapacity(itemsOut.size());
+        for(int i = 0; i < itemsOut.size(); i++)
+            out.set(i, itemsOut.get(i).copy());
+        return out;
     }
 
+    /**
+     * @return A {@link NonNullList} containing copies of this recipe's inputs.
+     */
     public NonNullList<ItemStack> getItemsIn() {
-        return this.itemsIn;
+        NonNullList<ItemStack> in = NonNullList.createWithCapacity(itemsIn.size());
+        for(int i = 0; i < itemsIn.size(); i++)
+            in.set(i, itemsIn.get(i).copy());
+        return in;
     }
 
     public int getCookTime() {
@@ -48,7 +59,7 @@ public class DistilleryRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container inv, Level level) {
+    public boolean matches(@NotNull Container inv, @NotNull Level level) {
         int requiredItems = getItemsIn().size();
 
         for(ItemStack stack : getItemsIn()) {
@@ -63,7 +74,11 @@ public class DistilleryRecipe implements Recipe<Container> {
         return requiredItems == 0;
     }
 
+    /**
+     * @deprecated Use {@link DistilleryRecipe#getItemsOut()} instead.
+     */
     @Override
+    @Deprecated
     public ItemStack assemble(Container inv) {
         return null; // Has multiple outputs, don't use this.
     }
@@ -73,22 +88,29 @@ public class DistilleryRecipe implements Recipe<Container> {
         return false;
     }
 
+    /**
+     * @deprecated Use {@link DistilleryRecipe#getItemsOut()} instead.
+     */
     @Override
+    @Deprecated
     public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 
     @Override
+    @NotNull
     public ResourceLocation getId() {
         return id;
     }
 
     @Override
+    @NotNull
     public RecipeSerializer<?> getSerializer() {
         return EnchantedRecipeTypes.DISTILLERY_SERIALIZER.get();
     }
 
     @Override
+    @NotNull
     public RecipeType<?> getType() {
         return type;
     }
@@ -103,7 +125,8 @@ public class DistilleryRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<DistilleryRecipe> {
 
         @Override
-        public DistilleryRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        @NotNull
+        public DistilleryRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
             NonNullList<ItemStack> itemsIn = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "ingredients"));
             NonNullList<ItemStack> itemsOut = JSONHelper.readItemStackList(GsonHelper.getAsJsonArray(json, "result"));
             int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
@@ -111,9 +134,9 @@ public class DistilleryRecipe implements Recipe<Container> {
             return new DistilleryRecipe(recipeId, itemsIn, itemsOut, cookTime);
         }
 
-        @Nullable
         @Override
-        public DistilleryRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        @NotNull
+        public DistilleryRecipe fromNetwork(@NotNull ResourceLocation recipeId, FriendlyByteBuf buffer) {
             int inSize = buffer.readInt();
             NonNullList<ItemStack> itemsIn = NonNullList.create();
             for (int x = 0; x < inSize; ++x)

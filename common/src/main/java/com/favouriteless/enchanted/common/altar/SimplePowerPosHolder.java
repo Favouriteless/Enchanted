@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class SimplePowerPosHolder implements IPowerPosHolder {
 	}
 
 	@Override
+	@NotNull
 	public List<BlockPos> getPositions() {
 		return altars;
 	}

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -38,7 +39,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
     }
 
     @Override
-    public void render(PoseStack poseStack, int xMouse, int yMouse, float partialTicks) {
+    public void render(@NotNull PoseStack poseStack, int xMouse, int yMouse, float partialTicks) {
         renderBackground(poseStack);
         super.render(poseStack, xMouse, yMouse, partialTicks);
         this.renderTooltip(poseStack, xMouse, yMouse);
@@ -46,7 +47,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
 
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
+    protected void renderBg(@NotNull PoseStack poseStack, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);;
@@ -56,20 +57,19 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
         blit(poseStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
         // Draw cook progress bar
-        int cookTime = menu.getData().get(0);
-        int cookTimeTotal = menu.getData().get(1);
-        int cookProgressionScaled = cookTimeTotal != 0 && cookTime != 0 ? cookTime * COOK_BAR_WIDTH / cookTimeTotal : 0;
-
+        int cookProgress = menu.getBlockEntity().getCookProgress();
+        int cookDuration = menu.getBlockEntity().getCookDuration();
+        int cookProgressionScaled = cookDuration != 0 && cookProgress != 0 ? cookProgress * COOK_BAR_WIDTH / cookDuration : 0;
 
         blit(poseStack, leftPos + COOK_BAR_XPOS, topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
 
-        int bubbleOffset = BUBBLELENGTHS[cookTime / 2 % 7];
+        int bubbleOffset = BUBBLELENGTHS[cookProgress / 2 % 7];
         if (bubbleOffset > 0)
             blit(poseStack, leftPos + BUBBLES_XPOS, topPos + BUBBLES_YPOS - bubbleOffset, BUBBLES_ICON_U, BUBBLES_ICON_V - bubbleOffset, 12, bubbleOffset);
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int xMouse, int yMouse) {
+    protected void renderLabels(@NotNull PoseStack poseStack, int xMouse, int yMouse) {
         font.draw(poseStack, title, (float)(imageWidth / 2 - font.width(title) / 2), (float)titleLabelY, Color.DARK_GRAY.getRGB());
         font.draw(poseStack, minecraft.player.getInventory().getDisplayName(), (float)inventoryLabelX, (float)inventoryLabelY, Color.DARK_GRAY.getRGB());
     }

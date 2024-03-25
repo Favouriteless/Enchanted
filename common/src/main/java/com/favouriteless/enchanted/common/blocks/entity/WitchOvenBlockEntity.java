@@ -17,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,7 +25,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.Block;
@@ -146,6 +148,10 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
         }
     }
 
+    /**
+     * Attempt to smelt the item in this {@link WitchOvenBlockEntity}'s input slot and roll for a byproduct.
+     * @param recipe The smelting recipe to use.
+     */
     private void burn(@Nullable Recipe<?> recipe) {
         if(canBurn(recipe)) {
             ItemStack input = getInput();
@@ -168,6 +174,11 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
         }
     }
 
+    /**
+     * Check if this Witch Oven is able to burn the item in it's input slot, and has enough space for the output.
+     * @param recipe The smelting recipe to check for.
+     * @return True if burnable, otherwise false.
+     */
     private boolean canBurn(@Nullable Recipe<?> recipe) {
         ItemStack input = getInput();
         if(recipe != null && !input.isEmpty() && !input.is(EnchantedTags.Items.WITCH_OVEN_BLACKLIST)) {
@@ -189,9 +200,13 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
         return false;
     }
 
-    private void tryCreateByproduct(@Nullable Recipe<?> recipe) {
+    /**
+     * Attempt to create a byproduct from the item currently in the input slot, assuming enough jars are present.
+     * @param recipe The {@link Recipe} to create a result from.
+     */
+    private void tryCreateByproduct(@Nullable WitchOvenRecipe recipe) {
         if(recipe != null && !getInput().isEmpty()) {
-            ItemStack result = ((Recipe<Container>)recipe).assemble(this);
+            ItemStack result = recipe.assemble(this);
             if(!result.isEmpty()) {
                 ItemStack jars = getJarInput();
 
@@ -223,9 +238,8 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
             };
 
             for (BlockPos _pos : potentialFilters) {
-                if (level.getBlockState(_pos).getBlock() instanceof FumeFunnelBlock) {
+                if (level.getBlockState(_pos).getBlock() instanceof FumeFunnelBlock)
                     level.setBlock(_pos, level.getBlockState(_pos).setValue(AbstractFurnaceBlock.LIT, isLit()), 3);
-                }
             }
         }
     }
@@ -292,11 +306,6 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
     }
 
     @Override
-    public NonNullList<ItemStack> getDroppableInventory() {
-        return inventory;
-    }
-
-    @Override
     public @NotNull Component getDefaultName() {
         return Component.translatable("container.enchanted.witch_oven");
     }
@@ -314,7 +323,6 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
         nbt.putInt("burnTimeTotal", burnDuration);
         nbt.putInt("cookTime", cookProgress);
         nbt.putInt("cookTimeTotal", cookDuration);
-        nbt.put("inventory", ContainerHelper.saveAllItems(new CompoundTag(), inventory));
     }
 
     @Override
@@ -324,7 +332,6 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
         burnDuration = nbt.getInt("burnTimeTotal");
         cookProgress = nbt.getInt("cookTime");
         cookDuration = nbt.getInt("cookTimeTotal");
-        ContainerHelper.loadAllItems(nbt.getCompound("inventory"), inventory);
     }
 
     private boolean isLit() {

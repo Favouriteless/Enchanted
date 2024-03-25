@@ -5,6 +5,7 @@ import com.favouriteless.enchanted.api.power.IPowerProvider;
 import com.favouriteless.enchanted.api.power.PowerHelper;
 import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.menus.DistilleryMenu;
 import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
@@ -13,12 +14,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,32 +32,28 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class DistilleryBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider {
+public class DistilleryBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider, WorldlyContainer {
 
-    private final ItemStackHandler jar = new ItemStackHandler(1);
-    private final ItemStackHandler input = new ItemStackHandler(2);
-    private final ItemStackHandler output = new ItemStackHandler(4);
-    private final CombinedInvWrapper inputCombined = new CombinedInvWrapper(jar, input);
+    private static final int[] TOP_SLOTS = new int[] { 1, 2 };
+    private static final int[] SIDE_SLOTS = new int[] { 0 };
+    private static final int[] BOTTOM_SLOTS = new int[] { 3, 4, 5, 6 };
 
-    private final LazyOptional<IItemHandlerModifiable> jarHandler = LazyOptional.of(() -> jar);
-    private final LazyOptional<IItemHandlerModifiable> inputHandler = LazyOptional.of(() -> input);
-    private final LazyOptional<IItemHandlerModifiable> outputHandler = LazyOptional.of(() -> output);
-
-    private final RecipeWrapper recipeWrapper = new RecipeWrapper(inputCombined);
-    private DistilleryRecipe currentRecipe;
+    private final RecipeManager.CachedCheck<Container, DistilleryRecipe> recipeCheck;
     private final SimplePowerPosHolder posHolder;
 
     private boolean isBurning = false;
-    private int cookTime = 0;
-    private int cookTimeTotal = 200;
+    private int cookProgress = 0;
+    private int cookDuration = 200;
+
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
             return switch(index) {
-                case 0 -> cookTime;
-                case 1 -> cookTimeTotal;
+                case 0 -> cookProgress;
+                case 1 -> cookDuration;
                 default -> 0;
             };
         }
@@ -61,9 +62,9 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
         public void set(int index, int value) {
             switch(index) {
                 case 0:
-                    cookTime = value;
+                    cookProgress = value;
                 case 1:
-                    cookTimeTotal = value;
+                    cookDuration = value;
             }
         }
 
@@ -74,164 +75,148 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     };
 
     public DistilleryBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state);
+        super(EnchantedBlockEntityTypes.DISTILLERY.get(), pos, state, NonNullList.withSize(7, ItemStack.EMPTY));
         this.posHolder = new SimplePowerPosHolder(pos);
+        this.recipeCheck = RecipeManager.createCheck(EnchantedRecipeTypes.DISTILLERY);
     }
 
-    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, T t) {
         if(t instanceof DistilleryBlockEntity be) {
+            IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
+
+            boolean isCooking = false; // Use this flag so cookProgress can be slowly lowered, couldn't use if/else.
             boolean isBurning = be.isBurning;
+            boolean hasInput = !be.inventory.get(1).isEmpty() ||!be.inventory.get(2).isEmpty();
 
-            if(level != null && !level.isClientSide) {
-                IPowerProvider powerprovider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
-                be.matchRecipe();
+            if(hasInput && powerProvider != null) {
+                DistilleryRecipe recipe = be.recipeCheck.getRecipeFor(be, level).orElse(null);
 
-                if(be.canDistill() && powerprovider != null) {
-                    if(powerprovider.tryConsumePower(10.0D)) {
-                        be.isBurning = true;
-                        be.cookTime++;
+                if(be.canDistill(recipe) && powerProvider.tryConsumePower(10.0D)) {
+                    isCooking = true;
+                    be.isBurning = true;
 
-                        if(be.cookTime == be.cookTimeTotal) {
-                            be.cookTime = 0;
-                            be.distill();
-                        }
+                    if(++be.cookProgress == be.cookDuration) {
+                        be.cookProgress = 0;
+                        be.distill(recipe);
                     }
                 }
-                else {
-                    be.isBurning = false;
-                    be.cookTime = 0;
-                }
-
-
-                if(isBurning != be.isBurning)
-                    level.setBlock(be.worldPosition, level.getBlockState(be.worldPosition).setValue(AbstractFurnaceBlock.LIT, be.isBurning), 3);
             }
+
+            if(!isCooking) {
+                be.isBurning = false;
+                if(be.cookProgress > 0)
+                    be.cookProgress = Mth.clamp(be.cookProgress - 2, 0, be.cookDuration);
+            }
+
+
+            if(isBurning != be.isBurning)
+                level.setBlock(be.worldPosition, level.getBlockState(be.worldPosition).setValue(AbstractFurnaceBlock.LIT, be.isBurning), 3);
 
             be.setChanged();
         }
     }
 
-    protected void distill() {
-        if (currentRecipe != null) {
-            List<ItemStack> recipeItemsOut = new ArrayList<>();
-
-            for(ItemStack itemStack : currentRecipe.getItemsOut())
-                recipeItemsOut.add(itemStack.copy());
-
-            for (ItemStack recipeResult : recipeItemsOut) {
-                for (int i = 0; i < output.getSlots(); i++) { // Try to fit items into existing stacks
-                    if(ItemStack.isSameItemSameTags(recipeResult, output.getStackInSlot(i)))
-                        recipeResult.setCount(output.insertItem(i, recipeResult, false).getCount());
-                }
-            }
-
-            for(ItemStack recipeResult : recipeItemsOut) {
-                if (!recipeResult.isEmpty()) {
-                    for (int i = 0; i < output.getSlots(); i++) { // Fit items into empty stacks
-                        if (output.getStackInSlot(i).isEmpty()) {
-                            output.setStackInSlot(i, recipeResult.copy());
+    /**
+     * Attempt to distill the item in this {@link DistilleryBlockEntity}'s input slot.
+     * @param recipe The recipe to use.
+     */
+    protected void distill(DistilleryRecipe recipe) {
+        if(recipe != null) {
+            for(ItemStack recipeItem : recipe.getItemsIn()) { // First, attempt to remove the input items.
+                for(int i = 0; i < 3; i++) {
+                    ItemStack inputItem = inventory.get(i);
+                    if(ItemStack.isSameItemSameTags(recipeItem, inputItem)) {
+                        if(inputItem.getCount() >= recipeItem.getCount()) {
+                            inputItem.shrink(recipeItem.getCount());
                             break;
                         }
                     }
                 }
             }
 
-            for(ItemStack recipeItem : currentRecipe.getItemsIn()) {
-                for (int i = 0; i < 3; i++) {
-                    if(ItemStack.isSameItemSameTags(recipeItem, inputCombined.getStackInSlot(i))) {
-                        inputCombined.extractItem(i, recipeItem.getCount(), false);
-                        break;
+            List<ItemStack> itemsOut = recipe.getItemsOut();
+
+            for(ItemStack recipeItem : itemsOut) {
+                for(int i = 3; i < inventory.size(); i++) { // First, stack the result into existing slots.
+                    ItemStack outputItem = inventory.get(i);
+
+                    if(ItemStack.isSameItemSameTags(recipeItem, outputItem)) {
+                        int amount = Math.min(outputItem.getMaxStackSize() - outputItem.getCount(), recipeItem.getCount());
+                        outputItem.grow(amount);
+                        recipeItem.shrink(amount);
+
+                        if(recipeItem.isEmpty())
+                            break;
+                    }
+                }
+                if(!recipeItem.isEmpty()) {
+                    for(int i = 3; i < inventory.size(); i++) { // After, stack the result into the first empty slot
+                        if(inventory.get(i).isEmpty()) {
+                            inventory.set(i, recipeItem);
+                            break;
+                        }
                     }
                 }
             }
-
         }
     }
 
-    protected boolean canDistill() {
-        if(currentRecipe != null) {
-            List<ItemStack> itemsOut = new ArrayList<>(currentRecipe.getItemsOut());
-            List<ItemStack> toRemoveOut = new ArrayList<>();
+    /**
+     * Check if this {@link DistilleryBlockEntity} is able to burn the item in it's input slots, and has enough space for the outputs.
+     * @param recipe The recipe to check for.
+     * @return True if distillable, otherwise false.
+     */
+    private boolean canDistill(DistilleryRecipe recipe) {
+        if(recipe != null) {
+            List<ItemStack> itemsOut = new ArrayList<>(recipe.getItemsOut());
 
-            for(ItemStack recipeStack : itemsOut) { // Check for existing ItemStacks of correct type and size.
-                for(int i = 0; i < output.getSlots(); i++) { // Iterate through output slots
-                    ItemStack invStack = output.getStackInSlot(i);
-                    if(ItemStack.isSameItemSameTags(invStack, invStack)) {
-                        if(recipeStack.getCount() + invStack.getCount() <= invStack.getMaxStackSize()) {
-                            toRemoveOut.add(recipeStack);
+            Iterator<ItemStack> iterator = itemsOut.iterator();
+            while(iterator.hasNext()) { // First, check if the output for the recipe can fit by stacking with items.
+                ItemStack recipeStack = iterator.next();
+
+                for(int i = 3; i < inventory.size(); i++) {
+                    ItemStack outStack = inventory.get(i);
+
+                    if(ItemStack.isSameItemSameTags(recipeStack, outStack)) {
+                        if(recipeStack.getCount() + outStack.getCount() <= outStack.getMaxStackSize()) {
+                            iterator.remove();
                             break;
                         }
-                        else
-                            recipeStack.shrink(invStack.getMaxStackSize() - invStack.getCount());
+                        recipeStack.shrink(outStack.getMaxStackSize() - outStack.getCount());
                     }
                 }
             }
 
-            itemsOut.removeAll(toRemoveOut); // ItemStacks have been accounted for
-            toRemoveOut.clear();
-
-            boolean[] isEmpty = new boolean[] { // Cursed but quickest way to set slots as not empty without actually modifying them
-                    output.getStackInSlot(0).isEmpty(),
-                    output.getStackInSlot(1).isEmpty(),
-                    output.getStackInSlot(2).isEmpty(),
-                    output.getStackInSlot(3).isEmpty()
-            };
-            for(ItemStack item : itemsOut) { // Check for empty item slots
-                for(int i = 0; i < isEmpty.length; i++) {
-                    if(isEmpty[i]) {
-                        toRemoveOut.add(item);
-                        isEmpty[i] = false;
-                        break;
-                    }
-                }
+            int emptySpaces = 0;
+            for(int i = 3; i < inventory.size(); i++) {
+                if(inventory.get(i).isEmpty())
+                    emptySpaces++;
             }
-            itemsOut.removeAll(toRemoveOut);
 
-            return itemsOut.isEmpty();
+            return emptySpaces >= itemsOut.size(); // If there are same/more empty, we know the output should fit.
         }
         return false;
     }
 
-    private void matchRecipe() {
-        if (level != null) {
-            if(currentRecipe == null || !currentRecipe.matches(recipeWrapper, level))
-                currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.DISTILLERY, recipeWrapper, level).orElse(null);
-
-            if(currentRecipe != null)
-                cookTimeTotal = currentRecipe.getCookTime();
-        }
+    public int getCookProgress() {
+        return cookProgress;
     }
 
-    public ItemStackHandler getJarInventory() {
-        return jar;
+    public int getCookDuration() {
+        return cookDuration;
     }
 
-    public ItemStackHandler getInputInventory() {
-        return input;
-    }
-
-    public ItemStackHandler getOutputInventory() {
-        return output;
+    private static int getTotalCookTime(Level level, DistilleryBlockEntity be) {
+        return be.recipeCheck.getRecipeFor(be, level).map(DistilleryRecipe::getCookTime).orElse(200);
     }
 
     @Override
-    public ContainerData getData() {
-        return data;
-    }
-
-    @Override
-    public NonNullList<ItemStack> getDroppableInventory() {
-        return getDroppableInventoryFor(jar, input, output);
-    }
-
-    @Override
-    public @NotNull Component getDisplayName() {
+    public Component getDefaultName() {
         return Component.translatable("container.enchanted.distillery");
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, @NotNull Inventory playerInventory, @NotNull Player player) {
         return new DistilleryMenu(id, playerInventory, this, data);
     }
 
@@ -239,55 +224,59 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     public void saveAdditional(@NotNull CompoundTag nbt) {
         super.saveAdditional(nbt);
         nbt.put("posHolder", posHolder.serialize());
-        nbt.putBoolean("burnTime", isBurning);
-        nbt.putInt("cookTime", cookTime);
-        nbt.putInt("cookTimeTotal", cookTimeTotal);
-        nbt.put("jar", jar.serializeNBT());
-        nbt.put("input", input.serializeNBT());
-        nbt.put("output", output.serializeNBT());
+        nbt.putBoolean("isBurning", isBurning);
+        nbt.putInt("cookTime", cookProgress);
+        nbt.putInt("cookTimeTotal", cookDuration);
     }
 
     @Override
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         posHolder.deserialize(nbt.getList("posHolder", 10));
-        isBurning = nbt.getBoolean("burnTime");
-        cookTime = nbt.getInt("cookTime");
-        cookTimeTotal = nbt.getInt("cookTimeTotal");
-        jar.deserializeNBT(nbt.getCompound("jar"));
-        input.deserializeNBT(nbt.getCompound("input"));
-        output.deserializeNBT(nbt.getCompound("output"));
+        isBurning = nbt.getBoolean("isBurning");
+        cookProgress = nbt.getInt("cookTime");
+        cookDuration = nbt.getInt("cookTimeTotal");
     }
 
+    @Override
     @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if(side == null)
-                return super.getCapability(cap, side);
-            else if(side == Direction.UP)
-                return inputHandler.cast();
-            else if(side == Direction.DOWN)
-                return outputHandler.cast();
-            else
-                return jarHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        if(inputHandler != null)
-            inputHandler.invalidate();
-        if(jarHandler != null)
-            jarHandler.invalidate();
-        if(outputHandler != null)
-            outputHandler.invalidate();
-    }
-
-    @Override
-    public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
+    public IPowerConsumer.IPowerPosHolder getPosHolder() {
         return posHolder;
     }
+
+    @Override
+    public int [] getSlotsForFace(@NotNull Direction face) {
+        if(face == Direction.UP)
+            return TOP_SLOTS;
+        else if(face == Direction.DOWN)
+            return BOTTOM_SLOTS;
+        else
+            return SIDE_SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction face) {
+        if(index < 3)
+            return index != 0 || stack.is(EnchantedItems.CLAY_JAR.get()); // Only let jars into slot 0
+        else
+            return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction face) {
+        return index > 2;
+    }
+
+    @Override
+    public void setItem(int index, @NotNull ItemStack stack) {
+        boolean matching = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, inventory.get(index));
+        inventory.set(index, stack);
+
+        if(index < 3 && !matching) { // If the item changed was one of the inputs, recalculate.
+            cookDuration = getTotalCookTime(level, this);
+            cookProgress = 0;
+            setChanged();
+        }
+    }
+
 }

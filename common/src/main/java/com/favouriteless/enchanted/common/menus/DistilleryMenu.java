@@ -4,7 +4,6 @@ import com.favouriteless.enchanted.common.blocks.entity.DistilleryBlockEntity;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedMenuTypes;
-import com.favouriteless.enchanted.common.menus.slots.NonJarInputSlot;
 import com.favouriteless.enchanted.common.menus.slots.JarInputSlot;
 import com.favouriteless.enchanted.common.menus.slots.OutputSlot;
 import com.favouriteless.enchanted.common.util.MenuUtils;
@@ -12,27 +11,24 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
 
-    public ContainerData data;
-
     public DistilleryMenu(int id, Inventory playerInventory, DistilleryBlockEntity be, ContainerData data) {
-        super(EnchantedMenuTypes.DISTILLERY.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.DISTILLERY.get());
-        this.data = data;
+        super(EnchantedMenuTypes.DISTILLERY.get(), id, be, EnchantedBlocks.DISTILLERY.get());
 
-        addSlot(new JarInputSlot(be.getJarInventory(), 0, 32, 35)); // Jar input
-        addSlot(new NonJarInputSlot(be.getInputInventory(), 0, 54, 25)); // Ingredient input
-        addSlot(new NonJarInputSlot(be.getInputInventory(), 1, 54, 45)); // Ingredient input
-        addSlot(new OutputSlot(be.getOutputInventory(), 0, 127, 7)); // Distillery output
-        addSlot(new OutputSlot(be.getOutputInventory(), 1, 127, 26)); // Distillery output
-        addSlot(new OutputSlot(be.getOutputInventory(), 2, 127, 45)); // Distillery output
+        addSlot(new JarInputSlot(be, 0, 32, 35)); // Jar input
+        addSlot(new Slot(be, 1, 54, 25)); // Ingredient input
+        addSlot(new Slot(be, 2, 54, 45)); // Ingredient input
 
-        addSlot(new OutputSlot(be.getOutputInventory(), 3, 127, 64)); // Distillery output
+        addSlot(new OutputSlot(be, 3, 127, 7)); // Distillery output
+        addSlot(new OutputSlot(be, 4, 127, 26)); // Distillery output
+        addSlot(new OutputSlot(be, 5, 127, 45)); // Distillery output
+        addSlot(new OutputSlot(be, 6, 127, 64)); // Distillery output
 
         addInventorySlots(playerInventory, 8, 84);
         addDataSlots(data);
@@ -43,12 +39,12 @@ public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack itemstack;
         Slot slot = slots.get(index);
 
         if(slot.hasItem()) {
-
             ItemStack slotItem = slot.getItem();
             itemstack = slotItem.copy();
 
@@ -79,11 +75,7 @@ public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
 
             slot.onTake(player, slotItem);
         }
-        return super.quickMoveStack(player, index);
-    }
-
-    public ContainerData getData() {
-        return data;
+        return ItemStack.EMPTY;
     }
 
 }

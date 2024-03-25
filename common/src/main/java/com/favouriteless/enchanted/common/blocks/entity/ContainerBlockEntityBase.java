@@ -39,7 +39,9 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
         }
     }
 
-    public abstract NonNullList<ItemStack> getDroppableInventory();
+    public NonNullList<ItemStack> getDroppableInventory() {
+        return inventory;
+    };
 
     public void setCustomName(Component name) {
         this.name = name;
@@ -68,6 +70,7 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
     @Override
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
+        ContainerHelper.loadAllItems(nbt.getCompound("inventory"), inventory);
 
         if(nbt.contains("CustomName", 8))
             name = Component.Serializer.fromJson(nbt.getString("CustomName"));
@@ -76,6 +79,7 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
     @Override
     protected void saveAdditional(@NotNull CompoundTag nbt) {
         super.saveAdditional(nbt);
+        nbt.put("inventory", ContainerHelper.saveAllItems(new CompoundTag(), inventory));
 
         if(name != null)
             nbt.putString("CustomName", Component.Serializer.toJson(name));

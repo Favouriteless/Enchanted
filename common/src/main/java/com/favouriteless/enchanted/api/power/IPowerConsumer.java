@@ -36,14 +36,14 @@ public interface IPowerConsumer {
     interface IPowerPosHolder extends ISerializable<ListTag> {
 
         /**
-         * <p>IMPORTANT: {@link IPowerProvider}s do not need to notify their subscribers when they are removed, you
+         * <p><strong>IMPORTANT:</strong> {@link IPowerProvider}s do not need to notify their subscribers when they are removed, you
          * should check that it still exists before trying to consume power. See
          * {@link PowerHelper#tryGetPowerProvider(Level, IPowerPosHolder)} for an example implementation of trying to grab a
          * provider.</p>
          *
          * @return List of the BlockPos of every AltarBlockEntity this {@link IPowerConsumer} is subscribed to.
          */
-        List<BlockPos> getPositions();
+        @NotNull List<BlockPos> getPositions();
 
         /**
          * Remove a {@link BlockPos} from the list of available altar positions.

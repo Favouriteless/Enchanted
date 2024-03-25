@@ -1,32 +1,35 @@
 package com.favouriteless.enchanted.common.menus;
 
+import com.favouriteless.enchanted.common.blocks.entity.ContainerBlockEntityBase;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
-public abstract class MenuBase<T extends BlockEntity> extends AbstractContainerMenu {
+public abstract class MenuBase<T extends ContainerBlockEntityBase> extends AbstractContainerMenu {
 
 	protected final T blockEntity;
-	protected final ContainerLevelAccess canInteractWithCallable;
 	protected final Block block;
 
-	protected MenuBase(MenuType<?> type, int id, T blockEntity, ContainerLevelAccess canInteractWithCallable, Block block) {
+	protected MenuBase(MenuType<?> type, int id, T blockEntity, Block block) {
 		super(type, id);
-		this.canInteractWithCallable = canInteractWithCallable;
 		this.block = block;
 		this.blockEntity = blockEntity;
 	}
 
 	@Override
 	public boolean stillValid(Player player) {
-		return stillValid(canInteractWithCallable, player, block);
+		return blockEntity.stillValid(player);
 	}
 
+	/**
+	 * Add slots to the menu for a player's full inventory, including hotbar.
+	 * @param playerInventory The {@link Inventory} the slots are for.
+	 * @param xStart The x position of the leftmost slots.
+	 * @param yStart The y position of the topmost slots.
+	 */
 	protected void addInventorySlots(Inventory playerInventory, int xStart, int yStart) {
 		for (int y = 0; y < 3; y++) { // Main Inventory
 			for (int x = 0; x < 9; x++) {

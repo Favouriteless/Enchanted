@@ -15,7 +15,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
     public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity be, ContainerData data) {
-        super(EnchantedMenuTypes.WITCH_OVEN.get(), id, be, ContainerLevelAccess.create(be.getLevel(), be.getBlockPos()), EnchantedBlocks.WITCH_OVEN.get());
+        super(EnchantedMenuTypes.WITCH_OVEN.get(), id, be, EnchantedBlocks.WITCH_OVEN.get());
 
         addSlot(new NonJarInputSlot(be, 0, 53, 17)); // Ingredient input
         addSlot(new FuelSlot(be, 0, 80, 53)); // Fuel Slot

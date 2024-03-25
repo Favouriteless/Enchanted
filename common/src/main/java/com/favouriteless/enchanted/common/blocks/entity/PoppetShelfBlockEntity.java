@@ -68,6 +68,9 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 		getInventory().load(tag);
 	}
 
+	/**
+	 * @return The {@link PoppetShelfInventory} instance for this {@link PoppetShelfBlockEntity}.
+	 */
 	public PoppetShelfInventory getInventory() {
 		if(inventory == null) {
 			if(level.isClientSide)

@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.client.screens;
 
 import com.favouriteless.enchanted.Enchanted;
+import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -55,7 +56,7 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMe
         int edgeSpacingY = (height - imageHeight) / 2;
         blit(poseStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
-        double progression = (double)menu.getData().get(0) / menu.getData().get(1);
+        double progression = (double)menu.getSpinProgress() / SpinningWheelBlockEntity.SPIN_DURATION;
 
         int barSize = (int)Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
         if(menu.getSlot(1).hasItem())

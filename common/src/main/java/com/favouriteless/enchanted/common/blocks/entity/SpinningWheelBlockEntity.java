@@ -12,15 +12,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,133 +30,110 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider {
+public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider, WorldlyContainer {
 
-	private final ItemStackHandler input = new ItemStackHandler(3);
-	private final ItemStackHandler output = new ItemStackHandler(1);
+	private static final int[] INPUT_SLOTS = new int[] { 0, 1, 2 };
+	private static final int[] BOTTOM_SLOTS = new int[] { 3 };
 
-	private final LazyOptional<IItemHandlerModifiable> inputHandler = LazyOptional.of(() -> input);
-	private final LazyOptional<IItemHandlerModifiable> outputHandler = LazyOptional.of(() -> output);
-
-	private final RecipeWrapper recipeWrapper = new RecipeWrapper(input);
-	private SpinningWheelRecipe currentRecipe;
+	private final RecipeManager.CachedCheck<Container, SpinningWheelRecipe> recipeCheck;
 	private final SimplePowerPosHolder posHolder;
 	private boolean isSpinning = false;
 
-	public static final int SPIN_TIME_TOTAL = 400;
-	private int spinTime = 0;
-	public ContainerData data = new ContainerData() {
-		public int get(int index) {
-			return switch(index) {
-				case 0 -> spinTime;
-				case 1 -> SPIN_TIME_TOTAL;
-				default -> 0;
-			};
-		}
+	public static final int SPIN_DURATION = 400;
+	private int spinProgress = 0;
 
-		public void set(int index, int value) {
-			if(index == 0) {
-				spinTime = value;
-			}
+	public DataSlot data = new DataSlot() {
+		@Override
+		public int get() {
+			return spinProgress;
 		}
 
 		@Override
-		public int getCount() {
-			return 2;
+		public void set(int value) {
+			spinProgress = value;
 		}
-
 	};
 
 	public SpinningWheelBlockEntity(BlockPos pos, BlockState state) {
-		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state);
+		super(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), pos, state, NonNullList.withSize(4, ItemStack.EMPTY));
 		this.posHolder = new SimplePowerPosHolder(pos);
+		this.recipeCheck = RecipeManager.createCheck(EnchantedRecipeTypes.SPINNING_WHEEL);
 	}
 
 	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
 		if(t instanceof SpinningWheelBlockEntity be) {
-			if(level != null) {
-				if(!level.isClientSide) {
-					IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
-					be.matchRecipe();
+			if(!level.isClientSide) {
+				IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
+				SpinningWheelRecipe recipe = be.recipeCheck.getRecipeFor(be, level).orElse(null);
+				boolean wasSpinning = be.spinProgress > 0;
 
-					if(be.canSpin() && be.currentRecipe.getPower() > 0 && powerProvider != null) {
-						double powerThisTick = (double)be.currentRecipe.getPower() / SPIN_TIME_TOTAL;
-						if(powerProvider.tryConsumePower(powerThisTick)) {
-							be.spinTime++;
-
-							if(be.spinTime == SPIN_TIME_TOTAL) {
-								be.spinTime = 0;
-								be.spin();
-							}
+				if(be.canSpin(recipe) && (recipe.getPower() == 0 || powerProvider != null)) {
+					if(powerProvider.tryConsumePower((double)recipe.getPower() / SPIN_DURATION)) {
+						if(++be.spinProgress == SPIN_DURATION) {
+							be.spinProgress = 0;
+							be.spin(recipe);
 						}
 					}
-					else
-						be.spinTime = 0;
+				}
+				else
+					be.spinProgress = 0;
 
+				if(wasSpinning != be.spinProgress > 0)
 					be.updateBlock();
-				}
-				else {
-					if(be.isSpinning)
-						be.spinTime++;
-					else
-						be.spinTime = 0;
-				}
+			}
+			else {
+				if(be.isSpinning)
+					be.spinProgress++;
+				else
+					be.spinProgress = 0;
 			}
 		}
 	}
 
-	protected void spin() {
-		output.insertItem(0, currentRecipe.assemble(recipeWrapper), false);
-
-		for(ItemStack recipeStack : currentRecipe.getItemsIn()) {
-			for (int i = 0; i < input.getSlots(); i++) {
-				if(ItemStack.isSameItemSameTags(recipeStack, input.getStackInSlot(i))) {
-					input.extractItem(i, recipeStack.getCount(), false);
+	/**
+	 * Attempt to spin the items in this {@link SpinningWheelBlockEntity}'s input slots.
+	 * @param recipe The {@link SpinningWheelRecipe} to use.
+	 */
+	protected void spin(SpinningWheelRecipe recipe) {
+		for(ItemStack recipeStack : recipe.getItemsIn()) {
+			for(int i = 0; i < 3; i++) {
+				ItemStack input = inventory.get(i);
+				if(ItemStack.isSameItemSameTags(recipeStack, input)) {
+					input.shrink(recipeStack.getCount());
 					break;
 				}
 			}
 		}
+
+		ItemStack result = recipe.assemble(this);
+		ItemStack output = inventory.get(3);
+		if(!output.isEmpty())
+			inventory.set(3, result);
+		else
+			output.grow(result.getCount());
 	}
 
-	protected boolean canSpin() {
-		if(currentRecipe != null) {
-			ItemStack outputStack = output.getStackInSlot(0);
-			if(outputStack.isEmpty()) // Output is empty
+	/**
+	 * Check if this {@link SpinningWheelBlockEntity} has enough space for the output of a given recipe.
+	 * @param recipe The recipe to check for.
+	 * @return True if space is found, otherwise false.
+	 */
+	protected boolean canSpin(SpinningWheelRecipe recipe) {
+		if(recipe != null) {
+			ItemStack output = inventory.get(3);
+			if(output.isEmpty())
 				return true;
 
-			ItemStack resultStack = currentRecipe.getResultItem();
-			if(ItemStack.isSameItemSameTags(outputStack, resultStack)) // Output same item & fits within stack
-				return outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize();
+			ItemStack result = recipe.assemble(this);
+			if(ItemStack.isSameItemSameTags(result, output))
+				return output.getCount() + result.getCount() <= output.getMaxStackSize();
 		}
 		return false;
 	}
 
-	private void matchRecipe() {
-		if (level != null)
-			if(currentRecipe == null || !currentRecipe.matches(recipeWrapper, level))
-				currentRecipe = level.getRecipeManager().getRecipeFor(EnchantedRecipeTypes.SPINNING_WHEEL, recipeWrapper, level).orElse(null);
-	}
-
-	public ItemStackHandler getInputInventory() {
-		return input;
-	}
-
-	public ItemStackHandler getOutputInventory() {
-		return output;
-	}
-
 	@Override
-	public ContainerData getData() {
-		return data;
-	}
-
-	@Override
-	public NonNullList<ItemStack> getDroppableInventory() {
-		return getDroppableInventoryFor(input, output);
-	}
-
-	@Override
-	public @NotNull Component getDisplayName() {
+	@NotNull
+	public Component getDefaultName() {
 		return Component.translatable("container.enchanted.spinning_wheel");
 	}
 
@@ -168,18 +147,18 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 	public void saveAdditional(@NotNull CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		nbt.put("posHolder", posHolder.serialize());
-		nbt.putInt("spinTime", spinTime);
-		nbt.put("input", input.serializeNBT());
-		nbt.put("output", output.serializeNBT());
+		nbt.putInt("spinProgress", spinProgress);
 	}
 
 	@Override
 	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
-		posHolder.deserialize(nbt.getList("posHolder", 10));
-		spinTime = nbt.getInt("spinTime");
-		input.deserializeNBT(nbt.getCompound("input"));
-		output.deserializeNBT(nbt.getCompound("output"));
+		if(nbt.contains("posHolder"))
+			posHolder.deserialize(nbt.getList("posHolder", 10));
+		if(nbt.contains("spinProgress"))
+			spinProgress = nbt.getInt("spinProgress");
+		if(nbt.contains("isSpinning"))
+			isSpinning = nbt.getBoolean("isSpinning");
 	}
 
 	@Nullable
@@ -189,44 +168,35 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		CompoundTag nbt = pkt.getTag();
-		isSpinning = nbt.getBoolean("isSpinning");
-	}
-
-	@Override
+	@NotNull
 	public CompoundTag getUpdateTag() {
 		CompoundTag nbt = super.getUpdateTag();
-		nbt.putBoolean("isSpinning", spinTime > 0);
+		nbt.putBoolean("isSpinning", spinProgress > 0);
 		return nbt;
 	}
 
+	@Override
 	@NotNull
-	@Override
-	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if(side == null)
-				return super.getCapability(cap, side);
-			else if(side == Direction.DOWN)
-				return outputHandler.cast();
-			else
-				return inputHandler.cast();
-		}
-		return super.getCapability(cap, side);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		if(inputHandler != null)
-			inputHandler.invalidate();
-		if(outputHandler != null)
-			outputHandler.invalidate();
-	}
-
-	@Override
-	public @NotNull IPowerConsumer.IPowerPosHolder getPosHolder() {
+	public IPowerConsumer.IPowerPosHolder getPosHolder() {
 		return posHolder;
+	}
+
+	@Override
+	public int[] getSlotsForFace(@NotNull Direction face) {
+		if(face == Direction.DOWN)
+			return BOTTOM_SLOTS;
+		else
+			return INPUT_SLOTS;
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction face) {
+		return index != 3;
+	}
+
+	@Override
+	public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction face) {
+		return true;
 	}
 
 }

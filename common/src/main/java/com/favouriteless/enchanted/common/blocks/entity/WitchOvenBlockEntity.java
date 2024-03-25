@@ -175,13 +175,14 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
     }
 
     /**
-     * Check if this Witch Oven is able to burn the item in it's input slot, and has enough space for the output.
-     * @param recipe The smelting recipe to check for.
-     * @return True if burnable, otherwise false.
+     * Check if this {@link WitchOvenBlockEntity} has enough space for the output of a given recipe, and the input is
+     * not blacklisted.
+     * @param recipe The recipe to check for.
+     * @return True if space is found, otherwise false.
      */
     private boolean canBurn(@Nullable Recipe<?> recipe) {
         ItemStack input = getInput();
-        if(recipe != null && !input.isEmpty() && !input.is(EnchantedTags.Items.WITCH_OVEN_BLACKLIST)) {
+        if(recipe != null && !input.is(EnchantedTags.Items.WITCH_OVEN_BLACKLIST)) {
             ItemStack result = ((Recipe<Container>)recipe).assemble(this);
             if(result.isEmpty())
                 return false; // Don't bother checking recipes with no output.
@@ -287,22 +288,6 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
 
     public ItemStack getJarOutput() {
         return inventory.get(4);
-    }
-
-    public int getBurnProgress() {
-        return burnProgress;
-    }
-
-    public int getBurnDuration() {
-        return burnDuration;
-    }
-
-    public int getCookProgress() {
-        return cookProgress;
-    }
-
-    public int getCookDuration() {
-        return cookDuration;
     }
 
     @Override

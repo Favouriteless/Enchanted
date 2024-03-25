@@ -18,8 +18,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
 
+    private final ContainerData data;
+
     public DistilleryMenu(int id, Inventory playerInventory, DistilleryBlockEntity be, ContainerData data) {
         super(EnchantedMenuTypes.DISTILLERY.get(), id, be, EnchantedBlocks.DISTILLERY.get());
+        this.data = data;
 
         addSlot(new JarInputSlot(be, 0, 32, 35)); // Jar input
         addSlot(new Slot(be, 1, 54, 25)); // Ingredient input
@@ -36,6 +39,14 @@ public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
 
     public DistilleryMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
         this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, data, DistilleryBlockEntity.class), new SimpleContainerData(2));
+    }
+
+    public int getCookProgress() {
+        return data.get(0);
+    }
+
+    public int getCookDuration() {
+        return data.get(1);
     }
 
     @Override

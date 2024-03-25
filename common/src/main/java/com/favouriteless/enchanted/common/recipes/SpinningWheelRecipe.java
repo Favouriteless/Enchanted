@@ -43,9 +43,9 @@ public class SpinningWheelRecipe implements Recipe<Container> {
         for(int i = 1; i < itemsIn.size(); i++) {
             ItemStack itemNeeded = itemsIn.get(i).copy();
 
-            if(itemNeeded.sameItem(inv.getItem(1)))
+            if(ItemStack.isSameItemSameTags(itemNeeded, inv.getItem(1)))
                 itemNeeded.shrink(inv.getItem(1).getCount());
-            if(itemNeeded.sameItem(inv.getItem(2)))
+            if(ItemStack.isSameItemSameTags(itemNeeded, inv.getItem(2)))
                 itemNeeded.shrink(inv.getItem(2).getCount());
 
             if(!itemNeeded.isEmpty()) // If not empty then there was not enough of this item
@@ -67,7 +67,7 @@ public class SpinningWheelRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack getResultItem() {
-        return result;
+        return result.copy();
     }
 
     @Override
@@ -90,8 +90,14 @@ public class SpinningWheelRecipe implements Recipe<Container> {
         return true;
     }
 
+    /**
+     * @return A {@link NonNullList} containing copies of this recipe's inputs.
+     */
     public NonNullList<ItemStack> getItemsIn() {
-        return itemsIn;
+        NonNullList<ItemStack> in = NonNullList.createWithCapacity(itemsIn.size());
+        for(int i = 0; i < itemsIn.size(); i++)
+            in.set(i, itemsIn.get(i).copy());
+        return in;
     }
 
 

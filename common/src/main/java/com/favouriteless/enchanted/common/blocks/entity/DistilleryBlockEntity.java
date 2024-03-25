@@ -117,8 +117,8 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     }
 
     /**
-     * Attempt to distill the item in this {@link DistilleryBlockEntity}'s input slot.
-     * @param recipe The recipe to use.
+     * Attempt to distill the items in this {@link DistilleryBlockEntity}'s input slots.
+     * @param recipe The {@link DistilleryRecipe} to use.
      */
     protected void distill(DistilleryRecipe recipe) {
         if(recipe != null) {
@@ -162,9 +162,9 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     }
 
     /**
-     * Check if this {@link DistilleryBlockEntity} is able to burn the item in it's input slots, and has enough space for the outputs.
+     * Check if this {@link DistilleryBlockEntity} has enough space for the output of a given recipe.
      * @param recipe The recipe to check for.
-     * @return True if distillable, otherwise false.
+     * @return True if space is found, otherwise false.
      */
     private boolean canDistill(DistilleryRecipe recipe) {
         if(recipe != null) {
@@ -196,14 +196,6 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
             return emptySpaces >= itemsOut.size(); // If there are same/more empty, we know the output should fit.
         }
         return false;
-    }
-
-    public int getCookProgress() {
-        return cookProgress;
-    }
-
-    public int getCookDuration() {
-        return cookDuration;
     }
 
     private static int getTotalCookTime(Level level, DistilleryBlockEntity be) {

@@ -24,8 +24,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
+    private final ContainerData data;
+
     public WitchOvenMenu(int id, Inventory playerInventory, WitchOvenBlockEntity be, ContainerData data) {
         super(EnchantedMenuTypes.WITCH_OVEN.get(), id, be, EnchantedBlocks.WITCH_OVEN.get());
+        this.data = data;
 
         addSlot(new NonJarInputSlot(be, 0, 53, 17)); // Ingredient input
         addSlot(new FuelSlot(be, 0, 80, 53)); // Fuel Slot
@@ -39,6 +42,22 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
 
     public WitchOvenMenu(int id, Inventory playerInventory, FriendlyByteBuf data) {
         this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, data, WitchOvenBlockEntity.class), new SimpleContainerData(4));
+    }
+
+    public int getBurnProgress() {
+        return data.get(0);
+    }
+
+    public int getBurnDuration() {
+        return data.get(1);
+    }
+
+    public int getCookProgress() {
+        return data.get(2);
+    }
+
+    public int getCookDuration() {
+        return data.get(3);
     }
 
     @Override

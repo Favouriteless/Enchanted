@@ -57,8 +57,8 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
         blit(poseStack, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
         // Draw cook progress bar
-        int cookProgress = menu.getBlockEntity().getCookProgress();
-        int cookDuration = menu.getBlockEntity().getCookDuration();
+        int cookProgress = menu.getCookProgress();
+        int cookDuration = menu.getCookDuration();
         int cookProgressionScaled = cookDuration != 0 && cookProgress != 0 ? cookProgress * COOK_BAR_WIDTH / cookDuration : 0;
 
         blit(poseStack, leftPos + COOK_BAR_XPOS, topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);

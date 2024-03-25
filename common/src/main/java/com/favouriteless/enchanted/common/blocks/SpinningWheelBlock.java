@@ -1,7 +1,6 @@
 package com.favouriteless.enchanted.common.blocks;
 
 import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
-import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -55,7 +54,7 @@ public class SpinningWheelBlock extends SimpleContainerBlockBase {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return type == EnchantedBlockEntityTypes.SPINNING_WHEEL.get() ? SpinningWheelBlockEntity::tick : null;
+		return SpinningWheelBlockEntity::tick;
 	}
 
 }

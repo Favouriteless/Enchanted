@@ -11,6 +11,7 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,7 +36,7 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
     protected void updateBlock() {
         if(level != null && !level.isClientSide) {
             BlockState state = level.getBlockState(worldPosition);
-            level.sendBlockUpdated(worldPosition, state, state, 2);
+            level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
         }
     }
 

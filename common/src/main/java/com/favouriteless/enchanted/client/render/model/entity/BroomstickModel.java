@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.client.render.model;
+package com.favouriteless.enchanted.client.render.model.entity;
 
 import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.mojang.blaze3d.vertex.PoseStack;

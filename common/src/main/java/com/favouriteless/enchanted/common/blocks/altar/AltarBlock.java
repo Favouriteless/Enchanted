@@ -5,11 +5,11 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityType
 import com.favouriteless.enchanted.common.network.multiblock.MultiBlockTools;
 import com.favouriteless.enchanted.common.network.multiblock.altar.AltarMultiBlock;
 import com.favouriteless.enchanted.common.network.multiblock.altar.AltarPartIndex;
+import com.favouriteless.enchanted.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -67,8 +67,8 @@ public class AltarBlock extends BaseEntityBlock {
 
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
                     BlockEntity blockEntity = level.getBlockEntity(cornerPos);
-                    if (blockEntity instanceof AltarBlockEntity)
-                        NetworkHooks.openGui((ServerPlayer)player, (MenuProvider)blockEntity, blockEntity.getBlockPos());
+                    if(blockEntity instanceof AltarBlockEntity be)
+                        Services.PLATFORM.openMenuScreen((ServerPlayer)player, be, be.getBlockPos());
                 }
                 return InteractionResult.CONSUME;
             }

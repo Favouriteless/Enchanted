@@ -9,8 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.function.Supplier;
 
@@ -49,6 +52,15 @@ public interface IClientRegistryHelper {
      * @param supplier The layer to be registered.
      */
     void register(ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier);
+
+    /**
+     * Register a {@link GeoArmorRenderer}.
+     * @param clazz The class of the armor items.
+     * @param rendererSupplier A {@link Supplier} returning an instance of the renderer.
+     * @param items The items this render is applicable for (only used on fabric)
+     */
+    @SuppressWarnings("rawtypes")
+    void register(Class<? extends ArmorItem> clazz, Supplier<GeoArmorRenderer> rendererSupplier, Item... items);
 
 
     /**

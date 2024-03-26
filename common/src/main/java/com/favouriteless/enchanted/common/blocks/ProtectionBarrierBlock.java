@@ -12,6 +12,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class ProtectionBarrierBlock extends TemporaryProtectionBarrierBlock {
 
@@ -20,11 +21,12 @@ public class ProtectionBarrierBlock extends TemporaryProtectionBarrierBlock {
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+	@NotNull
+	public VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
 		if (context instanceof EntityCollisionContext entityContext) {
 			Entity entity = entityContext.getEntity();
 			if(entity != null) {
-				if(ForgeRegistries.ENTITIES.tags().getTag(EnchantedTags.EntityTypes.MONSTERS).contains(entityContext.getEntity().getType()))
+				if(entityContext.getEntity().getType().is(EnchantedTags.EntityTypes.MONSTERS))
 					return super.getCollisionShape(state, level, pos, context);
 				else if(entityContext.getEntity() instanceof Player player && player.isCrouching())
 					return Shapes.empty();
@@ -34,7 +36,7 @@ public class ProtectionBarrierBlock extends TemporaryProtectionBarrierBlock {
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if(entity instanceof Player player && player.isCrouching())
 			player.makeStuckInBlock(state, new Vec3(0.75D, 0.15F, 0.75D));
 	}

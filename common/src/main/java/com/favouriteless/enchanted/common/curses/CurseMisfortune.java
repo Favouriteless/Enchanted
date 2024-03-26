@@ -9,7 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 
-public class CurseMisfortune extends RandomCurse<CurseMisfortune> {
+public class CurseMisfortune extends RandomCurse {
 
 	private static final RandomSource random = RandomSource.create();
 

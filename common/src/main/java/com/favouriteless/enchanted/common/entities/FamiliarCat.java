@@ -22,7 +22,7 @@ public class FamiliarCat extends Cat {
 	}
 
 	@Override
-	public InteractionResult interact(Player player, InteractionHand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		if(player.isCrouching() && hand == InteractionHand.MAIN_HAND) {
 			if(!level.isClientSide) {
 				if(player.getUUID().equals(getOwnerUUID())) {
@@ -31,7 +31,7 @@ public class FamiliarCat extends Cat {
 				}
 			}
 		}
-		return super.interact(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override

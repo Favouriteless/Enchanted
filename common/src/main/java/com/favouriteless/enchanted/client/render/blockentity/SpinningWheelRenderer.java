@@ -2,8 +2,8 @@ package com.favouriteless.enchanted.client.render.blockentity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
+import com.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.ContainerData;
 
 public class SpinningWheelRenderer implements BlockEntityRenderer<SpinningWheelBlockEntity> {
 
@@ -65,10 +64,9 @@ public class SpinningWheelRenderer implements BlockEntityRenderer<SpinningWheelB
 		poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationYDegrees));
 		poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
 
-		ContainerData furnaceData = blockEntity.getData();
-		float cookTime = furnaceData.get(2) >= 1 ? furnaceData.get(2) + partialTicks - 1 : 0;
+		float spinProgress = blockEntity.getSpinProgress() >= 1 ? blockEntity.getSpinProgress() + partialTicks - 1 : 0;
 		float turnFactor = 25;
-		float rotationDegreesWheel = cookTime % turnFactor * 360 / turnFactor;
+		float rotationDegreesWheel = spinProgress % turnFactor * 360 / turnFactor;
 		float rotationDegreesArm = rotationDegreesWheel * 2;
 
 		VertexConsumer vertexBuilder = buffer.getBuffer((RenderType.entityTranslucentCull(TEXTURE)));

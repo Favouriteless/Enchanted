@@ -5,7 +5,7 @@ import com.favouriteless.enchanted.common.init.EnchantedTags.Biomes;
 import com.favouriteless.enchanted.common.init.registry.CurseTypes;
 import net.minecraft.world.level.Level;
 
-public class CurseOverheating extends RandomCurse<CurseOverheating> {
+public class CurseOverheating extends RandomCurse {
 
 	public CurseOverheating() {
 		super(CurseTypes.OVERHEATING, 30, 90); // Executes once every 0.5-1.5 minutes

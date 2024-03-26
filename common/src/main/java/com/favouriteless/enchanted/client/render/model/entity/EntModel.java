@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.client.render.model;
+package com.favouriteless.enchanted.client.render.model.entity;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.entities.Ent;
@@ -8,8 +8,8 @@ import software.bernie.geckolib3.model.AnimatedTickingGeoModel;
 
 public class EntModel extends AnimatedTickingGeoModel<Ent> {
 
-	private static final ResourceLocation MODEL = Enchanted.location("geo/ent.json");
-	private static final ResourceLocation ANIMATION = Enchanted.location("animations/ent.json");
+	private static final ResourceLocation MODEL = Enchanted.location("geo/entity/ent.geo.json");
+	private static final ResourceLocation ANIMATION = Enchanted.location("animations/entity/ent.animation.json");
 
 	@Override
 	public ResourceLocation getAnimationResource(Ent entity) {

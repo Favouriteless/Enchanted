@@ -181,6 +181,10 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 		return posHolder;
 	}
 
+	public int getSpinProgress() {
+		return spinProgress;
+	}
+
 	@Override
 	public int[] getSlotsForFace(@NotNull Direction face) {
 		if(face == Direction.DOWN)

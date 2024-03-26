@@ -5,6 +5,7 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -71,7 +73,7 @@ public class Broomstick extends Entity {
 
         tickLerp();
         if(isControlledByLocalInstance()) {
-            setPacketCoordinates(getX(), getY(), getZ());
+            //setPacketCoordinates(getX(), getY(), getZ());
 
             if(level.isClientSide) {
                 deltaRotX *= 0.8F;
@@ -89,11 +91,6 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
-        return false;
-    }
-
-    @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
         return false;
     }
@@ -102,12 +99,12 @@ public class Broomstick extends Entity {
     protected void playSwimSound(float pVolume) {}
 
     @Override
-    protected void playStepSound(BlockPos pPos, BlockState pState) {}
+    protected void playStepSound(BlockPos pos, BlockState state) {}
 
     private void tickLerp() {
         if(isControlledByLocalInstance()) {
             lerpSteps = 0;
-            setPacketCoordinates(getX(), getY(), getZ());
+            //setPacketCoordinates(getX(), getY(), getZ());
         }
 
         if(lerpSteps > 0) {
@@ -190,12 +187,12 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag nbt) {
+    protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
 
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag nbt) {
+    protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
 
     }
 
@@ -205,12 +202,13 @@ public class Broomstick extends Entity {
     }
 
     @Override
+    @NotNull
     public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this);
     }
 
     @Override
-    public void positionRider(Entity passenger) {
+    public void positionRider(@NotNull Entity passenger) {
         if(hasPassenger(passenger)) {
             passenger.setPos(getX(), getY() + getPassengersRidingOffset(), getZ());
 
@@ -236,12 +234,12 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    protected boolean canAddPassenger(Entity passenger) {
-        return getPassengers().size() < 1;
+    protected boolean canAddPassenger(@NotNull Entity passenger) {
+        return getPassengers().isEmpty();
     }
 
     @Override
-    public void onPassengerTurned(Entity entity) {
+    public void onPassengerTurned(@NotNull Entity entity) {
         clampRotation(entity);
     }
 
@@ -255,7 +253,7 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    public void push(Entity entity) {
+    public void push(@NotNull Entity entity) {
         if(entity instanceof Broomstick) {
             if(entity.getBoundingBox().minY < getBoundingBox().maxY) {
                 super.push(entity);
@@ -268,7 +266,7 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float pAmount) {
+    public boolean hurt(@NotNull DamageSource source, float pAmount) {
         if(isInvulnerableTo(source)) {
             return false;
         }

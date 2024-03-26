@@ -11,10 +11,10 @@ public class SimpleAnimatedGeoModel<T extends IAnimatable> extends AnimatedGeoMo
 	private final ResourceLocation animationLocation;
 	private final ResourceLocation textureLocation;
 
-	public SimpleAnimatedGeoModel(String name) {
-		this.modelLocation = Enchanted.location("geo/" + name + ".json");
-		this.animationLocation = Enchanted.location("animations/" + name + ".json");;
-		this.textureLocation = Enchanted.location("textures/entity/" + name + ".png");;
+	public SimpleAnimatedGeoModel(String prefix, String name) {
+		this.modelLocation = Enchanted.location(String.format("geo/%s/%s.geo.json", prefix, name));
+		this.animationLocation = Enchanted.location(String.format("animations/%s/%s.animation.json", prefix, name));
+		this.textureLocation = Enchanted.location(String.format("textures/%s/%s.png", prefix, name));
 	}
 
 	@Override

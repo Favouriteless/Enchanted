@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.client.render.entity;
 
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.render.model.BroomstickModel;
+import com.favouriteless.enchanted.client.render.model.entity.BroomstickModel;
 import com.favouriteless.enchanted.client.render.model.ModelLayerLocations;
 import com.favouriteless.enchanted.common.entities.Broomstick;
 import com.mojang.blaze3d.vertex.PoseStack;

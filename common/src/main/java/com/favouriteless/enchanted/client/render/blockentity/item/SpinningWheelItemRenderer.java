@@ -18,14 +18,18 @@ public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 	}
 
-
 	@Override
-	public void renderByItem(ItemStack stack, TransformType transformType, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void renderByItem(ItemStack stack, TransformType transformType, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
 		if(dummyBe == null)
 			dummyBe = new SpinningWheelBlockEntity(BlockPos.ZERO, EnchantedBlocks.SPINNING_WHEEL.get().defaultBlockState());
 
 		poseStack.pushPose();
-		Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, packedLight, packedOverlay);
+		Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, light, overlay);
 		poseStack.popPose();
 	}
+
+	public static SpinningWheelItemRenderer getInstance() {
+		return new SpinningWheelItemRenderer();
+	}
+
 }

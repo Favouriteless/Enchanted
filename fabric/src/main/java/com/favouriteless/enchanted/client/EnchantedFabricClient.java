@@ -9,8 +9,7 @@ public class EnchantedFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         new FabricClientRegistryHelper();
         EnchantedClient.init();
-        FabricClientRegistry.registerBlockColors();
-        FabricClientRegistry.registerParticles();
+        FabricClientRegistry.registerAll();
         ClientEventsFabric.register();
     }
 

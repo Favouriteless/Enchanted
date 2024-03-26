@@ -14,8 +14,8 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class SimpleAnimatedGeoRenderer<T extends LivingEntity & IAnimatable> extends GeoEntityRenderer<T> {
 
-    public SimpleAnimatedGeoRenderer(Context context, String name) {
-        super(context, new SimpleAnimatedGeoModel<>(name));
+    public SimpleAnimatedGeoRenderer(Context context, String prefix, String name) {
+        super(context, new SimpleAnimatedGeoModel<>(prefix, name));
     }
 
     @Override

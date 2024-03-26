@@ -2,22 +2,41 @@ package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
+import com.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
+import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FabricClientRegistry {
 
-    public static void registerBlockColors() {
+    public static void registerAll() {
+        registerItemRenderers();
+        registerArmorRenderers();
+        registerBlockColors();
+        registerParticles();
+    }
+
+    private static void registerItemRenderers() {
+        BuiltinItemRendererRegistry.INSTANCE.register(EnchantedItems.SPINNING_WHEEL.get(), SpinningWheelItemRenderer.getInstance()::renderByItem);
+    }
+
+    private static void registerBlockColors() {
         ColorProviderRegistry.BLOCK.register((a, b, c, d) -> 0xF0F0F0, EnchantedBlocks.CHALK_WHITE.get());
         ColorProviderRegistry.BLOCK.register((a, b, c, d) -> 0x801818, EnchantedBlocks.CHALK_RED.get());
         ColorProviderRegistry.BLOCK.register((a, b, c, d) -> 0x4F2F78, EnchantedBlocks.CHALK_PURPLE.get());
     }
 
-    public static void registerParticles() {
+    private static void registerParticles() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
 
         registry.register(EnchantedParticles.BOILING.get(), BoilingParticle.Factory::new);

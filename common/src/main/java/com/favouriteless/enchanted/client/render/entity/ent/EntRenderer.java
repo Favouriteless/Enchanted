@@ -1,6 +1,6 @@
 package com.favouriteless.enchanted.client.render.entity.ent;
 
-import com.favouriteless.enchanted.client.render.model.EntModel;
+import com.favouriteless.enchanted.client.render.model.entity.EntModel;
 import com.favouriteless.enchanted.common.entities.Ent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

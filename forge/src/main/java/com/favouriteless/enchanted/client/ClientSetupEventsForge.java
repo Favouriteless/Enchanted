@@ -1,7 +1,6 @@
 package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.Enchanted;
-import com.favouriteless.enchanted.client.EnchantedClient;
 import com.favouriteless.enchanted.client.particles.*;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;

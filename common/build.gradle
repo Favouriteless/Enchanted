@@ -39,3 +39,5 @@ publishing {
         }
     }
 }
+
+sourceSets.main.resources.srcDirs += project(":common").file('src/generated/resources')

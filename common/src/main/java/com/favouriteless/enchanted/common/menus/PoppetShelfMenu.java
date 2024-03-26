@@ -9,19 +9,31 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class PoppetShelfMenu extends MenuBase<PoppetShelfBlockEntity> {
+public class PoppetShelfMenu extends AbstractContainerMenu {
 
-	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity blockEntity) {
-		super(EnchantedMenuTypes.POPPET_SHELF.get(), id, blockEntity, ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), EnchantedBlocks.POPPET_SHELF.get());
+	private final ContainerLevelAccess containerAccess;
 
-		for(int i = 0; i < blockEntity.getInventory().getContainerSize(); i++)
-			addSlot(new PoppetSlot(blockEntity.getInventory(), i, 47 + i*22, 18));
+	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity be) {
+		super(EnchantedMenuTypes.POPPET_SHELF.get(), id);
 
-		addInventorySlots(playerInventory, 8, 49);
+		for(int i = 0; i < be.getInventory().getContainerSize(); i++)
+			addSlot(new PoppetSlot(be.getInventory(), i, 47 + i*22, 18));
+
+		for (int y = 0; y < 3; y++) { // Main Inventory
+			for (int x = 0; x < 9; x++) {
+				addSlot(new Slot(playerInventory, x + (y * 9) + 9, 8 + (x * 18), 49 + (y * 18)));
+			}
+		}
+		for (int x = 0; x < 9; x++) { // Hotbar
+			addSlot(new Slot(playerInventory, x, 8 + (18 * x), 49 + 58));
+		}
+
+		this.containerAccess = ContainerLevelAccess.create(be.getLevel(), be.getBlockPos());
 	}
 
 	public PoppetShelfMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
@@ -54,7 +66,12 @@ public class PoppetShelfMenu extends MenuBase<PoppetShelfBlockEntity> {
 
 			slot.onTake(playerIn, slotItem);
 		}
-		return super.quickMoveStack(playerIn, index);
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public boolean stillValid(Player player) {
+		return stillValid(containerAccess, player, EnchantedBlocks.POPPET_SHELF.get());
 	}
 
 	public static class PoppetSlot extends Slot {

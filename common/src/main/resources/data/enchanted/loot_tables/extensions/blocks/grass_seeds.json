@@ -1,0 +1,39 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:artichoke_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:snowbell_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:belladonna_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:mandrake_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:wolfsbane_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "enchanted:garlic"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.1
+        }
+      ]
+    }
+  ]
+}

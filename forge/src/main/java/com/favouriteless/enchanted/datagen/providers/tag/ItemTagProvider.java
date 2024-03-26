@@ -38,10 +38,6 @@ public class ItemTagProvider extends ItemTagsProvider {
         copy(Blocks.WOODEN_STAIRS, Items.WOODEN_STAIRS);
 
         // Other tags
-        tag(Items.SEEDS_DROPS)
-                .add(EnchantedItems.ARTICHOKE_SEEDS.get(), EnchantedItems.SNOWBELL_SEEDS.get(),
-                        EnchantedItems.MANDRAKE_SEEDS.get(), EnchantedItems.BELLADONNA_SEEDS.get(),
-                        EnchantedItems.WOLFSBANE_SEEDS.get(), EnchantedItems.GARLIC.get());
         tag(Items.TOOL_POPPET_BLACKLIST)
                 .addTag(EnchantedTags.Items.CHALKS);
     }

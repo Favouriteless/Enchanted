@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.api.rites;
 
 import com.favouriteless.enchanted.api.curses.Curse;
+import com.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import com.favouriteless.enchanted.common.curses.CurseManager;
 import com.favouriteless.enchanted.common.curses.CurseType;
@@ -13,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 import java.util.UUID;
 
@@ -41,11 +41,10 @@ public abstract class AbstractCurseRite extends AbstractRite {
         else {
             int casterLevel = 0;
 
-
-            IFamiliarEntry familiarEntry = getLevel().getServer().getLevel(Level.OVERWORLD).getCapability(EnchantedCapabilities.FAMILIAR).orElse(null).getFamiliarFor(getCasterUUID());
+            IFamiliarEntry familiarEntry = FamiliarSavedData.get(getLevel()).getEntry(getCasterUUID());
 
             if(familiarEntry != null) {
-                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT.get())
+                if(!familiarEntry.isDismissed() && familiarEntry.getType() == FamiliarTypes.CAT)
                     casterLevel++;
             }
 

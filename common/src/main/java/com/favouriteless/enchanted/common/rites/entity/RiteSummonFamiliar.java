@@ -7,7 +7,6 @@ import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
-import com.favouriteless.enchanted.common.rites.SummonForcer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +52,7 @@ public class RiteSummonFamiliar extends AbstractRite {
             }
 
             if(targetEntity.getLevel() != level)
-                targetEntity.changeDimension(level, new SummonForcer(vec3));
+                targetEntity.changeDimension(level);
             else
                 targetEntity.teleportTo(vec3.x, vec3.y, vec3.z);
 

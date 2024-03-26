@@ -4,15 +4,17 @@ import com.favouriteless.enchanted.common.blocks.*;
 import com.favouriteless.enchanted.common.blocks.access.EnchantedSaplingBlock;
 import com.favouriteless.enchanted.common.blocks.access.EnchantedStairBlock;
 import com.favouriteless.enchanted.common.blocks.altar.AltarBlock;
-import com.favouriteless.enchanted.common.blocks.altar.*;
-import com.favouriteless.enchanted.common.blocks.cauldrons.*;
-import com.favouriteless.enchanted.common.blocks.chalk.*;
+import com.favouriteless.enchanted.common.blocks.altar.CandelabraBlock;
+import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlock;
+import com.favouriteless.enchanted.common.blocks.altar.ChaliceBlockMilk;
+import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
+import com.favouriteless.enchanted.common.blocks.cauldrons.WitchCauldronBlock;
+import com.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
+import com.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import com.favouriteless.enchanted.common.blocks.crops.*;
 import com.favouriteless.enchanted.common.init.EnchantedMaterials;
 import com.favouriteless.enchanted.common.world.features.EnchantedTreeGrower;
 import com.favouriteless.enchanted.platform.Services;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,27 +29,6 @@ import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 public class EnchantedBlocks {
-
-    public static void initRender() {
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_GOLD.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_WHITE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_RED.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.CHALK_PURPLE.get(), RenderType.cutout());
-
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ROWAN_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.HAWTHORN_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ALDER_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.BELLADONNA.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.ARTICHOKE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.MANDRAKE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.GLINT_WEED.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.EMBER_MOSS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.SPANISH_MOSS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.WOLFSBANE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.GARLIC.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.SNOWBELL.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(EnchantedBlocks.BLOOD_POPPY.get(), RenderType.cutout());
-    }
 
     public static final Supplier<Block> ALTAR = register("altar",() -> new AltarBlock(Properties.of(EnchantedMaterials.ALTAR).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
     public static final Supplier<Block> WITCH_OVEN = register("witch_oven",() -> new WitchOvenBlock(Properties.copy(Blocks.ANVIL).strength(5.0F, 1200.0F).lightLevel(getLightValueLit(13)).noOcclusion()));

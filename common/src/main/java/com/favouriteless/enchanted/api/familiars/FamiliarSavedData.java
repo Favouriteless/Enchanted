@@ -10,6 +10,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +78,8 @@ public class FamiliarSavedData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    @NotNull
+    public CompoundTag save(@NotNull CompoundTag nbt) {
         for(UUID uuid : entries.keySet()) {
             CompoundTag tag = new CompoundTag();
             IFamiliarEntry entry = entries.get(uuid);

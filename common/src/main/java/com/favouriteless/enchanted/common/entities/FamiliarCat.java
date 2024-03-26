@@ -2,6 +2,7 @@ package com.favouriteless.enchanted.common.entities;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.familiars.FamiliarHelper;
+import com.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import com.favouriteless.enchanted.api.familiars.IFamiliarCapability.IFamiliarEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -38,13 +39,12 @@ public class FamiliarCat extends Cat {
 	public void tick() {
 		super.tick();
 		if(!level.isClientSide) {
-			FamiliarHelper.runIfCap(level, cap -> {
-				IFamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
-				if(entry == null || !getUUID().equals(entry.getUUID())) {
-					discard();
-					Enchanted.LOG.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
-				}
-			});
+
+			IFamiliarEntry entry = FamiliarSavedData.get(level).getEntry(getOwnerUUID());
+			if(entry == null || !getUUID().equals(entry.getUUID())) {
+				discard();
+				Enchanted.LOG.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
+			}
 		}
 	}
 
@@ -52,11 +52,12 @@ public class FamiliarCat extends Cat {
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
 		if(!level.isClientSide) {
-			FamiliarHelper.runIfCap(level, cap -> {
-				IFamiliarEntry entry = cap.getFamiliarFor(getOwnerUUID());
-				if(entry != null)
-					entry.setNbt(nbt);
-			});
+			FamiliarSavedData data = FamiliarSavedData.get(level);
+			IFamiliarEntry entry = data.getEntry(getOwnerUUID());
+			if(entry != null) {
+				entry.setNbt(nbt);
+				data.setDirty();
+			}
 		}
 	}
 

@@ -2,9 +2,7 @@ package com.favouriteless.enchanted.common.init;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.common.init.registry.AltarUpgradeRegistry;
-import com.favouriteless.enchanted.common.init.registry.ArthanaLootRegistry;
 import com.favouriteless.enchanted.common.init.registry.PowerProviderRegistry;
-import com.favouriteless.enchanted.common.loot.ArthanaLootReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.AltarUpgradeReloadListener;
 import com.favouriteless.enchanted.common.reloadlisteners.altar.PowerProviderReloadListener;
 import com.favouriteless.enchanted.platform.Services;
@@ -20,7 +18,6 @@ public class EnchantedData {
     public static final PowerProviderRegistry<Block> POWER_BLOCKS = new PowerProviderRegistry<>();
     public static final PowerProviderRegistry<TagKey<Block>> POWER_TAGS = new PowerProviderRegistry<>();
     public static final AltarUpgradeRegistry ALTAR_UPGRADES = new AltarUpgradeRegistry();
-    public static final ArthanaLootRegistry ARTHANA_LOOT = new ArthanaLootRegistry();
 
 
 
@@ -28,7 +25,6 @@ public class EnchantedData {
         register("altar_blocks", new PowerProviderReloadListener<>("altar/blocks", EnchantedData::createBlockKey, EnchantedData.POWER_BLOCKS));
         register("altar_tags", new PowerProviderReloadListener<>("altar/tags", EnchantedData::createBlockTagKey, EnchantedData.POWER_TAGS));
         register("altar_upgrade", new AltarUpgradeReloadListener());
-        register("arthana_loot", new ArthanaLootReloadListener());
     }
 
     public static void register(String id, SimpleJsonResourceReloadListener reloadListener) {

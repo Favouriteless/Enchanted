@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 
 public class AltarMenu extends AbstractContainerMenu {
 
@@ -40,6 +41,11 @@ public class AltarMenu extends AbstractContainerMenu {
 
     public int getRechargeMultiplier() {
         return data.get(2);
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player var1, int var2) {
+        return null;
     }
 
     @Override

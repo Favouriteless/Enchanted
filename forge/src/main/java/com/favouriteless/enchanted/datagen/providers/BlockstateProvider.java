@@ -99,7 +99,9 @@ public class BlockstateProvider extends BlockStateProvider {
 
 	private void simpleItem(Block block) {
 		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		itemModels().withExistingParent(ModelProvider.ITEM_FOLDER + name, mcLoc(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", ModelProvider.BLOCK_FOLDER + name);
+		itemModels()
+				.withExistingParent(ModelProvider.ITEM_FOLDER + name, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+				.texture("layer0", ModelProvider.BLOCK_FOLDER + name);
 	}
 
 	private void chalkBlockWithItem(Block block) {
@@ -108,7 +110,9 @@ public class BlockstateProvider extends BlockStateProvider {
 						.rotationY((state.getValue(ChalkCircleBlock.GLYPH) % 4 * 90))
 						.build()
 				);
-		itemModels().withExistingParent(ForgeRegistries.BLOCKS.getKey(block).toString(), mcLoc(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", modLoc(ModelProvider.ITEM_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block).getPath()));
+		itemModels()
+				.withExistingParent(ForgeRegistries.BLOCKS.getKey(block).toString(), mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+				.texture("layer0", modLoc(ModelProvider.ITEM_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block).getPath()));
 	}
 
 	private void goldChalkBlockWithItem(Block block) {
@@ -120,7 +124,9 @@ public class BlockstateProvider extends BlockStateProvider {
 			builder.partialState().with(GoldChalkBlock.GLYPH, j).setModels(new ConfiguredModel(model, 0, j*90, false));
 		}
 
-		itemModels().withExistingParent(ForgeRegistries.BLOCKS.getKey(block).toString(), mcLoc(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", modLoc(ModelProvider.ITEM_FOLDER + "/" + name));
+		itemModels()
+				.withExistingParent(ForgeRegistries.BLOCKS.getKey(block).toString(), mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
+				.texture("layer0", modLoc(ModelProvider.ITEM_FOLDER + "/" + name));
 	}
 
 	private void simpleBlockWithItem(Block block) {
@@ -161,7 +167,8 @@ public class BlockstateProvider extends BlockStateProvider {
 				.modelFile(state.getValue(BlockStateProperties.LIT) ? modelLit : modelUnlit)
 				.rotationY((int)(state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + angleOffset) % 360)
 				.build());
-		itemModels().getBuilder(name).parent(modelUnlit);
+		itemModels().getBuilder(name)
+				.parent(modelUnlit);
 	}
 
 	private void fumeFunnelWithItem(Block block) {
@@ -181,7 +188,8 @@ public class BlockstateProvider extends BlockStateProvider {
 			}
 		}
 
-		itemModels().getBuilder(name).parent(models().getExistingFile(modLoc("block/" + name + types[0])));
+		itemModels().getBuilder(name)
+				.parent(models().getExistingFile(modLoc("block/" + name + types[0])));
 	}
 
 	private void leafRandomBlockWithItem(Block block, int numVariants) {
@@ -191,7 +199,8 @@ public class BlockstateProvider extends BlockStateProvider {
 			models[i] = new ConfiguredModel(models().getExistingFile(modLoc("block/" + name + "_" + i)));
 		}
 		getVariantBuilder(block).partialState().setModels(models);
-		itemModels().getBuilder(name).parent(models().getExistingFile(modLoc("block/" + name + "_0")));
+		itemModels().getBuilder(name)
+				.parent(models().getExistingFile(modLoc("block/" + name + "_0")));
 	}
 
 	private void rotatedPillarBlockWithItem(RotatedPillarBlock block) {
@@ -201,7 +210,7 @@ public class BlockstateProvider extends BlockStateProvider {
 
 	private void crossBlock(Block block) {
 		ResourceLocation path = blockTexture(block);
-		simpleBlock(block, models().cross(path.toString(), path));
+		simpleBlock(block, models().cross(path.toString(), path).renderType(new ResourceLocation("cutout")));
 	}
 
 	private void crossBlockWithItem(Block block) {
@@ -212,7 +221,10 @@ public class BlockstateProvider extends BlockStateProvider {
 	private void cropsBlockWithItem(CropsBlockAgeFive block, String parent) {
 		String path = BlockModelProvider.BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_stage_";
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-						.modelFile(models().withExistingParent(path + state.getValue(CropsBlockAgeFive.AGE_FIVE), mcLoc("block/" + parent)).texture(parent, path + state.getValue(CropsBlockAgeFive.AGE_FIVE)))
+						.modelFile(models()
+								.withExistingParent(path + state.getValue(CropsBlockAgeFive.AGE_FIVE), mcLoc("block/" + parent))
+								.texture(parent, path + state.getValue(CropsBlockAgeFive.AGE_FIVE))
+								.renderType(new ResourceLocation("cutout")))
 						.build());
 	}
 

@@ -1,6 +1,6 @@
-package com.favouriteless.enchanted.api.patchouli.processors;
+package com.favouriteless.enchanted.patchouli.processors;
 
-import com.favouriteless.enchanted.common.recipes.SpinningWheelRecipe;
+import com.favouriteless.enchanted.common.recipes.DistilleryRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -11,9 +11,9 @@ import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 
-public class SpinningWheelRecipeProcessor implements IComponentProcessor {
+public class DistilleryRecipeProcessor implements IComponentProcessor {
 
-	private SpinningWheelRecipe recipe;
+	private DistilleryRecipe recipe;
 
 	@Override
 	public void setup(IVariableProvider variables) {
@@ -21,25 +21,28 @@ public class SpinningWheelRecipeProcessor implements IComponentProcessor {
 
 		RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 		Recipe<?> recipeIn = recipeManager.byKey(new ResourceLocation(recipeId)).orElseThrow(IllegalArgumentException::new);
-		if(!(recipeIn instanceof SpinningWheelRecipe))
+		if(!(recipeIn instanceof DistilleryRecipe))
 			throw new IllegalStateException();
-		recipe = (SpinningWheelRecipe)recipeIn;
+		recipe = (DistilleryRecipe)recipeIn;
 	}
 
 	@Override
 	public IVariable process(String key) {
+
+		int index = Integer.parseInt(String.valueOf(key.charAt(key.length() - 1)));
 		if(key.startsWith("in")) {
-			int index = Integer.parseInt(String.valueOf(key.charAt(key.length()-1)));
-			NonNullList<ItemStack> stacks = recipe.getItemsIn();
+            NonNullList<ItemStack> stacks = recipe.getItemsIn();
 			if(index >= 0 && index < stacks.size()) {
 				return IVariable.from(stacks.get(index));
 			}
 			return IVariable.from(ItemStack.EMPTY);
 		}
-		else if(key.equals("out")) {
-			ItemStack stack = recipe.getResultItem();
-
-			return IVariable.from(stack);
+		else if(key.startsWith("out")) {
+            NonNullList<ItemStack> stacks = recipe.getItemsOut();
+			if(index >= 0 && index < stacks.size()) {
+				return IVariable.from(stacks.get(index));
+			}
+			return IVariable.from(ItemStack.EMPTY);
 		}
 
 		return null;

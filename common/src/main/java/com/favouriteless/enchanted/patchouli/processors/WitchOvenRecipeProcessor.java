@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.api.patchouli.processors;
+package com.favouriteless.enchanted.patchouli.processors;
 
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
 import com.favouriteless.enchanted.common.recipes.WitchOvenRecipe;

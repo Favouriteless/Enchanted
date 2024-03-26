@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * Simple {@link AbstractRite} implementation for removing a {@link Curse} from a {@link Player}.
  *
- * <p>IMPORTANT: Rites implementing this should add a filled taglock to their requirements so the target's {@link UUID}
+ * <p><strong>IMPORTANT:</strong> Rites implementing this should add a filled taglock to their requirements so the target's {@link UUID}
  * can be grabbed.</p>
  */
 public abstract class AbstractRemoveCurseRite extends AbstractRite {

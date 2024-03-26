@@ -43,8 +43,8 @@ import java.util.UUID;
  * Base class for every Rite (circle magic ritual), containing all the logic required to detect/find the correct rite
  * as well as handling the creation/destruction of rites.
  *
- * <p>An {@link AbstractRite} needs to have a {@link RiteType} registered for the circles to be able to find it. Use
- * {@link RiteTypes#register(ResourceLocation, RiteFactory)} to do so.</p>
+ * <p><strong>IMPORTANT: </strong>An {@link AbstractRite} needs to have a {@link RiteType} registered for the circles to
+ * be able to find it. Use {@link RiteTypes#register(ResourceLocation, RiteFactory)} to do so.</p>
  *
  * <p>Important methods for classes implementing {@link AbstractRite} have been moved towards the top of the class.</p>
  */

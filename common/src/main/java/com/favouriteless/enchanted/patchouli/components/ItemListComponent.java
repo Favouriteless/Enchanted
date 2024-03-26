@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.api.patchouli.components;
+package com.favouriteless.enchanted.patchouli.components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;

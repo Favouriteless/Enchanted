@@ -20,7 +20,7 @@ import java.util.UUID;
 /**
  * Simple {@link AbstractRite} implementation for creating a {@link Curse} and applying it to a {@link Player}.
  *
- * <p>IMPORTANT: Rites implementing this should add a filled taglock to their requirements so the target's UUID can
+ * <p><strong>IMPORTANT:</strong> Rites implementing this should add a filled taglock to their requirements so the target's UUID can
  * be grabbed.</p>
  *
  * <p>See {@link RiteCurseMisfortune} for an example implementation of {@link AbstractCurseRite}.</p>

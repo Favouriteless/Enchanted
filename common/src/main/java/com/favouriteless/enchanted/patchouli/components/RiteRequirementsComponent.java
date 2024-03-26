@@ -1,4 +1,4 @@
-package com.favouriteless.enchanted.api.patchouli.components;
+package com.favouriteless.enchanted.patchouli.components;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRite;

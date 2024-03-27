@@ -1,0 +1,17 @@
+{
+  "name": "Witchcraft: Poppetry",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Poppetry is the art of creating poppets which act as a substitute for the target to perform magic with, this knowledge is described in Witchcraft: Poppetry."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:book_poppetry"
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 3
+}

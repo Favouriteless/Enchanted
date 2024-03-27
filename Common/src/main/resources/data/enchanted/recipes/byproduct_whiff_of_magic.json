@@ -1,0 +1,7 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": {
+    "item": "enchanted:rowan_sapling"
+  },
+  "result": { "item": "enchanted:whiff_of_magic", "count": 1 }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Sanctity",
+  "icon": "minecraft:feather",
+  "category": "enchanted:creature",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Sanctity",
+      "text": "Prevent monsters from entering the circle. $(br2)While effective, this barrier is certainly not impenetrable. High speeds can cause a monster to rebound inside the circle. $(br2)Requires an additional 3 power per tick"
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:sanctity"
+    }
+  ],
+  "read_by_default": true
+}

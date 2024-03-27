@@ -1,0 +1,30 @@
+{
+  "name": "Distillery",
+  "icon": "enchanted:distillery",
+  "category": "enchanted:distillation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The distillery allows witches to separate a material into it's components by utilising differences in boiling and condensing points. $(br2)Place near an Altar with sufficient power."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:distillery[facing=north,lit=true]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:distillery"
+    }
+  ],
+  "read_by_default": false,
+  "priority": true
+}

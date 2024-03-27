@@ -1,0 +1,26 @@
+{
+  "name": "Fertility",
+  "icon": "minecraft:emerald",
+  "category": "enchanted:world",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Fertility",
+      "text": "Cause plants within a large range to grow, heal sick animals and cure zombie villagers."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:fertility"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Fertility",
+      "text": "Cause plants within a large range to grow, heal sick animals and cure zombie villagers."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:fertility_charged"
+    }
+  ],
+  "read_by_default": true
+}

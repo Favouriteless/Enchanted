@@ -1,0 +1,16 @@
+{
+  "name": "Bone Needle",
+  "icon": "enchanted:bone_needle",
+  "category": "enchanted:crafting_materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bone needles are used to craft many other useful tools."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:bone_needle"
+    }
+  ],
+  "read_by_default": true
+}

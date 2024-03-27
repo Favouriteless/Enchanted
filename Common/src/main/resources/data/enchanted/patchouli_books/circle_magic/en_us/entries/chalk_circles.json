@@ -1,0 +1,17 @@
+{
+  "name": "Performing Rites",
+  "icon": "enchanted:textures/block/glyph_gold.png",
+  "category": "enchanted:performing_rites",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "To perform a rite, the correct chalk circles must be constructed first. Rites can use three types of chalk; ritual, infernal and otherwhere, which are placed around a heart glyph drawn with golden chalk.$(br2)Each rite needs a suitable amount of power from an altar and foci items, this is displayed in a diagram."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:charging_stone"
+    }
+  ],
+  "read_by_default": false,
+  "priority": true
+}

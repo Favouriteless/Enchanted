@@ -1,33 +1,27 @@
-plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT' apply(false)
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
-    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
-    id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
-}
-
 subprojects {
+
     apply plugin: 'java'
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
     java.withSourcesJar()
     java.withJavadocJar()
-        
+
     jar {
         from(rootProject.file("LICENSE")) {
             rename { "${it}_${mod_name}" }
         }
         manifest {
             attributes([
-                'Specification-Title'     : mod_name,
-                'Specification-Vendor'    : mod_author,
-                'Specification-Version'   : project.jar.archiveVersion,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Timestamp'               : System.currentTimeMillis(),
-                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                'Built-On-Minecraft'      : minecraft_version
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    'Timestampe'              : System.currentTimeMillis(),
+                    'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                    'Build-On-Minecraft'      : minecraft_version
             ])
         }
     }
@@ -39,67 +33,88 @@ subprojects {
     }
 
     repositories {
+
         mavenCentral()
+
+        flatDir {
+            dirs '../lib'
+        }
+
+        maven {
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+
+        maven {
+            name = "SmartBrainLib (SBL) Maven Repo"
+            url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
+        }
+
         maven {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
+
         maven {
-            name = 'BlameJared'
+            name = 'BlameJared Maven'
             url = 'https://maven.blamejared.com'
         }
         maven {
-            name = 'GeckoLib'
-            url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            name = 'ParchmentMC'
+            url = 'https://maven.parchmentmc.org'
+        }
+
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
         }
         maven {
-            name = "SmartBrainLib"
-            url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
+            // location of the maven that hosts JEI files
+            name = "Progwml6 maven"
+            url = "https://dvs1.progwml6.com/files/maven/"
         }
-        maven {
-            name = "Cloth Config"
-            url = "https://maven.shedaniel.me/"
-        }
-        flatDir {
-            dirs '../lib'
-        }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+
     }
 
     tasks.withType(JavaCompile).configureEach {
-    
+
         it.options.encoding = 'UTF-8'
-        it.options.getRelease().set(17)
-    }
-
-    processResources {
-        def expandProps = [
-                "version": version,
-                "group": project.group, //Else we target the task's group.
-                "minecraft_version": minecraft_version,
-                "forge_version": forge_version,
-                "forge_loader_version_range": forge_loader_version_range,
-                "forge_version_range": forge_version_range,
-                "minecraft_version_range": minecraft_version_range,
-                "fabric_version": fabric_version,
-                "fabric_loader_version": fabric_loader_version,
-                "mod_name": mod_name,
-                "mod_author": mod_author,
-                "mod_id": mod_id,
-                "license": license,
-                "description": project.description
-        ]
-
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
-            expand expandProps
-        }
-        inputs.properties(expandProps)
+        it.options.release = 17
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The
     // metadata includes mapped dependencies which are not reasonably consumable by
     // other mod developers.
-    tasks.withType(GenerateModuleMetadata).configureEach {
+    tasks.withType(GenerateModuleMetadata) {
 
         enabled = false
     }
+
+    task assembleSubProjects() {
+                var props = rootProject.getProperties()
+                var fileName = "${props.get("mod_name")}-${project.getName().toLowerCase()}-${minecraft_version}-${props.get("version")}.jar"
+                var sourceFileName = "${props.get("mod_name")}-${project.getName().toLowerCase()}-${minecraft_version}-${props.get("version")}-sources.jar"
+                project.file("build/libs/${fileName}").renameTo(rootProject.file("buildOutput/${fileName}"))
+                project.file("build/libs/${sourceFileName}").renameTo(rootProject.file("buildOutput/${sourceFileName}"))
+            }
+
+    }
+
+
+
+task assembleSubProjects(){
+    doFirst {
+        subprojects.forEach(subProject -> {
+            var props = rootProject.getProperties()
+            var fileName = "${props.get("mod_name")}-${subProject.getName().toLowerCase()}-${minecraft_version}-${props.get("version")}.jar"
+            var sourceFileName = "${props.get("mod_name")}-${subProject.getName().toLowerCase()}-${minecraft_version}-${props.get("version")}-sources.jar"
+            subProject.file("build/libs/${fileName}").renameTo(rootProject.file("buildOutput/${fileName}"))
+            subProject.file("build/libs/${sourceFileName}").renameTo(rootProject.file("buildOutput/${sourceFileName}"))
+        })
+    }
+
 }

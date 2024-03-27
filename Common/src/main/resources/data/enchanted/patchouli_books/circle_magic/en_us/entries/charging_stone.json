@@ -1,0 +1,17 @@
+{
+  "name": "Attuned Stone",
+  "icon": "enchanted:attuned_stone_charged",
+  "category": "enchanted:charging",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Attuned Stone",
+      "text": "Gather power to imbue an attuned stone with magical energy. This stone can be used for various purposes such as substituting an altar or creating magical objects."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:charging_stone"
+    }
+  ],
+  "read_by_default": true
+}

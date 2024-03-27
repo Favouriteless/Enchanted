@@ -1,0 +1,6 @@
+{
+  "name": "Creature Rites",
+  "description": "Creature rites are used to change or limit the behaviour of creatures affected by the circle. Rites of this type can often be used for warding.",
+  "icon": "minecraft:creeper_head",
+  "sortnum": 0
+}

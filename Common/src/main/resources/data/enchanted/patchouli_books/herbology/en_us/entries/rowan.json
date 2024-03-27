@@ -1,0 +1,25 @@
+{
+  "name": "Rowan Tree",
+  "icon": "enchanted:textures/block/rowan_sapling.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft and occultism.$(br2)The magical affinity of the Rowan is seldom matched by other trees, and is thought to give protection against malevolant beings.$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:rowan_sapling"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

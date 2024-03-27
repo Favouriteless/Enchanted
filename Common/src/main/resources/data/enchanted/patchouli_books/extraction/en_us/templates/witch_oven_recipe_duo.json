@@ -1,0 +1,40 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "Oven Byproduct",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    }
+  ],
+  "include": [
+    {
+      "template": "enchanted:witch_oven_recipe",
+      "as": "recipe",
+      "using": {
+        "recipe": "#recipe",
+        "itemIn": "#itemIn",
+        "resultItem": "#resultItem",
+        "text": "#text"
+      },
+      "y": 22
+    },
+    {
+      "template": "enchanted:witch_oven_recipe",
+      "as": "recipe2",
+      "using": {
+        "recipe": "#recipe2",
+        "itemIn": "#itemIn2",
+        "resultItem": "#resultItem2",
+        "text": "#text2"
+      },
+      "y": 90
+    }
+  ]
+}

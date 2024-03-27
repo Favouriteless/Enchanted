@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "block": "enchanted:chalice_filled",
+      "powerMultiplier": 2.0,
+      "rechargeMultiplier": 0.0,
+      "priority": 1
+    },
+    {
+      "block": "enchanted:chalice",
+      "powerMultiplier": 1.0,
+      "rechargeMultiplier": 0.0,
+      "priority": 0
+    }
+  ]
+}

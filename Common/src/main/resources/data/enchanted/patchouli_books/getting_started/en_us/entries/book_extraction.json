@@ -1,0 +1,17 @@
+{
+  "name": "Witchcraft: Extraction",
+  "icon": "patchouli:textures/items/book_purple.png",
+  "category": "enchanted:additional_resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "To be effective in the art of witchcraft, one must be able to extract magickal substances or properties from other materials."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:book_extraction"
+    }
+  ],
+  "read_by_default": false,
+  "sortnum": 1
+}

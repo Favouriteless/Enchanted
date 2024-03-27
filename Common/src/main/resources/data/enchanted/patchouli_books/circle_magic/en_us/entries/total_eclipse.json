@@ -1,0 +1,26 @@
+{
+  "name": "Total Eclipse",
+  "icon": "minecraft:clock",
+  "category": "enchanted:world",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Total Eclipse",
+      "text": "Cover the sky with darkness and blot out the sun. $(br2)(Sets the time to midnight)"
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:total_eclipse"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Total Eclipse",
+      "text": "Cover the sky with darkness and blot out the sun. $(br2)(Sets the time to midnight)"
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:total_eclipse_charged"
+    }
+  ],
+  "read_by_default": true
+}

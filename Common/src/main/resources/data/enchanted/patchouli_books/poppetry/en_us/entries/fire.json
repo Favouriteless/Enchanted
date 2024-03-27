@@ -1,0 +1,17 @@
+{
+  "name": "Fire",
+  "icon": "enchanted:fire_poppet",
+  "category": "enchanted:infusing_poppets",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Fire poppets protect the beneficiary from death by fire.$(br2)$(bold)Sturdy$() One extra use.$(br)$(bold)Infused$() Grants 10 seconds of fire resistance."
+    },
+    {
+      "type": "enchanted:spinning_wheel_recipe",
+      "recipe": "enchanted:spin_fire_poppet"
+    }
+  ],
+  "read_by_default": true,
+  "priority": false
+}

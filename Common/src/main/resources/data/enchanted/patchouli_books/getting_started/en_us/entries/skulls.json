@@ -1,0 +1,24 @@
+{
+  "name": "Skull Upgrades",
+  "icon": "enchanted:chalice_filled",
+  "category": "enchanted:altars",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Skulls are able to enhance both the capacity and recharge rate of an altar, with varying effectiveness. $(br2)$(bold)Skeleton$() +1x Power Capacity +1x Recharge Rate$(br)$(bold)Wither$() +2x Power Capacity +2x Recharge Rate$(br)$(bold)Player$() +2.5x Power Capacity +3x Recharge Rate"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "minecraft:skeleton_skull"
+        },
+        "pattern": [
+          [ " 0 " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

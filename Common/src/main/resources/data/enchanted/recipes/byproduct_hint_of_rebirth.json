@@ -1,0 +1,7 @@
+{
+  "type": "enchanted:witch_oven",
+  "ingredient": {
+    "item": "minecraft:spruce_sapling"
+  },
+  "result": { "item": "enchanted:hint_of_rebirth", "count": 1 }
+}

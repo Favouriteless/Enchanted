@@ -1,0 +1,16 @@
+{
+  "name": "Ritual Chalk",
+  "icon": "enchanted:chalk_white",
+  "category": "enchanted:performing_rites",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ritual chalk is the most basic form of chalk used in circle magic, it is fairly easily obtained and used for a lot of simple applications as well as more complex rites."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:chalk_white"
+    }
+  ],
+  "read_by_default": true
+}

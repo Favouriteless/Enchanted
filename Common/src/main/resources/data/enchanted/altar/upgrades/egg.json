@@ -1,0 +1,10 @@
+{
+  "values": [
+    {
+      "block": "enchanted:infinity_egg",
+      "powerMultiplier": 100000.0,
+      "rechargeMultiplier": 10000.0,
+      "priority": 0
+    }
+  ]
+}

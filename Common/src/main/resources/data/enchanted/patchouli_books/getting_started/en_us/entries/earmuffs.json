@@ -1,0 +1,16 @@
+{
+  "name": "Earmuffs",
+  "icon": "enchanted:earmuffs",
+  "category": "enchanted:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Earmuffs provide a level of protection against enemies using audio based attacks such as screams, and could even be considered essential when dealing with Mandrakes and Banshees."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:earmuffs"
+    }
+  ],
+  "read_by_default": true
+}

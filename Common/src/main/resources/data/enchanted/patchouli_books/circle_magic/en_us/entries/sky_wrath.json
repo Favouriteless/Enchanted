@@ -1,0 +1,26 @@
+{
+  "name": "Sky's Wrath",
+  "icon": "minecraft:lightning_rod",
+  "category": "enchanted:world",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Sky's Wrath",
+      "text": "Call a focused lightning storm around the circle. $(br2)Adding a bound waystone allows the caster to direct the lightning to that location."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:sky_wrath"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Sky's Wrath",
+      "text": "Call a focused lightning storm around the circle. $(br2)Adding a bound or blooded waystone allows the caster to direct the lightning to that location."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:sky_wrath_charged"
+    }
+  ],
+  "read_by_default": true
+}

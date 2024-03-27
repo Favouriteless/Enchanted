@@ -18,6 +18,10 @@ out
 build
 .gradle
 
+runServer
+runClient
+buildOutput
+
 # other
 eclipse
 run

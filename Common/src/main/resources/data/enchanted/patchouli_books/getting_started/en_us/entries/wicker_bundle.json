@@ -1,0 +1,16 @@
+{
+  "name": "Wicker Bundle",
+  "icon": "enchanted:wicker_bundle",
+  "category": "enchanted:crafting_materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Saplings can be bundled together to create a wicker bundle."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:wicker_bundle"
+    }
+  ],
+  "read_by_default": true
+}

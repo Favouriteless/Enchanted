@@ -1,0 +1,16 @@
+{
+  "name": "Slimeball",
+  "icon": "minecraft:slime_ball",
+  "category": "enchanted:distillation",
+  "pages": [
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_foul_fume_quicklime"
+    },
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distillery_breath_of_the_goddess_lapis"
+    }
+  ],
+  "read_by_default": true
+}

@@ -1,0 +1,12 @@
+{
+  "type": "enchanted:distillery",
+  "ingredients": [
+    { "item": "enchanted:clay_jar", "count": 1 },
+    { "item": "enchanted:diamond_vapour", "count": 1 },
+    { "item": "minecraft:blaze_rod", "count": 1 }
+  ],
+  "result": [
+    { "item": "enchanted:demonic_blood", "count": 1 }
+  ],
+  "cookTime": 300
+}

@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:spinning_wheel",
+  "ingredients": [
+    { "item": "enchanted:poppet_sturdy" },
+    { "item": "enchanted:chalk_purple" },
+    { "item": "enchanted:ender_dew" }
+  ],
+  "result": { "item": "enchanted:void_poppet_sturdy" },
+  "power": 1000
+}

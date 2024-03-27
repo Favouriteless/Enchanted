@@ -1,0 +1,10 @@
+{
+  "type": "enchanted:spinning_wheel",
+  "ingredients": [
+    { "item": "enchanted:poppet" },
+    { "item": "enchanted:attuned_stone_charged" },
+    { "item": "minecraft:ender_pearl"}
+  ],
+  "result": { "item": "enchanted:poppet_infused" },
+  "power": 500
+}

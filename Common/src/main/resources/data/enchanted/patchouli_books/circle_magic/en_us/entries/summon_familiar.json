@@ -1,0 +1,17 @@
+{
+  "name": "Summon Familiar",
+  "icon": "enchanted:arthana",
+  "category": "enchanted:transposition",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Summon Familiar",
+      "text": "Summon the familiar bound to the caster of the rite, causing them to teleport to the casting circle. This rite is capable of summoning dismissed or deceased familiars."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:summoning_familiar"
+    }
+  ],
+  "read_by_default": true
+}

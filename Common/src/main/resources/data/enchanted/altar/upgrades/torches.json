@@ -1,0 +1,118 @@
+{
+  "values": [
+    {
+      "block": "enchanted:candelabra",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 2.0,
+      "priority": 2
+    },
+    {
+      "block": "minecraft:candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:white_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:orange_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:magenta_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:light_blue_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:yellow_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:lime_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:pink_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:gray_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:light_gray_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:cyan_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:purple_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:blue_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:brown_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:green_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:red_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:black_candle",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 1.0,
+      "priority": 1
+    },
+    {
+      "block": "minecraft:torch",
+      "powerMultiplier": 0.0,
+      "rechargeMultiplier": 0.5,
+      "priority": 0
+    }
+  ]
+}

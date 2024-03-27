@@ -1,0 +1,25 @@
+{
+  "name": "Glint Weed",
+  "icon": "enchanted:textures/block/glint_weed.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This magical weed which emits a glow around it, acting like a torch, can survive on nearly any surface but only spreads on grass, dirt and sand.$(br2)No special harvesting requirements are needed.$(br2)$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:glint_weed"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

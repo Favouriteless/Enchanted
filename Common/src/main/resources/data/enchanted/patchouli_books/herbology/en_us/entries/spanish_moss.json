@@ -1,0 +1,25 @@
+{
+  "name": "Spanish Moss",
+  "icon": "enchanted:textures/block/spanish_moss.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates. Spanish Moss is often used in the creation of Poppets.$(br2)Should be harvested with shears to be kept intact.$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:spanish_moss[south=true]"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

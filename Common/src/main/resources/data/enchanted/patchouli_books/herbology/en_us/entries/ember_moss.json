@@ -1,0 +1,25 @@
+{
+  "name": "Ember Moss",
+  "icon": "enchanted:textures/block/ember_moss.png",
+  "category": "enchanted:mutated_plants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ember Moss of the Takakia genus is a plant which has a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance.$(br2)Should be harvested with shears to avoid destruction.$(br)$(br2)$(bold)Procurement:$()$(br)Mutated from small plants."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "enable_visualize": false,
+      "multiblock": {
+        "mapping": {
+          "0": "enchanted:ember_moss"
+        },
+        "pattern": [
+          [ "0" ],
+          [ " " ]
+        ]
+      }
+    }
+  ],
+  "read_by_default": true
+}

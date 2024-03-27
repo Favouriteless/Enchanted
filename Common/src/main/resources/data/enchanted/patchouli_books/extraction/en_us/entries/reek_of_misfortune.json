@@ -1,0 +1,18 @@
+{
+  "name": "Reek of Misfortune",
+  "icon": "enchanted:reek_of_misfortune",
+  "category": "enchanted:collecting_fumes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The highly sacred alder tree symbolising nature itself appears to bleed when cut, brings misfortune to all. It is thought that the tree contains the souls of our ancestors.$(br2)The fumes produced from burning it can be collected, keeping this effect."
+    },
+    {
+      "type": "enchanted:witch_oven_recipe_single",
+      "recipe": "enchanted:byproduct_reek_of_misfortune",
+      "itemIn": "enchanted:alder_sapling",
+      "resultItem": "enchanted:wood_ash"
+    }
+  ],
+  "read_by_default": true
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Curse of Blight",
+  "icon": "minecraft:spider_eye",
+  "category": "enchanted:curses",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Curse of Blight",
+      "text": "Cause plants within a large area to die, grass and dirt to decay, make animals sick and turn villagers into zombies."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:curse_of_blight"
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 2
+}

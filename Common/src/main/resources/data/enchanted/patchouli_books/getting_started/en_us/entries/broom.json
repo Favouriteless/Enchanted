@@ -1,0 +1,16 @@
+{
+  "name": "Broom",
+  "icon": "enchanted:broom",
+  "category": "enchanted:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A broom can be used to sweep away chalk quickly, without having to spend time erasing it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "enchanted:broom"
+    }
+  ],
+  "read_by_default": true
+}

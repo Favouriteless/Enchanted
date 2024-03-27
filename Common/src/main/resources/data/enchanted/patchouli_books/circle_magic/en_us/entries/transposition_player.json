@@ -1,0 +1,26 @@
+{
+  "name": "Transpose Player",
+  "icon": "minecraft:ender_pearl",
+  "category": "enchanted:transposition",
+  "pages": [
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Transpose Player",
+      "text": "Teleport the caster to the location contained within a bound waystone. $(br2)Known to leave some parts behind on rare occasions if cast poorly."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:transposition_player"
+    },
+    {
+      "type": "enchanted:rite_description",
+      "rite_name": "Transpose Player",
+      "text": "Teleport the caster to the location contained within a blooded waystone. $(br2)Known to leave some parts behind on rare occasions if cast poorly."
+    },
+    {
+      "type": "enchanted:rite_requirements",
+      "rite": "enchanted:transposition_player_blooded"
+    }
+  ],
+  "read_by_default": true
+}

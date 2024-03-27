@@ -31,10 +31,10 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
         this.data = data;
 
         addSlot(new NonJarInputSlot(be, 0, 53, 17)); // Ingredient input
-        addSlot(new FuelSlot(be, 0, 80, 53)); // Fuel Slot
-        addSlot(new OutputSlot(be, 0, 107, 17)); // Smelting output
-        addSlot(new JarInputSlot(be, 0, 53, 53)); // Jar input
-        addSlot(new OutputSlot(be, 1, 107, 53)); // Jar output
+        addSlot(new JarInputSlot(be, 1, 53, 53)); // Jar input
+        addSlot(new FuelSlot(be, 2, 80, 53)); // Fuel Slot
+        addSlot(new OutputSlot(be, 3, 107, 17)); // Smelting output
+        addSlot(new OutputSlot(be, 4, 107, 53)); // Jar output
 
         addInventorySlots(playerInventory, 8, 84);
         addDataSlots(data);
@@ -68,7 +68,7 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
             ItemStack slotItem = slot.getItem();
             ItemStack originalItem = slotItem.copy();
 
-            if (index <= 4) { // If slot from oven
+            if (index < 5) { // If slot from oven
                 if (!moveItemStackTo(slotItem, 5, 41, true))
                     return ItemStack.EMPTY;
             } else if(hasRecipe(slotItem)) { // Item has viable recipe
@@ -76,11 +76,11 @@ public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
                     return ItemStack.EMPTY;
             }
             else if(ItemStackHelper.isFuel(slotItem)) { // Item is fuel
-                if(!moveItemStackTo(slotItem, 1, 2, false))
+                if(!moveItemStackTo(slotItem, 2, 3, false))
                     return ItemStack.EMPTY;
             }
             else if(originalItem.getItem() == EnchantedItems.CLAY_JAR.get()) { // Item is clay jar
-                if(!moveItemStackTo(slotItem, 3, 4, false))
+                if(!moveItemStackTo(slotItem, 1, 2, false))
                     return ItemStack.EMPTY;
             }
             else if(index < 32) { // Item is in main player inventory but cannot be processed

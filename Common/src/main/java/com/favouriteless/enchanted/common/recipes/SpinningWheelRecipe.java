@@ -94,7 +94,7 @@ public class SpinningWheelRecipe implements Recipe<Container> {
      * @return A {@link NonNullList} containing copies of this recipe's inputs.
      */
     public NonNullList<ItemStack> getItemsIn() {
-        NonNullList<ItemStack> in = NonNullList.createWithCapacity(itemsIn.size());
+        NonNullList<ItemStack> in = NonNullList.withSize(itemsIn.size(), ItemStack.EMPTY);
         for(int i = 0; i < itemsIn.size(); i++)
             in.set(i, itemsIn.get(i).copy());
         return in;

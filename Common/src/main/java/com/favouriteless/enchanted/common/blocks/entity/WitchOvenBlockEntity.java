@@ -86,7 +86,7 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
     };
 
     public WitchOvenBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, NonNullList.withSize(4, ItemStack.EMPTY));
+        super(EnchantedBlockEntityTypes.WITCH_OVEN.get(), pos, state, NonNullList.withSize(5, ItemStack.EMPTY));
         this.smeltCheck = RecipeManager.createCheck(RecipeType.SMELTING);
         this.ovenCheck = RecipeManager.createCheck(EnchantedRecipeTypes.WITCH_OVEN.get());
     }
@@ -124,7 +124,7 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
 
                 if(be.isLit() && be.canBurn(recipe)) {
                     if(++be.cookProgress == be.cookDuration) {
-                        be.cookDuration = 0;
+                        be.cookProgress = 0;
                         be.cookDuration = getTotalCookTime(level, be);
                         be.burn(recipe);
                         isChanged = true;

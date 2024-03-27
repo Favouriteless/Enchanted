@@ -107,7 +107,7 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 
 		ItemStack result = recipe.assemble(this);
 		ItemStack output = inventory.get(3);
-		if(!output.isEmpty())
+		if(output.isEmpty())
 			inventory.set(3, result);
 		else
 			output.grow(result.getCount());

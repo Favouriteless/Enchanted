@@ -450,7 +450,12 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		startTime = time;
 	}
 
-    @Override
+	@Override
+	public NonNullList<ItemStack> getDroppableInventory() {
+		return NonNullList.create();
+	}
+
+	@Override
 	@NotNull
 	public IPowerConsumer.IPowerPosHolder getPosHolder() {
 		return posHolder;

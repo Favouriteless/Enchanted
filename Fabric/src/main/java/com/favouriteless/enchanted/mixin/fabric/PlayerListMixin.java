@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerListMixin {
 
     @Inject(method="placeNewPlayer", at=@At("TAIL"))
-    private static void placeNewPlayer(Connection netManager, ServerPlayer player, CallbackInfo ci) {
+    private void placeNewPlayer(Connection netManager, ServerPlayer player, CallbackInfo ci) {
         CommonEvents.onPlayerLoggedIn(player);
     }
 
     @Inject(method="remove", at=@At("HEAD"))
-    private static void placeNewPlayer(ServerPlayer player, CallbackInfo ci) {
+    private void placeNewPlayer(ServerPlayer player, CallbackInfo ci) {
         CommonEvents.onPlayerLoggedOut(player);
     }
 

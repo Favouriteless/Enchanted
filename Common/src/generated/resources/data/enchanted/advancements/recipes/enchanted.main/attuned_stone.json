@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "enchanted:attuned_stone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_whiff_of_magic": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "enchanted:whiff_of_magic"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_whiff_of_magic",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "enchanted:attuned_stone"
+    ]
+  }
+}

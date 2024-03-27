@@ -91,7 +91,7 @@ dependencies {
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version_forge}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     implementation fg.deobf("net.tslat.smartbrainlib:SmartBrainLib-forge-${minecraft_version}:${sbl_version}")
-    implementation "com.favouriteless:StateObserver-forge-${minecraft_version}:${stateobserver_version}"
+    implementation fg.deobf("com.favouriteless:StateObserver-forge-${minecraft_version}:${stateobserver_version}")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.5")) { jarJar.ranged(it, "[0.3.5,)") }

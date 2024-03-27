@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "enchanted:block/hawthorn_slab"
+    },
+    "type=double": {
+      "model": "enchanted:block/hawthorn_planks"
+    },
+    "type=top": {
+      "model": "enchanted:block/hawthorn_slab_top"
+    }
+  }
+}

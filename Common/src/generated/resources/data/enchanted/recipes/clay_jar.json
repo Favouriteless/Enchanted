@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "enchanted:clay_jar_soft"
+  },
+  "result": "enchanted:clay_jar"
+}

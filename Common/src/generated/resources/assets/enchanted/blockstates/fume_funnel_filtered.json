@@ -1,0 +1,128 @@
+{
+  "variants": {
+    "facing=east,lit=false,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left",
+      "y": 450
+    },
+    "facing=east,lit=false,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top",
+      "y": 450
+    },
+    "facing=east,lit=false,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right",
+      "y": 450
+    },
+    "facing=east,lit=false,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 450
+    },
+    "facing=east,lit=true,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left_on",
+      "y": 90
+    },
+    "facing=east,lit=true,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top_on",
+      "y": 90
+    },
+    "facing=east,lit=true,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right_on",
+      "y": 90
+    },
+    "facing=east,lit=true,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 90
+    },
+    "facing=north,lit=false,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left",
+      "y": 360
+    },
+    "facing=north,lit=false,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top",
+      "y": 360
+    },
+    "facing=north,lit=false,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right",
+      "y": 360
+    },
+    "facing=north,lit=false,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 360
+    },
+    "facing=north,lit=true,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left_on"
+    },
+    "facing=north,lit=true,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top_on"
+    },
+    "facing=north,lit=true,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right_on"
+    },
+    "facing=north,lit=true,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered"
+    },
+    "facing=south,lit=false,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left",
+      "y": 180
+    },
+    "facing=south,lit=false,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top",
+      "y": 180
+    },
+    "facing=south,lit=false,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right",
+      "y": 180
+    },
+    "facing=south,lit=false,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 180
+    },
+    "facing=south,lit=true,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left_on",
+      "y": 180
+    },
+    "facing=south,lit=true,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top_on",
+      "y": 180
+    },
+    "facing=south,lit=true,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right_on",
+      "y": 180
+    },
+    "facing=south,lit=true,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 180
+    },
+    "facing=west,lit=false,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left",
+      "y": 270
+    },
+    "facing=west,lit=false,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top",
+      "y": 270
+    },
+    "facing=west,lit=false,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right",
+      "y": 270
+    },
+    "facing=west,lit=false,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 270
+    },
+    "facing=west,lit=true,type=0": {
+      "model": "enchanted:block/fume_funnel_filtered_left_on",
+      "y": 270
+    },
+    "facing=west,lit=true,type=1": {
+      "model": "enchanted:block/fume_funnel_filtered_top_on",
+      "y": 270
+    },
+    "facing=west,lit=true,type=2": {
+      "model": "enchanted:block/fume_funnel_filtered_right_on",
+      "y": 270
+    },
+    "facing=west,lit=true,type=3": {
+      "model": "enchanted:block/fume_funnel_filtered",
+      "y": 270
+    }
+  }
+}

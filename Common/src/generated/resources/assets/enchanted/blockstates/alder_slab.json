@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "enchanted:block/alder_slab"
+    },
+    "type=double": {
+      "model": "enchanted:block/alder_planks"
+    },
+    "type=top": {
+      "model": "enchanted:block/alder_slab_top"
+    }
+  }
+}

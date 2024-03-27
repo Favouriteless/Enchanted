@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:blindness",
+    "minecraft:nausea",
+    "minecraft:hunger",
+    "minecraft:poison",
+    "minecraft:weakness",
+    "minecraft:wither"
+  ]
+}

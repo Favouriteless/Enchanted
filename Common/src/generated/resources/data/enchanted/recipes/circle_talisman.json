@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "enchanted:attuned_stone"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "n": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "ngn",
+    "gag",
+    "ngn"
+  ],
+  "result": {
+    "item": "enchanted:circle_talisman"
+  }
+}

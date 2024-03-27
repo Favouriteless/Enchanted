@@ -9,8 +9,13 @@ import com.favouriteless.enchanted.platform.services.ForgeClientRegistryHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -21,6 +26,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid=Enchanted.MOD_ID, bus=Bus.MOD, value=Dist.CLIENT)
@@ -78,7 +84,13 @@ public class ClientSetupEventsForge {
 	}
 
 	@SubscribeEvent
-	public static void onRegisterLayerDefinitions(RegisterLayerDefinitions event) {
+	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		ClientRegistry.registerEntityRenderers();
+	}
+
+	@SubscribeEvent
+	public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		ClientRegistry.registerLayerDefinitions();
 		for(Pair<ModelLayerLocation, Supplier<LayerDefinition>> pair : ForgeClientRegistryHelper.LAYER_DEFINITIONS)
 			event.registerLayerDefinition(pair.getKey(), pair.getValue());
 	}

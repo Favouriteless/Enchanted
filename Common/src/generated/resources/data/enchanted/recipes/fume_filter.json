@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "enchanted:attuned_stone"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "iai",
+    "ggg"
+  ],
+  "result": {
+    "item": "enchanted:fume_filter"
+  }
+}

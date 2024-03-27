@@ -1,0 +1,41 @@
+[27Mar2024 19:01:35.349] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 1.19, --assetsDir, C:\Users\fredr\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 43.3.2, --fml.mcVersion, 1.19.2, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20220805.130853, --mod, enchanted, --all, --output, D:\Documents\Minecraft Modding\Mods\Enchanted\Common\src\generated\resources, --existing, D:\Documents\Minecraft Modding\Mods\Enchanted\Common\src\main\resources, --mixin.config, enchanted.mixins.json, --mixin.config, enchanted.forge.mixins.json]
+[27Mar2024 19:01:35.354] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.10 by JetBrains s.r.o.; OS Windows 11 arch amd64 version 10.0
+[27Mar2024 19:01:35.478] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/fredr/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23130!/ Service=ModLauncher Env=CLIENT
+[27Mar2024 19:01:35.702] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\fredr\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.19.2-43.3.2\c6003be305db8dcd62fe8e13d7a22dbafec933d0\javafmllanguage-1.19.2-43.3.2.jar is missing mods.toml file
+[27Mar2024 19:01:35.703] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\fredr\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.19.2-43.3.2\a6bedb81a0d846101ad3552fbc79d309cbd77003\lowcodelanguage-1.19.2-43.3.2.jar is missing mods.toml file
+[27Mar2024 19:01:35.705] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\fredr\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.19.2-43.3.2\8c82dec0028684adb54ac89cbd44e75ad69ca61a\mclanguage-1.19.2-43.3.2.jar is missing mods.toml file
+[27Mar2024 19:01:35.707] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\fredr\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.19.2-43.3.2\62ed3ca06b6020c89ffe2a291294fc6fac27a1d5\fmlcore-1.19.2-43.3.2.jar is missing mods.toml file
+[27Mar2024 19:01:35.820] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[27Mar2024 19:01:36.789] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[27Mar2024 19:01:36.806] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\fredr\.gradle\caches\forge_gradle\assets, --assetIndex, 1.19, --mod, enchanted, --all, --output, D:\Documents\Minecraft Modding\Mods\Enchanted\Common\src\generated\resources, --existing, D:\Documents\Minecraft Modding\Mods\Enchanted\Common\src\main\resources]
+[27Mar2024 19:01:36.887] [main/WARN] [mixin/]: Reference map '${mod_id}.refmap.json' for enchanted.mixins.json could not be read. If this is a development environment you can ignore this message
+[27Mar2024 19:01:36.894] [main/WARN] [mixin/]: Reference map '${mod_id}.refmap.json' for enchanted.forge.mixins.json could not be read. If this is a development environment you can ignore this message
+[27Mar2024 19:01:37.078] [main/INFO] [mixin/]: Remapping refMap stateobserver.refmap.json using D:\Documents\Minecraft Modding\Mods\Enchanted\Forge/build/createSrgToMcp/output.srg
+[27Mar2024 19:01:37.079] [main/INFO] [mixin/]: Remapping refMap stateobserver.refmap.json using D:\Documents\Minecraft Modding\Mods\Enchanted\Forge/build/createSrgToMcp/output.srg
+[27Mar2024 19:01:37.081] [main/INFO] [mixin/]: Remapping refMap patchouli.refmap.json using D:\Documents\Minecraft Modding\Mods\Enchanted\Forge/build/createSrgToMcp/output.srg
+[27Mar2024 19:01:37.412] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [enchanted]
+[27Mar2024 19:01:37.510] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
+[27Mar2024 19:01:39.288] [main/INFO] [net.minecraft.util.datafix.DataFixers/]: Building unoptimized datafixer
+[27Mar2024 19:01:40.265] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 43.3.2, for MC 1.19.2 with MCP 20220805.130853
+[27Mar2024 19:01:40.265] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v43.3.2 Initialized
+[27Mar2024 19:01:40.395] [modloading-worker-0/WARN] [software.bernie.geckolib3.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners. Ignore if datagenning.
+[27Mar2024 19:01:40.663] [main/WARN] [net.minecraft.server.packs.VanillaPackResources/]: Assets URL 'union:/C:/Users/fredr/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.19.2-43.3.2_mapped_parchment_2022.11.27-1.19.2/forge-1.19.2-43.3.2_mapped_parchment_2022.11.27-1.19.2-recomp.jar%23188!/assets/.mcassetsroot' uses unexpected schema
+[27Mar2024 19:01:40.663] [main/WARN] [net.minecraft.server.packs.VanillaPackResources/]: Assets URL 'union:/C:/Users/fredr/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.19.2-43.3.2_mapped_parchment_2022.11.27-1.19.2/forge-1.19.2-43.3.2_mapped_parchment_2022.11.27-1.19.2-recomp.jar%23188!/data/.mcassetsroot' uses unexpected schema
+[27Mar2024 19:01:40.909] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block
+[27Mar2024 19:01:40.935] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block finished after 26 ms
+[27Mar2024 19:01:40.935] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item
+[27Mar2024 19:01:40.943] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item finished after 6 ms
+[27Mar2024 19:01:40.943] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:entity_type
+[27Mar2024 19:01:40.946] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:entity_type finished after 2 ms
+[27Mar2024 19:01:40.946] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:mob_effect
+[27Mar2024 19:01:40.948] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:mob_effect finished after 2 ms
+[27Mar2024 19:01:40.948] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/biome
+[27Mar2024 19:01:40.950] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/biome finished after 1 ms
+[27Mar2024 19:01:40.950] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: enchanted
+[27Mar2024 19:01:41.247] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: enchanted finished after 297 ms
+[27Mar2024 19:01:41.248] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: enchanted
+[27Mar2024 19:01:41.438] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: enchanted finished after 190 ms
+[27Mar2024 19:01:41.438] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[27Mar2024 19:01:41.483] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 43 ms
+[27Mar2024 19:01:41.483] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 574 ms
+[27Mar2024 19:01:41.496] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 446, old count: 0, new count: 447, removed stale: 0, written: 446

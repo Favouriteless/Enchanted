@@ -26,6 +26,20 @@ public class ClientRegistry {
     public static void register() {
         IClientRegistryHelper registry = Services.CLIENT_REGISTRY;
 
+        // Armor renderers
+        registry.register(EarmuffsItem.class, EarmuffsRenderer::new, EnchantedItems.EARMUFFS.get());
+
+        // MenuScreens
+        MenuScreens.register(EnchantedMenuTypes.WITCH_OVEN.get(), WitchOvenScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.DISTILLERY.get(), DistilleryScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.ALTAR.get(), AltarScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
+        MenuScreens.register(EnchantedMenuTypes.POPPET_SHELF.get(), PoppetShelfScreen::new);
+    }
+
+    public static void registerEntityRenderers() {
+        IClientRegistryHelper registry = Services.CLIENT_REGISTRY;
+
         // Entity renderers
         registry.register(EnchantedEntityTypes.MANDRAKE.get(), context -> new SimpleAnimatedGeoRenderer<>(context, "entity", "mandrake"));
         registry.register(EnchantedEntityTypes.ENT.get(), EntRenderer::new);
@@ -38,20 +52,14 @@ public class ClientRegistry {
         registry.register(EnchantedBlockEntityTypes.KETTLE.get(), context -> new CauldronWaterRenderer<>(8));
         registry.register(EnchantedBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
         registry.register(EnchantedBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
+    }
 
-        // Armor renderers
-        registry.register(EarmuffsItem.class, EarmuffsRenderer::new, EnchantedItems.EARMUFFS.get());
-
-        // MenuScreens
-        MenuScreens.register(EnchantedMenuTypes.WITCH_OVEN.get(), WitchOvenScreen::new);
-        MenuScreens.register(EnchantedMenuTypes.DISTILLERY.get(), DistilleryScreen::new);
-        MenuScreens.register(EnchantedMenuTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(EnchantedMenuTypes.SPINNING_WHEEL.get(), SpinningWheelScreen::new);
-        MenuScreens.register(EnchantedMenuTypes.POPPET_SHELF.get(), PoppetShelfScreen::new);
+    public static void registerLayerDefinitions() {
+        IClientRegistryHelper registry = Services.CLIENT_REGISTRY;
 
         // Layer definitions
         registry.register(ModelLayerLocations.BROOMSTICK, BroomstickModel::createLayerDefinition);
         registry.register(ModelLayerLocations.SPINNING_WHEEL, SpinningWheelRenderer::createLayerDefinition);
-     }
+    }
 
 }

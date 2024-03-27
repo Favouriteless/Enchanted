@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#minecraft:saplings",
+    "#minecraft:small_flowers",
+    "minecraft:grass",
+    "minecraft:brown_mushroom",
+    "minecraft:red_mushroom",
+    "enchanted:ember_moss",
+    "enchanted:glint_weed",
+    "enchanted:spanish_moss"
+  ]
+}

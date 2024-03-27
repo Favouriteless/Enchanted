@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "h": {
+      "item": "enchanted:hawthorn_sapling"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " s ",
+    " s ",
+    "hhh"
+  ],
+  "result": {
+    "item": "enchanted:broom"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "enchanted:attuned_stone"
+    },
+    "b": {
+      "item": "enchanted:bone_needle"
+    },
+    "m": {
+      "item": "enchanted:spanish_moss"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "w": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "wmw",
+    "bms",
+    "waw"
+  ],
+  "result": {
+    "item": "enchanted:poppet"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#minecraft:saplings",
+    "#minecraft:small_flowers",
+    "minecraft:grass",
+    "minecraft:fern",
+    "minecraft:sweet_berry_bush",
+    "enchanted:glint_weed"
+  ]
+}

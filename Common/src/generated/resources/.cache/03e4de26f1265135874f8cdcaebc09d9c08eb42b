@@ -1,0 +1,21 @@
+// 1.19.2	2024-03-27T19:01:41.4841352	Tags for minecraft:item
+3417ee3ef05e30f24367eb8cbc928a2225ed4b7e data/enchanted/tags/items/chalices.json
+844b6ebc39e105bb6db321be907ec43b2115b1e2 data/enchanted/tags/items/chalks.json
+847203a50ec44d614777e94b9ece91cefd7d94fa data/enchanted/tags/items/leaves.json
+84980a2aaeb2cfd9ec5ba7157d843a877013c53c data/enchanted/tags/items/logs.json
+e47cedad84283e8d4746c2aeff8d12fe2618a430 data/enchanted/tags/items/planks.json
+3bd801c9b78565d3ac5135054487bd37e13085b9 data/enchanted/tags/items/saplings.json
+7e3768100cc5ced9173c6f166e9f4fd2b701fe38 data/enchanted/tags/items/slabs.json
+7e3768100cc5ced9173c6f166e9f4fd2b701fe38 data/enchanted/tags/items/stairs.json
+181fea80d046f4ab0fe3aa89579ae39eb6bc9c87 data/enchanted/tags/items/tool_poppet_blacklist.json
+08b6def3e9de617893655d4017801562f26b4bb1 data/enchanted/tags/items/wooden_slabs.json
+990b5a153ba74d4169b814216548205322d8dc22 data/enchanted/tags/items/wooden_stairs.json
+115f6d9fa2c6915eed7935e8b664a6a502fc0624 data/minecraft/tags/items/leaves.json
+6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/items/logs_that_burn.json
+3e1228c4cd6b906d835632f70808a30c9b292a30 data/minecraft/tags/items/planks.json
+0be1cfac5a68e2e534eb7d7110e17d169fb624c4 data/minecraft/tags/items/saplings.json
+b6c4d3a26e658d777700b2e7ee38db667c04bce5 data/minecraft/tags/items/slabs.json
+7009f10883e1442aeddc354cf74482aceafc2e28 data/minecraft/tags/items/small_flowers.json
+e7d8c18de943c4d75c996da4e7cab000c4a84fed data/minecraft/tags/items/stairs.json
+7e3768100cc5ced9173c6f166e9f4fd2b701fe38 data/minecraft/tags/items/wooden_slabs.json
+06c0ff2a10b36ce67064c4dd12a66a943f5b5639 data/minecraft/tags/items/wooden_stairs.json

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "enchanted:block/wicker_bundle_top",
+    "side": "enchanted:block/wicker_bundle"
+  }
+}

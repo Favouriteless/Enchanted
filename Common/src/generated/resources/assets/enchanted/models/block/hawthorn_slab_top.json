@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "enchanted:block/hawthorn_planks",
+    "side": "enchanted:block/hawthorn_planks",
+    "top": "enchanted:block/hawthorn_planks"
+  }
+}

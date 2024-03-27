@@ -1,0 +1,467 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "enchanted:item/circle_talisman_0_0_1",
+      "predicate": {
+        "enchanted:large": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_1_0",
+      "predicate": {
+        "enchanted:medium": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_0_0",
+      "predicate": {
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_0_2",
+      "predicate": {
+        "enchanted:large": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_2_0",
+      "predicate": {
+        "enchanted:medium": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_0_0",
+      "predicate": {
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_0_3",
+      "predicate": {
+        "enchanted:large": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_3_0",
+      "predicate": {
+        "enchanted:medium": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_0_0",
+      "predicate": {
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_1_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_0_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_1_0",
+      "predicate": {
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_2_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_0_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_1_0",
+      "predicate": {
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_3_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_0_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_1_0",
+      "predicate": {
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_1_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_0_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_2_0",
+      "predicate": {
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_2_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_0_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_2_0",
+      "predicate": {
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_3_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_0_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_2_0",
+      "predicate": {
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_1_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_0_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_3_0",
+      "predicate": {
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_2_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_0_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_3_0",
+      "predicate": {
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_0_3_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_0_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_3_0",
+      "predicate": {
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_1_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_1_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_1_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_2_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_2_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_2_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_3_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_3_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_3_1",
+      "predicate": {
+        "enchanted:large": 0.299,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_1_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_1_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_1_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_2_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_2_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_2_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_3_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_3_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_3_2",
+      "predicate": {
+        "enchanted:large": 0.598,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_1_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_1_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_1_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.299,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_2_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_2_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_2_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.598,
+        "enchanted:small": 0.89699996
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_1_3_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.299
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_2_3_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.598
+      }
+    },
+    {
+      "model": "enchanted:item/circle_talisman_3_3_3",
+      "predicate": {
+        "enchanted:large": 0.89699996,
+        "enchanted:medium": 0.89699996,
+        "enchanted:small": 0.89699996
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "enchanted:item/circle_talisman"
+  }
+}

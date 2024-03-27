@@ -101,7 +101,7 @@ public class BlockstateProvider extends BlockStateProvider {
 		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		itemModels()
 				.withExistingParent(ModelProvider.ITEM_FOLDER + name, mcLoc(ModelProvider.ITEM_FOLDER + "/generated"))
-				.texture("layer0", ModelProvider.BLOCK_FOLDER + name);
+				.texture("layer0", ModelProvider.BLOCK_FOLDER + "/" + name);
 	}
 
 	private void chalkBlockWithItem(Block block) {

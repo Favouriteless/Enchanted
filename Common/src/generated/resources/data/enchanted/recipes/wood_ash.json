@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 150,
+  "experience": 0.1,
+  "ingredient": {
+    "tag": "minecraft:saplings"
+  },
+  "result": "enchanted:wood_ash"
+}

@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.favouriteless.enchanted.mixin.fabric",
-  "refmap": "${mod_id}.refmap.json",
+  "refmap": "enchanted.refmap.json",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "DamageSourceAccessor",

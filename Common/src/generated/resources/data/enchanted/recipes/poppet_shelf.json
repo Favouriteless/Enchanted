@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "enchanted:attuned_stone"
+    },
+    "p": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "w": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    "apa",
+    "pwp",
+    "apa"
+  ],
+  "result": {
+    "item": "enchanted:poppet_shelf"
+  }
+}

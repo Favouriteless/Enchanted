@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "enchanted:odour_of_purity"
+    },
+    {
+      "item": "enchanted:clay_jar"
+    },
+    {
+      "item": "enchanted:clay_jar"
+    },
+    {
+      "item": "enchanted:clay_jar"
+    }
+  ],
+  "result": {
+    "item": "enchanted:purified_milk"
+  }
+}

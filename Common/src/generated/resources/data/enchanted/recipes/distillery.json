@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "enchanted:attuned_stone"
+    },
+    "c": {
+      "item": "enchanted:clay_jar"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "cic",
+    "iii",
+    "gag"
+  ],
+  "result": {
+    "item": "enchanted:distillery"
+  }
+}

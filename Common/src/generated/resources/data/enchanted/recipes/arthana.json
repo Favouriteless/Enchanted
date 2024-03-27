@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "e": {
+      "item": "minecraft:emerald"
+    },
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "n": {
+      "item": "minecraft:gold_nugget"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " i ",
+    "nen",
+    " s "
+  ],
+  "result": {
+    "item": "enchanted:arthana"
+  }
+}

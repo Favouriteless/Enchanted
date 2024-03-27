@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "enchanted:block/rowan_planks",
+    "side": "enchanted:block/rowan_planks",
+    "top": "enchanted:block/rowan_planks"
+  }
+}

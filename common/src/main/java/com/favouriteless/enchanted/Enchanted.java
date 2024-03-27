@@ -27,8 +27,9 @@ public class Enchanted {
         EnchantedSoundEvents.load();
         EnchantedItems.load();
         EnchantedBlocks.load();
-        EnchantedEntityTypes.load();
         EnchantedBlockEntityTypes.load();
+        EnchantedEntityTypes.load();
+        EnchantedParticleTypes.load();
         EnchantedMenuTypes.load();
         EnchantedRecipeTypes.load();
         EnchantedData.load();

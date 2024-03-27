@@ -6,7 +6,7 @@ import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.init.EnchantedTags;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.mixin.SaplingBlockAccessor;
@@ -96,7 +96,7 @@ public class RiteForest extends AbstractRite {
                         }
                     }
                 }
-                level.sendParticles(EnchantedParticles.FERTILITY_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                level.sendParticles(EnchantedParticleTypes.FERTILITY_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
                 tries++;
                 if(treesPlaced == treeCount)
                     stopExecuting();

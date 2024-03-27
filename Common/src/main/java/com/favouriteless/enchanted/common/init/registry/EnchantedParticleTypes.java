@@ -12,7 +12,7 @@ import net.minecraft.core.particles.ParticleType;
 
 import java.util.function.Supplier;
 
-public class EnchantedParticles {
+public class EnchantedParticleTypes {
 
     public static final Supplier<ParticleType<SimpleColouredData>> BOILING = register("boiling", () -> new SimpleColouredParticleType(false));
     public static final Supplier<ParticleType<SimpleColouredData>> CAULDRON_BREW = register("cauldron_brew", () -> new SimpleColouredParticleType(false));

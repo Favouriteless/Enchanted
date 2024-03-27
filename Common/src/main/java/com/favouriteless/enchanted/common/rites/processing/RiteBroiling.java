@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,7 @@ public class RiteBroiling extends AbstractRite {
                 replaceItem(itemEntity, new ItemStack(recipe.getResultItem().getItem(), recipe.getResultItem().getCount() * (totalCount - burnedCount)), new ItemStack(Items.CHARCOAL, burnedCount));
 
                 level.sendParticles(ParticleTypes.SMALL_FLAME, itemEntity.position().x(), itemEntity.position().y(), itemEntity.position().z, 25, 0.2D, 0.2D, 0.2D, 0.0D);
-                level.sendParticles(EnchantedParticles.BROILING_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                level.sendParticles(EnchantedParticleTypes.BROILING_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             }
         }
     }

@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
@@ -83,9 +83,9 @@ public class RiteSkyWrath extends AbstractRite {
         }
 
         if(targetPos != null && targetLevel != null && targetLevel instanceof ServerLevel serverLevel)
-            serverLevel.sendParticles(EnchantedParticles.SKY_WRATH_SEED.get(), targetPos.getX()+0.5D, targetPos.getY()+2.0D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            serverLevel.sendParticles(EnchantedParticleTypes.SKY_WRATH_SEED.get(), targetPos.getX()+0.5D, targetPos.getY()+2.0D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         else
-            level.sendParticles(EnchantedParticles.SKY_WRATH_SEED.get(), pos.getX()+0.5D, pos.getY()+2.0D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            level.sendParticles(EnchantedParticleTypes.SKY_WRATH_SEED.get(), pos.getX()+0.5D, pos.getY()+2.0D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
     @Override

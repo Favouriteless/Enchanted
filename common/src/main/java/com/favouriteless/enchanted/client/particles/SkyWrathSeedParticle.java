@@ -1,7 +1,7 @@
 package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.world.RiteSkyWrath;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
@@ -36,7 +36,7 @@ public class SkyWrathSeedParticle extends NoRenderParticle {
 					double cy = y + Math.random() * ySpread;
 					double cz = z + Math.cos(angle) * RiteSkyWrath.LIGHTNING_RADIUS + Math.random() * zSpread;
 
-					level.addParticle(new DelayedActionData(EnchantedParticles.SKY_WRATH.get(), x, y, z, RiteSkyWrath.EXPLODE-age), cx, cy, cz, 0, 0, 0);
+					level.addParticle(new DelayedActionData(EnchantedParticleTypes.SKY_WRATH.get(), x, y, z, RiteSkyWrath.EXPLODE-age), cx, cy, cz, 0, 0, 0);
 				}
 			}
 		}

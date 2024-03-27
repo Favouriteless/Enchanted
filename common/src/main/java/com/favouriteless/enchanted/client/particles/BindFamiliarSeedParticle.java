@@ -2,7 +2,7 @@ package com.favouriteless.enchanted.client.particles;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.binding.RiteBindingFamiliar;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
@@ -49,7 +49,7 @@ public class BindFamiliarSeedParticle extends NoRenderParticle {
 		if(Enchanted.RANDOM.nextFloat() < 0.3F)
 			fallTicks = Enchanted.RANDOM.nextInt(fallTicks);
 
-		level.addParticle(new DelayedActionData(EnchantedParticles.BIND_FAMILIAR.get(), x, y, z, fallTicks), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
+		level.addParticle(new DelayedActionData(EnchantedParticleTypes.BIND_FAMILIAR.get(), x, y, z, fallTicks), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
 	}
 
 	public static class Factory implements ParticleProvider<SimpleParticleType> {

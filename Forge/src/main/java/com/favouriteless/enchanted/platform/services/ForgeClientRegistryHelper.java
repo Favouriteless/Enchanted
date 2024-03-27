@@ -1,6 +1,5 @@
 package com.favouriteless.enchanted.platform.services;
 
-import com.favouriteless.enchanted.platform.services.IClientRegistryHelper;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.geom.ModelLayerLocation;

@@ -2,9 +2,9 @@ package com.favouriteless.enchanted.client;
 
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.client.particles.*;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.platform.services.ForgeClientRegistryHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -46,29 +46,29 @@ public class ClientSetupEventsForge {
 
 	@SubscribeEvent
 	public static void onRegisterParticleFactories(RegisterParticleProvidersEvent event) {
-		event.register(EnchantedParticles.BOILING.get(), BoilingParticle.Factory::new);
-		event.register(EnchantedParticles.CAULDRON_BREW.get(), CauldronBrewParticle.Factory::new);
-		event.register(EnchantedParticles.CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
-		event.register(EnchantedParticles.KETTLE_COOK.get(), KettleCookParticle.Factory::new);
-		event.register(EnchantedParticles.CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
-		event.register(EnchantedParticles.POPPET.get(), PoppetParticle.Factory::new);
-		event.register(EnchantedParticles.IMPRISONMENT_CAGE.get(), ImprisonmentCageParticle.Factory::new);
-		event.register(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageSeedParticle.Factory::new);
-		event.register(EnchantedParticles.TRANSPOSITION_IRON_SEED.get(), TranspositionIronSeedParticle.Factory::new);
-		event.register(EnchantedParticles.BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
-		event.register(EnchantedParticles.SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
-		event.register(EnchantedParticles.SKY_WRATH.get(), SkyWrathParticle.Factory::new);
-		event.register(EnchantedParticles.CURSE_SEED.get(), CurseSeedParticle.Factory::new);
-		event.register(EnchantedParticles.CURSE_BLIGHT_SEED.get(), CurseBlightSeedParticle.Factory::new);
-		event.register(EnchantedParticles.CURSE_BLIGHT.get(), RepellingParticle.Factory::new);
-		event.register(EnchantedParticles.REMOVE_CURSE_SEED.get(), RemoveCurseSeedParticle.Factory::new);
-		event.register(EnchantedParticles.REMOVE_CURSE.get(), RemoveCurseParticle.Factory::new);
-		event.register(EnchantedParticles.FERTILITY_SEED.get(), FertilitySeedParticle.Factory::new);
-		event.register(EnchantedParticles.FERTILITY.get(), RepellingParticle.Factory::new);
-		event.register(EnchantedParticles.PROTECTION_SEED.get(), ProtectionSeedParticle.Factory::new);
-		event.register(EnchantedParticles.PROTECTION.get(), ProtectionParticle.Factory::new);
-		event.register(EnchantedParticles.BIND_FAMILIAR_SEED.get(), BindFamiliarSeedParticle.Factory::new);
-		event.register(EnchantedParticles.BIND_FAMILIAR.get(), BindFamiliarParticle.Factory::new);
+		event.register(EnchantedParticleTypes.BOILING.get(), BoilingParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CAULDRON_BREW.get(), CauldronBrewParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
+		event.register(EnchantedParticleTypes.KETTLE_COOK.get(), KettleCookParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
+		event.register(EnchantedParticleTypes.POPPET.get(), PoppetParticle.Factory::new);
+		event.register(EnchantedParticleTypes.IMPRISONMENT_CAGE.get(), ImprisonmentCageParticle.Factory::new);
+		event.register(EnchantedParticleTypes.IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.TRANSPOSITION_IRON_SEED.get(), TranspositionIronSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.SKY_WRATH.get(), SkyWrathParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CURSE_SEED.get(), CurseSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CURSE_BLIGHT_SEED.get(), CurseBlightSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.CURSE_BLIGHT.get(), RepellingParticle.Factory::new);
+		event.register(EnchantedParticleTypes.REMOVE_CURSE_SEED.get(), RemoveCurseSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.REMOVE_CURSE.get(), RemoveCurseParticle.Factory::new);
+		event.register(EnchantedParticleTypes.FERTILITY_SEED.get(), FertilitySeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.FERTILITY.get(), RepellingParticle.Factory::new);
+		event.register(EnchantedParticleTypes.PROTECTION_SEED.get(), ProtectionSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.PROTECTION.get(), ProtectionParticle.Factory::new);
+		event.register(EnchantedParticleTypes.BIND_FAMILIAR_SEED.get(), BindFamiliarSeedParticle.Factory::new);
+		event.register(EnchantedParticleTypes.BIND_FAMILIAR.get(), BindFamiliarParticle.Factory::new);
 	}
 
 	@SubscribeEvent

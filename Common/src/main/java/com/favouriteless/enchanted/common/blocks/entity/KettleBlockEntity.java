@@ -3,7 +3,7 @@ package com.favouriteless.enchanted.common.blocks.entity;
 import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticleType.SimpleColouredData;
 import com.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityTypes;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedRecipeTypes;
 import com.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.minecraft.core.BlockPos;
@@ -38,7 +38,7 @@ public class KettleBlockEntity extends CauldronBlockEntity<KettleRecipe> {
             double dy = worldPosition.getY() + Math.random();
             double dz = worldPosition.getZ() + Math.random();
 
-            level.addParticle(new SimpleColouredData(EnchantedParticles.KETTLE_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
+            level.addParticle(new SimpleColouredData(EnchantedParticleTypes.KETTLE_COOK.get(), getRed(time), getGreen(time), getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
         }
     }
 

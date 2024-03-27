@@ -4,7 +4,7 @@ import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.ImprisonmentCageParticle;
 import com.favouriteless.enchanted.common.init.EnchantedTags.EntityTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import net.minecraft.core.BlockPos;
@@ -57,7 +57,7 @@ public class RiteImprisonment extends AbstractRite {
         removeList.forEach(tetheredMonsters::remove);
 
         if(this.ticks % (ImprisonmentCageParticle.LIFETIME+15) == 0) { // 15 ticks for the fade time
-            getLevel().sendParticles(EnchantedParticles.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            getLevel().sendParticles(EnchantedParticleTypes.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D, pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
         }
     }
 

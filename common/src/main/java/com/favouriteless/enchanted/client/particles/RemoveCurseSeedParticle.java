@@ -3,7 +3,7 @@ package com.favouriteless.enchanted.client.particles;
 import com.favouriteless.enchanted.Enchanted;
 import com.favouriteless.enchanted.api.rites.AbstractRemoveCurseRite;
 import com.favouriteless.enchanted.client.particles.types.DelayedActionParticleType.DelayedActionData;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
@@ -53,7 +53,7 @@ public class RemoveCurseSeedParticle extends NoRenderParticle {
 		double c = Math.cbrt(Math.random());
 		Vec3 pos = new Vec3(cx, cy, cz).normalize().scale(c * RADIUS).add(x, y, z);
 
-		level.addParticle(new DelayedActionData(EnchantedParticles.REMOVE_CURSE.get(), x, y, z, AbstractRemoveCurseRite.RAISE - age + Enchanted.RANDOM.nextInt(11)), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
+		level.addParticle(new DelayedActionData(EnchantedParticleTypes.REMOVE_CURSE.get(), x, y, z, AbstractRemoveCurseRite.RAISE - age + Enchanted.RANDOM.nextInt(11)), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
 	}
 
 	public static class Factory implements ParticleProvider<SimpleParticleType> {

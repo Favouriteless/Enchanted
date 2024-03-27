@@ -2,9 +2,9 @@ package com.favouriteless.enchanted.common.rites.entity.protection;
 
 import com.favouriteless.enchanted.api.rites.AbstractRite;
 import com.favouriteless.enchanted.client.particles.types.DoubleParticleType.DoubleParticleData;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.init.registry.EnchantedBlocks;
 import com.favouriteless.enchanted.common.init.registry.EnchantedItems;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
 import com.favouriteless.enchanted.common.rites.CirclePart;
 import com.favouriteless.enchanted.common.rites.RiteType;
 import com.favouriteless.enchanted.common.util.WaystoneHelper;
@@ -53,7 +53,7 @@ public class RiteProtection extends AbstractRite {
         findTargetPos();
         generateSphere(block);
         getOrCreateObserver();
-        targetLevel.sendParticles(new DoubleParticleData(EnchantedParticles.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        targetLevel.sendParticles(new DoubleParticleData(EnchantedParticleTypes.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class RiteProtection extends AbstractRite {
             if(ticks % 20 == 0) {
                 generateSphere(block);
                 stateObserver.checkChanges();
-                targetLevel.sendParticles(new DoubleParticleData(EnchantedParticles.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                targetLevel.sendParticles(new DoubleParticleData(EnchantedParticleTypes.PROTECTION_SEED.get(), radius), targetPos.getX()+0.5D, targetPos.getY()+0.6D, targetPos.getZ()+0.5D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
             }
     }
 

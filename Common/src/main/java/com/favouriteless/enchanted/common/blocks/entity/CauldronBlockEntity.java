@@ -9,7 +9,7 @@ import com.favouriteless.enchanted.client.particles.types.SimpleColouredParticle
 import com.favouriteless.enchanted.common.CommonConfig;
 import com.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import com.favouriteless.enchanted.common.blocks.cauldrons.CauldronBlockBase;
-import com.favouriteless.enchanted.common.init.registry.EnchantedParticles;
+import com.favouriteless.enchanted.common.init.registry.EnchantedParticleTypes;
 import com.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import com.favouriteless.enchanted.common.util.PlayerInventoryHelper;
 import net.minecraft.core.BlockPos;
@@ -135,7 +135,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 						double dy = be.worldPosition.getY() + waterY + 0.02D;
 						double dz = be.worldPosition.getZ() + 0.5D + (Math.random() - 0.5D) * be.getWaterWidth();
 
-						level.addParticle(new SimpleColouredData(EnchantedParticles.BOILING.get(), be.getRed(time), be.getGreen(time), be.getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
+						level.addParticle(new SimpleColouredData(EnchantedParticleTypes.BOILING.get(), be.getRed(time), be.getGreen(time), be.getBlue(time)), dx, dy, dz, 0D, 0D, 0D);
 					}
 					if(!be.isFailed) {
 						if(!be.isComplete && be.cookProgress > 0 && be.cookProgress < be.cookDuration) {
@@ -148,7 +148,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 							double dz = be.worldPosition.getZ() + zOffset;
 							Vec3 velocity = new Vec3(xOffset, 0, zOffset).subtract(0.5D, 0.0D, 0.5D).normalize().scale((1D + Math.random()) * 0.06D);
 
-							level.addParticle(new SimpleColouredData(EnchantedParticles.CAULDRON_BREW.get(), be.getRed(time), be.getGreen(time), be.getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
+							level.addParticle(new SimpleColouredData(EnchantedParticleTypes.CAULDRON_BREW.get(), be.getRed(time), be.getGreen(time), be.getBlue(time)), dx, dy, dz, velocity.x, (1.0D + Math.random()) * 0.06D, velocity.z);
 						}
 					}
 				}

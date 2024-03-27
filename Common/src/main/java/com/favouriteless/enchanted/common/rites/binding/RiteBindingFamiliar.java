@@ -55,7 +55,7 @@ public class RiteBindingFamiliar extends AbstractRite {
 			targetEntity.teleportTo(newPos.x, newPos.y, newPos.z);
 			level.sendParticles(ParticleTypes.PORTAL, targetEntity.getX(), targetEntity.getY(),  targetEntity.getZ(), 20 + Enchanted.RANDOM.nextInt(10), offset, offset, offset, 0.0D);
 
-			level.sendParticles(EnchantedParticles.BIND_FAMILIAR_SEED.get(), newPos.x, newPos.y, newPos.z, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+			level.sendParticles(EnchantedParticleTypes.BIND_FAMILIAR_SEED.get(), newPos.x, newPos.y, newPos.z, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 		}
 	}
 

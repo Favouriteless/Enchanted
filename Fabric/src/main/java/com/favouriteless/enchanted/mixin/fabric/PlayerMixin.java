@@ -1,6 +1,7 @@
 package com.favouriteless.enchanted.mixin.fabric;
 
 import com.favouriteless.enchanted.common.CommonEventsFabric;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -41,18 +42,16 @@ public class PlayerMixin {
     }
 
     @Inject(method="attack", at=@At(value="INVOKE", target="Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"), locals=LocalCapture.CAPTURE_FAILHARD)
-    private void itemBreakAttack(Entity target, CallbackInfo ci,
-                                 float f, float g, float h, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4,
-                                 float j, int k, ItemStack itemStack2) {
+    private void itemBreakAttack(Entity target, CallbackInfo ci, @Local ItemStack itemStack) {
         ItemStack original; // TODO Somehow replace this weird jank with getting an actual copy of the item before it gets passed into ItemStack#hurt.
-        if(itemStack2.isEmpty()) {
-            itemStack2.setCount(1);
-            original = itemStack2.copy();
+        if(itemStack.isEmpty()) {
+            itemStack.setCount(1);
+            original = itemStack.copy();
             original.setDamageValue(original.getMaxDamage() - 1);
-            itemStack2.setCount(0);
+            itemStack.setCount(0);
         }
         else
-            original = itemStack2.copy();
+            original = itemStack.copy();
 
         CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, original, InteractionHand.MAIN_HAND);
     }

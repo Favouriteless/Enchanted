@@ -23,6 +23,8 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 
 public class ClientRegistry {
 
+    public static Map
+
     public static void register() {
         IClientRegistryHelper registry = Services.CLIENT_REGISTRY;
 

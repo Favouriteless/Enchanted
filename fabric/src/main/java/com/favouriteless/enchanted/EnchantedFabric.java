@@ -16,11 +16,11 @@ public class EnchantedFabric implements ModInitializer {
     
     @Override
     public void onInitialize() {
-        ModLoadingContext.registerConfig(Enchanted.MOD_ID, Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
         Enchanted.init();
         registerEntityAttributes();
         CommonEventsFabric.register();
         EnchantedItems.registerCompostables();
+        ModLoadingContext.registerConfig(Enchanted.MOD_ID, Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
     }
 
     private static void registerEntityAttributes() {

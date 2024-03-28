@@ -51,7 +51,7 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 		if(bypassInvul)
 			accessor.setBypassInvul();
 		if(isMagic)
-			accessor.setMagic();
+			source.setMagic();
 
 		return source;
 	}

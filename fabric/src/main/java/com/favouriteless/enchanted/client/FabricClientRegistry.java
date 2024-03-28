@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.inventory.InventoryMenu;
 
 public class FabricClientRegistry {
@@ -31,6 +32,7 @@ public class FabricClientRegistry {
     }
 
     private static void registerParticles() {
+        addParticleTextures();
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
 
         registry.register(EnchantedParticleTypes.BOILING.get(), BoilingParticle.Factory::new);
@@ -56,7 +58,9 @@ public class FabricClientRegistry {
         registry.register(EnchantedParticleTypes.PROTECTION.get(), ProtectionParticle.Factory::new);
         registry.register(EnchantedParticleTypes.BIND_FAMILIAR_SEED.get(), BindFamiliarSeedParticle.Factory::new);
         registry.register(EnchantedParticleTypes.BIND_FAMILIAR.get(), BindFamiliarParticle.Factory::new);
+    }
 
+    private static void addParticleTextures() {
         ClientSpriteRegistryCallback.event(InventoryMenu.BLOCK_ATLAS).register(((atlas, event) -> {
             event.register(Enchanted.location("particle/bubble"));
             event.register(Enchanted.location("particle/bubble_pop_0"));

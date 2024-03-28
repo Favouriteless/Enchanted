@@ -16,7 +16,4 @@ public interface DamageSourceAccessor {
     @Invoker("bypassInvul")
     DamageSource setBypassInvul();
 
-    @Invoker("setMagic")
-    DamageSource setMagic();
-
 }

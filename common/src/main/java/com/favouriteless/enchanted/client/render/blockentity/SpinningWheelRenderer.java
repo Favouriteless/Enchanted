@@ -72,15 +72,11 @@ public class SpinningWheelRenderer implements BlockEntityRenderer<SpinningWheelB
 		VertexConsumer vertexBuilder = buffer.getBuffer((RenderType.entityTranslucentCull(TEXTURE)));
 		body.render(poseStack, vertexBuilder, packedLight, packedOverlay);
 
-		poseStack.pushPose();
 		wheel.zRot = (float)(Math.PI + Math.toRadians(rotationDegreesWheel));
 		wheel.render(poseStack, vertexBuilder, packedLight, packedOverlay);
-		poseStack.popPose();
 
-		poseStack.pushPose();
 		frontArm.yRot = (float)(Math.PI + Math.toRadians(rotationDegreesArm));
 		frontArm.render(poseStack, vertexBuilder, packedLight, packedOverlay);
-		poseStack.popPose();
 
 		poseStack.popPose();
 	}

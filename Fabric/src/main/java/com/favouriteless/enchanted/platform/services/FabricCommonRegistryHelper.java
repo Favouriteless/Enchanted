@@ -25,8 +25,9 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 
 	@Override
 	public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> entry) {
-		Registry.register(registry, Enchanted.location(name), entry.get());
-		return entry;
+		T value = entry.get();
+		Registry.register(registry, Enchanted.location(name), value);
+		return () -> value;
 	}
 
 	@Override

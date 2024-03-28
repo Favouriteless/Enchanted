@@ -12,7 +12,8 @@
   ],
   "client": [
     "AbstractSoundInstanceAccessor",
-    "LocalPlayerMixin"
+    "LocalPlayerMixin",
+    "ParticleEngineMixin"
   ],
   "server": [
   ],

@@ -51,33 +51,6 @@ public class ClientSetupEventsForge {
 	}
 
 	@SubscribeEvent
-	public static void onRegisterParticleFactories(RegisterParticleProvidersEvent event) {
-		event.register(EnchantedParticleTypes.BOILING.get(), BoilingParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CAULDRON_BREW.get(), CauldronBrewParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CAULDRON_COOK.get(), CauldronCookParticle.Factory::new);
-		event.register(EnchantedParticleTypes.KETTLE_COOK.get(), KettleCookParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CIRCLE_MAGIC.get(), CircleMagicParticle.Factory::new);
-		event.register(EnchantedParticleTypes.POPPET.get(), PoppetParticle.Factory::new);
-		event.register(EnchantedParticleTypes.IMPRISONMENT_CAGE.get(), ImprisonmentCageParticle.Factory::new);
-		event.register(EnchantedParticleTypes.IMPRISONMENT_CAGE_SEED.get(), ImprisonmentCageSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.TRANSPOSITION_IRON_SEED.get(), TranspositionIronSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.BROILING_SEED.get(), BroilingSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.SKY_WRATH_SEED.get(), SkyWrathSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.SKY_WRATH.get(), SkyWrathParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CURSE_SEED.get(), CurseSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CURSE_BLIGHT_SEED.get(), CurseBlightSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.CURSE_BLIGHT.get(), RepellingParticle.Factory::new);
-		event.register(EnchantedParticleTypes.REMOVE_CURSE_SEED.get(), RemoveCurseSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.REMOVE_CURSE.get(), RemoveCurseParticle.Factory::new);
-		event.register(EnchantedParticleTypes.FERTILITY_SEED.get(), FertilitySeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.FERTILITY.get(), RepellingParticle.Factory::new);
-		event.register(EnchantedParticleTypes.PROTECTION_SEED.get(), ProtectionSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.PROTECTION.get(), ProtectionParticle.Factory::new);
-		event.register(EnchantedParticleTypes.BIND_FAMILIAR_SEED.get(), BindFamiliarSeedParticle.Factory::new);
-		event.register(EnchantedParticleTypes.BIND_FAMILIAR.get(), BindFamiliarParticle.Factory::new);
-	}
-
-	@SubscribeEvent
 	public static void onRegisterKeybinds(RegisterKeyMappingsEvent event) {
 		for(KeyMapping mapping : ForgeClientRegistryHelper.KEY_MAPPINGS)
 			event.register(mapping);

@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface ZombieVillagerAccessor {
 
     @Invoker("startConverting")
-    void startConverting(@Nullable UUID uuid, int conversionTime);
+    void startConversion(@Nullable UUID uuid, int conversionTime);
 
 }

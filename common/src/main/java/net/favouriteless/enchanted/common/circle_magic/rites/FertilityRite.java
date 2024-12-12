@@ -84,7 +84,7 @@ public class FertilityRite extends Rite {
 
     protected void applyCureEffects(UUID casterUUID, LivingEntity target) {
         if(target instanceof ZombieVillager villager) {
-            ((ZombieVillagerAccessor)villager).startConverting(casterUUID, Enchanted.RANDOM.nextInt(2401) + 3600);
+            ((ZombieVillagerAccessor)villager).startConversion(casterUUID, Enchanted.RANDOM.nextInt(2401) + 3600);
             return;
         }
 

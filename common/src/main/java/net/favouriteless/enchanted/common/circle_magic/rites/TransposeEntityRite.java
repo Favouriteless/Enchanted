@@ -20,7 +20,7 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
         if (transposee == null)
             return cancel();
 
-        super.findTargetLocation(params);
+        findTargetLocation(params);
         if (targetLevel == null || targetPos == null)
             return cancel();
 

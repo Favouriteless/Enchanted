@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.common.circle_magic.rites;
 
 import net.favouriteless.enchanted.common.init.registry.EItems;
 import net.favouriteless.enchanted.common.util.WaystoneHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,9 +19,9 @@ public class TransposeCasterWaystoneRite extends TransposeEntityRite {
 
     @Override
     protected void findTargetLocation(RiteParams params) {
-        for (ItemStack item : params.consumedItems) {
+        for(ItemStack item : params.consumedItems) {
             if (item.getItem() == EItems.BOUND_WAYSTONE.get()) {
-                targetLevel = level.getServer().getLevel(WaystoneHelper.getLevel(level, item).dimension());
+                targetLevel = (ServerLevel)WaystoneHelper.getLevel(level, item);
                 targetPos = WaystoneHelper.getPos(item);
                 return;
             }

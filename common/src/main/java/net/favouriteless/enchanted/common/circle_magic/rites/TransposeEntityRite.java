@@ -17,19 +17,19 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
     @Override
     protected boolean onStart(RiteParams params) {
         Entity transposee = getTransposee(params);
-        if (transposee == null)
+        if(transposee == null)
             return cancel();
 
         findTargetLocation(params);
-        if (targetLevel == null || targetPos == null)
+        if(targetLevel == null || targetPos == null)
             return cancel();
 
-        portalParticles((ServerLevel) transposee.level(), transposee.blockPosition());
+        portalParticles((ServerLevel)transposee.level(), transposee.blockPosition());
         portalParticles(targetLevel, targetPos);
 
         transposee.level().playSound(null, transposee.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1, 1);
 
-        Vec3 destination = targetPos.getCenter().add(0, 0.01d, 0);
+        Vec3 destination = targetPos.getCenter().add(0, 0.01D, 0);
         if (targetLevel != transposee.level())
             transposee.changeDimension(targetLevel);
         else

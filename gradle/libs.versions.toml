@@ -1,6 +1,6 @@
 [versions]
 # Enchanted
-    enchanted = "4.0.7-beta"
+    enchanted = "4.0.8-beta"
 
 # Common
     stateobserver = "1.5.3"

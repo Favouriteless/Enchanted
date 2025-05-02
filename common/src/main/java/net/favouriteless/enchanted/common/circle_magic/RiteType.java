@@ -77,7 +77,7 @@ public class RiteType implements Comparable<RiteType> {
         if(!weather.check(level))
             return false;
 
-        long time = level.getDayTime();
+        long time = level.getDayTime() % 24000;
         if(time < timeRange.getFirst())
             return false;
         if(time > timeRange.getLast())

@@ -1,1 +1,2 @@
 - FIXED: Targeting crash with Sky's Wrath
+- FIXED: Rites can stop working at certain times of day

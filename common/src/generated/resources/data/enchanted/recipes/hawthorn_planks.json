@@ -4,7 +4,7 @@
   "group": "planks",
   "ingredients": [
     {
-      "item": "enchanted:hawthorn_log"
+      "tag": "enchanted:hawthorn_logs"
     }
   ],
   "result": {

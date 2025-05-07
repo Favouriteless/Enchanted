@@ -234,9 +234,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 		buttonBuilder(EItems.ROWAN_BUTTON.get(), Ingredient.of(EItems.ROWAN_PLANKS.get()))
 				.unlockedBy(getHasName(EItems.ROWAN_PLANKS.get()), has(EItems.ROWAN_PLANKS.get())).save(consumer);
 
-		planksFromLog(consumer, EItems.ROWAN_PLANKS.get(), EItems.ROWAN_LOG.get());
-		planksFromLog(consumer, EItems.ALDER_PLANKS.get(), EItems.ALDER_LOG.get());
-		planksFromLog(consumer, EItems.HAWTHORN_PLANKS.get(), EItems.HAWTHORN_LOG.get());
+		planksFromLog(consumer, EItems.ROWAN_PLANKS.get(), EnchantedTags.Items.ROWAN_LOGS, 4);
+		planksFromLog(consumer, EItems.ALDER_PLANKS.get(), EnchantedTags.Items.ALDER_LOGS, 4);
+		planksFromLog(consumer, EItems.HAWTHORN_PLANKS.get(), EnchantedTags.Items.HAWTHORN_LOGS, 4);
 	}
 
 	protected void buildSmeltingRecipes(Consumer<FinishedRecipe> consumer) {
@@ -457,10 +457,6 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
 	protected static void byproduct(Consumer<FinishedRecipe> consumer, ItemLike result, TagKey<Item> tag) {
 		ByproductRecipeBuilder.create(result, tag).save(consumer);
-	}
-
-	protected static void planksFromLog(Consumer<FinishedRecipe> consumer, ItemLike planks, ItemLike logs) {
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, planks, 4).requires(logs).group("planks").unlockedBy(getHasName(logs), has(logs)).save(consumer);
 	}
 
 	protected static void stairs(Consumer<FinishedRecipe> consumer, ItemLike stairs, ItemLike material) {

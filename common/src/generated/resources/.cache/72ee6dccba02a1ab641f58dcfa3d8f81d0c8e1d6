@@ -1,12 +1,15 @@
-// 1.20.1	2024-05-10T01:19:41.1070215	Tags for minecraft:item mod id enchanted
+// 1.20.1	2025-05-07T19:01:24.1848147	Tags for minecraft:item mod id enchanted
+123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/items/alder_logs.json
 472c8d9b5b2662130a73e930c548a07cbee95c70 data/enchanted/tags/items/armors.json
 f24a8d97196c48573340680ccf913a094e799f30 data/enchanted/tags/items/armor_poppet_whitelist.json
 e7ff58a601c24e056dc5521f018555f7e596ec4e data/enchanted/tags/items/chalices.json
 cc0b47d4892d7d2ed9f5813df5bc1d69754bd3ef data/enchanted/tags/items/chalks.json
+2b6211b51490f8caac3959b72e04e988a45ebc11 data/enchanted/tags/items/hawthorn_logs.json
 847203a50ec44d614777e94b9ece91cefd7d94fa data/enchanted/tags/items/leaves.json
-84980a2aaeb2cfd9ec5ba7157d843a877013c53c data/enchanted/tags/items/logs.json
+7d4d6af77b94f2dc243f0abdd68d45eabf56905e data/enchanted/tags/items/logs.json
 e47cedad84283e8d4746c2aeff8d12fe2618a430 data/enchanted/tags/items/planks.json
 80113e16be07af958a40508fa4f07e59255c8ee5 data/enchanted/tags/items/raw_foods.json
+b1bf603e14a40fa231fcff7776962ebc9b20d72e data/enchanted/tags/items/rowan_logs.json
 3bd801c9b78565d3ac5135054487bd37e13085b9 data/enchanted/tags/items/saplings.json
 7e3768100cc5ced9173c6f166e9f4fd2b701fe38 data/enchanted/tags/items/slabs.json
 7e3768100cc5ced9173c6f166e9f4fd2b701fe38 data/enchanted/tags/items/stairs.json

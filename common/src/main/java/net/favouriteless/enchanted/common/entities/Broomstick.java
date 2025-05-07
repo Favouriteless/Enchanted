@@ -28,14 +28,20 @@ import java.util.List;
 
 public class Broomstick extends Entity {
 
+    public static final EntityDataAccessor<Integer> DATA_ID_HURT = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> DATA_ID_HURTDIR = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.FLOAT);
+
     public static final double ACCELERATION = 0.02D;
     public static final double MAX_SPEED = 1.0D;
-
-    private float deltaRotX = 0.0F;
-    private float deltaRotY = 0.0F;
+    public static final double MAX_TILT = 20.0D;
 
     private int inputAcceleration = 0;
     private int inputClimb = 0;
+    private int inputTurn = 0;
+
+    private float deltaRotX = 0.0F;
+    private float deltaRotY = 0.0F;
 
     private int lerpSteps = 0;
     private double lerpX = 0.0D;
@@ -43,10 +49,6 @@ public class Broomstick extends Entity {
     private double lerpZ = 0.0D;
     private double lerpXRot = 0.0D;
     private double lerpYRot = 0.0D;
-
-    private static final EntityDataAccessor<Integer> DATA_ID_HURT = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> DATA_ID_HURTDIR = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(Broomstick.class, EntityDataSerializers.FLOAT);
 
     public Broomstick(EntityType<Broomstick> type, Level world) {
         super(type, world);
@@ -62,33 +64,84 @@ public class Broomstick extends Entity {
 
     @Override
     public void tick() {
-        if (getHurtTime() > 0) {
+        if(getHurtTime() > 0)
             setHurtTime(getHurtTime() - 1);
-        }
-
-        if (getDamage() > 0.0F) {
+        if(getDamage() > 0.0F)
             setDamage(getDamage() - 1.0F);
-        }
 
         super.tick();
 
         tickLerp();
         if(isControlledByLocalInstance()) {
-            //setPacketCoordinates(getX(), getY(), getZ());
-
             if(level().isClientSide) {
-                deltaRotX *= 0.8F;
-                deltaRotY *= 0.8F;
                 BroomstickEntityClientHandler.controlBroom(this);
+                handleRotationTick();
+                handleMovementTick();
             }
             else {
-                setDeltaMovement(getDeltaMovement().scale(0.75D).add(0.0D, -0.05D, 0.0D));
+                setDeltaMovement(getDeltaMovement().scale(0.75D));
+
+                if(level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(0, 1.0D, 0)).isEmpty())
+                    setDeltaMovement(getDeltaMovement().add(0.0D, -0.01D, 0.0D));
             }
             move(MoverType.SELF, getDeltaMovement());
         }
         else {
             setDeltaMovement(Vec3.ZERO);
         }
+    }
+
+    protected void handleMovementTick() {
+        Vec3 velocity = getDeltaMovement();
+
+        Vec3 forward = Vec3.directionFromRotation(0, getYRot());
+        Vec3 up = new Vec3(0.0D, 1.0D, 0.0D);
+        Vec3 left = up.cross(forward);
+
+        double acceleration = inputAcceleration * ACCELERATION;
+
+        // If W or S is held, only decelerate the sideways components of the velocity.
+        velocity = forward.scale(velocity.dot(forward) * (inputAcceleration == 0 ? 0.85D : 1.0D) + acceleration)
+                .add(up.scale(velocity.dot(up) * 0.85D))
+                .add(left.scale(velocity.dot(left) * 0.85D));
+
+        velocity = velocity.add(0, inputClimb * ACCELERATION * 1.25D, 0); // Include vertical movement
+
+        double speed = Math.max(Math.min(velocity.length(), MAX_SPEED), 0); // Clamp to maximum velocity.
+        setDeltaMovement(velocity.normalize().scale(speed));
+    }
+
+    protected void handleRotationTick() {
+        LivingEntity controller = getControllingPassenger();
+
+        deltaRotY += inputTurn;
+        deltaRotX += inputClimb * -inputAcceleration;
+
+        if(inputClimb == 0 || inputAcceleration == 0) {
+            if(Math.abs(getXRot()) < Math.abs(deltaRotX))
+                deltaRotX = -getXRot();
+            else if(getXRot() > 0) {
+                if(deltaRotX > 0)
+                    deltaRotX = 0;
+                deltaRotX--;
+            }
+            else if(getXRot() < 0) {
+                if(deltaRotX < 0)
+                    deltaRotX = 0;
+                deltaRotX++;
+            }
+        }
+
+        setYRot(getYRot() + deltaRotY);
+        controller.setYRot(controller.getYRot() + deltaRotY);
+        setXRot((float)Mth.clamp(getXRot() + deltaRotX, -MAX_TILT, MAX_TILT));
+        deltaRotX *= 0.8F;
+        deltaRotY *= 0.8F;
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        return new Vec3(getX(), getBoundingBox().maxY + 0.05D, getZ());
     }
 
     @Override
@@ -102,16 +155,17 @@ public class Broomstick extends Entity {
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {}
 
-    private void tickLerp() {
+    protected void tickLerp() {
         if(isControlledByLocalInstance()) {
             lerpSteps = 0;
-            //setPacketCoordinates(getX(), getY(), getZ());
+            syncPacketPositionCodec(getX(), getY(), getZ());
         }
 
         if(lerpSteps > 0) {
-            double x = getX() + (lerpX - getX()) / lerpSteps;
-            double y = getY() + (lerpY - getY()) / lerpSteps;
-            double z = getZ() + (lerpZ - getZ()) / lerpSteps;
+            double f = 1.0D / lerpSteps;
+            double x = Mth.lerp(f, getX(), lerpX);
+            double y = Mth.lerp(f, getY(), lerpY);
+            double z = Mth.lerp(f, getZ(), lerpZ);
 
             double xRot = Mth.wrapDegrees(lerpXRot - getXRot());
             double yRot = Mth.wrapDegrees(lerpYRot - getYRot());
@@ -126,30 +180,13 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    public void lerpTo(double pX, double pY, double pZ, float pYaw, float pPitch, int pPosRotationIncrements, boolean pTeleport) {
-        lerpX = pX;
-        lerpY = pY;
-        lerpZ = pZ;
-        lerpYRot = pYaw;
-        lerpXRot = pPitch;
+    public void lerpTo(double x, double y, double z, float yRot, float xRot, int posRotationIncrements, boolean teleport) {
+        lerpX = x;
+        lerpY = y;
+        lerpZ = z;
+        lerpYRot = yRot;
+        lerpXRot = xRot;
         lerpSteps = 10;
-    }
-
-    public Vec3 getNewDeltaMovement() {
-        Vec3 velocity = getDeltaMovement();
-
-        Vec3 forward = Vec3.directionFromRotation(new Vec2(getXRot(), getYRot()));
-        Vec3 up = Vec3.directionFromRotation(new Vec2(getXRot()-90, getYRot()));
-        Vec3 left = up.cross(forward);
-
-        double acceleration = inputAcceleration * ACCELERATION;
-        velocity = forward.scale(velocity.dot(forward) * (inputAcceleration == 0 ? 0.85D : 1.0D) + acceleration)
-                .add(up.scale(velocity.dot(up) * 0.85D))
-                .add(left.scale(velocity.dot(left) * 0.85D));
-        velocity = velocity.add(0, inputClimb * ACCELERATION*1.25D, 0);
-
-        double speed = Math.max(Math.min(velocity.length(), MAX_SPEED), 0);
-        return velocity.normalize().scale(speed);
     }
 
     @Override
@@ -173,12 +210,10 @@ public class Broomstick extends Entity {
             return InteractionResult.SUCCESS;
         }
         else {
-            if(!level().isClientSide) {
+            if(!level().isClientSide)
                 return pPlayer.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
-            }
-            else {
+            else
                 return InteractionResult.SUCCESS;
-            }
         }
     }
 
@@ -189,12 +224,10 @@ public class Broomstick extends Entity {
 
     @Override
     protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
-
     }
 
     @Override
     protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
-
     }
 
     @Override
@@ -217,12 +250,10 @@ public class Broomstick extends Entity {
 
     public boolean isControlledByLocalInstance() {
         Entity entity = getControllingPassenger();
-        if(entity instanceof Player) {
-            return ((Player) entity).isLocalPlayer();
-        }
-        else {
+        if(entity instanceof Player)
+            return ((Player)entity).isLocalPlayer();
+        else
             return !level().isClientSide;
-        }
     }
 
     @Nullable
@@ -256,14 +287,12 @@ public class Broomstick extends Entity {
     @Override
     public void push(@NotNull Entity entity) {
         if(entity instanceof Broomstick) {
-            if(entity.getBoundingBox().minY < getBoundingBox().maxY) {
+            if(entity.getBoundingBox().minY < getBoundingBox().maxY)
                 super.push(entity);
-            }
         }
         else if(entity.getBoundingBox().minY <= getBoundingBox().minY) {
             super.push(entity);
         }
-
     }
 
     @Override
@@ -278,9 +307,8 @@ public class Broomstick extends Entity {
             markHurt();
             boolean isSurvivalPlayer = source.getEntity() instanceof Player && ((Player) source.getEntity()).getAbilities().instabuild;
             if(isSurvivalPlayer || getDamage() > 40.0F) {
-                if(!isSurvivalPlayer && level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                if(!isSurvivalPlayer && level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
                     spawnAtLocation(EItems.ENCHANTED_BROOMSTICK.get());
-                }
 
                 discard();
             }
@@ -292,51 +320,30 @@ public class Broomstick extends Entity {
         }
     }
 
-    /**
-     * Sets the forward direction of the entity.
-     */
-    public void setHurtDir(int pForwardDirection) {
-        entityData.set(DATA_ID_HURTDIR, pForwardDirection);
+    public void setHurtDir(int forward) {
+        entityData.set(DATA_ID_HURTDIR, forward);
     }
 
-    /**
-     * Gets the forward direction of the entity.
-     */
     public int getHurtDir() {
         return entityData.get(DATA_ID_HURTDIR);
     }
 
-    /**
-     * Sets the time to count down from since the last time entity was hit.
-     */
-    public void setHurtTime(int pTimeSinceHit) {
-        entityData.set(DATA_ID_HURT, pTimeSinceHit);
+    public void setHurtTime(int timeSinceHit) {
+        entityData.set(DATA_ID_HURT, timeSinceHit);
     }
 
-    /**
-     * Gets the time since the last hit.
-     */
     public int getHurtTime() {
         return entityData.get(DATA_ID_HURT);
     }
 
-    /**
-     * Sets the damage taken from the last hit.
-     */
     public void setDamage(float pDamageTaken) {
         entityData.set(DATA_ID_DAMAGE, pDamageTaken);
     }
 
-    /**
-     * Gets the damage taken from the last hit.
-     */
     public float getDamage() {
         return entityData.get(DATA_ID_DAMAGE);
     }
 
-    /**
-     * Setups the entity to do the hurt animation. Only used by packets in multiplayer.
-     */
     @Override
     public void animateHurt(float yaw) {
         setHurtDir(-getHurtDir());
@@ -344,39 +351,24 @@ public class Broomstick extends Entity {
         setDamage(getDamage() * 11.0F);
     }
 
-    public void setInputAcceleration(boolean forwards, boolean backwards) {
-        if((!forwards && !backwards) || (forwards && backwards))
-            inputAcceleration = 0;
-        else if(forwards)
-                inputAcceleration = 1;
-        else
-            inputAcceleration = -1;
-    }
+    public void setInputs(boolean forward, boolean backward, boolean left, boolean right, boolean up, boolean down) {
+        inputAcceleration = 0;
+        if(forward)
+            inputAcceleration++;
+        if(backward)
+            inputAcceleration--;
 
-    public void setInputClimb(boolean up, boolean down) {
-        if((!up && !down) || (up && down))
-            inputClimb = 0;
-        else if(up)
-            inputClimb = 1;
-        else
-            inputClimb = -1;
-    }
+        inputTurn = 0;
+        if(left)
+            inputTurn--;
+        if(right)
+            inputTurn++;
 
-
-    public void setDeltaRotX(float value) {
-        deltaRotX = value;
-    }
-
-    public void setDeltaRotY(float value) {
-        deltaRotY = value;
-    }
-
-    public float getDeltaRotX() {
-        return deltaRotX;
-    }
-
-    public float getDeltaRotY() {
-        return deltaRotY;
+        inputClimb = 0;
+        if(up)
+            inputClimb++;
+        if(down)
+            inputClimb--;
     }
 
 }

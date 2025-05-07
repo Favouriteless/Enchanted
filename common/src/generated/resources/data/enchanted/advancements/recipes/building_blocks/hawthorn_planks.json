@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_hawthorn_log": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "enchanted:hawthorn_log"
-            ]
+            "tag": "enchanted:hawthorn_logs"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_hawthorn_log",
+      "has_log",
       "has_the_recipe"
     ]
   ],

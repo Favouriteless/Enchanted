@@ -1,4 +1,4 @@
-// 1.20.1	2024-05-10T01:19:41.1070215	Loot Tables
+// 1.20.1	2025-05-07T19:01:24.1858326	Loot Tables
 e6b2fa21f5990622f5e44017a94e0c21599030e6 data/enchanted/loot_tables/blocks/alder_button.json
 a014e3ebbb84c643111f67fef612e692630e30fd data/enchanted/loot_tables/blocks/alder_fence.json
 3564852954d79056682002314827c70771e6b9d6 data/enchanted/loot_tables/blocks/alder_fence_gate.json
@@ -34,6 +34,8 @@ b568e94bcda668267bbb028a8f90d139d6ed1cb2 data/enchanted/loot_tables/blocks/hawth
 52ba8d57f69755248f14f06d7f2e3de7696a62d2 data/enchanted/loot_tables/blocks/kettle.json
 838a90370f21206d460656a01f06bb439015f894 data/enchanted/loot_tables/blocks/mandrake.json
 e7ca5e78c3c937f4bfee898a23ba05ae1c048b00 data/enchanted/loot_tables/blocks/poppet_shelf.json
+fc657200eacaaf2ee171ea6b2153bd730303e9d4 data/enchanted/loot_tables/blocks/protection_barrier.json
+c057560cc347ce9990a722fa068b4c93e6ec1e75 data/enchanted/loot_tables/blocks/protection_barrier_temporary.json
 b0bc1d1a21ad58988ed023c89853408cad12e8f2 data/enchanted/loot_tables/blocks/rowan_button.json
 cd6fefceda48b2d1b88abce7c1cad66f3c89dee1 data/enchanted/loot_tables/blocks/rowan_fence.json
 757017b6f6986d64deb72c3a3c50ab36f3241c6b data/enchanted/loot_tables/blocks/rowan_fence_gate.json

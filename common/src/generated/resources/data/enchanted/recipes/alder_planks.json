@@ -4,7 +4,7 @@
   "group": "planks",
   "ingredients": [
     {
-      "item": "enchanted:alder_log"
+      "tag": "enchanted:alder_logs"
     }
   ],
   "result": {

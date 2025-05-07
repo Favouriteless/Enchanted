@@ -47,6 +47,8 @@ body:
     attributes:
       label: Game Log
       description: Provide a link to your log on a paste site such as [Gist](https://gist.github.com/) or [mclo.gs](https://mclo.gs/).
+    validations:
+      required: true
   - type: dropdown
     id: additional-mods
     attributes:

@@ -1,2 +1,4 @@
-- FIXED: Targeting crash with Sky's Wrath
-- FIXED: Rites can stop working at certain times of day
+- REMOVED: C and V tilt keybinds for the enchanted broomstick. Nobody really used em anyway.
+- CHANGED: Broomsticks will now only float to the ground if nobody is standing on them.
+
+- FIXED: Broomsticks visually snap back to their original position after dismounting.

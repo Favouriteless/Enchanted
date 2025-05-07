@@ -1,11 +1,13 @@
 package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.favouriteless.enchanted.platform.services.IClientRegistryHelper;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor;
 import net.minecraft.client.gui.screens.Screen;
@@ -48,7 +50,7 @@ public class FabricClientRegistryHelper implements IClientRegistryHelper {
 
 	@Override
 	public KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext) {
-		return new KeyMapping(name, keyCode, category);
+		return KeyBindingHelper.registerKeyBinding(new KeyMapping(name, keyCode, category));
 	}
 
 	@Override

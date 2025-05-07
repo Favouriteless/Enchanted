@@ -25,7 +25,7 @@ public class BroomstickRenderer extends EntityRenderer<Broomstick> {
 	}
 
 	@Override
-	public void render(Broomstick broomstick, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+	public void render(Broomstick broomstick, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 		poseStack.pushPose();
 
 		poseStack.translate(0.0D, 0.7D, 0.0D);
@@ -39,15 +39,15 @@ public class BroomstickRenderer extends EntityRenderer<Broomstick> {
 		if (f > 0.0F)
 			poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)broomstick.getHurtDir()));
 
-		VertexConsumer ivertexbuilder = buffer.getBuffer(this.model.renderType(this.getTextureLocation(broomstick)));
-		this.model.renderToBuffer(poseStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+		VertexConsumer buffer = bufferSource.getBuffer(model.renderType(getTextureLocation(broomstick)));
+		model.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		poseStack.popPose();
 
-		super.render(broomstick, yaw, partialTicks, poseStack, buffer, packedLight);
+		super.render(broomstick, yaw, partialTicks, poseStack, bufferSource, packedLight);
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(Broomstick pEntity) {
+	public ResourceLocation getTextureLocation(Broomstick entity) {
 		return TEXTURE;
 	}
 

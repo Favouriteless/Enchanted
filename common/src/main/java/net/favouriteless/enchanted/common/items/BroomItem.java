@@ -25,7 +25,7 @@ public class BroomItem extends Item {
 
 		if(!level.isClientSide) {
 			BlockState state = level.getBlockState(pos);
-			if(state.is(ETags.Blocks.CHALKS))
+			if(state.is(ETags.Blocks.BROOM_SWEEPABLE))
 				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			level.playSound(null, pos, ESoundEvents.BROOM_SWEEP.get(), SoundSource.PLAYERS, 1.0F, 0.8F + Enchanted.RANDOM.nextFloat()*0.2F);
 		}

@@ -33,7 +33,7 @@ public class VoodooPoppetItem extends PoppetItem {
         if(PoppetUtils.isBound(stack) && entity instanceof Player player) {
             ItemStack offHand = player.getOffhandItem();
 
-            if(offHand.getItem() == EItems.BONE_NEEDLE.get()) {
+            if(offHand.getItem() == EItems.BONE_NEEDLE.get() || offHand.getItem() == EItems.ICY_NEEDLE.get()) {
                 if(PoppetUtils.isBound(stack)) {
                     if(level instanceof ServerLevel serverLevel) {
                         ServerPlayer target = PoppetUtils.getBoundPlayer(stack, serverLevel);

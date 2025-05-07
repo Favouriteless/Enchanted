@@ -1,5 +1,7 @@
 - REMOVED: C and V tilt keybinds for the enchanted broomstick. Nobody really used em anyway.
 - CHANGED: Broomsticks will now only float to the ground if nobody is standing on them.
+- CHANGED: Icy needles can now be used with voodoo poppets in addition to bone needles.
+- CHANGED: Brooms now use the enchanted:broom_sweepable tag to determine what they can sweep up.
 
 - FIXED: Broomsticks visually snap back to their original position after dismounting.
 - FIXED: DataComponent matching issue in recipes.

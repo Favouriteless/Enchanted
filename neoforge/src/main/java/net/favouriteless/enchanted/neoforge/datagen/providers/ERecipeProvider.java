@@ -209,12 +209,9 @@ public class ERecipeProvider extends RecipeProvider {
 		buttonBuilder(EItems.ROWAN_BUTTON.get(), Ingredient.of(EItems.ROWAN_PLANKS.get()))
 				.unlockedBy(getHasName(EItems.ROWAN_PLANKS.get()), has(EItems.ROWAN_PLANKS.get())).save(output);
 
-		planksFromLog(output, EItems.ROWAN_PLANKS.get(), EItems.ROWAN_LOG.get());
-		planksFromLog(output, EItems.ALDER_PLANKS.get(), EItems.ALDER_LOG.get());
-		planksFromLog(output, EItems.HAWTHORN_PLANKS.get(), EItems.HAWTHORN_LOG.get());
-		planksFromLog(output, EItems.ROWAN_PLANKS.get(), EItems.STRIPPED_ROWAN_LOG.get());
-		planksFromLog(output, EItems.ALDER_PLANKS.get(), EItems.STRIPPED_ALDER_LOG.get());
-		planksFromLog(output, EItems.HAWTHORN_PLANKS.get(), EItems.STRIPPED_HAWTHORN_LOG.get());
+		planksFromLog(output, EItems.ALDER_PLANKS.get(), ETags.Items.ALDER_LOGS, 4);
+		planksFromLog(output, EItems.HAWTHORN_PLANKS.get(), ETags.Items.HAWTHORN_LOGS, 4);
+		planksFromLog(output, EItems.ROWAN_PLANKS.get(), ETags.Items.ROWAN_LOGS, 4);
 	}
 
 	protected void buildSmeltingRecipes(RecipeOutput output, Provider registries) {
@@ -423,28 +420,45 @@ public class ERecipeProvider extends RecipeProvider {
 		ByproductRecipeBuilder.create(result, items).save(output);
 	}
 
-	protected static void planksFromLog(RecipeOutput output, ItemLike planks, ItemLike logs) {
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, planks, 4).requires(logs).group("planks").unlockedBy(getHasName(logs), has(logs)).save(output);
-	}
-
-	protected static void slab(RecipeOutput recipeOutput, RecipeCategory category, ItemLike slab, ItemLike material) {
-		EShapedRecipeBuilder.shaped(category, slab, 6).define('#', material).pattern("###").save(recipeOutput);
+	protected static void slab(RecipeOutput output, RecipeCategory category, ItemLike slab, ItemLike material) {
+		EShapedRecipeBuilder.shaped(category, slab, 6)
+				.define('#', material)
+				.pattern("###")
+				.save(output);
 	}
 
 	protected static void stairs(RecipeOutput output, ItemLike stairs, ItemLike material) {
-		EShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).define('#', material).pattern("#  ").pattern("## ").pattern("###").save(output);
+		EShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
+				.define('#', material)
+				.pattern("#  ")
+				.pattern("## ")
+				.pattern("###")
+				.save(output);
 	}
 
-	protected static void pressurePlate(RecipeOutput recipeOutput, ItemLike pressurePlate, ItemLike material) {
-		EShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, pressurePlate).define('#', material).pattern("##").save(recipeOutput);
+	protected static void pressurePlate(RecipeOutput output, ItemLike pressurePlate, ItemLike material) {
+		EShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, pressurePlate)
+				.define('#', material)
+				.pattern("##")
+				.save(output);
 	}
 
 	protected static void fence(RecipeOutput output, ItemLike fence, Ingredient material) {
-		EShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fence, fence == Blocks.NETHER_BRICK_FENCE ? 6 : 3).define('W', material).define('#', fence == Blocks.NETHER_BRICK_FENCE ? Items.NETHER_BRICK : Items.STICK).pattern("W#W").pattern("W#W").save(output);
+		EShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fence, fence == Blocks.NETHER_BRICK_FENCE ? 6 : 3)
+				.define('W', material)
+				.define('#', fence == Blocks.NETHER_BRICK_FENCE ? Items.NETHER_BRICK : Items.STICK)
+				.pattern("W#W")
+				.pattern("W#W")
+				.save(output);
 	}
 
 	protected static void fenceGate(RecipeOutput output, ItemLike fenceGate, Ingredient material) {
-		EShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, fenceGate).define('#', Items.STICK).define('W', material).pattern("#W#").pattern("#W#").save(output);
+		EShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, fenceGate)
+				.define('#', Items.STICK)
+				.define('W', material)
+				.pattern("#W#")
+				.pattern("#W#")
+				.save(output);
 	}
 
 }

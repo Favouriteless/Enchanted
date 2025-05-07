@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_alder_log": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": "enchanted:alder_log"
+            "items": "#enchanted:alder_logs"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_alder_log"
+      "has_log"
     ]
   ],
   "rewards": {

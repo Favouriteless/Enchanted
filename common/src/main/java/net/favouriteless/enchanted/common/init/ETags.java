@@ -14,14 +14,17 @@ import net.minecraft.world.level.block.Block;
 public class ETags {
 
     public static class Blocks {
+        public static final TagKey<Block> ALDER_LOGS = createBlockTag("alder_logs");
         public static final TagKey<Block> BLIGHT_DECAYABLE_BLOCKS = createBlockTag("blight_decayable_blocks");
         public static final TagKey<Block> BLIGHT_DECAYABLE_PLANTS = createBlockTag("blight_decayable_plants");
         public static final TagKey<Block> BLIGHT_DECAY_BLOCKS = createBlockTag("blight_decay_blocks");
+        public static final TagKey<Block> BROOM_SWEEPABLE = createBlockTag("broom_sweepable");
         public static final TagKey<Block> CHALICES = createBlockTag("chalices");
         public static final TagKey<Block> CHALKS = createBlockTag("chalks");
         public static final TagKey<Block> CROPS = createBlockTag("crops");
         public static final TagKey<Block> FENCES = createBlockTag("fences");
         public static final TagKey<Block> FENCE_GATES = createBlockTag("fence_gates");
+        public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag("hawthorn_logs");
         public static final TagKey<Block> LEAVES = createBlockTag("leaves");
         public static final TagKey<Block> LOGS = createBlockTag("logs");
         public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag("mutandis_blacklist_plants");
@@ -30,6 +33,7 @@ public class ETags {
         public static final TagKey<Block> MUTANDIS_PLANTS = createBlockTag("mutandis_plants");
         public static final TagKey<Block> PLANKS = createBlockTag("planks");
         public static final TagKey<Block> RITE_FOREST_REPLACEABLE = createBlockTag("rite_forest_replaceable");
+        public static final TagKey<Block> ROWAN_LOGS = createBlockTag("rowan_logs");
         public static final TagKey<Block> SAPLINGS = createBlockTag("saplings");
         public static final TagKey<Block> SLABS = createBlockTag("slabs");
         public static final TagKey<Block> STAIRS = createBlockTag("stairs");
@@ -42,15 +46,18 @@ public class ETags {
     }
 
     public static class Items {
+        public static final TagKey<Item> ALDER_LOGS = createItemTag("alder_logs");
         public static final TagKey<Item> ARMORS = createItemTag("armors");
         public static final TagKey<Item> ARMOR_POPPET_BLACKLIST = createItemTag("armor_poppet_blacklist");
         public static final TagKey<Item> CHALICES = createItemTag("chalices");
         public static final TagKey<Item> CHALKS = createItemTag("chalks");
         public static final TagKey<Item> LEAVES = createItemTag("leaves");
         public static final TagKey<Item> FENCE_GATES = createItemTag("fence_gates");
+        public static final TagKey<Item> HAWTHORN_LOGS = createItemTag("hawthorn_logs");
         public static final TagKey<Item> LOGS = createItemTag("logs");
         public static final TagKey<Item> PLANKS = createItemTag("planks");
         public static final TagKey<Item> RAW_FOODS = createItemTag("raw_foods");
+        public static final TagKey<Item> ROWAN_LOGS = createItemTag("rowan_logs");
         public static final TagKey<Item> SAPLINGS = createItemTag("saplings");
         public static final TagKey<Item> SLABS = createItemTag("slabs");
         public static final TagKey<Item> STAIRS = createItemTag("stairs");

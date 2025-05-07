@@ -30,6 +30,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
     }
 
     public void addEnchantedTags(Provider provider) {
+        tag(ETags.Blocks.ALDER_LOGS)
+                .add(EBlocks.ALDER_LOG.get(), EBlocks.STRIPPED_ALDER_LOG.get());
         tag(ETags.Blocks.BLIGHT_DECAY_BLOCKS)
                 .add(Blocks.SAND, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT);
         tag(ETags.Blocks.BLIGHT_DECAYABLE_BLOCKS)
@@ -38,6 +40,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .addTags(BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS)
                 .add(Blocks.SHORT_GRASS, Blocks.FERN, Blocks.SWEET_BERRY_BUSH)
                 .add(EBlocks.GLINT_WEED.get());
+        tag(ETags.Blocks.BROOM_SWEEPABLE)
+                .addTags(ETags.Blocks.CHALKS);
         tag(ETags.Blocks.CHALICES)
                 .add(EBlocks.CHALICE.get(), EBlocks.CHALICE_FILLED.get());
         tag(ETags.Blocks.CHALKS)
@@ -50,12 +54,12 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .addTag(ETags.Blocks.WOODEN_FENCES);
         tag(ETags.Blocks.FENCE_GATES)
                 .add(EBlocks.ALDER_FENCE_GATE.get(), EBlocks.HAWTHORN_FENCE_GATE.get(), EBlocks.ROWAN_FENCE_GATE.get());
+        tag(ETags.Blocks.HAWTHORN_LOGS)
+                .add(EBlocks.HAWTHORN_LOG.get(), EBlocks.STRIPPED_HAWTHORN_LOG.get());
         tag(ETags.Blocks.LEAVES)
                 .add(EBlocks.ALDER_LEAVES.get(), EBlocks.ROWAN_LEAVES.get(), EBlocks.HAWTHORN_LEAVES.get());
         tag(ETags.Blocks.LOGS)
-                .add(EBlocks.ALDER_LOG.get(), EBlocks.ROWAN_LOG.get(), EBlocks.HAWTHORN_LOG.get(),
-                        EBlocks.STRIPPED_ALDER_LOG.get(), EBlocks.STRIPPED_ROWAN_LOG.get(),
-                        EBlocks.STRIPPED_HAWTHORN_LOG.get());
+                .addTags(ETags.Blocks.ALDER_LOGS, ETags.Blocks.HAWTHORN_LOGS, ETags.Blocks.ROWAN_LOGS);
         tag(ETags.Blocks.MUTANDIS_BLACKLIST)
                 .add(Blocks.WITHER_ROSE)
                 .add(EBlocks.BLOOD_POPPY.get());
@@ -74,6 +78,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .addTag(BlockTags.SMALL_FLOWERS)
                 .add(Blocks.FERN)
                 .add(EBlocks.GLINT_WEED.get());
+        tag(ETags.Blocks.ROWAN_LOGS)
+                .add(EBlocks.ROWAN_LOG.get(), EBlocks.STRIPPED_ROWAN_LOG.get());
         tag(ETags.Blocks.SAPLINGS)
                 .add(EBlocks.ROWAN_SAPLING.get(), EBlocks.ALDER_SAPLING.get(), EBlocks.HAWTHORN_SAPLING.get());
         tag(ETags.Blocks.SLABS)
@@ -99,7 +105,7 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         // Mineable
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .addTags(ETags.Blocks.LOGS, ETags.Blocks.WOODEN_FENCES, ETags.Blocks.WOODEN_STAIRS,
-                ETags.Blocks.WOODEN_SLABS)
+                        ETags.Blocks.WOODEN_SLABS)
                 .add(EBlocks.SPINNING_WHEEL.get());
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .addTag(ETags.Blocks.LEAVES)

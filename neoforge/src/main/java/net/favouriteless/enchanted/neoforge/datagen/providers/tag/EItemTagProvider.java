@@ -31,12 +31,15 @@ public class EItemTagProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     public void addEnchantedTags(Provider provider) {
         // Copied block tags
+        copy(Blocks.ALDER_LOGS, ETags.Items.ALDER_LOGS);
         copy(Blocks.CHALICES, ETags.Items.CHALICES);
         copy(Blocks.CHALKS, ETags.Items.CHALKS);
         copy(Blocks.FENCE_GATES, ETags.Items.FENCE_GATES);
+        copy(Blocks.HAWTHORN_LOGS, ETags.Items.HAWTHORN_LOGS);
         copy(Blocks.LEAVES, ETags.Items.LEAVES);
         copy(Blocks.LOGS, ETags.Items.LOGS);
         copy(Blocks.PLANKS, ETags.Items.PLANKS);
+        copy(Blocks.ROWAN_LOGS, ETags.Items.ROWAN_LOGS);
         copy(Blocks.SAPLINGS, ETags.Items.SAPLINGS);
         copy(Blocks.SLABS, ETags.Items.SLABS);
         copy(Blocks.STAIRS, ETags.Items.STAIRS);

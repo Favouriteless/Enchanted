@@ -66,14 +66,16 @@ public class ItemUtils {
 		if(a.getItem() != b.getItem())
 			return false;
 
-		DataComponentMap aMap = a.getComponents();
+		DataComponentPatch aMap = a.getComponentsPatch();
 		DataComponentPatch bPatch = b.getComponentsPatch();
 		for(Entry<DataComponentType<?>, Optional<?>> entry : bPatch.entrySet()) {
-			if(!aMap.has(entry.getKey()))
+			if(!aMap.get(entry.getKey()).isPresent())
 				return false;
 
-			Object aComp = aMap.get(entry.getKey());
-			Object bComp = entry.getValue();
+			Optional<?> optional = aMap.get(entry.getKey());
+
+			Object aComp = optional != null ? optional.orElse(null) : null; // Stupid nullable optional from mojang
+			Object bComp = entry.getValue().orElse(null);
 
 			if(!Objects.equals(aComp, bComp))
 				return false;

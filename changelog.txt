@@ -2,3 +2,4 @@
 - CHANGED: Broomsticks will now only float to the ground if nobody is standing on them.
 
 - FIXED: Broomsticks visually snap back to their original position after dismounting.
+- FIXED: DataComponent matching issue in recipes.

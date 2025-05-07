@@ -11,7 +11,9 @@ body:
       label: Please confirm the following
       options:
         - label: This bug is not in another [current issue](https://github.com/Favouriteless/Enchanted/issues)
+          required: true
         - label: This report is not a general support request. If it is, join the [Discord](https://discord.gg/UkVgJ9nb5y)
+          required: true
   - type: dropdown
     id: minecraft-version
     attributes:
@@ -45,6 +47,8 @@ body:
     attributes:
       label: Game Log
       description: Provide a link to your log on a paste site such as [Gist](https://gist.github.com/) or [mclo.gs](https://mclo.gs/).
+    validations:
+      required: true
   - type: dropdown
     id: additional-mods
     attributes:

@@ -28,10 +28,10 @@ public class EnchantedTags {
         public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag(Enchanted.id("hawthorn_logs"));
         public static final TagKey<Block> LEAVES = createBlockTag(Enchanted.id("leaves"));
         public static final TagKey<Block> LOGS = createBlockTag(Enchanted.id("logs"));
-        public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag(Enchanted.id("mutandis_blacklist_plants"));
-        public static final TagKey<Block> MUTANDIS_EXTREMIS_BLACKLIST = createBlockTag(Enchanted.id("mutandis_extremis_blaclist"));
-        public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = createBlockTag(Enchanted.id("mutandis_extremis_plants"));
-        public static final TagKey<Block> MUTANDIS_PLANTS = createBlockTag(Enchanted.id("mutandis_plants"));
+        public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag(Enchanted.id("mutandis_blacklist"));
+        public static final TagKey<Block> MUTANDIS_EXTREMIS_BLACKLIST = createBlockTag(Enchanted.id("mutandis_extremis_blacklist"));
+        public static final TagKey<Block> MUTANDIS_EXTREMIS = createBlockTag(Enchanted.id("mutandis_extremis"));
+        public static final TagKey<Block> MUTANDIS = createBlockTag(Enchanted.id("mutandis"));
         public static final TagKey<Block> PLANKS = createBlockTag(Enchanted.id("planks"));
         public static final TagKey<Block> RITE_FOREST_REPLACEABLE = createBlockTag(Enchanted.id("rite_forest_replaceable"));
         public static final TagKey<Block> ROWAN_LOGS = createBlockTag(Enchanted.id("rowan_logs"));

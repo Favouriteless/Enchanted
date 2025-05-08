@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.datagen.providers.tag;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.access.EnchantedButtonBlock;
 import net.favouriteless.enchanted.common.init.EnchantedTags;
 import net.favouriteless.enchanted.common.init.registry.EBlocks;
 import net.minecraft.core.HolderLookup.Provider;
@@ -64,13 +63,13 @@ public class BlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST)
                 .add(Blocks.WITHER_ROSE)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS)
-                .addTag(EnchantedTags.Blocks.MUTANDIS_PLANTS)
+        tag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS)
+                .addTag(EnchantedTags.Blocks.MUTANDIS)
                 .addTag(EnchantedTags.Blocks.CROPS)
                 .addTag(BlockTags.CROPS)
                 .add(Blocks.SUGAR_CANE, Blocks.CACTUS)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(EnchantedTags.Blocks.MUTANDIS_PLANTS)
+        tag(EnchantedTags.Blocks.MUTANDIS)
                 .addTag(BlockTags.SAPLINGS)
                 .addTag(BlockTags.SMALL_FLOWERS)
                 .add(Blocks.GRASS, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM)

@@ -1,6 +1,6 @@
-- REMOVED: C and V tilt keybinds for the enchanted broomstick. Nobody really used em anyway.
-- CHANGED: Broomsticks will now only float to the ground if nobody is standing on them.
-- CHANGED: Icy needles can now be used with voodoo poppets in addition to bone needles.
-- CHANGED: Brooms now use the enchanted:broom_sweepable tag to determine what they can sweep up.
+- FIXED: Mutandis extremis uses the blacklist for regular mutandis
+- FIXED: Creating a spinning wheel recipe with 0 power will crash
 
-- FIXED: Broomsticks visually snap back to their original position after dismounting.
+ ----- IMPORTANT FOR MODPACK DEVELOPERS -----
+- CHANGED: enchanted:mutandis_plants tag has been renamed to enchanted:mutandis
+- CHANGED: enchanted:mutandis_extremis_plants tag has been renamed to enchanted:mutandis_extremis

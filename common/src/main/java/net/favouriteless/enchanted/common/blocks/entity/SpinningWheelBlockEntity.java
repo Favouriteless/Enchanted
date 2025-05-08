@@ -80,13 +80,12 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 				SpinningRecipe recipe = be.recipeCheck.getRecipeFor(be, level).orElse(null);
 				boolean wasSpinning = be.spinProgress > 0;
 
-				if(be.canSpin(recipe) && (recipe.getPower() == 0 || powerProvider != null)) {
-					if(powerProvider.tryConsume((double)recipe.getPower() / be.spinDuration)) {
-						if(++be.spinProgress == be.spinDuration) {
-							be.spinProgress = 0;
-							be.spinDuration = recipe.getDuration();
-							be.spin(recipe);
-						}
+				if(be.canSpin(recipe) && (recipe.getPower() == 0 ||
+						(powerProvider != null && powerProvider.tryConsume((double)recipe.getPower() / be.spinDuration)))) {
+					if(++be.spinProgress == be.spinDuration) {
+						be.spinProgress = 0;
+						be.spinDuration = recipe.getDuration();
+						be.spin(recipe);
 					}
 				}
 				else

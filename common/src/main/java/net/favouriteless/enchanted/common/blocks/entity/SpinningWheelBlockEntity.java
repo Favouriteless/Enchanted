@@ -57,7 +57,7 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 		IPowerProvider provider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
 		// Can fit result and has enough power to spin
 		if(recipe != null && be.canSpin(recipe) && (recipe.value().getPower() == 0 ||
-				provider != null && provider.tryConsume((double)recipe.value().getPower() / be.spinDuration))) {
+				(provider != null && provider.tryConsume((double)recipe.value().getPower() / be.spinDuration)))) {
 			if(++be.spinProgress == be.spinDuration) {
 				be.spinProgress = 0;
 				be.spinDuration = recipe.value().getDuration();

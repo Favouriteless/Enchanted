@@ -23,9 +23,8 @@ public class PowerHelper {
 		List<BlockPos> providers = holder.getPositions();
 		while(!providers.isEmpty()) {
 			if(level != null) {
-				BlockPos pos = providers.get(0);
-				BlockEntity be = level.getBlockEntity(pos);
-				if(be instanceof IPowerProvider provider)
+				BlockPos pos = providers.getFirst();
+				if(level.getBlockEntity(pos) instanceof IPowerProvider provider)
 					return provider;
 				else
 					providers.remove(pos);

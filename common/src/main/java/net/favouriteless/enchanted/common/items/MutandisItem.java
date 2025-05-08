@@ -1,7 +1,8 @@
 package net.favouriteless.enchanted.common.items;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.ETags.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet.Named;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,52 +18,51 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MutandisItem extends Item {
 
-    private final TagKey<Block> validBlocks;
+    private final TagKey<Block> validTag;
+    private final TagKey<Block> invalidTag;
 
-    public MutandisItem(TagKey<Block> validBlocks) {
+    public MutandisItem(TagKey<Block> validTag, TagKey<Block> invalidTag) {
         super(new Properties());
-        this.validBlocks = validBlocks;
+        this.validTag = validTag;
+        this.invalidTag = invalidTag;
     }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockState state = level.getBlockState(pos);
 
-        Named<Block> blacklistTag = BuiltInRegistries.BLOCK.getOrCreateTag(Blocks.MUTANDIS_BLACKLIST);
-        Named<Block> validTag = BuiltInRegistries.BLOCK.getOrCreateTag(validBlocks);
+        if(state.is(invalidTag) || !state.is(validTag))
+            return InteractionResult.PASS;
 
-        if(validTag.size() == 0 || validTag.stream().allMatch(blacklistTag::contains)) { // This check prevents the while loop below from becoming infinite.
-            Enchanted.LOG.error("Mutandis tag is invalid! This means the tag is empty, or every item in it is blacklisted.");
-            return InteractionResult.FAIL;
+        Named<Block> validBlocks = BuiltInRegistries.BLOCK.getOrCreateTag(validTag);
+        Named<Block> invalidBlocks = BuiltInRegistries.BLOCK.getOrCreateTag(invalidTag);
+
+        Block[] options = validBlocks.stream()
+                .filter(b -> !invalidBlocks.contains(b))
+                .map(Holder::value)
+                .toArray(Block[]::new);
+
+        if(options.length == 0)
+            return InteractionResult.PASS;
+
+        if(!level.isClientSide) {
+            level.setBlockAndUpdate(pos, options[Enchanted.RANDOM.nextInt(options.length)].defaultBlockState());
+            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+
+            if(!context.getPlayer().isCreative())
+                context.getItemInHand().shrink(1);
         }
-
-        if(!state.is(blacklistTag) && state.is(validTag)) {
-            Level level = context.getLevel();
-            if(!level.isClientSide) {
-
-                BlockState newState = null;
-                while(newState == null) {
-                    // This CAN throw an NPE, but it shouldn't as the above check ensures that validTag does have values it can use.
-                    BlockState _state = validTag.getRandomElement(Enchanted.RANDOMSOURCE).orElse(null).value().defaultBlockState();
-                    if(!_state.is(Blocks.MUTANDIS_BLACKLIST))
-                        newState = _state;
-                }
-
-                level.setBlockAndUpdate(context.getClickedPos(), newState);
-                level.playSound(null, context.getClickedPos(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
-                if(!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
-                return InteractionResult.CONSUME;
-            }
-            else {
-                for(int i = 0; i < 10; i++) {
-                    double dx = context.getClickedPos().getX() + Math.random();
-                    double dy = context.getClickedPos().getY() + Math.random();
-                    double dz = context.getClickedPos().getZ() + Math.random();
-                    level.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0.0D, 0.0D, 0.0D);
-                }
-                return InteractionResult.SUCCESS;
+        else {
+            for(int i = 0; i < 10; i++) {
+                double dx = pos.getX() + Math.random();
+                double dy = pos.getY() + Math.random();
+                double dz = pos.getZ() + Math.random();
+                level.addParticle(ParticleTypes.WITCH, dx, dy, dz, 0, 0, 0);
             }
         }
-        return InteractionResult.FAIL;
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

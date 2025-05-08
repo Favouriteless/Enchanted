@@ -43,10 +43,10 @@ public class EJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new SpinningCategory(guiHelper));
         registration.addRecipeCategories(new DistillingCategory(guiHelper));
         registration.addRecipeCategories(new RiteCategory(guiHelper));
-        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.CAULDRON, Component.translatable("jei.enchanted.witch_cauldron"), EItems.WITCH_CAULDRON.get()));
-        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.KETTLE, Component.translatable("jei.enchanted.witch_cauldron"), EItems.KETTLE.get()));
-        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS, EItems.MUTANDIS.get(), Component.translatable("jei.enchanted.mutandis")));
-        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS_EXTREMIS, EItems.MUTANDIS_EXTREMIS.get(), Component.translatable("jei.enchanted.mutandis_extremis")));
+        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.CAULDRON, Component.translatable("jei.category.enchanted.witch_cauldron"), EItems.WITCH_CAULDRON.get()));
+        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.KETTLE, Component.translatable("jei.category.enchanted.kettle"), EItems.KETTLE.get()));
+        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS, EItems.MUTANDIS.get(), Component.translatable("jei.category.enchanted.mutandis")));
+        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS_EXTREMIS, EItems.MUTANDIS_EXTREMIS.get(), Component.translatable("jei.category.enchanted.mutandis_extremis")));
     }
 
     @Override
@@ -60,6 +60,7 @@ public class EJeiPlugin implements IModPlugin {
         JeiRiteRecipe.register(registration);
         JeiMutandisRecipe.register(registration);
         registration.addIngredientInfo(new ItemStack(EItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.chalice_filled"));
+        registration.addIngredientInfo(new ItemStack(EItems.WITCH_CAULDRON.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.witch_cauldron"));
     }
 
     @Override

@@ -27,10 +27,10 @@ public class ETags {
         public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag("hawthorn_logs");
         public static final TagKey<Block> LEAVES = createBlockTag("leaves");
         public static final TagKey<Block> LOGS = createBlockTag("logs");
-        public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag("mutandis_blacklist_plants");
-        public static final TagKey<Block> MUTANDIS_EXTREMIS_BLACKLIST = createBlockTag("mutandis_extremis_blaclist");
-        public static final TagKey<Block> MUTANDIS_EXTREMIS_PLANTS = createBlockTag("mutandis_extremis_plants");
-        public static final TagKey<Block> MUTANDIS_PLANTS = createBlockTag("mutandis_plants");
+        public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag("mutandis_blacklist");
+        public static final TagKey<Block> MUTANDIS_EXTREMIS_BLACKLIST = createBlockTag("mutandis_extremis_blacklist");
+        public static final TagKey<Block> MUTANDIS_EXTREMIS = createBlockTag("mutandis_extremis");
+        public static final TagKey<Block> MUTANDIS = createBlockTag("mutandis");
         public static final TagKey<Block> PLANKS = createBlockTag("planks");
         public static final TagKey<Block> RITE_FOREST_REPLACEABLE = createBlockTag("rite_forest_replaceable");
         public static final TagKey<Block> ROWAN_LOGS = createBlockTag("rowan_logs");

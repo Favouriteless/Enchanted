@@ -10,7 +10,6 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,12 +62,12 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(ETags.Blocks.MUTANDIS_BLACKLIST)
                 .add(Blocks.WITHER_ROSE)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(ETags.Blocks.MUTANDIS_EXTREMIS_PLANTS)
-                .addTags(ETags.Blocks.MUTANDIS_PLANTS, ETags.Blocks.CROPS)
+        tag(ETags.Blocks.MUTANDIS_EXTREMIS)
+                .addTags(ETags.Blocks.MUTANDIS, ETags.Blocks.CROPS)
                 .addTag(BlockTags.CROPS)
                 .add(Blocks.SUGAR_CANE, Blocks.CACTUS)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(ETags.Blocks.MUTANDIS_PLANTS)
+        tag(ETags.Blocks.MUTANDIS)
                 .addTags(BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS)
                 .add(Blocks.SHORT_GRASS, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM)
                 .add(EBlocks.EMBER_MOSS.get(), EBlocks.GLINT_WEED.get(), EBlocks.SPANISH_MOSS.get());

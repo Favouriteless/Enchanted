@@ -47,11 +47,12 @@ public class ELanguageProvider extends LanguageProvider {
         addEntityType(EEntityTypes.FAMILIAR_CAT, "Cat (Familiar)");
 
         addJei(EItems.CHALICE_FILLED, "Right click on a Chalice using redstone soup.");
-        addJei("circle_magic", "Circle Magic");
-        addJei("kettle", "Kettle");
-        addJei("witch_cauldron", "Witch's Cauldron");
-        addJei("mutandis", "Mutandis");
-        addJei("mutandis_extremis", "Mutandis Extremis");
+        addJei(EItems.WITCH_CAULDRON, "Right click on a Cauldron using Annointing Paste");
+        addJeiCategory("circle_magic", "Circle Magic");
+        addJeiCategory("kettle", "Kettle");
+        addJeiCategory("witch_cauldron", "Witch's Cauldron");
+        addJeiCategory("mutandis", "Mutandis");
+        addJeiCategory("mutandis_extremis", "Mutandis Extremis");
         addJei("mutandis.description", "Use mutandis to transmute plants.");
 
         addKey("categories.broomstick", "Broomsticks");
@@ -131,6 +132,10 @@ public class ELanguageProvider extends LanguageProvider {
 
     protected void addRite(String key, String value) {
         add(Enchanted.translationKey("rite", key), value);
+    }
+
+    protected void addJeiCategory(String key, String value) {
+        add(Enchanted.translationKey("jei.category", key), value);
     }
 
     protected void addJei(String key, String value) {

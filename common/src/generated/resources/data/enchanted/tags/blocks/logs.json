@@ -1,7 +1,7 @@
 {
   "values": [
-    "enchanted:alder_log",
-    "enchanted:rowan_log",
-    "enchanted:hawthorn_log"
+    "#enchanted:alder_logs",
+    "#enchanted:hawthorn_logs",
+    "#enchanted:rowan_logs"
   ]
 }

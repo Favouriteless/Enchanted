@@ -39,19 +39,19 @@ public class JeiMutandisRecipe {
     }
 
     public static void register(IRecipeRegistration registration) {
-        BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS_PLANTS).ifPresent(tag -> registration.addRecipes(
+        BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS).ifPresent(tag -> registration.addRecipes(
                 EJeiRecipeTypes.MUTANDIS,
                 tag.stream()
                         .filter(block -> !BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST).map(t -> t.contains(block)).orElse(false))
-                        .map(block -> new JeiMutandisRecipe(EnchantedTags.Blocks.MUTANDIS_PLANTS, new ItemStack(block.value()), Component.translatable("jei.enchanted.mutandis.description")))
+                        .map(block -> new JeiMutandisRecipe(EnchantedTags.Blocks.MUTANDIS, new ItemStack(block.value()), Component.translatable("jei.enchanted.mutandis.description")))
                         .toList())
         );
 
-        BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS).ifPresent(tag -> registration.addRecipes(
+        BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS).ifPresent(tag -> registration.addRecipes(
                 EJeiRecipeTypes.MUTANDIS_EXTREMIS,
                 tag.stream()
                         .filter(block -> !BuiltInRegistries.BLOCK.getTag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_BLACKLIST).map(t -> t.contains(block)).orElse(false))
-                        .map(block -> new JeiMutandisRecipe(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS, new ItemStack(block.value()), Component.translatable("jei.enchanted.mutandis.description")))
+                        .map(block -> new JeiMutandisRecipe(EnchantedTags.Blocks.MUTANDIS_EXTREMIS, new ItemStack(block.value()), Component.translatable("jei.enchanted.mutandis.description")))
                         .toList())
         );
     }

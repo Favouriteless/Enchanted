@@ -30,11 +30,14 @@ public class ItemTagProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     public void addEnchantedTags(Provider provider) {
         // Copied block tags
+        copy(Blocks.ALDER_LOGS, EnchantedTags.Items.ALDER_LOGS);
         copy(Blocks.CHALICES, EnchantedTags.Items.CHALICES);
         copy(Blocks.CHALKS, EnchantedTags.Items.CHALKS);
+        copy(Blocks.HAWTHORN_LOGS, EnchantedTags.Items.HAWTHORN_LOGS);
         copy(Blocks.LEAVES, EnchantedTags.Items.LEAVES);
         copy(Blocks.LOGS, EnchantedTags.Items.LOGS);
         copy(Blocks.PLANKS, EnchantedTags.Items.PLANKS);
+        copy(Blocks.ROWAN_LOGS, EnchantedTags.Items.ROWAN_LOGS);
         copy(Blocks.SAPLINGS, EnchantedTags.Items.SAPLINGS);
         copy(Blocks.SLABS, EnchantedTags.Items.SLABS);
         copy(Blocks.STAIRS, EnchantedTags.Items.STAIRS);

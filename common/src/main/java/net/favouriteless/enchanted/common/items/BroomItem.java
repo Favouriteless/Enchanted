@@ -20,7 +20,7 @@ public class BroomItem extends Item {
 	public InteractionResult useOn(UseOnContext context) {
 		if(!context.getLevel().isClientSide) {
 			BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-			if(state.is(EnchantedTags.Blocks.CHALKS))
+			if(state.is(EnchantedTags.Blocks.BROOM_SWEEPABLE))
 				context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.AIR.defaultBlockState());
 			context.getLevel().playSound(null, context.getClickedPos(), ESoundEvents.BROOM_SWEEP.get(), SoundSource.PLAYERS, 1.0F, 0.8F + Enchanted.RANDOM.nextFloat()*0.2F);
 		}

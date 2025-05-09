@@ -28,6 +28,8 @@ public class BlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
     }
 
     public void addEnchantedTags(Provider provider) {
+        tag(EnchantedTags.Blocks.ALDER_LOGS)
+                .add(EBlocks.ALDER_LOG.get(), EBlocks.STRIPPED_ALDER_LOG.get());
         tag(EnchantedTags.Blocks.BLIGHT_DECAY_BLOCKS)
                 .add(Blocks.SAND, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT);
         tag(EnchantedTags.Blocks.BLIGHT_DECAYABLE_BLOCKS)
@@ -50,22 +52,24 @@ public class BlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(EnchantedTags.Blocks.FENCE_GATES)
                 .add(EBlocks.ALDER_FENCE_GATE.get(), EBlocks.HAWTHORN_FENCE_GATE.get(),
                         EBlocks.ROWAN_FENCE_GATE.get());
+        tag(EnchantedTags.Blocks.HAWTHORN_LOGS)
+                .add(EBlocks.HAWTHORN_LOG.get(), EBlocks.STRIPPED_HAWTHORN_LOG.get());
         tag(EnchantedTags.Blocks.LEAVES)
                 .add(EBlocks.ALDER_LEAVES.get(), EBlocks.ROWAN_LEAVES.get(),
                         EBlocks.HAWTHORN_LEAVES.get());
         tag(EnchantedTags.Blocks.LOGS)
-                .add(EBlocks.ALDER_LOG.get(), EBlocks.ROWAN_LOG.get(),
-                        EBlocks.HAWTHORN_LOG.get());
+                .addTags(EnchantedTags.Blocks.ALDER_LOGS, EnchantedTags.Blocks.HAWTHORN_LOGS,
+                        EnchantedTags.Blocks.ROWAN_LOGS);
         tag(EnchantedTags.Blocks.MUTANDIS_BLACKLIST)
                 .add(Blocks.WITHER_ROSE)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS_PLANTS)
-                .addTag(EnchantedTags.Blocks.MUTANDIS_PLANTS)
+        tag(EnchantedTags.Blocks.MUTANDIS_EXTREMIS)
+                .addTag(EnchantedTags.Blocks.MUTANDIS)
                 .addTag(EnchantedTags.Blocks.CROPS)
                 .addTag(BlockTags.CROPS)
                 .add(Blocks.SUGAR_CANE, Blocks.CACTUS)
                 .add(EBlocks.BLOOD_POPPY.get());
-        tag(EnchantedTags.Blocks.MUTANDIS_PLANTS)
+        tag(EnchantedTags.Blocks.MUTANDIS)
                 .addTag(BlockTags.SAPLINGS)
                 .addTag(BlockTags.SMALL_FLOWERS)
                 .add(Blocks.GRASS, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM)
@@ -78,6 +82,8 @@ public class BlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .addTag(BlockTags.SMALL_FLOWERS)
                 .add(Blocks.FERN)
                 .add(EBlocks.GLINT_WEED.get());
+        tag(EnchantedTags.Blocks.ROWAN_LOGS)
+                .add(EBlocks.ROWAN_LOG.get(), EBlocks.STRIPPED_ROWAN_LOG.get());
         tag(EnchantedTags.Blocks.SAPLINGS)
                 .add(EBlocks.ROWAN_SAPLING.get(), EBlocks.ALDER_SAPLING.get(),
                         EBlocks.HAWTHORN_SAPLING.get());

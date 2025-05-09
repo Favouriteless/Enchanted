@@ -129,6 +129,7 @@ public class RiteCategory implements IRecipeCategory<JeiRiteRecipe> {
             builder.addSlot(RecipeIngredientRole.OUTPUT, startX + (i % 3) * 17, startY + i / 3 * 17).addItemStack(stack);
         }
 
+        circles.clear();
         for(Map.Entry<ResourceKey<CircleMagicShape>, Block> entry : recipe.rite().getShapes().entrySet()) {
             CircleMagicShape shapeKey = Minecraft.getInstance().level.registryAccess().registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY).get(entry.getKey());
             if(shapeKey == null)

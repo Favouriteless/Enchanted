@@ -1,6 +1,6 @@
 [versions]
 # Enchanted
-    enchanted = "3.1.6"
+    enchanted = "3.1.7"
 
 # Mod Dependencies (Common)
     stateobserver = "1.4.2"

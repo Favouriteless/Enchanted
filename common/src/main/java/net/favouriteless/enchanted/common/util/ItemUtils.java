@@ -80,24 +80,21 @@ public class ItemUtils {
     }
 
     private static boolean compareNbt(Tag aTag, Tag bTag) {
-        if(aTag == null) {
+        if(aTag == null)
             return bTag == null;
-        }
-        if(!Objects.equals(aTag, bTag)) {
-            if(aTag instanceof NumericTag aNumeric && bTag instanceof NumericTag bNumeric) {
-                // If numeric, check equal
-                if(aNumeric.getAsFloat() == bNumeric.getAsFloat())
-                    return true;
-            }
 
-            if(aTag instanceof CompoundTag aCompound && bTag instanceof CompoundTag bCompound) {
-                // If compound, compare all keys separately
-                return bCompound.getAllKeys().stream().allMatch(key -> compareNbt(aCompound.get(key), bCompound.get(key)));
-            }
-            return false;
+        if(Objects.equals(aTag, bTag))
+            return true;
+
+        if(aTag instanceof NumericTag aNumeric && bTag instanceof NumericTag bNumeric) {
+            if(aNumeric.getAsFloat() == bNumeric.getAsFloat())
+                return true;
         }
 
-        return true;
+        if(aTag instanceof CompoundTag aCompound && bTag instanceof CompoundTag bCompound)
+            return bCompound.getAllKeys().stream().allMatch(key -> compareNbt(aCompound.get(key), bCompound.get(key)));
+
+        return false;
     }
 
     public static void giveOrDrop(Player player, ItemStack item) {
@@ -108,10 +105,6 @@ public class ItemUtils {
         entity.setNoPickUpDelay();
         entity.setThrower(player.getUUID());
         player.level().addFreshEntity(player);
-    }
-
-    public static String snbtToJson(String snbt) {
-        return snbt.replaceAll("([0-9])[bBsSlLfFdD]([,}])", "$1$2");
     }
 
     /**

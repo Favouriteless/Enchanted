@@ -8,6 +8,7 @@ import net.favouriteless.enchanted.common.init.registry.EnchantedBlockEntityType
 import net.favouriteless.enchanted.common.init.registry.ERecipeTypes;
 import net.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
+import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -111,7 +112,7 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 		for(ItemStack recipeStack : recipe.getItemsIn()) {
 			for(int i = 0; i < 3; i++) {
 				ItemStack input = inventory.get(i);
-				if(ItemStack.isSameItemSameTags(recipeStack, input)) {
+				if(ItemUtils.isSameItemPartial(recipeStack, input)) {
 					input.shrink(recipeStack.getCount());
 					break;
 				}

@@ -112,13 +112,13 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
             builder.addSlot(RecipeIngredientRole.OUTPUT, startX + (i % 3) * 17, startY + i / 3 * 17).addItemStack(stack);
         }
 
+        circles.clear();
         for(Entry<Holder<CircleMagicShape>, Block> entry : recipe.rite().getShapes().entrySet()) {
             ResourceKey<CircleMagicShape> shapeKey = entry.getKey().unwrapKey().orElse(null);
             if(shapeKey == null)
                 return;
 
             ResourceLocation location = shapeKey.location();
-
             ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(
                     location.getNamespace(),
                     String.format("textures/gui/circle_magic_shapes/%s_%s.png", location.getPath(), BuiltInRegistries.BLOCK.getKey(entry.getValue()).getPath())

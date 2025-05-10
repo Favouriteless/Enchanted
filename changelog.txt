@@ -1,3 +1,5 @@
-- FIXED: Partial recipe matching now works
-- FIXED: Spinning wheels do not consume their ingredients when using partially matched items
-- FIXED: Incorrect display of circles in the JEI plugin
+- FIXED: Rites do not have any language entries
+
+I could find no trace of the Rite names ever existing in the entire history of the project. This is concerning, because
+none of us wrote them manually either. All of you may wish to undergo a mental evaluation to ensure this wasn't some
+weird mass hallucination.

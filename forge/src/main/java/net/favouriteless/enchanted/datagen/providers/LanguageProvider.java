@@ -68,6 +68,52 @@ public class LanguageProvider extends net.minecraftforge.common.data.LanguagePro
         addContainer(EBlocks.SPINNING_WHEEL, "Spinning Wheel");
         addContainer(EBlocks.WITCH_OVEN, "Witch's Oven");
 
+        addRite("bind_familiar", "Rite of Binding");
+        addRite("bind_talisman", "Rite of Binding");
+        addRite("bind_talisman_charged", "Rite of Binding");
+        addRite("blight", "Curse of Blight");
+        addRite("broiling", "Rite of Broiling");
+        addRite("broiling_charged", "Rite of Broiling");
+        addRite("charging_stone", "Rite of Charging");
+        addRite("curse_misfortune", "Curse of Misfortune");
+        addRite("curse_overheating", "Curse of Overheating");
+        addRite("curse_sinking", "Curse of Sinking");
+        addRite("duplicate_waystone", "Rite of Binding");
+        addRite("duplicate_waystone_charged", "Rite of Binding");
+        addRite("fertility", "Rite of Fertility");
+        addRite("fertility_charged", "Rite of Fertility");
+        addRite("forest", "Rite of Forest");
+        addRite("imprisonment", "Rite of Imprisonment");
+        addRite("infusion_broom", "Rite of Infusion");
+        addRite("protection", "Rite of Protection");
+        addRite("protection_waystone", "Rite of Protection");
+        addRite("protection_large", "Rite of Protection");
+        addRite("protection_large_waystone", "Rite of Protection");
+        addRite("protection_temporary", "Rite of Protection");
+        addRite("protection_temporary_blooded", "Rite of Protection");
+        addRite("protection_temporary_waystone", "Rite of Protection");
+        addRite("remove_misfortune", "Rite of Curse Removal");
+        addRite("remove_overheating", "Rite of Curse Removal");
+        addRite("remove_sinking", "Rite of Curse Removal");
+        addRite("sanctity", "Rite of Sanctity");
+        addRite("sky_wrath", "Rite of Sky's Wrath");
+        addRite("sky_wrath_charged", "Rite of Sky's Wrath");
+        addRite("sky_wrath_blooded", "Rite of Sky's Wrath");
+        addRite("sky_wrath_blooded_charged", "Rite of Sky's Wrath");
+        addRite("sky_wrath_waystone", "Rite of Sky's Wrath");
+        addRite("sky_wrath_waystone_charged", "Rite of Sky's Wrath");
+        addRite("summon_entity", "Rite of Summoning");
+        addRite("summon_familiar", "Rite of Summoning");
+        addRite("total_eclipse", "Rite of Total Eclipse");
+        addRite("total_eclipse_charged", "Rite of Total Eclipse");
+        addRite("transpose_caster_blooded", "Rite of Transposition");
+        addRite("transpose_caster_waystone", "Rite of Transposition");
+        addRite("transpose_iron", "Rite of Transposition");
+        addRite("waystone", "Rite of Binding");
+        addRite("waystone_charged", "Rite of Binding");
+        addRite("waystone_blooded", "Rite of Binding");
+        addRite("waystone_blooded_charged", "Rite of Binding");
+
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 
@@ -85,6 +131,10 @@ public class LanguageProvider extends net.minecraftforge.common.data.LanguagePro
 
     protected void addJei(Supplier<? extends Item> item, String value) {
         add(Enchanted.translationKey("jei", ForgeRegistries.ITEMS.getKey(item.get()).getPath()), value);
+    }
+
+    protected void addRite(String key, String value) {
+        add(Enchanted.translationKey("rite", key), value);
     }
 
     protected void autoGenerateAll() {

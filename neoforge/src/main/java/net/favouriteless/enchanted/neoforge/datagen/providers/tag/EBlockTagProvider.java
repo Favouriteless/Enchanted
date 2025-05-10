@@ -116,6 +116,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                         EBlocks.ALTAR.get(), EBlocks.POPPET_SHELF.get());
 
         // Other tags
+        tag(BlockTags.CLIMBABLE)
+                .add(EBlocks.SPANISH_MOSS.get());
         tag(BlockTags.CROPS)
                 .addTag(ETags.Blocks.CROPS);
         tag(BlockTags.FENCES)

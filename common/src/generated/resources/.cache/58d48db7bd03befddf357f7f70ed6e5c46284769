@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-08T18:35:19.0425469	Tags for minecraft:block mod id enchanted
+// 1.21.1	2025-05-09T15:47:33.95294	Tags for minecraft:block mod id enchanted
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/block/alder_logs.json
 69c396cb051bbe9a130e6979b67065e5041b179d data/enchanted/tags/block/blight_decayable_blocks.json
 db77d76070801e3294b77d64cfc0adaeb8972d36 data/enchanted/tags/block/blight_decayable_plants.json
@@ -27,6 +27,7 @@ b1bf603e14a40fa231fcff7776962ebc9b20d72e data/enchanted/tags/block/rowan_logs.js
 61da92085ed5dfcbe8d02afa8c3a16917a06d8ca data/enchanted/tags/block/wooden_pressure_plates.json
 08b6def3e9de617893655d4017801562f26b4bb1 data/enchanted/tags/block/wooden_slabs.json
 990b5a153ba74d4169b814216548205322d8dc22 data/enchanted/tags/block/wooden_stairs.json
+32adfa97bb5b4f7b8c06529d3445fb9489cfd873 data/minecraft/tags/block/climbable.json
 26218d57e208f3721ed88151e14ff84c0d671c55 data/minecraft/tags/block/crops.json
 a63c9ec100ada9b80c9c27ba66474b9ccdaff9ef data/minecraft/tags/block/fences.json
 db79e7fde09cdd640b1b64f690b5471b2911d128 data/minecraft/tags/block/fence_gates.json

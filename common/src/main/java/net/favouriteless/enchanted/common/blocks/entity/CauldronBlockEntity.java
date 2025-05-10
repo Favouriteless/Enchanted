@@ -210,8 +210,11 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 				setWater(0);
 				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
-			else
-				fluidAmount -= fluidCapacity / potentialRecipes.get(0).getResultItem(level.registryAccess()).getCount() + 1;
+			else {
+				fluidAmount -= fluidCapacity / potentialRecipes.getFirst().getResultItem(level.registryAccess()).getCount() + 1;
+				if(fluidAmount < 0)
+					fluidAmount = 0;
+			}
 
 			if(!itemOut.isEmpty()) {
 				if(player != null)

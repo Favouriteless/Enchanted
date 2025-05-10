@@ -25,7 +25,7 @@ public class SpanishMossBlock extends VineBlock {
             if (direction != Direction.DOWN) {
                 BooleanProperty booleanproperty = getPropertyForFace(direction);
                 boolean flag1 = isMoss && clickedState.getValue(booleanproperty);
-
+                // TODO: Rewrite this class
                 if (!flag1 && this.canSupportAtFace(context.getLevel(), context.getClickedPos(), direction))
                     return newState.setValue(booleanproperty, true);
             }

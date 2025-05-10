@@ -1,6 +1,2 @@
-- FIXED: Mutandis extremis uses the blacklist for regular mutandis
-- FIXED: Creating a spinning wheel recipe with 0 power will crash
-
------ IMPORTANT FOR MODPACK DEVELOPERS -----
-- CHANGED: enchanted:mutandis_plants tag has been renamed to enchanted:mutandis
-- CHANGED: enchanted:mutandis_extremis_plants tag has been renamed to enchanted:mutandis_extremis
+- CHANGED: Spanish moss is now climbable
+- FIXED: Witch cauldron and kettle can require an extra bucket to fill under certain conditions

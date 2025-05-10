@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Util class for functions related to {@link ItemStack}.
@@ -72,34 +73,28 @@ public class ItemUtils {
             return true;
         }
 
+        // Check if all tags in b are present and equal in a
         CompoundTag aTags = a.getTag();
         CompoundTag bTags = b.getTag();
-        for(String tag : bTags.getAllKeys()) {
-            if(!aTags.contains(tag))
-                return false;
+        return compareNbt(aTags, bTags);
+    }
 
-            Tag aTag = aTags.get(tag);
-            Tag bTag = bTags.get(tag);
-            if(aTag == null) {
-                if(bTag == null)
-                    continue;
-                return false;
+    private static boolean compareNbt(Tag aTag, Tag bTag) {
+        if(aTag == null) {
+            return bTag == null;
+        }
+        if(!Objects.equals(aTag, bTag)) {
+            if(aTag instanceof NumericTag aNumeric && bTag instanceof NumericTag bNumeric) {
+                // If numeric, check equal
+                if(aNumeric.getAsFloat() == bNumeric.getAsFloat())
+                    return true;
             }
 
-            if(!Objects.equals(aTag, bTag)) {
-                if(aTag instanceof NumericTag aNumeric && bTag instanceof NumericTag bNumeric) {
-                    // If numeric, check equal
-                    if(aNumeric.getAsFloat() == bNumeric.getAsFloat())
-                        continue;
-                }
-
-                if(aTag instanceof CompoundTag aCompound && bTag instanceof CompoundTag bCompound) {
-                    // If compound, convert SNBT to json, then check equal
-                    if(snbtToJson(aCompound.toString()).equals(snbtToJson(bCompound.toString())))
-                        continue;
-                }
-                return false;
+            if(aTag instanceof CompoundTag aCompound && bTag instanceof CompoundTag bCompound) {
+                // If compound, compare all keys separately
+                return bCompound.getAllKeys().stream().allMatch(key -> compareNbt(aCompound.get(key), bCompound.get(key)));
             }
+            return false;
         }
 
         return true;

@@ -54,6 +54,9 @@ public class ELanguageProvider extends LanguageProvider {
         addJeiCategory("mutandis", "Mutandis");
         addJeiCategory("mutandis_extremis", "Mutandis Extremis");
         addJei("mutandis.description", "Use mutandis to transmute plants.");
+        addJei("arthana.bat", "Obtained by killing a bat with an arthana. Looting increases the odds.");
+        addJei("arthana.wolf", "Obtained by killing a wolf with an arthana. Looting increases the odds.");
+        addJei("arthana.creeper", "Obtained by killing a creeper with an arthana. Looting increases the odds.");
 
         addKey("categories.broomstick", "Broomsticks");
         addKey("broom_aim_down", "Point Down");

@@ -59,8 +59,10 @@ public class EJeiPlugin implements IModPlugin {
 
         JeiRiteRecipe.register(registration);
         JeiMutandisRecipe.register(registration);
+
         registration.addIngredientInfo(new ItemStack(EItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.chalice_filled"));
         registration.addIngredientInfo(new ItemStack(EItems.WITCH_CAULDRON.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.witch_cauldron"));
+        registration.addIngredientInfo(new ItemStack(EItems.WOOL_OF_BAT.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.arthana.drops"));
     }
 
     @Override

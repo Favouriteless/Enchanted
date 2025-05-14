@@ -1,0 +1,12 @@
+{
+  "title": "Getting Started",
+  "landing_text": "To get started in witchcraft, first you must know the basic tools and equipment used by witches.\n\nThis chapter tells you everything you need to know about getting started as a Witch",
+  "icon": { "id": "enchanted:arthana", "count": 1},
+  "entries": [
+    "getting_started/taglocks",
+    "getting_started/earmuffs"
+  ],
+  "children": [
+    "altars"
+  ]
+}

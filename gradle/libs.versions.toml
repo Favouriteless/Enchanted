@@ -3,7 +3,8 @@
     enchanted = "4.0.11-beta"
 
 # Common
-    stateobserver = "1.5.3"
+    stateobserver = "1.6.1"
+    modopedia = "0.0.8"
     geckolib = "4.7"
     forgeconfigapi = "21.1.1"
     iris-common = "1.8.0-beta.8+1.21.1-neoforge"
@@ -45,6 +46,7 @@
 [libraries]
 # Common
     stateobserver-common = { group = "net.favouriteless.stateobserver", name = "stateobserver-common-1.21.1", version.ref = "stateobserver" }
+    modopedia-common = { group = "net.favouriteless.modopedia", name = "modopedia-common-1.21.1", version.ref = "modopedia" }
     geckolib-common = { group = "software.bernie.geckolib", name = "geckolib-common-1.21.1", version.ref = "geckolib" }
     forgeconfigapi-common = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-common-neoforgeapi", version.ref = "forgeconfigapi" }
     iris-common = { group = "maven.modrinth", name = "iris", version.ref = "iris-common"}
@@ -52,6 +54,7 @@
 
 # NeoForge
     stateobserver-neoforge = { group = "net.favouriteless.stateobserver", name = "stateobserver-neoforge-1.21.1", version.ref = "stateobserver" }
+    modopedia-neoforge = { group = "net.favouriteless.modopedia", name = "modopedia-neoforge-1.21.1", version.ref = "modopedia" }
     geckolib-neoforge = { group = "software.bernie.geckolib", name = "geckolib-neoforge-1.21.1", version.ref = "geckolib" }
     iris-neoforge = { group = "maven.modrinth", name = "iris", version.ref = "iris-neoforge"}
     jei-neoforge-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei-neoforge" }
@@ -59,6 +62,7 @@
 
 # Fabric
     stateobserver-fabric = { group = "net.favouriteless.stateobserver", name = "stateobserver-fabric-1.21.1", version.ref = "stateobserver" }
+    modopedia-fabric = { group = "net.favouriteless.modopedia", name = "modopedia-fabric-1.21.1", version.ref = "modopedia" }
     geckolib-fabric = { group = "software.bernie.geckolib", name = "geckolib-fabric-1.21.1", version.ref = "geckolib" }
     forgeconfigapi-fabric = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-fabric", version.ref = "forgeconfigapi" }
     iris-fabric = { group = "maven.modrinth", name = "iris", version.ref = "iris-fabric"}

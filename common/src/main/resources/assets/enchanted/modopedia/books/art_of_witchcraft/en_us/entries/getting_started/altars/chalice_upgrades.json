@@ -1,0 +1,15 @@
+{
+  "title": "Chalice Upgrades",
+  "icon": { "id": "enchanted:chalice_filled" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:text_with_header",
+          "header": "Chalice Upgrades",
+          "text": "A chalice may be placed on top of an altar to increase its power capacity. The chalice can be filled by using $(b)Redstone Soup$() on it.\n\n$(b)Chalice:$() +1x Power Capacity\n$(b)Filled Chalice:$() +2x Power Capacity."
+        }
+      ]
+    }
+  ]
+}

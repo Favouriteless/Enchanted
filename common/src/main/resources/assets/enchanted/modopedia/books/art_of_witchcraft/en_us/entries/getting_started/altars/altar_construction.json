@@ -1,0 +1,15 @@
+{
+  "title": "Constructing an Altar",
+  "icon": { "id": "enchanted:altar" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:text_with_header",
+          "header": "Constructing an Altar",
+          "text": "To construct an altar, a witch must place $(b)six altar blocks$() to form a rectangular platform.\n\n$(b)Upgrades$()\nCertain blocks may be placed on top of the altar to multiply its effects. Only the best upgrade of each $(b)type$() will count, these are detailed in the rest of the chapter."
+        }
+      ]
+    }
+  ]
+}

@@ -30,6 +30,7 @@ dependencies {
     compileOnly( libs.mixin )
     compileOnly( libs.mixinextras.common )
     compileOnly( libs.stateobserver.common )
+    compileOnly( libs.modopedia.common )
     compileOnly( libs.geckolib.common )
     compileOnly( libs.forgeconfigapi.common )
     compileOnly( libs.iris.common )

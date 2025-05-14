@@ -18,7 +18,7 @@ java {
 }
 
 base {
-    archivesName = "enchanted-fabric-${libs.versions.minecraft.asProvider().get()}"
+    archivesName = "enchanted-fabric-${minecraftVersion}"
 }
 
 repositories {
@@ -42,6 +42,7 @@ dependencies {
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
     modImplementation( libs.stateobserver.fabric )
+    modImplementation( libs.modopedia.fabric )
     modImplementation( libs.geckolib.fabric )
     modImplementation( libs.forgeconfigapi.fabric )
 

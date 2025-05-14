@@ -1,0 +1,15 @@
+{
+  "title": "Earmuffs",
+  "icon": { "id": "enchanted:earmuffs" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:text_with_header",
+          "header": "Earmuffs",
+          "text": "When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential\n\n$(b)Earmuffs$() can dampen deafening sounds, rendering them bearable."
+        }
+      ]
+    }
+  ]
+}

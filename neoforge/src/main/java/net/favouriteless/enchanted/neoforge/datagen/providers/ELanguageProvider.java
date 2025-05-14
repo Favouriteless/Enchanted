@@ -122,6 +122,9 @@ public class ELanguageProvider extends LanguageProvider {
         addRite("waystone_blooded", "Rite of Binding");
         addRite("waystone_blooded_charged", "Rite of Binding");
 
+        addBookTitle("art_of_witchcraft", "The Art of Witchcraft");
+        addBookSubtitle("art_of_witchcraft", "A guide to magic");
+
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 
@@ -135,6 +138,14 @@ public class ELanguageProvider extends LanguageProvider {
 
     protected void addRite(String key, String value) {
         add(Enchanted.translationKey("rite", key), value);
+    }
+
+    protected void addBookTitle(String key, String value) {
+        add(Enchanted.translationKey("book.title", key), value);
+    }
+
+    protected void addBookSubtitle(String key, String value) {
+        add(Enchanted.translationKey("book.subtitle", key), value);
     }
 
     protected void addJeiCategory(String key, String value) {

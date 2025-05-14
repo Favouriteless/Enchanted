@@ -66,6 +66,7 @@ neoForge {
 dependencies {
     compileOnly( project(":common") )
     implementation( libs.stateobserver.neoforge )
+    implementation( libs.modopedia.neoforge )
     implementation( libs.geckolib.neoforge ) { isTransitive = false }
 
     compileOnly( libs.iris.neoforge )

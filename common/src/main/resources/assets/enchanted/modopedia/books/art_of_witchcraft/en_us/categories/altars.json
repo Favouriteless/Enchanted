@@ -1,0 +1,11 @@
+{
+  "title": "Altars",
+  "landing_text": "An altar acts as a source of magical energy for chalk circles and most of a witch's tools.\n\nThe amount of natural energy around an altar will determine how effective it is. Generally, a variety of plants is best.",
+  "icon": { "id": "enchanted:altar", "count": 1},
+  "entries": [
+    "getting_started/altars/altar_construction",
+    "getting_started/altars/torch_upgrades",
+    "getting_started/altars/skull_upgrades",
+    "getting_started/altars/chalice_upgrades"
+  ]
+}

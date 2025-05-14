@@ -28,7 +28,7 @@ public class TransposeBlocksRite extends Rite {
 
     @Override
     protected boolean onTick(RiteParams params) {
-        Vec2i offset = type.getInteriorPoints().get(params.ticks());
+        Vec2i offset = type.getInteriorPoints(level.registryAccess()).get(params.ticks());
 
         for (int i = 0; i < pos.getY() - level.getMinBuildHeight(); i++) {
             BlockPos pos = this.pos.offset(offset.x(), -i, offset.y()); // Steps down 1 block per iteration.
@@ -49,7 +49,7 @@ public class TransposeBlocksRite extends Rite {
                     1, 0, 0, 0, 0);
         }
 
-        return params.ticks() < type.getInteriorPoints().size() - 1; // Stop executing when run out of points.
+        return params.ticks() < type.getInteriorPoints(level.registryAccess()).size() - 1; // Stop executing when run out of points.
     }
 
 }

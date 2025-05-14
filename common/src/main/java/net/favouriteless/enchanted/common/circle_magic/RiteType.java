@@ -10,6 +10,7 @@ import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -144,10 +145,10 @@ public class RiteType implements Comparable<RiteType> {
 		return factory.getOutputs();
 	}
 
-	public List<Vec2i> getInteriorPoints() {
-		if (interiorPoints.isEmpty()) {
+	public List<Vec2i> getInteriorPoints(RegistryAccess registryAccess) {
+		if(interiorPoints.isEmpty()) {
 			shapes.keySet().forEach(shapeLoc -> {
-				CircleMagicShape shape = Minecraft.getInstance().getConnection().registryAccess().registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY).get(shapeLoc);
+				CircleMagicShape shape = registryAccess.registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY).get(shapeLoc);
 				if (shape.getRadius() > radius)
 					radius = shape.getRadius();
 				interiorPoints.addAll(shape.getInteriorPoints());

@@ -1,5 +1,1 @@
-- FIXED: Rites do not have any language entries
-
-I could find no trace of the Rite names ever existing in the entire history of the project. This is concerning, because
-none of us wrote them manually either. All of you may wish to undergo a mental evaluation to ensure this wasn't some
-weird mass hallucination.
+- FIXED: Block transposition rites will crash on dedicated servers.

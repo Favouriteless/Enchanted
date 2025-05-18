@@ -1,6 +1,7 @@
 {
   "title": "Constructing an Altar",
   "icon": { "id": "enchanted:altar" },
+  "assigned_items": ["enchanted:altar"],
   "pages": [
     {
       "components": [

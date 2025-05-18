@@ -6,6 +6,8 @@ import net.favouriteless.enchanted.common.entities.EEntityTypes;
 import net.favouriteless.enchanted.common.items.EItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.HoverEvent.Action;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -122,7 +124,7 @@ public class ELanguageProvider extends LanguageProvider {
         addRite("waystone_blooded", "Rite of Binding");
         addRite("waystone_blooded_charged", "Rite of Binding");
 
-        addBookTitle("art_of_witchcraft", "The Art of Witchcraft");
+        addBookTitle("art_of_witchcraft", "Art of Witchcraft");
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
 
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.

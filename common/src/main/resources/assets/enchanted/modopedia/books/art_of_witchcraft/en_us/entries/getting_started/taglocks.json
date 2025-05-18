@@ -1,6 +1,7 @@
 {
   "title": "Taglocks",
   "icon": { "id": "enchanted:taglock" },
+  "assigned_items": ["enchanted:taglock", "enchanted:taglock_kit"],
   "pages": [
     {
       "components": [

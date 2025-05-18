@@ -7,7 +7,18 @@
         {
           "template": "modopedia:text_with_header",
           "header": "Skull Upgrades",
-          "text": "Skulls can increase both the capacity and recharge rate of an altar, with varying effectiveness.\n\n$(b)Skeleton:$() +1x Power Capacity, +1x Recharge Rate\n$(b)Wither:$() +2x Power Capacity, +2x Recharge Rate\n$(b)Player:$() +2.5x Power Capacity, +3x Recharge Rate"
+          "text": "Skulls can increase both the capacity and recharge rate of an altar, with varying effectiveness."
+        },
+        {
+          "template": "enchanted:item_description_list",
+          "x": -2,
+          "y": 57,
+          "items": [
+            { "id": "minecraft:skeleton_skull" },
+            { "id": "minecraft:wither_skeleton_skull" },
+            { "id": "minecraft:player_head", "components": { "minecraft:profile": "Favouriteless", "minecraft:custom_name": "[{\"text\":\"Player Head\",\"italic\":false,\"color\":\"red\"}]" } }
+          ],
+          "text": "+1x Power, +1x Recharge\n+2x Power, +2x Recharge\n+2.5x Power, +3x Recharge"
         }
       ]
     }

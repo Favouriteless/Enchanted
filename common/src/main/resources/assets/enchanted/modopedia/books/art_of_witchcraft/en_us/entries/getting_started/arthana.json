@@ -1,0 +1,16 @@
+{
+  "title": "Arthana",
+  "icon": { "id": "enchanted:arthana" },
+  "assigned_items": ["enchanted:arthana"],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:text_with_header",
+          "header": "Arthana",
+          "text": "The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare magical materials such as:\n\n$(b)Wolf$() Tongue of Dog\n$(b)Creeper$() Creeper Heart\n$(b)Bat$() Wool of Bat"
+        }
+      ]
+    }
+  ]
+}

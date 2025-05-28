@@ -49,10 +49,14 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(ETags.Blocks.CROPS)
                 .add(EBlocks.BELLADONNA.get(), EBlocks.SNOWBELL.get(), EBlocks.MANDRAKE.get(), EBlocks.GARLIC.get(),
                         EBlocks.WOLFSBANE.get());
+        tag(ETags.Blocks.EMBER_MOSS_SPREADS_ON)
+                .add(Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.SAND);
         tag(ETags.Blocks.FENCES)
                 .addTag(ETags.Blocks.WOODEN_FENCES);
         tag(ETags.Blocks.FENCE_GATES)
                 .add(EBlocks.ALDER_FENCE_GATE.get(), EBlocks.HAWTHORN_FENCE_GATE.get(), EBlocks.ROWAN_FENCE_GATE.get());
+        tag(ETags.Blocks.GLINT_WEED_SPREADS_ON)
+                .add(Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.SAND);
         tag(ETags.Blocks.HAWTHORN_LOGS)
                 .add(EBlocks.HAWTHORN_LOG.get(), EBlocks.STRIPPED_HAWTHORN_LOG.get());
         tag(ETags.Blocks.LEAVES)

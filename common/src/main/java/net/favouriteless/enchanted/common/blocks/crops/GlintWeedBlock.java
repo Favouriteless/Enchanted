@@ -1,11 +1,10 @@
 package net.favouriteless.enchanted.common.blocks.crops;
 
+import net.favouriteless.enchanted.common.init.ETags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GlintWeedBlock extends AbstractSpreadingBlock {
@@ -24,8 +23,8 @@ public class GlintWeedBlock extends AbstractSpreadingBlock {
     }
 
     @Override
-    public boolean canSpreadOn(Block block) {
-        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.SAND;
+    public boolean canSpreadOn(BlockState block) {
+        return block.is(ETags.Blocks.GLINT_WEED_SPREADS_ON);
     }
 
 }

@@ -23,8 +23,10 @@ public class EnchantedTags {
         public static final TagKey<Block> CHALICES = createBlockTag(Enchanted.id("chalices"));
         public static final TagKey<Block> CHALKS = createBlockTag(Enchanted.id("chalks"));
         public static final TagKey<Block> CROPS = createBlockTag(Enchanted.id("crops"));
+        public static final TagKey<Block> EMBER_MOSS_SPREADS_ON = createBlockTag(Enchanted.id("ember_moss_spreads_on"));
         public static final TagKey<Block> FENCES = createBlockTag(Enchanted.id("fences"));
         public static final TagKey<Block> FENCE_GATES = createBlockTag(Enchanted.id("fence_gates"));
+        public static final TagKey<Block> GLINT_WEED_SPREADS_ON = createBlockTag(Enchanted.id("glint_weed_spreads_on"));
         public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag(Enchanted.id("hawthorn_logs"));
         public static final TagKey<Block> LEAVES = createBlockTag(Enchanted.id("leaves"));
         public static final TagKey<Block> LOGS = createBlockTag(Enchanted.id("logs"));

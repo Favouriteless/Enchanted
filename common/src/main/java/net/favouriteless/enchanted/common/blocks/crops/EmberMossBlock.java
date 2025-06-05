@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.common.blocks.crops;
 
+import net.favouriteless.enchanted.common.init.EnchantedTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -35,8 +36,8 @@ public class EmberMossBlock extends AbstractSpreadingBlock {
     }
 
     @Override
-    public boolean canSpreadOn(Block block) {
-        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.SAND;
+    public boolean canSpreadOn(BlockState block) {
+        return block.is(EnchantedTags.Blocks.EMBER_MOSS_SPREADS_ON);
     }
 
 }

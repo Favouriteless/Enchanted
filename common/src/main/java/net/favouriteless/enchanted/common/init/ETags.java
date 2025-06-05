@@ -22,8 +22,10 @@ public class ETags {
         public static final TagKey<Block> CHALICES = createBlockTag("chalices");
         public static final TagKey<Block> CHALKS = createBlockTag("chalks");
         public static final TagKey<Block> CROPS = createBlockTag("crops");
+        public static final TagKey<Block> EMBER_MOSS_SPREADS_ON = createBlockTag("ember_moss_spreads_on");
         public static final TagKey<Block> FENCES = createBlockTag("fences");
         public static final TagKey<Block> FENCE_GATES = createBlockTag("fence_gates");
+        public static final TagKey<Block> GLINT_WEED_SPREADS_ON = createBlockTag("glint_weed_spreads_on");
         public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag("hawthorn_logs");
         public static final TagKey<Block> LEAVES = createBlockTag("leaves");
         public static final TagKey<Block> LOGS = createBlockTag("logs");

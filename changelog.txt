@@ -1,1 +1,1 @@
-- FIXED: Block transposition rites will crash on dedicated servers.
+- CHANGED: Ember moss and glint weed now spread based on a tag

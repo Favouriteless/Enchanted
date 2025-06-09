@@ -1,0 +1,21 @@
+{
+  "texture": "enchanted:textures/gui/art_of_witchcraft.png",
+  "width": 385,
+  "height": 211,
+  "tex_width": 385,
+  "tex_height": 315,
+  "pages": [
+    { "u": 84, "v": 50, "width": 100, "height": 135 },
+    { "u": 202, "v": 50, "width": 100, "height": 135 }
+  ],
+  "title_backer": { "x": 81, "y": 53, "u": 0, "v": 239, "width": 105, "height": 28 },
+  "left_button": { "x": 46, "y": 26, "u": 0, "v": 211, "width": 18, "height": 10 },
+  "right_button": { "x": 322, "y": 206, "u": 19, "v": 211, "width": 18, "height": 10 },
+  "back_button": { "x": 184, "y": 206, "u": 54, "v": 211, "width": 18, "height": 11 },
+  "refresh_button": { "x": 78, "y": 181, "u": 38, "v": 211, "width": 0, "height": 0 },
+  "separator": { "u": 0, "v": 267, "width": 100, "height": 6 },
+  "item_frame": { "u": 153, "v": 211, "width": 20, "height": 20 },
+  "crafting_frame": { "u": 173, "v": 211, "width": 54, "height": 54 },
+  "small_frame": { "u": 227, "v": 211, "width": 54, "height": 54 },
+  "large_frame": { "u": 281, "v": 211, "width": 104, "height": 104 }
+}

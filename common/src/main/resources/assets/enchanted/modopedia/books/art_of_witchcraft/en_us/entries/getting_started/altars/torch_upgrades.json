@@ -15,9 +15,9 @@
           "x": -2,
           "y": 57,
           "items": [
-            { "id": "minecraft:torch" },
-            { "id": "minecraft:candle" },
-            { "id": "enchanted:candelabra" }
+            [ { "id": "minecraft:torch" } ],
+            "minecraft:candles",
+            [ { "id": "enchanted:candelabra" } ]
           ],
           "text": "+0.5x Recharge\n+1x Recharge\n+2x Recharge"
         }

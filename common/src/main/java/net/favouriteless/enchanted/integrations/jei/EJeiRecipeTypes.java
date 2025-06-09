@@ -9,7 +9,7 @@ public class EJeiRecipeTypes {
 
     public static final RecipeType<ByproductRecipe> BYPRODUCT = new RecipeType<>(Enchanted.id("byproduct"), ByproductRecipe.class);
     public static final RecipeType<DistillingRecipe> DISTILLING = new RecipeType<>(Enchanted.id("distilling"), DistillingRecipe.class);
-    public static final RecipeType<SpinningRecipe> SPINNING = new RecipeType<>(Enchanted.id("spinning_"), SpinningRecipe.class);
+    public static final RecipeType<SpinningRecipe> SPINNING = new RecipeType<>(Enchanted.id("spinning"), SpinningRecipe.class);
     public static final RecipeType<WitchCauldronRecipe> CAULDRON = new RecipeType<>(Enchanted.id("witch_cauldron"), WitchCauldronRecipe.class);
     public static final RecipeType<KettleRecipe> KETTLE = new RecipeType<>(Enchanted.id("kettle"), KettleRecipe.class);
     public static final RecipeType<JeiRiteRecipe> RITE = new RecipeType<>(Enchanted.id("rite"), JeiRiteRecipe.class);

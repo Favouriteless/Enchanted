@@ -15,8 +15,8 @@
           "x": -2,
           "y": 63,
           "items": [
-            { "id": "enchanted:chalice" },
-            { "id": "enchanted:chalice_filled" }
+            [ { "id": "enchanted:chalice" } ],
+            [ { "id": "enchanted:chalice_filled" } ]
           ],
           "text": "1x Power\n2x Power"
         }

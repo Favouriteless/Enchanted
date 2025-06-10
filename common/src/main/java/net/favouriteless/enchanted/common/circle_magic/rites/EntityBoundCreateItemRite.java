@@ -31,7 +31,7 @@ public class EntityBoundCreateItemRite extends Rite {
             if(stack.getItem() == EItems.TAGLOCK_FILLED.get()) {
                 if(stack.hasTag() && stack.getTag().contains(TaglockFilledItem.TARGET_TAG)) {
                     ref = stack.getTag().getUUID(TaglockFilledItem.TARGET_TAG);
-                    name = level.getEntity(ref).getName().getString();
+                    name = stack.getTag().getString(TaglockFilledItem.NAME_TAG);
                     break;
                 }
             }

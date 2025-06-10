@@ -1,1 +1,1 @@
-- CHANGED: Rite of Total Eclipse doesn't reset day progress anymore
+- FIXED: JEI plugin does not load on fabric.

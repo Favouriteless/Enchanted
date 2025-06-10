@@ -19,6 +19,9 @@
         ],
         "client": [
             "net.favouriteless.enchanted.fabric.client.EnchantedClientFabric"
+        ],
+        "jei_mod_plugin": [
+            "net.favouriteless.enchanted.integrations.jei.EJeiPlugin"
         ]
     },
     "mixins": [

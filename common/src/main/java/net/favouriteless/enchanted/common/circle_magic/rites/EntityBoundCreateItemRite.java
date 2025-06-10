@@ -4,7 +4,6 @@ import net.favouriteless.enchanted.common.init.registry.EItems;
 import net.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;

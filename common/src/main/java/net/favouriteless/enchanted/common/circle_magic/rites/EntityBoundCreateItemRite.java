@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.common.circle_magic.rites;
 
+import net.favouriteless.enchanted.common.init.registry.EItems;
 import net.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class EntityBoundCreateItemRite extends Rite {
-    //todo: fix
+
     private final List<ItemStack> items;
 
     public EntityBoundCreateItemRite(BaseRiteParams baseParams, RiteParams params, List<ItemStack> items) {
@@ -26,17 +27,17 @@ public class EntityBoundCreateItemRite extends Rite {
         UUID ref = null;
         String name = null;
 
-        for (ItemStack stack : params.consumedItems) {
-            if (stack.getItem() instanceof TaglockFilledItem) {
-                if (stack.getOrCreateTag().contains(TaglockFilledItem.TARGET_TAG)) {
-                    ref = NbtUtils.loadUUID(stack.getTag().get(TaglockFilledItem.TARGET_TAG));
+        for(ItemStack stack : params.consumedItems) {
+            if(stack.getItem() == EItems.TAGLOCK_FILLED.get()) {
+                if(stack.hasTag() && stack.getTag().contains(TaglockFilledItem.TARGET_TAG)) {
+                    ref = stack.getTag().getUUID(TaglockFilledItem.TARGET_TAG);
                     name = level.getEntity(ref).getName().getString();
                     break;
                 }
             }
         }
 
-        for (ItemStack stack : items) {
+        for(ItemStack stack : items) {
             WaystoneHelper.bind(stack, ref, name);
             ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
             level.addFreshEntity(itemEntity);

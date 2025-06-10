@@ -114,6 +114,8 @@ public class LanguageProvider extends net.minecraftforge.common.data.LanguagePro
         addRite("waystone_blooded", "Rite of Binding");
         addRite("waystone_blooded_charged", "Rite of Binding");
 
+        add("item.enchanted.bound_waystone.not_bound", "Not bound");
+
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 

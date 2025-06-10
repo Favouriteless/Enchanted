@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.util;
 
 import net.favouriteless.enchanted.common.init.registry.EItems;
+import net.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -22,8 +23,6 @@ public class WaystoneHelper {
 	public static final String Y = "yPos";
 	public static final String Z = "zPos";
 	public static final String DIMENSION = "dimension";
-	public static final String UUID = "uuid";
-	public static final String NAME = "displayName";
 
 	public static BlockPos getPos(ItemStack stack) {
 		if(stack.getItem() != EItems.BOUND_WAYSTONE.get())
@@ -57,8 +56,8 @@ public class WaystoneHelper {
 		if(stack.getItem() == EItems.BLOODED_WAYSTONE.get()) {
 			if(stack.hasTag()) {
 				CompoundTag nbt = stack.getTag();
-				if(nbt.contains(UUID)) {
-					UUID uuid = nbt.getUUID(UUID);
+				if(nbt.contains(TaglockFilledItem.TARGET_TAG)) {
+					UUID uuid = nbt.getUUID(TaglockFilledItem.TARGET_TAG);
 
 					ServerPlayer player = level.getServer().getPlayerList().getPlayer(uuid);
 					if(player != null)
@@ -88,9 +87,9 @@ public class WaystoneHelper {
 	public static void bind(ItemStack stack, UUID uuid, @Nullable String name) {
 		if(stack.getItem() == EItems.BLOODED_WAYSTONE.get()) {
 			CompoundTag nbt = stack.getOrCreateTag();
-			nbt.putUUID(UUID, uuid);
+			nbt.putUUID(TaglockFilledItem.TARGET_TAG, uuid);
 			if(name != null)
-				nbt.putString(NAME, name);
+				nbt.putString(TaglockFilledItem.NAME_TAG, name);
 		}
 	}
 

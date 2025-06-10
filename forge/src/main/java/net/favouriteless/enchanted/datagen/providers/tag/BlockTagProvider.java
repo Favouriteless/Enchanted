@@ -104,6 +104,8 @@ public class BlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(EnchantedTags.Blocks.WOODEN_STAIRS)
                 .add(EBlocks.ROWAN_STAIRS.get(), EBlocks.ALDER_STAIRS.get(),
                         EBlocks.HAWTHORN_STAIRS.get());
+        tag(EnchantedTags.Blocks.BROOM_SWEEPABLE)
+                .addTag(EnchantedTags.Blocks.CHALKS);
     }
 
     public void addVanillaTags(Provider provider) {

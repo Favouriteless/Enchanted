@@ -14,7 +14,6 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -139,12 +138,16 @@ public abstract class Rite {
      * {@link Rite#onStart(RiteParams)}. Override this if you want to change it for some reason.
      */
     protected UUID findTargetUUID(ServerLevel level, BlockPos pos, RiteParams params) {
-        for (ItemStack stack : params.consumedItems) {
-            if (stack.getItem() instanceof TaglockFilledItem) {
-                if (stack.getOrCreateTag().contains(TaglockFilledItem.TARGET_TAG)) {
-                    return NbtUtils.loadUUID(stack.getTag().get(TaglockFilledItem.TARGET_TAG));
-                }
-            }
+        for(ItemStack stack : params.consumedItems) {
+            if(!stack.hasTag())
+                continue;
+
+            CompoundTag nbt = stack.getTag();
+
+            if(!nbt.contains(TaglockFilledItem.TARGET_TAG))
+                continue;
+
+            return nbt.getUUID(TaglockFilledItem.TARGET_TAG);
         }
         return null;
     }

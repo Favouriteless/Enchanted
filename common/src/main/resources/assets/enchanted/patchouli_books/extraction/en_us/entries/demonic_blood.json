@@ -6,6 +6,10 @@
     {
       "type": "enchanted:distillery_recipe",
       "recipe": "enchanted:distilling/demon_heart_diamond_vapour"
+    },
+    {
+      "type": "enchanted:distillery_recipe",
+      "recipe": "enchanted:distilling/diamond_vapour_blaze_rod"
     }
   ],
   "read_by_default": true

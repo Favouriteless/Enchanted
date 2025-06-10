@@ -1,1 +1,4 @@
-- FIXED: Rite of Total Eclipse doesn't reset day progress anymore
+- FIXED: JEI plugin does not load on fabric.
+- FIXED: Demonic blood second recipe is not in the extraction book.
+- FIXED: Broom does not sweep chalk.
+- FIXED: Entity targets don't get applied to rites.

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TaglockFilledItem extends Item {
+
     public static final String TARGET_TAG = "entity";
     public static final String NAME_TAG = "entityName";
 

@@ -1,14 +1,15 @@
-// 1.20.1	2025-05-28T12:12:58.471407	Tags for minecraft:block mod id enchanted
+// 1.20.1	2025-06-10T07:07:35.661306	Tags for minecraft:block mod id enchanted
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/blocks/alder_logs.json
-032a28906df93325eea0f3c0b2070e0f2344aa47 data/enchanted/tags/blocks/blight_decay_blocks.json
 69c396cb051bbe9a130e6979b67065e5041b179d data/enchanted/tags/blocks/blight_decayable_blocks.json
 d7b586bbe2081b57c98765eb70ddbf16670a018a data/enchanted/tags/blocks/blight_decayable_plants.json
+032a28906df93325eea0f3c0b2070e0f2344aa47 data/enchanted/tags/blocks/blight_decay_blocks.json
+181fea80d046f4ab0fe3aa89579ae39eb6bc9c87 data/enchanted/tags/blocks/broom_sweepable.json
 e7ff58a601c24e056dc5521f018555f7e596ec4e data/enchanted/tags/blocks/chalices.json
 cc0b47d4892d7d2ed9f5813df5bc1d69754bd3ef data/enchanted/tags/blocks/chalks.json
 bc7721a66aee97cea11dffcfa62295799c09460b data/enchanted/tags/blocks/crops.json
 75dba89f697956e874f2cadecb3b09a0d89f0c6a data/enchanted/tags/blocks/ember_moss_spreads_on.json
-11c11e8d3eb37d55c44dfbad3c5d2fc892bd4fd2 data/enchanted/tags/blocks/fence_gates.json
 af21188360929836cdf79542ec2c5b1ff6032459 data/enchanted/tags/blocks/fences.json
+11c11e8d3eb37d55c44dfbad3c5d2fc892bd4fd2 data/enchanted/tags/blocks/fence_gates.json
 75dba89f697956e874f2cadecb3b09a0d89f0c6a data/enchanted/tags/blocks/glint_weed_spreads_on.json
 2b6211b51490f8caac3959b72e04e988a45ebc11 data/enchanted/tags/blocks/hawthorn_logs.json
 847203a50ec44d614777e94b9ece91cefd7d94fa data/enchanted/tags/blocks/leaves.json
@@ -26,8 +27,8 @@ b1bf603e14a40fa231fcff7776962ebc9b20d72e data/enchanted/tags/blocks/rowan_logs.j
 08b6def3e9de617893655d4017801562f26b4bb1 data/enchanted/tags/blocks/wooden_slabs.json
 990b5a153ba74d4169b814216548205322d8dc22 data/enchanted/tags/blocks/wooden_stairs.json
 26218d57e208f3721ed88151e14ff84c0d671c55 data/minecraft/tags/blocks/crops.json
-db79e7fde09cdd640b1b64f690b5471b2911d128 data/minecraft/tags/blocks/fence_gates.json
 a63c9ec100ada9b80c9c27ba66474b9ccdaff9ef data/minecraft/tags/blocks/fences.json
+db79e7fde09cdd640b1b64f690b5471b2911d128 data/minecraft/tags/blocks/fence_gates.json
 115f6d9fa2c6915eed7935e8b664a6a502fc0624 data/minecraft/tags/blocks/leaves.json
 6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/blocks/logs_that_burn.json
 ec1c16676edb829a286ebfed3b7d0209b979c2d9 data/minecraft/tags/blocks/mineable/axe.json

@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,8 +20,8 @@ public class BloodedWaystoneItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         if(stack.hasTag()) {
             CompoundTag nbt = stack.getTag();
-            if(nbt.contains(WaystoneHelper.NAME))
-                tooltip.add(Component.literal(nbt.getString(WaystoneHelper.NAME)).withStyle(ChatFormatting.GRAY));
+            if(nbt.contains(TaglockFilledItem.NAME_TAG))
+                tooltip.add(Component.literal(nbt.getString(TaglockFilledItem.NAME_TAG)).withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, level, tooltip, flag);
     }

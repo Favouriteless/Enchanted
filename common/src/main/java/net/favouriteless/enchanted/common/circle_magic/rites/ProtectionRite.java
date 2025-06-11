@@ -66,9 +66,9 @@ public class ProtectionRite extends LocationTargetRite {
 
     @Override
     protected void onStop(RiteParams params) {
-        if (targetPos == null)
+        if(targetPos == null)
             targetPos = pos;
-        if (targetLevel == null)
+        if(targetLevel == null)
             targetLevel = level;
 
         targetLevel.playSound(null, targetPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.MASTER, 1.0f, 0.5f);
@@ -97,9 +97,9 @@ public class ProtectionRite extends LocationTargetRite {
     }
 
     protected void getOrCreateObserver(ServerLevel level, BlockPos pos) {
-        if (observer == null)
+        if(observer == null)
             observer = StateObserverManager.get().getObserver(level, pos, ProtectionRiteObserver.class);
-        if (observer == null)
+        if(observer == null)
             observer = StateObserverManager.get().addObserver(new ProtectionRiteObserver(level, pos,
                     radius + 1, radius + 1, radius + 1, blocksPlayers ? EBlocks.PROTECTION_BARRIER_BLOCKING.get() : EBlocks.PROTECTION_BARRIER.get(), radius));
     }

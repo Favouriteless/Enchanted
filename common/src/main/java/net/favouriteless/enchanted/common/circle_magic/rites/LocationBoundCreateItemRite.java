@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 public class LocationBoundCreateItemRite extends Rite {
-    //todo: fix
+
     private final List<ItemStack> items;
 
     public LocationBoundCreateItemRite(BaseRiteParams baseParams, RiteParams params, List<ItemStack> items) {

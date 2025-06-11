@@ -1,12 +1,12 @@
 package net.favouriteless.enchanted.common.circle_magic.rites;
 
-import net.favouriteless.enchanted.common.init.registry.EItems;
 import net.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.favouriteless.enchanted.common.util.WaystoneHelper;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -24,23 +24,29 @@ public class EntityBoundCreateItemRite extends Rite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        UUID ref = null;
+        UUID uuid = null;
         String name = null;
 
         for(ItemStack stack : params.consumedItems) {
-            if(stack.getItem() == EItems.TAGLOCK_FILLED.get()) {
-                if(stack.hasTag() && stack.getTag().contains(TaglockFilledItem.TARGET_TAG)) {
-                    ref = stack.getTag().getUUID(TaglockFilledItem.TARGET_TAG);
-                    name = level.getEntity(ref).getName().getString();
-                    break;
-                }
-            }
+            if(!stack.hasTag() || !stack.getTag().contains(TaglockFilledItem.TARGET_TAG))
+                continue;
+
+            CompoundTag nbt = stack.getTag();
+            uuid = nbt.getUUID(TaglockFilledItem.TARGET_TAG);
+
+            Entity entity = findEntity(uuid);
+            if(entity != null)
+                name = entity.getDisplayName().getString();
+            else
+                name = nbt.getString(TaglockFilledItem.NAME_TAG);
+
+            break;
         }
 
         for(ItemStack stack : items) {
-            WaystoneHelper.bind(stack, ref, name);
-            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
-            level.addFreshEntity(itemEntity);
+            WaystoneHelper.bind(stack, uuid, name);
+            ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
+            level.addFreshEntity(entity);
         }
         level.playSound(null, pos, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.MASTER, 0.5F, 1.0F);
         randomParticles(ParticleTypes.WITCH);

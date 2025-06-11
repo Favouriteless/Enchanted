@@ -95,7 +95,7 @@ public abstract class Rite {
      * Charged attuned stones will just have their charge consumed.
      */
     protected void consumeItem(ItemEntity entity) {
-        if (!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
+        if(!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
             params.consumedItems.add(entity.getItem());
             entity.discard();
         } else {
@@ -114,20 +114,20 @@ public abstract class Rite {
     protected @Nullable Entity findEntity(UUID uuid) {
         Entity out;
 
-        if (entityCache.containsKey(uuid)) { // Cache our entities first since we're usually trying to grab the same one anyway
+        if(entityCache.containsKey(uuid)) { // Cache our entities first since we're usually trying to grab the same one anyway
             out = entityCache.get(uuid).get();
-            if (out != null)
+            if(out != null)
                 return out;
             entityCache.remove(uuid);
         }
 
         out = level.getServer().getPlayerList().getPlayer(uuid);
-        if (out != null)
+        if(out != null)
             return cacheAndReturn(uuid, out);
 
         for (ServerLevel dim : level.getServer().getAllLevels()) {
             out = dim.getEntity(uuid);
-            if (out != null)
+            if(out != null)
                 return cacheAndReturn(uuid, out);
         }
         return null;

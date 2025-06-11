@@ -30,7 +30,7 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
         transposee.level().playSound(null, transposee.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1, 1);
 
         Vec3 destination = targetPos.getCenter().add(0, 0.01D, 0);
-        if (targetLevel != transposee.level())
+        if(targetLevel != transposee.level())
             transposee.changeDimension(targetLevel);
         else
             transposee.teleportTo(destination.x, destination.y, destination.z);

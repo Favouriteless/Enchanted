@@ -1,1 +1,1 @@
-- FIXED: JEI plugin does not load on fabric.
+- CHANGED: Various entity targeting rites now choose their position on execution, rather than on cast.

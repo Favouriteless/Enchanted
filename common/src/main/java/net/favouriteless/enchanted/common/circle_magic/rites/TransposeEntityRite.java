@@ -17,12 +17,9 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
+        super.onStart(params);
         Entity transposee = getTransposee(params);
         if(transposee == null)
-            return cancel();
-
-        findTargetLocation(params);
-        if(targetLevel == null || targetPos == null)
             return cancel();
 
         portalParticles((ServerLevel)transposee.level(), transposee.blockPosition());

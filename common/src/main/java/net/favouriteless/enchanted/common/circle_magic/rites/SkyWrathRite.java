@@ -18,11 +18,9 @@ public class SkyWrathRite extends LocationTargetRite {
     @Override
     protected boolean onStart(RiteParams params) {
         super.onStart(params);
-        if(targetLevel == null || targetPos == null)
-            return false;
 
         targetLevel.sendParticles(EParticleTypes.SKY_WRATH_SEED.get(),
-                pos.getX()+0.5D, pos.getY()+2, pos.getZ()+0.5D,
+                pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D,
                 1, 0, 0, 0, 0);
 
         return true;
@@ -34,6 +32,7 @@ public class SkyWrathRite extends LocationTargetRite {
             level.setWeatherParameters(0, 6000, true, true);
         }
         else if(params.ticks() > EXPLODE) {
+            findTargetLocation(params); // Just in case the entity variant has it's target move position
             spawnLightning(targetLevel, targetPos.getX() + 0.5D, targetPos.getY(), targetPos.getZ() + 0.5D);
             return false;
         }

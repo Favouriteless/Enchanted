@@ -5,6 +5,7 @@ import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,6 +27,11 @@ public class EntityBoundCreateItemRite extends Rite {
         for(ItemStack stack : params.consumedItems) {
             if(stack.has(EDataComponents.ENTITY_REF.get())) {
                 ref = stack.get(EDataComponents.ENTITY_REF.get());
+
+                Entity entity = findEntity(ref.uuid()); // Try to re-grab name if possible.
+                if(entity != null)
+                    ref = EntityRefData.of(ref.uuid(), entity.getDisplayName().getString());
+
                 break;
             }
         }

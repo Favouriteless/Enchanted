@@ -1,0 +1,24 @@
+{
+  "title": "Mutandis",
+  "icon": { "id": "enchanted:mutandis" },
+  "assigned_items": ["enchanted:mutandis"],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Mutandis",
+          "text": "Mutandis is used to mutate plants into other species you could not normally obtain.\n\nUsing this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:cauldron_recipe",
+          "recipe": "enchanted:witch_cauldron/mutandis"
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@
     {
       "components": [
         {
-          "template": "modopedia:text_with_header",
+          "template": "modopedia:headered_text",
           "header": "Belladonna",
           "text": "Atropa bella-donna, commonly known as deadly nightshade, is a poisonous member of the Solanaceae family.\n\nThe berries and foliage of this plant are extremely toxic and should be handled with care."
         }
@@ -15,15 +15,9 @@
     {
       "components": [
         {
-          "template": "modopedia:multiblock_with_text",
-          "text": "$(b)Procurement:$()\nDropped by tall and short grass.",
-          "multiblock": {
-            "type": "modopedia:simple",
-            "pattern": [[ "B" ]],
-            "key": {
-              "B": { "type": "modopedia:simple", "states": ["enchanted:belladonna[age=4]"] }
-            }
-          }
+          "template": "enchanted:block_page",
+          "block": "enchanted:belladonna[age=4]",
+          "text": "$(b)Procurement:$()\nDropped by tall and short grass."
         }
       ]
     }

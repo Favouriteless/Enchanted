@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-07T16:32:31.8501677	Recipes
+// 1.21.1	2025-06-11T23:28:46.658665	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -45,6 +45,7 @@ d8c234ff449276b733635dfb940010afaebff609 data/enchanted/advancement/recipes/reds
 c0fce2ff107659a0431a83c705cc5fdbe28c986b data/enchanted/advancement/recipes/redstone/rowan_fence_gate.json
 d746632503d188ae07284b603e543e1f60390d27 data/enchanted/advancement/recipes/redstone/rowan_pressure_plate.json
 cc8293bb125da3b2152119231e4424e11bdd2b96 data/enchanted/advancement/recipes/tools/arthana.json
+e46be7ea2b3fb18baca46e12fafa8b0398e4de36 data/enchanted/advancement/recipes/tools/art_of_witchcraft.json
 f470a9783cb61bf995d36dfba68cd80d98fa169d data/enchanted/advancement/recipes/tools/circle_talisman.json
 42e9d8f85e31e8acbf66c6d53ece4c5e57109274 data/enchanted/advancement/recipes/tools/earmuffs.json
 9fa630b1a8274eb5c3d30afa2570c7a924bd5734 data/enchanted/advancement/recipes/tools/ritual_chalk.json
@@ -58,6 +59,7 @@ f0ecc2eaedc2b74c5bfb7579d563dda93e9da814 data/enchanted/recipe/alder_stairs.json
 99c97f4f5ae253440a5627b03d34544d343d85c7 data/enchanted/recipe/altar.json
 bcf7862d8b682acbf1aed770e670e7b36e9ff674 data/enchanted/recipe/anointing_paste.json
 086171cb67aab99bd0e14dce86908f8b67251c64 data/enchanted/recipe/arthana.json
+b2caf09e79ff2f6508086e84f45af4dc15fe95eb data/enchanted/recipe/art_of_witchcraft.json
 158cb17cd01bf0205798ce6e66a9c5d9c879313a data/enchanted/recipe/attuned_stone.json
 6c85cfa58049dc7f4d968d6fec25bd1609c87353 data/enchanted/recipe/bone_needle.json
 e3d84740234d9a5735b97926ff95833c230c2754 data/enchanted/recipe/broom.json

@@ -1,0 +1,24 @@
+{
+  "title": "Mutandis Extremis",
+  "icon": { "id": "enchanted:mutandis_extremis" },
+  "assigned_items": ["enchanted:mutandis_extremis"],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Mutandis Extremis",
+          "text": "Mutandis Extremis, an enhanced form of $(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.\n\nIt can also be used to create $(b)Blood Poppies$()."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:cauldron_recipe",
+          "recipe": "enchanted:witch_cauldron/mutandis_extremis"
+        }
+      ]
+    }
+  ]
+}

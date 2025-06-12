@@ -48,3 +48,10 @@ license = "All Rights Reserved"
     versionRange = "[${geckolib_version},)"
     ordering = "NONE"
     side = "BOTH"
+
+[[dependencies.enchanted]]
+    modId = "modopedia"
+    type = "required" #mandatory
+    versionRange = "[${modopedia_version},)"
+    ordering = "NONE"
+    side = "BOTH"

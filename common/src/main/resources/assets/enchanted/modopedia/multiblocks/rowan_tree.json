@@ -1,0 +1,51 @@
+{
+  "type": "modopedia:dense",
+  "pattern": [
+    [
+      "     ",
+      "     ",
+      "  T  ",
+      "     ",
+      "     "
+    ],
+    [
+      "     ",
+      "     ",
+      "  T  ",
+      "     ",
+      "     "
+    ],
+    [
+      " LLLL",
+      "LLLLL",
+      "LLTLL",
+      "LLLLL",
+      " LLL "
+    ],
+    [
+      "LLLLL",
+      "LLLLL",
+      "LLTLL",
+      "LLLLL",
+      "LLLLL"
+    ],
+    [
+      "     ",
+      "  L  ",
+      " LTL ",
+      "  LL ",
+      "     "
+    ],
+    [
+      "     ",
+      "  L  ",
+      " LLL ",
+      "  L  ",
+      "     "
+    ]
+  ],
+  "key": {
+    "T": { "type": "modopedia:simple", "states": ["enchanted:rowan_log"] },
+    "L": { "type": "modopedia:simple", "states": ["enchanted:rowan_leaves"] }
+  }
+}

@@ -36,7 +36,8 @@
         "java": ">=21",
         "stateobserver": ">=${stateobserver_version}",
         "geckolib": ">=${geckolib_version}",
-        "forgeconfigapiport": ">=${forgeconfigapi_version}"
+        "forgeconfigapiport": ">=${forgeconfigapi_version}",
+        "modopedia": ">=${modopedia_version}"
     },
     "accessWidener" : "enchanted.accesswidener"
 }

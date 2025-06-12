@@ -1,11 +1,16 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers;
 
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.items.EItems;
 import net.favouriteless.enchanted.neoforge.datagen.builders.recipe.*;
+import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.common.data_components.MDataComponents;
+import net.favouriteless.modopedia.common.items.MItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -212,6 +217,14 @@ public class ERecipeProvider extends RecipeProvider {
 		planksFromLog(output, EItems.ALDER_PLANKS.get(), ETags.Items.ALDER_LOGS, 4);
 		planksFromLog(output, EItems.HAWTHORN_PLANKS.get(), ETags.Items.HAWTHORN_LOGS, 4);
 		planksFromLog(output, EItems.ROWAN_PLANKS.get(), ETags.Items.ROWAN_LOGS, 4);
+
+		ItemStack book = new ItemStack(MItems.BOOK.get());
+		book.set(MDataComponents.BOOK, Enchanted.id("art_of_witchcraft"));
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, book)
+				.requires(Items.INK_SAC).requires(Items.BOOK).requires(Items.FEATHER)
+				.requires(EItems.BELLADONNA_SEEDS.get())
+				.unlockedBy(getHasName(EItems.BELLADONNA_SEEDS.get()), has(EItems.BELLADONNA_SEEDS.get())).save(output, Enchanted.id("art_of_witchcraft"));
 	}
 
 	protected void buildSmeltingRecipes(RecipeOutput output, Provider registries) {

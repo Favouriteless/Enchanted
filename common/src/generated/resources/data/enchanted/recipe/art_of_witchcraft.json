@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:ink_sac"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "enchanted:belladonna_seeds"
+    }
+  ],
+  "result": {
+    "components": {
+      "modopedia:book": "enchanted:art_of_witchcraft"
+    },
+    "count": 1,
+    "id": "modopedia:book"
+  }
+}

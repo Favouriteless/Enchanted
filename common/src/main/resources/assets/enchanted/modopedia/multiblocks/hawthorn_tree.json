@@ -1,0 +1,110 @@
+{
+  "type": "modopedia:dense",
+  "pattern": [
+    [
+      "         ",
+      "         ",
+      "         ",
+      "         ",
+      "    T    ",
+      "         ",
+      "         ",
+      "         ",
+      "         "
+    ],
+    [
+      "         ",
+      "         ",
+      "         ",
+      "         ",
+      "    T    ",
+      "         ",
+      "         ",
+      "         ",
+      "         "
+    ],
+    [
+      "         ",
+      "         ",
+      "         ",
+      "         ",
+      "    TYL  ",
+      "     LYL ",
+      "      L  ",
+      "         ",
+      "         "
+    ],
+    [
+      "         ",
+      "         ",
+      "  L      ",
+      " LYU LLL ",
+      "  L TLLLL",
+      "    LLLLL",
+      "    LLLLL",
+      "     LLL ",
+      "         "
+    ],
+    [
+      "         ",
+      " LLL     ",
+      "LLLLL    ",
+      "LLLLLLLL ",
+      "LLLLTLLLL",
+      " LLLLLLLL",
+      "    LLLLL",
+      "     LLL ",
+      "         "
+    ],
+    [
+      "         ",
+      " LLL     ",
+      "LLLLLL   ",
+      "LLLLLLLL ",
+      "LLLLTLLLL",
+      " LLLLLLLL",
+      "   LLLLLL",
+      "     LLL ",
+      "         "
+    ],
+    [
+      "         ",
+      " LLL     ",
+      "LLLLLL   ",
+      "LLLLLLL  ",
+      "LLLLLLL  ",
+      " LLLLLLL ",
+      "   LLLL  ",
+      "         ",
+      "         "
+    ],
+    [
+      "         ",
+      "  L      ",
+      " LLLLL   ",
+      "  LLLLL  ",
+      "  LLTLL  ",
+      "  LLLLL  ",
+      "   LLL   ",
+      "         ",
+      "         "
+    ],
+    [
+      "         ",
+      "         ",
+      "         ",
+      "    L    ",
+      "   LLL   ",
+      "    L    ",
+      "         ",
+      "         ",
+      "         "
+    ]
+  ],
+  "key": {
+    "T": { "type": "modopedia:simple", "states": ["enchanted:hawthorn_log[axis=y]"] },
+    "Y": { "type": "modopedia:simple", "states": ["enchanted:hawthorn_log[axis=x]"] },
+    "U": { "type": "modopedia:simple", "states": ["enchanted:hawthorn_log[axis=z]"] },
+    "L": { "type": "modopedia:simple", "states": ["enchanted:hawthorn_leaves"] }
+  }
+}

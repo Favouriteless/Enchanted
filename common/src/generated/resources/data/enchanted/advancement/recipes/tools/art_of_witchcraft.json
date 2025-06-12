@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_belladonna_seeds": {
+      "conditions": {
+        "items": [
+          {
+            "items": "enchanted:belladonna_seeds"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "enchanted:art_of_witchcraft"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_belladonna_seeds"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "enchanted:art_of_witchcraft"
+    ]
+  }
+}

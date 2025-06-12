@@ -1,0 +1,92 @@
+{
+  "type": "modopedia:dense",
+  "pattern": [
+    [
+      "       ",
+      "       ",
+      "       ",
+      "   T   ",
+      "       ",
+      "       ",
+      "       "
+    ],
+    [
+      "       ",
+      "       ",
+      "       ",
+      "   T   ",
+      "       ",
+      "       ",
+      "       "
+    ],
+    [
+      "       ",
+      "    L  ",
+      "   LYL ",
+      "   TL  ",
+      "       ",
+      "       ",
+      "       "
+    ],
+    [
+      "   LLL ",
+      "  LLLLL",
+      "  LLLLL",
+      "  LTLLL",
+      "  LYLL ",
+      "   L   ",
+      "       "
+    ],
+    [
+      "   LLL ",
+      "  LLLLL",
+      "  LLLLL",
+      " LLTULL",
+      " LLLLL ",
+      " LLLLL ",
+      "  LLL  "
+    ],
+    [
+      "       ",
+      "   LLL ",
+      "  LLLLL",
+      " LLTLLL",
+      " LLLLLL",
+      " LLLLL ",
+      "  LLL  "
+    ],
+    [
+      "       ",
+      "  LLLL ",
+      " LLLLLL",
+      " LLTLLL",
+      " LLLLLL",
+      "  LLLL ",
+      "       "
+    ],
+    [
+      "       ",
+      "  LLL  ",
+      " LLLLL ",
+      " LLLLL ",
+      " LLLLL ",
+      "  LLL  ",
+      "       "
+    ],
+    [
+      "       ",
+      "       ",
+      "   L   ",
+      "  LLL  ",
+      "   L   ",
+      "       ",
+      "       "
+    ]
+  ],
+  "key": {
+    "T": { "type": "modopedia:simple", "states": ["enchanted:alder_log[axis=y]"] },
+    "Y": { "type": "modopedia:simple", "states": ["enchanted:alder_log[axis=x]"] },
+    "U": { "type": "modopedia:simple", "states": ["enchanted:alder_log[axis=z]"] },
+    "L": { "type": "modopedia:simple", "states": ["enchanted:alder_leaves"] }
+  }
+}

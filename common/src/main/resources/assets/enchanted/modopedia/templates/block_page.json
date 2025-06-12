@@ -1,0 +1,22 @@
+{
+  "processor": "enchanted:block_page",
+  "text_y": 90,
+  "components": [
+    {
+      "type": "modopedia:multiblock",
+      "multiblock": "#multiblock",
+      "width": 100,
+      "height": 100,
+      "offset_x": "#offset_x",
+      "offset_y": "#offset_y",
+      "no_offsets": "#no_offsets",
+      "scale": "#scale"
+    },
+    {
+      "type": "modopedia:text",
+      "y": "#text_y",
+      "text": "#text",
+      "justify": "center"
+    }
+  ]
+}

@@ -41,6 +41,7 @@ dependencies {
 
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
+
     modImplementation( libs.stateobserver.fabric )
     modImplementation( libs.modopedia.fabric )
     modImplementation( libs.geckolib.fabric )
@@ -61,7 +62,7 @@ loom {
 
             client()
             ideConfigGenerated(true)
-            runDir("runs/" + name)
+            runDir("runs/$name")
             programArgs("--username=Favouriteless", "--uuid=9410df73-6be3-41d5-a620-51b2e9be667b")
         }
 
@@ -70,7 +71,7 @@ loom {
 
             server()
             ideConfigGenerated(true)
-            runDir("runs/" + name)
+            runDir("runs/$name")
         }
     }
 

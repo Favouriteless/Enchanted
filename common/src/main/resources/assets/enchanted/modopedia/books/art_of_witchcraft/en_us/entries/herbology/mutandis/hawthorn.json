@@ -1,0 +1,25 @@
+{
+  "title": "Hawthorn Trees",
+  "icon": { "id": "enchanted:hawthorn_sapling" },
+  "assigned_items": ["enchanted:hawthorn_sapling", "enchanted:hawthorn_log", "enchanted:hawthorn_leaves"],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Hawthorn Trees",
+          "text": "This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.\n\nIn addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:multiblock_page",
+          "multiblock_id": "enchanted:hawthorn_tree",
+          "text": "$(b)Procurement:$()\nUse mutandis on a small plant."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Mutated Plants",
+  "landing_text": "Some plants require mutations to be obtained, either by using Mutandis or Mutandis Extremis.\n\nPlants of this nature are covered in this chapter.",
+  "icon": { "id": "enchanted:mutandis" },
+  "entries": [
+    "herbology/mutandis/mutandis",
+    "herbology/mutandis/mutandis_extremis",
+    "herbology/mutandis/rowan",
+    "herbology/mutandis/hawthorn",
+    "herbology/mutandis/alder",
+    "herbology/mutandis/spanish_moss",
+    "herbology/mutandis/glint_weed",
+    "herbology/mutandis/ember_moss"
+  ],
+  "display_on_front_page": false
+}

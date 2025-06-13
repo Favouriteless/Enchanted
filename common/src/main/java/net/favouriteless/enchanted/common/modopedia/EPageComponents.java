@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.integrations.modopedia;
+package net.favouriteless.enchanted.common.modopedia;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.modopedia.api.registries.PageComponentRegistry;

@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.common;
 
 import net.favouriteless.enchanted.common.blocks.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
+import net.favouriteless.enchanted.common.circle_magic.ERiteFactories;
 import net.favouriteless.enchanted.common.effects.EEffects;
 import net.favouriteless.enchanted.common.entities.EEntityTypes;
 import net.favouriteless.enchanted.common.init.ECreativeTab;
@@ -12,10 +13,7 @@ import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.menus.EMenuTypes;
 import net.favouriteless.enchanted.common.network.EPackets;
 import net.favouriteless.enchanted.common.recipes.ERecipeTypes;
-import net.favouriteless.enchanted.common.circle_magic.ERiteFactories;
 import net.favouriteless.enchanted.common.sounds.ESoundEvents;
-import net.favouriteless.enchanted.integrations.modopedia.EPageComponents;
-import net.favouriteless.enchanted.integrations.modopedia.ETemplateProcessors;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
@@ -51,8 +49,6 @@ public class Enchanted {
         EData.load();
         ECreativeTab.load();
         ERiteFactories.load();
-        EPageComponents.load();
-        ETemplateProcessors.load();
     }
 
     public static ResourceLocation id(String path) {

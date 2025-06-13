@@ -4,8 +4,11 @@
   "icon": { "id": "enchanted:arthana", "count": 1 },
   "entries": [
     "getting_started/arthana",
+    "getting_started/earmuffs",
+    "getting_started/broom",
     "getting_started/taglocks",
-    "getting_started/earmuffs"
+    "getting_started/bone_needle",
+    "getting_started/attuned_stone"
   ],
   "children": [
     "altars"

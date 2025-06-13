@@ -6,20 +6,28 @@
     {
       "components": [
         {
-          "template": "modopedia:text_with_header",
+          "template": "modopedia:headered_text",
           "header": "Torch Upgrades",
           "text": "A torch, candelabra or candle can be used as an upgrade. Their effects are as follows:"
         },
         {
           "template": "enchanted:item_description_list",
-          "x": -2,
-          "y": 57,
+          "x": 10,
+          "y": 65,
           "items": [
             [ { "id": "minecraft:torch" } ],
             "minecraft:candles",
             [ { "id": "enchanted:candelabra" } ]
           ],
           "text": "+0.5x Recharge\n+1x Recharge\n+2x Recharge"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:shaped_recipe_page",
+          "recipe": "enchanted:candelabra"
         }
       ]
     }

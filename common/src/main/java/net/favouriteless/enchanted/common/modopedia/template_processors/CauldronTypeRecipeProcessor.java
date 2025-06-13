@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.integrations.modopedia.template_processors;
+package net.favouriteless.enchanted.common.modopedia.template_processors;
 
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;

@@ -1,1 +1,1 @@
-- CHANGED: Various entity targeting rites now choose their position on execution, rather than on cast.
+- ADDED: First iteration of new Modopedia book.

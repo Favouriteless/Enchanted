@@ -5,7 +5,7 @@
     {
       "components": [
         {
-          "template": "modopedia:text_with_header",
+          "template": "modopedia:headered_text",
           "header": "Skull Upgrades",
           "text": "Skulls can increase both the capacity and recharge rate of an altar, with varying effectiveness."
         },

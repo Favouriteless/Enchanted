@@ -1,0 +1,24 @@
+{
+  "title": "Attuned Stones",
+  "icon": { "id": "enchanted:attuned_stone" },
+  "assigned_items": [ "enchanted:attuned_stone" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Attuned Stones",
+          "text": "An attuned stone is a diamond which has been infused with magical energy.\n\nIt can be charged to be used as a portable container for Altar Power, allowing the user to cast circle magic without an altar being present, and is also used in the creation of a lot of magical tools."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:shaped_recipe_page",
+          "recipe": "enchanted:attuned_stone"
+        }
+      ]
+    }
+  ]
+}

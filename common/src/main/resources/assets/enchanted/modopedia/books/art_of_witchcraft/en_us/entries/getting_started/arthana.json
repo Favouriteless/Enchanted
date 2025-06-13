@@ -1,16 +1,80 @@
 {
   "title": "Arthana",
   "icon": { "id": "enchanted:arthana" },
-  "assigned_items": ["enchanted:arthana"],
+  "assigned_items": [ "enchanted:arthana", "enchanted:tongue_of_dog", "enchanted:creeper_heart", "enchanted:wool_of_bat" ],
   "pages": [
     {
       "components": [
         {
-          "template": "modopedia:text_with_header",
+          "template": "modopedia:headered_text",
           "header": "Arthana",
-          "text": "The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare magical materials such as:\n\n$(b)Wolf$() Tongue of Dog\n$(b)Creeper$() Creeper Heart\n$(b)Bat$() Wool of Bat"
+          "text": "The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare magical materials such as:"
+        },
+        {
+          "type": "modopedia:text",
+          "x": 30,
+          "y": 73,
+          "line_height": 17,
+          "text": "Tongue of Dog\nCreeper Heart\nWool of Bat"
+        },
+        {
+          "type": "modopedia:entity",
+          "entity": "minecraft:wolf",
+          "x": 10,
+          "y": 70,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "modopedia:entity",
+          "entity": "minecraft:creeper",
+          "x": 10,
+          "y": 87,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "modopedia:entity",
+          "entity": "minecraft:bat",
+          "x": 10,
+          "y": 104,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "modopedia:tooltip",
+          "tooltip": [ "Wolf" ],
+          "x": 10,
+          "y": 70,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "modopedia:tooltip",
+          "tooltip": [ "Creeper" ],
+          "x": 10,
+          "y": 87,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "modopedia:tooltip",
+          "tooltip": [ "Bat" ],
+          "x": 10,
+          "y": 104,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:shaped_recipe_page",
+          "recipe": "enchanted:arthana"
         }
       ]
     }
+
   ]
 }

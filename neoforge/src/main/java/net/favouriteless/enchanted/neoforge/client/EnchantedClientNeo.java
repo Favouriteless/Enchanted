@@ -37,7 +37,6 @@ import java.util.function.Supplier;
 public class EnchantedClientNeo {
 
     public EnchantedClientNeo(IEventBus bus, ModContainer container) {
-        EnchantedClient.init();
         container.registerConfig(Type.CLIENT, ClientConfig.SPEC, "enchanted-client.toml");
     }
 

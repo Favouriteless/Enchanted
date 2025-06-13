@@ -1,0 +1,24 @@
+{
+  "title": "Bone Needles",
+  "icon": { "id": "enchanted:bone_needle" },
+  "assigned_items": [ "enchanted:bone_needle" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Bone Needles",
+          "text": "Needles are an important part of many tools used for Witchcraft, most notably $(b)taglock kits$() and $(b)poppets$().\n\nA simple needle can be fashioned by whittling a bone."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:shapeless_recipe_page",
+          "recipe": "enchanted:bone_needle"
+        }
+      ]
+    }
+  ]
+}

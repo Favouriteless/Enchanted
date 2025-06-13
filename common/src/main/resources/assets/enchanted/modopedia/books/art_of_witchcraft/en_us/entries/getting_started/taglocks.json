@@ -6,9 +6,17 @@
     {
       "components": [
         {
-          "template": "modopedia:text_with_header",
+          "template": "modopedia:headered_text",
           "header": "Taglocks",
           "text": "Sometimes, you may need to represent another person to perform magic. This can be achieved using a $(b)taglock kit$().\n\nBy using a taglock kit on a Player or their bed, you can collect a sample to use in magic."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:shapeless_recipe_page",
+          "recipe": "enchanted:taglock_kit"
         }
       ]
     }

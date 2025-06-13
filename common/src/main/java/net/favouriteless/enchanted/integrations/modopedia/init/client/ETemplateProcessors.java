@@ -1,9 +1,9 @@
-package net.favouriteless.enchanted.common.modopedia;
+package net.favouriteless.enchanted.integrations.modopedia.init.client;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.modopedia.template_processors.BlockPageProcessor;
-import net.favouriteless.enchanted.common.modopedia.template_processors.CauldronTypeRecipeProcessor;
-import net.favouriteless.modopedia.api.registries.TemplateRegistry;
+import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.BlockPageProcessor;
+import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
+import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 
 public class ETemplateProcessors {
 

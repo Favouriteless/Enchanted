@@ -1,10 +1,10 @@
-package net.favouriteless.enchanted.common.modopedia.template_processors;
+package net.favouriteless.enchanted.integrations.modopedia.client.template_processors;
 
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.TemplateProcessor;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;

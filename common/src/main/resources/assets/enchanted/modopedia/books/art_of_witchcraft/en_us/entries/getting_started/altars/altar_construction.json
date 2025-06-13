@@ -11,8 +11,23 @@
           "text": "To construct an altar, a witch must place $(b)six altar blocks$() to form a rectangular platform."
         },
         {
+          "template": "modopedia:crafting_table_recipe",
+          "recipe": "enchanted:altar",
+          "x": 5,
+          "y": 65
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Upgrades",
+          "text": "Certain blocks may be placed on top of the altar to multiply its effects.\n\nUpgrades have a $(b)type$(), only the best upgrade within a type will be counted."
+        },
+        {
           "type": "modopedia:multiblock",
-          "y": 60,
+          "y": 70,
           "width": 100,
           "height": 70,
           "multiblock": {
@@ -33,15 +48,6 @@
               "t": { "type": "modopedia:simple", "states": [ "enchanted:candelabra" ] }
             }
           }
-        }
-      ]
-    },
-    {
-      "components": [
-        {
-          "template": "modopedia:headered_text",
-          "header": "Upgrades",
-          "text": "Certain blocks may be placed on top of the altar to multiply its effects.\n\nUpgrades have a $(b)type$(), which groups certain blocks together. Only the best upgrade within a type will be counted."
         }
       ]
     }

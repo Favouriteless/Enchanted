@@ -5,5 +5,5 @@
   "texture": "enchanted:art_of_witchcraft",
   "creative_tab": "enchanted:main",
   "model": "modopedia:item/modopedia_books/brown_brass",
-  "type": "enchanted:classic"
+  "type": { "id": "enchanted:classic" }
 }

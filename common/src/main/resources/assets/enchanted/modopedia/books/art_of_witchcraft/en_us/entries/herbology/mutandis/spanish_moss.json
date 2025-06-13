@@ -17,7 +17,7 @@
         {
           "template": "enchanted:block_page",
           "block": "enchanted:spanish_moss",
-          "text": "$(b)Procurement:$()\nUse mutandis on a small plant. Harvest with shears."
+          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$(/b)$(el) on a small plant. Harvest with shears."
         }
       ]
     }

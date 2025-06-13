@@ -112,6 +112,7 @@ modrinth {
     dependencies {
         required.project("stateobserver")
         required.project("geckolib")
+        required.project("modopedia")
     }
 
     //debugMode = true
@@ -132,7 +133,8 @@ tasks.register<TaskPublishCurseForge>("publishToCurseForge") {
 
     mainFile.addRequirement(
         "stateobserver",
-        "geckolib"
+        "geckolib",
+        "modopedia"
     )
 
     //debugMode = true

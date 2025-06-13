@@ -15,7 +15,7 @@
     {
       "components": [
         {
-          "template": "enchanted:shaped_recipe_page",
+          "template": "enchanted:crafting_table_page",
           "recipe": "enchanted:attuned_stone"
         }
       ]

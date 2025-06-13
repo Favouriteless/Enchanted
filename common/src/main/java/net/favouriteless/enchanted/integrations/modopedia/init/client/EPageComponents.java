@@ -1,8 +1,8 @@
-package net.favouriteless.enchanted.common.modopedia;
+package net.favouriteless.enchanted.integrations.modopedia.init.client;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
-import net.favouriteless.modopedia.book.page_components.WidgetPageComponent;
+import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
+import net.favouriteless.modopedia.client.page_components.WidgetPageComponent;
 
 public class EPageComponents {
 

@@ -8,7 +8,7 @@
         {
           "template": "modopedia:headered_text",
           "header": "Alder Trees",
-          "text": "Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when due to their red sap.\n\nAlders are thought to be both a bringer of misfortune and a repellent of negativity."
+          "text": "Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.\n\nAlders are thought to be both a bringer of misfortune and a repellent of negativity."
         }
       ]
     },
@@ -17,7 +17,7 @@
         {
           "template": "enchanted:multiblock_page",
           "multiblock_id": "enchanted:alder_tree",
-          "text": "$(b)Procurement:$()\nUse mutandis on a small plant."
+          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$(/b)$(el) on a small plant."
         }
       ]
     }

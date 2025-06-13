@@ -12,7 +12,7 @@
   "left_button": { "x": 46, "y": 206, "u": 0, "v": 211, "width": 18, "height": 10 },
   "right_button": { "x": 322, "y": 206, "u": 19, "v": 211, "width": 18, "height": 10 },
   "back_button": { "x": 184, "y": 206, "u": 54, "v": 211, "width": 18, "height": 11 },
-  "refresh_button": { "x": 59, "y": 187, "u": 38, "v": 211, "width": 15, "height": 14 },
+  "refresh_button": { "x": 27, "y": 128, "u": 38, "v": 211, "width": 15, "height": 14 },
   "widgets": {
     "separator": { "u": 0, "v": 267, "width": 100, "height": 6 },
     "small_frame": { "u": 136, "v": 211, "width": 20, "height": 20 },

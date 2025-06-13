@@ -14,6 +14,7 @@ import net.favouriteless.enchanted.common.menus.EMenuTypes;
 import net.favouriteless.enchanted.common.network.EPackets;
 import net.favouriteless.enchanted.common.recipes.ERecipeTypes;
 import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.integrations.modopedia.init.common.EBookTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
@@ -28,7 +29,6 @@ public class Enchanted {
 
     public static final Random RANDOM = new Random();
     public static final RandomSource RANDOMSOURCE = RandomSource.create();
-
 
     public static void init() {
         EPackets.register();
@@ -49,6 +49,8 @@ public class Enchanted {
         EData.load();
         ECreativeTab.load();
         ERiteFactories.load();
+
+        EBookTypes.load();
     }
 
     public static ResourceLocation id(String path) {

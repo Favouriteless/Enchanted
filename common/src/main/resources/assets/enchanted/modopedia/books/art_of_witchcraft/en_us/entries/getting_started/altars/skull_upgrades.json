@@ -18,7 +18,7 @@
             [ { "id": "minecraft:wither_skeleton_skull" } ],
             [ { "id": "minecraft:player_head", "components": { "minecraft:profile": "Favouriteless", "minecraft:custom_name": "[{\"text\":\"Player Head\",\"italic\":false,\"color\":\"red\"}]" } } ]
           ],
-          "text": "+1x Power, +1x Recharge\n+2x Power, +2x Recharge\n+2.5x Power, +3x Recharge"
+          "text": "+1x Power +1x Recharge\n+2x Power +2x Recharge\n+2.5x Power +3x Recharge"
         }
       ]
     }

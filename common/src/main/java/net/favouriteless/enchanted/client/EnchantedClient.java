@@ -1,11 +1,9 @@
 package net.favouriteless.enchanted.client;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EKeybinds;
-import net.favouriteless.enchanted.common.modopedia.CenteredTitleBookType;
-import net.favouriteless.enchanted.common.modopedia.EPageComponents;
-import net.favouriteless.enchanted.common.modopedia.ETemplateProcessors;
-import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
+import net.favouriteless.enchanted.integrations.modopedia.init.client.EBookScreenFactories;
+import net.favouriteless.enchanted.integrations.modopedia.init.client.EPageComponents;
+import net.favouriteless.enchanted.integrations.modopedia.init.client.ETemplateProcessors;
 
 public class EnchantedClient {
 
@@ -13,10 +11,9 @@ public class EnchantedClient {
         EKeybinds.load();
         EShaders.load();
 
-        // Modopedia
         EPageComponents.load();
         ETemplateProcessors.load();
-        BookTypeRegistry.get().register(Enchanted.id("classic"), new CenteredTitleBookType());
+        EBookScreenFactories.load();;
     }
 
 }

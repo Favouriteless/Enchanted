@@ -1,1 +1,5 @@
-- ADDED: First iteration of new Modopedia book.
+- ADDED: Modopedia "Study" support for the book.
+
+- CHANGED: Book texture has been updated with new widgets.
+- CHANGED: Made various navigability changes to the book.
+- CHANGED: Made some layout and readability changes to the book.

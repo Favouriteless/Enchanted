@@ -9,7 +9,7 @@
       "y": 10
     },
     {
-      "template": "modopedia:shapeless_recipe",
+      "template": "modopedia:crafting_table_recipe",
       "recipe": "#recipe",
       "x": 5,
       "y": 40

@@ -9,6 +9,7 @@ import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
+import net.favouriteless.enchanted.common.init.ETags.Blocks;
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.enchanted.common.recipes.recipe_inputs.ListInput;
 import net.favouriteless.enchanted.common.util.ItemUtils;
@@ -33,11 +34,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -290,7 +290,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 	}
 
 	public void setWater(int amount) {
-		fluidAmount = amount;
+		fluidAmount = Math.min(amount, fluidCapacity);
 		setChanged();
 		updateBlock();
 	}
@@ -305,13 +305,8 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 	protected abstract void matchRecipes();
 
-	public static boolean providesHeat(BlockState state){
-		return  state.getBlock() == Blocks.FIRE ||
-				state.getBlock() == Blocks.SOUL_FIRE ||
-				state.getBlock() == Blocks.LAVA ||
-				state.getBlock() == Blocks.CAMPFIRE && state.getValue(CampfireBlock.LIT) ||
-				state.getBlock() == Blocks.SOUL_CAMPFIRE && state.getValue(CampfireBlock.LIT) ||
-				state.getBlock() == Blocks.MAGMA_BLOCK;
+	public static boolean providesHeat(BlockState state) {
+		return state.is(Blocks.HEAT_SOURCES) && (!state.getValues().containsKey(BlockStateProperties.LIT) || state.getValue(BlockStateProperties.LIT));
 	}
 
 	private void recalculateTargetColour() {

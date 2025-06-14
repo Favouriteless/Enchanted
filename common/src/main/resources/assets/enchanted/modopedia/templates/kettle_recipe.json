@@ -1,0 +1,40 @@
+{
+  "processor": "enchanted:cauldron_type_recipe",
+  "components": [
+    {
+      "type": "enchanted:cauldron",
+      "x": 5,
+      "y": 49
+    },
+    {
+      "type": "modopedia:header",
+      "text": "Kettle Recipe"
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#inputs",
+      "row_max": 5,
+      "centered": true,
+      "reverse_y": true,
+      "y": "#inputs_y",
+      "x": 50
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#output",
+      "x": 42,
+      "y": 84
+    }
+  ,
+    {
+      "type": "modopedia:text",
+      "text": "#power",
+      "y": 126,
+      "justify": "center"
+    }
+  ]
+}

@@ -29,9 +29,9 @@ public class AnointingPasteItem extends Item {
         if(!level.isClientSide) {
             level.setBlockAndUpdate(pos, EBlocks.WITCH_CAULDRON.get().defaultBlockState());
             context.getItemInHand().shrink(1);
-            level.playSound(context.getPlayer(), pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         else {
+            level.playSound(context.getPlayer(), pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
             spawnParticles(level, pos);
         }
 

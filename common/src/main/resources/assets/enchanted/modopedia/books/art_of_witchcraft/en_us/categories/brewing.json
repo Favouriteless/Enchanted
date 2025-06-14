@@ -1,0 +1,14 @@
+{
+  "title": "Brewing",
+  "landing_text": "One of the most essential skills a witch can possess is the abilities and knowledge to create brews, potions and decoctions.\n\n",
+  "icon": { "id": "enchanted:redstone_soup" },
+  "entries": [
+    "brewing/brewing",
+    "brewing/witch_cauldron",
+    "brewing/kettle",
+    "herbology/mutandis",
+    "herbology/mutandis_extremis"
+  ],
+  "children": [
+  ]
+}

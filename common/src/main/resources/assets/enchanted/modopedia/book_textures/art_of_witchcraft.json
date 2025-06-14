@@ -8,7 +8,7 @@
     { "u": 84, "v": 50, "width": 100, "height": 135 },
     { "u": 202, "v": 50, "width": 100, "height": 135 }
   ],
-  "title_backer": { "x": 81, "y": 53, "u": 0, "v": 239, "width": 98, "height": 28 },
+  "title_backer": { "x": 83, "y": 40, "u": 0, "v": 239, "width": 96, "height": 28 },
   "left_button": { "x": 46, "y": 206, "u": 0, "v": 211, "width": 18, "height": 10 },
   "right_button": { "x": 322, "y": 206, "u": 19, "v": 211, "width": 18, "height": 10 },
   "back_button": { "x": 184, "y": 206, "u": 54, "v": 211, "width": 18, "height": 11 },

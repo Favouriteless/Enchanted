@@ -1,5 +1,2 @@
-- ADDED: Modopedia "Study" support for the book.
-
-- CHANGED: Book texture has been updated with new widgets.
-- CHANGED: Made various navigability changes to the book.
-- CHANGED: Made some layout and readability changes to the book.
+- CHANGED: Cauldrons now take only one bucket of water to fill.
+- CHANGED: Chalice and candelabra models have been made larger in the inventory, item frames and on the ground.

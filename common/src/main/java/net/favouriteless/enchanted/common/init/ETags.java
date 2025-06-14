@@ -27,6 +27,7 @@ public class ETags {
         public static final TagKey<Block> FENCE_GATES = createBlockTag("fence_gates");
         public static final TagKey<Block> GLINT_WEED_SPREADS_ON = createBlockTag("glint_weed_spreads_on");
         public static final TagKey<Block> HAWTHORN_LOGS = createBlockTag("hawthorn_logs");
+        public static final TagKey<Block> HEAT_SOURCES = createBlockTag("heat_sources");
         public static final TagKey<Block> LEAVES = createBlockTag("leaves");
         public static final TagKey<Block> LOGS = createBlockTag("logs");
         public static final TagKey<Block> MUTANDIS_BLACKLIST = createBlockTag("mutandis_blacklist");

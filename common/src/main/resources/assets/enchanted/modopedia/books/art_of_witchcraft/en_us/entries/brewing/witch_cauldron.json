@@ -1,0 +1,31 @@
+{
+  "title": "Witch's Cauldron",
+  "icon": { "id": "enchanted:witch_cauldron" },
+  "assigned_items": [ "enchanted:witch_cauldron", "enchanted:anointing_paste" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Witch's Cauldron",
+          "text": "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to $(b)$(el:brewing/brewing)brew complex potions$()."
+        },
+        {
+          "template": "modopedia:crafting_table_recipe",
+          "recipe": "enchanted:anointing_paste",
+          "x": 5,
+          "y": 70
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:block_page",
+          "block": "enchanted:witch_cauldron",
+          "text": "$(b)Procurement:$()\nUse anointing paste on a cauldron."
+        }
+      ]
+    }
+  ]
+}

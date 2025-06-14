@@ -41,19 +41,21 @@ public abstract class CauldronBlockBase extends Block implements EntityBlock {
 				level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 				return ItemInteractionResult.SUCCESS;
 			}
-			else if(stack.getItem() == Items.BUCKET && cauldron.getWater() >= 1000) {
-				if (!level.isClientSide) {
-					if (cauldron.removeWater(1000)) {
+			else if(stack.getItem() == Items.BUCKET) {
+				if(!level.isClientSide) {
+					if(cauldron.removeWater(cauldron.getWater())) {
 						level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-						stack.shrink(1);
-						ItemUtils.giveOrDrop(player, new ItemStack(Items.WATER_BUCKET));
+						if(cauldron.getWater() >= 1000) {
+							stack.shrink(1);
+							ItemUtils.giveOrDrop(player, new ItemStack(Items.WATER_BUCKET));
+						}
 					}
 				}
 				return ItemInteractionResult.SUCCESS;
 			}
-			else if (stack.getItem() == Items.WATER_BUCKET) {
-				if (!level.isClientSide) {
-					if (cauldron.addWater(1000)) {
+			else if(stack.getItem() == Items.WATER_BUCKET) {
+				if(!level.isClientSide) {
+					if(cauldron.addWater(Integer.MAX_VALUE)) {
 						level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 						if (!player.isCreative()) player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
 					}

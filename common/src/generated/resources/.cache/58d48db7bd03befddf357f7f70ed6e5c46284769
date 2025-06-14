@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-11T23:26:48.2305234	Tags for minecraft:block mod id enchanted
+// 1.21.1	2025-06-14T05:08:17.2371919	Tags for minecraft:block mod id enchanted
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/block/alder_logs.json
 69c396cb051bbe9a130e6979b67065e5041b179d data/enchanted/tags/block/blight_decayable_blocks.json
 db77d76070801e3294b77d64cfc0adaeb8972d36 data/enchanted/tags/block/blight_decayable_plants.json
@@ -12,6 +12,7 @@ af21188360929836cdf79542ec2c5b1ff6032459 data/enchanted/tags/block/fences.json
 11c11e8d3eb37d55c44dfbad3c5d2fc892bd4fd2 data/enchanted/tags/block/fence_gates.json
 75dba89f697956e874f2cadecb3b09a0d89f0c6a data/enchanted/tags/block/glint_weed_spreads_on.json
 2b6211b51490f8caac3959b72e04e988a45ebc11 data/enchanted/tags/block/hawthorn_logs.json
+10a67f90e65783ce27a5be02c7b2cdbc48aa3867 data/enchanted/tags/block/heat_sources.json
 847203a50ec44d614777e94b9ece91cefd7d94fa data/enchanted/tags/block/leaves.json
 7d4d6af77b94f2dc243f0abdd68d45eabf56905e data/enchanted/tags/block/logs.json
 2d1609a0ab74b48695f17db5d115df4c23a80008 data/enchanted/tags/block/mutandis.json

@@ -102,6 +102,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .add(EBlocks.ROWAN_FENCE.get(), EBlocks.ALDER_FENCE.get(), EBlocks.HAWTHORN_FENCE.get());
         tag(ETags.Blocks.WOODEN_STAIRS)
                 .add(EBlocks.ROWAN_STAIRS.get(), EBlocks.ALDER_STAIRS.get(), EBlocks.HAWTHORN_STAIRS.get());
+        tag(ETags.Blocks.HEAT_SOURCES)
+                .add(Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE, Blocks.LAVA, Blocks.MAGMA_BLOCK);
     }
 
     public void addVanillaTags(Provider provider) {

@@ -92,6 +92,39 @@
 			}
 		}
 	],
+	"display": {
+	"thirdperson_righthand": {
+		"translation": [0, 5.25, 0],
+		"scale": [0.7, 0.7, 0.7]
+	},
+	"thirdperson_lefthand": {
+		"translation": [0, 5.25, 0],
+		"scale": [0.7, 0.7, 0.7]
+	},
+	"firstperson_righthand": {
+		"rotation": [0, 45, 0],
+		"translation": [0, 4.75, 0]
+	},
+	"firstperson_lefthand": {
+		"rotation": [0, 45, 0],
+		"translation": [0, 4.75, 0]
+	},
+	"ground": {
+		"translation": [0, 5.25, 0]
+	},
+	"gui": {
+		"rotation": [25, 45, 0],
+		"translation": [0, 5.5, 0],
+		"scale": [1.5, 1.5, 1.5]
+	},
+	"head": {
+		"translation": [0, 14, 0]
+	},
+	"fixed": {
+		"translation": [0, 8.5, 0],
+		"scale": [2, 2, 2]
+	}
+},
 	"groups": [
 		0,
 		{

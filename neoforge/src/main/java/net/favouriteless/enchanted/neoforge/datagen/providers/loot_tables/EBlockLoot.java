@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.loot_tables;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;

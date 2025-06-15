@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.circle_magic;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.api.Vec2i;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

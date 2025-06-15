@@ -1,0 +1,24 @@
+{
+  "title": "Golden Chalk",
+  "icon": { "id": "enchanted:golden_chalk" },
+  "assigned_items": [ "enchanted:golden_chalk" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Golden Chalk",
+          "text": "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)heart glyph$() for $(b)circle magic$() is drawn using golden chalk."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:cauldron_recipe",
+          "recipe": "enchanted:witch_cauldron/golden_chalk"
+        }
+      ]
+    }
+  ]
+}

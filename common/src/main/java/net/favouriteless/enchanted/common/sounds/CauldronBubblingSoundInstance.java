@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.sounds;
 
 import net.favouriteless.enchanted.common.blocks.entity.CauldronBlockEntity;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;

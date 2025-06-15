@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.mixin.common;
 
-import net.favouriteless.enchanted.common.lootextensions.LootExtensions;
+import net.favouriteless.enchanted.common.loot_extensions.LootExtensions;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;

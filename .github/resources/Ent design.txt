@@ -1,0 +1,22 @@
+Phases: (phase)
+- 100% hp: Only use swipes.
+- 75% hp: Ent roars, use slams/fling too. Start phase with jumping slam.
+- 50% hp: Ent roars, start using root attacks.
+
+Attacks:
+- Left arm swipe (1, 2, 3)
+- Right arm swipe (1, 2, 3)
+- Slam (2, 3)
+- Jumping slam (2, 3)
+- Fling (2, 3)
+- Root burst (3)
+- Root target (3)
+
+Combos:
+- Left swipe > right swipe (1, 2, 3)
+- Left swipe > right swipe > slam (2, 3)
+- Fling > jumping slam (2, 3)
+- Fling > root burst (3)
+- Root target > jumping slam (3)
+- Root target > root burst (3)
+

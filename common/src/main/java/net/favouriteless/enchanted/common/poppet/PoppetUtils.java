@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.poppet;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.items.poppets.DeathPoppetItem;
@@ -11,7 +11,6 @@ import net.favouriteless.enchanted.common.network.packets.client.PoppetAnimation
 import net.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
 import net.favouriteless.enchanted.platform.CommonServices;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;

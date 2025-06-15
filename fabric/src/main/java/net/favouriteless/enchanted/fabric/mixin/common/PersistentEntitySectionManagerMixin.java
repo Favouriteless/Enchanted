@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.fabric.mixin.common;
 
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.entity.EntityAccess;

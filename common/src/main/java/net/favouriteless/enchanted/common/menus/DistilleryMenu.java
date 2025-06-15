@@ -1,8 +1,9 @@
 package net.favouriteless.enchanted.common.menus;
 
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.DistilleryBlockEntity;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.init.EMenuTypes;
 import net.favouriteless.enchanted.common.menus.slots.JarInputSlot;
 import net.favouriteless.enchanted.common.menus.slots.OutputSlot;
 import net.favouriteless.enchanted.common.util.MenuUtils;

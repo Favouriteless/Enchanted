@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-11T23:28:46.658665	Recipes
+// 1.21.1	2025-06-15T02:32:20.2997546	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -154,15 +154,11 @@ bb27082b7484e62f69f8c7ddde33a27eeca336ec data/enchanted/recipe/spinning_wheel.js
 c59326f5fb99a39086e1a2139a0ed2b0753eeb2a data/enchanted/recipe/taglock_kit.json
 5d2d2d21ab3c1e5b6da2d91df0672829ae8a5533 data/enchanted/recipe/waystone.json
 8b88b7e4642291d884898711709c0d53e11bdbc0 data/enchanted/recipe/wicker_bundle.json
-c82c74b39b60cef7fdc5f4394e6cd5fb1d6cfa80 data/enchanted/recipe/witch_cauldron/cooked_beef.json
-be0ec8621c6ab6d3ad1dcfbc8587a47465a8cd36 data/enchanted/recipe/witch_cauldron/cooked_chicken.json
-afa09fc76e9e4e531199668a5da9a829609636e6 data/enchanted/recipe/witch_cauldron/cooked_porkchop.json
 577e2a49fc4d29da2191e47282565469a5c4e19c data/enchanted/recipe/witch_cauldron/drop_of_luck.json
 e341d6226975434e0f7a8d6e5be0de962e654957 data/enchanted/recipe/witch_cauldron/golden_chalk.json
 2d29d50712369a4a1ab5fa78bc9d3fa69515e11e data/enchanted/recipe/witch_cauldron/mutandis.json
 3e1a3f7da80cf44ab4422ce3d5c16afdb24cf366 data/enchanted/recipe/witch_cauldron/mutandis_extremis.json
 9347dc156e7ac87e39afed415fbd90ae140ce66a data/enchanted/recipe/witch_cauldron/nether_chalk.json
-dfb90323621e3ad741e2058e571c88c2a2f5924e data/enchanted/recipe/witch_cauldron/nether_wart.json
 c9f9a704697b4256ccc125ca7bdc09ca201c97c5 data/enchanted/recipe/witch_cauldron/otherwhere_chalk.json
 1365db52777809e1a9e9d4434acb080ecb64abde data/enchanted/recipe/witch_oven.json
 11396d73054a93356889c9ebd89e26c8bbf68735 data/enchanted/recipe/wood_ash.json

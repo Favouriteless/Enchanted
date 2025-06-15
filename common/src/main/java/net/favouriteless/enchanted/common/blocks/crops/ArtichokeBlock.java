@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.blocks.crops;
 
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;

@@ -8,7 +8,7 @@
         {
           "template": "modopedia:headered_text",
           "header": "Witch's Cauldron",
-          "text": "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to $(b)$(el:brewing/brewing)brew complex potions$()."
+          "text": "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to brew complex potions."
         },
         {
           "template": "modopedia:crafting_table_recipe",

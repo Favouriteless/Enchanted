@@ -7,6 +7,7 @@
   "mixins": [
     "common.BlockBehaviourMixin",
     "common.LivingEntityMixin",
+    "common.MobMixin",
     "common.SaplingBlockAccessor",
     "common.ZombieVillagerAccessor"
   ],

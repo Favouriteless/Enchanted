@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.platform.CommonServices;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;

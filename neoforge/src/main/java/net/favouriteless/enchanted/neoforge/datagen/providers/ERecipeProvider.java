@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.neoforge.datagen.providers;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.ETags;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.neoforge.datagen.builders.recipe.*;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
@@ -301,10 +301,6 @@ public class ERecipeProvider extends RecipeProvider {
 	}
 
 	protected void buildCauldronRecipes(RecipeOutput output, Provider registries) {
-		CauldronTypeRecipeBuilder.cauldron(new ItemStack(Items.COOKED_BEEF), 0)
-				.inputs(Items.BEEF)
-				.cookColor(0x183016)
-				.finalColor(0x1C5E16).save(output);
 		CauldronTypeRecipeBuilder.cauldron(new ItemStack(EItems.GOLDEN_CHALK.get()), 3000)
 				.inputs(EItems.MANDRAKE_ROOT.get(), Items.GOLD_NUGGET, EItems.RITUAL_CHALK.get())
 				.cookColor(0x594000)
@@ -317,10 +313,6 @@ public class ERecipeProvider extends RecipeProvider {
 				.inputs(Items.NETHER_WART, Items.BLAZE_POWDER, EItems.RITUAL_CHALK.get())
 				.cookColor(0x54011A)
 				.finalColor(0x9C012F).save(output);
-		CauldronTypeRecipeBuilder.cauldron(new ItemStack(Items.COOKED_CHICKEN), 0)
-				.inputs(Items.CHICKEN)
-				.cookColor(0x522854)
-				.finalColor(0x6E1673).save(output);
 		CauldronTypeRecipeBuilder.cauldron(new ItemStack(EItems.DROP_OF_LUCK.get()), 7000)
 				.inputs(EItems.MANDRAKE_ROOT.get(), Items.NETHER_WART, EItems.TEAR_OF_THE_GODDESS.get(),
 						EItems.REFINED_EVIL.get(), EItems.MUTANDIS_EXTREMIS.get())
@@ -334,15 +326,6 @@ public class ERecipeProvider extends RecipeProvider {
 				.inputs(EItems.MUTANDIS.get(), Items.NETHER_WART)
 				.cookColor(0x541818)
 				.finalColor(0x801D1D).save(output);
-		CauldronTypeRecipeBuilder.cauldron(new ItemStack(Items.NETHER_WART), 0)
-				.inputs(EItems.MANDRAKE_ROOT.get(), EItems.TEAR_OF_THE_GODDESS.get(), EItems.DIAMOND_VAPOUR.get(),
-						Items.ENDER_PEARL, Items.WHEAT, EItems.MUTANDIS.get())
-				.cookColor(0x5C2300)
-				.finalColor(0x993400).save(output);
-		CauldronTypeRecipeBuilder.cauldron(new ItemStack(Items.COOKED_PORKCHOP), 0)
-				.inputs(Items.PORKCHOP)
-				.cookColor(0x3D4518)
-				.finalColor(0x626E13).save(output);
 	}
 
 	protected void buildKettleRecipes(RecipeOutput output, Provider registries) {

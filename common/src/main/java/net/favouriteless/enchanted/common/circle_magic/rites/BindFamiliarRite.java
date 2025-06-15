@@ -5,7 +5,7 @@ import net.favouriteless.enchanted.api.familiars.FamiliarType;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.familiars.FamiliarTypes;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

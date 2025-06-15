@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;
 import net.favouriteless.enchanted.integrations.jei.recipes.JeiRiteRecipe;
 import net.minecraft.client.Minecraft;

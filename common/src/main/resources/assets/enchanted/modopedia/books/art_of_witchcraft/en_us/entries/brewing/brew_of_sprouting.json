@@ -1,0 +1,24 @@
+{
+  "title": "Brew of Sprouting",
+  "icon": { "id": "enchanted:brew_of_sprouting" },
+  "assigned_items": [ "enchanted:brew_of_sprouting" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Brew of Sprouting",
+          "text": "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)$(t:This feature is coming soon.)NOTE: UNIMPLEMENTED$()"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:kettle_recipe",
+          "recipe": "enchanted:kettle/brew_of_sprouting"
+        }
+      ]
+    }
+  ]
+}

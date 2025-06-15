@@ -6,11 +6,11 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
-import net.favouriteless.enchanted.common.entities.EEntityTypes;
+import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.common.entities.Mandrake;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.neoforged.fml.config.ModConfig.Type;
 
 public class EnchantedFabric implements ModInitializer {

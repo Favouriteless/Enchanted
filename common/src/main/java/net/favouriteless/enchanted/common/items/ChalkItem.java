@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.items;
 
 import net.favouriteless.enchanted.common.blocks.chalk.AbstractChalkBlock;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;

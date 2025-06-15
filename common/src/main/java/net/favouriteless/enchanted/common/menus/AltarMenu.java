@@ -1,7 +1,8 @@
 package net.favouriteless.enchanted.common.menus;
 
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
+import net.favouriteless.enchanted.common.init.EMenuTypes;
 import net.favouriteless.enchanted.common.util.MenuUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

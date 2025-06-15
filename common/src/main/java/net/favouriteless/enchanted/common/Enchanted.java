@@ -1,19 +1,19 @@
 package net.favouriteless.enchanted.common;
 
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.circle_magic.ERiteFactories;
-import net.favouriteless.enchanted.common.effects.EEffects;
-import net.favouriteless.enchanted.common.entities.EEntityTypes;
+import net.favouriteless.enchanted.common.init.ERiteFactories;
+import net.favouriteless.enchanted.common.init.EMobEffects;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.ECreativeTab;
 import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.common.menus.EMenuTypes;
-import net.favouriteless.enchanted.common.network.EPackets;
-import net.favouriteless.enchanted.common.recipes.ERecipeTypes;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.EMenuTypes;
+import net.favouriteless.enchanted.common.init.EPackets;
+import net.favouriteless.enchanted.common.init.ERecipeTypes;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.favouriteless.enchanted.integrations.modopedia.init.common.EBookTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -42,7 +42,7 @@ public class Enchanted {
         EBlocks.load();
         EBlockEntityTypes.load();
         EEntityTypes.load();
-        EEffects.load();
+        EMobEffects.load();
         EParticleTypes.load();
         EMenuTypes.load();
         ERecipeTypes.load();

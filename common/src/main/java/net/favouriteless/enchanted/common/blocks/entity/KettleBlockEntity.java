@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.common.blocks.entity;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
 import net.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.recipes.ERecipeTypes;
+import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.favouriteless.enchanted.common.recipes.recipe_inputs.ListInput;
 import net.minecraft.core.BlockPos;

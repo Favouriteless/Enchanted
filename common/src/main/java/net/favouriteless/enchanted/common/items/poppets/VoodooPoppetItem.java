@@ -2,8 +2,8 @@ package net.favouriteless.enchanted.common.items.poppets;
 
 import net.favouriteless.enchanted.common.entities.VoodooItemEntity;
 import net.favouriteless.enchanted.common.init.EDamageTypes;
-import net.favouriteless.enchanted.common.entities.EEntityTypes;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.poppet.PoppetUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

@@ -19,7 +19,6 @@
       "items": "#inputs",
       "row_max": 5,
       "centered": true,
-      "reverse_y": true,
       "y": "#inputs_y",
       "x": 50
     },

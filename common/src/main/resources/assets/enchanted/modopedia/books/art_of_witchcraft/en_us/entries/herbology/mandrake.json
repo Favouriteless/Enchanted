@@ -8,7 +8,7 @@
         {
           "template": "modopedia:headered_text",
           "header": "Mandrake",
-          "text": "Mandrakes are a group of perennial herbaceous plants with long, parsnip shaped roots.\n\nIf agitated, mandrakes will scream causing injury or even death. Wearing $(el:getting_started/earmuffs)$(b)earmuffs(/b)$(el) can protect you, and they sleep at night."
+          "text": "Mandrakes are a group of perennial herbaceous plants with long, parsnip shaped roots.\n\nIf agitated, mandrakes will scream causing injury or even death. Wearing $(el:getting_started/earmuffs)$(b)earmuffs$() can protect you, and they sleep at night."
         }
       ]
     },

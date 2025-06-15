@@ -10,18 +10,13 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.items.EItems;
-import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
-import net.favouriteless.enchanted.common.util.RecipeUtils;
 import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe> {

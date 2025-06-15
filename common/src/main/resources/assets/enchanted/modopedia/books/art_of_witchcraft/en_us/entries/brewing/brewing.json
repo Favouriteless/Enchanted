@@ -1,14 +1,13 @@
 {
-  "title": "Brews and Potions",
-  "icon": { "id": "enchanted:mystic_unguent" },
-  "assigned_items": [ "enchanted:kettle" ],
+  "title": "Creating Brews",
+  "icon": { "id": "enchanted:witch_cauldron" },
   "pages": [
     {
       "components": [
         {
           "template": "modopedia:headered_text",
           "header": "Brews and Potions",
-          "text": "Creating a brew, infusion or potion is a simple process, requiring either a $(b)$(el:brewing/witch_cauldron)witch's cauldron$(/b)$(/el) or $(b)$(el:brewing/kettle)kettle$(/b)$(/el).\n\nFirst, you must fill your $(b)$(el:brewing/witch_cauldron)cauldron$(/b)$(/el) or $(b)$(el:brewing/kettle)kettle$(/b)$(/el) with water from a bucket. You will know it is full if no more water can fit."
+          "text": "Creating a brew, infusion or potion is a simple process, requiring either a $(b)$(c:#582C69)$(el:brewing/witch_cauldron)witch's cauldron$() or $(b)$(c:#582C69)$(el:brewing/kettle)kettle$().\n\nFirst, you must fill your $(b)$(el:brewing/witch_cauldron)cauldron$() or $(b)$(el:brewing/kettle)kettle$() with water from a bucket. You will know it is full if no more water can fit."
         }
       ]
     },

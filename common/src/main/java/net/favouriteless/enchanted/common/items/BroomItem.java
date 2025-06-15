@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.items;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.ETags;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;

@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +49,11 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 
 
 	public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
+		return registryMap.register(registry, name, entry);
+	}
+
+	@Override
+	public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
 		return registryMap.register(registry, name, entry);
 	}
 

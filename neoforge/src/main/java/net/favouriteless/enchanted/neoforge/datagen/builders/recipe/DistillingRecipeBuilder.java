@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.neoforge.datagen.builders.recipe;
 
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;

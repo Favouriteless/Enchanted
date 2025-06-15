@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.poppet;
 
 import net.favouriteless.enchanted.common.init.ETags.Items;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.poppets.DeathPoppetItem;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
 import net.minecraft.world.InteractionHand;

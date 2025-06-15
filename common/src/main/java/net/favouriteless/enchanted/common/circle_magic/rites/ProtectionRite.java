@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.circle_magic.rites;
 
 import net.favouriteless.enchanted.client.particles.types.DoubleOptions;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.stateobservers.ProtectionRiteObserver;
 import net.favouriteless.enchanted.common.util.BlockPosUtils;

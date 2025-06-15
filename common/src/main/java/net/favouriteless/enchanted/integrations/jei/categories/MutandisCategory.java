@@ -2,8 +2,6 @@ package net.favouriteless.enchanted.integrations.jei.categories;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -12,21 +10,14 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.items.EItems;
-import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
-import net.favouriteless.enchanted.common.util.RecipeUtils;
-import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;
 import net.favouriteless.enchanted.integrations.jei.recipes.JeiMutandisRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MutandisCategory extends AbstractRecipeCategory<JeiMutandisRecipe> {
 

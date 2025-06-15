@@ -1,8 +1,6 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
-import net.favouriteless.enchanted.common.items.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.platform.CommonServices;
 import net.minecraft.resources.ResourceLocation;

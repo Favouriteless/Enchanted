@@ -1,14 +1,10 @@
 package net.favouriteless.enchanted.mixin.common;
 
 import net.favouriteless.enchanted.common.CommonConfig;
-import net.favouriteless.enchanted.common.lootextensions.LootExtensions;
-import net.favouriteless.enchanted.common.poppet.PoppetEvents;
+import net.favouriteless.enchanted.common.loot_extensions.LootExtensions;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootParams.Builder;
 import net.minecraft.world.level.storage.loot.LootTable;

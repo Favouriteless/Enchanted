@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.entities;
 
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.brews.ThrowableBrewItem;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;

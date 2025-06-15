@@ -4,7 +4,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.curses.CurseMisfortune;
 import net.favouriteless.enchanted.common.curses.CurseType;
 import net.favouriteless.enchanted.common.curses.CurseTypes;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;

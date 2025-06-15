@@ -2,12 +2,12 @@ package net.favouriteless.enchanted.neoforge.common;
 
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.EBlocks;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.entities.EEntityTypes;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.common.entities.Mandrake;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper.DataRegistryRegisterable;
 import net.favouriteless.enchanted.platform.services.NeoNetworkHelper;

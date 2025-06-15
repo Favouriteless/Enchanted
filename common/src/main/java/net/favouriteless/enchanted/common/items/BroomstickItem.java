@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.items;
 
 import net.favouriteless.enchanted.common.entities.Broomstick;
-import net.favouriteless.enchanted.common.entities.EEntityTypes;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

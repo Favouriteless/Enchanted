@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.platform.JsonDataLoaderWrapper;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -40,6 +41,11 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 		T value = entry.get();
 		Registry.register(registry, Enchanted.id(name), value);
 		return () -> value;
+	}
+
+	@Override
+	public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
+		return Registry.registerForHolder(registry, Enchanted.id(name), entry.get());
 	}
 
 	@Override

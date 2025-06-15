@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.tag;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;

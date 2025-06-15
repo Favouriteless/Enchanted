@@ -1,0 +1,24 @@
+{
+  "title": "Brew of Love",
+  "icon": { "id": "enchanted:brew_of_love" },
+  "assigned_items": [ "enchanted:brew_of_love" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Brew of Love",
+          "text": "Charming or love potions are one of the most widely sought types of brew.\n\nWhen thrown, the vapour produced will cause nearby animals to become infatuated."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:kettle_recipe",
+          "recipe": "enchanted:kettle/brew_of_love"
+        }
+      ]
+    }
+  ]
+}

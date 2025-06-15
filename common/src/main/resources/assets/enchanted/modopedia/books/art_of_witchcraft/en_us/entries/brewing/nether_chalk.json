@@ -1,0 +1,24 @@
+{
+  "title": "Infernal Chalk",
+  "icon": { "id": "enchanted:nether_chalk" },
+  "assigned_items": [ "enchanted:nether_chalk" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Infernal Chalk",
+          "text": "Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.\n\nInfernal chalk is used for many rites involving the nether, demonic beings or fire."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:cauldron_recipe",
+          "recipe": "enchanted:witch_cauldron/nether_chalk"
+        }
+      ]
+    }
+  ]
+}

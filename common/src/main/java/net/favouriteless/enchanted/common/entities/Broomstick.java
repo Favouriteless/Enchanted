@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.entities;
 
 import net.favouriteless.enchanted.client.client_handlers.entities.BroomstickEntityClientHandler;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;

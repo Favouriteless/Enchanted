@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -32,6 +33,8 @@ public interface ICommonRegistryHelper {
      * @return A {@link Supplier} providing the registered object.
      */
     <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry);
+
+    <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry);
 
     /**
      * Create a {@link MenuType} with extra data and register it via

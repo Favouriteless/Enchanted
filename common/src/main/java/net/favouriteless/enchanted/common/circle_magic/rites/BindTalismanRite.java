@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.circle_magic.rites;
 
 import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.init.EData;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;

@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.client;
 
 import net.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import net.favouriteless.enchanted.common.CommonConfig;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.mixin.client.AbstractSoundInstanceAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

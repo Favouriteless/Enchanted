@@ -8,7 +8,7 @@
         {
           "template": "modopedia:headered_text",
           "header": "Bone Needles",
-          "text": "Needles are an important part of many tools used for Witchcraft, most notably $(el:getting_started/taglocks)$(b)taglock kits(/b)$(el) and $(b)poppets$().\n\nA simple needle can be fashioned by whittling a bone."
+          "text": "Needles are an important part of many tools used for Witchcraft, most notably $(el:getting_started/taglocks)$(b)taglock kits$() and $(b)poppets$().\n\nA simple needle can be fashioned by whittling a bone."
         }
       ]
     },

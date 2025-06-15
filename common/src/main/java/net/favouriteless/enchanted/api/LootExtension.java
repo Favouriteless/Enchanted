@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.api;
 
-import net.favouriteless.enchanted.common.lootextensions.LootExtensions;
+import net.favouriteless.enchanted.common.loot_extensions.LootExtensions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;

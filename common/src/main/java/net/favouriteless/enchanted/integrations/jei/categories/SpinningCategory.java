@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
 import net.favouriteless.enchanted.common.util.RecipeUtils;
 import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;

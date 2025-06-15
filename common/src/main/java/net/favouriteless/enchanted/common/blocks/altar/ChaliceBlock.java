@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.blocks.altar;
 
-import net.favouriteless.enchanted.common.blocks.EBlocks;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;

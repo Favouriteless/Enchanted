@@ -8,7 +8,7 @@
         {
           "template": "modopedia:headered_text",
           "header": "Kettle",
-          "text": "The kettle, used for $(b)$(el:brewing/brewing)creating infusions$(/el)$(/b) is a crucial utensil for any witch."
+          "text": "The kettle, used for creating infusions, is a crucial utensil for any witch."
         },
         {
           "template": "modopedia:crafting_table_recipe",

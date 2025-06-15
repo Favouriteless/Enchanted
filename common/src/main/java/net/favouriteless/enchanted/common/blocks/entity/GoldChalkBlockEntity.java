@@ -6,7 +6,7 @@ import net.favouriteless.enchanted.api.power.PowerHelper;
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EData;
-import net.favouriteless.enchanted.common.items.EItems;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.circle_magic.RiteManager;
 import net.favouriteless.enchanted.common.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;

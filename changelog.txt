@@ -1,2 +1,11 @@
+**NOTE: PLEASE UPDATE TO THE LATEST VERSION OF MODOPEDIA IF YOU HAVEN'T ALREADY**
+
+- ADDED: Brewing section for the book.
+- ADDED: Entry links for various sections of the book.
+- ADDED: Brew of the Grotesque now makes mobs ignore you when consumed.
+
+- CHANGED: Flying ointment's levitation duration has been raised to 60 seconds.
+- CHANGED: Brew of the Depths now gives 10 minutes of water breathing.
+- CHANGED: Fixed some formatting mistakes in the book.
 - CHANGED: Cauldrons now take only one bucket of water to fill.
 - CHANGED: Chalice and candelabra models have been made larger in the inventory, item frames and on the ground.

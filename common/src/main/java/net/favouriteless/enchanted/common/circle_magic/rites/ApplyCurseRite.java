@@ -6,7 +6,7 @@ import net.favouriteless.enchanted.common.curses.CurseManager;
 import net.favouriteless.enchanted.common.curses.CurseType;
 import net.favouriteless.enchanted.common.familiars.FamiliarTypes;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.sounds.ESoundEvents;
+import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.sounds.SoundSource;
 
 public class ApplyCurseRite extends Rite {

@@ -12,17 +12,17 @@ import net.favouriteless.modopedia.client.screens.books.CategoryScreen;
 import net.favouriteless.modopedia.client.screens.books.EntryScreen;
 import org.jetbrains.annotations.Nullable;
 
-public class EClassicBookScreenFactory implements BookScreenFactory<EClassicBookType> {
+public class EClassicScreenFactory implements BookScreenFactory<EClassicBookType> {
 
     @Override
     public @Nullable BookScreen openLandingScreen(EClassicBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
-        return new EnchantedClassicLandingScreen(book, langCode, content);
+        return new EnchantedClassicLandingScreen(book, langCode, content, type.lockedType(), lastScreen);
     }
 
     @Override
     public @Nullable BookScreen openCategoryScreen(EClassicBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, langCode, content, cat, lastScreen) : lastScreen;
+        return cat != null ? new CategoryScreen(book, langCode, content, cat, type.lockedType(), lastScreen) : lastScreen;
     }
 
     @Override

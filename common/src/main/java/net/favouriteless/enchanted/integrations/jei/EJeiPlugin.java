@@ -61,7 +61,11 @@ public class EJeiPlugin implements IModPlugin {
 
         registration.addIngredientInfo(new ItemStack(EItems.CHALICE_FILLED.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.chalice_filled"));
         registration.addIngredientInfo(new ItemStack(EItems.WITCH_CAULDRON.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.witch_cauldron"));
-        registration.addIngredientInfo(new ItemStack(EItems.WOOL_OF_BAT.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.arthana.drops"));
+        registration.addIngredientInfo(new ItemStack(EItems.FUME_FUNNEL_FILTERED.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.fume_funnel_filtered"));
+
+        registration.addIngredientInfo(new ItemStack(EItems.WOOL_OF_BAT.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.arthana.bat"));
+        registration.addIngredientInfo(new ItemStack(EItems.TONGUE_OF_DOG.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.arthana.wolf"));
+        registration.addIngredientInfo(new ItemStack(EItems.CREEPER_HEART.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.enchanted.arthana.creeper"));
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.LandingScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
+import net.favouriteless.modopedia.common.book_types.LockedViewType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -20,12 +21,8 @@ import java.util.List;
 
 public class EnchantedClassicLandingScreen extends ClassicLandingScreen {
 
-    public EnchantedClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
-        super(book, langCode, content, lastScreen);
-    }
-
-    public EnchantedClassicLandingScreen(Book book, String langCode, LocalisedBookContent content) {
-        this(book, langCode, content, null);
+    public EnchantedClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, LockedViewType lockType, BookScreen lastScreen) {
+        super(book, langCode, content, lockType, lastScreen);
     }
 
     @Override

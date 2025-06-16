@@ -17,7 +17,7 @@
         {
           "template": "enchanted:multiblock_page",
           "multiblock_id": "enchanted:rowan_tree",
-          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$(/b)$(el) on a small plant. Leaves can drop rowan berries."
+          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$() on a small plant. Leaves can drop rowan berries."
         }
       ]
     }

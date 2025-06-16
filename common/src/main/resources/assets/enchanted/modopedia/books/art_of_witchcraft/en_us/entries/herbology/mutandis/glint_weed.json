@@ -17,7 +17,7 @@
         {
           "template": "enchanted:block_page",
           "block": "enchanted:glint_weed",
-          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$(/b)$(el) on a small plant.",
+          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$() on a small plant.",
           "no_offsets": true
         }
       ]

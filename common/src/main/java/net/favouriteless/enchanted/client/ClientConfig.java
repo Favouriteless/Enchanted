@@ -5,6 +5,7 @@ import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ClientConfig {
+
 	public static final ClientConfig INSTANCE;
 	public static final ModConfigSpec SPEC;
 

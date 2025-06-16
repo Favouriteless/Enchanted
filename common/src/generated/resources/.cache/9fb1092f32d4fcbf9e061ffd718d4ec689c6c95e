@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-15T02:32:20.2997546	Recipes
+// 1.21.1	2025-06-16T04:53:36.8198	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -23,7 +23,6 @@ e5826bedb09b330cfd7acee192c60f3392354a1b data/enchanted/advancement/recipes/misc
 6031f6a7a3c858d210c924bf6a2e9f51575ec949 data/enchanted/advancement/recipes/misc/distillery.json
 c134b64378a770b1c17232500e2fea5f3aa0c4d3 data/enchanted/advancement/recipes/misc/fume_filter.json
 7e4bc441177ed5e8fc4e96e1b15faf6aed855ab6 data/enchanted/advancement/recipes/misc/fume_funnel.json
-ec402c99b9b5c910a1ca0eaaffb8cd1cfcf5e177 data/enchanted/advancement/recipes/misc/fume_funnel_filtered.json
 c3277016ac94d077b9173e4746c89e359ff6eb1c data/enchanted/advancement/recipes/misc/kettle.json
 3cbc8ba05e7656e014feafedf38e70d120ee8e83 data/enchanted/advancement/recipes/misc/poppet.json
 b125203256ae995e962a7dbc97b166339db706fe data/enchanted/advancement/recipes/misc/poppet_shelf.json
@@ -77,7 +76,6 @@ feeb2d909816d2445fed2bcaf1760ff347f63a0b data/enchanted/recipe/byproduct/reek_of
 dbffdda60d8d0c391ed5b1a4c06e8dd2d4e9a6ec data/enchanted/recipe/circle_talisman.json
 501a71eaf2236fda7aed0fc356745ac5548dad86 data/enchanted/recipe/clay_jar.json
 6534b092c1ac652c3ed67668b1e58008cec74775 data/enchanted/recipe/distillery.json
-c456245a28df1bb3319dc496fc584e9d5ada95d4 data/enchanted/recipe/distilling/blaze_powder_gunpowder.json
 dc3877dbdabf7407b9385aad9cbab6b5db85ba2e data/enchanted/recipe/distilling/breath_of_the_goddess_lapis_lazuli.json
 7cf3ad8501f420580da952ae236752b7b5fe693a data/enchanted/recipe/distilling/demon_heart_diamond_vapour.json
 2696732645dc3e926eda3921f72a21ceb8e0f222 data/enchanted/recipe/distilling/diamond_oil_of_vitriol.json
@@ -88,7 +86,6 @@ be43203cc00c9ae4636c5082434c8fd4b13b1a63 data/enchanted/recipe/distilling/ender_
 ba74b165dbe00df47462b4652b17e6b86ada2d7f data/enchanted/recipe/earmuffs.json
 a8970fc7769a5a31bc2d7958f71f83fadbb90e92 data/enchanted/recipe/fume_filter.json
 f6185181146078557dc3817307e9e554c22cea23 data/enchanted/recipe/fume_funnel.json
-1ad46ea01f85c931f445e9d985c5b7869503d634 data/enchanted/recipe/fume_funnel_filtered.json
 9c2646027a2b088ad4f910beebcd03e9265f88f8 data/enchanted/recipe/hawthorn_button.json
 b66ca2e4f0eab94a71a2e9004bfd60e78e0d940c data/enchanted/recipe/hawthorn_fence.json
 34596f28d2714204cd4b5d7edb0ab71fb5d9282d data/enchanted/recipe/hawthorn_fence_gate.json

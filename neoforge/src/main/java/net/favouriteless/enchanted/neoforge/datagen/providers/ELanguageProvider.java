@@ -33,7 +33,7 @@ public class ELanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         add(Enchanted.translationKey("tab", "main"), "Enchanted");
 
-        add("item.enchanted.bound_waystone.not_bound", "Not bound");
+        add(Enchanted.translationKey("item", "bound_waystone.not_bound"), "Not bound");
 
         add("death.attack.enchanted.sacrifice", "%1$s was sacrificed.");
         add("death.attack.enchanted.sound", "%1$s had their eardrums pierced.");
@@ -46,8 +46,9 @@ public class ELanguageProvider extends LanguageProvider {
 
         addEntityType(EEntityTypes.FAMILIAR_CAT, "Cat (Familiar)");
 
-        addJei(EItems.CHALICE_FILLED, "Right click on a Chalice using redstone soup.");
-        addJei(EItems.WITCH_CAULDRON, "Right click on a Cauldron using Annointing Paste");
+        addJei(EItems.CHALICE_FILLED, "Right click on a chalice using redstone soup");
+        addJei(EItems.WITCH_CAULDRON, "Right click on a cauldron using anointing Paste");
+        addJei(EItems.FUME_FUNNEL_FILTERED, "Right click on a fume funnel using a fume filter");
         addJeiCategory("circle_magic", "Circle Magic");
         addJeiCategory("kettle", "Kettle");
         addJeiCategory("witch_cauldron", "Witch's Cauldron");
@@ -57,16 +58,6 @@ public class ELanguageProvider extends LanguageProvider {
         addJei("arthana.bat", "Obtained by killing a bat with an arthana. Looting increases the odds.");
         addJei("arthana.wolf", "Obtained by killing a wolf with an arthana. Looting increases the odds.");
         addJei("arthana.creeper", "Obtained by killing a creeper with an arthana. Looting increases the odds.");
-
-        addKey("categories.broomstick", "Broomsticks");
-        addKey("broom_aim_down", "Point Down");
-        addKey("broom_aim_up", "Point Up");
-        addKey("broom_forward", "Fly Forwards");
-        addKey("broom_backward", "Fly Backwards");
-        addKey("broom_turn_left", "Turn Left");
-        addKey("broom_turn_right", "Turn Right");
-        addKey("broom_up", "Fly Up");
-        addKey("broom_down", "Fly Down");
 
         addContainer(EBlocks.ALTAR, "Altar");
         addContainer(EBlocks.DISTILLERY, "Distillery");
@@ -125,6 +116,8 @@ public class ELanguageProvider extends LanguageProvider {
         addBookTitle("art_of_witchcraft", "Art of Witchcraft");
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
 
+        addTooltip("byproduct_recipe", "Byproduct Recipe");
+
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 
@@ -158,6 +151,10 @@ public class ELanguageProvider extends LanguageProvider {
 
     protected void addJei(Supplier<? extends Item> item, String value) {
         add(Enchanted.translationKey("jei", BuiltInRegistries.ITEM.getKey(item.get()).getPath()), value);
+    }
+
+    protected void addTooltip(String suffix, String value) {
+        add(Enchanted.translationKey("tooltip", suffix), value);
     }
 
     protected void autoGenerateAll() {

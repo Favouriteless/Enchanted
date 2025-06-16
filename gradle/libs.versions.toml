@@ -1,10 +1,10 @@
 [versions]
 # Enchanted
-    enchanted = "4.1.2-beta"
+    enchanted = "4.1.3-beta"
 
 # Common
     stateobserver = "1.6.1"
-    modopedia = "1.0.10"
+    modopedia = "1.0.12"
     geckolib = "4.7"
     forgeconfigapi = "21.1.1"
     iris-common = "1.8.0-beta.8+1.21.1-neoforge"

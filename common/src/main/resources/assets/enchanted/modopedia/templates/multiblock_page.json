@@ -1,8 +1,10 @@
 {
+  "multiblock_y": 0,
   "text_y": 90,
   "components": [
     {
       "type": "modopedia:multiblock",
+      "y": "#multiblock_y",
       "multiblock_id": "#multiblock_id",
       "multiblock": "#multiblock",
       "no_offsets": "#no_offsets",

@@ -188,9 +188,6 @@ public class ERecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.BONE_NEEDLE.get(), 8)
 				.requires(Items.FLINT).requires(Items.BONE)
 				.unlockedBy(getHasName(Items.BONE), has(Items.BONE)).save(output);
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.FUME_FUNNEL_FILTERED.get())
-				.requires(EItems.FUME_FUNNEL.get()).requires(EItems.FUME_FILTER.get())
-				.unlockedBy(getHasName(EItems.FUME_FUNNEL.get()), has(EItems.FUME_FUNNEL.get())).save(output);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.PURIFIED_MILK.get()).requires(Items.MILK_BUCKET)
 				.requires(EItems.ODOUR_OF_PURITY.get()).requires(EItems.CLAY_JAR.get(), 3)
 				.unlockedBy(getHasName(EItems.ODOUR_OF_PURITY.get()), has(EItems.ODOUR_OF_PURITY.get())).save(output);
@@ -279,8 +276,6 @@ public class ERecipeProvider extends RecipeProvider {
 	}
 
 	protected void buildDistillingRecipes(RecipeOutput output, Provider registries) {
-		DistillingRecipeBuilder.create(Items.BLAZE_POWDER, Items.GUNPOWDER)
-				.results(new ItemStack(Items.GLOWSTONE_DUST, 2)).save(output);
 		DistillingRecipeBuilder.create(new ItemStack(EItems.CLAY_JAR.get(), 3), new ItemStack(EItems.BREATH_OF_THE_GODDESS.get()), new ItemStack(Items.LAPIS_LAZULI))
 				.results(EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get(), Items.SLIME_BALL, EItems.FOUL_FUME.get()).save(output);
 		DistillingRecipeBuilder.create(new ItemStack(EItems.CLAY_JAR.get(), 2), new ItemStack(EItems.DEMON_HEART.get()), new ItemStack(EItems.DIAMOND_VAPOUR.get()))

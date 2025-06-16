@@ -17,7 +17,7 @@
         {
           "template": "enchanted:multiblock_page",
           "multiblock_id": "enchanted:hawthorn_tree",
-          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$(/b)$(el) on a small plant."
+          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutandis/mutandis)$(b)mutandis$() on a small plant."
         }
       ]
     }

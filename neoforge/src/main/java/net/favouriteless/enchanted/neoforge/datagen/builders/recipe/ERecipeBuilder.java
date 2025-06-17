@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class ERecipeBuilder implements RecipeBuilder {
 
-    private String subfolder;
+    private final String subfolder;
 
     protected ERecipeBuilder(String subfolder) {
         this.subfolder = subfolder;

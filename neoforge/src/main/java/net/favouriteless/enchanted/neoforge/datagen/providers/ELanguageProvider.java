@@ -44,6 +44,8 @@ public class ELanguageProvider extends LanguageProvider {
         addBlock(EBlocks.WITCH_CAULDRON, "Witch's Cauldron");
         addBlock(EBlocks.WITCH_OVEN, "Witch's Oven");
 
+        addItem(EItems.EXHALE_OF_THE_HORNED_ONE, "Horned One's Exhale");
+
         addEntityType(EEntityTypes.FAMILIAR_CAT, "Cat (Familiar)");
 
         addJei(EItems.CHALICE_FILLED, "Right click on a chalice using redstone soup");
@@ -117,6 +119,7 @@ public class ELanguageProvider extends LanguageProvider {
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
 
         addTooltip("byproduct_recipe", "Byproduct Recipe");
+        addTooltip("altar_power", "%1$s Altar Power");
 
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }

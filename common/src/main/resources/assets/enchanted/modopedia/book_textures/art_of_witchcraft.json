@@ -3,7 +3,7 @@
   "width": 386,
   "height": 211,
   "tex_width": 390,
-  "tex_height": 370,
+  "tex_height": 400,
   "pages": [
     { "u": 84, "v": 50, "width": 100, "height": 135 },
     { "u": 202, "v": 50, "width": 100, "height": 135 }
@@ -22,6 +22,7 @@
     "crafting_flame": { "u": 122, "v": 211, "width": 14, "height": 14 },
     "crafting_arrow": { "u": 106, "v": 211, "width": 16, "height": 13 },
     "down_arrow": { "u": 106, "v": 224, "width": 16, "height": 13 },
-    "cauldron": { "u": 0, "v": 273, "width": 90, "height": 80 }
+    "cauldron": { "u": 0, "v": 273, "width": 90, "height": 80 },
+    "distillery": { "u": 100, "v": 265, "width": 78, "height": 113 }
   }
 }

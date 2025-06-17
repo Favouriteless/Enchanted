@@ -14,7 +14,7 @@ import net.favouriteless.enchanted.common.init.EMenuTypes;
 import net.favouriteless.enchanted.common.init.EPackets;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
-import net.favouriteless.enchanted.integrations.modopedia.init.common.EBookTypes;
+import net.favouriteless.enchanted.integrations.modopedia.common.init.EBookTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;

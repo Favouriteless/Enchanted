@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "type": "modopedia:header",
+      "text": "Fume Extraction"
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "template": "enchanted:byproduct_recipe",
+      "recipe": "#recipe",
+      "x": 19,
+      "y": 40
+    }
+  ]
+}

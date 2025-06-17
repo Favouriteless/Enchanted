@@ -1,0 +1,24 @@
+{
+  "title": "Horned One's Exhale",
+  "icon": { "id": "enchanted:exhale_of_the_horned_one" },
+  "assigned_items": [ "enchanted:exhale_of_the_horned_one" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Horned One's Exhale",
+          "text": "The Oak King, one of the aspects of the Horned God, symbolises nature, hunting and the cycle of life.\n\nThe fumes produced by oaks are said to be The Horned God's exhale, carrying some of the properties associated with him."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:byproduct_page",
+          "recipe": "enchanted:byproduct/exhale_of_the_horned_one_oak_sapling"
+        }
+      ]
+    }
+  ]
+}

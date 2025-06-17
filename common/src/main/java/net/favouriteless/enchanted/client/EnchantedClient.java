@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.client;
 
 import net.favouriteless.enchanted.common.init.EKeybinds;
-import net.favouriteless.enchanted.integrations.modopedia.init.client.EBookScreenFactories;
-import net.favouriteless.enchanted.integrations.modopedia.init.client.EPageComponents;
-import net.favouriteless.enchanted.integrations.modopedia.init.client.ETemplateProcessors;
+import net.favouriteless.enchanted.integrations.modopedia.client.init.EBookScreenFactories;
+import net.favouriteless.enchanted.integrations.modopedia.client.init.EPageComponents;
+import net.favouriteless.enchanted.integrations.modopedia.client.init.ETemplateProcessors;
 
 public class EnchantedClient {
 

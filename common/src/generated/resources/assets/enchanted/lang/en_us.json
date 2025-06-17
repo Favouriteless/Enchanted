@@ -113,7 +113,7 @@
   "item.enchanted.enchanted_broomstick": "Enchanted Broomstick",
   "item.enchanted.ender_dew": "Ender Dew",
   "item.enchanted.ent_twig": "Ent Twig",
-  "item.enchanted.exhale_of_the_horned_one": "Exhale of the Horned One",
+  "item.enchanted.exhale_of_the_horned_one": "Horned One's Exhale",
   "item.enchanted.fire_poppet": "Fire Poppet",
   "item.enchanted.flying_ointment": "Flying Ointment",
   "item.enchanted.focused_will": "Focused Will",
@@ -242,5 +242,6 @@
   "rite.enchanted.waystone_blooded_charged": "Rite of Binding",
   "rite.enchanted.waystone_charged": "Rite of Binding",
   "tab.enchanted.main": "Enchanted",
+  "tooltip.enchanted.altar_power": "%1$s Altar Power",
   "tooltip.enchanted.byproduct_recipe": "Byproduct Recipe"
 }

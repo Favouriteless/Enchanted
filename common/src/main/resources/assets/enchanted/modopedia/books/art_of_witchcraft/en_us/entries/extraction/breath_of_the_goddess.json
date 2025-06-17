@@ -15,7 +15,7 @@
     {
       "components": [
         {
-          "template": "enchanted:byproduct_recipe",
+          "template": "enchanted:byproduct_page",
           "recipe": "enchanted:byproduct/breath_of_the_goddess_birch_sapling"
         }
       ]

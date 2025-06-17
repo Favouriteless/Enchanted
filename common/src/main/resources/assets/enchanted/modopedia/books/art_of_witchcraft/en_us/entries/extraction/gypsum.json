@@ -1,0 +1,24 @@
+{
+  "title": "Gypsum",
+  "icon": { "id": "enchanted:gypsum" },
+  "assigned_items": [ "enchanted:gypsum" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Gypsum",
+          "text": "A soft, translucent mineral salt produced by oxidising sulfides in the presence of quicklime.\n\nIn addition to being an effective fertiliser, it is commonly used as a base for ritual chalks."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:distilling_page",
+          "recipe": "enchanted:distilling/foul_fume_quicklime"
+        }
+      ]
+    }
+  ]
+}

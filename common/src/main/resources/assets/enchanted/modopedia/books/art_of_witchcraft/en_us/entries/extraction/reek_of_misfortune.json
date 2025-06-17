@@ -1,0 +1,40 @@
+{
+  "title": "Reek of Misfortune",
+  "icon": { "id": "enchanted:reek_of_misfortune" },
+  "assigned_items": [ "enchanted:reek_of_misfortune" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Reek of Misfortune",
+          "text": "The sacred alder tree appears to bleed when cut, bringing misfortune to all. It is thought that the tree contains the souls of our ancestors.\n\nThe fumes produced from burning it can be collected, keeping these effects."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:byproduct_page",
+          "recipe": "enchanted:byproduct/reek_of_misfortune_alder_sapling"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:distilling_page",
+          "recipe": "enchanted:distilling/diamond_vapour_ghast_tear"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:distilling_page",
+          "recipe": "enchanted:distilling/ender_pearl"
+        }
+      ]
+    }
+  ]
+}

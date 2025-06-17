@@ -1,0 +1,40 @@
+{
+  "title": "Odour of Purity",
+  "icon": { "id": "enchanted:odour_of_purity" },
+  "assigned_items": [ "enchanted:odour_of_purity" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:headered_text",
+          "header": "Odour of Purity",
+          "text": "Hawthorn can be used to collect a powerful purifying agent called Odour of Purity, which is used in the creation of most pure substances.\n\nThis tree is sacred to the Goddesses Aine and Brigid."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:byproduct_page",
+          "recipe": "enchanted:byproduct/odour_of_purity_hawthorn_sapling"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:distilling_page",
+          "recipe": "enchanted:distilling/diamond_oil_of_vitriol"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "enchanted:distilling_page",
+          "recipe": "enchanted:distilling/diamond_vapour_ghast_tear"
+        }
+      ]
+    }
+  ]
+}

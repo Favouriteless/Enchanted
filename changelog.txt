@@ -1,3 +1,4 @@
-- Started porting extraction book.
-- Updated to support new modopedia features.
-- Filtered fume funnels are now created by right-clicking on a fume funnel using a filter.
+- ADDED: Full extraction section of book.
+
+- CHANGED: Exhale of the Horned One is now called "Horned One's Exhale" (it didn't fit on the page in the book).
+- CHANGED: Invalidated patchouli resource paths so it stops loading the broken books.

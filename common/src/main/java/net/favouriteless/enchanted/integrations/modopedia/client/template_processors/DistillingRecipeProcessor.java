@@ -29,8 +29,8 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof DistillingRecipe recipe) {
-            List<ItemStack[]> inputs = recipe.getInputs().stream().map(i -> new ItemStack[] { i }).toList();
-            List<ItemStack[]> outputs = recipe.getOutputs().stream().map(i -> new ItemStack[] { i }).toList();
+            List<List<ItemStack>> inputs = recipe.getInputs().stream().map(List::of).toList();
+            List<List<ItemStack>> outputs = recipe.getOutputs().stream().map(List::of).toList();
 
             lookup.set("firstInput", Variable.of(inputs.subList(0, 1)));
             lookup.set("inputs", Variable.of(inputs.subList(1, inputs.size())));

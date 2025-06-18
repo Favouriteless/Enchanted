@@ -1,4 +1,2 @@
-- ADDED: Full extraction section of book.
-
-- CHANGED: Exhale of the Horned One is now called "Horned One's Exhale" (it didn't fit on the page in the book).
-- CHANGED: Invalidated patchouli resource paths so it stops loading the broken books.
+- CHANGED: Updated books for new modopedia features
+- FIXED: Altar power not displaying correctly in books

@@ -21,21 +21,21 @@
       "y": 3
     },
     {
-      "items": "#inputs",
+      "items": "#p_inputs",
       "template": "modopedia:framed_item"
     },
     {
-      "items": "#jars",
+      "items": "#p_jars",
       "template": "modopedia:framed_item",
       "y": 24
     },
     {
-      "items": "#output",
+      "items": "#p_output",
       "template": "modopedia:framed_item",
       "x": 44
     },
     {
-      "items": "#byproduct",
+      "items": "#p_byproduct",
       "template": "modopedia:framed_item",
       "x": 44,
       "y": 24

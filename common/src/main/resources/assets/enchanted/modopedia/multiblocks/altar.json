@@ -1,0 +1,24 @@
+{
+  "type": "modopedia:dense",
+  "pattern": [
+    [
+      "a0c",
+      "def"
+    ],
+    [
+      "g h",
+      " t "
+    ]
+  ],
+  "key": {
+    "a": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p000,facing_x=true]" ] },
+    "0": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p100,facing_x=true]" ] },
+    "c": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p200,facing_x=true]" ] },
+    "d": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p001,facing_x=true]" ] },
+    "e": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p101,facing_x=true]" ] },
+    "f": { "type": "modopedia:simple", "states": [ "enchanted:altar[formed=p201,facing_x=true]" ] },
+    "g": { "type": "modopedia:simple", "states": [ "enchanted:chalice_filled" ] },
+    "h": { "type": "modopedia:simple", "states": [ "minecraft:player_head" ] },
+    "t": { "type": "modopedia:simple", "states": [ "enchanted:candelabra" ] }
+  }
+}

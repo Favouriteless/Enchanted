@@ -48,12 +48,12 @@ public class ETemplateProvider extends TemplateProvider {
                         TooltipBuilder.of(new String[] { "tooltip.enchanted.byproduct_recipe" })
                                 .x(22).y(3)
                                 .width(16).height(13),
-                        FramedItemBuilder.of("#inputs"),
-                        FramedItemBuilder.of("#jars")
+                        FramedItemBuilder.of("#p_inputs"),
+                        FramedItemBuilder.of("#p_jars")
                                 .y(24),
-                        FramedItemBuilder.of("#output")
+                        FramedItemBuilder.of("#p_output")
                                 .x(44),
-                        FramedItemBuilder.of("#byproduct")
+                        FramedItemBuilder.of("#p_byproduct")
                                 .x(44).y(24)
                 )
                 .build(output);
@@ -66,13 +66,13 @@ public class ETemplateProvider extends TemplateProvider {
                         SeparatorBuilder.of()
                                         .y(10),
                         HeaderBuilder.of("book.enchanted.header.witch_cauldron_recipe"),
-                        ItemBuilder.of("#inputs").
-                                x(50).y("#inputs_y")
+                        ItemBuilder.of("#p_inputs").
+                                x(50).y("#p_inputs_y")
                                 .rowMax(5)
                                 .centered(true),
-                        ItemBuilder.of("#output")
+                        ItemBuilder.of("#p_output")
                                 .x(42).y(84),
-                        TextBuilder.of("#power")
+                        TextBuilder.of("#p_power")
                                 .y(126)
                                 .justify(Justify.CENTER)
                 )
@@ -86,13 +86,13 @@ public class ETemplateProvider extends TemplateProvider {
                         SeparatorBuilder.of()
                                 .y(10),
                         HeaderBuilder.of("book.enchanted.header.kettle_recipe"),
-                        ItemBuilder.of("#inputs")
-                                .x(50).y("#inputs_y")
+                        ItemBuilder.of("#p_inputs")
+                                .x(50).y("#p_inputs_y")
                                 .rowMax(5)
                                 .centered(true),
-                        ItemBuilder.of("#output")
+                        ItemBuilder.of("#p_output")
                                 .x(42).y(84),
-                        TextBuilder.of("#power")
+                        TextBuilder.of("#p_power")
                                 .y(126)
                                 .justify(Justify.CENTER)
                 )
@@ -101,15 +101,22 @@ public class ETemplateProvider extends TemplateProvider {
         TemplateBuilder.of(DistillingRecipeBuilder.ID.getPath())
                 .processor(DistillingRecipeProcessor.ID)
                 .components(
-                        DistilleryBuilder.of(),
-                        ItemBuilder.of("#firstInput")
-                                .x(31).y(2),
-                        ItemBuilder.of("#inputs")
-                                .x(21).y(22)
+                        DistilleryBuilder.of()
+                                .x("#p_x"),
+                        ItemBuilder.of("#p_input1")
+                                .x("#p_input1_x").y(2),
+                        ItemBuilder.of("#p_input2")
+                                .x("#p_input2_x").y(22)
                                 .padding(20),
-                        ItemBuilder.of("#outputs")
-                                .x(2).y(95)
-                                .padding(19)
+                        ItemBuilder.of("#p_output1")
+                                .x("#p_output1_x").y(95)
+                                .padding(19),
+                        ItemBuilder.of("#p_output2")
+                                .x("#p_output2_x").y(95)
+                                .padding(19),
+                        TextBuilder.of("#p_power")
+                                .y(113)
+                                .justify(Justify.CENTER)
                 )
                 .build(output);
     }
@@ -130,7 +137,7 @@ public class ETemplateProvider extends TemplateProvider {
                         HeaderBuilder.of("book.enchanted.header.fume_extraction"),
                         SeparatorBuilder.of()
                                 .y(10),
-                        ByproductRecipeBuilder.of("#recipe")
+                        ByproductRecipeBuilder.of("#recipe1")
                                 .x(19).y(25),
                         ByproductRecipeBuilder.of("#recipe2")
                                 .x(19).y(75)
@@ -140,10 +147,8 @@ public class ETemplateProvider extends TemplateProvider {
         TemplateBuilder.of(DistilleryPageBuilder.ID.getPath())
                 .components(
                         HeaderBuilder.of("book.enchanted.header.distillation"),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        DistillingRecipeBuilder.of("#recipe")
-                                .x(11).y(18)
+                        SeparatorBuilder.of().y(10),
+                        DistillingRecipeBuilder.of("#recipe").y(18)
                 )
                 .build(output);
     }

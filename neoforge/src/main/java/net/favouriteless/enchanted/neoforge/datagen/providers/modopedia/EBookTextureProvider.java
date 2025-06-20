@@ -17,7 +17,7 @@ public class EBookTextureProvider extends BookTextureProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, BookTexture> output) {
+    protected void build(Provider provider, BiConsumer<String, BookTexture> output) {
         BookTextureBuilder.of("art_of_witchcraft")
                 .texture(Enchanted.id("textures/gui/art_of_witchcraft.png"), 390, 400)
                 .sized(386, 211)

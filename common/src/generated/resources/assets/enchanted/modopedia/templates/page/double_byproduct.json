@@ -9,7 +9,7 @@
       "y": 10
     },
     {
-      "recipe": "#recipe",
+      "recipe": "#recipe1",
       "template": "enchanted:recipe/byproduct",
       "x": 19,
       "y": 25

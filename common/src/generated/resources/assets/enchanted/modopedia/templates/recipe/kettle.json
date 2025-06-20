@@ -16,21 +16,21 @@
     {
       "type": "modopedia:item",
       "centered": true,
-      "items": "#inputs",
+      "items": "#p_inputs",
       "row_max": 5,
       "x": 50,
-      "y": "#inputs_y"
+      "y": "#p_inputs_y"
     },
     {
       "type": "modopedia:item",
-      "items": "#output",
+      "items": "#p_output",
       "x": 42,
       "y": 84
     },
     {
       "type": "modopedia:text",
       "justify": "center",
-      "text": "#power",
+      "text": "#p_power",
       "y": 126
     }
   ],

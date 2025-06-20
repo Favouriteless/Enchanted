@@ -45,6 +45,7 @@ public class ELanguageProvider extends LanguageProvider {
         addBlock(EBlocks.WITCH_OVEN, "Witch's Oven");
 
         addItem(EItems.EXHALE_OF_THE_HORNED_ONE, "Horned One's Exhale");
+        addItem(EItems.ATTUNED_STONE_CHARGED, "Attuned Stone (Charged)");
 
         addEntityType(EEntityTypes.FAMILIAR_CAT, "Cat (Familiar)");
 

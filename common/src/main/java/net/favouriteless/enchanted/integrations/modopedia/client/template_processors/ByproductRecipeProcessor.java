@@ -52,10 +52,10 @@ public class ByproductRecipeProcessor implements TemplateProcessor {
 
             ItemStack result = recipe.getResultItem(level.registryAccess());
 
-            lookup.set("inputs", Variable.of(List.of(inputs)));
-            lookup.set("outputs", Variable.of(List.of(outputs)));
-            lookup.set("byproduct", Variable.of(List.of(List.of(result))));
-            lookup.set("jars", Variable.of(List.of(List.of(new ItemStack(EItems.CLAY_JAR.get(), result.getCount())))));
+            lookup.set("p_inputs", Variable.of(List.of(inputs)));
+            lookup.set("p_output", Variable.of(List.of(outputs)));
+            lookup.set("p_byproduct", Variable.of(List.of(List.of(result))));
+            lookup.set("p_jars", Variable.of(List.of(List.of(new ItemStack(EItems.CLAY_JAR.get(), result.getCount())))));
         }
         else {
             throw new IllegalArgumentException("ByproductRecipe template must use a ByproductRecipe.");

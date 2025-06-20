@@ -36,10 +36,10 @@ public class CauldronTypeRecipeProcessor implements TemplateProcessor {
 
             int rows = inputs.size() / 5 + 1;
 
-            lookup.set("inputs_y", Variable.of(35 - rows * 8)); // 31 is right in the center of the ingredients area
-            lookup.set("inputs", Variable.of(inputs));
-            lookup.set("output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
-            lookup.set("power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.getPower()).getString()));
+            lookup.set("p_inputs_y", Variable.of(35 - rows * 8)); // 31 is right in the center of the ingredients area
+            lookup.set("p_inputs", Variable.of(inputs));
+            lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+            lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.getPower()).getString()));
         }
         else {
             throw new IllegalArgumentException("CauldronTypeRecipe template must use a CauldronTypeRecipe recipe.");

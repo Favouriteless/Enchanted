@@ -19,7 +19,7 @@ public class EBookProvider extends BookProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, Book> output) {
+    protected void build(Provider provider, BiConsumer<String, Book> output) {
         BookBuilder.of("art_of_witchcraft", "book.title.enchanted.art_of_witchcraft")
                 .subtitle("book.subtitle.enchanted.art_of_witchcraft")
                 .landingText(

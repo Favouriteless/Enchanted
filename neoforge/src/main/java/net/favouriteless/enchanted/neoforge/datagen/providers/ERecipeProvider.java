@@ -200,6 +200,9 @@ public class ERecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.WAYSTONE.get())
 				.requires(Items.FLINT).requires(EItems.BONE_NEEDLE.get())
 				.unlockedBy(getHasName(EItems.BONE_NEEDLE.get()), has(EItems.BONE_NEEDLE.get())).save(output);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.CHALICE_FILLED.get())
+						.requires(EItems.CHALICE.get()).requires(EItems.REDSTONE_SOUP.get())
+						.unlockedBy(getHasName(EItems.CHALICE.get()), has(EItems.CHALICE.get()));
 
 
 		buttonBuilder(EItems.ALDER_BUTTON.get(), Ingredient.of(EItems.ALDER_PLANKS.get()))

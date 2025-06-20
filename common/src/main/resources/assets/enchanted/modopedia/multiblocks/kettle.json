@@ -1,0 +1,12 @@
+{
+  "type": "modopedia:dense",
+  "pattern": [
+    [ "WFW" ],
+    [ "WKW" ]
+  ],
+  "key": {
+    "K": { "type": "modopedia:simple", "states": [ "enchanted:kettle[type=2,facing=north]" ] },
+    "F": { "type": "modopedia:simple", "states": [ "minecraft:campfire[lit=true]" ] },
+    "W": { "type": "modopedia:simple", "states": [ "minecraft:cobblestone_wall" ] }
+  }
+}

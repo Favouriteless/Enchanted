@@ -87,6 +87,7 @@ public class ETags {
     }
 
     public static class EntityTypes {
+        public static final TagKey<EntityType<?>> GROTESQUE_IMMUNE = createEntityTag("grotesque_immune");
         public static final TagKey<EntityType<?>> MONSTERS = createEntityTag("monsters");
         public static final TagKey<EntityType<?>> TAGLOCK_BLACKLIST = createEntityTag("taglock_blacklist");
     }

@@ -5,8 +5,8 @@
   "refmap": "enchanted.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "common.BlockBehaviourMixin",
     "common.LivingEntityMixin",
+    "common.LootTableMixin",
     "common.MobMixin",
     "common.SaplingBlockAccessor",
     "common.ZombieVillagerAccessor"

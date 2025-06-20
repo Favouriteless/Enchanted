@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.mixin.common;
 
 import net.favouriteless.enchanted.common.init.EMobEffects;
-import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +13,11 @@ public class MobMixin {
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void setTarget(LivingEntity target, CallbackInfo ci) {
-        if(target != null && target.hasEffect(EMobEffects.GROTESQUE))
+        if(target == null)
+            return;
+        if(((Mob)(Object)this).getLastAttacker() == target)
+            return;
+        if(target.hasEffect(EMobEffects.GROTESQUE))
             ci.cancel();
     }
 

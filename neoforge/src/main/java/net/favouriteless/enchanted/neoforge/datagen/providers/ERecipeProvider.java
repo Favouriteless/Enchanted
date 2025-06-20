@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.neoforge.datagen.builders.recipe.*;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;

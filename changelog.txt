@@ -1,0 +1,2 @@
+- ADDED: `enchanted:grotesque_immune` tag excludes mobs from being affected by the brew of the grotesque. By default this includes the ender dragon, the wither, elder guardians, pillagers, evokers, ravagers, vexes, iron golems, wardens, piglin brutes and witches.
+- CHANGED: Refactored loot extensions (arthana/seed drops). This should not be a user-facing change.

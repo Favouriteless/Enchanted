@@ -1,3 +1,4 @@
-// 1.21.1	2025-06-11T23:26:48.231523	Tags for minecraft:entity_type mod id enchanted
+// 1.21.1	2025-06-20T03:32:14.1179458	Tags for minecraft:entity_type mod id enchanted
+36a5a1176f454b7a678f2cffeb39a765286c4f2e data/enchanted/tags/entity_type/grotesque_immune.json
 586f20f3d30811a2fd7824d707510e40590927a8 data/enchanted/tags/entity_type/monsters.json
 13e16a4839ee3c65c87473c9cd742468266491ee data/enchanted/tags/entity_type/taglock_blacklist.json

@@ -23,6 +23,10 @@ public class EContentSetProvider extends ContentSetProvider {
 
     }
 
+    public void buildGettingStartedEntries(BiConsumer<String, JsonElement> output) {
+
+    }
+
     @Override
     public void buildCategories(BiConsumer<String, Category> output) {
         CategoryBuilder.of("getting_started", "Getting Started")

@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.template_processors;
 
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class ByproductRecipeProcessor implements TemplateProcessor {
+
+    public static final ResourceLocation ID = Enchanted.id("byproduct_recipe");
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {

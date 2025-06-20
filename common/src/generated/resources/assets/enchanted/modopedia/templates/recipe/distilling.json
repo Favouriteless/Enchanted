@@ -1,0 +1,28 @@
+{
+  "components": [
+    {
+      "type": "enchanted:distillery"
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#firstInput",
+      "x": 31,
+      "y": 2
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#inputs",
+      "padding": 20,
+      "x": 21,
+      "y": 22
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#outputs",
+      "padding": 19,
+      "x": 2,
+      "y": 95
+    }
+  ],
+  "processor": "enchanted:distilling_recipe"
+}

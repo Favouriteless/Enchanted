@@ -1,0 +1,123 @@
+{
+  "back_button": {
+    "height": 11,
+    "u": 54,
+    "v": 211,
+    "width": 18,
+    "x": 184,
+    "y": 206
+  },
+  "height": 211,
+  "left_button": {
+    "height": 10,
+    "u": 0,
+    "v": 211,
+    "width": 18,
+    "x": 46,
+    "y": 206
+  },
+  "pages": [
+    {
+      "height": 135,
+      "u": 84,
+      "v": 50,
+      "width": 100
+    },
+    {
+      "height": 135,
+      "u": 202,
+      "v": 50,
+      "width": 100
+    }
+  ],
+  "refresh_button": {
+    "height": 14,
+    "u": 38,
+    "v": 211,
+    "width": 15,
+    "x": 27,
+    "y": 128
+  },
+  "right_button": {
+    "height": 10,
+    "u": 19,
+    "v": 211,
+    "width": 18,
+    "x": 322,
+    "y": 206
+  },
+  "tex_height": 400,
+  "tex_width": 390,
+  "texture": "enchanted:textures/gui/art_of_witchcraft.png",
+  "title_backer": {
+    "height": 28,
+    "u": 0,
+    "v": 239,
+    "width": 96,
+    "x": 83,
+    "y": 40
+  },
+  "widgets": {
+    "cauldron": {
+      "height": 80,
+      "u": 0,
+      "v": 273,
+      "width": 90
+    },
+    "crafting_arrow": {
+      "height": 13,
+      "u": 106,
+      "v": 211,
+      "width": 16
+    },
+    "crafting_flame": {
+      "height": 14,
+      "u": 122,
+      "v": 211,
+      "width": 14
+    },
+    "crafting_grid": {
+      "height": 54,
+      "u": 156,
+      "v": 211,
+      "width": 54
+    },
+    "distillery": {
+      "height": 113,
+      "u": 100,
+      "v": 265,
+      "width": 78
+    },
+    "down_arrow": {
+      "height": 13,
+      "u": 106,
+      "v": 224,
+      "width": 16
+    },
+    "large_frame": {
+      "height": 104,
+      "u": 264,
+      "v": 211,
+      "width": 104
+    },
+    "medium_frame": {
+      "height": 54,
+      "u": 210,
+      "v": 211,
+      "width": 54
+    },
+    "separator": {
+      "height": 6,
+      "u": 0,
+      "v": 267,
+      "width": 100
+    },
+    "small_frame": {
+      "height": 20,
+      "u": 136,
+      "v": 211,
+      "width": 20
+    }
+  },
+  "width": 386
+}

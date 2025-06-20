@@ -1,0 +1,45 @@
+{
+  "components": [
+    {
+      "type": "modopedia:crafting_arrow",
+      "x": 22,
+      "y": 2
+    },
+    {
+      "type": "modopedia:crafting_flame",
+      "x": 23,
+      "y": 25
+    },
+    {
+      "type": "modopedia:tooltip",
+      "height": 13,
+      "tooltip": [
+        "tooltip.enchanted.byproduct_recipe"
+      ],
+      "width": 16,
+      "x": 22,
+      "y": 3
+    },
+    {
+      "items": "#inputs",
+      "template": "modopedia:framed_item"
+    },
+    {
+      "items": "#jars",
+      "template": "modopedia:framed_item",
+      "y": 24
+    },
+    {
+      "items": "#output",
+      "template": "modopedia:framed_item",
+      "x": 44
+    },
+    {
+      "items": "#byproduct",
+      "template": "modopedia:framed_item",
+      "x": 44,
+      "y": 24
+    }
+  ],
+  "processor": "enchanted:byproduct_recipe"
+}

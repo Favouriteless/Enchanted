@@ -1,2 +1,0 @@
-- CHANGED: Updated books for new modopedia features
-- FIXED: Altar power not displaying correctly in books

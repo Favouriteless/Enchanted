@@ -1,0 +1,38 @@
+{
+  "components": [
+    {
+      "type": "enchanted:cauldron",
+      "x": 5,
+      "y": 49
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "type": "modopedia:header",
+      "text": "book.enchanted.header.witch_cauldron_recipe"
+    },
+    {
+      "type": "modopedia:item",
+      "centered": true,
+      "items": "#inputs",
+      "row_max": 5,
+      "x": 50,
+      "y": "#inputs_y"
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#output",
+      "x": 42,
+      "y": 84
+    },
+    {
+      "type": "modopedia:text",
+      "justify": "center",
+      "text": "#power",
+      "y": 126
+    }
+  ],
+  "processor": "enchanted:cauldron_type_recipe"
+}

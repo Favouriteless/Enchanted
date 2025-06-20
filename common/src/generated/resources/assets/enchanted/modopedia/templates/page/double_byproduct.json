@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "type": "modopedia:header",
+      "text": "book.enchanted.header.fume_extraction"
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "recipe": "#recipe",
+      "template": "enchanted:recipe/byproduct",
+      "x": 19,
+      "y": 25
+    },
+    {
+      "recipe": "#recipe2",
+      "template": "enchanted:recipe/byproduct",
+      "x": 19,
+      "y": 75
+    }
+  ]
+}

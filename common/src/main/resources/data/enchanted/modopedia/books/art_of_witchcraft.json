@@ -1,9 +1,0 @@
-{
-  "title": "book.title.enchanted.art_of_witchcraft",
-  "subtitle": "book.subtitle.enchanted.art_of_witchcraft",
-  "landing_text": "$(b)Witchcraft$() is the art of bringing out and using the magical effects of seemingly mundane objects.\n\nThis book aims to explain the various schools of witchcraft.",
-  "texture": "enchanted:art_of_witchcraft",
-  "creative_tab": "enchanted:main",
-  "model": "modopedia:item/modopedia_books/brown_brass",
-  "type": { "id": "enchanted:classic" }
-}

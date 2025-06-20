@@ -117,6 +117,10 @@ public class ELanguageProvider extends LanguageProvider {
 
         addBookTitle("art_of_witchcraft", "Art of Witchcraft");
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
+        addBookHeader("fume_extraction", "Fume Extraction");
+        addBookHeader("distillation", "Distillation");
+        addBookHeader("witch_cauldron_recipe", "Cauldron Recipe");
+        addBookHeader("kettle_recipe", "Kettle Recipe");
 
         addTooltip("byproduct_recipe", "Byproduct Recipe");
         addTooltip("altar_power", "%1$s Altar Power");
@@ -142,6 +146,10 @@ public class ELanguageProvider extends LanguageProvider {
 
     protected void addBookSubtitle(String key, String value) {
         add(Enchanted.translationKey("book.subtitle", key), value);
+    }
+
+    protected void addBookHeader(String key, String value) {
+        add(Enchanted.translationKey("book", "header." + key), value);
     }
 
     protected void addJeiCategory(String key, String value) {

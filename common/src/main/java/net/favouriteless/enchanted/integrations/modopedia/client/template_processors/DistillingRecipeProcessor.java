@@ -9,14 +9,15 @@ import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class DistillingRecipeProcessor implements TemplateProcessor {
+
+    public static final ResourceLocation ID = Enchanted.id("distilling_recipe");
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {

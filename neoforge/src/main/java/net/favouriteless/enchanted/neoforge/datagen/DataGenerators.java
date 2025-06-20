@@ -2,6 +2,10 @@ package net.favouriteless.enchanted.neoforge.datagen;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.neoforge.datagen.providers.*;
+import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EBookProvider;
+import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EBookTextureProvider;
+import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EContentSetProvider;
+import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.ETemplateProvider;
 import net.favouriteless.enchanted.neoforge.datagen.providers.tag.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -36,6 +40,11 @@ public class DataGenerators {
 		gen.addProvider(true, new ItemModelProvider(output, fileHelper));
 		gen.addProvider(true, new ELanguageProvider(output));
 		gen.addProvider(true, ELootTableProvider.create(output, provider));
+
+		gen.addProvider(true, new EBookTextureProvider(provider, output));
+		gen.addProvider(true, new ETemplateProvider(provider, output));
+		gen.addProvider(true, new EBookProvider(provider, output));
+		gen.addProvider(true, new EContentSetProvider(provider, output));
 	}
 
 }

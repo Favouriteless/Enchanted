@@ -10,6 +10,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.DistilleryBlock;
 import net.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import net.favouriteless.enchanted.common.blocks.WitchOvenBlock;
+import net.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags;
@@ -28,8 +29,6 @@ import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
 import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.TagStateMatcher;
-import net.favouriteless.modopedia.datagen.builders.SingleRecipeTemplateBuilder;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -37,6 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -192,7 +192,142 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     public void buildHerbologyEntries(Provider provider, BiConsumer<String, JsonElement> output) {
+        simpleHerbologyPage("belladonna", "Belladonna", """
+                Atropa bella-donna, commonly known as deadly nightshade, is a poisonous member of the Solanaceae family.
+                
+                The berries and foliage of this plant are extremely toxic and should be handled with care.
+                """, EBlocks.BELLADONNA.get(), procureGrass(), EItems.BELLADONNA_FLOWER.get(), EItems.BELLADONNA_SEEDS.get()
+        ).build(output);
 
+        simpleHerbologyPage("garlic", "Garlic", """
+                Garlic, scientific name allium sativum, is a dietary staple in many households.
+                
+                Vampires are said to dislike garlic but its effectiveness as a repellent is questionable.
+                """, EBlocks.GARLIC.get(), procureGrass(), EItems.GARLIC.get()
+        ).build(output);
+
+        simpleHerbologyPage("mandrake", "Mandrakes", """
+                Mandrakes are a group of perennial herbaceous plants with long, parsnip shaped roots.
+                
+                If agitated, mandrakes will scream causing injury or even death. Wearing $(el:getting_started/earmuffs)$(b)earmuffs$() can protect you, and they sleep at night.
+                """, EBlocks.MANDRAKE.get(), procureGrass(), EItems.MANDRAKE_ROOT.get(), EItems.MANDRAKE_SEEDS.get()
+        ).build(output);
+
+        simpleHerbologyPage("snowbell", "Snowbell", """
+                Styrax japonicus, more commonly referred to as Snowbell, is a shrub from the Styracaceae family.
+                
+                Despite the name, they are native to warm climates in Asia. Its resin is used for purification, dispelling anger or soothing tension.
+                """, EBlocks.SNOWBELL.get(), procureGrass(), EItems.ICY_NEEDLE.get(), EItems.SNOWBELL_SEEDS.get()
+        ).build(output);
+
+        simpleHerbologyPage("water_artichoke", "Water Artichoke", """
+                This subspecies of the common Artichoke, or cynara cardunculus, only grows on still water.
+                
+                Unlike it's green cousin, it is not considered edible. Consumption of this plant will satiate hunger but empty your stomach.
+                """, EBlocks.WATER_ARTICHOKE.get(), procureGrass(), EItems.WATER_ARTICHOKE.get(), EItems.WATER_ARTICHOKE_SEEDS.get()
+        ).build(output);
+
+        simpleHerbologyPage("wolfsbane", "Wolfsbane", """
+                Aconitum, common name of Wolfsbane, is a perennial flower of the Ranunculaceae family.
+                
+                Its roots contain aconitine, a potent neurotoxin and cardiotoxin. Contrary to popular belief, the name is just a translation from greek.
+                """, EBlocks.WOLFSBANE.get(), procureGrass(), EItems.WOLFSBANE_FLOWER.get(), EItems.WOLFSBANE_SEEDS.get()
+        ).build(output);
+
+        simpleHerbologyPage("mutated_plants/glint_weed", "Glint Weed", """
+                This magical weed emits a glow around it, acting like a torch. Nobody knows what type of plant it actually is.
+                
+                While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread.
+                """, EBlocks.GLINT_WEED.get(), procureMutandis(), EItems.GLINT_WEED.get()
+        ).build(output);
+
+        simpleHerbologyPage("mutated_plants/ember_moss", "Ember Moss", """
+                Ember moss is a non-vascular plant with a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance.
+                """, EBlocks.EMBER_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.EMBER_MOSS.get()
+        ).build(output);
+
+        simpleHerbologyPage("mutated_plants/spanish_moss", "Spanish Moss", """
+                An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates.
+                
+                Spanish Moss is often used in the creation of Poppets. Should be harvested with shears to be kept intact.
+                """, EBlocks.SPANISH_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.SPANISH_MOSS.get()
+        ).build(output);
+
+        EntryBuilder.of("herbology/mutated_plants/alder", "Alder Trees")
+                .icon(EItems.ALDER_SAPLING.get().getDefaultInstance())
+                .assignedItems(EItems.ALDER_SAPLING.get(), EItems.ALDER_LOG.get(), EItems.STRIPPED_ALDER_LOG.get(), 
+                        EItems.ALDER_PLANKS.get(), EItems.ALDER_STAIRS.get(), EItems.ALDER_SLAB.get(), EItems.ALDER_FENCE.get(),
+                        EItems.ALDER_FENCE_GATE.get(), EItems.ALDER_BUTTON.get(), EItems.ALDER_PRESSURE_PLATE.get())
+                .page(
+                        HeaderedTextBuilder.of("Alder Trees", """
+                                Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.
+                                
+                                Alders are thought to be both a bringer of misfortune and a repellent of negativity."""
+                        )
+                )
+                .page(
+                        GalleryBuilder.of(
+                                MultiblockPageBuilder.of(procureMutandis())
+                                        .multiblockId(Enchanted.id("alder_tree")),
+                                BlockPageBuilder.of(procureMutandis(), EBlocks.ALDER_SAPLING.get().defaultBlockState())
+                        )
+                )
+                .build(output);
+
+        EntryBuilder.of("herbology/mutated_plants/hawthorn", "Hawthorn Trees")
+                .icon(EItems.HAWTHORN_SAPLING.get().getDefaultInstance())
+                .assignedItems(EItems.HAWTHORN_SAPLING.get(), EItems.HAWTHORN_LOG.get(), EItems.STRIPPED_HAWTHORN_LOG.get(),
+                        EItems.HAWTHORN_PLANKS.get(), EItems.HAWTHORN_STAIRS.get(), EItems.HAWTHORN_SLAB.get(), EItems.HAWTHORN_FENCE.get(),
+                        EItems.HAWTHORN_FENCE_GATE.get(), EItems.HAWTHORN_BUTTON.get(), EItems.HAWTHORN_PRESSURE_PLATE.get())
+                .page(
+                        HeaderedTextBuilder.of("Hawthorn Trees", """
+                                This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.
+                                
+                                In addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires."""
+                        )
+                )
+                .page(
+                        GalleryBuilder.of(
+                                MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("hawthorn_tree")),
+                                BlockPageBuilder.of(procureMutandis(), EBlocks.HAWTHORN_SAPLING.get().defaultBlockState())
+                        )
+                )
+                .build(output);
+
+        EntryBuilder.of("herbology/mutated_plants/rowan", "Rowan Trees")
+                .icon(EItems.ROWAN_BERRIES.get().getDefaultInstance())
+                .assignedItems(EItems.ROWAN_BERRIES.get(), EItems.ROWAN_SAPLING.get(), EItems.ROWAN_LOG.get(),
+                        EItems.STRIPPED_ROWAN_LOG.get(), EItems.ROWAN_PLANKS.get(), EItems.ROWAN_STAIRS.get(),
+                        EItems.ROWAN_SLAB.get(), EItems.ROWAN_FENCE.get(), EItems.ROWAN_FENCE_GATE.get(),
+                        EItems.ROWAN_BUTTON.get(), EItems.ROWAN_PRESSURE_PLATE.get())
+                .page(
+                        HeaderedTextBuilder.of("Rowan Trees", """
+                                The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft.
+                                
+                                The magical affinity of the Rowan is seldom matched by other trees, and is thought to give protection against malevolent beings."""
+                        )
+                )
+                .page(
+                        GalleryBuilder.of(
+                                MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("rowan_tree")),
+                                BlockPageBuilder.of(procureMutandis(), EBlocks.ROWAN_SAPLING.get().defaultBlockState())
+                        )
+                )
+                .build(output);
+
+        simpleCauldronPage("herbology/mutated_plants/mutandis", EItems.MUTANDIS.get(), "Mutandis", """
+                                Mutandis is used to mutate plants into other species you could not normally obtain.
+                                
+                                Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant.
+                                """
+        ).build(output);
+
+        simpleCauldronPage("herbology/mutated_plants/mutandis_extremis", EItems.MUTANDIS_EXTREMIS.get(), "Mutandis Extremis", """
+                                Mutandis Extremis, an enhanced form of $(el:herbology/mutated_plants/mutandis)$(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.
+                                
+                                It can also be used to create $(b)Blood Poppies$().
+                                """
+        ).build(output);
     }
 
     public void buildExtractionEntries(Provider provider, BiConsumer<String, JsonElement> output) {
@@ -365,21 +500,21 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     public void buildBrewingEntries(Provider provider, BiConsumer<String, JsonElement> output) {
-        simpleKettlePage(EItems.BREW_OF_LOVE.get(), "Brew of Love", "Charming or love potions are one of the most widely sought types of brew.\n\nWhen thrown, the vapour produced will cause nearby animals to become infatuated.").build(output);
-        simpleKettlePage(EItems.BREW_OF_SPROUTING.get(), "Brew of Sprouting", "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)This feature is coming soon.").build(output);
-        simpleKettlePage(EItems.BREW_OF_THE_DEPTHS.get(), "Brew of the Depths", "The ability to breathe underwater has fascinated people for millennia. Fortunately, witches have a solution for this.\n\nThe brew of depths grants the ability to breathe underwater for an extended time when ingested.").build(output);
-        simpleKettlePage(EItems.BREW_OF_THE_GROTESQUE.get(), "Brew of the Grotesque", "This brew makes the drinker unrecognisably grotesque, tricking nearby mobs into believing the drinker is one of their own.\n\nAdditionally, brew of the grotesque is used as a base in most curses.").build(output);
-        simpleKettlePage(EItems.FLYING_OINTMENT.get(), "Flying Ointment", "Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.\n\nMost notably, it can be used to $(b)infuse broomsticks$()").build(output);
-        simpleKettlePage(EItems.HAPPENSTANCE_OIL.get(), "Happenstance Oil", "Clairvoyance is an indispensable tool for a witch in need of information.\n\nHappenstance oil is a key component of crystal balls, and while consuming it is not recommended, it can improve your vision.").build(output);
-        simpleKettlePage(EItems.MYSTIC_UNGUENT.get(), "Mystic Unguent", "Mystic Unguent is a curious concoction which allows a witch to give physical form to thoughts.\n\nIt's main use is in the production of mystic branches, consuming this brew is not recommended.").build(output);
-        simpleKettlePage(EItems.REDSTONE_SOUP.get(), "Redstone Soup", "Redstone Soup primarily acts as a base for other infusions and brews, it has very few reported effects outside of this.\n\nIngesting redstone soup can increase your health for a short time.").build(output);
-        simpleKettlePage(EItems.SOUL_OF_THE_WORLD.get(), "Soul of the World", "Soul of the World is a derivation of $(b)$(el:brewing/redstone_soup)redstone soup$() imbued with natural energy. It can be used to infuse energy into a person to grant them special abilities.\n\nThis brew is extremely toxic and should not be ingested.").build(output);
-        simpleKettlePage(EItems.SPIRIT_OF_OTHERWHERE.get(), "Spirit of Otherwhere", "Similar to $(b)$(el:brewing/soul_of_the_world)soul of the world$(), spirit of otherwhere is a derivation of $(b)$(el:brewing/redstone_soup)redstone soup$() imbued with the same properties as the End and its inhabitants.\n\nThis infusion is extremely toxic and should not be ingested.").build(output);
+        simpleBrewingKettlePage(EItems.BREW_OF_LOVE.get(), "Brew of Love", "Charming or love potions are one of the most widely sought types of brew.\n\nWhen thrown, the vapour produced will cause nearby animals to become infatuated.").build(output);
+        simpleBrewingKettlePage(EItems.BREW_OF_SPROUTING.get(), "Brew of Sprouting", "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)This feature is coming soon.").build(output);
+        simpleBrewingKettlePage(EItems.BREW_OF_THE_DEPTHS.get(), "Brew of the Depths", "The ability to breathe underwater has fascinated people for millennia. Fortunately, witches have a solution for this.\n\nThe brew of depths grants the ability to breathe underwater for an extended time when ingested.").build(output);
+        simpleBrewingKettlePage(EItems.BREW_OF_THE_GROTESQUE.get(), "Brew of the Grotesque", "This brew makes the drinker unrecognisably grotesque, tricking nearby mobs into believing the drinker is one of their own.\n\nAdditionally, brew of the grotesque is used as a base in most curses.").build(output);
+        simpleBrewingKettlePage(EItems.FLYING_OINTMENT.get(), "Flying Ointment", "Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.\n\nMost notably, it can be used to $(b)infuse broomsticks$()").build(output);
+        simpleBrewingKettlePage(EItems.HAPPENSTANCE_OIL.get(), "Happenstance Oil", "Clairvoyance is an indispensable tool for a witch in need of information.\n\nHappenstance oil is a key component of crystal balls, and while consuming it is not recommended, it can improve your vision.").build(output);
+        simpleBrewingKettlePage(EItems.MYSTIC_UNGUENT.get(), "Mystic Unguent", "Mystic Unguent is a curious concoction which allows a witch to give physical form to thoughts.\n\nIt's main use is in the production of mystic branches, consuming this brew is not recommended.").build(output);
+        simpleBrewingKettlePage(EItems.REDSTONE_SOUP.get(), "Redstone Soup", "Redstone Soup primarily acts as a base for other infusions and brews, it has very few reported effects outside of this.\n\nIngesting redstone soup can increase your health for a short time.").build(output);
+        simpleBrewingKettlePage(EItems.SOUL_OF_THE_WORLD.get(), "Soul of the World", "Soul of the World is a derivation of $(b)$(el:brewing/redstone_soup)redstone soup$() imbued with natural energy. It can be used to infuse energy into a person to grant them special abilities.\n\nThis brew is extremely toxic and should not be ingested.").build(output);
+        simpleBrewingKettlePage(EItems.SPIRIT_OF_OTHERWHERE.get(), "Spirit of Otherwhere", "Similar to $(b)$(el:brewing/soul_of_the_world)soul of the world$(), spirit of otherwhere is a derivation of $(b)$(el:brewing/redstone_soup)redstone soup$() imbued with the same properties as the End and its inhabitants.\n\nThis infusion is extremely toxic and should not be ingested.").build(output);
 
-        simpleCauldronPage(EItems.DROP_OF_LUCK.get(), "Drop of Luck", "Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:brewing/redstone_soup)Redstone Soup$().").build(output);
-        simpleCauldronPage(EItems.GOLDEN_CHALK.get(), "Golden Chalk", "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)heart glyph$() for $(b)circle magic$() is drawn using golden chalk.").build(output);
-        simpleCauldronPage(EItems.NETHER_CHALK.get(), "Infernal Chalk", "Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.\n\nInfernal chalk is used for many rites involving the nether, demonic beings or fire.").build(output);
-        simpleCauldronPage(EItems.OTHERWHERE_CHALK.get(), "Otherwhere chalk", "Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.\n\nTypically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.").build(output);
+        simpleBrewingCauldronPage(EItems.DROP_OF_LUCK.get(), "Drop of Luck", "Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:brewing/redstone_soup)Redstone Soup$().").build(output);
+        simpleBrewingCauldronPage(EItems.GOLDEN_CHALK.get(), "Golden Chalk", "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)heart glyph$() for $(b)circle magic$() is drawn using golden chalk.").build(output);
+        simpleBrewingCauldronPage(EItems.NETHER_CHALK.get(), "Infernal Chalk", "Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.\n\nInfernal chalk is used for many rites involving the nether, demonic beings or fire.").build(output);
+        simpleBrewingCauldronPage(EItems.OTHERWHERE_CHALK.get(), "Otherwhere chalk", "Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.\n\nTypically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.").build(output);
 
         EntryBuilder.of("brewing/kettle", "The Kettle")
                 .icon(EItems.KETTLE.get().getDefaultInstance())
@@ -447,6 +582,8 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build(output);
     }
 
+
+
     @Override
     public void buildCategories(Provider provider, BiConsumer<String, Category> output) {
         CategoryBuilder.of("getting_started", "Getting Started")
@@ -456,7 +593,6 @@ public class EContentSetProvider extends ContentSetProvider {
                         This chapter tells you everything you need to know about getting started as a Witch."""
                 )
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
-                .displayOnFrontPage(true)
                 .children("getting_started/altars")
                 .entries(
                         "getting_started/arthana", "getting_started/earmuffs", "getting_started/broom",
@@ -485,7 +621,6 @@ public class EContentSetProvider extends ContentSetProvider {
                         This involves two processes; fume collection and distillation. Both of these are detailed in this chapter."""
                 )
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
-                .displayOnFrontPage(true)
                 .entries(
                         "extraction/witch_oven", "extraction/distillery", "extraction/clay_jar",
                         "extraction/breath_of_the_goddess", "extraction/demonic_blood", "extraction/diamond_vapour",
@@ -504,7 +639,6 @@ public class EContentSetProvider extends ContentSetProvider {
                         This chapter aims to tell you how to obtain these plants and what they do."""
                 )
                 .icon(EItems.WOLFSBANE_FLOWER.get().getDefaultInstance())
-                .displayOnFrontPage(true)
                 .children("herbology/mutated_plants")
                 .entries(
                         "herbology/belladonna", "herbology/water_artichoke", "herbology/mandrake", "herbology/snowbell",
@@ -521,9 +655,10 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.MUTANDIS.get().getDefaultInstance())
                 .displayOnFrontPage(false)
                 .entries(
-                        "herbology/mutandis/mutandis", "herbology/mutandis/mutandis_extremis", "herbology/mutandis/rowan",
-                        "herbology/mutandis/hawthorn", "herbology/mutandis/alder", "herbology/mutandis/spanish_moss",
-                        "herbology/mutandis/glint_weed", "herbology/mutandis/ember_moss"
+                        "herbology/mutated_plants/mutandis", "herbology/mutated_plants/mutandis_extremis",
+                        "herbology/mutated_plants/rowan", "herbology/mutated_plants/hawthorn",
+                        "herbology/mutated_plants/alder", "herbology/mutated_plants/spanish_moss",
+                        "herbology/mutated_plants/glint_weed", "herbology/mutated_plants/ember_moss"
                 )
                 .build(output);
 
@@ -534,16 +669,24 @@ public class EContentSetProvider extends ContentSetProvider {
                         The methods of brewing and various common recipes can be found in this chapter."""
                 )
                 .icon(EItems.REDSTONE_SOUP.get().getDefaultInstance())
-                .displayOnFrontPage(true)
                 .entries(
-                        "brewing/brewing", "herbology/mutandis", "herbology/mutandis_extremis", "brewing/golden_chalk",
-                        "brewing/nether_chalk", "brewing/otherwhere_chalk", "brewing/drop_of_luck",
+                        "brewing/brewing", "herbology/mutated_plants/mutandis", "herbology/mutated_plants/mutandis_extremis",
+                        "brewing/golden_chalk", "brewing/nether_chalk", "brewing/otherwhere_chalk", "brewing/drop_of_luck",
                         "brewing/redstone_soup", "brewing/flying_ointment", "brewing/happenstance_oil",
                         "brewing/mystic_unguent", "brewing/spirit_of_otherwhere", "brewing/soul_of_the_world",
                         "brewing/brew_of_love", "brewing/brew_of_sprouting", "brewing/brew_of_the_depths",
                         "brewing/brew_of_the_grotesque"
                 )
                 .build(output);
+    }
+
+
+    public String procureMutandis() {
+        return "$(b)Procurement:$()\nUse $(el:herbology/mutated_plants/mutandis)$(b)mutandis$() on a small plant.";
+    }
+    
+    private String procureGrass() {
+        return "$(b)Procurement:$()\nDropped by tall and short grass";
     }
 
     public EntryBuilder simpleCraftedItem(String id, String title, String description, ResourceLocation recipe, Item... items) {
@@ -554,22 +697,33 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(CraftingPageBuilder.of(recipe));
     }
 
-    public EntryBuilder simpleCauldronPage(Item item, String title, String description) {
+    public EntryBuilder simpleBrewingCauldronPage(Item item, String title, String description) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-        return EntryBuilder.of("brewing/" + id.getPath(), title)
-                .icon(item.getDefaultInstance())
-                .assignedItems(item)
-                .page(HeaderedTextBuilder.of(title, description))
-                .page(WitchCauldronRecipeBuilder.of(Enchanted.id("witch_cauldron/" + id.getPath())));
+        return simpleCauldronPage("brewing/" + id.getPath(), item, title, description);
     }
 
-    public EntryBuilder simpleKettlePage(Item item, String title, String description) {
+    public EntryBuilder simpleBrewingKettlePage(Item item, String title, String description) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-        return EntryBuilder.of("brewing/" + id.getPath(), title)
+        return simpleKettlePage("brewing/" + id.getPath(), item, title, description);
+
+    }
+
+    public EntryBuilder simpleCauldronPage(String id, Item item, String title, String description) {
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
+        return EntryBuilder.of(id, title)
                 .icon(item.getDefaultInstance())
                 .assignedItems(item)
                 .page(HeaderedTextBuilder.of(title, description))
-                .page(KettleRecipeBuilder.of(Enchanted.id("kettle/" + id.getPath())));
+                .page(WitchCauldronRecipeBuilder.of(Enchanted.id("witch_cauldron/" + itemId.getPath())));
+    }
+
+    public EntryBuilder simpleKettlePage(String id, Item item, String title, String description) {
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
+        return EntryBuilder.of(id, title)
+                .icon(item.getDefaultInstance())
+                .assignedItems(item)
+                .page(HeaderedTextBuilder.of(title, description))
+                .page(KettleRecipeBuilder.of(Enchanted.id("kettle/" + itemId.getPath())));
     }
 
     public EntryBuilder simpleExtractionPage(Item item, String title, String description, PageComponentBuilder... recipeTemplates) {
@@ -579,6 +733,22 @@ public class EContentSetProvider extends ContentSetProvider {
                 .assignedItems(item)
                 .page(HeaderedTextBuilder.of(title, description))
                 .page(GalleryBuilder.of(recipeTemplates).height(140));
+    }
+
+    public EntryBuilder simpleHerbologyPage(String id, String title, String description, CropsBlockAgeFive block, String procurement, Item... items) {
+        return EntryBuilder.of("herbology/" + id, title)
+                .icon(items[0].getDefaultInstance())
+                .assignedItems(items)
+                .page(HeaderedTextBuilder.of(title, description))
+                .page(BlockPageBuilder.of(procurement, block.defaultBlockState().setValue(CropsBlockAgeFive.AGE_FIVE, 4)));
+    }
+
+    public EntryBuilder simpleHerbologyPage(String id, String title, String description, Block block, String procurement, Item... items) {
+        return EntryBuilder.of("herbology/" + id, title)
+                .icon(items[0].getDefaultInstance())
+                .assignedItems(items)
+                .page(HeaderedTextBuilder.of(title, description))
+                .page(BlockPageBuilder.of(procurement, block.defaultBlockState()));
     }
 
     public static PageComponentBuilder[] combine(PageComponentBuilder[] a, PageComponentBuilder[] b) {

@@ -1,8 +1,8 @@
 {
   "entries": [
     "brewing/brewing",
-    "herbology/mutandis",
-    "herbology/mutandis_extremis",
+    "herbology/mutated_plants/mutandis",
+    "herbology/mutated_plants/mutandis_extremis",
     "brewing/golden_chalk",
     "brewing/nether_chalk",
     "brewing/otherwhere_chalk",

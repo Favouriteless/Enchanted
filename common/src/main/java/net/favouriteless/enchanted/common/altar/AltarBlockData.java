@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.altar;
 
 import net.favouriteless.enchanted.common.init.EData;
-import net.favouriteless.enchanted.common.init.ETags;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -124,7 +124,7 @@ public class AltarBlockData {
                 blockCounts.put(block, blockNbt.getInt(name));
         }
         for(String name : tagNbt.getAllKeys())
-            tagCounts.put(ETags.createBlockTag(name), tagNbt.getInt(name));
+            tagCounts.put(TagKey.create(Registries.BLOCK, ResourceLocation.parse(name)), tagNbt.getInt(name));
 
         isInitialised = false;
     }

@@ -6,3 +6,4 @@
 - CHANGED: Refactored curse system.
 
 - FIXED: Breaking curses has a lower success rate than intended.
+- FIXED: Altar power tags do not load correctly under some circumstances.

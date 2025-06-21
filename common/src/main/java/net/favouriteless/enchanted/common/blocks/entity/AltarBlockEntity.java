@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+// TODO: Another rewrite, this code is bad.
 public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
 
     private final double rechargeRate = CommonConfig.INSTANCE.altarBaseRecharge.get();
@@ -118,7 +119,6 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
 
     @Override
     public void loadAdditional(CompoundTag nbt, Provider provider) {
-        setMaxPower(nbt.getDouble("maxPower"));
         setMaxPower(nbt.getDouble("maxPower"));
         currentPower = nbt.getDouble("currentPower");
         powerMultiplier = nbt.getDouble("powerMultiplier");

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.circle_magic.rites.factory;
 
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.enchanted.api.rites.RiteFactory;
+import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.rites.BindFamiliarRite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;

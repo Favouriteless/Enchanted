@@ -24,7 +24,9 @@ public class CommonConfig {
 
     public final BooleanValue hoeOnlySeeds;
     public final BooleanValue disableTotems;
-    public final DoubleValue entAxeMultiplier;
+
+    public final IntValue curseWhisperMax;
+    public final IntValue curseWhisperMin;
 
 
     private CommonConfig(ModConfigSpec.Builder builder) {
@@ -38,17 +40,21 @@ public class CommonConfig {
         builder.pop();
 
         builder.push("Cauldron Options");
-        cauldronItemSpoil = builder.comment("Allow incorrect items to spoil brew (DEFAULT: true)").define("cauldron_item_spoil", true);
+        cauldronItemSpoil = builder.comment("Allow incorrect items to spoil brew").define("cauldron_item_spoil", true);
         builder.pop();
 
         builder.push("Kettle Options");
-        kettleItemSpoil = builder.comment("Allow incorrect items to spoil brew (DEFAULT: true)").define("kettle_item_spoil", true);
+        kettleItemSpoil = builder.comment("Allow incorrect items to spoil brew").define("kettle_item_spoil", true);
         builder.pop();
 
         builder.push("Miscellaneous Options");
-        hoeOnlySeeds = builder.comment("Only drop modded seeds when a hoe is used to break grass. (DEFAULT: false)").define("hoe_seeds", false);
-        disableTotems = builder.comment("Disable totems of undying (to make poppets more useful) (DEFAULT: false)").define("disable_totems", false);
-        entAxeMultiplier = builder.comment("The damage multiplier for axes against an Ent").defineInRange("ent_axe_multiplier", 3.0D, 0, Double.MAX_VALUE);
+        hoeOnlySeeds = builder.comment("Only drop modded seeds when a hoe is used to break grass.").define("hoe_seeds", false);
+        disableTotems = builder.comment("Disable totems of undying (to make poppets more useful)").define("disable_totems", false);
+        builder.pop();
+
+        builder.push("Curse Options");
+        curseWhisperMin = builder.comment("The minimum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_min", 120, 0, Integer.MAX_VALUE);
+        curseWhisperMax = builder.comment("The maximum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_max", 240, 0, Integer.MAX_VALUE);
         builder.pop();
     }
 

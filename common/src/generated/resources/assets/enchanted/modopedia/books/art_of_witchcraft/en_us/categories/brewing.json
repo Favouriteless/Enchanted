@@ -1,11 +1,11 @@
 {
   "entries": [
     "brewing/brewing",
-    "herbology/mutated_plants/mutandis",
-    "herbology/mutated_plants/mutandis_extremis",
-    "brewing/golden_chalk",
-    "brewing/nether_chalk",
-    "brewing/otherwhere_chalk",
+    "materials/mutandis",
+    "materials/mutandis_extremis",
+    "golden_chalk",
+    "nether_chalk",
+    "otherwhere_chalk",
     "brewing/drop_of_luck",
     "brewing/redstone_soup",
     "brewing/flying_ointment",

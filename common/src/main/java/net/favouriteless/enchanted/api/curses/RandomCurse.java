@@ -2,48 +2,46 @@ package net.favouriteless.enchanted.api.curses;
 
 import net.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Random;
 
 /**
- * An implementation of {@link Curse} which triggers randomly between a specified range of seconds.
+ * A {@link Curse} which triggers randomly within a specified range of time.
  */
 public abstract class RandomCurse extends Curse {
 
-	private final int minTime;
-	private final int maxTime;
-	private final double chance;
-	private long lastUseTick = 0;
+	public static final Random RANDOM = new Random();
 
-	public RandomCurse(CurseType<?> type, int minTime, int maxTime) {
+	private final int min;
+	private final int max;
+
+	private long nextUseTick = 0;
+
+	public RandomCurse(CurseType<?> type, int min, int max) {
 		super(type);
-		this.minTime = minTime;
-		this.maxTime = maxTime;
-		this.chance = 1.0D / ((maxTime - minTime)*20);
+		this.min = min;
+		this.max = max;
 	}
 
 	@Override
-	protected void onTick() {
-		long ticksSince = ticks - lastUseTick;
-		if(ticksSince > maxTime*20L) {
-			lastUseTick = ticks;
-			execute();
-		}
-		else if(ticksSince > minTime*20L) {
-			if(Math.random() < chance) {
-				lastUseTick = ticks;
-				execute();
-			}
+	protected void onTick(ServerPlayer target, long ticks) {
+		if(nextUseTick <= ticks) {
+			execute(target);
+			nextUseTick = ticks + RANDOM.nextLong(min * 20L, max * 20L);
 		}
 	}
 
-	protected abstract void execute();
+	protected abstract void execute(ServerPlayer target);
 
 	@Override
 	protected void saveAdditional(CompoundTag nbt) {
-		nbt.putLong("lastUse", lastUseTick);
+		nbt.putLong("nextUse", nextUseTick);
 	}
 
 	@Override
 	protected void loadAdditional(CompoundTag nbt) {
-		lastUseTick = nbt.getLong("lastUse");
+		nextUseTick = nbt.getLong("nextUse");
 	}
+
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-
+// TODO: Dispatch codec this and add proper API
 public class CurseTypes {
 
     private static final Map<ResourceLocation, CurseType<?>> CURSE_TYPES = new HashMap<>();
@@ -36,8 +36,8 @@ public class CurseTypes {
         return CURSE_TYPES.get(id);
     }
 
-    public static Curse getInstance(ResourceLocation id) {
-        CurseType<?> type = CURSE_TYPES.get(id);
+    public static Curse create(ResourceLocation id) {
+        CurseType<?> type = get(id);
         return type != null ? type.create() : null;
     }
 

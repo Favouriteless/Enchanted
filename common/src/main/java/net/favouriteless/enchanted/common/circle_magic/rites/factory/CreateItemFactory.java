@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.circle_magic.rites.factory;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.favouriteless.enchanted.api.rites.RiteFactory;
+import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.rites.CreateItemRite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
@@ -10,7 +10,6 @@ import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

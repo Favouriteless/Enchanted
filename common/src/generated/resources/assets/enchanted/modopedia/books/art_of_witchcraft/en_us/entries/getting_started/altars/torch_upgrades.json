@@ -27,8 +27,8 @@
           "components": [
             {
               "block": "minecraft:torch",
-              "offset_y": -20.0,
-              "scale": 2.0,
+              "offset_y": -15.0,
+              "scale": 1.8,
               "template": "modopedia:page/block",
               "text": "$(b)Torch:$()\n+0.5x Recharge Rate",
               "text_offset": -30
@@ -43,8 +43,8 @@
             },
             {
               "block": "enchanted:candelabra",
-              "offset_y": -20.0,
-              "scale": 2.0,
+              "offset_y": -15.0,
+              "scale": 1.75,
               "template": "modopedia:page/block",
               "text": "$(b)Candelabra:$()\n+2x Recharge Rate",
               "text_offset": -30

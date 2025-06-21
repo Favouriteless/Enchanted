@@ -61,4 +61,8 @@ public class Enchanted {
         return String.format("%s.%s.%s", prefix, MOD_ID, suffix);
     }
 
+    public static String savedDataName(String suffix) {
+        return MOD_ID + ":" + suffix;
+    }
+
 }

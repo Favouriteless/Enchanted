@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.api.rites;
+package net.favouriteless.enchanted.api.circle_magic;
 
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;

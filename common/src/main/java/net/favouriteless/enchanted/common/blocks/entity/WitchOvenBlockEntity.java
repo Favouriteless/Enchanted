@@ -180,7 +180,7 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
     }
 
     /**
-     * @return The chance for a byproduct to be produced by this Witch Oven, accounting fume funnels.
+     * @return The weight for a byproduct to be produced by this Witch Oven, accounting fume funnels.
      */
     private double getByproductChance() {
         double byproductChance = 0.3D;

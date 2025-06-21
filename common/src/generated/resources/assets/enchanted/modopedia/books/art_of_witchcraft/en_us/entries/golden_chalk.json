@@ -12,7 +12,7 @@
         {
           "header": "Golden Chalk",
           "template": "modopedia:page/headered_text",
-          "text": "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)heart glyph$() for $(b)circle magic$() is drawn using golden chalk."
+          "text": "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)$(el:circle_magic/tutorial/performing_rites)heart glyph$() for $(b)$(cl:circle_magic)circle magic$() is drawn using golden chalk."
         }
       ]
     },

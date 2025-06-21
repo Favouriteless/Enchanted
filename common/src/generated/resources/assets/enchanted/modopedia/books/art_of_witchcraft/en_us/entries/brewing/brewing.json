@@ -56,7 +56,7 @@
         {
           "header": "Adding Ingredients",
           "template": "modopedia:page/headered_text",
-          "text": "The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, in order, one by one.\n\nThe water should start to change colour. Once added, the brew needs to boil for a few seconds to finish."
+          "text": "The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, $(b)in order$(), one by one.\n\nThe water should start to change colour. Once added, the brew needs to boil for a few seconds to finish."
         }
       ]
     },

@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.blocks.chalk.AbstractChalkBlock;
-import net.favouriteless.enchanted.common.init.ETags.Blocks;
 import net.favouriteless.enchanted.common.items.*;
 import net.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import net.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
@@ -120,8 +119,8 @@ public class EItems {
 	public static final Supplier<Item> MANDRAKE_ROOT = registerItem("mandrake_root");
 	public static final Supplier<ItemNameBlockItem> MANDRAKE_SEEDS = registerBlockNamed("mandrake_seeds", EBlocks.MANDRAKE);
 	public static final Supplier<Item> MELLIFLUOUS_HUNGER = registerItem("mellifluous_hunger");
-	public static final Supplier<Item> MUTANDIS = register("mutandis", () -> new MutandisItem(ETags.Blocks.MUTANDIS, ETags.Blocks.MUTANDIS_BLACKLIST));
-	public static final Supplier<Item> MUTANDIS_EXTREMIS = register("mutandis_extremis", () -> new MutandisItem(ETags.Blocks.MUTANDIS_EXTREMIS, Blocks.MUTANDIS_EXTREMIS_BLACKLIST));
+	public static final Supplier<Item> MUTANDIS = register("mutandis", () -> new MutandisItem(false));
+	public static final Supplier<Item> MUTANDIS_EXTREMIS = register("mutandis_extremis", () -> new MutandisItem(true));
 	public static final Supplier<SimpleEffectBrewItem> MYSTIC_UNGUENT = registerBrew("mystic_unguent", () -> MobEffects.WEAKNESS, 1200, 1);
 	public static final Supplier<ChalkItem> NETHER_CHALK = registerChalk("nether_chalk", EBlocks.NETHER_CHALK, 40);
 	public static final Supplier<Item> ODOUR_OF_PURITY = registerItem("odour_of_purity");

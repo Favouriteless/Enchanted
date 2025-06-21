@@ -1,34 +1,23 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
 import com.google.gson.JsonElement;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.*;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.*;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.blocks.DistilleryBlock;
-import net.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
-import net.favouriteless.enchanted.common.blocks.WitchOvenBlock;
-import net.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
+import net.favouriteless.enchanted.common.blocks.*;
+import net.favouriteless.enchanted.common.blocks.crops.*;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Category;
-import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.HeaderBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.MultiblockBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.SeparatorBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.*;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
-import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.*;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
-import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
-import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
-import net.favouriteless.modopedia.client.multiblock.state_matchers.TagStateMatcher;
+import net.favouriteless.modopedia.client.multiblock.*;
+import net.favouriteless.modopedia.client.multiblock.state_matchers.*;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -55,43 +44,231 @@ public class EContentSetProvider extends ContentSetProvider {
 
     @Override
     public void buildEntries(Provider provider, BiConsumer<String, JsonElement> output) {
+        buildBaseEntries(provider, output);
+        buildMaterialEntries(provider, output);
         buildGettingStartedEntries(provider, output);
         buildHerbologyEntries(provider, output);
         buildExtractionEntries(provider, output);
         buildBrewingEntries(provider, output);
+        buildCircleMagicEntries(provider, output);
     }
 
-    public void buildGettingStartedEntries(Provider provider, BiConsumer<String, JsonElement> output) {
-        simpleCraftedItem("getting_started/attuned_stone", "Attuned Stones", """
-                                An attuned stone is a diamond which has been infused with magical energy.
-                                
-                                It can be charged to be used as a portable container for $(b)$(el:getting_started/altars/altar_construction)altar power$(), allowing the user to cast circle magic without an altar being present, and is also used in the creation of a variety of magical tools.""",
-                Enchanted.id("attuned_stone"), EItems.ATTUNED_STONE.get(), EItems.ATTUNED_STONE_CHARGED.get()).build(output);
+    public void buildBaseEntries(Provider provider, BiConsumer<String, JsonElement> output) {
+        simpleCraftedItem("ritual_chalk", "Ritual Chalk", """
+                Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.
+                
+                There are no known special effects of ritual chalk, it is merely chalk infused with $(b)$(el:materials/tear_of_the_goddess)Tear of the Goddess$().""",
+                Enchanted.id("ritual_chalk"), EItems.RITUAL_CHALK.get()
+        ).build(output);
 
-        simpleCraftedItem("getting_started/bone_needle", "Bone Needles", """
-                                Needles are an important part of many tools used for Witchcraft, most notably $(el:getting_started/taglocks)$(b)taglock kits$() and $(b)poppets$().
-                                
-                                A simple needle can be fashioned by whittling a bone.""",
-                Enchanted.id("bone_needle"), EItems.BONE_NEEDLE.get()).build(output);
+        simpleCauldronPage("golden_chalk", EItems.GOLDEN_CHALK.get(), "Golden Chalk", """
+                Chalk is vital for performing circle magic and among chalks golden chalk is the most important.
+                
+                The $(b)$(el:circle_magic/tutorial/performing_rites)heart glyph$() for $(b)$(cl:circle_magic)circle magic$() is drawn using golden chalk."""
+        ).build(output);
+        simpleCauldronPage("nether_chalk", EItems.NETHER_CHALK.get(), "Infernal Chalk", """
+                Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.
+                
+                Infernal chalk is used for many rites involving the nether, demonic beings or fire."""
+        ).build(output);
+        simpleCauldronPage("otherwhere_chalk", EItems.OTHERWHERE_CHALK.get(), "Otherwhere chalk", """
+                Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.
+                
+                Typically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end."""
+        ).build(output);
 
-        simpleCraftedItem("getting_started/broom", "Brooms", """
+        simpleCraftedItem("broom", "Brooms", """
                                 A broom can be used to sweep chalk away quickly, without having to spend time erasing it.
                                 
                                 Conveniently, a broom can also make for an excellent method of transportation with some preparation.""",
                 Enchanted.id("broom"), EItems.BROOM.get()).build(output);
 
-        simpleCraftedItem("getting_started/earmuffs", "Earmuffs", """
+        simpleCraftedItem("earmuffs", "Earmuffs", """
                                 When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential.
                                 
                                 $(b)Earmuffs$() can dampen deafening sounds, rendering them bearable.""",
                 Enchanted.id("earmuffs"), EItems.EARMUFFS.get()).build(output);
 
-        simpleCraftedItem("getting_started/taglocks", "Taglocks", """
+        simpleCraftedItem("taglocks", "Taglocks", """
                                 Sometimes, you may need to represent another person to perform magic. This can be achieved using a $(b)taglock kit$().
                                 
                                 By using a taglock kit on a Player or their bed, you can collect a sample to use in magic.""",
                 Enchanted.id("taglock_kit"), EItems.TAGLOCK_FILLED.get(), EItems.TAGLOCK.get()).build(output);
 
+        EntryBuilder.of("arthana", "Arthana")
+                .icon(EItems.ARTHANA.get().getDefaultInstance())
+                .assignedItems(EItems.ARTHANA.get(), EItems.TONGUE_OF_DOG.get(), EItems.WOOL_OF_BAT.get(), EItems.CREEPER_HEART.get())
+                .page(
+                        HeaderedTextBuilder.of("Arthana", """
+                                The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare magical materials you otherwise couldn't obtain."""
+                        ),
+                        CraftingRecipeBuilder.of(Enchanted.id("arthana")).y(75)
+                )
+                .page(
+                        GalleryBuilder.of(
+                                EntityPageBuilder.of(EntityType.BAT, "$(b)Drops:$()\nWool of Bat").scale(0.75F),
+                                EntityPageBuilder.of(EntityType.WOLF, "$(b)Drops:$()\nTongue of Dog").scale(0.65F),
+                                EntityPageBuilder.of(EntityType.CREEPER, "$(b)Drops:$()\nCreeper Heart")
+                        )
+                )
+                .build(output);
+    }
+
+    public void buildMaterialEntries(Provider provider, BiConsumer<String, JsonElement> output) {
+        simpleCraftedItem("materials/attuned_stone", "Attuned Stones", """
+                                An attuned stone is a diamond which has been infused with magical energy.
+                                
+                                It can be charged to be used as a portable container for $(b)$(el:getting_started/altars/altar_construction)altar power$(), allowing the user to cast circle magic without an altar being present, and is also used in the creation of a variety of magical tools.""",
+                Enchanted.id("attuned_stone"), EItems.ATTUNED_STONE.get(), EItems.ATTUNED_STONE_CHARGED.get()).build(output);
+
+        simpleCraftedItem("materials/bone_needle", "Bone Needles", """
+                                Needles are an important part of many tools used for Witchcraft, most notably $(el:getting_started/taglocks)$(b)taglock kits$() and $(b)poppets$().
+                                
+                                A simple needle can be fashioned by whittling a bone.""",
+                Enchanted.id("bone_needle"), EItems.BONE_NEEDLE.get()).build(output);
+
+        simpleExtractionPage(EItems.BREATH_OF_THE_GODDESS.get(), "Breath of the Goddess", """
+                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
+                
+                The smoke produced by burning birch has healing properties.""",
+                byproductPages("byproduct/breath_of_the_goddess_birch_sapling")
+        ).build(output);
+
+        simpleExtractionPage(EItems.DEMONIC_BLOOD.get(), "Demonic Blood", """
+                        The blood of a demon has many uses in witchcraft. While usually obtained from demons, it can also be refined from several other materials.
+                        
+                        It's main uses are in infusions and curses.""",
+                distillingPages("distilling/diamond_vapour_blaze_rod")
+        ).build(output);
+
+        simpleExtractionPage(EItems.DIAMOND_VAPOUR.get(), "Diamond Vapour", """
+                        Diamonds, by using oil of vitriol, can be dissolved and then evaporated to form a powerful refining agent.
+                        
+                        Diamond vapour is required to distill some other materials.""",
+                distillingPages("distilling/diamond_oil_of_vitriol")
+        ).build(output);
+
+        simpleExtractionPage(EItems.ENDER_DEW.get(), "Ender Dew", """
+                        Ender pearls, which allow people to teleport, can be distilled into a purer form called Ender Dew.
+                        
+                        This substance contains the relocation properties of ender pearls in a liquid form, making it useful for brewing.""",
+                distillingPages("distilling/ender_pearl")
+        ).build(output);
+
+        simpleExtractionPage(EItems.EXHALE_OF_THE_HORNED_ONE.get(), "Horned One's Exhale", """
+                        The Oak King, one of the aspects of the Horned God, symbolises nature, hunting and the cycle of life.
+                        
+                        The fumes produced by oaks are said to be The Horned God's exhale, carrying some of the properties associated with him.""",
+                byproductPages("byproduct/exhale_of_the_horned_one_oak_sapling")
+        ).build(output);
+
+        simpleExtractionPage(EItems.FOUL_FUME.get(), "Foul Fume", """
+                        A foul smelling smoke containing sulfur, often smelled when encountering demonic beings or the nether.
+                        
+                        There are many plants, foods and other sources containing this gas.""",
+                combine(
+                        byproductPages("byproduct/foul_fume_jungle_sapling", "byproduct/foul_fume_logs_that_burn",
+                                "byproduct/foul_fume_raw_foods"),
+                        distillingPages("distilling/breath_of_the_goddess_lapis_lazuli",
+                                "distilling/diamond_vapour_ghast_tear")
+                )
+        ).build(output);
+
+        simpleExtractionPage(EItems.GYPSUM.get(), "Gypsum", """
+                        A soft, translucent mineral salt produced by oxidising sulfides in the presence of quicklime.
+                        
+                        In addition to being an effective fertiliser, it is commonly used as a base for ritual chalks.""",
+                distillingPages("distilling/foul_fume_quicklime")
+        ).build(output);
+
+        simpleExtractionPage(EItems.HINT_OF_REBIRTH.get(), "Hint of Rebirth", """
+                        Spruce trees are associated with the birth of the divine child. As such, they are a symbol of rebirth, protection, resilience and endurance.
+                        
+                        Regardless, they make good firewood.""",
+                byproductPages("byproduct/hint_of_rebirth_spruce_sapling")
+        ).build(output);
+
+        simpleExtractionPage(EItems.ODOUR_OF_PURITY.get(), "Odour of Purity", """
+                        Hawthorn can be used to collect a powerful purifying agent called Odour of Purity, which is used in the creation of most pure substances.
+                        
+                        This tree is sacred to the Goddesses Aine and Brigid.""",
+                combine(
+                        byproductPages("byproduct/odour_of_purity_hawthorn_sapling"),
+                        distillingPages("distilling/diamond_oil_of_vitriol", "distilling/diamond_vapour_ghast_tear")
+                )
+        ).build(output);
+
+        simpleExtractionPage(EItems.OIL_OF_VITRIOL.get(), "Oil of Vitriol", """
+                        A clear, slightly yellowed liquid which seems to react to living matter with vitriol, leaving them burned and blackened.
+                        
+                        Oil of vitriol dissolves most substances it comes into contact with.""",
+                distillingPages("distilling/foul_fume_quicklime")
+        ).build(output);
+
+        simpleExtractionPage(EItems.REEK_OF_MISFORTUNE.get(), "Reek of Misfortune", """
+                        The sacred alder tree appears to bleed when cut, bringing misfortune to all. It is thought that the tree contains the souls of our ancestors.
+                        
+                        The fumes produced from burning it can be collected, keeping these effects.""",
+                combine(
+                        byproductPages("byproduct/reek_of_misfortune_alder_sapling"),
+                        distillingPages("distilling/diamond_vapour_ghast_tear", "distilling/ender_pearl")
+                )
+        ).build(output);
+
+        simpleExtractionPage(EItems.REFINED_EVIL.get(), "Refined Evil", """
+                        Pure, condensed evil refined using diamond vapour.
+                        
+                        Refined Evil is primarily used for brewing, but also has some uses in demonology.""",
+                distillingPages("distilling/diamond_vapour_ghast_tear")
+        ).build(output);
+
+        simpleExtractionPage(EItems.TEAR_OF_THE_GODDESS.get(), "Tear of the Goddess", """
+                        Lapis Lazuli is a gemstone which brings wisdom, truth, loyalty and honour.
+                        
+                        Combining Lapis with the White Goddess's power amplifies it's effects.""",
+                distillingPages("distilling/breath_of_the_goddess_lapis_lazuli")
+        ).build(output);
+
+        simpleExtractionPage(EItems.WHIFF_OF_MAGIC.get(), "Whiff of Magic", """
+                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
+                
+                The smoke produced by burning birch has healing properties.""",
+                combine(byproductPages("byproduct/whiff_of_magic_rowan_sapling"),
+                        distillingPages("distilling/ender_pearl", "distilling/breath_of_the_goddess_lapis_lazuli")
+                )
+        ).build(output);
+        
+        simpleCauldronPage("materials/mutandis", EItems.MUTANDIS.get(), "Mutandis", """
+                                Mutandis is used to mutate plants into other species you could not normally obtain.
+                                
+                                Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant.
+                                """
+        ).build(output);
+
+        simpleCauldronPage("materials/mutandis_extremis", EItems.MUTANDIS_EXTREMIS.get(), "Mutandis Extremis", """
+                                Mutandis Extremis, an enhanced form of $(el:herbology/mutated_plants/mutandis)$(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.
+                                
+                                It can also be used to create $(b)Blood Poppies$().
+                                """
+        ).build(output);
+
+        EntryBuilder.of("materials/clay_jar", "Clay Jars")
+                .icon(EItems.CLAY_JAR.get().getDefaultInstance())
+                .assignedItems(EItems.CLAY_JAR.get(), EItems.SOFT_CLAY_JAR.get())
+                .page(
+                        HeaderedTextBuilder.of("Clay Jars", """
+                                A container to hold materials collected during fume extraction or distillation is essential for witches. A simple clay jar works well for this purpose.""")
+                )
+                .page(
+                        HeaderBuilder.of(Modopedia.translation("template", "recipe")),
+                        SeparatorBuilder.of().y(10),
+                        CookingRecipeBuilder.of(Enchanted.id("clay_jar")).y(30),
+                        CraftingRecipeBuilder.of(Enchanted.id("soft_clay_jar")).y(70)
+                )
+                .build(output);
+    }
+
+    public void buildGettingStartedEntries(Provider provider, BiConsumer<String, JsonElement> output) {
         EntryBuilder.of("getting_started/altars/altar_construction", "Creating an Altar")
                 .icon(EItems.ALTAR.get().getDefaultInstance())
                 .assignedItems(EItems.ALTAR.get())
@@ -142,11 +319,11 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(
                         GalleryBuilder.of(
                                 BlockPageBuilder.of("$(b)Skeleton Skull:$()\n+1x Power Capacity\n+1x Recharge Rate", Blocks.SKELETON_SKULL.defaultBlockState())
-                                        .scale(1.75F).offsetY(-20).textOffset(-20),
+                                        .scale(1.6F).offsetY(-20).textOffset(-25),
                                 BlockPageBuilder.of("$(b)Wither Skeleton Skull:$()\n+2x Power Capacity\n+2x Recharge Rate", Blocks.WITHER_SKELETON_SKULL.defaultBlockState())
-                                        .scale(1.75F).offsetY(-20).textOffset(-20),
+                                        .scale(1.6F).offsetY(-20).textOffset(-25),
                                 BlockPageBuilder.of("$(b)Player Skull:$()\n+2.5x Power Capacity\n+3x Recharge Rate", Blocks.PLAYER_HEAD.defaultBlockState())
-                                        .scale(1.75F).offsetY(-20).textOffset(-20)
+                                        .scale(1.6F).offsetY(-20).textOffset(-25)
                         )
                 )
                 .build(output);
@@ -163,29 +340,11 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(
                         GalleryBuilder.of(
                                 BlockPageBuilder.of("$(b)Torch:$()\n+0.5x Recharge Rate", Blocks.TORCH.defaultBlockState())
-                                        .scale(2.0F).offsetY(-20).textOffset(-30),
+                                        .scale(1.8F).offsetY(-15).textOffset(-30),
                                 BlockPageBuilder.of("$(b)Candle:$()\n+1x Recharge Rate", Blocks.LIGHT_GRAY_CANDLE.defaultBlockState())
                                         .scale(2.0F).offsetY(-20).textOffset(-30),
                                 BlockPageBuilder.of("$(b)Candelabra:$()\n+2x Recharge Rate", EBlocks.CANDELABRA.get().defaultBlockState())
-                                        .scale(2.0F).offsetY(-20).textOffset(-30)
-                        )
-                )
-                .build(output);
-
-        EntryBuilder.of("getting_started/arthana", "Arthana")
-                .icon(EItems.ARTHANA.get().getDefaultInstance())
-                .assignedItems(EItems.ARTHANA.get(), EItems.TONGUE_OF_DOG.get(), EItems.WOOL_OF_BAT.get(), EItems.CREEPER_HEART.get())
-                .page(
-                        HeaderedTextBuilder.of("Arthana", """
-                                The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare magical materials you otherwise couldn't obtain."""
-                        ),
-                        CraftingRecipeBuilder.of(Enchanted.id("arthana")).y(70)
-                )
-                .page(
-                        GalleryBuilder.of(
-                                EntityPageBuilder.of(EntityType.BAT, "$(b)Drops:$()\nWool of Bat"),
-                                EntityPageBuilder.of(EntityType.WOLF, "$(b)Drops:$()\nTongue of Dog"),
-                                EntityPageBuilder.of(EntityType.CREEPER, "$(b)Drops:$()\nCreeper Heart")
+                                        .scale(1.75F).offsetY(-15).textOffset(-30)
                         )
                 )
                 .build(output);
@@ -314,136 +473,9 @@ public class EContentSetProvider extends ContentSetProvider {
                         )
                 )
                 .build(output);
-
-        simpleCauldronPage("herbology/mutated_plants/mutandis", EItems.MUTANDIS.get(), "Mutandis", """
-                                Mutandis is used to mutate plants into other species you could not normally obtain.
-                                
-                                Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant.
-                                """
-        ).build(output);
-
-        simpleCauldronPage("herbology/mutated_plants/mutandis_extremis", EItems.MUTANDIS_EXTREMIS.get(), "Mutandis Extremis", """
-                                Mutandis Extremis, an enhanced form of $(el:herbology/mutated_plants/mutandis)$(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.
-                                
-                                It can also be used to create $(b)Blood Poppies$().
-                                """
-        ).build(output);
     }
 
     public void buildExtractionEntries(Provider provider, BiConsumer<String, JsonElement> output) {
-        simpleExtractionPage(EItems.BREATH_OF_THE_GODDESS.get(), "Breath of the Goddess", """
-                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
-                
-                The smoke produced by burning birch has healing properties.""",
-                byproductPages("byproduct/breath_of_the_goddess_birch_sapling")
-        ).build(output);
-
-        simpleExtractionPage(EItems.DEMONIC_BLOOD.get(), "Demonic Blood", """
-                        The blood of a demon has many uses in witchcraft. While usually obtained from demons, it can also be refined from several other materials.
-                        
-                        It's main uses are in infusions and curses.""",
-                distillingPages("distilling/diamond_vapour_blaze_rod")
-        ).build(output);
-
-        simpleExtractionPage(EItems.DIAMOND_VAPOUR.get(), "Diamond Vapour", """
-                        Diamonds, by using oil of vitriol, can be dissolved and then evaporated to form a powerful refining agent.
-                        
-                        Diamond vapour is required to distill some other materials.""",
-                distillingPages("distilling/diamond_oil_of_vitriol")
-        ).build(output);
-
-        simpleExtractionPage(EItems.ENDER_DEW.get(), "Ender Dew", """
-                        Ender pearls, which allow people to teleport, can be distilled into a purer form called Ender Dew.
-                        
-                        This substance contains the relocation properties of ender pearls in a liquid form, making it useful for brewing.""",
-                distillingPages("distilling/ender_pearl")
-        ).build(output);
-
-        simpleExtractionPage(EItems.EXHALE_OF_THE_HORNED_ONE.get(), "Horned One's Exhale", """
-                        The Oak King, one of the aspects of the Horned God, symbolises nature, hunting and the cycle of life.
-                        
-                        The fumes produced by oaks are said to be The Horned God's exhale, carrying some of the properties associated with him.""",
-                byproductPages("byproduct/exhale_of_the_horned_one_oak_sapling")
-        ).build(output);
-
-        simpleExtractionPage(EItems.FOUL_FUME.get(), "Foul Fume", """
-                        A foul smelling smoke containing sulfur, often smelled when encountering demonic beings or the nether.
-                        
-                        There are many plants, foods and other sources containing this gas.""",
-                combine(
-                        byproductPages("byproduct/foul_fume_jungle_sapling", "byproduct/foul_fume_logs_that_burn",
-                                "byproduct/foul_fume_raw_foods"),
-                        distillingPages("distilling/breath_of_the_goddess_lapis_lazuli",
-                                "distilling/diamond_vapour_ghast_tear")
-                )
-        ).build(output);
-
-        simpleExtractionPage(EItems.GYPSUM.get(), "Gypsum", """
-                        A soft, translucent mineral salt produced by oxidising sulfides in the presence of quicklime.
-                        
-                        In addition to being an effective fertiliser, it is commonly used as a base for ritual chalks.""",
-                distillingPages("distilling/foul_fume_quicklime")
-        ).build(output);
-
-        simpleExtractionPage(EItems.HINT_OF_REBIRTH.get(), "Hint of Rebirth", """
-                        Spruce trees are associated with the birth of the divine child. As such, they are a symbol of rebirth, protection, resilience and endurance.
-                        
-                        Regardless, they make good firewood.""",
-                byproductPages("byproduct/hint_of_rebirth_spruce_sapling")
-        ).build(output);
-
-        simpleExtractionPage(EItems.ODOUR_OF_PURITY.get(), "Odour of Purity", """
-                        Hawthorn can be used to collect a powerful purifying agent called Odour of Purity, which is used in the creation of most pure substances.
-                        
-                        This tree is sacred to the Goddesses Aine and Brigid.""",
-                combine(
-                        byproductPages("byproduct/odour_of_purity_hawthorn_sapling"),
-                        distillingPages("distilling/diamond_oil_of_vitriol", "distilling/diamond_vapour_ghast_tear")
-                )
-        ).build(output);
-
-        simpleExtractionPage(EItems.OIL_OF_VITRIOL.get(), "Oil of Vitriol", """
-                        A clear, slightly yellowed liquid which seems to react to living matter with vitriol, leaving them burned and blackened.
-                        
-                        Oil of vitriol dissolves most substances it comes into contact with.""",
-                distillingPages("distilling/foul_fume_quicklime")
-        ).build(output);
-
-        simpleExtractionPage(EItems.REEK_OF_MISFORTUNE.get(), "Reek of Misfortune", """
-                        The sacred alder tree appears to bleed when cut, bringing misfortune to all. It is thought that the tree contains the souls of our ancestors.
-                        
-                        The fumes produced from burning it can be collected, keeping these effects.""",
-                combine(
-                        byproductPages("byproduct/reek_of_misfortune_alder_sapling"),
-                        distillingPages("distilling/diamond_vapour_ghast_tear", "distilling/ender_pearl")
-                )
-        ).build(output);
-
-        simpleExtractionPage(EItems.REFINED_EVIL.get(), "Refined Evil", """
-                        Pure, condensed evil refined using diamond vapour.
-                        
-                        Refined Evil is primarily used for brewing, but also has some uses in demonology.""",
-                distillingPages("distilling/diamond_vapour_ghast_tear")
-        ).build(output);
-
-        simpleExtractionPage(EItems.TEAR_OF_THE_GODDESS.get(), "Tear of the Goddess", """
-                        Lapis Lazuli is a gemstone which brings wisdom, truth, loyalty and honour.
-                        
-                        Combining Lapis with the White Goddess's power amplifies it's effects.""",
-                distillingPages("distilling/breath_of_the_goddess_lapis_lazuli")
-        ).build(output);
-
-        simpleExtractionPage(EItems.WHIFF_OF_MAGIC.get(), "Whiff of Magic", """
-                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
-                
-                The smoke produced by burning birch has healing properties.""",
-                combine(byproductPages("byproduct/whiff_of_magic_rowan_sapling"),
-                        distillingPages("distilling/ender_pearl", "distilling/breath_of_the_goddess_lapis_lazuli")
-                )
-        ).build(output);
-
-
-
         EntryBuilder.of("extraction/distillery", "Distillation")
                 .icon(EItems.DISTILLERY.get().getDefaultInstance())
                 .assignedItems(EItems.DISTILLERY.get())
@@ -512,9 +544,6 @@ public class EContentSetProvider extends ContentSetProvider {
         simpleBrewingKettlePage(EItems.SPIRIT_OF_OTHERWHERE.get(), "Spirit of Otherwhere", "Similar to $(b)$(el:brewing/soul_of_the_world)soul of the world$(), spirit of otherwhere is a derivation of $(b)$(el:brewing/redstone_soup)redstone soup$() imbued with the same properties as the End and its inhabitants.\n\nThis infusion is extremely toxic and should not be ingested.").build(output);
 
         simpleBrewingCauldronPage(EItems.DROP_OF_LUCK.get(), "Drop of Luck", "Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:brewing/redstone_soup)Redstone Soup$().").build(output);
-        simpleBrewingCauldronPage(EItems.GOLDEN_CHALK.get(), "Golden Chalk", "Chalk is vital for performing circle magic and among chalks golden chalk is the most important.\n\nThe $(b)heart glyph$() for $(b)circle magic$() is drawn using golden chalk.").build(output);
-        simpleBrewingCauldronPage(EItems.NETHER_CHALK.get(), "Infernal Chalk", "Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.\n\nInfernal chalk is used for many rites involving the nether, demonic beings or fire.").build(output);
-        simpleBrewingCauldronPage(EItems.OTHERWHERE_CHALK.get(), "Otherwhere chalk", "Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.\n\nTypically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.").build(output);
 
         EntryBuilder.of("brewing/kettle", "The Kettle")
                 .icon(EItems.KETTLE.get().getDefaultInstance())
@@ -567,7 +596,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 )
                 .page(
                         HeaderedTextBuilder.of("Adding Ingredients", """
-                                The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, in order, one by one.
+                                The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, $(b)in order$(), one by one.
                                 
                                 The water should start to change colour. Once added, the brew needs to boil for a few seconds to finish."""
                         )
@@ -582,6 +611,19 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build(output);
     }
 
+    public void buildCircleMagicEntries(Provider provider, BiConsumer<String, JsonElement> output) {
+        EntryBuilder.of("circle_magic/tutorial/performing_rites", "Performing Rites")
+                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+                .page(
+                      HeaderedTextBuilder.of("Performing Rites", """
+                              To perform circle magic, there are three basic steps a witch must follow. First, drawing the correct chalk circles. Second, placing the correct sacrifices into the circle abnd lastly, activating the rite.""")
+                )
+                .page(
+                        HeaderedTextBuilder.of("Chalk Circles", "")
+                )
+                .build(output);
+    }
+
 
 
     @Override
@@ -590,99 +632,104 @@ public class EContentSetProvider extends ContentSetProvider {
                 .landingText("""
                         To get started in witchcraft, first you must know about the basic tools and equipment used by witches.
                         
-                        This chapter tells you everything you need to know about getting started as a Witch."""
-                )
+                        This chapter tells you everything you need to know about getting started as a Witch.""")
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
                 .children("getting_started/altars")
-                .entries(
-                        "getting_started/arthana", "getting_started/earmuffs", "getting_started/broom",
-                        "getting_started/taglocks", "getting_started/bone_needle", "getting_started/attuned_stone"
-                )
+                .entries("arthana", "earmuffs", "broom", "taglocks", "material/bone_needle", "material/attuned_stone")
                 .build(output);
 
         CategoryBuilder.of("getting_started/altars", "Altars")
                 .landingText("""
                         An altar acts as a source of magical energy for chalk circles and most of a witch's tools.
                         
-                        The amount of natural energy around an altar will determine how effective it is. Generally, a variety of plants is best."""
-                )
+                        The amount of natural energy around an altar will determine how effective it is. Generally, a variety of plants is best.""")
                 .icon(EItems.ALTAR.get().getDefaultInstance())
                 .displayOnFrontPage(false)
-                .entries(
-                        "getting_started/altars/altar_construction", "getting_started/altars/torch_upgrades",
-                        "getting_started/altars/skull_upgrades", "getting_started/altars/chalice_upgrades"
-                )
+                .entries("getting_started/altars/altar_construction", "getting_started/altars/torch_upgrades",
+                        "getting_started/altars/skull_upgrades", "getting_started/altars/chalice_upgrades")
                 .build(output);
 
         CategoryBuilder.of("extraction", "Material Processing")
                 .landingText("""
                         Many resources used in witchcraft can only be obtained by extracting them from other materials.
                         
-                        This involves two processes; fume collection and distillation. Both of these are detailed in this chapter."""
-                )
+                        This involves two processes; fume collection and distillation. Both of these are detailed in this chapter.""")
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
                 .entries(
-                        "extraction/witch_oven", "extraction/distillery", "extraction/clay_jar",
-                        "extraction/breath_of_the_goddess", "extraction/demonic_blood", "extraction/diamond_vapour",
-                        "extraction/ender_dew", "extraction/exhale_of_the_horned_one", "extraction/foul_fume",
-                        "extraction/glowstone_dust", "extraction/gypsum", "extraction/hint_of_rebirth",
-                        "extraction/odour_of_purity", "extraction/oil_of_vitriol", "extraction/reek_of_misfortune",
-                        "extraction/refined_evil", "extraction/slime_ball", "extraction/tear_of_the_goddess",
-                        "extraction/whiff_of_magic"
-                )
+                        "extraction/witch_oven", "extraction/distillery", "materials/clay_jar",
+                        "materials/breath_of_the_goddess", "materials/demonic_blood", "materials/diamond_vapour",
+                        "materials/ender_dew", "materials/exhale_of_the_horned_one", "materials/foul_fume",
+                        "materials/glowstone_dust", "materials/gypsum", "materials/hint_of_rebirth", 
+                        "materials/odour_of_purity", "materials/oil_of_vitriol", "materials/reek_of_misfortune",
+                        "materials/refined_evil", "materials/slime_ball", "materials/tear_of_the_goddess",
+                        "materials/whiff_of_magic")
                 .build(output);
 
         CategoryBuilder.of("herbology", "Herbology")
                 .landingText("""
                         Witchcraft often requires using various plants, some of which are common while others require mutations.
                         
-                        This chapter aims to tell you how to obtain these plants and what they do."""
-                )
+                        This chapter aims to tell you how to obtain these plants and what they do.""")
                 .icon(EItems.WOLFSBANE_FLOWER.get().getDefaultInstance())
                 .children("herbology/mutated_plants")
                 .entries(
                         "herbology/belladonna", "herbology/water_artichoke", "herbology/mandrake", "herbology/snowbell",
-                        "herbology/wolfsbane", "herbology/garlic"
-                )
+                        "herbology/wolfsbane", "herbology/garlic")
                 .build(output);
 
         CategoryBuilder.of("herbology/mutated_plants", "Mutated Plants")
                 .landingText("""
                         Some plants require mutations to be obtained, either by using Mutandis or Mutandis Extremis.
                         
-                        Plants of this nature are covered in this chapter."""
-                )
+                        Plants of this nature are covered in this chapter.""")
                 .icon(EItems.MUTANDIS.get().getDefaultInstance())
                 .displayOnFrontPage(false)
                 .entries(
-                        "herbology/mutated_plants/mutandis", "herbology/mutated_plants/mutandis_extremis",
-                        "herbology/mutated_plants/rowan", "herbology/mutated_plants/hawthorn",
-                        "herbology/mutated_plants/alder", "herbology/mutated_plants/spanish_moss",
-                        "herbology/mutated_plants/glint_weed", "herbology/mutated_plants/ember_moss"
-                )
+                        "materials/mutandis", "materials/mutandis_extremis", "herbology/mutated_plants/rowan",
+                        "herbology/mutated_plants/hawthorn", "herbology/mutated_plants/alder",
+                        "herbology/mutated_plants/spanish_moss", "herbology/mutated_plants/glint_weed",
+                        "herbology/mutated_plants/ember_moss")
                 .build(output);
 
         CategoryBuilder.of("brewing", "Brewing")
                 .landingText("""
                         One of the most essential skills a witch can possess is the abilities and knowledge to create brews, potions and decoctions.
                         
-                        The methods of brewing and various common recipes can be found in this chapter."""
-                )
+                        The methods of brewing and various common recipes can be found in this chapter.""")
                 .icon(EItems.REDSTONE_SOUP.get().getDefaultInstance())
                 .entries(
-                        "brewing/brewing", "herbology/mutated_plants/mutandis", "herbology/mutated_plants/mutandis_extremis",
-                        "brewing/golden_chalk", "brewing/nether_chalk", "brewing/otherwhere_chalk", "brewing/drop_of_luck",
-                        "brewing/redstone_soup", "brewing/flying_ointment", "brewing/happenstance_oil",
-                        "brewing/mystic_unguent", "brewing/spirit_of_otherwhere", "brewing/soul_of_the_world",
-                        "brewing/brew_of_love", "brewing/brew_of_sprouting", "brewing/brew_of_the_depths",
-                        "brewing/brew_of_the_grotesque"
-                )
+                        "brewing/brewing", "materials/mutandis", "materials/mutandis_extremis", "golden_chalk",
+                        "nether_chalk", "otherwhere_chalk", "brewing/drop_of_luck", "brewing/redstone_soup",
+                        "brewing/flying_ointment", "brewing/happenstance_oil", "brewing/mystic_unguent",
+                        "brewing/spirit_of_otherwhere", "brewing/soul_of_the_world", "brewing/brew_of_love",
+                        "brewing/brew_of_sprouting", "brewing/brew_of_the_depths", "brewing/brew_of_the_grotesque")
+                .build(output);
+
+        CategoryBuilder.of("circle_magic", "Circle Magic")
+                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+                .landingText("""
+                        Circle magic is the practice of using chalk circles or other materials in combination with foci items to collect magical energy from the environment and achieve the intended affect.
+                        
+                        The methods of circle magic and known rites are detailed in this chapter.
+                        """)
+                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
+                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
+                        "circle_magic/transposition", "circle_magic/world")
+                .build(output);
+
+        CategoryBuilder.of("circle_magic/tutorial", "Performing Rites")
+                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText("""
+                        Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles, items, and sometimes even a sacrifice.""")
+                .entries("circle_magic/tutorial/performing_rites", "golden_chalk", "ritual_chalk", "nether_chalk", "otherwhere_chalk")
                 .build(output);
     }
 
 
+
     public String procureMutandis() {
-        return "$(b)Procurement:$()\nUse $(el:herbology/mutated_plants/mutandis)$(b)mutandis$() on a small plant.";
+        return "$(b)Procurement:$()\nUse $(el:materials/mutandis)$(b)mutandis$() on a small plant.";
     }
     
     private String procureGrass() {
@@ -728,7 +775,7 @@ public class EContentSetProvider extends ContentSetProvider {
 
     public EntryBuilder simpleExtractionPage(Item item, String title, String description, PageComponentBuilder... recipeTemplates) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-        return EntryBuilder.of("extraction/" + id.getPath(), title)
+        return EntryBuilder.of("materials/" + id.getPath(), title)
                 .icon(item.getDefaultInstance())
                 .assignedItems(item)
                 .page(HeaderedTextBuilder.of(title, description))

@@ -23,7 +23,7 @@ public class DistillingRecipe implements Recipe<ListInput> {
 
     public static final MapCodec<DistillingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ItemStack.CODEC.sizeLimitedListOf(3).fieldOf("ingredients").forGetter(recipe -> recipe.inputs),
-            ItemStack.CODEC.sizeLimitedListOf(4).fieldOf("results").forGetter(recipe -> recipe.outputs),
+            ItemStack.CODEC.sizeLimitedListOf(4).fieldOf("mutagenSets").forGetter(recipe -> recipe.outputs),
             Codec.INT.optionalFieldOf("duration", 300).forGetter(recipe -> recipe.duration),
             Codec.INT.optionalFieldOf("power", 750).forGetter(recipe -> recipe.power)
     ).apply(instance, DistillingRecipe::new));

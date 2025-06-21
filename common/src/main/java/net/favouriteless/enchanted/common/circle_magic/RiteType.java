@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.common.circle_magic;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.enchanted.api.Vec2i;
-import net.favouriteless.enchanted.api.rites.RiteFactory;
+import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;

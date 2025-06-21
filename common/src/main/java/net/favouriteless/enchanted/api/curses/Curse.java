@@ -1,134 +1,124 @@
 package net.favouriteless.enchanted.api.curses;
 
+import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.curses.CurseMisfortune;
+import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.curses.CurseType;
 import net.favouriteless.enchanted.common.curses.CurseTypes;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 
+import java.lang.ref.WeakReference;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
- * {@link Curse} is the base class used for all curses in Enchanted. A curse is an effect which attaches itself to a
- * {@link Player} and acts upon that player while being ticked. Curses must then be registered using
- * {@link CurseTypes#register(ResourceLocation, Supplier)} so the mod is able to know it exists.
- *
- * <p>See {@link RandomCurse} and {@link CurseMisfortune} for examples of how a curse can be implemented.</p>
+ * <p>
+ *     A {@link Curse} is a server-side object which attaches itself to a target player and ticks. Not to be confused
+ *     with {@link Rite}.
+ * </p>
+ * <p>
+ *     <b>IMPORTANT:</b> Curses must be registered via {@link CurseTypes#register(ResourceLocation, Supplier)} to work.
+ * </p>
  */
 public abstract class Curse {
 
-    public static final int MIN_WHISPER_TIME = 120;
-    public static final int MAX_WHISPER_TIME = 240;
-    public static final double WHISPER_CHANCE = 1.0D / ((MAX_WHISPER_TIME - MIN_WHISPER_TIME)*20);
-
     public final CurseType<?> type;
-    protected UUID targetUUID;
-    protected UUID casterUUID;
-    protected int level;
+    public int strength;
+    private UUID targetUUID;
 
-    protected ServerPlayer targetPlayer;
-
-    protected long ticks = 0;
+    private WeakReference<ServerPlayer> target;
+    private long ticks = 0;
     private long lastWhisper = 0;
 
     public Curse(CurseType<?> type) {
         this.type = type;
     }
 
-    /**
-     * Do not override tick in implementations of {@link Curse}. This is used to handle logic for the whispering sounds
-     * and targeting. Override {@link Curse#onTick()} instead to add custom tick effects.
-     */
-    public void tick(ServerLevel level) { // Ticks with level purely for level access, do not save this anywhere.
-        if(targetPlayer == null || targetPlayer.isRemoved())
-            targetPlayer = level.getServer().getPlayerList().getPlayer(targetUUID);
-        if(targetPlayer != null)
-            onTick();
+    protected void onTick(final ServerPlayer target, long ticks) {};
 
-        long timeSinceWhisper = ticks - lastWhisper;
-        if(timeSinceWhisper > MAX_WHISPER_TIME*20L)
-            whisper();
-        else if(timeSinceWhisper > MIN_WHISPER_TIME*20L)
-            if(Math.random() < WHISPER_CHANCE)
-                whisper();
-        ticks++;
-    }
+    protected void saveAdditional(CompoundTag nbt) {}
 
-    /**
-     * Override onTick to add custom effects to ticks for a {@link Curse}.
-     */
-    protected abstract void onTick();
+    protected void loadAdditional(CompoundTag nbt) {}
 
-    private void whisper() {
-        if(targetPlayer != null) {
-            lastWhisper = ticks;
-            targetPlayer.connection.send(new ClientboundSoundEntityPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(ESoundEvents.CURSE_WHISPER.get()), SoundSource.AMBIENT, targetPlayer, 0.075F, (float)Math.random() * 0.15F + 0.85F, Enchanted.RANDOM.nextLong()));
-        }
-    }
+    public void onRemove(ServerPlayer target) {}
 
-    public CurseType<?> getType() {
-        return type;
+    public ServerPlayer getTarget() {
+        return target != null ? target.get() : null;
     }
 
     public UUID getTargetUUID() {
         return targetUUID;
     }
 
-    public UUID getCasterUUID() {
-        return casterUUID;
-    }
-
-    public void setTarget(UUID targetUUID) {
+    public void setTargetUUID(UUID targetUUID) {
         this.targetUUID = targetUUID;
+        this.target = null;
     }
 
-    public void setTarget(ServerPlayer player) {
-        this.targetUUID = player.getUUID();
-        this.targetPlayer = player;
+    // ----------------------------------- NON-API IMPLEMENTATIONS BELOW THIS POINT -----------------------------------
+
+
+    public final void tick(ServerLevel level) { // Ticks with level purely for level access, do not save this anywhere.
+        if(getTarget() == null)
+            target = new WeakReference<>(level.getServer().getPlayerList().getPlayer(targetUUID));
+
+        ServerPlayer target = getTarget();
+        if(target != null)
+            onTick(target, ticks);
+
+
+        long since = ticks - lastWhisper;
+        int min = CommonConfig.INSTANCE.curseWhisperMin.get();
+        int max = CommonConfig.INSTANCE.curseWhisperMax.get();
+
+        if(since > max * 20L)
+            whisper();
+        else if(since > min * 20L) {
+            if(Math.random() < 1.0D / ((max - min) * 20))
+                whisper();
+        }
+        ticks++;
     }
 
-    public void setCaster(UUID casterUUID) {
-        this.casterUUID = casterUUID;
+    public final void remove(ServerLevel level) {
+        if(getTarget() == null)
+            target = new WeakReference<>(level.getServer().getPlayerList().getPlayer(targetUUID));
+
+        ServerPlayer target = getTarget();
+        if(target != null)
+            onRemove(target);
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    private void whisper() {
+        ServerPlayer target = getTarget();
+        if(target == null)
+            return;
+
+        lastWhisper = ticks;
+        target.connection.send(new ClientboundSoundEntityPacket(ESoundEvents.CURSE_WHISPER, SoundSource.AMBIENT, target,
+                0.1F, (float)Math.random() * 0.15F + 0.85F, Enchanted.RANDOM.nextLong()));
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void save(CompoundTag nbt) {
+    public final void save(CompoundTag nbt) {
         nbt.putString("type", type.getId().toString());
         nbt.putUUID("target", targetUUID);
-        nbt.putUUID("caster", casterUUID);
         nbt.putLong("ticks", ticks);
-        nbt.putInt("level", level);
+        nbt.putInt("strength", strength);
         saveAdditional(nbt);
     }
 
-    public void load(CompoundTag nbt) {
+    public final void load(CompoundTag nbt) {
+        target = null;
         targetUUID = nbt.getUUID("target");
-        casterUUID = nbt.getUUID("caster");
         ticks = nbt.getLong("ticks");
-        level = nbt.getInt("level");
+        strength = nbt.getInt("strength");
         loadAdditional(nbt);
     }
-
-    protected void saveAdditional(CompoundTag nbt) {}
-
-    protected void loadAdditional(CompoundTag nbt) {}
-
-    public void onRemove(ServerLevel level) {}
 
 }

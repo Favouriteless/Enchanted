@@ -4,7 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.enchanted.api.rites.RiteFactory;
+import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.minecraft.resources.ResourceLocation;
 
 public class RiteFactoryRegistry {

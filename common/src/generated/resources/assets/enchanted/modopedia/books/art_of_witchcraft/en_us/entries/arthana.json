@@ -20,7 +20,7 @@
         {
           "recipe": "enchanted:arthana",
           "template": "modopedia:recipe/crafting",
-          "y": 70
+          "y": 75
         }
       ]
     },
@@ -30,11 +30,13 @@
           "components": [
             {
               "entity": "minecraft:bat",
+              "scale": 0.75,
               "template": "modopedia:page/entity",
               "text": "$(b)Drops:$()\nWool of Bat"
             },
             {
               "entity": "minecraft:wolf",
+              "scale": 0.65,
               "template": "modopedia:page/entity",
               "text": "$(b)Drops:$()\nTongue of Dog"
             },

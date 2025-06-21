@@ -33,10 +33,10 @@ public class SpinningRecipe implements Recipe<ListInput> {
             SpinningRecipe::new
     );
 
-    protected final List<ItemStack> inputs;
-    protected final ItemStack result;
-    protected final int power;
-    protected final int duration;
+    private final List<ItemStack> inputs;
+    private final ItemStack result;
+    private final int power;
+    private final int duration;
 
     public SpinningRecipe(List<ItemStack> inputs, ItemStack result, int power, int duration) {
         this.inputs = inputs;

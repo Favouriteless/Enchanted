@@ -48,7 +48,7 @@ public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DistillingRecipe recipe, IFocusGroup focuses) {
-        List<ItemStack> inputs = recipe.getInputs();
+        List<ItemStack> inputs = recipe.inputs();
 
         boolean hasJars = false;
         for(ItemStack stack : inputs) {
@@ -63,7 +63,7 @@ public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe>
             builder.addSlot(RecipeIngredientRole.INPUT, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, inputs.getFirst());
 
         offset = 0;
-        for(ItemStack i : recipe.getInputs()) {
+        for(ItemStack i : recipe.inputs()) {
             if(!i.is(EItems.CLAY_JAR.get())) {
                 builder.addSlot(RecipeIngredientRole.INPUT, 50, 20 + offset).addIngredient(VanillaTypes.ITEM_STACK, i);
                 offset += 20;
@@ -71,7 +71,7 @@ public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe>
         }
 
         offset = 0;
-        for(ItemStack i : recipe.getOutputs()) {
+        for(ItemStack i : recipe.outputs()) {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 2 + offset).addIngredient(VanillaTypes.ITEM_STACK, i);
             offset += 19;
         }

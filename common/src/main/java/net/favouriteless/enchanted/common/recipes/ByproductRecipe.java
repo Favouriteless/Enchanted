@@ -24,8 +24,8 @@ public class ByproductRecipe implements Recipe<SingleRecipeInput> {
             ByproductRecipe::new
     );
 
-    protected final Ingredient ingredient;
-    protected final ItemStack result;
+    private final Ingredient ingredient;
+    private final ItemStack result;
 
     public ByproductRecipe(Ingredient ingredient, ItemStack result) {
         this.ingredient = ingredient;

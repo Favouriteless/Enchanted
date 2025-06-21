@@ -61,8 +61,8 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
         RecipeHolder<DistillingRecipe> recipe = be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).orElse(null);
 
         if(recipe != null && be.canDistill(recipe) &&
-                (recipe.value().getPower() == 0 || powerProvider != null &&
-                        powerProvider.tryConsume((double)recipe.value().getPower() / recipe.value().getDuration()))) {
+                (recipe.value().power() == 0 || powerProvider != null &&
+                        powerProvider.tryConsume((double)recipe.value().power() / recipe.value().duration()))) {
             be.isBurning = true;
 
             if(++be.cookProgress == be.cookDuration) {
@@ -88,7 +88,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
      * @param recipe The {@link DistillingRecipe} to use.
      */
     private void distill(@NotNull RecipeHolder<DistillingRecipe> recipe) {
-        for(ItemStack recipeItem : recipe.value().getInputs()) { // First, attempt to remove the input items.
+        for(ItemStack recipeItem : recipe.value().inputs()) { // First, attempt to remove the input items.
             for(int i = 0; i < 3; i++) {
                 ItemStack inputItem = inventory.get(i);
                 if(ItemUtils.isSameItemPartial(inputItem, recipeItem)) {
@@ -100,7 +100,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
             }
         }
 
-        List<ItemStack> itemsOut = recipe.value().getOutputs();
+        List<ItemStack> itemsOut = recipe.value().outputs();
 
         for(ItemStack recipeItem : itemsOut) {
             for(int i = 3; i < inventory.size(); i++) { // First, stack the result into existing slots.
@@ -130,7 +130,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
      * Check if this {@link DistilleryBlockEntity} has enough space for the output of a given recipe.
      */
     private boolean canDistill(@NotNull RecipeHolder<DistillingRecipe> recipe) {
-        List<ItemStack> itemsOut = new ArrayList<>(recipe.value().getOutputs());
+        List<ItemStack> itemsOut = new ArrayList<>(recipe.value().outputs());
 
         Iterator<ItemStack> iterator = itemsOut.iterator();
         while(iterator.hasNext()) { // First, check if the output for the recipe can fit by stacking with items.
@@ -160,7 +160,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     }
 
     private static int getTotalCookTime(Level level, DistilleryBlockEntity be) {
-        return be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).map(holder -> holder.value().getDuration()).orElse(200);
+        return be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).map(holder -> holder.value().duration()).orElse(200);
     }
 
     @Override

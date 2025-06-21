@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import org.w3c.dom.css.Rect;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,14 +38,14 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof DistillingRecipe recipe) {
-            List<List<ItemStack>> inputs = recipe.getInputs().stream().map(List::of).toList();
-            List<List<ItemStack>> outputs = recipe.getOutputs().stream().map(List::of).toList();
+            List<List<ItemStack>> inputs = recipe.inputs().stream().map(List::of).toList();
+            List<List<ItemStack>> outputs = recipe.outputs().stream().map(List::of).toList();
 
             lookup.set("p_input1", Variable.of(inputs.subList(0, 1)));
             lookup.set("p_input2", Variable.of(inputs.subList(1, inputs.size())));
             lookup.set("p_output1", Variable.of(outputs.size() > 1 ? outputs.subList(0, 2) : outputs.subList(0, 1)));
             lookup.set("p_output2", Variable.of(outputs.size() > 2 ? outputs.subList(2, outputs.size()) : List.of(List.of(ItemStack.EMPTY))));
-            lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.getPower()).getString()));
+            lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.power()).getString()));
         }
         else {
             throw new IllegalArgumentException("DistilleryRecipe template must use a DistilleryRecipe.");

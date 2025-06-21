@@ -19,11 +19,12 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistillingRecipe implements Recipe<ListInput> {
+public record DistillingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, int duration,
+                               int power) implements Recipe<ListInput> {
 
     public static final MapCodec<DistillingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ItemStack.CODEC.sizeLimitedListOf(3).fieldOf("ingredients").forGetter(recipe -> recipe.inputs),
-            ItemStack.CODEC.sizeLimitedListOf(4).fieldOf("mutagenSets").forGetter(recipe -> recipe.outputs),
+            ItemStack.CODEC.sizeLimitedListOf(4).fieldOf("results").forGetter(recipe -> recipe.outputs),
             Codec.INT.optionalFieldOf("duration", 300).forGetter(recipe -> recipe.duration),
             Codec.INT.optionalFieldOf("power", 750).forGetter(recipe -> recipe.power)
     ).apply(instance, DistillingRecipe::new));
@@ -36,38 +37,19 @@ public class DistillingRecipe implements Recipe<ListInput> {
             DistillingRecipe::new
     );
 
-    protected final List<ItemStack> inputs;
-    protected final List<ItemStack> outputs;
-    protected final int duration;
-    protected final int power;
-
-    public DistillingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, int duration, int power) {
-        this.inputs = inputs;
-        this.outputs = outputs;
-        this.duration = duration;
-        this.power = power;
-    }
-
-    public List<ItemStack> getOutputs() {
+    @Override
+    public List<ItemStack> outputs() {
         List<ItemStack> out = new ArrayList<>();
         for(ItemStack stack : outputs)
             out.add(stack.copy());
         return out;
     }
 
-    public List<ItemStack> getInputs() {
-        return inputs;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     @Override
     public boolean matches(ListInput inv, Level level) {
-        int requiredItems = getInputs().size();
+        int requiredItems = inputs().size();
 
-        for(ItemStack stack : getInputs()) {
+        for(ItemStack stack : inputs()) {
             for(int i = 0; i < 3; i++) {
                 ItemStack item = inv.getItem(i);
                 if(ItemUtils.isSameItemPartial(item, stack) && item.getCount() >= stack.getCount()) {
@@ -109,10 +91,6 @@ public class DistillingRecipe implements Recipe<ListInput> {
     @Override
     public boolean isSpecial() {
         return true;
-    }
-
-    public int getPower() {
-        return power;
     }
 
 }

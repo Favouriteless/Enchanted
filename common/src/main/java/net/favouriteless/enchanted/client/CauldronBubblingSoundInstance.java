@@ -4,25 +4,27 @@ import net.favouriteless.enchanted.common.blocks.entity.CauldronBlockEntity;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 
 public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance {
 
-	private final CauldronBlockEntity<?> blockEntity;
+	private final CauldronBlockEntity<?> be;
 
-	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> blockEntity) {
+	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> be) {
 		super(ESoundEvents.CAULDRON_BUBBLING.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
-		this.blockEntity = blockEntity;
+		this.be = be;
 		this.looping = true;
 		this.delay = 0;
-		this.x = blockEntity.getBlockPos().getX() + 0.5D;
-		this.y = blockEntity.getBlockPos().getY() + 0.5D;
-		this.z = blockEntity.getBlockPos().getZ() + 0.5D;
-		this.volume = blockEntity.isHot() ? 1.0F : 0.0F;
+		BlockPos pos = be.getBlockPos();
+		this.x = pos.getX() + 0.5D;
+		this.y = pos.getY() + 0.5D;
+		this.z = pos.getZ() + 0.5D;
+		this.volume = be.isHot() ? 1.0F : 0.0F;
 	}
 
 	public boolean canPlaySound() {
-		return !blockEntity.isRemoved();
+		return !be.isRemoved();
 	}
 
 	public boolean canStartSilent() {
@@ -31,10 +33,10 @@ public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance
 
 	@Override
 	public void tick() {
-		if(blockEntity.isRemoved())
+		if(be.isRemoved())
 			stop();
 		else {
-			if(blockEntity.isHot()) {
+			if(be.isHot()) {
 				if(volume < 1.0F)
 					volume += 0.05F;
 				else

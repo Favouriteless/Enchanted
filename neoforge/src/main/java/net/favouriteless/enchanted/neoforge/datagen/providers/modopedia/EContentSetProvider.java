@@ -561,7 +561,7 @@ public class EContentSetProvider extends ContentSetProvider {
 
         EntryBuilder.of("brewing/witch_cauldron", "Witch's Cauldron")
                 .icon(EItems.WITCH_CAULDRON.get().getDefaultInstance())
-                .assignedItems(EItems.WITCH_CAULDRON.get())
+                .assignedItems(EItems.WITCH_CAULDRON.get(), EItems.ANOINTING_PASTE.get())
                 .page(
                         HeaderedTextBuilder.of("Witch's Cauldron", "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to brew complex potions."),
                         CraftingRecipeBuilder.of(Enchanted.id("kettle")).y(70)

@@ -247,5 +247,6 @@
   "rite.enchanted.waystone_charged": "Rite of Binding",
   "tab.enchanted.main": "Enchanted",
   "tooltip.enchanted.altar_power": "%1$s Altar Power",
-  "tooltip.enchanted.byproduct_recipe": "Byproduct Recipe"
+  "tooltip.enchanted.byproduct_recipe": "Byproduct Recipe",
+  "tooltip.enchanted.disabled_totems": "Disabled (Enchanted: Witchcraft)"
 }

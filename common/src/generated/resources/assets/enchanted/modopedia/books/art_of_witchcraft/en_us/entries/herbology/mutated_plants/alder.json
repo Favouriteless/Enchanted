@@ -32,12 +32,12 @@
             {
               "multiblock_id": "enchanted:alder_tree",
               "template": "modopedia:page/multiblock",
-              "text": "$(b)Procurement:$()\nUse $(el:herbology/mutated_plants/mutandis)$(b)mutandis$() on a small plant."
+              "text": "$(b)Procurement:$()\nUse $(el:materials/mutandis)$(b)mutandis$() on a small plant."
             },
             {
               "block": "enchanted:alder_sapling",
               "template": "modopedia:page/block",
-              "text": "$(b)Procurement:$()\nUse $(el:herbology/mutated_plants/mutandis)$(b)mutandis$() on a small plant."
+              "text": "$(b)Procurement:$()\nUse $(el:materials/mutandis)$(b)mutandis$() on a small plant."
             }
           ]
         }

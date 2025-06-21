@@ -3,10 +3,10 @@ package net.favouriteless.enchanted.common.blocks.entity;
 import net.favouriteless.enchanted.api.power.IPowerConsumer;
 import net.favouriteless.enchanted.api.power.IPowerProvider;
 import net.favouriteless.enchanted.api.power.PowerHelper;
-import net.favouriteless.enchanted.client.client_handlers.block_entities.CauldronBlockEntityClientHandler;
+import net.favouriteless.enchanted.client.client_handlers.block_entities.CauldronClientHandler;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;
@@ -358,7 +358,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			startRed = targetRed;
 			startGreen = targetGreen;
 			startBlue = targetBlue;
-			CauldronBlockEntityClientHandler.startCauldronBubbling(this);
+			CauldronClientHandler.startSound(this);
 		}
 	}
 

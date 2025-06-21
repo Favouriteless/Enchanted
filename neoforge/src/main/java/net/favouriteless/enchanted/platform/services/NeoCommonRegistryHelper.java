@@ -5,7 +5,6 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -41,7 +40,6 @@ import java.util.function.Supplier;
 
 public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 
-	public static final DeferredRegister<CreativeModeTab> TAB_REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Enchanted.MOD_ID);
 	private static final RegistryMap registryMap = new RegistryMap();
 
 	public static final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>();
@@ -81,7 +79,7 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 
 	@Override
 	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemGenerator) {
-		return TAB_REGISTRY.register(name, () -> CreativeModeTab.builder()
+		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name, () -> CreativeModeTab.builder()
 				.title(Component.translatable("tab." + Enchanted.MOD_ID + "." + name))
 				.icon(iconSupplier)
 				.displayItems(itemGenerator)

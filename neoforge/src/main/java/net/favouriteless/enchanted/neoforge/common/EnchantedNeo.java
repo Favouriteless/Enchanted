@@ -31,7 +31,6 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 public class EnchantedNeo {
     
     public EnchantedNeo(IEventBus bus, ModContainer container) {
-        NeoCommonRegistryHelper.TAB_REGISTRY.register(bus);
         Enchanted.init();
 
         container.registerConfig(Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");

@@ -21,7 +21,7 @@
         {
           "block": "enchanted:spanish_moss",
           "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$()\nUse $(el:herbology/mutated_plants/mutandis)$(b)mutandis$() on a small plant. Harvest with shears."
+          "text": "$(b)Procurement:$()\nUse $(el:materials/mutandis)$(b)mutandis$() on a small plant. Harvest with shears."
         }
       ]
     }

@@ -5,6 +5,8 @@
 - CHANGED: Cat familiars will now keep their cursing bonus while dismissed.
 - CHANGED: Major refactors to parts of the API.
 - CHANGED: Refactored curse system.
+- CHANGED: Totem of undying disable config now supports localisation.
 
 - FIXED: Breaking curses has a lower success rate than intended.
 - FIXED: Altar power tags do not load correctly under some circumstances.
+- FIXED: witch's cauldron and curse removal rites don't play their sounds.

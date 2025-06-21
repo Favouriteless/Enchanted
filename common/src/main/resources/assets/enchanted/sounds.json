@@ -38,11 +38,6 @@
       "enchanted:chalk_write_4"
     ]
   },
-  "silent": {
-    "sounds": [
-      "enchanted:silent"
-    ]
-  },
   "bind_familiar": {
     "sounds": [
       "enchanted:bind_familiar"

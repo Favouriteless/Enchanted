@@ -57,7 +57,7 @@ public class BindFamiliarRite extends Rite {
             return false;
 
         if(params.ticks() == START_SOUND)
-            level.playSound(null, target.getX(),  target.getY(),  target.getZ(), ESoundEvents.BIND_FAMILIAR.get(), SoundSource.MASTER, 1.5F, 1.0F);
+            level.playSound(null, target.getX(),  target.getY(),  target.getZ(), ESoundEvents.BIND_FAMILIAR.value(), SoundSource.MASTER, 1.5F, 1.0F);
 
         if(params.ticks() < BIND_TICKS) {
             double dx = (pos.getX() + OFFSET.x + Math.random() * 0.2D) - 0.1D;
@@ -79,7 +79,6 @@ public class BindFamiliarRite extends Rite {
 
             FamiliarSavedData data = FamiliarSavedData.get(level);
             data.setFamiliar(params.caster, type, familiar);
-            data.setDirty();
 
             Enchanted.LOG.info("Familiar of type {} bound to {}", type.getId().toString(), params.caster);
             level.addFreshEntity(familiar);

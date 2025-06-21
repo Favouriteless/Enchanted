@@ -11,7 +11,7 @@ public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance
 	private final CauldronBlockEntity<?> blockEntity;
 
 	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> blockEntity) {
-		super(ESoundEvents.CAULDRON_BUBBLING.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
+		super(ESoundEvents.CAULDRON_BUBBLING.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 		this.blockEntity = blockEntity;
 		this.looping = true;
 		this.delay = 0;

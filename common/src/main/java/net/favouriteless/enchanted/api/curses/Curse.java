@@ -34,7 +34,7 @@ public abstract class Curse {
 
     private WeakReference<ServerPlayer> target;
     private long ticks = 0;
-    private long lastWhisper = 0;
+    private long nextWhisper = 0;
 
     public Curse(CurseType<?> type) {
         this.type = type;
@@ -72,16 +72,11 @@ public abstract class Curse {
         if(target != null)
             onTick(target, ticks);
 
-
-        long since = ticks - lastWhisper;
-        int min = CommonConfig.INSTANCE.curseWhisperMin.get();
-        int max = CommonConfig.INSTANCE.curseWhisperMax.get();
-
-        if(since > max * 20L)
+        if(nextWhisper <= ticks) {
             whisper();
-        else if(since > min * 20L) {
-            if(Math.random() < 1.0D / ((max - min) * 20))
-                whisper();
+            int min = CommonConfig.INSTANCE.curseWhisperMin.get();
+            int max = CommonConfig.INSTANCE.curseWhisperMax.get();
+            nextWhisper = ticks + Enchanted.RANDOM.nextLong(min * 20L, max * 20L);
         }
         ticks++;
     }
@@ -99,8 +94,6 @@ public abstract class Curse {
         ServerPlayer target = getTarget();
         if(target == null)
             return;
-
-        lastWhisper = ticks;
         target.connection.send(new ClientboundSoundEntityPacket(ESoundEvents.CURSE_WHISPER, SoundSource.AMBIENT, target,
                 0.1F, (float)Math.random() * 0.15F + 0.85F, Enchanted.RANDOM.nextLong()));
     }

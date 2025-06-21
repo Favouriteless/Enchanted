@@ -44,6 +44,7 @@ public class FamiliarSavedData extends SavedData {
      */
     public void setFamiliar(UUID owner, FamiliarType<?, ?> type, TamableAnimal familiar) {
         entries.put(owner, new FamiliarEntry(type, familiar));
+        setDirty();
     }
 
     /**

@@ -1,17 +1,14 @@
 package net.favouriteless.enchanted.api.curses;
 
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.curses.CurseType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-
-import java.util.Random;
 
 /**
  * A {@link Curse} which triggers randomly within a specified range of time.
  */
 public abstract class RandomCurse extends Curse {
-
-	public static final Random RANDOM = new Random();
 
 	private final int min;
 	private final int max;
@@ -28,7 +25,7 @@ public abstract class RandomCurse extends Curse {
 	protected void onTick(ServerPlayer target, long ticks) {
 		if(nextUseTick <= ticks) {
 			execute(target);
-			nextUseTick = ticks + RANDOM.nextLong(min * 20L, max * 20L);
+			nextUseTick = ticks + Enchanted.RANDOM.nextLong(min * 20L, max * 20L);
 		}
 	}
 

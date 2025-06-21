@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.circle_magic.rites;
 
 import net.favouriteless.enchanted.api.curses.Curse;
+import net.favouriteless.enchanted.api.curses.CurseManager;
 import net.favouriteless.enchanted.common.curses.CurseSavedData;
 import net.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.api.familiars.IFamiliarEntry;
@@ -48,19 +49,22 @@ public class RemoveCurseRite extends Rite {
             if(familiar != null && familiar.getType() == FamiliarTypes.CAT)
                 strength++;
 
-            List<Curse> curses = CurseSavedData.get(level).get(params.target);
+            CurseSavedData data = CurseSavedData.get(level);
+            List<Curse> curses = data.get(params.target);
 
             for(Curse curse : curses) {
                 if(curse.type != this.curse)
                     continue;
 
-                int diff = strength - curse.strength;
-                double chance = 1.0D - (diff * 0.2D); // If the caster is equal level, there is a 100% chance the curse will be cured.
+                double chance = (strength - curse.strength) * 0.2D; // 20% chance to fail per level difference.
 
-                if(Math.random() < chance)
-                    CurseManagerImpl.removeCurse(level, curse);
-                else if(curse.getStrength() < CurseManagerImpl.MAX_STRENGTH)
-                    curse.setStrength(curse.getStrength() + 1);
+                if(Math.random() > chance) {
+                    CurseManager.get().removeCurse(level, curse);
+                }
+                else if(curse.strength < CurseManagerImpl.MAX_STRENGTH) {
+                    curse.strength += 1;
+                    data.setDirty();
+                }
                 break;
             }
             return false;

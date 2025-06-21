@@ -40,10 +40,9 @@ public class ChalkItem extends BlockItem {
         BlockPos targetPos = pos.above();
         BlockState targetState = level.getBlockState(targetPos);
 
-        if(targetState.canBeReplaced()) {
-            if(chalkBlock.canSurvive(chalkBlock.defaultBlockState(), level, targetPos))
-                tryPlaceChalk(level, targetPos, context);
-        }
+        if(targetState.canBeReplaced() && chalkBlock.canSurvive(chalkBlock.defaultBlockState(), level, targetPos))
+            tryPlaceChalk(level, targetPos, context);
+
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -54,7 +53,7 @@ public class ChalkItem extends BlockItem {
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
 
-        level.playSound(player, pos, ESoundEvents.CHALK_WRITE.get(), SoundSource.PLAYERS, 1F, 1F);
+        level.playSound(player, pos, ESoundEvents.CHALK_WRITE.value(), SoundSource.PLAYERS, 1, 1);
         player.getItemInHand(hand).hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
     }
 

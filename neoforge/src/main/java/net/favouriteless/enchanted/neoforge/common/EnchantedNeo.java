@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.neoforge.common;
 
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
@@ -34,6 +35,7 @@ public class EnchantedNeo {
         Enchanted.init();
 
         container.registerConfig(Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
+        container.registerConfig(Type.SERVER, ServerConfig.SPEC, "enchanted-server.toml");
 
         NeoCommonRegistryHelper.getRegistryMap().register(bus);
         bus.addListener(NeoNetworkHelper::registerPayloads);

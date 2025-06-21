@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.stateobservers;
 
 import net.favouriteless.enchanted.api.power.IPowerConsumer;
 import net.favouriteless.enchanted.api.power.IPowerProvider;
-import net.favouriteless.enchanted.common.CommonConfig;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import net.favouriteless.stateobserver.api.StateChangeSet.StateChange;
 import net.favouriteless.stateobserver.api.StateObserver;
@@ -27,7 +27,7 @@ public class AltarStateObserver extends StateObserver {
             if(be instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
 
                 for(StateChange change : getChangeSet().getChanges()) { // For all changes
-                    if(altar.posWithinRange(change.pos(), CommonConfig.INSTANCE.altarRange.get())) { // Change is relevant
+                    if(altar.posWithinRange(change.pos(), ServerConfig.INSTANCE.altarRange.get())) { // Change is relevant
                         if(!change.oldState().is(change.newState().getBlock())) { // Block actually changed
                             if(getLevel().getBlockEntity(change.pos()) instanceof IPowerConsumer consumer)
                                 consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.

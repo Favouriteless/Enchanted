@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.api.curses;
 
-import net.favouriteless.enchanted.common.CommonConfig;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.curses.CurseType;
@@ -74,8 +74,8 @@ public abstract class Curse {
 
         if(nextWhisper <= ticks) {
             whisper();
-            int min = CommonConfig.INSTANCE.curseWhisperMin.get();
-            int max = CommonConfig.INSTANCE.curseWhisperMax.get();
+            int min = ServerConfig.INSTANCE.curseWhisperMin.get();
+            int max = ServerConfig.INSTANCE.curseWhisperMax.get();
             nextWhisper = ticks + Enchanted.RANDOM.nextLong(min * 20L, max * 20L);
         }
         ticks++;

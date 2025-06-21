@@ -19,7 +19,7 @@ public class LootExtensions {
     private static final Map<ResourceLocation, LootExtension> extensions = new HashMap<>();
 
     static {
-        register(ResourceLocation.withDefaultNamespace("blocks/short_grass"), new LootExtension(Enchanted.id("extensions/grass_seeds"), c -> !CommonConfig.INSTANCE.hoeOnlySeeds.get() || c.getParam(LootContextParams.TOOL).getItem() instanceof HoeItem));
+        register(ResourceLocation.withDefaultNamespace("blocks/short_grass"), new LootExtension(Enchanted.id("extensions/grass_seeds"), c -> !ServerConfig.INSTANCE.hoeOnlySeeds.get() || c.getParam(LootContextParams.TOOL).getItem() instanceof HoeItem));
         register(ResourceLocation.withDefaultNamespace("entities/bat"), new LootExtension(Enchanted.id("extensions/arthana/bat"), c -> true));
         register(ResourceLocation.withDefaultNamespace("entities/creeper"), new LootExtension(Enchanted.id("extensions/arthana/creeper"), c -> true));
         register(ResourceLocation.withDefaultNamespace("entities/wolf"), new LootExtension(Enchanted.id("extensions/arthana/wolf"), c -> true));

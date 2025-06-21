@@ -12,7 +12,7 @@ public class ClientConfig {
 	public final BooleanValue useOriginalCatType;
 
 	private ClientConfig(ModConfigSpec.Builder builder) {
-		useOriginalCatType = builder.comment("Render cat familiars with their original fur colour rather than all black (DEFAULT: false)").define("original_cat_type", false);
+		useOriginalCatType = builder.comment("Render cat familiars with their original fur colour rather than all black").define("original_cat_type", false);
 	}
 
 	static {

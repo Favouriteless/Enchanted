@@ -1,5 +1,6 @@
 - ADDED: Config options for min/max whispering times on curses.
 
+- CHANGED: Most common config options have been moved to server config.
 - CHANGED: Completely reworked mutandis, check the book.
 - CHANGED: Cat familiars will now keep their cursing bonus while dismissed.
 - CHANGED: Major refactors to parts of the API.

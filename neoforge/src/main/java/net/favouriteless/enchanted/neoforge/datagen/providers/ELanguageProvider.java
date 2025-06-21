@@ -125,6 +125,7 @@ public class ELanguageProvider extends LanguageProvider {
 
         addTooltip("byproduct_recipe", "Byproduct Recipe");
         addTooltip("altar_power", "%1$s Altar Power");
+        addTooltip("disabled_totems", "Disabled (Enchanted: Witchcraft)");
 
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }

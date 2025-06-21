@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.client;
 
 import net.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
-import net.favouriteless.enchanted.common.CommonConfig;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.mixin.client.AbstractSoundInstanceAccessor;
 import net.minecraft.ChatFormatting;
@@ -30,8 +30,8 @@ public class ClientEvents {
 
 
 	public static void onItemTooltip(ItemStack item, List<Component> toolTips, TooltipFlag flags) {
-		if(item.getItem() == Items.TOTEM_OF_UNDYING && CommonConfig.INSTANCE.disableTotems.get())
-			toolTips.add(Component.literal("Totems are disabled (Enchanted config)").withStyle(ChatFormatting.RED));
+		if(item.getItem() == Items.TOTEM_OF_UNDYING && ServerConfig.INSTANCE.disableTotems.get())
+			toolTips.add(Component.translatable("Totems are disabled (Enchanted config)").withStyle(ChatFormatting.RED));
 	}
 
 	public static void playSound(SoundInstance soundInstance) {

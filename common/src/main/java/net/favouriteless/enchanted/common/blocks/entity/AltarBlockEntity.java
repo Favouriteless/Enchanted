@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.common.blocks.entity;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.api.power.IPowerConsumer;
 import net.favouriteless.enchanted.api.power.IPowerProvider;
-import net.favouriteless.enchanted.common.CommonConfig;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.altar.AltarBlockData;
 import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
 import net.favouriteless.enchanted.common.altar.AltarUpgradeData;
@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 // TODO: Another rewrite, this code is bad.
 public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
 
-    private final double rechargeRate = CommonConfig.INSTANCE.altarBaseRecharge.get();
+    private final double rechargeRate = ServerConfig.INSTANCE.altarBaseRecharge.get();
     private final AltarBlockData altarBlockData = new AltarBlockData();
     private final AltarUpgradeData altarUpgradeData = new AltarUpgradeData();
     private double rechargeMultiplier = 1.0D;
@@ -95,7 +95,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
         if(stateObserver == null)
             stateObserver = StateObserverManager.get().getObserver(level, worldPosition, AltarStateObserver.class);
         if(stateObserver == null) {
-            int range = CommonConfig.INSTANCE.altarRange.get();
+            int range = ServerConfig.INSTANCE.altarRange.get();
             stateObserver = StateObserverManager.get().addObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
         }
         facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
@@ -165,7 +165,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
      */
     private void recalculateBlocks() {
         if(level != null && !level.isClientSide) {
-            int range = CommonConfig.INSTANCE.altarRange.get();
+            int range = ServerConfig.INSTANCE.altarRange.get();
             BlockPos startingPos = facingX ?
                     BlockPos.containing(centerPos.add(-(range+4), -(range+2), -(range+2))) :
                     BlockPos.containing(centerPos.add(-(range+2), -(range+2), -(range+4)));

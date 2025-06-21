@@ -6,10 +6,11 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.EBlocks;
-import net.favouriteless.enchanted.common.init.EEntityTypes;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.common.entities.Mandrake;
+import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.neoforged.fml.config.ModConfig.Type;
 
@@ -25,6 +26,7 @@ public class EnchantedFabric implements ModInitializer {
         registerStrippables();
 
         NeoForgeConfigRegistry.INSTANCE.register(Enchanted.MOD_ID, Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
+        NeoForgeConfigRegistry.INSTANCE.register(Enchanted.MOD_ID, Type.SERVER, ServerConfig.SPEC, "enchanted-server.toml");
     }
 
     private static void registerEntityAttributes() {

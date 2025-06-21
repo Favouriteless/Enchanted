@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.common.sounds;
+package net.favouriteless.enchanted.client;
 
 import net.favouriteless.enchanted.common.blocks.entity.CauldronBlockEntity;
 import net.favouriteless.enchanted.common.init.ESoundEvents;

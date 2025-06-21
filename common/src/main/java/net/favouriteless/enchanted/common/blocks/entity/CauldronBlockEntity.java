@@ -3,9 +3,9 @@ package net.favouriteless.enchanted.common.blocks.entity;
 import net.favouriteless.enchanted.api.power.IPowerConsumer;
 import net.favouriteless.enchanted.api.power.IPowerProvider;
 import net.favouriteless.enchanted.api.power.PowerHelper;
-import net.favouriteless.enchanted.client.client_handlers.blockentities.CauldronBlockEntityClientHandler;
+import net.favouriteless.enchanted.client.client_handlers.block_entities.CauldronBlockEntityClientHandler;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.CommonConfig;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
@@ -248,7 +248,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			matchRecipes();
 
 			if(potentialRecipes.isEmpty()) {
-				if(CommonConfig.INSTANCE.cauldronItemSpoil.get())
+				if(ServerConfig.INSTANCE.cauldronItemSpoil.get())
 					setFailed();
 				else {
 					inventory.remove(itemEntity.getItem());

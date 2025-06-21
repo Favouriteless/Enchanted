@@ -29,7 +29,7 @@ public class WitchCauldronBlockEntity extends CauldronBlockEntity<WitchCauldronR
 
     @Override
     public double getWaterWidth() {
-        return 0.875D;
+        return 0.75D;
     }
 
     @Override

@@ -13,10 +13,11 @@ public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance
 
 	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> be) {
 		super(ESoundEvents.CAULDRON_BUBBLING.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
+		BlockPos pos = be.getBlockPos();
+
 		this.be = be;
 		this.looping = true;
 		this.delay = 0;
-		BlockPos pos = be.getBlockPos();
 		this.x = pos.getX() + 0.5D;
 		this.y = pos.getY() + 0.5D;
 		this.z = pos.getZ() + 0.5D;

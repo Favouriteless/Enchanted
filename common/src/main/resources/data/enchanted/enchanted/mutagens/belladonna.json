@@ -1,4 +1,0 @@
-{
-  "enchanted:ember_moss": { "mutagens": [ "minecraft:short_grass", "minecraft:oak_sapling" ], "weight": 15, "extremis": false },
-  "enchanted:spanish_moss": { "mutagens": [ "minecraft:short_grass", "minecraft:birch_sapling" ], "weight": 10, "extremis": false }
-}

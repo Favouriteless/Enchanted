@@ -1,20 +1,11 @@
 package net.favouriteless.enchanted.common;
 
-import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.init.ERiteFactories;
-import net.favouriteless.enchanted.common.init.EMobEffects;
-import net.favouriteless.enchanted.common.init.EEntityTypes;
-import net.favouriteless.enchanted.common.init.ECreativeTab;
-import net.favouriteless.enchanted.common.init.EData;
-import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.init.*;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.common.init.EMenuTypes;
-import net.favouriteless.enchanted.common.init.EPackets;
-import net.favouriteless.enchanted.common.init.ERecipeTypes;
-import net.favouriteless.enchanted.common.init.ESoundEvents;
+import net.favouriteless.enchanted.common.mutandis.MutagenSavedData;
 import net.favouriteless.enchanted.integrations.modopedia.common.init.EBookTypes;
+import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
@@ -33,6 +24,11 @@ public class Enchanted {
     public static void init() {
         EPackets.register();
         loadRegistries();
+
+        StateObserverManager.get().registerGlobalListener((level, pos, old, state) -> {
+            if(old.getBlock() != state.getBlock() || !state.isRandomlyTicking())
+                MutagenSavedData.get(level).remove(pos);
+        });
     }
 
     public static void loadRegistries() {
@@ -62,7 +58,7 @@ public class Enchanted {
     }
 
     public static String savedDataName(String suffix) {
-        return MOD_ID + ":" + suffix;
+        return MOD_ID + "_" + suffix;
     }
 
 }

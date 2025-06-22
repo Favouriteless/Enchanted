@@ -46,7 +46,7 @@ public class DistillingRecipeBuilder extends ERecipeBuilder {
     public DistillingRecipeBuilder results(ItemStack... results) {
         Collections.addAll(this.results, results);
         if(this.results.size() > 4)
-            throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagenSets.");
+            throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagens.");
         return this;
     }
 
@@ -57,7 +57,7 @@ public class DistillingRecipeBuilder extends ERecipeBuilder {
 
         Collections.addAll(this.results, stacks);
         if(this.results.size() > 4)
-            throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagenSets.");
+            throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagens.");
         return this;
     }
 

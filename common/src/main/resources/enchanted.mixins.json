@@ -9,6 +9,7 @@
     "common.LootTableMixin",
     "common.MobMixin",
     "common.SaplingBlockAccessor",
+    "common.ServerLevelMixin",
     "common.ZombieVillagerAccessor"
   ],
   "client": [

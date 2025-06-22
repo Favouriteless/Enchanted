@@ -1,0 +1,11 @@
+[
+  {
+    "extremis": false,
+    "mutagens": [
+      "minecraft:glow_lichen",
+      "enchanted:spanish_moss"
+    ],
+    "result": "enchanted:spanish_moss",
+    "weight": 10
+  }
+]

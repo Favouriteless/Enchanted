@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.neoforge.datagen;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.neoforge.datagen.providers.*;
+import net.favouriteless.enchanted.neoforge.datagen.providers.enchanted.EMutagenInfoProvider;
 import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EBookProvider;
 import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EBookTextureProvider;
 import net.favouriteless.enchanted.neoforge.datagen.providers.modopedia.EContentSetProvider;
@@ -45,6 +46,8 @@ public class DataGenerators {
 		gen.addProvider(true, new ETemplateProvider(provider, output));
 		gen.addProvider(true, new EBookProvider(provider, output));
 		gen.addProvider(true, new EContentSetProvider(provider, output));
+
+		gen.addProvider(true, new EMutagenInfoProvider(output, provider));
 	}
 
 }

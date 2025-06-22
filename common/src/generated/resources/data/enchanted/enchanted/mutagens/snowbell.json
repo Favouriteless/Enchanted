@@ -1,0 +1,12 @@
+[
+  {
+    "extremis": false,
+    "mutagens": [
+      "minecraft:netherrack",
+      "minecraft:crimson_nylium",
+      "minecraft:warped_nylium"
+    ],
+    "result": "enchanted:ember_moss",
+    "weight": 10
+  }
+]

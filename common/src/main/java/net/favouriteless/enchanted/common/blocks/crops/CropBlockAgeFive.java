@@ -8,11 +8,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-public class CropsBlockAgeFive extends CropBlock {
+public class CropBlockAgeFive extends CropBlock {
 
     public static final IntegerProperty AGE_FIVE = IntegerProperty.create("age", 0, 4);
 
-    public CropsBlockAgeFive(Properties properties) {
+    public CropBlockAgeFive(Properties properties) {
         super(properties);
     }
 

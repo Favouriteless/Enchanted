@@ -6,7 +6,7 @@ import net.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import net.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
-import net.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
+import net.favouriteless.enchanted.common.blocks.crops.CropBlockAgeFive;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
@@ -259,12 +259,12 @@ public class BlockstateProvider extends BlockStateProvider {
 		simpleItem(block);
 	}
 
-	private void cropsWithItem(CropsBlockAgeFive block, String parent) {
+	private void cropsWithItem(CropBlockAgeFive block, String parent) {
 		String path = BlockModelProvider.BLOCK_FOLDER + "/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_stage_";
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
 						.modelFile(models()
-								.withExistingParent(path + state.getValue(CropsBlockAgeFive.AGE_FIVE), mcLoc("block/" + parent))
-								.texture(parent, path + state.getValue(CropsBlockAgeFive.AGE_FIVE))
+								.withExistingParent(path + state.getValue(CropBlockAgeFive.AGE_FIVE), mcLoc("block/" + parent))
+								.texture(parent, path + state.getValue(CropBlockAgeFive.AGE_FIVE))
 								.renderType(ResourceLocation.withDefaultNamespace("cutout")))
 						.build());
 	}

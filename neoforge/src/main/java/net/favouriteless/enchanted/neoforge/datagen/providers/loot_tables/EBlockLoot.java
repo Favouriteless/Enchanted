@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.loot_tables;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
-import net.favouriteless.enchanted.common.blocks.crops.CropsBlockAgeFive;
+import net.favouriteless.enchanted.common.blocks.crops.CropBlockAgeFive;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -53,7 +53,7 @@ public class EBlockLoot extends BlockLootSubProvider {
                                 .withPool(LootPool.lootPool()
                                         .add(LootItem.lootTableItem(EItems.GARLIC.get())
                                                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(EBlocks.GARLIC.get())
-                                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlockAgeFive.AGE_FIVE, 4)))
+                                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlockAgeFive.AGE_FIVE, 4)))
                                                 .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registries.holderOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))))
                 )
         );
@@ -85,7 +85,7 @@ public class EBlockLoot extends BlockLootSubProvider {
 
     protected void createDualCropBlockAgeFiveDrops(Block block, ItemLike crop, ItemLike otherCrop, ItemLike seeds) {
         LootItemCondition.Builder ageCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlockAgeFive.AGE_FIVE, 4));
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlockAgeFive.AGE_FIVE, 4));
 
         add(block, LootTable.lootTable().withPool(
                 LootPool.lootPool()
@@ -116,9 +116,9 @@ public class EBlockLoot extends BlockLootSubProvider {
                                         .when(BonusLevelTableCondition.bonusLevelFlatChance(registries.holderOrThrow(Enchantments.FORTUNE), 0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
     }
 
-    protected void createCropBlockAgeFiveDrops(CropsBlockAgeFive block, ItemLike crop, ItemLike seeds) {
+    protected void createCropBlockAgeFiveDrops(CropBlockAgeFive block, ItemLike crop, ItemLike seeds) {
         LootItemCondition.Builder itemCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlockAgeFive.AGE_FIVE, 4));
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlockAgeFive.AGE_FIVE, 4));
         add(block, createCropDrops(block, crop.asItem(), seeds.asItem(), itemCondition));
     }
 

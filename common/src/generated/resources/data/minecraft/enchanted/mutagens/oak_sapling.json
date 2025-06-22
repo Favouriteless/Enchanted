@@ -1,0 +1,35 @@
+[
+  {
+    "extremis": false,
+    "mutagens": [
+      "enchanted:belladonna",
+      "enchanted:mandrake",
+      "enchanted:wolfsbane",
+      "enchanted:water_artichoke"
+    ],
+    "result": "enchanted:rowan_sapling",
+    "weight": 20
+  },
+  {
+    "extremis": false,
+    "mutagens": [
+      "enchanted:belladonna",
+      "enchanted:mandrake",
+      "enchanted:wolfsbane",
+      "enchanted:water_artichoke"
+    ],
+    "result": "enchanted:hawthorn_sapling",
+    "weight": 5
+  },
+  {
+    "extremis": false,
+    "mutagens": [
+      "enchanted:belladonna",
+      "enchanted:mandrake",
+      "enchanted:wolfsbane",
+      "enchanted:water_artichoke"
+    ],
+    "result": "enchanted:alder_sapling",
+    "weight": 5
+  }
+]

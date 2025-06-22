@@ -1,0 +1,11 @@
+[
+  {
+    "extremis": false,
+    "mutagens": [
+      "enchanted:rowan_leaves",
+      "enchanted:rowan_log"
+    ],
+    "result": "enchanted:glint_weed",
+    "weight": 10
+  }
+]

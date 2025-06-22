@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.neoforge.datagen.builders.recipe;
+package net.favouriteless.enchanted.api.datagen.builders.recipe;
 
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.DistillingRecipe;

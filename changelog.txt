@@ -7,6 +7,7 @@
 - CHANGED: Refactored curse system.
 - CHANGED: Totem of undying disable config now supports localisation.
 
+- FIXED: Spanish moss spreading behaviour has some weird edge cases.
 - FIXED: Breaking curses has a lower success rate than intended.
 - FIXED: Altar power tags do not load correctly under some circumstances.
 - FIXED: witch's cauldron and curse removal rites don't play their sounds.

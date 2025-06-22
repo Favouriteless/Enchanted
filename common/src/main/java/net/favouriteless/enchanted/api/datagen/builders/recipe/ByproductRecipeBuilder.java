@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.neoforge.datagen.builders.recipe;
+package net.favouriteless.enchanted.api.datagen.builders.recipe;
 
 import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,8 +15,8 @@ import java.util.Arrays;
 public class ByproductRecipeBuilder extends ERecipeBuilder {
 
     private final ItemStack result;
-    private ItemLike[] items = null;
-    private TagKey<Item> tag = null;
+    private final ItemLike[] items;
+    private final TagKey<Item> tag;
 
     private ByproductRecipeBuilder(ItemStack result, ItemLike[] items, TagKey<Item> tag) {
         super("byproduct");

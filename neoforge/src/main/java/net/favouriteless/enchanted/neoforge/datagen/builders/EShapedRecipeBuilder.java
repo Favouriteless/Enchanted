@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.neoforge.datagen.builders.recipe;
+package net.favouriteless.enchanted.neoforge.datagen.builders;
 
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;

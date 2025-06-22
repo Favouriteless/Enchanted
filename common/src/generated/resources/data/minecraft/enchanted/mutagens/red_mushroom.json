@@ -1,0 +1,10 @@
+[
+  {
+    "extremis": true,
+    "mutagens": [
+      "minecraft:sculk_shrieker"
+    ],
+    "result": "enchanted:blood_poppy",
+    "weight": 10
+  }
+]

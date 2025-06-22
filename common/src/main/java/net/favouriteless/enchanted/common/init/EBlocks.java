@@ -45,7 +45,7 @@ public class EBlocks {
     public static final Supplier<SlabBlock> ALDER_SLAB = register("alder_slab", () -> slab(Blocks.OAK_SLAB));
     public static final Supplier<StairBlock> ALDER_STAIRS = register("alder_stairs", () -> stairs(ALDER_PLANKS.get()));
     public static final Supplier<AltarBlock> ALTAR = register("altar", () -> new AltarBlock(copy(Blocks.STONE).pushReaction(PushReaction.BLOCK).requiresCorrectToolForDrops()));
-    public static final Supplier<CropsBlockAgeFive> BELLADONNA = register("belladonna", () -> new BelladonnaBlock(copy(Blocks.WHEAT)));
+    public static final Supplier<CropBlockAgeFive> BELLADONNA = register("belladonna", () -> new BelladonnaBlock(copy(Blocks.WHEAT)));
     public static final Supplier<BloodPoppyBlock> BLOOD_POPPY = register("blood_poppy", () -> new BloodPoppyBlock(copy(Blocks.POPPY)));
     public static final Supplier<CandelabraBlock> CANDELABRA = register("candelabra", CandelabraBlock::new);
     public static final Supplier<ChaliceBlock> CHALICE = register("chalice", () -> new ChaliceBlock(false, Properties.of().strength(1.0F, 6.0F).noOcclusion()));
@@ -87,7 +87,7 @@ public class EBlocks {
     public static final Supplier<SlabBlock> ROWAN_SLAB = register("rowan_slab", () -> slab(Blocks.OAK_SLAB));
     public static final Supplier<StairBlock> ROWAN_STAIRS = register("rowan_stairs", () -> stairs(ROWAN_PLANKS.get()));
     public static final Supplier<SnowbellBlock> SNOWBELL = register("snowbell", () -> new SnowbellBlock(copy(Blocks.WHEAT)));
-    public static final Supplier<SpanishMossBlock> SPANISH_MOSS = register("spanish_moss", () -> new SpanishMossBlock(copy(Blocks.VINE)));
+    public static final Supplier<VineBlock> SPANISH_MOSS = register("spanish_moss", () -> new VineBlock(copy(Blocks.VINE)));
     public static final Supplier<SpinningWheelBlock> SPINNING_WHEEL = register("spinning_wheel", () -> new SpinningWheelBlock(copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final Supplier<ArtichokeBlock> WATER_ARTICHOKE = register("water_artichoke", () -> new ArtichokeBlock(copy(Blocks.WHEAT).sound(SoundType.LILY_PAD)));
     public static final Supplier<HayBlock> WICKER_BUNDLE = register("wicker_bundle", () -> new HayBlock(copy(Blocks.HAY_BLOCK)));

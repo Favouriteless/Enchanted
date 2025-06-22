@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-21T07:02:06.3879417	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-06-22T09:18:20.4629612	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 dcddf36f4f72819e520301f0c2dd94f1c5ffbcdf assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 9ca033cf2e25726e3c4a0d3178f1f1c8cff7c83a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
 f246bafb10df967ea1818f1f16011027abe499a1 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/tutorial.json
@@ -21,7 +21,7 @@ fc6795e30d15cf27f5688469483633f539483e18 assets/enchanted/modopedia/books/art_of
 0842bdf80c4b4305e3678df4317597232590cddf assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/redstone_soup.json
 b19b3d9a813fcc7663c4e83f32ec80f87b2eabc7 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/soul_of_the_world.json
 988ede8ea4b86d02ca2dfba796e92d9fa0cd8675 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/spirit_of_otherwhere.json
-542d5a864fc248405d33ace625a9a8be363032bd assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/witch_cauldron.json
+22f32988b110cce466472d8b761d31a0c023de6f assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/witch_cauldron.json
 bd54a6e60d8e4790edd260f24502c23d33a312b4 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/broom.json
 0e4547a2aa219fd223b7bc18ddedd8fc94c61447 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/tutorial/performing_rites.json
 8e6382462e42001c7761b3786231f77b1183fb04 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/earmuffs.json

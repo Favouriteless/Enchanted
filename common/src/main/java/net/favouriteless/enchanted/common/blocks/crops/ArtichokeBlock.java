@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-public class ArtichokeBlock extends CropsBlockAgeFive {
+public class ArtichokeBlock extends CropBlockAgeFive {
 
     public ArtichokeBlock(Properties properties) {
         super(properties);

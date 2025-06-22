@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BedBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import java.util.Map;
  */
 public class BedTaglockSavedData extends SavedData {
 
-    private static final String NAME = "enchanted_bed_taglocks";
+    private static final String NAME = Enchanted.savedDataName("bed_taglocks");
     private final Map<BlockPos, IBedTaglock> entries = new HashMap<>();
 
     public BedTaglockSavedData() {

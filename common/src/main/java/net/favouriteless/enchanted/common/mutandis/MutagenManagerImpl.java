@@ -16,6 +16,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 public class MutagenManagerImpl implements MutagenManager {
 
@@ -69,11 +71,26 @@ public class MutagenManagerImpl implements MutagenManager {
         if(Math.random() >= chance)
             return false;
 
-        level.setBlockAndUpdate(pos, set.result().defaultBlockState());
+        mutate(level, pos, set.result());
+        return true;
+    }
+
+    private void mutate(ServerLevel level, BlockPos pos, Block newBlock) {
+        BlockState state = level.getBlockState(pos);
+        BlockState newState = newBlock.defaultBlockState();
+
+        for(Property<?> property : state.getProperties()) {
+            if(newState.hasProperty(property))
+                newState = copyProperty(property, state, newState); // Attempt to capture and copy any viable properties.
+        }
+
+        level.setBlockAndUpdate(pos, newState);
         level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.MASTER);
         level.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 25, 0.5D, 0.5D, 0.5D, 0.0D);
+    }
 
-        return true;
+    private <T extends Comparable<T>> BlockState copyProperty(Property<T> property, BlockState old, BlockState state) {
+        return state.setValue(property, old.getValue(property));
     }
 
     private Object2IntMap<MutagenSet> getValidMutagenSets(ServerLevel level, BlockPos pos, MutagenInfo info) {

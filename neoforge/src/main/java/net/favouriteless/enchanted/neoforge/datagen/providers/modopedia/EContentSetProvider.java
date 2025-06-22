@@ -782,12 +782,12 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(GalleryBuilder.of(recipeTemplates).height(140));
     }
 
-    public EntryBuilder simpleHerbologyPage(String id, String title, String description, CropsBlockAgeFive block, String procurement, Item... items) {
+    public EntryBuilder simpleHerbologyPage(String id, String title, String description, CropBlockAgeFive block, String procurement, Item... items) {
         return EntryBuilder.of("herbology/" + id, title)
                 .icon(items[0].getDefaultInstance())
                 .assignedItems(items)
                 .page(HeaderedTextBuilder.of(title, description))
-                .page(BlockPageBuilder.of(procurement, block.defaultBlockState().setValue(CropsBlockAgeFive.AGE_FIVE, 4)));
+                .page(BlockPageBuilder.of(procurement, block.defaultBlockState().setValue(CropBlockAgeFive.AGE_FIVE, 4)));
     }
 
     public EntryBuilder simpleHerbologyPage(String id, String title, String description, Block block, String procurement, Item... items) {

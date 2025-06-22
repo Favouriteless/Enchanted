@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MandrakeBlock extends CropsBlockAgeFive {
+public class MandrakeBlock extends CropBlockAgeFive {
 
     public MandrakeBlock(Properties properties) {
         super(properties);

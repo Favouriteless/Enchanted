@@ -3,6 +3,7 @@
     "minecraft:ender_dragon",
     "minecraft:wither",
     "minecraft:warden",
-    "enchanted:familiar_cat"
+    "enchanted:familiar_cat",
+    "minecraft:allay"
   ]
 }

@@ -127,6 +127,9 @@ public class ELanguageProvider extends LanguageProvider {
         addTooltip("altar_power", "%1$s Altar Power");
         addTooltip("disabled_totems", "Disabled (Enchanted: Witchcraft)");
 
+        add(Enchanted.translationKey("taglock", "failed"), "Taglock attempt failed");
+        add(Enchanted.translationKey("taglock", "failed.player"), "%1$s tried to taglock you");
+
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 

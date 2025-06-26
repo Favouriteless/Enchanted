@@ -1,13 +1,13 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
 import net.favouriteless.enchanted.api.taglock.IBedTaglock;
-import net.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
+import net.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags.EntityTypes;
-import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.util.ItemUtils;
@@ -23,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -45,25 +46,30 @@ public class EmptyTaglockItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        if(target instanceof Player) {
+        if(target.getType().is(EntityTypes.TAGLOCK_BLACKLIST))
+            return InteractionResult.PASS;
+
+        if(!player.level().isClientSide) {
             double failChance = 0.2D;
-            if (!player.isCrouching())
+            if(!player.isCrouching())
                 failChance += 0.2D;
             if(!facingAway(player, target))
                 failChance += 0.4D;
+            if(target.getType() != EntityType.PLAYER)
+                failChance = 0;
 
             if(Math.random() >= failChance) {
-                if(!player.level().isClientSide) {
-                    player.displayClientMessage(Component.literal("Taglock attempt failed").withStyle(ChatFormatting.RED), false);
-                    ((ServerPlayer)target).displayClientMessage(Component.literal(player.getDisplayName().getString() + " tried to taglock you").withStyle(ChatFormatting.RED), false);
-                }
-                return InteractionResult.FAIL;
+                fillTaglockEntity(player, stack, target);
             }
-        }
-        if(!target.getType().is(EntityTypes.TAGLOCK_BLACKLIST))
-            fillTaglockEntity(player, stack, target);
+            else {
+                player.displayClientMessage(Component.translatable(Enchanted.translationKey("taglock", "failed")).withStyle(ChatFormatting.RED), false);
 
-        return InteractionResult.SUCCESS;
+                if(target instanceof ServerPlayer sp)
+                    sp.displayClientMessage(Component.translatable(Enchanted.translationKey("taglock", "failed.player"), player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
+            }
+
+        }
+        return InteractionResult.sidedSuccess(player.level().isClientSide);
     }
 
     @Override
@@ -80,19 +86,19 @@ public class EmptyTaglockItem extends Item {
 
                 if(be instanceof BedBlockEntity bed) {
                     BedTaglockSavedData data = BedTaglockSavedData.get(level);
-                    IBedTaglock bedEntry = data.getEntry(bed);
+                    IBedTaglock entry = data.getEntry(bed);
 
-                    if(bedEntry.getData() != null) {
-                        fillTaglock(context.getPlayer(), context.getItemInHand(), bedEntry.getData());
-                        bedEntry.setData(null);
-                        data.setDirty();
-                    }
+                    if(entry == null)
+                        return InteractionResult.CONSUME;
+
+                    fillTaglock(context.getPlayer(), context.getItemInHand(), entry.getData());
+                    entry.setData(null);
+                    data.setDirty();
                 }
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-
-        if(state.getBlock() == EBlocks.BLOOD_POPPY.get()) {
+        else if(state.getBlock() == EBlocks.BLOOD_POPPY.get()) {
             if(!level.isClientSide) {
                 if(level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
                     fillTaglock(context.getPlayer(), context.getItemInHand(), poppy.getTaglockData());
@@ -129,7 +135,7 @@ public class EmptyTaglockItem extends Item {
         Vec2 v1 = new Vec2((float)sourceLook.x, (float)sourceLook.z);
         Vec2 v2 = new Vec2((float)targetLook.x, (float)targetLook.z);
 
-        return !(Math.acos((v1.x * v2.x + v1.y *v2.y) / (Mth.sqrt(v1.x * v1.x + v1.y * v1.y) * Mth.sqrt(v2.x * v2.x + v2.y * v2.y))) > Mth.PI/2);
+        return !(Math.acos((v1.x * v2.x + v1.y *v2.y) / (Mth.sqrt(v1.x * v1.x + v1.y * v1.y) * Mth.sqrt(v2.x * v2.x + v2.y * v2.y))) > Mth.HALF_PI);
     }
 
 

@@ -246,6 +246,8 @@
   "rite.enchanted.waystone_blooded_charged": "Rite of Binding",
   "rite.enchanted.waystone_charged": "Rite of Binding",
   "tab.enchanted.main": "Enchanted",
+  "taglock.enchanted.failed": "Taglock attempt failed",
+  "taglock.enchanted.failed.player": "%1$s tried to taglock you",
   "tooltip.enchanted.altar_power": "%1$s Altar Power",
   "tooltip.enchanted.byproduct_recipe": "Byproduct Recipe",
   "tooltip.enchanted.disabled_totems": "Disabled (Enchanted: Witchcraft)"

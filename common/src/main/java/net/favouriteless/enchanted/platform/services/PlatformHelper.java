@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-public interface IPlatformHelper {
+public interface PlatformHelper {
 
     String getPlatformName();
 

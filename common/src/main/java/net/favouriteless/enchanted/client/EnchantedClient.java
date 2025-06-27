@@ -9,7 +9,6 @@ public class EnchantedClient {
 
     public static void init() {
         EKeybinds.load();
-        EShaders.load();
 
         EPageComponents.load();
         ETemplateProcessors.load();

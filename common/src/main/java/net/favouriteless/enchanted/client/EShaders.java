@@ -1,18 +1,19 @@
 package net.favouriteless.enchanted.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import net.favouriteless.enchanted.platform.ClientServices;
-import net.favouriteless.enchanted.platform.services.IClientRegistryHelper;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
+import org.apache.logging.log4j.util.TriConsumer;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class EShaders {
 
     public static @Nullable ShaderInstance PARTICLE_NO_CUTOFF;
 
-    public static void load() {
-        IClientRegistryHelper registry = ClientServices.CLIENT_REGISTRY;
-        registry.registerShader("particle", DefaultVertexFormat.PARTICLE, i -> PARTICLE_NO_CUTOFF = i);
+    public static void load(TriConsumer<String, VertexFormat, Consumer<ShaderInstance>> consumer) {
+        consumer.accept("particle", DefaultVertexFormat.PARTICLE, i -> PARTICLE_NO_CUTOFF = i);
     }
 
 }

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.init;
 
-import net.favouriteless.enchanted.common.network.packets.client.PoppetAnimationPayload;
-import net.favouriteless.enchanted.common.network.packets.client.SinkingCursePayload;
+import net.favouriteless.enchanted.common.network.client.PoppetAnimationPayload;
+import net.favouriteless.enchanted.common.network.client.SinkingCursePayload;
 import net.favouriteless.enchanted.platform.CommonServices;
 
 public class EPackets {

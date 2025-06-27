@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.common.network;
+package net.favouriteless.enchanted.platform;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

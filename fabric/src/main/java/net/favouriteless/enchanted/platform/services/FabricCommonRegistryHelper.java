@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries.SyncOption;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -34,7 +33,7 @@ import org.apache.commons.lang3.function.TriFunction;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
+public class FabricCommonRegistryHelper implements CommonRegistryHelper {
 
 	@Override
 	public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
@@ -61,11 +60,6 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	@Override
 	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
 		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
-	}
-
-	@Override
-	public SoundType createSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound) {
-		return new SoundType(volume, pitch, breakSound.get(), stepSound.get(), placeSound.get(), hitSound.get(), fallSound.get());
 	}
 
 	@Override

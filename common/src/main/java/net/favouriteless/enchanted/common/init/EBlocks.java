@@ -10,7 +10,7 @@ import net.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import net.favouriteless.enchanted.common.blocks.crops.*;
 import net.favouriteless.enchanted.platform.CommonServices;
-import net.favouriteless.enchanted.platform.services.ICommonRegistryHelper;
+import net.favouriteless.enchanted.platform.services.CommonRegistryHelper;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -98,7 +98,7 @@ public class EBlocks {
     //public static final Supplier<Block> DEMON_HEART = register("demon_heart", DemonHeart::new);
 
     public static void registerFlammables() {
-        ICommonRegistryHelper registry = CommonServices.COMMON_REGISTRY;
+        CommonRegistryHelper registry = CommonServices.COMMON_REGISTRY;
         registry.setFlammable(ROWAN_LOG.get(), 5, 5);
         registry.setFlammable(ROWAN_PLANKS.get(), 5, 20);
         registry.setFlammable(ROWAN_STAIRS.get(), 5, 20);

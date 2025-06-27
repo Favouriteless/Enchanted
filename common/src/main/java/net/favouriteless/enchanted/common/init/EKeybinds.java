@@ -1,10 +1,6 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.platform.ClientServices;
-import net.favouriteless.enchanted.platform.services.IClientRegistryHelper.KeyConflictContext;
-import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.KeyMapping;
 
 public class EKeybinds {
 

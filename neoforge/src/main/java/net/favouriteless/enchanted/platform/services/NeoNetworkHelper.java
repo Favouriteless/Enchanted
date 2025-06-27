@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.platform.services;
 
-import net.favouriteless.enchanted.common.network.PacketContext;
-import net.favouriteless.enchanted.neoforge.common.network.NeoPacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
+import net.favouriteless.enchanted.platform.NeoPacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class NeoNetworkHelper implements INetworkHelper {
+public class NeoNetworkHelper implements NetworkHelper {
 
     private static final List<PayloadRegisterable<?>> clientPackets = new ArrayList<>();
     private static final List<PayloadRegisterable<?>> serverPackets = new ArrayList<>();

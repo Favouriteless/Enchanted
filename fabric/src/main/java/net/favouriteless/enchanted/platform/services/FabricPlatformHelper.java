@@ -3,7 +3,6 @@ package net.favouriteless.enchanted.platform.services;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.loader.api.FabricLoader;
-import net.favouriteless.enchanted.platform.services.IPlatformHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -17,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.Nullable;
 
-public class FabricPlatformHelper implements IPlatformHelper {
+public class FabricPlatformHelper implements PlatformHelper {
 
     @Override
     public String getPlatformName() {

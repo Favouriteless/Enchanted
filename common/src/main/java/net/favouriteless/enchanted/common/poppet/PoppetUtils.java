@@ -7,7 +7,7 @@ import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.items.poppets.DeathPoppetItem;
 import net.favouriteless.enchanted.common.items.poppets.PoppetItem;
 import net.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
-import net.favouriteless.enchanted.common.network.packets.client.PoppetAnimationPayload;
+import net.favouriteless.enchanted.common.network.client.PoppetAnimationPayload;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
 import net.favouriteless.enchanted.platform.CommonServices;

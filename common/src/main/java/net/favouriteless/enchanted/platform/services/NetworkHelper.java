@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.platform.services;
 
-import net.favouriteless.enchanted.common.network.PacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.BiConsumer;
 
-public interface INetworkHelper {
+public interface NetworkHelper {
 
     <T extends CustomPacketPayload> void registerClient(CustomPacketPayload.Type<T> type,
                                                         StreamCodec<? super RegistryFriendlyByteBuf, T> codec,

@@ -28,4 +28,5 @@ public class ParticleEngineMixin {
 				.add(EParticleRenderTypes.PARTICLE_TRANSLUCENT)
 				.build();
 	}
+
 }

@@ -12,6 +12,7 @@
     "common.ServerPlayerGameModeMixin"
   ],
   "client": [
+    "client.MinecraftMixin",
     "client.MultiPlayerGameModeMixin",
     "client.ParticleEngineMixin",
     "client.SoundEngineMixin"

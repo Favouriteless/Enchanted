@@ -1,8 +1,8 @@
-package net.favouriteless.enchanted.common.network.packets.client;
+package net.favouriteless.enchanted.common.network.client;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.client.client_handlers.misc.EnchantedClientValues;
-import net.favouriteless.enchanted.common.network.PacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

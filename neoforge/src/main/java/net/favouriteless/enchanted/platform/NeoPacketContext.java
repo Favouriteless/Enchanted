@@ -1,6 +1,5 @@
-package net.favouriteless.enchanted.neoforge.common.network;
+package net.favouriteless.enchanted.platform;
 
-import net.favouriteless.enchanted.common.network.PacketContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.player.Player;

@@ -10,7 +10,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import org.jetbrains.annotations.Nullable;
 
-public class NeoPlatformHelper implements IPlatformHelper {
+public class NeoPlatformHelper implements PlatformHelper {
 
     @Override
     public String getPlatformName() {

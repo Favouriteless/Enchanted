@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.platform.services;
 
-import net.favouriteless.enchanted.common.network.PacketContext;
-import net.favouriteless.enchanted.fabric.common.network.FabricClientPacketContext;
-import net.favouriteless.enchanted.fabric.common.network.FabricServerPacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
+import net.favouriteless.enchanted.platform.FabricClientPacketContext;
+import net.favouriteless.enchanted.platform.FabricServerPacketContext;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class FabricNetworkHelper implements INetworkHelper {
+public class FabricNetworkHelper implements NetworkHelper {
 
     public static final List<ClientPayloadRegisterable<?>> clientHandlers = new ArrayList<>();
 

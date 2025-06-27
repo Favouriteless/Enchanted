@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.curses;
 
 import net.favouriteless.enchanted.api.curses.Curse;
-import net.favouriteless.enchanted.common.network.packets.client.SinkingCursePayload;
+import net.favouriteless.enchanted.common.network.client.SinkingCursePayload;
 import net.favouriteless.enchanted.platform.CommonServices;
 import net.minecraft.server.level.ServerPlayer;
 

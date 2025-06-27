@@ -11,7 +11,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,9 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.util.DeferredSoundType;
 import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -38,12 +35,16 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
+public class NeoCommonRegistryHelper implements CommonRegistryHelper {
 
 	private static final RegistryMap registryMap = new RegistryMap();
 
 	public static final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>();
 	public static final List<DataRegistryRegisterable<?>> dataRegistryRegisterables = new ArrayList<>();
+
+	public static RegistryMap getRegistryMap() {
+		return registryMap;
+	}
 
 
 	public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
@@ -73,11 +74,6 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public SoundType createSoundType(float volume, float pitch, Supplier<SoundEvent> breakSound, Supplier<SoundEvent> stepSound, Supplier<SoundEvent> placeSound, Supplier<SoundEvent> hitSound, Supplier<SoundEvent> fallSound) {
-		return new DeferredSoundType(volume, pitch, breakSound, stepSound, placeSound, hitSound, fallSound);
-	}
-
-	@Override
 	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemGenerator) {
 		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name, () -> CreativeModeTab.builder()
 				.title(Component.translatable("tab." + Enchanted.MOD_ID + "." + name))
@@ -101,10 +97,6 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	@Override
 	public void setFlammable(Block block, int igniteOdds, int burnOdds) {
 		((FireBlock)Blocks.FIRE).setFlammable(block, igniteOdds, burnOdds);
-	}
-
-	public static RegistryMap getRegistryMap() {
-		return registryMap;
 	}
 
 

@@ -1,0 +1,88 @@
+import com.diluv.schoomp.Webhook
+import com.diluv.schoomp.message.Message
+import com.diluv.schoomp.message.embed.Embed
+
+plugins {
+    id 'enchanted-common'
+
+    alias libs.plugins.moddevgradle
+}
+
+neoForge {
+    neoFormVersion = libs.versions.neoform.get()
+
+    accessTransformers = project.files("src/main/resources/META-INF/accesstransformer.cfg")
+
+    parchment {
+        minecraftVersion = libs.versions.parchment.minecraft.get()
+        mappingsVersion = libs.versions.parchment.asProvider().get()
+    }
+}
+
+dependencies {
+    compileOnly libs.mixin
+    compileOnly libs.mixinextras.common
+    compileOnly libs.stateobserver.common
+    compileOnly libs.modopedia.common
+    compileOnly libs.geckolib.common
+    compileOnly libs.forgeconfigapi.common
+    compileOnly libs.iris.common
+    compileOnly libs.jei.common.api
+}
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+sourceSets.main.resources { srcDir "src/generated/resources" }
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.files
+}
+
+tasks.register("discord") {
+    group = "publishing"
+
+    doLast {
+        try {
+            String url = System.getenv("ENCHANTED_RELEASE_WEBHOOK")
+            if(url == null)
+                throw new IllegalArgumentException("No webhook URL found")
+
+            Webhook webhook = new Webhook(url, "Gradle Upload")
+
+            Message message = new Message()
+            message.username = "Elaina"
+            message.avatarUrl = "https://i.imgur.com/I455GSr.jpeg"
+            message.content = "<@&1246846443944149145> Enchanted ${libs.versions.enchanted.get()} for Minecraft ${libs.versions.minecraft.asProvider().get()} has been published!"
+
+
+            Embed embed = new Embed()
+            embed.title = "Changelog"
+            embed.color = 0x9C58B8
+            
+            String changeString = rootProject.file("changelog.txt").getText("UTF-8").replace("\r", "")
+            embed.description = changeString.length() < 4096 ? changeString : "The changelog was too long to embed, you can view it on " +
+                        "[CurseForge](https://www.curseforge.com/minecraft/mc-mods/enchanted-witchcraft/files/all) or " +
+                        "[Modrinth](https://modrinth.com/mod/enchanted-witchcraft/versions)."
+
+            message.addEmbed(embed)
+            webhook.sendMessage(message)
+        }
+        catch(IllegalArgumentException | IOException e) {
+            project.logger.debug("Failed to push to discord webhook: " + e.message)
+        }
+    }
+}
+
+tasks.named("publish", DefaultTask).configure {
+    finalizedBy "discord"
+}

@@ -1,0 +1,122 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import net.darkhax.curseforgegradle.UploadArtifact
+
+plugins {
+    id 'enchanted-loader'
+
+    alias libs.plugins.moddevgradle
+    alias libs.plugins.minotaur
+    alias libs.plugins.curseforgegradle
+}
+
+String mcVersion = libs.versions.minecraft.asProvider().get()
+
+dependencies {
+    implementation libs.stateobserver.neoforge
+    implementation libs.modopedia.neoforge
+    implementation(libs.geckolib.neoforge) { transitive = false }
+
+    compileOnly libs.iris.neoforge
+    compileOnly libs.jei.neoforge.api
+
+    runtimeOnly libs.jei.neoforge
+}
+
+neoForge {
+    version = libs.versions.neoforge.asProvider().get()
+
+    accessTransformers = project(":common").files("src/main/resources/META-INF/accesstransformer.cfg")
+
+    parchment {
+        minecraftVersion = libs.versions.parchment.minecraft.get()
+        mappingsVersion = libs.versions.parchment.asProvider().get()
+    }
+
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', "enchanted")
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+            gameDirectory = project.file("runs/$name")
+        }
+
+        client {
+            client()
+            programArguments.addAll(
+                    "--username", "Favouriteless",
+                    "--uuid", "9410df73-6be3-41d5-a620-51b2e9be667b"
+            )
+        }
+
+        server {
+            server()
+            programArgument("--nogui")
+        }
+
+        String output = project(":common").file("src/generated/resources/").absolutePath
+        String existing = project(":common").file("src/main/resources/").absolutePath
+
+        data {
+            data()
+            programArguments.addAll(
+                    "--mod", "enchanted", "--all",
+                    "--output", output,
+                    "--existing", existing
+            )
+        }
+    }
+
+    mods {
+        "enchanted" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN") ?: "Invalid/No API Token Found"
+
+    projectId = "HsbpdVo9"
+    versionName = "Neoforge $mcVersion"
+    versionNumber = project.version.toString()
+    versionType = project.version.toString().endsWith("beta") ? "beta" : "release"
+    uploadFile = tasks.jar
+    changelog = rootProject.file("changelog.txt").getText("UTF-8")
+    loaders = ["neoforge"]
+    gameVersions = ["1.21.1"]
+
+    dependencies {
+        required.project "stateobserver"
+        required.project "geckolib"
+        required.project "modopedia"
+    }
+
+    //debugMode = true
+    //https://github.com/modrinth/minotaur#available-properties
+}
+
+tasks.register("curseforge", TaskPublishCurseForge) {
+    group = "publishing"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "Invalid/No API Token Found"
+
+    UploadArtifact main = upload(560363, tasks.jar)
+    main.releaseType = project.version.toString().endsWith("beta") ? "beta" : "release"
+    main.changelog = rootProject.file("changelog.txt").readText(Charsets.UTF_8)
+
+    main.addModLoader("NeoForge")
+    main.addGameVersion(mcVersion)
+    main.addJavaVersion("Java 21")
+
+    main.addRequirement(
+            "stateobserver",
+            "geckolib",
+            "modopedia"
+    )
+
+    //debugMode = true
+    //https://github.com/Darkhax/CurseForgeGradle#available-properties
+}
+
+tasks.named("publish", DefaultTask).configure {
+    finalizedBy "modrinth"
+    finalizedBy "curseforge"
+}

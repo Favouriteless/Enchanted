@@ -1,0 +1,36 @@
+plugins {
+    alias libs.plugins.minotaur apply false
+    alias libs.plugins.curseforgegradle apply false
+}
+
+subprojects {
+    repositories {
+        maven {
+            name = "Favouriteless Releases"
+            url = "https://maven.favouriteless.net/releases"
+        }
+
+        maven {
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+        }
+
+        maven {
+            name = "GeckoLib"
+            url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
+            content {
+                includeGroup "software.bernie.geckolib"
+            }
+        }
+
+        maven {
+            name = "BlameJared"
+            url = "https://maven.blamejared.com/"
+        }
+    }
+}

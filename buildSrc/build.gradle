@@ -1,0 +1,17 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal()
+
+    maven {
+        name = "BlameJared Maven"
+        url = "https://maven.blamejared.com"
+    }
+}
+
+dependencies {
+    gradleApi()
+    implementation libs.schoomp // This is for sending discord webhook requests on publish.
+}

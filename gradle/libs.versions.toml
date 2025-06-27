@@ -12,7 +12,6 @@
 
 # NeoForge
     neoforge-loader-range = "[4,)"
-    neoforge-range = "[21.1.72,)"
     neoforge = "21.1.79"
     iris-neoforge = "1.8.0-beta.8+1.21.1-neoforge"
     jei-neoforge = "19.21.0.247"

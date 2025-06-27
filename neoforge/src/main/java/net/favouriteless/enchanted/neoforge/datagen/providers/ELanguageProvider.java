@@ -4,6 +4,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ELanguageProvider extends LanguageProvider {
@@ -174,49 +176,19 @@ public class ELanguageProvider extends LanguageProvider {
     }
 
     protected void autoGenerateAll() {
-        autoGenerateBlocks();
-        autoGenerateItems();
-        autoGenerateEntities();
-        autoGenerateMobEffects();
+        autoGenerate(BuiltInRegistries.BLOCK, Block::getDescriptionId);
+        autoGenerate(BuiltInRegistries.ITEM, Item::getDescriptionId);
+        autoGenerate(BuiltInRegistries.ENTITY_TYPE, EntityType::getDescriptionId);
+        autoGenerate(BuiltInRegistries.MOB_EFFECT, MobEffect::getDescriptionId);
     }
 
-    protected void autoGenerateBlocks() {
-        for(Entry<ResourceKey<Block>, Block> entry : BuiltInRegistries.BLOCK.entrySet()) {
-            if(entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID)) {
-                String id = entry.getValue().getDescriptionId();
-                if(!usedKeys.contains(id))
-                    add(id, getAutoName(entry.getKey().location().getPath()));
-            }
-        }
-    }
-
-    protected void autoGenerateItems() {
-        for(Entry<ResourceKey<Item>, Item> entry : BuiltInRegistries.ITEM.entrySet()) {
-            if(entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID)) {
-                String id = entry.getValue().getDescriptionId();
-                if(!usedKeys.contains(id))
-                    add(id, getAutoName(entry.getKey().location().getPath()));
-            }
-        }
-    }
-
-    protected void autoGenerateMobEffects() {
-        for(Entry<ResourceKey<MobEffect>, MobEffect> entry : BuiltInRegistries.MOB_EFFECT.entrySet()) {
-            if(entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID)) {
-                String id = entry.getValue().getDescriptionId();
-                if(!usedKeys.contains(id))
-                    add(id, getAutoName(entry.getKey().location().getPath()));
-            }
-        }
-    }
-
-    protected void autoGenerateEntities() {
-        for(Entry<ResourceKey<EntityType<?>>, EntityType<?>> entry : BuiltInRegistries.ENTITY_TYPE.entrySet()) {
-            if(entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID)) {
-                String id = entry.getValue().getDescriptionId();
-                if(!usedKeys.contains(id))
-                    add(id, getAutoName(entry.getKey().location().getPath()));
-            }
+    protected <T> void autoGenerate(Registry<T> registry, Function<T, String> idGetter) {
+        for(Entry<ResourceKey<T>, T> entry : registry.entrySet()) {
+            if(!entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID))
+                continue;
+            String id = idGetter.apply(entry.getValue());
+            if(!usedKeys.contains(id))
+                add(id, getAutoName(entry.getKey().location().getPath()));
         }
     }
 

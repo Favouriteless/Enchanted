@@ -1,0 +1,120 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import net.darkhax.curseforgegradle.UploadArtifact
+
+plugins {
+    id 'enchanted-loader'
+
+    alias libs.plugins.loom
+    alias libs.plugins.minotaur
+    alias libs.plugins.curseforgegradle
+}
+
+String mcVersion = libs.versions.minecraft.asProvider().get()
+
+dependencies {
+    minecraft libs.minecraft
+    mappings loom.layered {
+        officialMojangMappings()
+        parchment "org.parchmentmc.data:parchment-${libs.versions.parchment.minecraft.get()}:${libs.versions.parchment.asProvider().get()}@zip"
+    }
+
+    modImplementation libs.fabric
+    modImplementation libs.fabric.api
+
+    modImplementation libs.stateobserver.fabric
+    modImplementation libs.modopedia.fabric
+    modImplementation libs.geckolib.fabric
+    modImplementation libs.forgeconfigapi.fabric
+
+    modCompileOnly libs.iris.fabric
+    modCompileOnly libs.jei.fabric.api
+
+    modRuntimeOnly libs.jei.fabric
+}
+
+loom {
+    accessWidenerPath = project(':common').file("src/main/resources/enchanted.accesswidener")
+
+    mixin {
+        defaultRefmapName.set("enchanted.refmap.json")
+    }
+
+    runs {
+        client {
+            client()
+            configName = "Fabric Client"
+            ideConfigGenerated = true
+            runDir = "runs/$name"
+        }
+        server {
+            server()
+            configName = "Fabric Server"
+            ideConfigGenerated = true
+            runDir = "runs/$name"
+        }
+    }
+
+}
+
+repositories {
+    maven {
+        name = "Parchment"
+        url = uri("https://maven.parchmentmc.org")
+        content {
+            includeGroupAndSubgroups("org.parchmentmc")
+        }
+    }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN") ?: "Invalid/No API Token Found"
+
+    projectId = "HsbpdVo9"
+    versionName = "Fabric $mcVersion"
+    versionNumber = project.version.toString()
+    versionType = project.version.toString().endsWith("beta") ? "beta" : "release"
+    uploadFile = tasks.jar
+    changelog = rootProject.file("changelog.txt").getText("UTF-8")
+    loaders = ["fabric"]
+    gameVersions = ["1.21.1"]
+
+    dependencies {
+        required.project "fabric-api"
+        required.project "stateobserver"
+        required.project "modopedia"
+        required.project "geckolib"
+        required.project "forge-config-api-port"
+    }
+
+    //debugMode = true
+    //https://github.com/modrinth/minotaur#available-properties
+}
+
+tasks.register("curseforge", TaskPublishCurseForge) {
+    group = "publishing"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "Invalid/No API Token Found"
+
+    UploadArtifact main = upload(560363, tasks.jar)
+    main.releaseType = project.version.toString().endsWith("beta") ? "beta" : "release"
+    main.changelog = rootProject.file("changelog.txt").readText(Charsets.UTF_8)
+
+    main.addModLoader("Fabric")
+    main.addGameVersion(mcVersion)
+    main.addJavaVersion("Java 21")
+    
+    main.addRequirement(
+        "fabric-api",
+        "stateobserver",
+        "geckolib",
+        "forge-config-api-port-fabric",
+        "modopedia"
+    )
+
+    //debugMode = true
+    //https://github.com/Darkhax/CurseForgeGradle#available-properties
+}
+
+tasks.named("publish", DefaultTask).configure {
+    finalizedBy "modrinth"
+    finalizedBy "curseforge"
+}

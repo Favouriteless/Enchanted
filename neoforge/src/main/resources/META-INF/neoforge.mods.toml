@@ -1,11 +1,11 @@
 modLoader = "javafml"
-loaderVersion = "${neoforge_loader_range}"
+loaderVersion = "${neoforge_loader_version_range}"
 license = "All Rights Reserved"
 
 
 [[mods]]
     modId = "enchanted"
-    version = "${version}"
+    version = "4.1.7-beta"
     displayName = "Enchanted"
     displayURL= "https://github.com/Favouriteless/Enchanted"
     logoFile = "enchanted.png"
@@ -24,7 +24,7 @@ license = "All Rights Reserved"
 [[dependencies.enchanted]]
     modId = "neoforge"
     type="required" #mandatory
-    versionRange = "${neoforge_version_range}"
+    versionRange = "[${neoforge_version},)"
     ordering = "NONE"
     side = "BOTH"
 

@@ -18,9 +18,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEven
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
-import static net.neoforged.fml.common.EventBusSubscriber.Bus.GAME;
-
-@EventBusSubscriber(modid = Enchanted.MOD_ID, bus= GAME)
+@EventBusSubscriber(modid = Enchanted.MOD_ID)
 public class CommonEventsNeo {
 
     @SubscribeEvent

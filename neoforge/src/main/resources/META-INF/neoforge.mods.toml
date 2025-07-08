@@ -5,7 +5,7 @@ license = "All Rights Reserved"
 
 [[mods]]
     modId = "enchanted"
-    version = "4.1.7-beta"
+    version = "${version}"
     displayName = "Enchanted"
     displayURL= "https://github.com/Favouriteless/Enchanted"
     logoFile = "enchanted.png"

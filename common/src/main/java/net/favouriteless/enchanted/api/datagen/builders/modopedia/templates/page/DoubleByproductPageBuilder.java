@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.modopedia.datagen.builders.DoubleRecipeTemplateBuilder;
+import net.favouriteless.modopedia.common.datagen.builders.DoubleRecipeTemplateBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class DoubleByproductPageBuilder {

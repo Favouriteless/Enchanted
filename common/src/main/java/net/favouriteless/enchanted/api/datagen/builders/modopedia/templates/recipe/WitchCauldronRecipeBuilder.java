@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.modopedia.datagen.builders.SingleRecipeTemplateBuilder;
+import net.favouriteless.modopedia.common.datagen.builders.SingleRecipeTemplateBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class WitchCauldronRecipeBuilder {

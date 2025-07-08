@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
-import com.google.gson.JsonElement;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.CauldronBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.DistilleryBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
@@ -14,6 +13,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemBuilder;
@@ -23,7 +23,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class ETemplateProvider extends TemplateProvider {
 
@@ -32,13 +31,13 @@ public class ETemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, JsonElement> output) {
+    protected void build(Provider provider, BookContentOutput output) {
         buildRecipes(output);
         buildPages(output);
     }
 
-    protected void buildRecipes(BiConsumer<String, JsonElement> output) {
-        TemplateBuilder.of(ByproductRecipeBuilder.ID.getPath())
+    protected void buildRecipes(BookContentOutput output) {
+        TemplateBuilder.of()
                 .processor(ByproductRecipeProcessor.ID)
                 .components(
                         CraftingArrowBuilder.of()
@@ -56,9 +55,9 @@ public class ETemplateProvider extends TemplateProvider {
                         FramedItemBuilder.of("#p_byproduct")
                                 .x(44).y(24)
                 )
-                .build(output);
+                .build(ByproductRecipeBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(WitchCauldronRecipeBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(CauldronTypeRecipeProcessor.ID)
                 .components(
                         CauldronBuilder.of()
@@ -76,9 +75,9 @@ public class ETemplateProvider extends TemplateProvider {
                                 .y(126)
                                 .justify(Justify.CENTER)
                 )
-                .build(output);
+                .build(WitchCauldronRecipeBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(KettleRecipeBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(CauldronTypeRecipeProcessor.ID)
                 .components(
                         CauldronBuilder.of()
@@ -96,9 +95,9 @@ public class ETemplateProvider extends TemplateProvider {
                                 .y(126)
                                 .justify(Justify.CENTER)
                 )
-                .build(output);
+                .build(KettleRecipeBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(DistillingRecipeBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(DistillingRecipeProcessor.ID)
                 .components(
                         DistilleryBuilder.of()
@@ -118,11 +117,11 @@ public class ETemplateProvider extends TemplateProvider {
                                 .y(113)
                                 .justify(Justify.CENTER)
                 )
-                .build(output);
+                .build(DistillingRecipeBuilder.ID.getPath(), output);
     }
 
-    protected void buildPages(BiConsumer<String, JsonElement> output) {
-        TemplateBuilder.of(ByproductPageBuilder.ID.getPath())
+    protected void buildPages(BookContentOutput output) {
+        TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of("book.enchanted.header.fume_extraction"),
                         SeparatorBuilder.of()
@@ -130,9 +129,9 @@ public class ETemplateProvider extends TemplateProvider {
                         ByproductRecipeBuilder.of("#recipe")
                                 .x(19).y(40)
                 )
-                .build(output);
+                .build(ByproductPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(DoubleByproductPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of("book.enchanted.header.fume_extraction"),
                         SeparatorBuilder.of()
@@ -142,15 +141,15 @@ public class ETemplateProvider extends TemplateProvider {
                         ByproductRecipeBuilder.of("#recipe2")
                                 .x(19).y(75)
                 )
-                .build(output);
+                .build(DoubleByproductPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(DistilleryPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of("book.enchanted.header.distillation"),
                         SeparatorBuilder.of().y(10),
                         DistillingRecipeBuilder.of("#recipe").y(18)
                 )
-                .build(output);
+                .build(DistilleryPageBuilder.ID.getPath(), output);
     }
 
 }

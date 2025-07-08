@@ -20,7 +20,7 @@ public class EBookProvider extends BookProvider {
 
     @Override
     protected void build(Provider provider, BiConsumer<String, Book> output) {
-        BookBuilder.of("art_of_witchcraft", "book.title.enchanted.art_of_witchcraft")
+        BookBuilder.of("book.title.enchanted.art_of_witchcraft")
                 .subtitle("book.subtitle.enchanted.art_of_witchcraft")
                 .landingText(
                         """
@@ -31,7 +31,7 @@ public class EBookProvider extends BookProvider {
                 .texture(Enchanted.id("art_of_witchcraft"))
                 .tab(Enchanted.id("main"))
                 .type(new EClassicBookType(LockedViewType.HIDDEN))
-                .build(output);
+                .build("art_of_witchcraft", output);
     }
 
 }

@@ -5,13 +5,12 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-@EventBusSubscriber(modid = Enchanted.MOD_ID, bus= Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Enchanted.MOD_ID, value = Dist.CLIENT)
 public class ClientEventsNeo {
 
     @SubscribeEvent

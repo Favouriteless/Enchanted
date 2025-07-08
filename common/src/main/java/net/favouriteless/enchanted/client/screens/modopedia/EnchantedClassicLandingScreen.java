@@ -31,8 +31,9 @@ public class EnchantedClassicLandingScreen extends ClassicLandingScreen {
         if(rawLandingText != null)
             rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
 
-        List<TextChunk> landingText = TextParser.parse(rawLandingText, texture.pages().getFirst().width(),
-                Minecraft.getInstance().font.lineHeight, Justify.LEFT, getStyle());
+        int lineWidth = texture.pages().getFirst().width();
+        int lineHeight = Minecraft.getInstance().font.lineHeight;
+        List<TextChunk> landingText = TextParser.parse(rawLandingText, getStyle(), lineWidth, lineHeight, language, Justify.LEFT);
 
         Font font = Minecraft.getInstance().font;
 

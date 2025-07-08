@@ -33,4 +33,5 @@ public class EShapedRecipeBuilder extends ShapedRecipeBuilder {
     public ShapedRecipePattern ensureValid(ResourceLocation location) {
         return ShapedRecipePattern.of(this.key, this.rows);
     }
+
 }

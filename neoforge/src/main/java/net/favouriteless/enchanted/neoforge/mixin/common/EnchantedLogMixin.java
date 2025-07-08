@@ -32,4 +32,5 @@ public abstract class EnchantedLogMixin extends RotatedPillarBlock {
 
         return itemAbility == ItemAbilities.AXE_STRIP ? stripped.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)) : null;
     }
+
 }

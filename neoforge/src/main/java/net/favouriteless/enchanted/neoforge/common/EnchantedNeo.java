@@ -16,7 +16,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -27,7 +26,7 @@ import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 
 @Mod(Enchanted.MOD_ID)
-@EventBusSubscriber(modid = Enchanted.MOD_ID, bus = Bus.MOD)
+@EventBusSubscriber(modid = Enchanted.MOD_ID)
 public class EnchantedNeo {
     
     public EnchantedNeo(IEventBus bus, ModContainer container) {

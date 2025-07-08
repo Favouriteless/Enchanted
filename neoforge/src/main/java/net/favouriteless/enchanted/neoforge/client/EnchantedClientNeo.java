@@ -14,7 +14,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,7 +24,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import java.io.IOException;
 
 @Mod(value = Enchanted.MOD_ID, dist = Dist.CLIENT)
-@EventBusSubscriber(modid = Enchanted.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Enchanted.MOD_ID, value = Dist.CLIENT)
 public class EnchantedClientNeo {
 
     public EnchantedClientNeo(IEventBus bus, ModContainer container) {

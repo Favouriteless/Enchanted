@@ -3,12 +3,12 @@
     "getting_started/altars"
   ],
   "entries": [
-    "arthana",
-    "earmuffs",
-    "broom",
-    "taglocks",
-    "material/bone_needle",
-    "material/attuned_stone"
+    "items/arthana",
+    "items/earmuffs",
+    "items/broom",
+    "items/taglock_kit",
+    "items/bone_needle",
+    "items/attuned_stone"
   ],
   "icon": {
     "count": 1,

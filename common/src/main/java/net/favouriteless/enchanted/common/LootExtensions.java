@@ -23,6 +23,7 @@ public class LootExtensions {
         register(ResourceLocation.withDefaultNamespace("entities/bat"), new LootExtension(Enchanted.id("extensions/arthana/bat"), c -> true));
         register(ResourceLocation.withDefaultNamespace("entities/creeper"), new LootExtension(Enchanted.id("extensions/arthana/creeper"), c -> true));
         register(ResourceLocation.withDefaultNamespace("entities/wolf"), new LootExtension(Enchanted.id("extensions/arthana/wolf"), c -> true));
+        register(ResourceLocation.withDefaultNamespace("entities/skeleton"), new LootExtension(Enchanted.id("extensions/arthana/skeleton"), c -> true));
     }
 
     public static void register(ResourceLocation id, LootExtension extension) {

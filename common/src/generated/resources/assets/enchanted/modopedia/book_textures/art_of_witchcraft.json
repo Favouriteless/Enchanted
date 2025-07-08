@@ -46,7 +46,7 @@
     "x": 322,
     "y": 206
   },
-  "tex_height": 400,
+  "tex_height": 410,
   "tex_width": 390,
   "texture": "enchanted:textures/gui/art_of_witchcraft.png",
   "title_backer": {
@@ -105,6 +105,12 @@
       "u": 210,
       "v": 211,
       "width": 54
+    },
+    "mutagen": {
+      "height": 88,
+      "u": 278,
+      "v": 315,
+      "width": 90
     },
     "separator": {
       "height": 6,

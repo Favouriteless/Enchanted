@@ -1,9 +1,9 @@
-// 1.21.1	2025-07-08T21:00:03.7798378	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-07-09T00:40:57.560751	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 6e0e27cae3667928f31fa321199a347c5bba4a6c assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 9ca033cf2e25726e3c4a0d3178f1f1c8cff7c83a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
-f246bafb10df967ea1818f1f16011027abe499a1 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/tutorial.json
+647bfa870deb02794f720d2b2e5597871c4fae3c assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/tutorial.json
 b04299de321390635b1ddb5d94fcba73313ebaba assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/extraction.json
-84bfa3d994ff5fdca44fc8943ef5c394b2dcb66a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started.json
+0c62db4e13b5ea21f3a5b6e03993ee495368f469 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started.json
 3014147239329d8b2f84485e60372dde5bfa3bb7 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started/altars.json
 22e8e58f001c35174fb8eb7bcc9d22a12175f48d assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology.json
 81fe73f4f621c91575c8ee8b1840d03bced2d020 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology/mutated_plants.json
@@ -67,3 +67,4 @@ e309e997b1ae4cd8adcb2018f874593ea96bb497 assets/enchanted/modopedia/books/art_of
 dd94fa355080e09f9438bf1e80c53ffb5c5ec50b assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/taglock_kit.json
 b83fb094d27c378cd78d62cd52107c4db82deb65 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/tear_of_the_goddess.json
 177829b24323e3727605ea44a81c5aacaeffeb56 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/whiff_of_magic.json
+391bc9ed0ef1bd92077813b3239789359fdc7668 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/test.json

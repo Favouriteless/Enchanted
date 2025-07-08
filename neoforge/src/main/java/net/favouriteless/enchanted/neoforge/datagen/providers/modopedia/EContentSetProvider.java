@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.ItemCircleBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
@@ -35,6 +36,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -62,10 +64,9 @@ public class EContentSetProvider extends ContentSetProvider {
                         This chapter tells you everything you need to know about getting started as a Witch.""")
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
                 .children("getting_started/altars")
-                .entries(
-                        itemPaths(EItems.ARTHANA.get(), EItems.EARMUFFS.get(), EItems.BROOM.get(), EItems.TAGLOCK.get(),
-                                EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get())
-                )
+                .entries(itemPaths(EItems.ARTHANA.get(), EItems.EARMUFFS.get(), EItems.BROOM.get(), EItems.TAGLOCK.get(),
+                                EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get()))
+                .entries("test")
                 .build("getting_started", output);
 
         CategoryBuilder.of("Altars")
@@ -85,14 +86,12 @@ public class EContentSetProvider extends ContentSetProvider {
                         
                         This involves two processes; fume collection and distillation. Both of these are detailed in this chapter.""")
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
-                .entries(merge(
-                        blockPaths(EBlocks.WITCH_OVEN.get(), EBlocks.DISTILLERY.get()),
-                        itemPaths(EItems.CLAY_JAR.get(), EItems.BREATH_OF_THE_GODDESS.get(), EItems.DEMONIC_BLOOD.get(),
+                .entries(blockPaths(EBlocks.WITCH_OVEN.get(), EBlocks.DISTILLERY.get()))
+                .entries(itemPaths(EItems.CLAY_JAR.get(), EItems.BREATH_OF_THE_GODDESS.get(), EItems.DEMONIC_BLOOD.get(),
                                 EItems.DIAMOND_VAPOUR.get(), EItems.ENDER_DEW.get(), EItems.EXHALE_OF_THE_HORNED_ONE.get(),
                                 EItems.FOUL_FUME.get(), EItems.GYPSUM.get(), EItems.HINT_OF_REBIRTH.get(),
                                 EItems.ODOUR_OF_PURITY.get(), EItems.OIL_OF_VITRIOL.get(), EItems.REEK_OF_MISFORTUNE.get(),
-                                EItems.REFINED_EVIL.get(), EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get())
-                ))
+                                EItems.REFINED_EVIL.get(), EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get()))
                 .build("extraction", output);
 
         CategoryBuilder.of("Herbology")
@@ -102,10 +101,8 @@ public class EContentSetProvider extends ContentSetProvider {
                         This chapter aims to tell you how to obtain these plants and what they do.""")
                 .icon(EItems.WOLFSBANE_FLOWER.get().getDefaultInstance())
                 .children("herbology/mutated_plants")
-                .entries(
-                        blockPaths(EBlocks.BELLADONNA.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.MANDRAKE.get(),
-                                EBlocks.SNOWBELL.get(), EBlocks.WOLFSBANE.get(), EBlocks.GARLIC.get())
-                )
+                .entries(blockPaths(EBlocks.BELLADONNA.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.MANDRAKE.get(),
+                                EBlocks.SNOWBELL.get(), EBlocks.WOLFSBANE.get(), EBlocks.GARLIC.get()))
                 .build("herbology", output);
 
         CategoryBuilder.of("Mutated Plants")
@@ -115,11 +112,9 @@ public class EContentSetProvider extends ContentSetProvider {
                         Plants of this nature are covered in this chapter.""")
                 .icon(EItems.MUTANDIS.get().getDefaultInstance())
                 .displayOnFrontPage(false)
-                .entries(merge(
-                        itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get()),
-                        blockPaths(EBlocks.ROWAN_SAPLING.get(), EBlocks.HAWTHORN_SAPLING.get(), EBlocks.ALDER_SAPLING.get(),
-                                EBlocks.SPANISH_MOSS.get(), EBlocks.GLINT_WEED.get(), EBlocks.EMBER_MOSS.get())
-                ))
+                .entries(itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get()))
+                .entries(blockPaths(EBlocks.ROWAN_SAPLING.get(), EBlocks.HAWTHORN_SAPLING.get(), EBlocks.ALDER_SAPLING.get(),
+                        EBlocks.SPANISH_MOSS.get(), EBlocks.GLINT_WEED.get(), EBlocks.EMBER_MOSS.get()))
                 .build("herbology/mutated_plants", output);
 
         CategoryBuilder.of("Brewing")
@@ -128,15 +123,13 @@ public class EContentSetProvider extends ContentSetProvider {
                         
                         The methods of brewing and various common recipes can be found in this chapter.""")
                 .icon(EItems.REDSTONE_SOUP.get().getDefaultInstance())
-                .entries(merge(
-                        "brewing/brewing",
-                        itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get(), EItems.GOLDEN_CHALK.get(),
-                                EItems.NETHER_CHALK.get(), EItems.OTHERWHERE_CHALK.get(), EItems.DROP_OF_LUCK.get(),
-                                EItems.REDSTONE_SOUP.get(), EItems.FLYING_OINTMENT.get(), EItems.HAPPENSTANCE_OIL.get(),
-                                EItems.MYSTIC_UNGUENT.get(), EItems.SPIRIT_OF_OTHERWHERE.get(), EItems.SOUL_OF_THE_WORLD.get(),
-                                EItems.BREW_OF_LOVE.get(), EItems.BREW_OF_SPROUTING.get(), EItems.BREW_OF_THE_DEPTHS.get(),
-                                EItems.BREW_OF_THE_GROTESQUE.get())
-                ))
+                .entries("brewing/brewing")
+                .entries(itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get(), EItems.GOLDEN_CHALK.get(),
+                        EItems.NETHER_CHALK.get(), EItems.OTHERWHERE_CHALK.get(), EItems.DROP_OF_LUCK.get(),
+                        EItems.REDSTONE_SOUP.get(), EItems.FLYING_OINTMENT.get(), EItems.HAPPENSTANCE_OIL.get(),
+                        EItems.MYSTIC_UNGUENT.get(), EItems.SPIRIT_OF_OTHERWHERE.get(), EItems.SOUL_OF_THE_WORLD.get(),
+                        EItems.BREW_OF_LOVE.get(), EItems.BREW_OF_SPROUTING.get(), EItems.BREW_OF_THE_DEPTHS.get(),
+                        EItems.BREW_OF_THE_GROTESQUE.get()))
                 .build("brewing", output);
 
         CategoryBuilder.of("Circle Magic")
@@ -156,12 +149,22 @@ public class EContentSetProvider extends ContentSetProvider {
                 .displayOnFrontPage(false)
                 .landingText("""
                         Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles, items, and sometimes even a sacrifice.""")
-                .entries("circle_magic/tutorial/performing_rites", "golden_chalk", "ritual_chalk", "nether_chalk", "otherwhere_chalk")
+                .entries("circle_magic/tutorial/performing_rites")
+                .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
+                        EItems.OTHERWHERE_CHALK.get()))
                 .build("circle_magic/tutorial", output);
     }
 
     @Override
     public void buildEntries(Provider provider, BookContentOutput output) {
+
+        List<ItemStack> items = new ArrayList<>();
+        for(int i = 0; i < 100; i++) items.add(EItems.ARTHANA.get().getDefaultInstance());
+
+        EntryBuilder.of("test")
+                .page(ItemCircleBuilder.of(items).ringMax(6))
+                .build("test", output);
+
         buildItemEntries(output);
         buildBlockEntries(output);
 

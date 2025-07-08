@@ -19,7 +19,7 @@ public class EBookTextureProvider extends BookTextureProvider {
     @Override
     protected void build(Provider provider, BiConsumer<String, BookTexture> output) {
         BookTextureBuilder.of()
-                .texture(Enchanted.id("textures/gui/art_of_witchcraft.png"), 390, 400)
+                .texture(Enchanted.id("textures/gui/art_of_witchcraft.png"), 390, 410)
                 .sized(386, 211)
                 .titleBacker(83, 40, 0, 239, 96, 28)
                 .leftButton(46, 206, 0, 211, 18, 10)
@@ -38,6 +38,7 @@ public class EBookTextureProvider extends BookTextureProvider {
                 .widget("down_arrow", 106, 224, 16, 13)
                 .widget("cauldron", 0, 273, 90, 80)
                 .widget("distillery", 100, 265, 78, 113)
+                .widget("mutagen", 278, 315, 90, 88)
                 .build("art_of_witchcraft", output);
     }
 

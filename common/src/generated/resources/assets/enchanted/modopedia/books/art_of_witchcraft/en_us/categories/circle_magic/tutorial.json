@@ -2,10 +2,10 @@
   "display_on_front_page": false,
   "entries": [
     "circle_magic/tutorial/performing_rites",
-    "golden_chalk",
-    "ritual_chalk",
-    "nether_chalk",
-    "otherwhere_chalk"
+    "items/golden_chalk",
+    "items/ritual_chalk",
+    "items/nether_chalk",
+    "items/otherwhere_chalk"
   ],
   "icon": {
     "count": 1,

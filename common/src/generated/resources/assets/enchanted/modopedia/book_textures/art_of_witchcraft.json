@@ -48,7 +48,7 @@
   },
   "tex_height": 410,
   "tex_width": 390,
-  "texture": "enchanted:textures/gui/art_of_witchcraft.png",
+  "texture": "enchanted:textures/gui/modopedia/art_of_witchcraft.png",
   "title_backer": {
     "height": 28,
     "u": 0,
@@ -93,6 +93,12 @@
       "u": 106,
       "v": 224,
       "width": 16
+    },
+    "image_frame": {
+      "height": 46,
+      "u": 185,
+      "v": 265,
+      "width": 79
     },
     "large_frame": {
       "height": 104,

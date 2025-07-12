@@ -12,7 +12,7 @@
         {
           "header": "Earmuffs",
           "template": "modopedia:page/headered_text",
-          "text": "When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential.\n\n$(b)Earmuffs$() can dampen deafening sounds, rendering them bearable."
+          "text": "When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential.\n\n$(b)Earmuffs$(/b) can dampen deafening sounds, rendering them bearable."
         }
       ]
     },

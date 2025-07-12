@@ -15,9 +15,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+
+import java.util.List;
 
 public class MutagenManagerImpl implements MutagenManager {
 
@@ -42,6 +45,13 @@ public class MutagenManagerImpl implements MutagenManager {
     @Override
     public boolean canMutate(ServerLevel level, Block block) {
         return level.registryAccess().registryOrThrow(EData.MUTAGEN_REGISTRY).containsKey(BuiltInRegistries.BLOCK.getKey(block));
+    }
+
+    @Override
+    public List<MutagenInfo> getMutagensFor(Level level, Block result) {
+        return level.registryAccess().registryOrThrow(EData.MUTAGEN_REGISTRY).stream()
+                .filter(m -> m.sets().stream().anyMatch(s -> s.result() == result))
+                .toList();
     }
 
     public boolean randomTick(ServerLevel level, BlockPos pos) {

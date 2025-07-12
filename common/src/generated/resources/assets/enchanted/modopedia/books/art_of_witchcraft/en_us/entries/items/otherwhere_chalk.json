@@ -10,7 +10,7 @@
     {
       "components": [
         {
-          "header": "Otherwhere chalk",
+          "header": "Otherwhere Chalk",
           "template": "modopedia:page/headered_text",
           "text": "Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.\n\nTypically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end."
         }
@@ -25,5 +25,5 @@
       ]
     }
   ],
-  "title": "Otherwhere chalk"
+  "title": "Otherwhere Chalk"
 }

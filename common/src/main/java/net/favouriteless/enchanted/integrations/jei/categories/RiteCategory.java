@@ -46,7 +46,7 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
     public RiteCategory(IGuiHelper helper) {
         super(
                 EJeiRecipeTypes.RITE,
-                Component.translatable("jei.enchanted.circle_magic"),
+                Component.translatable("jei.category.enchanted.circle_magic"),
                 helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(EItems.RITUAL_CHALK.get())),
                 180, 120
         );

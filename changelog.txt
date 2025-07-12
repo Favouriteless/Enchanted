@@ -10,6 +10,8 @@
 - CHANGED: Major refactors to parts of the API.
 - CHANGED: Refactored curse system.
 - CHANGED: Totem of undying disable config now supports localisation.
+- CHANGED: Art of Witchcraft book now uses a translation key for it's landing text.
+- CHANGED: Added new page to the witchcraft book explaining how altars gain their base power.
 
 - FIXED: Spanish moss spreading behaviour has some weird edge cases.
 - FIXED: Breaking curses has a lower success rate than intended.

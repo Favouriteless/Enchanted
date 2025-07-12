@@ -13,7 +13,7 @@
         {
           "header": "Chalices",
           "template": "modopedia:page/headered_text",
-          "text": "A chalice may be placed on top of an altar to increase its power capacity. The chalice can be filled by using $(b)$(el:items/redstone_soup)Redstone Soup$() on it."
+          "text": "A chalice may be placed on top of an altar to increase its power capacity. The chalice can be filled by using $(b)$(el:items/redstone_soup)Redstone Soup$(/el)$(/b) on it."
         },
         {
           "recipe": "enchanted:chalice",

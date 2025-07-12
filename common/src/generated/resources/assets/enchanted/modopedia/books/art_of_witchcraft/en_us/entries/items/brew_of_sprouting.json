@@ -12,7 +12,7 @@
         {
           "header": "Brew of Sprouting",
           "template": "modopedia:page/headered_text",
-          "text": "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)This feature is coming soon."
+          "text": "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)This feature is coming soon.$(/b)"
         }
       ]
     },

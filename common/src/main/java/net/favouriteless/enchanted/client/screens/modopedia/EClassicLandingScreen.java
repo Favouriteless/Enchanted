@@ -3,14 +3,14 @@ package net.favouriteless.enchanted.client.screens.modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
-import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.LandingScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
-import net.favouriteless.modopedia.common.book_types.LockedViewType;
+import net.favouriteless.modopedia.common.book_types.LockedViewProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -19,10 +19,10 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-public class EnchantedClassicLandingScreen extends ClassicLandingScreen {
+public class EClassicLandingScreen<T extends BookType & LockedViewProvider> extends net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen<T> {
 
-    public EnchantedClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, LockedViewType lockType, BookScreen lastScreen) {
-        super(book, langCode, content, lockType, lastScreen);
+    public EClassicLandingScreen(Book book, T type, String language, LocalisedBookContent content, BookScreen<?> lastScreen) {
+        super(book, type, language, content, lastScreen);
     }
 
     @Override

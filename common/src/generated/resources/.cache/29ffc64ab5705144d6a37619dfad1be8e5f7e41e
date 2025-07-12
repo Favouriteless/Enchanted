@@ -1,8 +1,9 @@
-// 1.21.1	2025-06-20T20:50:47.8180855	Modopedia Templates[enchanted]
-cd4a084b47a50b6645365092a0e46fc6ff0ac2e0 assets/enchanted/modopedia/templates/page/byproduct.json
-bcd5f246dbae48ba047415d09f497376d670d92b assets/enchanted/modopedia/templates/page/distillery.json
-72da2da2fdf1259c61b481e0e9cb6b8eee610d1d assets/enchanted/modopedia/templates/page/double_byproduct.json
-ad44b3b04e4bb5d04961a037fd7be7de78ce9fdc assets/enchanted/modopedia/templates/recipe/byproduct.json
-ca896e4db47e633903b1ad4f555be565ec14f339 assets/enchanted/modopedia/templates/recipe/distilling.json
-ef7e8c24d597f57f852058a093761b1954183748 assets/enchanted/modopedia/templates/recipe/kettle.json
-eec344f697d0409ef2b5060e89c2941f4f9ce99b assets/enchanted/modopedia/templates/recipe/witch_cauldron.json
+// 1.21.1	2025-07-12T17:42:23.6007527	Modopedia Templates[enchanted]
+1471c9c51c1ab607a3ffd8fc173bdda0ffd8cb0c assets/enchanted/modopedia/templates/framed_image.json
+bbbf097e12406272aebd07c20a05b1c338deaae5 assets/enchanted/modopedia/templates/page/byproduct.json
+f2d480bc8dea8356d3086cebd9e3f8fc6a5eb00a assets/enchanted/modopedia/templates/page/distillery.json
+df3ca3ac91e147d656430afb45917c194eba89f4 assets/enchanted/modopedia/templates/page/double_byproduct.json
+8b14121d9e848bd4a963e24820a3f2dfab5cecb4 assets/enchanted/modopedia/templates/recipe/byproduct.json
+176a4a131866840470229140ed1f288745050ea7 assets/enchanted/modopedia/templates/recipe/distilling.json
+584f18a211bedff64dee24cbd38c330f573ea152 assets/enchanted/modopedia/templates/recipe/kettle.json
+4ddd265325132760f53d666c1a67a781b41920eb assets/enchanted/modopedia/templates/recipe/witch_cauldron.json

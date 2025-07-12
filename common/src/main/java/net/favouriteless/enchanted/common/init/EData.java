@@ -22,7 +22,7 @@ public class EData {
     public static final ResourceKey<Registry<AltarUpgrade>> ALTAR_UPGRADE_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/upgrade")), AltarUpgrade.CODEC);
     public static final ResourceKey<Registry<PowerProvider<Block>>> ALTAR_BLOCK_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/block")), PowerProvider.BLOCK_CODEC);
     public static final ResourceKey<Registry<PowerProvider<TagKey<Block>>>> ALTAR_TAG_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/tag")), PowerProvider.TAG_CODEC);
-    public static final ResourceKey<Registry<MutagenInfo>> MUTAGEN_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("mutagens")), MutagenInfo.CODEC);
+    public static final ResourceKey<Registry<MutagenInfo>> MUTAGEN_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("mutagens")), MutagenInfo.CODEC, MutagenInfo.CODEC);
 
     public static final ResourceKey<Registry<CircleMagicShape>> CIRCLE_SHAPE_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("circle_magic/shape")), CircleMagicShape.CODEC, CircleMagicShape.CODEC);
     public static final ResourceKey<Registry<RiteType>> RITE_TYPES_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("circle_magic/rite")), RiteType.CODEC, RiteType.CODEC);

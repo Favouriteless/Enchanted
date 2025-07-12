@@ -21,7 +21,7 @@
         {
           "block": "enchanted:glint_weed",
           "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$()\nUse $(el:items/mutandis)$(b)mutandis$() on a small plant."
+          "text": "$(b)Procurement:$(/b)\nUse $(el:items/mutandis)mutandis$(/el) on a small plant."
         }
       ]
     }

@@ -2,6 +2,8 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.CauldronBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.DistilleryBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.ImageFrameBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
@@ -13,12 +15,13 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
-import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
-import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.favouriteless.modopedia.book.text.Justify;
+import net.favouriteless.modopedia.client.template_processors.WidgetSpacingProcessor;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
@@ -31,12 +34,19 @@ public class ETemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(Provider provider, BookContentOutput output) {
+    protected void build(Provider provider, BookOutput output) {
         buildRecipes(output);
         buildPages(output);
+
+        TemplateBuilder.of()
+                .components(
+                        ImageBuilder.of("#images").width(75).height(42),
+                        ImageFrameBuilder.of().x(-2).y(-2)
+                )
+                .build(FramedImageBuilder.ID.getPath(), output);
     }
 
-    protected void buildRecipes(BookContentOutput output) {
+    protected void buildRecipes(BookOutput output) {
         TemplateBuilder.of()
                 .processor(ByproductRecipeProcessor.ID)
                 .components(
@@ -44,15 +54,15 @@ public class ETemplateProvider extends TemplateProvider {
                                 .x(22).y(2),
                         CraftingFlameBuilder.of()
                                 .x(23).y(25),
-                        TooltipBuilder.of(new String[] { "tooltip.enchanted.byproduct_recipe" })
+                        TooltipBuilder.of(new String[] { "tooltip.enchanted.byproduct_recipe"} )
                                 .x(22).y(3)
                                 .width(16).height(13),
-                        FramedItemBuilder.of("#p_inputs"),
-                        FramedItemBuilder.of("#p_jars")
+                        FramedItemGalleryBuilder.of("#p_inputs"),
+                        FramedItemGalleryBuilder.of("#p_jars")
                                 .y(24),
-                        FramedItemBuilder.of("#p_output")
+                        FramedItemGalleryBuilder.of("#p_output")
                                 .x(44),
-                        FramedItemBuilder.of("#p_byproduct")
+                        FramedItemGalleryBuilder.of("#p_byproduct")
                                 .x(44).y(24)
                 )
                 .build(ByproductRecipeBuilder.ID.getPath(), output);
@@ -63,13 +73,11 @@ public class ETemplateProvider extends TemplateProvider {
                         CauldronBuilder.of()
                                 .x(5).y(49),
                         SeparatorBuilder.of()
-                                        .y(10),
-                        HeaderBuilder.of("book.enchanted.header.witch_cauldron_recipe"),
-                        ItemBuilder.of("#p_inputs").
-                                x(50).y("#p_inputs_y")
-                                .rowMax(5)
-                                .centered(true),
-                        ItemBuilder.of("#p_output")
+                                .y(10),
+                        HeaderBuilder.of("book.header.enchanted.witch_cauldron_recipe"),
+                        ItemGalleryBuilder.of("#p_inputs").
+                                x(50).y("#p_inputs_y"),
+                        ItemGalleryBuilder.of("#p_output")
                                 .x(42).y(84),
                         TextBuilder.of("#p_power")
                                 .y(126)
@@ -84,12 +92,10 @@ public class ETemplateProvider extends TemplateProvider {
                                 .x(5).y(49),
                         SeparatorBuilder.of()
                                 .y(10),
-                        HeaderBuilder.of("book.enchanted.header.kettle_recipe"),
-                        ItemBuilder.of("#p_inputs")
-                                .x(50).y("#p_inputs_y")
-                                .rowMax(5)
-                                .centered(true),
-                        ItemBuilder.of("#p_output")
+                        HeaderBuilder.of("book.header.enchanted.kettle_recipe"),
+                        ItemGalleryBuilder.of("#p_inputs")
+                                .x(50).y("#p_inputs_y"),
+                        ItemGalleryBuilder.of("#p_output")
                                 .x(42).y(84),
                         TextBuilder.of("#p_power")
                                 .y(126)
@@ -102,17 +108,14 @@ public class ETemplateProvider extends TemplateProvider {
                 .components(
                         DistilleryBuilder.of()
                                 .x("#p_x"),
-                        ItemBuilder.of("#p_input1")
+                        ItemGalleryBuilder.of("#p_input1")
                                 .x("#p_input1_x").y(2),
-                        ItemBuilder.of("#p_input2")
-                                .x("#p_input2_x").y(22)
-                                .padding(20),
-                        ItemBuilder.of("#p_output1")
-                                .x("#p_output1_x").y(95)
-                                .padding(19),
-                        ItemBuilder.of("#p_output2")
-                                .x("#p_output2_x").y(95)
-                                .padding(19),
+                        ItemGalleryBuilder.of("#p_input2")
+                                .x("#p_input2_x").y(22),
+                        ItemGalleryBuilder.of("#p_output1")
+                                .x("#p_output1_x").y(95),
+                        ItemGalleryBuilder.of("#p_output2")
+                                .x("#p_output2_x").y(95),
                         TextBuilder.of("#p_power")
                                 .y(113)
                                 .justify(Justify.CENTER)
@@ -120,10 +123,10 @@ public class ETemplateProvider extends TemplateProvider {
                 .build(DistillingRecipeBuilder.ID.getPath(), output);
     }
 
-    protected void buildPages(BookContentOutput output) {
+    protected void buildPages(BookOutput output) {
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.enchanted.header.fume_extraction"),
+                        HeaderBuilder.of("book.header.enchanted.fume_extraction"),
                         SeparatorBuilder.of()
                                 .y(10),
                         ByproductRecipeBuilder.of("#recipe")
@@ -133,7 +136,7 @@ public class ETemplateProvider extends TemplateProvider {
 
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.enchanted.header.fume_extraction"),
+                        HeaderBuilder.of("book.header.enchanted.fume_extraction"),
                         SeparatorBuilder.of()
                                 .y(10),
                         ByproductRecipeBuilder.of("#recipe1")
@@ -145,9 +148,11 @@ public class ETemplateProvider extends TemplateProvider {
 
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.enchanted.header.distillation"),
-                        SeparatorBuilder.of().y(10),
-                        DistillingRecipeBuilder.of("#recipe").y(18)
+                        HeaderBuilder.of("book.header.enchanted.distillation"),
+                        SeparatorBuilder.of()
+                                .y(10),
+                        DistillingRecipeBuilder.of("#recipe")
+                                .y(18)
                 )
                 .build(DistilleryPageBuilder.ID.getPath(), output);
     }

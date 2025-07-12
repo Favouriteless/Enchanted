@@ -21,22 +21,22 @@
       "y": 3
     },
     {
-      "items": "#p_inputs",
-      "template": "modopedia:framed_item"
+      "display": "#p_inputs",
+      "template": "modopedia:framed_item_gallery"
     },
     {
-      "items": "#p_jars",
-      "template": "modopedia:framed_item",
+      "display": "#p_jars",
+      "template": "modopedia:framed_item_gallery",
       "y": 24
     },
     {
-      "items": "#p_output",
-      "template": "modopedia:framed_item",
+      "display": "#p_output",
+      "template": "modopedia:framed_item_gallery",
       "x": 44
     },
     {
-      "items": "#p_byproduct",
-      "template": "modopedia:framed_item",
+      "display": "#p_byproduct",
+      "template": "modopedia:framed_item_gallery",
       "x": 44,
       "y": 24
     }

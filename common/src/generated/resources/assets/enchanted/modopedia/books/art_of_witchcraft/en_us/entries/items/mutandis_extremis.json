@@ -12,7 +12,7 @@
         {
           "header": "Mutandis Extremis",
           "template": "modopedia:page/headered_text",
-          "text": "Mutandis Extremis, an enhanced form of $(el:items/mutandis)$(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.\n\nIt can also be used to create $(b)Blood Poppies$()."
+          "text": "Mutandis Extremis, an enhanced form of $(b)$(el:items/mutandis)mutandis$(/el)$(/b), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.\n\nIt can also be used to create $(b)Blood Poppies$()."
         }
       ]
     },

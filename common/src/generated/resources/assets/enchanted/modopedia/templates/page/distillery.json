@@ -2,7 +2,7 @@
   "components": [
     {
       "type": "modopedia:header",
-      "text": "book.enchanted.header.distillation"
+      "text": "book.header.enchanted.distillation"
     },
     {
       "type": "modopedia:separator",

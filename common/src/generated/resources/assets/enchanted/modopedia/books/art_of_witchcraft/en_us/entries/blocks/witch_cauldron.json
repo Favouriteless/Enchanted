@@ -27,7 +27,7 @@
         {
           "block": "enchanted:witch_cauldron",
           "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$()\nUse anointing paste on a cauldron."
+          "text": "$(b)Procurement:$(/b)\nUse a anointing paste on a cauldron"
         }
       ]
     }

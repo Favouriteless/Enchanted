@@ -4,6 +4,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -120,6 +121,9 @@ public class ELanguageProvider extends LanguageProvider {
 
         addBookTitle("art_of_witchcraft", "Art of Witchcraft");
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
+        addBookLandingText("art_of_witchcraft", FormattedStringBuilder.begin()
+                .bold("Witchcraft").then(" is the art of bringing out and using the magical effects of seemingly mundane objects.")
+                .paragraph("This book aims to explain the various schools of witchcraft.").toString());
         addBookHeader("fume_extraction", "Fume Extraction");
         addBookHeader("distillation", "Distillation");
         addBookHeader("witch_cauldron_recipe", "Cauldron Recipe");
@@ -156,7 +160,11 @@ public class ELanguageProvider extends LanguageProvider {
     }
 
     protected void addBookHeader(String key, String value) {
-        add(Enchanted.translationKey("book", "header." + key), value);
+        add(Enchanted.translationKey("book.header", key), value);
+    }
+
+    protected void addBookLandingText(String key, String value) {
+        add(Enchanted.translationKey("book.landing_text", key), value);
     }
 
     protected void addJeiCategory(String key, String value) {

@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.ItemCircleBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
@@ -19,14 +19,12 @@ import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.HeaderBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.MultiblockBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.SeparatorBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CookingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.TagStateMatcher;
@@ -36,13 +34,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,22 +56,19 @@ public class EContentSetProvider extends ContentSetProvider {
     @Override
     public void buildCategories(Provider provider, BookContentOutput output) {
         CategoryBuilder.of("Getting Started")
-                .landingText("""
-                        To get started in witchcraft, first you must know about the basic tools and equipment used by witches.
-                        
-                        This chapter tells you everything you need to know about getting started as a Witch.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("To get started in witchcraft, first you must know about the basic tools and equipment used by witches.")
+                        .paragraph("This chapter tells you everything you need to know about getting started as a Witch.").toString())
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
                 .children("getting_started/altars")
                 .entries(itemPaths(EItems.ARTHANA.get(), EItems.EARMUFFS.get(), EItems.BROOM.get(), EItems.TAGLOCK.get(),
                                 EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get()))
-                .entries("test")
                 .build("getting_started", output);
 
         CategoryBuilder.of("Altars")
-                .landingText("""
-                        An altar acts as a source of magical energy for chalk circles and most of a witch's tools.
-                        
-                        The amount of natural energy around an altar will determine how effective it is. Generally, a variety of plants is best.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("An altar acts as a source of magical energy for chalk circles and most of a witch's tools.")
+                        .paragraph("The amount of natural energy around an altar will determine how effective it is. Generally, a variety of plants is best.").toString())
                 .icon(EItems.ALTAR.get().getDefaultInstance())
                 .displayOnFrontPage(false)
                 .entries(blockPath(EBlocks.ALTAR.get()), gettingStartedPath("torch_upgrades"),
@@ -81,10 +76,9 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build("getting_started/altars", output);
 
         CategoryBuilder.of("Material Processing")
-                .landingText("""
-                        Many resources used in witchcraft can only be obtained by extracting them from other materials.
-                        
-                        This involves two processes; fume collection and distillation. Both of these are detailed in this chapter.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Many resources used in witchcraft can only be obtained by extracting them from other materials.")
+                        .paragraph("This involves two processes; fume collection and distillation. Both of these are detailed in this chapter.").toString())
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
                 .entries(blockPaths(EBlocks.WITCH_OVEN.get(), EBlocks.DISTILLERY.get()))
                 .entries(itemPaths(EItems.CLAY_JAR.get(), EItems.BREATH_OF_THE_GODDESS.get(), EItems.DEMONIC_BLOOD.get(),
@@ -95,10 +89,9 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build("extraction", output);
 
         CategoryBuilder.of("Herbology")
-                .landingText("""
-                        Witchcraft often requires using various plants, some of which are common while others require mutations.
-                        
-                        This chapter aims to tell you how to obtain these plants and what they do.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Witchcraft often requires using various plants, some of which are common while others require mutations.")
+                        .paragraph("This chapter aims to tell you how to obtain these plants and what they do.").toString())
                 .icon(EItems.WOLFSBANE_FLOWER.get().getDefaultInstance())
                 .children("herbology/mutated_plants")
                 .entries(blockPaths(EBlocks.BELLADONNA.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.MANDRAKE.get(),
@@ -106,10 +99,9 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build("herbology", output);
 
         CategoryBuilder.of("Mutated Plants")
-                .landingText("""
-                        Some plants require mutations to be obtained, either by using Mutandis or Mutandis Extremis.
-                        
-                        Plants of this nature are covered in this chapter.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Some plants require mutations to be obtained, either by using Mutandis or Mutandis Extremis.")
+                        .paragraph("Plants of this nature are covered in this chapter.").toString())
                 .icon(EItems.MUTANDIS.get().getDefaultInstance())
                 .displayOnFrontPage(false)
                 .entries(itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get()))
@@ -118,10 +110,9 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build("herbology/mutated_plants", output);
 
         CategoryBuilder.of("Brewing")
-                .landingText("""
-                        One of the most essential skills a witch can possess is the abilities and knowledge to create brews, potions and decoctions.
-                        
-                        The methods of brewing and various common recipes can be found in this chapter.""")
+                .landingText(FormattedStringBuilder.begin()
+                        .then("One of the most essential skills a witch can possess is the abilities and knowledge to create brews, potions and decoctions.")
+                        .paragraph("The methods of brewing and various common recipes can be found in this chapter.").toString())
                 .icon(EItems.REDSTONE_SOUP.get().getDefaultInstance())
                 .entries("brewing/brewing")
                 .entries(itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get(), EItems.GOLDEN_CHALK.get(),
@@ -132,39 +123,28 @@ public class EContentSetProvider extends ContentSetProvider {
                         EItems.BREW_OF_THE_GROTESQUE.get()))
                 .build("brewing", output);
 
-        CategoryBuilder.of("Circle Magic")
-                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
-                .landingText("""
-                        Circle magic is the practice of using chalk circles or other materials in combination with foci items to collect magical energy from the environment and achieve the intended affect.
-                        
-                        The methods of circle magic and known rites are detailed in this chapter.
-                        """)
-                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
-                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
-                        "circle_magic/transposition", "circle_magic/world")
-                .build("circle_magic", output);
-
-        CategoryBuilder.of("Performing Rites")
-                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
-                .displayOnFrontPage(false)
-                .landingText("""
-                        Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles, items, and sometimes even a sacrifice.""")
-                .entries("circle_magic/tutorial/performing_rites")
-                .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
-                        EItems.OTHERWHERE_CHALK.get()))
-                .build("circle_magic/tutorial", output);
+//        CategoryBuilder.of("Circle Magic")
+//                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+//                .landingText(FormattedStringBuilder.begin()
+//                        .then("Circle magic is the practice of using chalk circles or other materials in combination with foci items to collect magical energy from the environment and achieve the intended affect.")
+//                        .paragraph("The methods of circle magic and known rites are detailed in this chapter.").toString())
+//                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
+//                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
+//                        "circle_magic/transposition", "circle_magic/world")
+//                .build("circle_magic", output);
+//
+//        CategoryBuilder.of("Performing Rites")
+//                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+//                .displayOnFrontPage(false)
+//                .landingText("Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles, items, and sometimes even a sacrifice.")
+//                .entries("circle_magic/tutorial/performing_rites")
+//                .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
+//                        EItems.OTHERWHERE_CHALK.get()))
+//                .build("circle_magic/tutorial", output);
     }
 
     @Override
     public void buildEntries(Provider provider, BookContentOutput output) {
-
-        List<ItemStack> items = new ArrayList<>();
-        for(int i = 0; i < 100; i++) items.add(EItems.ARTHANA.get().getDefaultInstance());
-
-        EntryBuilder.of("test")
-                .page(ItemCircleBuilder.of(items).ringMax(6))
-                .build("test", output);
-
         buildItemEntries(output);
         buildBlockEntries(output);
 
@@ -177,93 +157,82 @@ public class EContentSetProvider extends ContentSetProvider {
         buildBrewItemEntries(output);
         buildExtractionItemEntries(output);
 
-        craftingEntry(output, "Ritual Chalk", formatItems("""
-                Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.
-                
-                There are no known special effects of ritual chalk, it is merely chalk infused with $(b)$(el:%s)Tear of the Goddess$().""", EItems.TEAR_OF_THE_GODDESS.get()),
+        craftingEntry(output, "Ritual Chalk", FormattedStringBuilder.begin()
+                        .then("Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.")
+                        .paragraph("There are no known special effects of ritual chalk, it is merely chalk infused with ")
+                        .boldEntryLink(itemPath(EItems.TEAR_OF_THE_GODDESS.get()), "Tear of the Goddess").then(".").toString(),
                 EItems.RITUAL_CHALK.get());
 
-        cauldronEntry(output, "Golden Chalk", EItems.GOLDEN_CHALK.get(), """
-                Chalk is vital for performing circle magic and among chalks golden chalk is the most important.
-                
-                The $(b)$(el:circle_magic/tutorial/performing_rites)heart glyph$() for $(b)$(cl:circle_magic)circle magic$() is drawn using golden chalk.""");
+        cauldronEntry(output, "Golden Chalk", EItems.GOLDEN_CHALK.get(), FormattedStringBuilder.begin()
+                .then("Chalk is vital for performing circle magic and among chalks golden chalk is the most important.")
+                .paragraph("The ").boldEntryLink("circle_magic/tutorial/performing_rites", "heart glyph").then(" for ")
+                .boldCategoryLink("circle_magic", "circle magic").then(" is drawn using golden chalk.").toString());
 
-        cauldronEntry(output, "Infernal Chalk", EItems.NETHER_CHALK.get(), """
-                Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.
-                
-                Infernal chalk is used for many rites involving the nether, demonic beings or fire.""");
+        cauldronEntry(output, "Infernal Chalk", EItems.NETHER_CHALK.get(), FormattedStringBuilder.begin()
+                        .then("Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.")
+                        .paragraph("Infernal chalk is used for many rites involving the nether, demonic beings or fire.").toString());
 
-        cauldronEntry(output, "Otherwhere chalk", EItems.OTHERWHERE_CHALK.get(), """
-                Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.
-                
-                Typically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.""");
+        cauldronEntry(output, "Otherwhere Chalk", EItems.OTHERWHERE_CHALK.get(), FormattedStringBuilder.begin()
+                        .then("Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.")
+                        .paragraph("Typically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.").toString());
 
-        craftingEntry(output, "Brooms", """
-                                A broom can be used to sweep chalk away quickly, without having to spend time erasing it.
-                                
-                                Conveniently, a broom can also make for an excellent method of transportation with some preparation.""",
+        craftingEntry(output, "Brooms", FormattedStringBuilder.begin()
+                        .then("A broom can be used to sweep chalk away quickly, without having to spend time erasing it.")
+                        .paragraph("Conveniently, a broom can also make for an excellent method of transportation with some preparation.").toString(),
                 EItems.BROOM.get());
 
-        craftingEntry(output, "Earmuffs", """
-                                When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential.
-                                
-                                $(b)Earmuffs$() can dampen deafening sounds, rendering them bearable.""",
+        craftingEntry(output, "Earmuffs", FormattedStringBuilder.begin()
+                        .then("When dealing with Mandrakes, Banshees and other loud creatures, protection for your ears is essential.")
+                        .paragraph().bold("Earmuffs").then(" can dampen deafening sounds, rendering them bearable.").toString(),
                 EItems.EARMUFFS.get());
 
-        craftingEntry(output, "Taglocks", """
-                                Sometimes, you may need to represent another person to perform magic. This can be achieved using a $(b)taglock kit$().
-                                
-                                By using a taglock kit on a Player or their bed, you can collect a sample to use in magic.""",
+        craftingEntry(output, "Taglocks", FormattedStringBuilder.begin()
+                        .then("Sometimes, you may need to represent another person to perform magic. This can be achieved using a ").bold("taglock kit")
+                        .paragraph("By using a taglock kit on a Player or their bed, you can collect a sample to use in magic.").toString(),
                 EItems.TAGLOCK.get(), EItems.TAGLOCK_FILLED.get(), EItems.TAGLOCK.get());
 
         EntryBuilder.of("Arthana")
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
                 .assignedItems(EItems.ARTHANA.get(), EItems.TONGUE_OF_DOG.get(), EItems.WOOL_OF_BAT.get(), EItems.CREEPER_HEART.get())
                 .page(
-                        HeaderedTextBuilder.of("Arthana", "The $(b)arthana$() is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare materials."),
+                        HeaderedTextBuilder.of("Arthana", FormattedStringBuilder.begin().then("The ").bold("arthana").then("  is a ritual knife used for sacrifice. When used to kill certain mobs, they can drop rare materials.").toString()),
                         CraftingRecipeBuilder.of(itemId(EItems.ARTHANA.get())).y(75)
                 )
-                .page(
-                        GalleryBuilder.of(
-                                EntityPageBuilder.of(EntityType.BAT, "$(b)Drops:$()\nWool of Bat").scale(0.75F),
-                                EntityPageBuilder.of(EntityType.WOLF, "$(b)Drops:$()\nTongue of Dog").scale(0.65F),
-                                EntityPageBuilder.of(EntityType.CREEPER, "$(b)Drops:$()\nCreeper Heart"),
-                                EntityPageBuilder.of(EntityType.SKELETON, "$(b)Drops:$()\nSkeleton Skull")
-                        )
+                .page(GalleryBuilder.of(
+                        EntityPageBuilder.of(EntityType.BAT, drops("Wool of Bat")).scale(0.75F),
+                        EntityPageBuilder.of(EntityType.WOLF, drops("Tongue of Dog")).scale(0.65F),
+                        EntityPageBuilder.of(EntityType.CREEPER, drops("Creeper Heart")),
+                        EntityPageBuilder.of(EntityType.SKELETON, drops("Skeleton Skull")))
                 )
                 .build(itemPath(EItems.ARTHANA.get()), output);
 
-        craftingEntry(output, "Attuned Stones", """
-                                An attuned stone is a diamond which has been infused with magical energy.
-                                
-                                It can be charged to be used as a portable container for $(b)$(el:getting_started/altars/altar_construction)altar power$(), allowing the user to cast circle magic without an altar being present, and is also used in the creation of a variety of magical tools.""",
+        craftingEntry(output, "Attuned Stones", FormattedStringBuilder.begin()
+                .then("An attuned stone is a diamond which has been infused with magical energy.")
+                .paragraph("It can be charged to be used as a portable container for ").boldEntryLink(blockPath(EBlocks.ALTAR.get()), "altar power")
+                .then(", allowing the user to cast circle magic without an altar being present, and is also used in the creation of a variety of magical tools.").toString(),
                 EItems.ATTUNED_STONE.get());
 
-        craftingEntry(output, "Bone Needles", formatItems("""
-                                Needles are an important part of many tools used for Witchcraft, most notably $(el:%s)$(b)taglock kits$() and $(b)poppets$().
-                                
-                                A simple needle can be fashioned by whittling a bone.""", EItems.TAGLOCK.get()),
+        craftingEntry(output, "Bone Needles", FormattedStringBuilder.begin()
+                        .then("Needles are an important part of many tools used for Witchcraft, most notably ").boldEntryLink(itemPath(EItems.TAGLOCK.get()), "taglock kits")
+                        .then(" and ").bold("poppets").then(".")
+                        .paragraph("A simple needle can be fashioned by whittling a bone.").toString(),
                 EItems.BONE_NEEDLE.get());
 
-        cauldronEntry(output, "Mutandis", EItems.MUTANDIS.get(), """
-                                Mutandis is used to mutate plants into other species you could not normally obtain.
-                                
-                                Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant."""
+        cauldronEntry(output, "Mutandis", EItems.MUTANDIS.get(), FormattedStringBuilder.begin()
+                .then("Mutandis is used to mutate plants into other species you could not normally obtain.")
+                .paragraph("Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant.").toString()
         );
 
-        cauldronEntry(output, "Mutandis Extremis", EItems.MUTANDIS_EXTREMIS.get(), formatItems("""
-                                Mutandis Extremis, an enhanced form of $(el:%s)$(b)mutandis$(), is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.
-                                
-                                It can also be used to create $(b)Blood Poppies$().""", EItems.MUTANDIS.get())
+        cauldronEntry(output, "Mutandis Extremis", EItems.MUTANDIS_EXTREMIS.get(), FormattedStringBuilder.begin()
+                .then("Mutandis Extremis, an enhanced form of ").boldEntryLink(itemPath(EItems.MUTANDIS.get()), "mutandis")
+                .then(", is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.")
+                .paragraph("It can also be used to create $(b)Blood Poppies$().").toString()
         );
 
         EntryBuilder.of("Clay Jars")
                 .icon(EItems.CLAY_JAR.get().getDefaultInstance())
                 .assignedItems(EItems.CLAY_JAR.get(), EItems.SOFT_CLAY_JAR.get())
-                .page(
-                        HeaderedTextBuilder.of("Clay Jars", """
-                                A container to hold materials collected during fume extraction or distillation is essential for witches. A simple clay jar works well for this purpose.""")
-                )
+                .page(HeaderedTextBuilder.of("Clay Jars", "A container to hold materials collected during fume extraction or distillation is essential for witches. A simple clay jar works well for this purpose."))
                 .page(
                         HeaderBuilder.of(Modopedia.translation("template", "recipe")),
                         SeparatorBuilder.of().y(10),
@@ -276,125 +245,142 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     public void buildBrewItemEntries(BookContentOutput output) {
-        kettleEntry(output, "Brew of Love", EItems.BREW_OF_LOVE.get(), "Charming or love potions are one of the most widely sought types of brew.\n\nWhen thrown, the vapour produced will cause nearby animals to become infatuated.");
-        kettleEntry(output, "Brew of Sprouting", EItems.BREW_OF_SPROUTING.get(), "Being able to slow your opponents in combat can be the difference between life and death.\n\nThe brew of sprouting can be used to ensnare mobs and people with roots.\n\n$(b)This feature is coming soon.");
-        kettleEntry(output, "Brew of the Depths", EItems.BREW_OF_THE_DEPTHS.get(), "The ability to breathe underwater has fascinated people for millennia. Fortunately, witches have a solution for this.\n\nThe brew of depths grants the ability to breathe underwater for an extended time when ingested.");
-        kettleEntry(output, "Brew of the Grotesque", EItems.BREW_OF_THE_GROTESQUE.get(), "This brew makes the drinker unrecognisably grotesque, tricking nearby mobs into believing the drinker is one of their own.\n\nAdditionally, brew of the grotesque is used as a base in most curses.");
-        kettleEntry(output, "Flying Ointment", EItems.FLYING_OINTMENT.get(), "Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.\n\nMost notably, it can be used to $(b)infuse broomsticks$()");
-        kettleEntry(output, "Happenstance Oil", EItems.HAPPENSTANCE_OIL.get(), "Clairvoyance is an indispensable tool for a witch in need of information.\n\nHappenstance oil is a key component of crystal balls, and while consuming it is not recommended, it can improve your vision.");
-        kettleEntry(output, "Mystic Unguent", EItems.MYSTIC_UNGUENT.get(), "Mystic Unguent is a curious concoction which allows a witch to give physical form to thoughts.\n\nIt's main use is in the production of mystic branches, consuming this brew is not recommended.");
-        kettleEntry(output, "Redstone Soup", EItems.REDSTONE_SOUP.get(), "Redstone Soup primarily acts as a base for other infusions and brews, it has very few reported effects outside of this.\n\nIngesting redstone soup can increase your health for a short time.");
-        kettleEntry(output, "Soul of the World", EItems.SOUL_OF_THE_WORLD.get(), formatItems("Soul of the World is a derivation of $(b)$(el:%s)redstone soup$() imbued with natural energy. It can be used to infuse energy into a person to grant them special abilities.\n\nThis brew is extremely toxic and should not be ingested.", EItems.REDSTONE_SOUP.get()));
-        kettleEntry(output, "Spirit of Otherwhere", EItems.SPIRIT_OF_OTHERWHERE.get(), formatItems("Similar to $(b)$(el:%s)soul of the world$(), spirit of otherwhere is a derivation of $(b)$(el:%s)redstone soup$() imbued with the same properties as the End and its inhabitants.\n\nThis infusion is extremely toxic and should not be ingested.", EItems.SOUL_OF_THE_WORLD.get(), EItems.REDSTONE_SOUP.get()));
+        kettleEntry(output, "Brew of Love", EItems.BREW_OF_LOVE.get(), FormattedStringBuilder.begin()
+                .then("Charming or love potions are one of the most widely sought types of brew.")
+                .paragraph("When thrown, the vapour produced will cause nearby animals to become infatuated.").toString());
+
+        kettleEntry(output, "Brew of Sprouting", EItems.BREW_OF_SPROUTING.get(), FormattedStringBuilder.begin()
+                .then("Being able to slow your opponents in combat can be the difference between life and death.")
+                .paragraph("The brew of sprouting can be used to ensnare mobs and people with roots.")
+                .paragraph().bold("This feature is coming soon.").toString());
+
+        kettleEntry(output, "Brew of the Depths", EItems.BREW_OF_THE_DEPTHS.get(), FormattedStringBuilder.begin()
+                .then("The ability to breathe underwater has fascinated people for millennia. Fortunately, witches have a solution for this.")
+                .paragraph("The brew of depths grants the ability to breathe underwater for an extended time when ingested.").toString());
+
+        kettleEntry(output, "Brew of the Grotesque", EItems.BREW_OF_THE_GROTESQUE.get(), FormattedStringBuilder.begin()
+                .then("This brew makes the drinker unrecognisably grotesque, tricking nearby mobs into believing the drinker is one of their own.")
+                .paragraph("Additionally, brew of the grotesque is used as a base in most curses.").toString());
+
+        kettleEntry(output, "Flying Ointment", EItems.FLYING_OINTMENT.get(), FormattedStringBuilder.begin()
+                .then("Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.")
+                .paragraph("Most notably, it can be used to ").bold("infuse broomsticks").toString());
+
+        kettleEntry(output, "Happenstance Oil", EItems.HAPPENSTANCE_OIL.get(), FormattedStringBuilder.begin()
+                .then("Clairvoyance is an indispensable tool for a witch in need of information.")
+                .paragraph("Happenstance oil is a key component of crystal balls, and while consuming it is not recommended, it can improve your vision.").toString());
+
+        kettleEntry(output, "Mystic Unguent", EItems.MYSTIC_UNGUENT.get(), FormattedStringBuilder.begin()
+                .then("Mystic Unguent is a curious concoction which allows a witch to give physical form to thoughts.")
+                .paragraph("It's main use is in the production of mystic branches, consuming this brew is not recommended.").toString());
+
+        kettleEntry(output, "Redstone Soup", EItems.REDSTONE_SOUP.get(), FormattedStringBuilder.begin()
+                .then("Redstone Soup primarily acts as a base for other infusions and brews, it has very few reported effects outside of this.")
+                .paragraph("Ingesting redstone soup can increase your health for a short time.").toString());
+
+        kettleEntry(output, "Soul of the World", EItems.SOUL_OF_THE_WORLD.get(), FormattedStringBuilder.begin()
+                .then("Soul of the World is a derivation of ").boldEntryLink(itemPath(EItems.REDSTONE_SOUP.get()), "redstone soup").then(" imbued with natural energy. It can be used to infuse energy into a person to grant them special abilities.")
+                .paragraph("This brew is extremely toxic and should not be ingested.").toString());
+
+        kettleEntry(output, "Spirit of Otherwhere", EItems.SPIRIT_OF_OTHERWHERE.get(), FormattedStringBuilder.begin()
+                .then("Similar to ").boldEntryLink(itemPath(EItems.SOUL_OF_THE_WORLD.get()), "soul of the world")
+                .then(", spirit of otherwhere is a derivation of ").boldEntryLink(itemPath(EItems.REDSTONE_SOUP.get()), "redstone soup").then(" imbued with the same properties as the End and its inhabitants.")
+                .paragraph("This infusion is extremely toxic and should not be ingested.").toString());
 
         cauldronEntry(output, "Drop of Luck", EItems.DROP_OF_LUCK.get(), formatItems("Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:%s)Redstone Soup$().", EItems.REDSTONE_SOUP.get()));
     }
 
     public void buildExtractionItemEntries(BookContentOutput output) {
-        galleryEntry(output, "Breath of the Goddess", EItems.BREATH_OF_THE_GODDESS.get(), """
-                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
-                
-                The smoke produced by burning birch has healing properties.""",
+        galleryEntry(output, "Breath of the Goddess", EItems.BREATH_OF_THE_GODDESS.get(), FormattedStringBuilder.begin()
+                        .then("Due to it's silvery appearance, birch is sometimes called \"White Lady Of The Woods\" and is associated with the goddess Brigid.")
+                        .paragraph("The smoke produced by burning birch has healing properties.").toString(),
                 byproductComponents("byproduct/breath_of_the_goddess_birch_sapling")
         );
 
-        galleryEntry(output, "Demonic Blood", EItems.DEMONIC_BLOOD.get(), """
-                        The blood of a demon has many uses in witchcraft. While usually obtained from demons, it can also be refined from several other materials.
-                        
-                        It's main uses are in infusions and curses.""",
+        galleryEntry(output, "Demonic Blood", EItems.DEMONIC_BLOOD.get(), FormattedStringBuilder.begin()
+                        .then("The blood of a demon has many uses in witchcraft. While usually obtained from demons, it can also be refined from several other materials.")
+                        .paragraph("It's main uses are in infusions and curses.").toString(),
                 distillingComponents("distilling/diamond_vapour_blaze_rod")
         );
 
-        galleryEntry(output, "Diamond Vapour", EItems.DIAMOND_VAPOUR.get(), """
-                        Diamonds, by using oil of vitriol, can be dissolved and then evaporated to form a powerful refining agent.
-                        
-                        Diamond vapour is required to distill some other materials.""",
+        galleryEntry(output, "Diamond Vapour", EItems.DIAMOND_VAPOUR.get(), FormattedStringBuilder.begin()
+                        .then("Diamonds, by using oil of vitriol, can be dissolved and then evaporated to form a powerful refining agent.")
+                        .paragraph("Diamond vapour is required to distill some other materials.").toString(),
                 distillingComponents("distilling/diamond_oil_of_vitriol")
         );
 
-        galleryEntry(output, "Ender Dew", EItems.ENDER_DEW.get(), """
-                        Ender pearls, which allow people to teleport, can be distilled into a purer form called Ender Dew.
-                        
-                        This substance contains the relocation properties of ender pearls in a liquid form, making it useful for brewing.""",
+        galleryEntry(output, "Ender Dew", EItems.ENDER_DEW.get(), FormattedStringBuilder.begin()
+                        .then("Ender pearls, which allow people to teleport, can be distilled into a purer form called Ender Dew.")
+                        .paragraph("This substance contains the relocation properties of ender pearls in a liquid form, making it useful for brewing.").toString(),
                 distillingComponents("distilling/ender_pearl")
         );
 
-        galleryEntry(output, "Horned One's Exhale", EItems.EXHALE_OF_THE_HORNED_ONE.get(), """
-                        The Oak King, one of the aspects of the Horned God, symbolises nature, hunting and the cycle of life.
-                        
-                        The fumes produced by oaks are said to be The Horned God's exhale, carrying some of the properties associated with him.""",
+        galleryEntry(output, "Horned One's Exhale", EItems.EXHALE_OF_THE_HORNED_ONE.get(), FormattedStringBuilder.begin()
+                        .then("The Oak King, one of the aspects of the Horned God, symbolises nature, hunting and the cycle of life.")
+                        .paragraph("The fumes produced by oaks are said to be The Horned God's exhale, carrying some of the properties associated with him.").toString(),
                 byproductComponents("byproduct/exhale_of_the_horned_one_oak_sapling")
         );
 
-        galleryEntry(output, "Foul Fume", EItems.FOUL_FUME.get(), """
-                        A foul smelling smoke containing sulfur, often smelled when encountering demonic beings or the nether.
-                        
-                        There are many plants, foods and other sources containing this gas.""",
+        galleryEntry(output, "Foul Fume", EItems.FOUL_FUME.get(),  FormattedStringBuilder.begin()
+                        .then("A foul smelling smoke containing sulfur, often smelled when encountering demonic beings or the nether.")
+                        .paragraph("There are many plants, foods and other sources containing this gas.").toString(),
                 merge(
                         byproductComponents("byproduct/foul_fume_jungle_sapling", "byproduct/foul_fume_logs_that_burn", "byproduct/foul_fume_raw_foods"),
                         distillingComponents("distilling/breath_of_the_goddess_lapis_lazuli", "distilling/diamond_vapour_ghast_tear")
                 )
         );
 
-        galleryEntry(output, "Gypsum", EItems.GYPSUM.get(), """
-                        A soft, translucent mineral salt produced by oxidising sulfides in the presence of quicklime.
-                        
-                        In addition to being an effective fertiliser, it is commonly used as a base for ritual chalks.""",
+        galleryEntry(output, "Gypsum", EItems.GYPSUM.get(), FormattedStringBuilder.begin()
+                        .then("A soft, translucent mineral salt produced by oxidising sulfides in the presence of quicklime.")
+                        .paragraph("In addition to being an effective fertiliser, it is commonly used as a base for ritual chalks.").toString(),
                 distillingComponents("distilling/foul_fume_quicklime")
         );
 
-        galleryEntry(output, "Hint of Rebirth", EItems.HINT_OF_REBIRTH.get(), """
-                        Spruce trees are associated with the birth of the divine child. As such, they are a symbol of rebirth, protection, resilience and endurance.
-                        
-                        Regardless, they make good firewood.""",
+        galleryEntry(output, "Hint of Rebirth", EItems.HINT_OF_REBIRTH.get(), FormattedStringBuilder.begin()
+                        .then("Spruce trees are associated with the birth of the divine child. As such, they are a symbol of rebirth, protection, resilience and endurance.")
+                        .paragraph("Regardless, they make good firewood.").toString(),
                 byproductComponents("byproduct/hint_of_rebirth_spruce_sapling")
         );
 
-        galleryEntry(output, "Odour of Purity", EItems.ODOUR_OF_PURITY.get(), """
-                        Hawthorn can be used to collect a powerful purifying agent called Odour of Purity, which is used in the creation of most pure substances.
-                        
-                        This tree is sacred to the Goddesses Aine and Brigid.""",
+        galleryEntry(output, "Odour of Purity", EItems.ODOUR_OF_PURITY.get(), FormattedStringBuilder.begin()
+                        .then("Hawthorn can be used to collect a powerful purifying agent called Odour of Purity, which is used in the creation of most pure substances.")
+                        .paragraph("This tree is sacred to the Goddesses Aine and Brigid.").toString(),
                 merge(
                         byproductComponents("byproduct/odour_of_purity_hawthorn_sapling"),
                         distillingComponents("distilling/diamond_oil_of_vitriol", "distilling/diamond_vapour_ghast_tear")
                 )
         );
 
-        galleryEntry(output, "Oil of Vitriol", EItems.OIL_OF_VITRIOL.get(), """
-                        A clear, slightly yellowed liquid which seems to react to living matter with vitriol, leaving them burned and blackened.
-                        
-                        Oil of vitriol dissolves most substances it comes into contact with.""",
+        galleryEntry(output, "Oil of Vitriol", EItems.OIL_OF_VITRIOL.get(), FormattedStringBuilder.begin()
+                        .then("A clear, slightly yellowed liquid which seems to react to living matter with vitriol, leaving them burned and blackened.")
+                        .paragraph("Oil of vitriol dissolves most substances it comes into contact with.").toString(),
                 distillingComponents("distilling/foul_fume_quicklime")
         );
 
-        galleryEntry(output, "Reek of Misfortune", EItems.REEK_OF_MISFORTUNE.get(), """
-                        The sacred alder tree appears to bleed when cut, bringing misfortune to all. It is thought that the tree contains the souls of our ancestors.
-                        
-                        The fumes produced from burning it can be collected, keeping these effects.""",
+        galleryEntry(output, "Reek of Misfortune", EItems.REEK_OF_MISFORTUNE.get(), FormattedStringBuilder.begin()
+                        .then("The sacred alder tree appears to bleed when cut, bringing misfortune to all. It is thought that the tree contains the souls of our ancestors.")
+                        .paragraph("The fumes produced from burning it can be collected, keeping these effects.").toString(),
                 merge(
                         byproductComponents("byproduct/reek_of_misfortune_alder_sapling"),
                         distillingComponents("distilling/diamond_vapour_ghast_tear", "distilling/ender_pearl")
                 )
         );
 
-        galleryEntry(output, "Refined Evil", EItems.REFINED_EVIL.get(), """
-                        Pure, condensed evil refined using diamond vapour.
-                        
-                        Refined Evil is primarily used for brewing, but also has some uses in demonology.""",
+        galleryEntry(output, "Refined Evil", EItems.REFINED_EVIL.get(), FormattedStringBuilder.begin()
+                        .then("Pure, condensed evil refined using diamond vapour.")
+                        .paragraph("Refined Evil is primarily used for brewing, but also has some uses in demonology.").toString(),
                 distillingComponents("distilling/diamond_vapour_ghast_tear")
         );
 
-        galleryEntry(output, "Tear of the Goddess", EItems.TEAR_OF_THE_GODDESS.get(), """
-                        Lapis Lazuli is a gemstone which brings wisdom, truth, loyalty and honour.
-                        
-                        Combining Lapis with the White Goddess's power amplifies it's effects.""",
+        galleryEntry(output, "Tear of the Goddess", EItems.TEAR_OF_THE_GODDESS.get(), FormattedStringBuilder.begin()
+                        .then("Lapis Lazuli is a gemstone which brings wisdom, truth, loyalty and honour.")
+                        .paragraph("Combining Lapis with the White Goddess's power amplifies it's effects.").toString(),
                 distillingComponents("distilling/breath_of_the_goddess_lapis_lazuli")
         );
 
-        galleryEntry(output, "Whiff of Magic", EItems.WHIFF_OF_MAGIC.get(), """
-                Due to it's silvery appearance, birch is sometimes called "White Lady Of The Woods" and is associated with the goddess Brigid.
-                
-                The smoke produced by burning birch has healing properties.""",
+        galleryEntry(output, "Whiff of Magic", EItems.WHIFF_OF_MAGIC.get(), FormattedStringBuilder.begin()
+                        .then("Rowan wood is famous for it's unparalleled affinity for magic")
+                        .paragraph("The smoke it produces can be condensed into pure magical energy thought to provide protection against malevolent beings.").toString(),
                 merge(
                         byproductComponents("byproduct/whiff_of_magic_rowan_sapling"),
                         distillingComponents("distilling/ender_pearl", "distilling/breath_of_the_goddess_lapis_lazuli")
@@ -409,15 +395,19 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.ALTAR.get().getDefaultInstance())
                 .assignedItems(EItems.ALTAR.get())
                 .page(
-                        HeaderedTextBuilder.of("Creating an Altar", "To construct an altar, a witch must place $(b)six altar blocks$() to form a rectangular platform."),
+                        HeaderedTextBuilder.of("Creating an Altar", FormattedStringBuilder.begin()
+                                .then("To construct an altar, a witch must place ").bold("six altar blocks").then(" to form a rectangular platform.").toString()),
                         CraftingRecipeBuilder.of(Enchanted.id("altar")).y(65)
                 )
                 .page(
-                        HeaderedTextBuilder.of("Upgrades", """
-                                Certain blocks may be placed on top of the altar to multiply its effects.
-                                
-                                Upgrades have a $(b)type$(), only the best upgrade within a type will be counted."""
-                        ),
+                        HeaderedTextBuilder.of("Altar Power", "Altars draw their power from nature, specifically from plants in the surrounding area. A variety of plants works better than having only a few."),
+                        FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/altar.png"))
+                                .x(10).y(80)
+                )
+                .page(
+                        HeaderedTextBuilder.of("Upgrades", FormattedStringBuilder.begin()
+                                .then("Certain blocks may be placed on top of the altar to multiply its effects.")
+                                .paragraph("Upgrades have a ").bold("type").then(", only the best upgrade within a type will be counted.").toString()),
                         MultiblockBuilder.of()
                                 .y(70).height(70)
                                 .multiblockId(Enchanted.id("altar"))
@@ -427,12 +417,9 @@ public class EContentSetProvider extends ContentSetProvider {
         EntryBuilder.of("Distillation")
                 .icon(EItems.DISTILLERY.get().getDefaultInstance())
                 .assignedItems(EItems.DISTILLERY.get())
-                .page(
-                        HeaderedTextBuilder.of("Distillation", formatBlocks("""
-                                The distillery allows witches to separate materials into their components by utilising differences in boiling and condensing points.
-                                
-                                Processing consumes $(b)$(el:%s)altar power$(), so the distillery must be placed accordingly.""", EBlocks.ALTAR.get())
-                        )
+                .page(HeaderedTextBuilder.of("Distillation", FormattedStringBuilder.begin()
+                        .then("The distillery allows witches to separate materials into their components by utilising differences in boiling and condensing points.")
+                        .paragraph("Processing consumes ").boldEntryLink(blockPath(EBlocks.ALTAR.get()), "altar power").then(", so the distillery must be placed accordingly.").toString())
                 )
                 .page(
                         HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
@@ -446,12 +433,9 @@ public class EContentSetProvider extends ContentSetProvider {
         EntryBuilder.of("Fume Collection")
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
                 .assignedItems(EItems.WITCH_OVEN.get(), EItems.FUME_FUNNEL.get(), EItems.FUME_FUNNEL_FILTERED.get(), EItems.FUME_FILTER.get())
-                .page(
-                        HeaderedTextBuilder.of("Fume Collection", formatItems("""
-                                The witch's oven is a modified furnace used to collect byproducts and fumes made from burning materials.
-                                
-                                Unlike a furnace, this oven cannot process ores. Place a $(b)$(el:%s)clay jar$() into the middle slot to collect fumes.""", EItems.CLAY_JAR.get())
-                        )
+                .page(HeaderedTextBuilder.of("Fume Collection", FormattedStringBuilder.begin()
+                        .then("The witch's oven is a modified furnace used to collect byproducts and fumes made from burning materials.")
+                        .paragraph("Unlike a furnace, this oven cannot process ores. Place a ").boldEntryLink(itemPath(EItems.CLAY_JAR.get()), "clay jar").then(" into the middle slot to collect fumes.").toString())
                 )
                 .page(
                         HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
@@ -464,16 +448,18 @@ public class EContentSetProvider extends ContentSetProvider {
                         HeaderedTextBuilder.of("Fume Funnels", "Adding fume funnels to the left and right of your witch's oven can drastically improve it's yield."),
                         CraftingRecipeBuilder.of(itemId(EItems.FUME_FUNNEL.get())).y(68)
                 )
-                .page(
-                        MultiblockPageBuilder.of("A third fume funnel can be placed on top of the witch oven as a decorative chimney.")
-                                .multiblockId(Enchanted.id("witch_oven"))
-                                .offsetY(-10)
+                .page(MultiblockPageBuilder.of("A third fume funnel can be placed on top of the witch oven as a decorative chimney.")
+                        .multiblockId(Enchanted.id("witch_oven"))
+                        .offsetY(-10)
                 )
                 .page(
                         HeaderedTextBuilder.of("Fume Filters", "A fume filter can be added to fume funnels to further increase yield. With two filters, success is guaranteed."),
                         CraftingRecipeBuilder.of(itemId(EItems.FUME_FILTER.get())).y(70)
                 )
-                .page(BlockPageBuilder.of("$(b)Procurement:$()\nUse a fume filter on a fume funnel.", EBlocks.FUME_FUNNEL_FILTERED.get().defaultBlockState().setValue(FumeFunnelBlock.LIT, true)))
+                .page(BlockPageBuilder.of(FormattedStringBuilder.begin()
+                        .bold("Procurement:").linebreak("Use a fume filter on a fume funnel.").toString(),
+                        EBlocks.FUME_FUNNEL_FILTERED.get().defaultBlockState().setValue(FumeFunnelBlock.LIT, true))
+                )
                 .build(blockPath(EBlocks.WITCH_OVEN.get()), output);
 
         EntryBuilder.of("The Kettle")
@@ -483,10 +469,9 @@ public class EContentSetProvider extends ContentSetProvider {
                         HeaderedTextBuilder.of("Kettle", "The kettle, used for creating infusions, is a crucial utensil for any witch."),
                         CraftingRecipeBuilder.of(itemId(EItems.KETTLE.get())).y(65)
                 )
-                .page(
-                        MultiblockBuilder.of()
-                                .multiblockId(Enchanted.id("kettle"))
-                                .y(20)
+                .page(MultiblockBuilder.of()
+                        .multiblockId(Enchanted.id("kettle"))
+                        .y(20)
                 )
                 .build(blockPath(EBlocks.KETTLE.get()), output);
 
@@ -497,70 +482,63 @@ public class EContentSetProvider extends ContentSetProvider {
                         HeaderedTextBuilder.of("Witch's Cauldron", "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to brew complex potions."),
                         CraftingRecipeBuilder.of(itemId(EItems.ANOINTING_PASTE.get())).y(70)
                 )
-                .page(
-                        BlockPageBuilder.of("$(b)Procurement:$()\nUse anointing paste on a cauldron.", EBlocks.WITCH_CAULDRON.get().defaultBlockState())
+                .page(BlockPageBuilder.of(FormattedStringBuilder.begin()
+                        .bold("Procurement:").linebreak("Use a anointing paste on a cauldron").toString(),
+                        EBlocks.WITCH_CAULDRON.get().defaultBlockState())
                 )
                 .build(blockPath(EBlocks.WITCH_CAULDRON.get()), output);
     }
 
     public void buildHerbologyBlockEntries(BookContentOutput output) {
-        blockEntry(output, "Belladonna", """
-                Atropa bella-donna, commonly known as deadly nightshade, is a poisonous member of the Solanaceae family.
-                
-                The berries and foliage of this plant are extremely toxic and should be handled with care.""",
+        blockEntry(output, "Belladonna", FormattedStringBuilder.begin()
+                        .then("Atropa bella-donna, commonly known as deadly nightshade, is a poisonous member of the Solanaceae family.")
+                        .paragraph("The berries and foliage of this plant are extremely toxic and should be handled with care.").toString(),
                 EBlocks.BELLADONNA.get(), procureGrass(), EItems.BELLADONNA_FLOWER.get(), EItems.BELLADONNA_SEEDS.get());
 
-        blockEntry(output, "Garlic", """
-                Garlic, scientific name allium sativum, is a dietary staple in many households.
-                
-                Vampires are said to dislike garlic but its effectiveness as a repellent is questionable.""",
-                EBlocks.GARLIC.get(), procureGrass(), EItems.GARLIC.get()
-        );
+        blockEntry(output, "Garlic", FormattedStringBuilder.begin()
+                .then("Garlic, scientific name allium sativum, is a dietary staple in many households.")
+                .paragraph("Vampires are said to dislike garlic but its effectiveness as a repellent is questionable.").toString(),
+                EBlocks.GARLIC.get(), procureGrass(), EItems.GARLIC.get());
 
-        blockEntry(output, "Mandrakes", formatItems("""
-                Mandrakes are a group of. perennial herbaceous plants with long, parsnip shaped roots.
-                
-                If agitated, mandrakes will scream causing injury or even death. Wearing $(el:%s)$(b)earmuffs$() can protect you, and they sleep at night.""", EItems.EARMUFFS.get()),
+
+        blockEntry(output, "Mandrakes", FormattedStringBuilder.begin()
+                        .then("Mandrakes are a group of. perennial herbaceous plants with long, parsnip shaped roots.")
+                        .paragraph("If agitated, mandrakes will scream causing injury or even death. Wearing ")
+                        .boldEntryLink(itemPath(EItems.EARMUFFS.get()), "earmuffs").then(" can protect you, and they sleep at night.").toString(),
                 EBlocks.MANDRAKE.get(), procureGrass(), EItems.MANDRAKE_ROOT.get(), EItems.MANDRAKE_SEEDS.get()
         );
 
-        blockEntry(output, "Snowbell", """
-                Styrax japonicus, more commonly referred to as Snowbell, is a shrub from the Styracaceae family.
-                
-                Despite the name, they are native to warm climates in Asia. Its resin is used for purification, dispelling anger or soothing tension.""",
+        blockEntry(output, "Snowbell", FormattedStringBuilder.begin()
+                        .then("Styrax japonicus, more commonly referred to as Snowbell, is a shrub from the Styracaceae family.")
+                        .paragraph("Despite the name, they are native to warm climates in Asia. Its resin is used for purification, dispelling anger or soothing tension.").toString(),
                 EBlocks.SNOWBELL.get(), procureGrass(), EItems.ICY_NEEDLE.get(), EItems.SNOWBELL_SEEDS.get()
         );
 
-        blockEntry(output, "Water Artichoke", """
-                This subspecies of the common Artichoke, or cynara cardunculus, only grows on still water.
-                
-                Unlike it's green cousin, it is not considered edible. Consumption of this plant will satiate hunger but empty your stomach.""",
+        blockEntry(output, "Water Artichoke", FormattedStringBuilder.begin()
+                        .then("This subspecies of the common Artichoke, or cynara cardunculus, only grows on still water.")
+                        .paragraph("Unlike it's green cousin, it is not considered edible. Consumption of this plant will satiate hunger but empty your stomach.").toString(),
                 EBlocks.WATER_ARTICHOKE.get(), procureGrass(), EItems.WATER_ARTICHOKE.get(), EItems.WATER_ARTICHOKE_SEEDS.get()
         );
 
-        blockEntry(output, "Wolfsbane", """
-                Aconitum, common name of Wolfsbane, is a perennial flower of the Ranunculaceae family.
-                
-                Its roots contain aconitine, a potent neurotoxin and cardiotoxin. Contrary to popular belief, the name is just a translation from greek.""",
+        blockEntry(output, "Wolfsbane", FormattedStringBuilder.begin()
+                        .then("Aconitum, common name of Wolfsbane, is a perennial flower of the Ranunculaceae family.")
+                        .paragraph("Its roots contain aconitine, a potent neurotoxin and cardiotoxin. Contrary to popular belief, the name is just a translation from greek.").toString(),
                 EBlocks.WOLFSBANE.get(), procureGrass(), EItems.WOLFSBANE_FLOWER.get(), EItems.WOLFSBANE_SEEDS.get()
         );
 
-        blockEntry(output, "Glint Weed", """
-                This magical weed emits a glow around it, acting like a torch. Nobody knows what type of plant it actually is.
-                
-                While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread.""",
+        blockEntry(output, "Glint Weed", FormattedStringBuilder.begin()
+                        .then("This magical weed emits a glow around it, acting like a torch. Nobody knows what type of plant it actually is.")
+                        .paragraph("While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread.").toString(),
                 EBlocks.GLINT_WEED.get(), procureMutandis(), EItems.GLINT_WEED.get()
         );
 
-        blockEntry(output, "Ember Moss", """
-                Ember moss is a non-vascular plant with a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance.""",
+        blockEntry(output, "Ember Moss", "Ember moss is a non-vascular plant with a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance.",
                 EBlocks.EMBER_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.EMBER_MOSS.get()
         );
 
-        blockEntry(output, "Spanish Moss", """
-                An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates.
-                
-                Spanish Moss is often used in the creation of Poppets. Should be harvested with shears to be kept intact.""",
+        blockEntry(output, "Spanish Moss", FormattedStringBuilder.begin()
+                        .then("An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates.")
+                        .paragraph("Spanish Moss is often used in the creation of Poppets. Should be harvested with shears to be kept intact.").toString(),
                 EBlocks.SPANISH_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.SPANISH_MOSS.get()
         );
 
@@ -569,19 +547,13 @@ public class EContentSetProvider extends ContentSetProvider {
                 .assignedItems(EItems.ALDER_SAPLING.get(), EItems.ALDER_LOG.get(), EItems.STRIPPED_ALDER_LOG.get(),
                         EItems.ALDER_PLANKS.get(), EItems.ALDER_STAIRS.get(), EItems.ALDER_SLAB.get(), EItems.ALDER_FENCE.get(),
                         EItems.ALDER_FENCE_GATE.get(), EItems.ALDER_BUTTON.get(), EItems.ALDER_PRESSURE_PLATE.get())
-                .page(
-                        HeaderedTextBuilder.of("Alder Trees", """
-                                Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.
-                                
-                                Alders are thought to be both a bringer of misfortune and a repellent of negativity."""
-                        )
+                .page(HeaderedTextBuilder.of("Alder Trees", FormattedStringBuilder.begin()
+                        .then("Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.")
+                        .paragraph("Alders are thought to be both a bringer of misfortune and a repellent of negativity.").toString())
                 )
-                .page(
-                        GalleryBuilder.of(
-                                MultiblockPageBuilder.of(procureMutandis())
-                                        .multiblockId(Enchanted.id("alder_tree")),
-                                BlockPageBuilder.of(procureMutandis(), EBlocks.ALDER_SAPLING.get().defaultBlockState())
-                        )
+                .page(GalleryBuilder.of(
+                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("alder_tree")),
+                        BlockPageBuilder.of(procureMutandis(), EBlocks.ALDER_SAPLING.get().defaultBlockState()))
                 )
                 .build(blockPath(EBlocks.ALDER_SAPLING.get()), output);
 
@@ -590,18 +562,13 @@ public class EContentSetProvider extends ContentSetProvider {
                 .assignedItems(EItems.HAWTHORN_SAPLING.get(), EItems.HAWTHORN_LOG.get(), EItems.STRIPPED_HAWTHORN_LOG.get(),
                         EItems.HAWTHORN_PLANKS.get(), EItems.HAWTHORN_STAIRS.get(), EItems.HAWTHORN_SLAB.get(), EItems.HAWTHORN_FENCE.get(),
                         EItems.HAWTHORN_FENCE_GATE.get(), EItems.HAWTHORN_BUTTON.get(), EItems.HAWTHORN_PRESSURE_PLATE.get())
-                .page(
-                        HeaderedTextBuilder.of("Hawthorn Trees", """
-                                This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.
-                                
-                                In addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires."""
-                        )
+                .page(HeaderedTextBuilder.of("Hawthorn Trees", FormattedStringBuilder.begin()
+                        .then("This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.")
+                        .paragraph("In addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires.").toString())
                 )
-                .page(
-                        GalleryBuilder.of(
-                                MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("hawthorn_tree")),
-                                BlockPageBuilder.of(procureMutandis(), EBlocks.HAWTHORN_SAPLING.get().defaultBlockState())
-                        )
+                .page(GalleryBuilder.of(
+                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("hawthorn_tree")),
+                        BlockPageBuilder.of(procureMutandis(), EBlocks.HAWTHORN_SAPLING.get().defaultBlockState()))
                 )
                 .build(blockPath(EBlocks.HAWTHORN_SAPLING.get()), output);
 
@@ -611,18 +578,13 @@ public class EContentSetProvider extends ContentSetProvider {
                         EItems.STRIPPED_ROWAN_LOG.get(), EItems.ROWAN_PLANKS.get(), EItems.ROWAN_STAIRS.get(),
                         EItems.ROWAN_SLAB.get(), EItems.ROWAN_FENCE.get(), EItems.ROWAN_FENCE_GATE.get(),
                         EItems.ROWAN_BUTTON.get(), EItems.ROWAN_PRESSURE_PLATE.get())
-                .page(
-                        HeaderedTextBuilder.of("Rowan Trees", """
-                                The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft.
-                                
-                                The magical affinity of the Rowan is seldom matched by other trees, and is thought to give protection against malevolent beings."""
-                        )
+                .page(HeaderedTextBuilder.of("Rowan Trees", FormattedStringBuilder.begin()
+                        .then("The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft.")
+                        .paragraph("The magical affinity of the Rowan is seldom matched by other trees, and is thought to give protection against malevolent beings.").toString())
                 )
-                .page(
-                        GalleryBuilder.of(
-                                MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("rowan_tree")),
-                                BlockPageBuilder.of(procureMutandis(), EBlocks.ROWAN_SAPLING.get().defaultBlockState())
-                        )
+                .page(GalleryBuilder.of(
+                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("rowan_tree")),
+                        BlockPageBuilder.of(procureMutandis(), EBlocks.ROWAN_SAPLING.get().defaultBlockState()))
                 )
                 .build(blockPath(EBlocks.ROWAN_SAPLING.get()), output);
     }
@@ -632,38 +594,32 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.CHALICE_FILLED.get().getDefaultInstance())
                 .assignedItems(EItems.CHALICE_FILLED.get(), EItems.CHALICE.get())
                 .page(
-                        HeaderedTextBuilder.of("Chalices", formatItems("A chalice may be placed on top of an altar to increase its power capacity. The chalice can be filled by using $(b)$(el:%s)Redstone Soup$() on it.", EItems.REDSTONE_SOUP.get())
-                        ),
+                        HeaderedTextBuilder.of("Chalices", FormattedStringBuilder.begin()
+                                .then("A chalice may be placed on top of an altar to increase its power capacity. The chalice can be filled by using ")
+                                .boldEntryLink(itemPath(EItems.REDSTONE_SOUP.get()), "Redstone Soup").then(" on it.").toString()),
                         CraftingRecipeBuilder.of(Enchanted.id("chalice")).y(70)
                 )
-                .page(
-                        GalleryBuilder.of(
-                                BlockPageBuilder.of("$(b)Chalice:$()\n+1x Power Capacity", EBlocks.CHALICE.get().defaultBlockState())
-                                        .scale(2.0F).offsetY(-20),
-                                BlockPageBuilder.of("$(b)Chalice (Filled):$()\n+2x Power Capacity", EBlocks.CHALICE_FILLED.get().defaultBlockState())
-                                        .scale(2.0F).offsetY(-20)
-                        )
+                .page(GalleryBuilder.of(
+                        BlockPageBuilder.of("$(b)Chalice:$()\n+1x Power Capacity", EBlocks.CHALICE.get().defaultBlockState())
+                                .scale(2.0F).offsetY(-20),
+                        BlockPageBuilder.of("$(b)Chalice (Filled):$()\n+2x Power Capacity", EBlocks.CHALICE_FILLED.get().defaultBlockState())
+                                .scale(2.0F).offsetY(-20))
                 )
                 .build(gettingStartedPath("chalice_upgrades"), output);
 
         EntryBuilder.of("Skull Upgrades")
                 .icon(Items.SKELETON_SKULL.getDefaultInstance())
-                .page(
-                        HeaderedTextBuilder.of("Skulls", """
-                                Skulls can increase both the capacity and recharge rate of an altar, with varying effectiveness.
-                                
-                                Human skulls are particularly effective at channeling energy."""
-                        )
+                .page(HeaderedTextBuilder.of("Skulls", FormattedStringBuilder.begin()
+                        .then("Skulls can increase both the capacity and recharge rate of an altar, with varying effectiveness.")
+                        .paragraph("Human skulls are particularly effective at channeling energy.").toString())
                 )
-                .page(
-                        GalleryBuilder.of(
-                                BlockPageBuilder.of("$(b)Skeleton Skull:$()\n+1x Power Capacity\n+1x Recharge Rate", Blocks.SKELETON_SKULL.defaultBlockState())
-                                        .scale(1.6F).offsetY(-20).textOffset(-25),
-                                BlockPageBuilder.of("$(b)Wither Skeleton Skull:$()\n+2x Power Capacity\n+2x Recharge Rate", Blocks.WITHER_SKELETON_SKULL.defaultBlockState())
-                                        .scale(1.6F).offsetY(-20).textOffset(-25),
-                                BlockPageBuilder.of("$(b)Player Skull:$()\n+2.5x Power Capacity\n+3x Recharge Rate", Blocks.PLAYER_HEAD.defaultBlockState())
-                                        .scale(1.6F).offsetY(-20).textOffset(-25)
-                        )
+                .page(GalleryBuilder.of(
+                        BlockPageBuilder.of("$(b)Skeleton Skull:$()\n+1x Power Capacity\n+1x Recharge Rate", Blocks.SKELETON_SKULL.defaultBlockState())
+                                .scale(1.6F).offsetY(-20).textOffset(-25),
+                        BlockPageBuilder.of("$(b)Wither Skeleton Skull:$()\n+2x Power Capacity\n+2x Recharge Rate", Blocks.WITHER_SKELETON_SKULL.defaultBlockState())
+                                .scale(1.6F).offsetY(-20).textOffset(-25),
+                        BlockPageBuilder.of("$(b)Player Skull:$()\n+2.5x Power Capacity\n+3x Recharge Rate", Blocks.PLAYER_HEAD.defaultBlockState())
+                                .scale(1.6F).offsetY(-20).textOffset(-25))
                 )
                 .build(gettingStartedPath("skull_upgrades"), output);
 
@@ -671,19 +627,16 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.CANDELABRA.get().getDefaultInstance())
                 .assignedItems(EItems.CANDELABRA.get())
                 .page(
-                        HeaderedTextBuilder.of("Torches", "A torch, candelabra or candle can be an effective means of increasing your altar's recharge rate."
-                        ),
+                        HeaderedTextBuilder.of("Torches", "A torch, candelabra or candle can be an effective means of increasing your altar's recharge rate."),
                         CraftingRecipeBuilder.of(Enchanted.id("candelabra")).y(70)
                 )
-                .page(
-                        GalleryBuilder.of(
-                                BlockPageBuilder.of("$(b)Torch:$()\n+0.5x Recharge Rate", Blocks.TORCH.defaultBlockState())
-                                        .scale(1.8F).offsetY(-15).textOffset(-30),
-                                BlockPageBuilder.of("$(b)Candle:$()\n+1x Recharge Rate", Blocks.LIGHT_GRAY_CANDLE.defaultBlockState())
-                                        .scale(2.0F).offsetY(-20).textOffset(-30),
-                                BlockPageBuilder.of("$(b)Candelabra:$()\n+2x Recharge Rate", EBlocks.CANDELABRA.get().defaultBlockState())
-                                        .scale(1.75F).offsetY(-15).textOffset(-30)
-                        )
+                .page(GalleryBuilder.of(
+                        BlockPageBuilder.of("$(b)Torch:$()\n+0.5x Recharge Rate", Blocks.TORCH.defaultBlockState())
+                                .scale(1.8F).offsetY(-15).textOffset(-30),
+                        BlockPageBuilder.of("$(b)Candle:$()\n+1x Recharge Rate", Blocks.LIGHT_GRAY_CANDLE.defaultBlockState())
+                                .scale(2.0F).offsetY(-20).textOffset(-30),
+                        BlockPageBuilder.of("$(b)Candelabra:$()\n+2x Recharge Rate", EBlocks.CANDELABRA.get().defaultBlockState())
+                                .scale(1.75F).offsetY(-15).textOffset(-30))
                 )
                 .build(gettingStartedPath("torch_upgrades"), output);
     }
@@ -691,13 +644,12 @@ public class EContentSetProvider extends ContentSetProvider {
     public void buildBrewingEntries(BookContentOutput output) {
         EntryBuilder.of("Creating Brews")
                 .icon(EItems.WITCH_CAULDRON.get().getDefaultInstance())
-                .page(
-                        HeaderedTextBuilder.of("Brews and Potions", formatBlocks("""
-                                Creating a brew, infusion or potion is a simple process, requiring either a $(b)$(c:#582C69)$(el:%1$s)witch's cauldron$() or $(b)$(c:#582C69)$(el:%2$s)kettle$().
-                                
-                                First, you must fill your $(b)$(el:%1$s)cauldron$() or $(b)$(el:%2$s)kettle$() with water from a bucket. You will know it is full if no more water can fit.""",
-                                EBlocks.WITCH_CAULDRON.get(), EBlocks.KETTLE.get())
-                        )
+                .page(HeaderedTextBuilder.of("Brews and Potions", FormattedStringBuilder.begin()
+                        .then("Creating a brew, infusion or potion is a simple process, requiring either a ")
+                        .boldEntryLink(blockPath(EBlocks.WITCH_CAULDRON.get()), "witch's cauldron", 0x582C69).then(" or ").boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle", 0x582C69).then(".")
+                        .paragraph("First, you must fill your ")
+                        .boldEntryLink(blockPath(EBlocks.WITCH_CAULDRON.get()), "cauldron").then(" or ").boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle")
+                        .then(" with water from a bucket. You will know it is full if no more water can fit.").toString())
                 )
                 .page(
                         MultiblockBuilder.of()
@@ -714,19 +666,13 @@ public class EContentSetProvider extends ContentSetProvider {
                                 )),
                         HeaderedTextBuilder.of("Heat Sources", "Next, place a heat source underneath your vessel such as fire, lava or a campfire. After a few seconds, the water should begin to boil.")
                 )
-                .page(
-                        HeaderedTextBuilder.of("Adding Ingredients", """
-                                The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, $(b)in order$(), one by one.
-                                
-                                The water should start to change colour. Once added, the brew needs to boil for a few seconds to finish."""
-                        )
+                .page(HeaderedTextBuilder.of("Adding Ingredients", FormattedStringBuilder.begin()
+                        .then("The final step, after filling the vessel and waiting for it to boil, is to drop your ingredients into the vessel, ").bold("in order").then(", one by one")
+                        .paragraph("The water should start to change colour. Once added, the brew needs to boil for a few seconds to finish.").toString())
                 )
-                .page(
-                        HeaderedTextBuilder.of("Spoiled Brews", """
-                                If you make a mistake during brewing, such as adding the wrong ingredient or removing the heat source, your brew will $(b)spoil$(/b).
-                                
-                                When spoiled, the brew will turn brown and need to be removed using an $(b)empty bucket$(/b)."""
-                        )
+                .page(HeaderedTextBuilder.of("Spoiled Brews", FormattedStringBuilder.begin()
+                        .then("If you make a mistake during brewing, such as adding the wrong ingredient or removing the heat source, your brew will ").bold("spoil").then(".")
+                        .paragraph("When spoiled, the brew will turn brown and need to be removed using an ").bold("empty bucket").then(".").toString())
                 )
                 .build(brewingPath("brewing"), output);
     }
@@ -736,7 +682,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
                 .page(
                       HeaderedTextBuilder.of("Performing Rites", """
-                              To perform circle magic, there are three basic steps a witch must follow. First, drawing the correct chalk circles. Second, placing the correct sacrifices into the circle abnd lastly, activating the rite.""")
+                              To perform circle magic, there are three basic steps a witch must follow. First, drawing the correct chalk circles. Second, placing the correct sacrifices into the circle and lastly, activating the rite.""")
                 )
                 .page(
                         HeaderedTextBuilder.of("Chalk Circles", "")
@@ -796,6 +742,8 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(HeaderedTextBuilder.of(title, description));
     }
 
+
+
     private static <T> T[] merge(T a, T[] b) {
         return ArrayUtils.insert(0, b, a);
     }
@@ -803,7 +751,6 @@ public class EContentSetProvider extends ContentSetProvider {
     private static <T> T[] merge(T[] a, T b) {
         return ArrayUtils.insert(0, a, b);
     }
-
 
     private static <T> T[] merge(T[] a, T[] b) {
         return ArrayUtils.addAll(a, b);
@@ -827,11 +774,15 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     private String procureMutandis() {
-        return formatItems("$(b)Procurement:$()\nUse $(el:%s)$(b)mutandis$() on a small plant.", EItems.MUTANDIS.get());
+        return FormattedStringBuilder.begin().bold("Procurement:").linebreak("Use ").entryLink(itemPath(EItems.MUTANDIS.get()), "mutandis").then(" on a small plant.").toString();
     }
 
     private String procureGrass() {
-        return "$(b)Procurement:$()\nDropped by tall and short grass";
+        return FormattedStringBuilder.begin().bold("Procurement:").linebreak("Dropped by tall and short grass").toString();
+    }
+
+    private String drops(String string) {
+        return FormattedStringBuilder.begin().bold("Drops:").linebreak(string).toString();
     }
 
 

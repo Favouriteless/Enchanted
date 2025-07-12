@@ -3,14 +3,12 @@ package net.favouriteless.enchanted.integrations.modopedia.client.template_proce
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
-import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
-import net.favouriteless.modopedia.api.book.BookTexture;
-import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
-import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.client.page_components.item_displays.CyclingItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -52,10 +50,10 @@ public class ByproductRecipeProcessor implements TemplateProcessor {
 
             ItemStack result = recipe.getResultItem(level.registryAccess());
 
-            lookup.set("p_inputs", Variable.of(List.of(inputs)));
-            lookup.set("p_output", Variable.of(List.of(outputs)));
-            lookup.set("p_byproduct", Variable.of(List.of(List.of(result))));
-            lookup.set("p_jars", Variable.of(List.of(List.of(new ItemStack(EItems.CLAY_JAR.get(), result.getCount())))));
+            lookup.set("p_inputs", Variable.of(new CyclingItemDisplay(inputs)));
+            lookup.set("p_output", Variable.of(new CyclingItemDisplay(outputs)));
+            lookup.set("p_byproduct", Variable.of(new SimpleItemDisplay(result)));
+            lookup.set("p_jars", Variable.of(new SimpleItemDisplay(new ItemStack(EItems.CLAY_JAR.get(), result.getCount()))));
         }
         else {
             throw new IllegalArgumentException("ByproductRecipe template must use a ByproductRecipe.");

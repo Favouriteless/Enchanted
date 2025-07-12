@@ -8,10 +8,13 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
+import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.client.page_components.item_displays.EmptyItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.GridItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
@@ -24,11 +27,11 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
-        initComponents(book, lookup, level);
-        initRecipes(book, lookup, level);
+        initComponents(book, lookup);
+        initRecipes(lookup, level);
     }
 
-    protected void initRecipes(Book book, MutableLookup lookup, Level level) {
+    protected void initRecipes(MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
@@ -38,13 +41,13 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof DistillingRecipe recipe) {
-            List<List<ItemStack>> inputs = recipe.inputs().stream().map(List::of).toList();
-            List<List<ItemStack>> outputs = recipe.outputs().stream().map(List::of).toList();
+            List<ItemDisplay> inputs = recipe.inputs().stream().<ItemDisplay>map(SimpleItemDisplay::new).toList();
+            List<ItemDisplay> outputs = recipe.outputs().stream().<ItemDisplay>map(SimpleItemDisplay::new).toList();
 
-            lookup.set("p_input1", Variable.of(inputs.subList(0, 1)));
-            lookup.set("p_input2", Variable.of(inputs.subList(1, inputs.size())));
-            lookup.set("p_output1", Variable.of(outputs.size() > 1 ? outputs.subList(0, 2) : outputs.subList(0, 1)));
-            lookup.set("p_output2", Variable.of(outputs.size() > 2 ? outputs.subList(2, outputs.size()) : List.of(List.of(ItemStack.EMPTY))));
+            lookup.set("p_input1", Variable.of(inputs.getFirst()));
+            lookup.set("p_input2", Variable.of(new GridItemDisplay(inputs.subList(1, inputs.size()),  2, 20, false)));
+            lookup.set("p_output1", Variable.of(new GridItemDisplay(outputs.size() > 1 ? outputs.subList(0, 2) : outputs.subList(0, 1), 2, 19, false)));
+            lookup.set("p_output2", Variable.of(outputs.size() > 2 ? new GridItemDisplay(outputs.subList(2, outputs.size()), 2, 19, false) : new EmptyItemDisplay()));
             lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.power()).getString()));
         }
         else {
@@ -52,7 +55,7 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
         }
     }
 
-    protected void initComponents(Book book, MutableLookup lookup, Level level) {
+    protected void initComponents(Book book, MutableLookup lookup) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
         if(tex == null)
             throw new IllegalStateException("DistilleryRecipe must have a valid BookTexture");

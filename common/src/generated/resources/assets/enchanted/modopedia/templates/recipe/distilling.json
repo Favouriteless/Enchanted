@@ -5,29 +5,26 @@
       "x": "#p_x"
     },
     {
-      "type": "modopedia:item",
-      "items": "#p_input1",
+      "type": "modopedia:item_gallery",
+      "display": "#p_input1",
       "x": "#p_input1_x",
       "y": 2
     },
     {
-      "type": "modopedia:item",
-      "items": "#p_input2",
-      "padding": 20,
+      "type": "modopedia:item_gallery",
+      "display": "#p_input2",
       "x": "#p_input2_x",
       "y": 22
     },
     {
-      "type": "modopedia:item",
-      "items": "#p_output1",
-      "padding": 19,
+      "type": "modopedia:item_gallery",
+      "display": "#p_output1",
       "x": "#p_output1_x",
       "y": 95
     },
     {
-      "type": "modopedia:item",
-      "items": "#p_output2",
-      "padding": 19,
+      "type": "modopedia:item_gallery",
+      "display": "#p_output2",
       "x": "#p_output2_x",
       "y": 95
     },

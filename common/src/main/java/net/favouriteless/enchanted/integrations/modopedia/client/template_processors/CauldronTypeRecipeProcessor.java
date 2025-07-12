@@ -6,6 +6,9 @@ import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
+import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.GridItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,11 +37,11 @@ public class CauldronTypeRecipeProcessor implements TemplateProcessor {
             List<List<ItemStack>> inputs = new ArrayList<>();
             recipe.getInputs().forEach(i -> inputs.add(List.of(i)));
 
-            int rows = inputs.size() / 5 + 1;
+            int rows = (int)Math.ceil(inputs.size() / 5.0F);
 
-            lookup.set("p_inputs_y", Variable.of(35 - rows * 8)); // 31 is right in the center of the ingredients area
-            lookup.set("p_inputs", Variable.of(inputs));
-            lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+            lookup.set("p_inputs_y", Variable.of(35 - rows * 8)); // 35 is right in the center of the ingredients area
+            lookup.set("p_inputs", Variable.of(new GridItemDisplay(recipe.getInputs().stream().<ItemDisplay>map(SimpleItemDisplay::new).toList(), 5, 16, true)));
+            lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
             lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.getPower()).getString()));
         }
         else {

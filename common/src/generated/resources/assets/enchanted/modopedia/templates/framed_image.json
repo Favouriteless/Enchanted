@@ -1,0 +1,15 @@
+{
+  "components": [
+    {
+      "type": "modopedia:image",
+      "height": 42,
+      "images": "#images",
+      "width": 75
+    },
+    {
+      "type": "enchanted:image_frame",
+      "x": -2,
+      "y": -2
+    }
+  ]
+}

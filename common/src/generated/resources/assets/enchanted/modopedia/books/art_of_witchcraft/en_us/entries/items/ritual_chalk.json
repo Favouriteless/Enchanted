@@ -12,7 +12,7 @@
         {
           "header": "Ritual Chalk",
           "template": "modopedia:page/headered_text",
-          "text": "Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.\n\nThere are no known special effects of ritual chalk, it is merely chalk infused with $(b)$(el:items/tear_of_the_goddess)Tear of the Goddess$()."
+          "text": "Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.\n\nThere are no known special effects of ritual chalk, it is merely chalk infused with $(b)$(el:items/tear_of_the_goddess)Tear of the Goddess$(/el)$(/b)."
         }
       ]
     },

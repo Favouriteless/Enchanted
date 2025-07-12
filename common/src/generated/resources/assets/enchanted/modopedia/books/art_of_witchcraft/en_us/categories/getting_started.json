@@ -8,8 +8,7 @@
     "items/broom",
     "items/taglock_kit",
     "items/bone_needle",
-    "items/attuned_stone",
-    "test"
+    "items/attuned_stone"
   ],
   "icon": {
     "count": 1,

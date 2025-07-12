@@ -2,7 +2,7 @@
   "components": [
     {
       "type": "modopedia:header",
-      "text": "book.enchanted.header.fume_extraction"
+      "text": "book.header.enchanted.fume_extraction"
     },
     {
       "type": "modopedia:separator",

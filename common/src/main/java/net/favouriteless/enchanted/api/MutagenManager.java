@@ -1,9 +1,13 @@
 package net.favouriteless.enchanted.api;
 
+import net.favouriteless.enchanted.common.mutandis.MutagenInfo;
 import net.favouriteless.enchanted.common.mutandis.MutagenManagerImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+
+import java.util.List;
 
 public interface MutagenManager {
 
@@ -16,5 +20,10 @@ public interface MutagenManager {
     boolean isMutating(ServerLevel level, BlockPos pos);
 
     boolean canMutate(ServerLevel level, Block block);
+
+    /**
+     * @return A list containing all MutagenInfos containing result as a result.
+     */
+    List<MutagenInfo> getMutagensFor(Level level, Block result);
 
 }

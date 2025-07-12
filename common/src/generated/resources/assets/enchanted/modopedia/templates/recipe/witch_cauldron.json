@@ -11,19 +11,17 @@
     },
     {
       "type": "modopedia:header",
-      "text": "book.enchanted.header.witch_cauldron_recipe"
+      "text": "book.header.enchanted.witch_cauldron_recipe"
     },
     {
-      "type": "modopedia:item",
-      "centered": true,
-      "items": "#p_inputs",
-      "row_max": 5,
+      "type": "modopedia:item_gallery",
+      "display": "#p_inputs",
       "x": 50,
       "y": "#p_inputs_y"
     },
     {
-      "type": "modopedia:item",
-      "items": "#p_output",
+      "type": "modopedia:item_gallery",
+      "display": "#p_output",
       "x": 42,
       "y": 84
     },

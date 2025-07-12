@@ -3,7 +3,7 @@
     "id": "enchanted:classic"
   },
   "creative_tab": "enchanted:main",
-  "landing_text": "$(b)Witchcraft$() is the art of bringing out and using the magical effects of seemingly mundane objects.\n\nThis book aims to explain the various schools of witchcraft.",
+  "landing_text": "book.landing_text.enchanted.art_of_witchcraft",
   "subtitle": "book.subtitle.enchanted.art_of_witchcraft",
   "texture": "enchanted:art_of_witchcraft",
   "title": "book.title.enchanted.art_of_witchcraft"

@@ -12,7 +12,7 @@
         {
           "header": "Distillation",
           "template": "modopedia:page/headered_text",
-          "text": "The distillery allows witches to separate materials into their components by utilising differences in boiling and condensing points.\n\nProcessing consumes $(b)$(el:blocks/altar)altar power$(), so the distillery must be placed accordingly."
+          "text": "The distillery allows witches to separate materials into their components by utilising differences in boiling and condensing points.\n\nProcessing consumes $(b)$(el:blocks/altar)altar power$(/el)$(/b), so the distillery must be placed accordingly."
         }
       ]
     },

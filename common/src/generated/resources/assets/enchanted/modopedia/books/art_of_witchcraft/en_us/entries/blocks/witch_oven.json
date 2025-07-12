@@ -15,7 +15,7 @@
         {
           "header": "Fume Collection",
           "template": "modopedia:page/headered_text",
-          "text": "The witch's oven is a modified furnace used to collect byproducts and fumes made from burning materials.\n\nUnlike a furnace, this oven cannot process ores. Place a $(b)$(el:items/clay_jar)clay jar$() into the middle slot to collect fumes."
+          "text": "The witch's oven is a modified furnace used to collect byproducts and fumes made from burning materials.\n\nUnlike a furnace, this oven cannot process ores. Place a $(b)$(el:items/clay_jar)clay jar$(/el)$(/b) into the middle slot to collect fumes."
         }
       ]
     },
@@ -100,7 +100,7 @@
         {
           "block": "enchanted:fume_funnel_filtered[lit=true]",
           "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$()\nUse a fume filter on a fume funnel."
+          "text": "$(b)Procurement:$(/b)\nUse a fume filter on a fume funnel."
         }
       ]
     }

@@ -44,6 +44,12 @@ public class ETemplateProvider extends TemplateProvider {
                         ImageFrameBuilder.of().x(-2).y(-2)
                 )
                 .build(FramedImageBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .components(
+
+                )
+                .build()
     }
 
     protected void buildRecipes(BookOutput output) {

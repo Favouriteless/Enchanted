@@ -100,7 +100,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
 
     UploadArtifact main = upload(560363, tasks.jar)
     main.releaseType = project.version.toString().endsWith("beta") ? "beta" : "release"
-    main.changelog = rootProject.file("changelog.txt").readText(Charsets.UTF_8)
+    main.changelog = rootProject.file("changelog.txt").getText("UTF-8")
 
     main.addModLoader("NeoForge")
     main.addGameVersion(mcVersion)

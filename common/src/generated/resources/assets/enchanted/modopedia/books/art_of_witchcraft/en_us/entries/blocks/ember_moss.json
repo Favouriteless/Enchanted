@@ -12,16 +12,37 @@
         {
           "header": "Ember Moss",
           "template": "modopedia:page/headered_text",
-          "text": "Ember moss is a non-vascular plant with a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance."
+          "text": "Ember moss is a plant with a very unique defense mechanism; it bursts into flames at the slightest touch or disturbance. Harvest with shears to be keep intact."
+        },
+        {
+          "type": "modopedia:multiblock",
+          "height": 60,
+          "multiblock": {
+            "type": "modopedia:dense",
+            "key": {
+              "S": {
+                "type": "modopedia:simple",
+                "states": [
+                  "enchanted:ember_moss"
+                ]
+              }
+            },
+            "pattern": [
+              [
+                "S"
+              ]
+            ]
+          },
+          "no_offsets": true,
+          "y": 70
         }
       ]
     },
     {
       "components": [
         {
-          "block": "enchanted:ember_moss",
-          "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$(/b)\nUse $(el:items/mutandis)mutandis$(/el) on a small plant. Harvest with shears."
+          "result": "enchanted:ember_moss",
+          "template": "enchanted:page/mutagen"
         }
       ]
     }

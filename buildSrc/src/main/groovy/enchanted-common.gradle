@@ -19,7 +19,7 @@ String modopediaVersion = libs.findVersion("modopedia").get()
 String forgeconfigapiVersion = libs.findVersion("forgeconfigapi").get()
 
 base {
-    archivesName = "enchanted-${project.name}-$mcVersion"
+    archivesName = "enchanted-${project.name}-$mcVersion-$version"
 }
 
 java {

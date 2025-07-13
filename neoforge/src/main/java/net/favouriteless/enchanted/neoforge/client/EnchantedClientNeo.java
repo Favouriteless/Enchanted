@@ -28,12 +28,12 @@ import java.io.IOException;
 public class EnchantedClientNeo {
 
     public EnchantedClientNeo(IEventBus bus, ModContainer container) {
+        EnchantedClient.init();
         container.registerConfig(Type.CLIENT, ClientConfig.SPEC, "enchanted-client.toml");
     }
 
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent event) {
-        EnchantedClient.init();
         ClientRegistry.registerItemModelPredicates();
     }
 

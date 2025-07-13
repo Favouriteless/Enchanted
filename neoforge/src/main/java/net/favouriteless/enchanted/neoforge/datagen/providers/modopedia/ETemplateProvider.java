@@ -3,10 +3,12 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.CauldronBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.DistilleryBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.ImageFrameBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.MutagenDisplayBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.MutagenPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.ByproductRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.DistillingRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
@@ -21,7 +23,6 @@ import net.favouriteless.modopedia.api.datagen.builders.page_components.componen
 import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.favouriteless.modopedia.book.text.Justify;
-import net.favouriteless.modopedia.client.template_processors.WidgetSpacingProcessor;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
@@ -44,12 +45,6 @@ public class ETemplateProvider extends TemplateProvider {
                         ImageFrameBuilder.of().x(-2).y(-2)
                 )
                 .build(FramedImageBuilder.ID.getPath(), output);
-
-        TemplateBuilder.of()
-                .components(
-
-                )
-                .build()
     }
 
     protected void buildRecipes(BookOutput output) {
@@ -161,6 +156,14 @@ public class ETemplateProvider extends TemplateProvider {
                                 .y(18)
                 )
                 .build(DistilleryPageBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .components(
+                        HeaderBuilder.of(Enchanted.translationKey("book.header", "mutagen_info")),
+                        SeparatorBuilder.of().y(10),
+                        MutagenDisplayBuilder.of("#result").x(50).y(25)
+                )
+                .build(MutagenPageBuilder.ID.getPath(), output);
     }
 
 }

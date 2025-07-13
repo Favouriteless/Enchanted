@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.api;
 
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo;
+import net.favouriteless.enchanted.common.mutandis.MutagenInfo.MutagenSet;
 import net.favouriteless.enchanted.common.mutandis.MutagenManagerImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MutagenManager {
 
@@ -24,6 +25,6 @@ public interface MutagenManager {
     /**
      * @return A list containing all MutagenInfos containing result as a result.
      */
-    List<MutagenInfo> getMutagensFor(Level level, Block result);
+    Map<Block, List<MutagenSet>> getMutagensFor(Level level, Block result);
 
 }

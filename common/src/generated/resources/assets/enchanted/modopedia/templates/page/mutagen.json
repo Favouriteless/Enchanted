@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "type": "modopedia:header",
+      "text": "book.header.enchanted.mutagen_info"
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "type": "enchanted:mutagen_display",
+      "result": "#result",
+      "x": 50,
+      "y": 25
+    }
+  ]
+}

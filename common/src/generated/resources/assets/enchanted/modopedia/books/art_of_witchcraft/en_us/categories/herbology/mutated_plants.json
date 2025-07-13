@@ -1,6 +1,7 @@
 {
   "display_on_front_page": false,
   "entries": [
+    "herbology/mutations",
     "items/mutandis",
     "items/mutandis_extremis",
     "blocks/rowan_sapling",
@@ -8,7 +9,8 @@
     "blocks/alder_sapling",
     "blocks/spanish_moss",
     "blocks/glint_weed",
-    "blocks/ember_moss"
+    "blocks/ember_moss",
+    "blocks/blood_poppy"
   ],
   "icon": {
     "count": 1,

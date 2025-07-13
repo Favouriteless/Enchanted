@@ -32,9 +32,7 @@
           "images": [
             "enchanted:textures/gui/modopedia/altar.png"
           ],
-          "template": "enchanted:framed_image",
-          "x": 10,
-          "y": 80
+          "template": "enchanted:framed_image"
         }
       ]
     },

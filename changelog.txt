@@ -1,11 +1,13 @@
 **NOTE: YOU NEED TO UPDATE NEOFORGE TO THE LATEST VERSION. UPDATE MODOPEDIA TO LATEST TOO.**
 
+- IMPORTANT CHANGE: Mutandis has been completely reworked and temporarily is not in JEI. Please check the guidebook. I will smite you if you ping me about this.
+
 - ADDED: Config options for min/max whispering times on curses.
 
+- CHANGED: Reworked the mutandis plant entries in the book.
 - CHANGED: The arthana can now be used to get skeleton skulls from skeletons.
 - CHANGED: Taglocks can now be used on non-player entities again. This can be disabled on a per-entity basis via the `enchanted:taglock_blacklist` tag.
 - CHANGED: Most common config options have been moved to server config.
-- CHANGED: Completely reworked mutandis, check the book.
 - CHANGED: Cat familiars will now keep their cursing bonus while dismissed.
 - CHANGED: Major refactors to parts of the API.
 - CHANGED: Refactored curse system.

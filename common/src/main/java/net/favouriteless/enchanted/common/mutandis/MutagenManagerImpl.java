@@ -1,5 +1,7 @@
 package net.favouriteless.enchanted.common.mutandis;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
@@ -12,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,7 +23,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MutagenManagerImpl implements MutagenManager {
 
@@ -48,10 +54,19 @@ public class MutagenManagerImpl implements MutagenManager {
     }
 
     @Override
-    public List<MutagenInfo> getMutagensFor(Level level, Block result) {
-        return level.registryAccess().registryOrThrow(EData.MUTAGEN_REGISTRY).stream()
-                .filter(m -> m.sets().stream().anyMatch(s -> s.result() == result))
-                .toList();
+    public Map<Block, List<MutagenSet>> getMutagensFor(Level level, Block result) {
+        Map<Block, List<MutagenSet>> out = new HashMap<>();
+
+        for(Map.Entry<ResourceKey<MutagenInfo>, MutagenInfo> entry : level.registryAccess().registryOrThrow(EData.MUTAGEN_REGISTRY).entrySet()) {
+            Block mutee = BuiltInRegistries.BLOCK.get(entry.getKey().location());
+
+            for(MutagenSet set : entry.getValue().sets()) {
+                if(set.result() == result)
+                    out.computeIfAbsent(mutee, l -> new ArrayList<>()).add(set);
+            }
+        }
+
+        return out;
     }
 
     public boolean randomTick(ServerLevel level, BlockPos pos) {

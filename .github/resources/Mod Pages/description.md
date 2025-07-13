@@ -10,8 +10,6 @@
     </a>
 </p>
 
-
-
 # Description
 
 Enchanted is a large magic mod focused on occult practices and witchcraft, inspired by paganism and celtic folklore. If you want to live in the woods stirring a cauldron, join the witch hunters, deal with demons or even become a vampire, this mod is probably for you.
@@ -32,10 +30,11 @@ Enchanted provides several distinct and unique branches of magic for witches to 
 </p>
 
 # Getting Started
+Enchanted has an in-game guide in called "Art of Witchcraft", crafted using a book, an ink sac, a feather and **belladonna seeds**. You can get these by breaking grass, just like vanilla seeds. There is also a [wiki](https://moddedmc.wiki/en/project/enchanted-witchcraft/docs), but I recommend using the book for a more immersive experience.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Favouriteless/Enchanted/refs/heads/1.21.1/.github/resources/mod_pages/book_recipe.png" alt="Enchanted banner"/>
-</p>
+**NOTE:** Enchanted has a config option to make these seeds only drop when grass is broken with a hoe. This is disabled by default, but some modpacks may choose to enable it.
+
+![Crafting recipe for enchanted's guidebook](https://raw.githubusercontent.com/Favouriteless/Enchanted/refs/heads/1.21.1/.github/resources/mod_pages/book_recipe.png)
 
 # Support Development
 

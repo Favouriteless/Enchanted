@@ -1,18 +1,18 @@
 {
   "assigned_items": [
-    "enchanted:spanish_moss"
+    "enchanted:blood_poppy"
   ],
   "icon": {
     "count": 1,
-    "id": "enchanted:spanish_moss"
+    "id": "enchanted:blood_poppy"
   },
   "pages": [
     {
       "components": [
         {
-          "header": "Spanish Moss",
+          "header": "Blood Poppy",
           "template": "modopedia:page/headered_text",
-          "text": "An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates. Harvest with shears to be keep intact."
+          "text": "Poppies famously thrive in ground stained with blood, with a mutation they can also draw blood from those who touch them. Right click with a $(b)$(el:items/taglock_kit)taglock kit$(/el)$(/b) to collect blood."
         },
         {
           "type": "modopedia:multiblock",
@@ -23,7 +23,7 @@
               "S": {
                 "type": "modopedia:simple",
                 "states": [
-                  "enchanted:spanish_moss"
+                  "enchanted:blood_poppy"
                 ]
               }
             },
@@ -41,11 +41,11 @@
     {
       "components": [
         {
-          "result": "enchanted:spanish_moss",
+          "result": "enchanted:blood_poppy",
           "template": "enchanted:page/mutagen"
         }
       ]
     }
   ],
-  "title": "Spanish Moss"
+  "title": "Blood Poppy"
 }

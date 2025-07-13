@@ -4,6 +4,7 @@ import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.Fram
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.MutagenPageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
 import net.favouriteless.enchanted.common.Enchanted;
@@ -19,7 +20,10 @@ import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.HeaderBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.MultiblockBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.SeparatorBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CookingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
@@ -40,7 +44,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,9 +107,10 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("Plants of this nature are covered in this chapter.").toString())
                 .icon(EItems.MUTANDIS.get().getDefaultInstance())
                 .displayOnFrontPage(false)
+                .entries(herbologyPath("mutations"))
                 .entries(itemPaths(EItems.MUTANDIS.get(), EItems.MUTANDIS_EXTREMIS.get()))
                 .entries(blockPaths(EBlocks.ROWAN_SAPLING.get(), EBlocks.HAWTHORN_SAPLING.get(), EBlocks.ALDER_SAPLING.get(),
-                        EBlocks.SPANISH_MOSS.get(), EBlocks.GLINT_WEED.get(), EBlocks.EMBER_MOSS.get()))
+                        EBlocks.SPANISH_MOSS.get(), EBlocks.GLINT_WEED.get(), EBlocks.EMBER_MOSS.get(), EBlocks.BLOOD_POPPY.get()))
                 .build("herbology/mutated_plants", output);
 
         CategoryBuilder.of("Brewing")
@@ -149,6 +153,7 @@ public class EContentSetProvider extends ContentSetProvider {
         buildBlockEntries(output);
 
         buildGettingStartedEntries(output);
+        buildHerbologyEntries(output);
         buildBrewingEntries(output);
         buildCircleMagicEntries(output);
     }
@@ -220,13 +225,14 @@ public class EContentSetProvider extends ContentSetProvider {
 
         cauldronEntry(output, "Mutandis", EItems.MUTANDIS.get(), FormattedStringBuilder.begin()
                 .then("Mutandis is used to mutate plants into other species you could not normally obtain.")
-                .paragraph("Using this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant.").toString()
+                .paragraph("Using this substance on a block can cause it to ").boldEntryLink(herbologyPath("mutations"), "mutate")
+                .then(" into a different block under the right conditions.").toString()
         );
 
         cauldronEntry(output, "Mutandis Extremis", EItems.MUTANDIS_EXTREMIS.get(), FormattedStringBuilder.begin()
-                .then("Mutandis Extremis, an enhanced form of ").boldEntryLink(itemPath(EItems.MUTANDIS.get()), "mutandis")
-                .then(", is able to mutate multi-stage plants such as cactus, sugar cane and wheat as well as everything mutandis can.")
-                .paragraph("It can also be used to create $(b)Blood Poppies$().").toString()
+                .then("Mutandis Extremis, an enhanced form of ").boldEntryLink(itemPath(EItems.MUTANDIS.get()), "mutandis").then(", performs a very similar function.")
+                .paragraph("Extremis is able to create more advanced ").boldEntryLink(herbologyPath("mutations"), "mutations")
+                .then(" such as ").boldEntryLink(blockPath(EBlocks.BLOOD_POPPY.get()), "Blood Poppies").then(".").toString()
         );
 
         EntryBuilder.of("Clay Jars")
@@ -402,7 +408,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .page(
                         HeaderedTextBuilder.of("Altar Power", "Altars draw their power from nature, specifically from plants in the surrounding area. A variety of plants works better than having only a few."),
                         FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/altar.png"))
-                                .x(10).y(80)
+
                 )
                 .page(
                         HeaderedTextBuilder.of("Upgrades", FormattedStringBuilder.begin()
@@ -526,20 +532,28 @@ public class EContentSetProvider extends ContentSetProvider {
                 EBlocks.WOLFSBANE.get(), procureGrass(), EItems.WOLFSBANE_FLOWER.get(), EItems.WOLFSBANE_SEEDS.get()
         );
 
-        blockEntry(output, "Glint Weed", FormattedStringBuilder.begin()
-                        .then("This magical weed emits a glow around it, acting like a torch. Nobody knows what type of plant it actually is.")
-                        .paragraph("While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread.").toString(),
-                EBlocks.GLINT_WEED.get(), procureMutandis(), EItems.GLINT_WEED.get()
+        mutatedEntry(output, "Glint Weed", FormattedStringBuilder.begin()
+                        .then("This magical weed emits a glow around it, acting like a torch. ")
+                        .then("While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread.").toString(),
+                EBlocks.GLINT_WEED.get(), EItems.GLINT_WEED.get()
         );
 
-        blockEntry(output, "Ember Moss", "Ember moss is a non-vascular plant with a very peculiar and unique defense mechanism where it bursts into flames at the slightest touch or disturbance.",
-                EBlocks.EMBER_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.EMBER_MOSS.get()
+        mutatedEntry(output, "Ember Moss", FormattedStringBuilder.begin()
+                        .then("Ember moss is a plant with a very unique defense mechanism; it bursts into flames at the slightest touch or disturbance. ")
+                        .then("Harvest with shears to be keep intact.").toString(),
+                EBlocks.EMBER_MOSS.get(), EItems.EMBER_MOSS.get()
         );
 
-        blockEntry(output, "Spanish Moss", FormattedStringBuilder.begin()
-                        .then("An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates.")
-                        .paragraph("Spanish Moss is often used in the creation of Poppets. Should be harvested with shears to be kept intact.").toString(),
-                EBlocks.SPANISH_MOSS.get(), procureMutandis() + " Harvest with shears.", EItems.SPANISH_MOSS.get()
+        mutatedEntry(output, "Spanish Moss", FormattedStringBuilder.begin()
+                        .then("An epiphytic flowering plant, similar to a moss or lichen, found growing on trees in tropical or subtropical climates. ")
+                        .then("Harvest with shears to be keep intact.").toString(),
+                EBlocks.SPANISH_MOSS.get(), EItems.SPANISH_MOSS.get()
+        );
+
+        mutatedEntry(output, "Blood Poppy", FormattedStringBuilder.begin()
+                        .then("Poppies famously thrive in ground stained with blood, with a mutation they can also draw blood from those who touch them. ")
+                        .then("Right click with a ").boldEntryLink(itemPath(EItems.TAGLOCK.get()), "taglock kit").then(" to collect blood.").toString(),
+                EBlocks.BLOOD_POPPY.get(), EItems.BLOOD_POPPY.get()
         );
 
         EntryBuilder.of("Alder Trees")
@@ -547,14 +561,22 @@ public class EContentSetProvider extends ContentSetProvider {
                 .assignedItems(EItems.ALDER_SAPLING.get(), EItems.ALDER_LOG.get(), EItems.STRIPPED_ALDER_LOG.get(),
                         EItems.ALDER_PLANKS.get(), EItems.ALDER_STAIRS.get(), EItems.ALDER_SLAB.get(), EItems.ALDER_FENCE.get(),
                         EItems.ALDER_FENCE_GATE.get(), EItems.ALDER_BUTTON.get(), EItems.ALDER_PRESSURE_PLATE.get())
-                .page(HeaderedTextBuilder.of("Alder Trees", FormattedStringBuilder.begin()
-                        .then("Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.")
-                        .paragraph("Alders are thought to be both a bringer of misfortune and a repellent of negativity.").toString())
+                .page(
+                        HeaderedTextBuilder.of("Alder Trees", FormattedStringBuilder.begin()
+                                .then("Alder trees, of the Betulaceae family, are deciduous trees thought to bleed when cut due to their red sap.").toString()),
+                        GalleryBuilder.of(
+                                MultiblockBuilder.of()
+                                        .multiblockId(Enchanted.id("alder_tree"))
+                                        .height(80),
+                                MultiblockBuilder.of()
+                                        .multiblock(new DenseMultiblock(
+                                                List.of(List.of("S")),
+                                                Map.of('S', new SimpleStateMatcher(List.of(EBlocks.ALDER_SAPLING.get().defaultBlockState())))
+                                        ))
+                                        .noOffsets(true)
+                        ).y(54).height(80)
                 )
-                .page(GalleryBuilder.of(
-                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("alder_tree")),
-                        BlockPageBuilder.of(procureMutandis(), EBlocks.ALDER_SAPLING.get().defaultBlockState()))
-                )
+                .page(MutagenPageBuilder.of(EBlocks.ALDER_SAPLING.get()))
                 .build(blockPath(EBlocks.ALDER_SAPLING.get()), output);
 
         EntryBuilder.of("Hawthorn Trees")
@@ -562,30 +584,46 @@ public class EContentSetProvider extends ContentSetProvider {
                 .assignedItems(EItems.HAWTHORN_SAPLING.get(), EItems.HAWTHORN_LOG.get(), EItems.STRIPPED_HAWTHORN_LOG.get(),
                         EItems.HAWTHORN_PLANKS.get(), EItems.HAWTHORN_STAIRS.get(), EItems.HAWTHORN_SLAB.get(), EItems.HAWTHORN_FENCE.get(),
                         EItems.HAWTHORN_FENCE_GATE.get(), EItems.HAWTHORN_BUTTON.get(), EItems.HAWTHORN_PRESSURE_PLATE.get())
-                .page(HeaderedTextBuilder.of("Hawthorn Trees", FormattedStringBuilder.begin()
-                        .then("This species of crataegus, commonly referred to as Hawthorn, is native to northern Europe and known as a tree of purity.")
-                        .paragraph("In addition to herbal uses, hawthorn is known to be an effective material for dispatching vampires.").toString())
+                .page(
+                        HeaderedTextBuilder.of("Hawthorn Trees", FormattedStringBuilder.begin()
+                                .then("This species of crataegus, commonly referred to as Hawthorn, has herbal uses and is known to be effective at dispatching vampires.").toString()),
+                        GalleryBuilder.of(
+                                MultiblockBuilder.of()
+                                        .multiblockId(Enchanted.id("hawthorn_tree"))
+                                        .height(80),
+                                MultiblockBuilder.of()
+                                        .multiblock(new DenseMultiblock(
+                                                List.of(List.of("S")),
+                                                Map.of('S', new SimpleStateMatcher(List.of(EBlocks.HAWTHORN_SAPLING.get().defaultBlockState())))
+                                        ))
+                                        .noOffsets(true)
+                        ).y(54).height(80)
                 )
-                .page(GalleryBuilder.of(
-                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("hawthorn_tree")),
-                        BlockPageBuilder.of(procureMutandis(), EBlocks.HAWTHORN_SAPLING.get().defaultBlockState()))
-                )
+                .page(MutagenPageBuilder.of(EBlocks.HAWTHORN_SAPLING.get()))
                 .build(blockPath(EBlocks.HAWTHORN_SAPLING.get()), output);
 
         EntryBuilder.of("Rowan Trees")
-                .icon(EItems.ROWAN_BERRIES.get().getDefaultInstance())
+                .icon(EItems.ROWAN_SAPLING.get().getDefaultInstance())
                 .assignedItems(EItems.ROWAN_BERRIES.get(), EItems.ROWAN_SAPLING.get(), EItems.ROWAN_LOG.get(),
                         EItems.STRIPPED_ROWAN_LOG.get(), EItems.ROWAN_PLANKS.get(), EItems.ROWAN_STAIRS.get(),
                         EItems.ROWAN_SLAB.get(), EItems.ROWAN_FENCE.get(), EItems.ROWAN_FENCE_GATE.get(),
                         EItems.ROWAN_BUTTON.get(), EItems.ROWAN_PRESSURE_PLATE.get())
-                .page(HeaderedTextBuilder.of("Rowan Trees", FormattedStringBuilder.begin()
-                        .then("The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft.")
-                        .paragraph("The magical affinity of the Rowan is seldom matched by other trees, and is thought to give protection against malevolent beings.").toString())
+                .page(
+                        HeaderedTextBuilder.of("Rowan Trees", FormattedStringBuilder.begin()
+                                .then("The rowan, or mountain-ash, a small deciduous tree native to Europe, has many uses in witchcraft.").toString()),
+                        GalleryBuilder.of(
+                                MultiblockBuilder.of()
+                                        .multiblockId(Enchanted.id("rowan_tree"))
+                                        .height(80),
+                                MultiblockBuilder.of()
+                                        .multiblock(new DenseMultiblock(
+                                                List.of(List.of("S")),
+                                                Map.of('S', new SimpleStateMatcher(List.of(EBlocks.ROWAN_SAPLING.get().defaultBlockState())))
+                                        ))
+                                        .noOffsets(true)
+                        ).y(54).height(80)
                 )
-                .page(GalleryBuilder.of(
-                        MultiblockPageBuilder.of(procureMutandis()).multiblockId(Enchanted.id("rowan_tree")),
-                        BlockPageBuilder.of(procureMutandis(), EBlocks.ROWAN_SAPLING.get().defaultBlockState()))
-                )
+                .page(MutagenPageBuilder.of(EBlocks.ROWAN_SAPLING.get()))
                 .build(blockPath(EBlocks.ROWAN_SAPLING.get()), output);
     }
 
@@ -677,6 +715,28 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build(brewingPath("brewing"), output);
     }
 
+    public void buildHerbologyEntries(BookContentOutput output) {
+        EntryBuilder.of("Mutations")
+                .icon(Items.CHORUS_FRUIT.getDefaultInstance())
+                .page(HeaderedTextBuilder.of("Mutations", FormattedStringBuilder.begin()
+                        .then("While many plants are naturally occurring, herbology often requires witches to mutate existing plants to suit their needs.")
+                        .paragraph("This is done using ").boldEntryLink(itemPath(EItems.MUTANDIS.get()), "mutandis", 0x582C69).then(" or ")
+                        .boldEntryLink(itemPath(EItems.MUTANDIS_EXTREMIS.get()), "mutandis extremis", 0x582C69).then(".").toString()))
+                .page(
+                        HeaderedTextBuilder.of("Mutandis", FormattedStringBuilder.begin()
+                                .then("Using mutandis on a block will make it start ").bold("mutating")
+                                .then(", giving it a chance to turn into a different block based on nearby ")
+                                .bold("mutagens").then(".").toString()),
+                        FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/mutation.png"))
+                                .x(10).y(75)
+                )
+                .page(HeaderedTextBuilder.of("Mutagens", FormattedStringBuilder.begin()
+                        .bold("Mutagens").then(" are the blocks a witch needs to place in the area around a mutating plant. The more mutagens you place, the more likely it is for the plant to mutate.")
+                        .paragraph("The block in the center is the plant being mutated, while the surrounding blocks are its mutagens.").toString()))
+                .page(MutagenPageBuilder.of(EBlocks.ROWAN_SAPLING.get()))
+                .build(herbologyPath("mutations"), output);
+    }
+
     public void buildCircleMagicEntries(BookContentOutput output) {
         EntryBuilder.of("Performing Rites")
                 .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
@@ -715,6 +775,10 @@ public class EContentSetProvider extends ContentSetProvider {
         blockEntry(title, description, block.defaultBlockState(), procurement, items).build(blockPath(block), output);
     }
 
+    private void mutatedEntry(BookContentOutput output, String title, String description, Block result, Item... items) {
+        mutatedEntry(title, description, result, items).build(blockPath(result), output);
+    }
+
     private void blockEntry(BookContentOutput output, String title, String description, CropBlockAgeFive block, String procurement, Item... items) {
         blockEntry(title, description, block.defaultBlockState().setValue(CropBlockAgeFive.AGE_FIVE, 4), procurement, items).build(blockPath(block), output);
     }
@@ -733,6 +797,24 @@ public class EContentSetProvider extends ContentSetProvider {
 
     private EntryBuilder blockEntry(String title, String description, BlockState state, String blockDescription, Item... items) {
         return headeredTextEntry(title, description, items).page(BlockPageBuilder.of(blockDescription, state));
+    }
+
+    private EntryBuilder mutatedEntry(String title, String description, Block result, Item... items) {
+        return EntryBuilder.of(title)
+                .icon(items[0].getDefaultInstance())
+                .assignedItems(items)
+                .page(
+                        HeaderedTextBuilder.of(title, description),
+                        MultiblockBuilder.of()
+                                .y(70)
+                                .height(60)
+                                .multiblock(new DenseMultiblock(
+                                        List.of(List.of("S")),
+                                        Map.of('S', new SimpleStateMatcher(List.of(result.defaultBlockState())))
+                                ))
+                                .noOffsets(true)
+                )
+                .page(MutagenPageBuilder.of(result));
     }
 
     private EntryBuilder headeredTextEntry(String title, String description, Item... items) {
@@ -797,6 +879,10 @@ public class EContentSetProvider extends ContentSetProvider {
 
     private String brewingPath(String path) {
         return "brewing/" + path;
+    }
+
+    private String herbologyPath(String path) {
+        return "herbology/" + path;
     }
 
     private String itemPath(Item item) {

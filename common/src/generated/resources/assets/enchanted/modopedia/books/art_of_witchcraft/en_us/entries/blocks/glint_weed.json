@@ -12,16 +12,37 @@
         {
           "header": "Glint Weed",
           "template": "modopedia:page/headered_text",
-          "text": "This magical weed emits a glow around it, acting like a torch. Nobody knows what type of plant it actually is.\n\nWhile it can survive on nearly any surface, if placed on grass, dirt or sand it will spread."
+          "text": "This magical weed emits a glow around it, acting like a torch. While it can survive on nearly any surface, if placed on grass, dirt or sand it will spread."
+        },
+        {
+          "type": "modopedia:multiblock",
+          "height": 60,
+          "multiblock": {
+            "type": "modopedia:dense",
+            "key": {
+              "S": {
+                "type": "modopedia:simple",
+                "states": [
+                  "enchanted:glint_weed"
+                ]
+              }
+            },
+            "pattern": [
+              [
+                "S"
+              ]
+            ]
+          },
+          "no_offsets": true,
+          "y": 70
         }
       ]
     },
     {
       "components": [
         {
-          "block": "enchanted:glint_weed",
-          "template": "modopedia:page/block",
-          "text": "$(b)Procurement:$(/b)\nUse $(el:items/mutandis)mutandis$(/el) on a small plant."
+          "result": "enchanted:glint_weed",
+          "template": "enchanted:page/mutagen"
         }
       ]
     }

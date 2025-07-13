@@ -12,7 +12,7 @@
         {
           "header": "Mutandis",
           "template": "modopedia:page/headered_text",
-          "text": "Mutandis is used to mutate plants into other species you could not normally obtain.\n\nUsing this substance on small plants such as grass, saplings, and flowers will mutate them into a different plant."
+          "text": "Mutandis is used to mutate plants into other species you could not normally obtain.\n\nUsing this substance on a block can cause it to $(b)$(el:herbology/mutations)mutate$(/el)$(/b) into a different block under the right conditions."
         }
       ]
     },

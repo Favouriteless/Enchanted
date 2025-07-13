@@ -5,6 +5,9 @@ plugins {
 
 VersionCatalog libs = project.extensions.getByType(VersionCatalogsExtension).named("libs")
 
+version = libs.findVersion("enchanted").get()
+group = "net.favouriteless.enchanted"
+
 String version = libs.findVersion("enchanted").get()
 String mcVersion = libs.findVersion("minecraft").get()
 String mcVersionRange = libs.findVersion("minecraft.range").get()

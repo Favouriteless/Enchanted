@@ -133,7 +133,8 @@ public class ELanguageProvider extends LanguageProvider {
         addTooltip("byproduct_recipe", "Byproduct Recipe");
         addTooltip("altar_power", "%1$s Altar Power");
         addTooltip("mutagen_weight", "Weight");
-        addTooltip("mutagen_weight.description", "Weight is used to decide\nwhich result to make.\nHigher is better.");
+        addTooltip("mutee", "Mutee:");
+        addTooltip("mutagens", "Mutagens:");
         addTooltip("mutagen_extremis", "Extremis");
         addTooltip("disabled_totems", "Disabled (Enchanted: Witchcraft)");
 

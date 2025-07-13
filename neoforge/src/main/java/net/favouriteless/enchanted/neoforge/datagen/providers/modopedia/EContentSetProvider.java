@@ -731,7 +731,7 @@ public class EContentSetProvider extends ContentSetProvider {
                                 .x(10).y(75)
                 )
                 .page(HeaderedTextBuilder.of("Mutagens", FormattedStringBuilder.begin()
-                        .bold("Mutagens").then(" are the blocks a witch needs to place in the area around a mutating plant. The more mutagens you place, the more likely it is for the plant to mutate.")
+                        .bold("Mutagens").then(" are the blocks a witch needs to place in the area surrounding a mutating plant. The more mutagens you place, the more likely it is for the plant to mutate.")
                         .paragraph("The block in the center is the plant being mutated, while the surrounding blocks are its mutagens.").toString()))
                 .page(MutagenPageBuilder.of(EBlocks.ROWAN_SAPLING.get()))
                 .build(herbologyPath("mutations"), output);

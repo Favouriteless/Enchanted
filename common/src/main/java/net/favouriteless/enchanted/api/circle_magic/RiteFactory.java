@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.api.circle_magic;
 
+import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
@@ -20,6 +21,10 @@ public interface RiteFactory {
      */
     default @Nullable List<ItemStack> getOutputs() {
         return null;
+    }
+
+    static Codec<RiteFactory> codec() {
+        return RiteFactoryRegistry.get().codec();
     }
 
 }

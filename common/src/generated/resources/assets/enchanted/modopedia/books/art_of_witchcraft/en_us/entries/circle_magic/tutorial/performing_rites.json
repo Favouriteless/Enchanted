@@ -10,7 +10,45 @@
         {
           "header": "Performing Rites",
           "template": "modopedia:page/headered_text",
-          "text": "To perform circle magic, there are three basic steps a witch must follow. First, drawing the correct chalk circles. Second, placing the correct sacrifices into the circle and lastly, activating the rite."
+          "text": "To perform circle magic, there are three basic steps a witch must follow; drawing the correct glyphs, adding foci and lastly, activating the rite."
+        },
+        {
+          "images": [
+            "enchanted:textures/gui/modopedia/circle_magic.png"
+          ],
+          "template": "enchanted:framed_image",
+          "x": 10,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "header": "Heart Glyphs",
+          "template": "modopedia:page/headered_text",
+          "text": "Every rite starts with a heart glyph, a symbol drawn with $(b)$(el:items/golden_chalk)golden chalk$(/el)$(/b).\n\nThis is the center of the rite, acting as a conduit for power and being used to activate or deactivate the magic."
+        },
+        {
+          "type": "modopedia:multiblock",
+          "height": 50,
+          "multiblock": {
+            "type": "modopedia:dense",
+            "key": {
+              "G": {
+                "type": "modopedia:simple",
+                "states": [
+                  "enchanted:golden_chalk"
+                ]
+              }
+            },
+            "pattern": [
+              [
+                "G"
+              ]
+            ]
+          },
+          "y": 80
         }
       ]
     },
@@ -19,7 +57,7 @@
         {
           "header": "Chalk Circles",
           "template": "modopedia:page/headered_text",
-          "text": ""
+          "text": "After a heart glyph, rites need chalk circles, drawn using $(b)$(el:items/ritual_chalk)ritual chalk$(/el)$(/b), $(b)$(el:items/nether_chalk)infernal chalk$(/el)$(/b) and $(b)$(el:items/otherwhere_chalk)otherwhere chalk$(/el)$(/b). "
         }
       ]
     }

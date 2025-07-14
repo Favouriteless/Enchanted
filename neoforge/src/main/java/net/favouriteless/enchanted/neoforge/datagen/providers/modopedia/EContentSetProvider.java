@@ -131,24 +131,27 @@ public class EContentSetProvider extends ContentSetProvider {
                 .sortNum(3)
                 .build("brewing", output);
 
-//        CategoryBuilder.of("Circle Magic")
-//                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
-//                .landingText(FormattedStringBuilder.begin()
-//                        .then("Circle magic is the practice of using chalk circles or other materials in combination with foci items to collect magical energy from the environment and achieve the intended affect.")
-//                        .paragraph("The methods of circle magic and known rites are detailed in this chapter.").toString())
-//                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
-//                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
-//                        "circle_magic/transposition", "circle_magic/world")
-//                .build("circle_magic", output);
-//
-//        CategoryBuilder.of("Performing Rites")
-//                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
-//                .displayOnFrontPage(false)
-//                .landingText("Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles, items, and sometimes even a sacrifice.")
-//                .entries("circle_magic/tutorial/performing_rites")
-//                .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
-//                        EItems.OTHERWHERE_CHALK.get()))
-//                .build("circle_magic/tutorial", output);
+        CategoryBuilder.of("Circle Magic")
+                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Circle magic is the practice of using chalk circles and foci to manifest complex magical phenomenon.")
+                        .paragraph("The fundamentals of circle magic and known rites are detailed in this chapter.").toString())
+                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
+                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
+                        "circle_magic/transposition", "circle_magic/world")
+                .sortNum(4)
+                .build("circle_magic", output);
+
+        CategoryBuilder.of("Fundamental Theory")
+                .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Performing a circle magic rite can be a complex and difficult process, requiring a mixture of chalk circles and foci.")
+                        .paragraph("This chapter explains the fundamentals and some important items.").toString())
+                .entries("circle_magic/tutorial/performing_rites")
+                .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
+                        EItems.OTHERWHERE_CHALK.get(), EItems.BROOM.get()))
+                .build("circle_magic/tutorial", output);
     }
 
     @Override
@@ -745,12 +748,27 @@ public class EContentSetProvider extends ContentSetProvider {
         EntryBuilder.of("Performing Rites")
                 .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
                 .page(
-                      HeaderedTextBuilder.of("Performing Rites", """
-                              To perform circle magic, there are three basic steps a witch must follow. First, drawing the correct chalk circles. Second, placing the correct sacrifices into the circle and lastly, activating the rite.""")
+                        HeaderedTextBuilder.of("Performing Rites", FormattedStringBuilder.begin()
+                                .then("To perform circle magic, there are three basic steps a witch must follow; drawing the correct glyphs, adding foci and lastly, activating the rite.").toString()),
+                        FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/circle_magic.png")).x(10).y(80)
                 )
                 .page(
-                        HeaderedTextBuilder.of("Chalk Circles", "")
+                        HeaderedTextBuilder.of("Heart Glyphs", FormattedStringBuilder.begin()
+                                .then("Every rite starts with a heart glyph, a symbol drawn with ").boldEntryLink(itemPath(EItems.GOLDEN_CHALK.get()), "golden chalk").then(".")
+                                .paragraph("This is the center of the rite, acting as a conduit for power and being used to activate or deactivate the magic.").toString()),
+                        MultiblockBuilder.of()
+                                .y(80)
+                                .height(50)
+                                .multiblock(new DenseMultiblock(
+                                        List.of(List.of("G")),
+                                        Map.of('G', new SimpleStateMatcher(List.of(EBlocks.GOLDEN_CHALK.get().defaultBlockState())))
+                                ))
                 )
+                .page(HeaderedTextBuilder.of("Chalk Circles", FormattedStringBuilder.begin()
+                        .then("After a heart glyph, rites need chalk circles, drawn using ")
+                        .boldEntryLink(itemPath(EItems.RITUAL_CHALK.get()), "ritual chalk").then(", ")
+                        .boldEntryLink(itemPath(EItems.NETHER_CHALK.get()), "infernal chalk").then(" and ")
+                        .boldEntryLink(itemPath(EItems.OTHERWHERE_CHALK.get()), "otherwhere chalk").then(". ").toString()))
                 .build("circle_magic/tutorial/performing_rites", output);
     }
 

@@ -4,10 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.enchanted.api.Vec2i;
 import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
-import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
+import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -39,7 +39,7 @@ public class RiteType implements Comparable<RiteType> {
             Codec.INT.optionalFieldOf("tick_power", 0).forGetter(r -> r.tickPower),
             RiteWeatherRequirement.CODEC.optionalFieldOf("weather", RiteWeatherRequirement.NONE).forGetter(r -> r.weather),
             Codec.INT.listOf(2, 2).optionalFieldOf("time", List.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
-            RiteFactoryRegistry.CODEC.fieldOf("factory").forGetter(r -> r.factory)
+            RiteFactory.codec().fieldOf("factory").forGetter(r -> r.factory)
     ).apply(instance, RiteType::new));
 
     private final List<ItemStack> items;

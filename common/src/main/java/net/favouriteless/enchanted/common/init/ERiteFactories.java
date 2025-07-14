@@ -1,40 +1,35 @@
 package net.favouriteless.enchanted.common.init;
 
-import com.mojang.serialization.MapCodec;
-import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
-import net.favouriteless.enchanted.common.circle_magic.RiteFactoryRegistry;
+import net.favouriteless.enchanted.api.circle_magic.RiteFactoryRegistry;
 import net.favouriteless.enchanted.common.circle_magic.rites.factory.*;
-import net.minecraft.resources.ResourceLocation;
 
 public class ERiteFactories {
 
     public static void load() {
-        register(ApplyCurseFactory.ID, ApplyCurseFactory.CODEC);
-        register(BindFamiliarFactory.ID, BindFamiliarFactory.CODEC);
-        register(BindTalismanFactory.ID, BindTalismanFactory.CODEC);
-        register(BlightFactory.ID, BlightFactory.CODEC);
-        register(BroilingFactory.ID, BroilingFactory.CODEC);
-        register(CommandFactory.ID, CommandFactory.CODEC);
-        register(CreateItemFactory.ID, CreateItemFactory.CODEC);
-        register(DuplicateItemFactory.ID, DuplicateItemFactory.CODEC);
-        register(EntityBoundCreateItemFactory.ID, EntityBoundCreateItemFactory.CODEC);
-        register(FertilityFactory.ID, FertilityFactory.CODEC);
-        register(ForestFactory.ID, ForestFactory.CODEC);
-        register(ImprisonmentFactory.ID, ImprisonmentFactory.CODEC);
-        register(LocationBoundCreateItemFactory.ID, LocationBoundCreateItemFactory.CODEC);
-        register(ProtectionFactory.ID, ProtectionFactory.CODEC);
-        register(RemoveCurseFactory.ID, RemoveCurseFactory.CODEC);
-        register(SanctityFactory.ID, SanctityFactory.CODEC);
-        register(SkyWrathFactory.ID, SkyWrathFactory.CODEC);
-        register(SummonEntityFactory.ID, SummonEntityFactory.CODEC);
-        register(SummonFamiliarFactory.ID, SummonFamiliarFactory.CODEC);
-        register(TotalEclipseFactory.ID, TotalEclipseFactory.CODEC);
-        register(TransposeBlocksFactory.ID, TransposeBlocksFactory.CODEC);
-        register(TransposeCasterFactory.ID, TransposeCasterFactory.CODEC);
-    }
-
-    public static void register(ResourceLocation id, MapCodec<? extends RiteFactory> codec) {
-        RiteFactoryRegistry.register(id, codec);
+        RiteFactoryRegistry registry = RiteFactoryRegistry.get();
+        
+        registry.register(ApplyCurseFactory.ID, ApplyCurseFactory.CODEC);
+        registry.register(BindFamiliarFactory.ID, BindFamiliarFactory.CODEC);
+        registry.register(BindTalismanFactory.ID, BindTalismanFactory.CODEC);
+        registry.register(BlightFactory.ID, BlightFactory.CODEC);
+        registry.register(BroilingFactory.ID, BroilingFactory.CODEC);
+        registry.register(CommandFactory.ID, CommandFactory.CODEC);
+        registry.register(CreateItemFactory.ID, CreateItemFactory.CODEC);
+        registry.register(DuplicateItemFactory.ID, DuplicateItemFactory.CODEC);
+        registry.register(EntityBoundCreateItemFactory.ID, EntityBoundCreateItemFactory.CODEC);
+        registry.register(FertilityFactory.ID, FertilityFactory.CODEC);
+        registry.register(ForestFactory.ID, ForestFactory.CODEC);
+        registry.register(ImprisonmentFactory.ID, ImprisonmentFactory.CODEC);
+        registry.register(LocationBoundCreateItemFactory.ID, LocationBoundCreateItemFactory.CODEC);
+        registry.register(ProtectionFactory.ID, ProtectionFactory.CODEC);
+        registry.register(RemoveCurseFactory.ID, RemoveCurseFactory.CODEC);
+        registry.register(SanctityFactory.ID, SanctityFactory.CODEC);
+        registry.register(SkyWrathFactory.ID, SkyWrathFactory.CODEC);
+        registry.register(SummonEntityFactory.ID, SummonEntityFactory.CODEC);
+        registry.register(SummonFamiliarFactory.ID, SummonFamiliarFactory.CODEC);
+        registry.register(TotalEclipseFactory.ID, TotalEclipseFactory.CODEC);
+        registry.register(TransposeBlocksFactory.ID, TransposeBlocksFactory.CODEC);
+        registry.register(TransposeCasterFactory.ID, TransposeCasterFactory.CODEC);
     }
 
 }

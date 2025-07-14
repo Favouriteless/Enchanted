@@ -1,12 +1,14 @@
-// 1.21.1	2025-07-14T12:08:42.9997299	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-07-15T00:04:28.4574076	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
+fdb121ef88d9a3243d1443e75518c3c36e387f49 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
+66a4957d2920c7d79ffeb9590f1518db2564be23 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/tutorial.json
 cad36922635b3ca358be3e81462118492631f1dc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/extraction.json
 84bfa3d994ff5fdca44fc8943ef5c394b2dcb66a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started.json
 3014147239329d8b2f84485e60372dde5bfa3bb7 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started/altars.json
 bb419bf4747c4be0241bb5f93215f1dddbca2c40 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology.json
 7ca82056e4d0f6994b34d042e6919510faa03aa2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology/mutated_plants.json
 786052cd34987c9d7df44922470048cbdb793f89 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/alder_sapling.json
-cdbab1e3615f701bc6d3b4b2cbd98d7ea9a06097 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/altar.json
+4464732729e217891786dcdd8e2765575f0f62db assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/altar.json
 0059d9129706d0513ab2e0ec12695387c71a9af9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/belladonna.json
 d2fa6942be2c31db74cc0d519cf8904a11eac4f1 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/blood_poppy.json
 a71ca5f66957ee4496ef51eed4dd148f777e2d2b assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/distillery.json
@@ -24,7 +26,7 @@ dbe5f50dbb97d6ed04eae9789a4ae997a69d89a3 assets/enchanted/modopedia/books/art_of
 104428a833951e5f46b7d55aeccf9f153ace07a5 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/witch_oven.json
 5ff2c4e37f477188cd30ab6e32cc3782720fc619 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/wolfsbane.json
 a9a110fe4607c43f8de281924baa08d5b50f23ac assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/brewing.json
-5c16b6d0b2d87b3a12a12aeada1127da885e3120 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/tutorial/performing_rites.json
+1d587300fef4e5aec3cd416ddf30bba1f6a5909b assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/tutorial/performing_rites.json
 904b5a985fcef14b18867cc1ef2731d57abfecab assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/getting_started/chalice_upgrades.json
 bde109f1877ea33b9a52fbce582c15d39706b1c2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/getting_started/skull_upgrades.json
 a9e9ca61edef8cb0a190bf6d62dbd51ab04f58bd assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/getting_started/torch_upgrades.json

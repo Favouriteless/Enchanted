@@ -13,16 +13,12 @@ import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
-import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.favouriteless.modopedia.api.book.page_components.PageWidgetHolder;
-import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
 import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
-import net.favouriteless.modopedia.client.page_components.item_displays.RingsItemDisplay;
-import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.favouriteless.modopedia.client.page_widgets.PageImageButton;
 import net.favouriteless.modopedia.platform.ClientServices;
 import net.minecraft.ChatFormatting;
@@ -35,7 +31,6 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -48,11 +43,9 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -110,6 +103,12 @@ public class MutagenDisplayPageComponent extends PageComponent {
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         BookTexture tex = context.getBookTexture();
         Rectangle mutagen = tex.widgets().get("mutagen");
+
+        Minecraft.getInstance().getTextureManager()
+                .getTexture(Enchanted.id(""));
+
+        Minecraft.getInstance().getResourceManager()
+                .getResource(Enchanted.id("")).isPresent();
 
         int width = mutagen.width();
         int height = mutagen.height();

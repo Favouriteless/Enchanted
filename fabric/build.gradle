@@ -73,7 +73,7 @@ modrinth {
     versionName = "Fabric $mcVersion"
     versionNumber = project.version.toString()
     versionType = project.version.toString().endsWith("beta") ? "beta" : "release"
-    uploadFile = tasks.jar
+    uploadFile = tasks.remapJar
     changelog = rootProject.file("changelog.txt").getText("UTF-8")
     loaders = ["fabric"]
     gameVersions = ["1.21.1"]
@@ -94,7 +94,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     group = "publishing"
     apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "Invalid/No API Token Found"
 
-    UploadArtifact main = upload(560363, tasks.jar)
+    UploadArtifact main = upload(560363, tasks.remapJar)
     main.releaseType = project.version.toString().endsWith("beta") ? "beta" : "release"
     main.changelog = rootProject.file("changelog.txt").getText("UTF-8")
 

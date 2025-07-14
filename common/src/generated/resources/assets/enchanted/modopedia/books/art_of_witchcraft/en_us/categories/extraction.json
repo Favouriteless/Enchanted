@@ -23,5 +23,6 @@
     "id": "enchanted:witch_oven"
   },
   "landing_text": "Many resources used in witchcraft can only be obtained by extracting them from other materials.\n\nThis involves two processes; fume collection and distillation. Both of these are detailed in this chapter.",
+  "sort_num": 1,
   "title": "Material Processing"
 }

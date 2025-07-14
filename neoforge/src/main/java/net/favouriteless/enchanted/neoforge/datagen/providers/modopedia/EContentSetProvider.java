@@ -66,6 +66,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .children("getting_started/altars")
                 .entries(itemPaths(EItems.ARTHANA.get(), EItems.EARMUFFS.get(), EItems.BROOM.get(), EItems.TAGLOCK.get(),
                                 EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get()))
+                .sortNum(0)
                 .build("getting_started", output);
 
         CategoryBuilder.of("Altars")
@@ -89,6 +90,7 @@ public class EContentSetProvider extends ContentSetProvider {
                                 EItems.FOUL_FUME.get(), EItems.GYPSUM.get(), EItems.HINT_OF_REBIRTH.get(),
                                 EItems.ODOUR_OF_PURITY.get(), EItems.OIL_OF_VITRIOL.get(), EItems.REEK_OF_MISFORTUNE.get(),
                                 EItems.REFINED_EVIL.get(), EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get()))
+                .sortNum(1)
                 .build("extraction", output);
 
         CategoryBuilder.of("Herbology")
@@ -99,6 +101,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .children("herbology/mutated_plants")
                 .entries(blockPaths(EBlocks.BELLADONNA.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.MANDRAKE.get(),
                                 EBlocks.SNOWBELL.get(), EBlocks.WOLFSBANE.get(), EBlocks.GARLIC.get()))
+                .sortNum(2)
                 .build("herbology", output);
 
         CategoryBuilder.of("Mutated Plants")
@@ -125,6 +128,7 @@ public class EContentSetProvider extends ContentSetProvider {
                         EItems.MYSTIC_UNGUENT.get(), EItems.SPIRIT_OF_OTHERWHERE.get(), EItems.SOUL_OF_THE_WORLD.get(),
                         EItems.BREW_OF_LOVE.get(), EItems.BREW_OF_SPROUTING.get(), EItems.BREW_OF_THE_DEPTHS.get(),
                         EItems.BREW_OF_THE_GROTESQUE.get()))
+                .sortNum(3)
                 .build("brewing", output);
 
 //        CategoryBuilder.of("Circle Magic")

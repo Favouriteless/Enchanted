@@ -4,7 +4,7 @@
 
 # Common
     stateobserver = "1.6.3"
-    modopedia = "1.1.4"
+    modopedia = "1.1.5"
     geckolib = "4.7"
     forgeconfigapi = "21.1.1"
     iris-common = "1.8.0-beta.8+1.21.1-neoforge"

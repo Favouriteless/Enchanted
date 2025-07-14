@@ -411,7 +411,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 )
                 .page(
                         HeaderedTextBuilder.of("Altar Power", "Altars draw their power from nature, specifically from plants in the surrounding area. A variety of plants works better than having only a few."),
-                        FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/altar.png"))
+                        FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/altar.png")).x(10).y(80)
 
                 )
                 .page(

@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-13T22:51:03.3130528	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-07-14T12:08:42.9997299	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 cad36922635b3ca358be3e81462118492631f1dc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/extraction.json
 84bfa3d994ff5fdca44fc8943ef5c394b2dcb66a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started.json
@@ -6,7 +6,7 @@ cad36922635b3ca358be3e81462118492631f1dc assets/enchanted/modopedia/books/art_of
 bb419bf4747c4be0241bb5f93215f1dddbca2c40 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology.json
 7ca82056e4d0f6994b34d042e6919510faa03aa2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology/mutated_plants.json
 786052cd34987c9d7df44922470048cbdb793f89 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/alder_sapling.json
-0991ad356df0fb024a7794d53bf1c681d985c809 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/altar.json
+cdbab1e3615f701bc6d3b4b2cbd98d7ea9a06097 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/altar.json
 0059d9129706d0513ab2e0ec12695387c71a9af9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/belladonna.json
 d2fa6942be2c31db74cc0d519cf8904a11eac4f1 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/blood_poppy.json
 a71ca5f66957ee4496ef51eed4dd148f777e2d2b assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/distillery.json

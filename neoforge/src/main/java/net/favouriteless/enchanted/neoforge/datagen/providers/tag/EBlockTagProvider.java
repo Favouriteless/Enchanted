@@ -10,6 +10,7 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,7 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
     @Override
     protected void addTags(@NotNull Provider provider) {
         addEnchantedTags(provider);
+        addCommonTags(provider);
         addVanillaTags(provider);
     }
 
@@ -104,6 +106,11 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .add(EBlocks.ROWAN_STAIRS.get(), EBlocks.ALDER_STAIRS.get(), EBlocks.HAWTHORN_STAIRS.get());
         tag(ETags.Blocks.HEAT_SOURCES)
                 .add(Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE, Blocks.LAVA, Blocks.MAGMA_BLOCK);
+    }
+
+    public void addCommonTags(Provider provider) {
+        tag(Tags.Blocks.STRIPPED_LOGS)
+                .add(EBlocks.STRIPPED_ALDER_LOG.get(), EBlocks.STRIPPED_HAWTHORN_LOG.get(), EBlocks.STRIPPED_ROWAN_LOG.get());
     }
 
     public void addVanillaTags(Provider provider) {

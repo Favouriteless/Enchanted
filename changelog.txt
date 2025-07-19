@@ -1,2 +1,3 @@
 - CHANGED: MutagenInfo pages now render the blocks rather than their item counterparts. This fixes issues with blocks which don't have an item.
 - CHANGED: Fixed the image misplacement in the mutations book entry.
+- CHANGED: Eating a creeper heart now has "undesirable" side effects.

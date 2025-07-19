@@ -9,6 +9,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
+import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.init.EItems;
@@ -32,7 +33,7 @@ import java.util.Map.Entry;
 
 public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
 
-    private static final int CIRCLE_SIZE = 110;
+    private static final int CIRCLE_SIZE = 100;
     private static final int START_RADIUS = 15;
     private static final int RADIUS_INCREMENT = 15;
 
@@ -53,7 +54,7 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
         this.helper = helper;
 
         background = helper.createDrawable(Enchanted.id("textures/gui/jei/circle_magic.png"), 0, 0, 180, 120);
-        glyph_golden = buildTexture(Enchanted.id("textures/gui/jei/gold_glyph.png"), CIRCLE_SIZE, CIRCLE_SIZE);
+        glyph_golden = buildTexture(Enchanted.id("textures/gui/gold_glyph.png"), CIRCLE_SIZE, CIRCLE_SIZE);
         arrow = helper.createAnimatedRecipeArrow(120);
     }
 
@@ -114,19 +115,13 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
 
         circles.clear();
         for(Entry<Holder<CircleMagicShape>, Block> entry : recipe.rite().getShapes().entrySet()) {
-            ResourceKey<CircleMagicShape> shapeKey = entry.getKey().unwrapKey().orElse(null);
-            if(shapeKey == null)
+            ResourceKey<CircleMagicShape> shape = entry.getKey().unwrapKey().orElse(null);
+            if(shape == null)
                 return;
 
-            ResourceLocation location = shapeKey.location();
-            ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(
-                    location.getNamespace(),
-                    String.format("textures/gui/circle_magic_shapes/%s_%s.png", location.getPath(), BuiltInRegistries.BLOCK.getKey(entry.getValue()).getPath())
-            );
-
-            if(Minecraft.getInstance().getResourceManager().getResource(texture).isPresent()) {
-                circles.add(buildTexture(texture, CIRCLE_SIZE, CIRCLE_SIZE));
-            }
+            ResourceLocation tex = EnchantedClient.getShapeGuiTexture(shape, entry.getValue());
+            if(tex != null)
+                circles.add(buildTexture(tex, CIRCLE_SIZE, CIRCLE_SIZE));
         }
     }
 

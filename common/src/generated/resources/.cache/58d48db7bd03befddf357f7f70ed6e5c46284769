@@ -1,4 +1,5 @@
-// 1.21.1	2025-06-14T05:08:17.2371919	Tags for minecraft:block mod id enchanted
+// 1.21.1	2025-07-19T01:43:06.1118246	Tags for minecraft:block mod id enchanted
+ecb125cfed15964e52ec0bb787bb3dab40a6b4ea data/c/tags/block/stripped_logs.json
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/block/alder_logs.json
 69c396cb051bbe9a130e6979b67065e5041b179d data/enchanted/tags/block/blight_decayable_blocks.json
 db77d76070801e3294b77d64cfc0adaeb8972d36 data/enchanted/tags/block/blight_decayable_plants.json

@@ -23,17 +23,17 @@ public class EDamageTypeTagProvider extends DamageTypeTagsProvider {
 
     public void addVanillaTags(Provider provider) {
         tag(DamageTypeTags.BYPASSES_ARMOR)
-                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO, EDamageTypes.INTERNAL_EXPLOSION);
         tag(DamageTypeTags.BYPASSES_EFFECTS)
-                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO, EDamageTypes.INTERNAL_EXPLOSION);
         tag(DamageTypeTags.BYPASSES_COOLDOWN)
-                .add(EDamageTypes.SACRIFICE);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.INTERNAL_EXPLOSION);
         tag(DamageTypeTags.BYPASSES_ENCHANTMENTS)
-                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO, EDamageTypes.INTERNAL_EXPLOSION);
         tag(DamageTypeTags.BYPASSES_INVULNERABILITY)
-                .add(EDamageTypes.SACRIFICE);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.INTERNAL_EXPLOSION);
         tag(DamageTypeTags.BYPASSES_RESISTANCE)
-                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO);
+                .add(EDamageTypes.SACRIFICE, EDamageTypes.SOUND, EDamageTypes.VOODOO, EDamageTypes.INTERNAL_EXPLOSION);
     }
 
 }

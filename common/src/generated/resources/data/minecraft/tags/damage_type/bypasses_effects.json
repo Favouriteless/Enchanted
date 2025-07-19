@@ -2,6 +2,7 @@
   "values": [
     "enchanted:sacrifice",
     "enchanted:sound",
-    "enchanted:voodoo"
+    "enchanted:voodoo",
+    "enchanted:internal_explosion"
   ]
 }

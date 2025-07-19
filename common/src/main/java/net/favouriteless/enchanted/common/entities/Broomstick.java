@@ -100,10 +100,10 @@ public class Broomstick extends Entity {
 
         // If W or S is held, only decelerate the sideways components of the velocity.
         velocity = forward.scale(velocity.dot(forward) * (inputAcceleration == 0 ? 0.85D : 1.0D) + acceleration)
-                .add(up.scale(velocity.dot(up) * 0.85D))
+                .add(up.scale(velocity.dot(up) * (inputClimb == 0 ? 0.85D : 1.0D)))
                 .add(left.scale(velocity.dot(left) * 0.85D));
 
-        velocity = velocity.add(0, inputClimb * ACCELERATION * 1.25D, 0); // Include vertical movement
+        velocity = velocity.add(0, inputClimb * ACCELERATION, 0); // Include vertical movement
 
         double speed = Math.max(Math.min(velocity.length(), MAX_SPEED), 0); // Clamp to maximum velocity.
         setDeltaMovement(velocity.normalize().scale(speed));

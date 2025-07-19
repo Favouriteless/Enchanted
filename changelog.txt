@@ -1,3 +1,4 @@
-- CHANGED: MutagenInfo pages now render the blocks rather than their item counterparts. This fixes issues with blocks which don't have an item.
-- CHANGED: Fixed the image misplacement in the mutations book entry.
+- ADDED: Circle magic section in the book.
+
 - CHANGED: Eating a creeper heart now has "undesirable" side effects.
+- CHANGED: Enchanted broomsticks now accelerate vertically at the same rate as they do on the XZ plane.

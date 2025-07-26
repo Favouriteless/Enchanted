@@ -1,6 +1,9 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers;
 
-import net.favouriteless.enchanted.api.datagen.builders.recipe.*;
+import net.favouriteless.enchanted.api.datagen.builders.recipe.ByproductRecipeBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.recipe.CauldronTypeRecipeBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.recipe.DistillingRecipeBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.recipe.SpinningRecipeBuilder;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags;
@@ -192,9 +195,6 @@ public class ERecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.PURIFIED_MILK.get()).requires(Items.MILK_BUCKET)
 				.requires(EItems.ODOUR_OF_PURITY.get()).requires(EItems.CLAY_JAR.get(), 3)
 				.unlockedBy(getHasName(EItems.ODOUR_OF_PURITY.get()), has(EItems.ODOUR_OF_PURITY.get())).save(output);
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.QUICKLIME.get())
-				.requires(EItems.WOOD_ASH.get())
-				.unlockedBy(getHasName(EItems.WOOD_ASH.get()), has(EItems.WOOD_ASH.get())).save(output);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.TAGLOCK.get())
 				.requires(Items.GLASS_BOTTLE).requires(EItems.BONE_NEEDLE.get())
 				.unlockedBy(getHasName(EItems.BONE_NEEDLE.get()), has(EItems.BONE_NEEDLE.get())).save(output);
@@ -203,7 +203,10 @@ public class ERecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(EItems.BONE_NEEDLE.get()), has(EItems.BONE_NEEDLE.get())).save(output);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.CHALICE_FILLED.get())
 						.requires(EItems.CHALICE.get()).requires(EItems.REDSTONE_SOUP.get())
-						.unlockedBy(getHasName(EItems.CHALICE.get()), has(EItems.CHALICE.get()));
+						.unlockedBy(getHasName(EItems.CHALICE.get()), has(EItems.CHALICE.get())).save(output);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BONE_MEAL, 4)
+						.requires(EItems.WOOD_ASH.get(), 2).requires(Items.BONE)
+						.unlockedBy(getHasName(EItems.WOOD_ASH.get()), has(EItems.WOOD_ASH.get())).save(output);
 
 
 		buttonBuilder(EItems.ALDER_BUTTON.get(), Ingredient.of(EItems.ALDER_PLANKS.get()))
@@ -235,6 +238,8 @@ public class ERecipeProvider extends RecipeProvider {
 						Ingredient.of(ItemTags.SAPLINGS), RecipeCategory.MISC, EItems.WOOD_ASH.get(),
 						0.1F, 150)
 				.unlockedBy("has_sapling", has(ItemTags.SAPLINGS)).save(output);
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.CALCITE), RecipeCategory.MISC, EItems.QUICKLIME.get(), 0.1F, 200)
+				.unlockedBy(getHasName(Items.CALCITE), has(Items.CALCITE)).save(output);
 	}
 
 	protected void buildByproductRecipes(RecipeOutput output, Provider registries) {

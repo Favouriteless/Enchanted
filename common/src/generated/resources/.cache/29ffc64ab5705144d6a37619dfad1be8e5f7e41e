@@ -1,9 +1,10 @@
-// 1.21.1	2025-07-13T03:35:00.6860081	Modopedia Templates[enchanted]
+// 1.21.1	2025-07-22T18:59:00.22537	Modopedia Templates[enchanted]
 1471c9c51c1ab607a3ffd8fc173bdda0ffd8cb0c assets/enchanted/modopedia/templates/framed_image.json
 bbbf097e12406272aebd07c20a05b1c338deaae5 assets/enchanted/modopedia/templates/page/byproduct.json
 f2d480bc8dea8356d3086cebd9e3f8fc6a5eb00a assets/enchanted/modopedia/templates/page/distillery.json
 df3ca3ac91e147d656430afb45917c194eba89f4 assets/enchanted/modopedia/templates/page/double_byproduct.json
 2a7d069e613642575c7761eb689531970fe4cbbe assets/enchanted/modopedia/templates/page/mutagen.json
+830951efdeb862e4fcf06c91dfc299ecff718be7 assets/enchanted/modopedia/templates/page/rite.json
 8b14121d9e848bd4a963e24820a3f2dfab5cecb4 assets/enchanted/modopedia/templates/recipe/byproduct.json
 176a4a131866840470229140ed1f288745050ea7 assets/enchanted/modopedia/templates/recipe/distilling.json
 584f18a211bedff64dee24cbd38c330f573ea152 assets/enchanted/modopedia/templates/recipe/kettle.json

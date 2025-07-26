@@ -11,6 +11,7 @@ import net.favouriteless.enchanted.common.init.ETags.EntityTypes;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.util.ItemUtils;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -62,10 +63,10 @@ public class EmptyTaglockItem extends Item {
                 fillTaglockEntity(player, stack, target);
             }
             else {
-                player.displayClientMessage(Component.translatable(Enchanted.translationKey("taglock", "failed")).withStyle(ChatFormatting.RED), false);
+                player.displayClientMessage(Component.translatable(LangUtils.key("taglock", "failed")).withStyle(ChatFormatting.RED), false);
 
                 if(target instanceof ServerPlayer sp)
-                    sp.displayClientMessage(Component.translatable(Enchanted.translationKey("taglock", "failed.player"), player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
+                    sp.displayClientMessage(Component.translatable(LangUtils.key("taglock", "failed.player"), player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
             }
 
         }

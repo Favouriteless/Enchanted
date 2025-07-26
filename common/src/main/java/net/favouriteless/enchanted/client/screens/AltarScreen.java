@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
 
-    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/altar.png");
+    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/menus/altar.png");
 
     public AltarScreen(AltarMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);

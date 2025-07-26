@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.integrations.modopedia.client.template_proce
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
@@ -48,7 +49,7 @@ public class DistillingRecipeProcessor implements TemplateProcessor {
             lookup.set("p_input2", Variable.of(new GridItemDisplay(inputs.subList(1, inputs.size()),  2, 20, false)));
             lookup.set("p_output1", Variable.of(new GridItemDisplay(outputs.size() > 1 ? outputs.subList(0, 2) : outputs.subList(0, 1), 2, 19, false)));
             lookup.set("p_output2", Variable.of(outputs.size() > 2 ? new GridItemDisplay(outputs.subList(2, outputs.size()), 2, 19, false) : new EmptyItemDisplay()));
-            lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.power()).getString()));
+            lookup.set("p_power", Variable.of(Component.translatable(LangUtils.tooltip("altar_power"), recipe.power()).getString()));
         }
         else {
             throw new IllegalArgumentException("DistilleryRecipe template must use a DistilleryRecipe.");

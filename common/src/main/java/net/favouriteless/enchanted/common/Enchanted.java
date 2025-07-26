@@ -4,7 +4,7 @@ import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.init.*;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.mutandis.MutagenSavedData;
-import net.favouriteless.enchanted.integrations.modopedia.common.init.EBookTypes;
+import net.favouriteless.enchanted.integrations.modopedia.EModopedia;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -46,15 +46,11 @@ public class Enchanted {
         ECreativeTab.load();
         ERiteFactories.load();
 
-        EBookTypes.load();
+        EModopedia.initCommon();
     }
 
     public static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
-    }
-
-    public static String translationKey(String prefix, String suffix) {
-        return String.format("%s.%s.%s", prefix, MOD_ID, suffix);
     }
 
     public static String savedDataName(String suffix) {

@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.recipes;
 
 import net.favouriteless.enchanted.common.recipes.recipe_inputs.ListInput;
+import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -35,10 +36,7 @@ public abstract class CauldronTypeRecipe implements Recipe<ListInput> {
             return false; // Too many items
 
         for(int i = 0; i < inputs.size() && i < input.size(); i++) {
-            ItemStack itemIn = inputs.get(i);
-            ItemStack inventoryItem = input.getItem(i);
-
-            if(!ItemStack.matches(itemIn, inventoryItem))
+            if(!ItemUtils.isSameItemPartial(inputs.get(i), input.getItem(i)))
                 return false;
         }
         return true;
@@ -52,9 +50,7 @@ public abstract class CauldronTypeRecipe implements Recipe<ListInput> {
             return false;
 
         for(int i = 0; i < inputs.size(); i++) {
-            ItemStack itemIn = inputs.get(i);
-            ItemStack inventoryItem = input.getItem(i);
-            if(!ItemStack.matches(itemIn, inventoryItem))
+            if(!ItemUtils.isSameItemPartial(inputs.get(i), input.getItem(i)))
                 return false;
         }
 

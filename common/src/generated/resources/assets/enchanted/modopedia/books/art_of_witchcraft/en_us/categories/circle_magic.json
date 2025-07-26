@@ -5,7 +5,6 @@
     "circle_magic/charging",
     "circle_magic/creature",
     "circle_magic/curses",
-    "circle_magic/infusion",
     "circle_magic/transposition",
     "circle_magic/world"
   ],

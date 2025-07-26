@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.integrations.modopedia.client.page_components.RitePageComponent;
 import net.favouriteless.enchanted.integrations.modopedia.client.page_components.MutagenDisplayPageComponent;
 import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
 import net.favouriteless.modopedia.client.page_components.WidgetPageComponent;
@@ -19,6 +20,7 @@ public class EPageComponents {
         registry.register(ID_DISTILLERY, () -> new WidgetPageComponent("distillery"));
         registry.register(ID_IMAGE_FRAME, () -> new WidgetPageComponent("image_frame"));
         registry.register(MutagenDisplayPageComponent.ID, MutagenDisplayPageComponent::new);
+        registry.register(RitePageComponent.ID, RitePageComponent::new);
     }
 
 }

@@ -6,7 +6,8 @@
     "items/ritual_chalk",
     "items/nether_chalk",
     "items/otherwhere_chalk",
-    "items/broom"
+    "items/broom",
+    "items/circle_talisman"
   ],
   "icon": {
     "count": 1,

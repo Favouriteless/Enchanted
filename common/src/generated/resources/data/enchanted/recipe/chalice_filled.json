@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "enchanted:chalice"
+    },
+    {
+      "item": "enchanted:redstone_soup"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "enchanted:chalice_filled"
+  }
+}

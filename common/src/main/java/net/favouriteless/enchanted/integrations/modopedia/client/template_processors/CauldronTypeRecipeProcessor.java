@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.integrations.modopedia.client.template_proce
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
@@ -42,7 +43,7 @@ public class CauldronTypeRecipeProcessor implements TemplateProcessor {
             lookup.set("p_inputs_y", Variable.of(35 - rows * 8)); // 35 is right in the center of the ingredients area
             lookup.set("p_inputs", Variable.of(new GridItemDisplay(recipe.getInputs().stream().<ItemDisplay>map(SimpleItemDisplay::new).toList(), 5, 16, true)));
             lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
-            lookup.set("p_power", Variable.of(Component.translatable(Enchanted.translationKey("tooltip", "altar_power"), recipe.getPower()).getString()));
+            lookup.set("p_power", Variable.of(Component.translatable(LangUtils.tooltip("altar_power"), recipe.getPower()).getString()));
         }
         else {
             throw new IllegalArgumentException("CauldronTypeRecipe template must use a CauldronTypeRecipe recipe.");

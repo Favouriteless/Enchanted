@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-16T04:53:36.8198	Recipes
+// 1.21.1	2025-07-22T20:33:05.8135606	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -19,6 +19,7 @@ cd84ee3db5ddaad7c8ca36c406fb8589433dd870 data/enchanted/advancement/recipes/deco
 7b7a8f60524690b700516c796722fbe763a80e69 data/enchanted/advancement/recipes/misc/attuned_stone.json
 9b08524fea1b87f741a4ae95058db9ab110a4bdc data/enchanted/advancement/recipes/misc/bone_needle.json
 e5826bedb09b330cfd7acee192c60f3392354a1b data/enchanted/advancement/recipes/misc/broom.json
+8906f830043b65ddddeada5c4dd667187316498e data/enchanted/advancement/recipes/misc/chalice_filled.json
 9f68dc1f0fdd722e9123ebe07e25ebbab5d4b34b data/enchanted/advancement/recipes/misc/clay_jar.json
 6031f6a7a3c858d210c924bf6a2e9f51575ec949 data/enchanted/advancement/recipes/misc/distillery.json
 c134b64378a770b1c17232500e2fea5f3aa0c4d3 data/enchanted/advancement/recipes/misc/fume_filter.json
@@ -27,7 +28,7 @@ c3277016ac94d077b9173e4746c89e359ff6eb1c data/enchanted/advancement/recipes/misc
 3cbc8ba05e7656e014feafedf38e70d120ee8e83 data/enchanted/advancement/recipes/misc/poppet.json
 b125203256ae995e962a7dbc97b166339db706fe data/enchanted/advancement/recipes/misc/poppet_shelf.json
 228f49a4fe1cdb437b36633c2e2caa65f525ecb5 data/enchanted/advancement/recipes/misc/purified_milk.json
-a8bf85d767304de3e3c84092dc368ad05385ee50 data/enchanted/advancement/recipes/misc/quicklime.json
+8edea1434318f8e97a265b493637dc64ae6dca09 data/enchanted/advancement/recipes/misc/quicklime.json
 7de2e194917ea6cc7396b50a89c629f6ac873462 data/enchanted/advancement/recipes/misc/soft_clay_jar.json
 d5f76142596d060dac687d8d209b755f03122a6e data/enchanted/advancement/recipes/misc/spinning_wheel.json
 8ce19a0e471b7be649e62dc45b020b71f3a75dfc data/enchanted/advancement/recipes/misc/taglock_kit.json
@@ -73,6 +74,7 @@ feeb2d909816d2445fed2bcaf1760ff347f63a0b data/enchanted/recipe/byproduct/reek_of
 970de17c9dfc12c21b7706e27f453cb64a56b5a2 data/enchanted/recipe/byproduct/whiff_of_magic_rowan_sapling.json
 71271c3acf10d6a4411bf086930c9dd6184ec239 data/enchanted/recipe/candelabra.json
 22a567bd3094f79121c915bc37a12d0535043520 data/enchanted/recipe/chalice.json
+6137f4f17fdc3165836ed75bb731ba0f00850527 data/enchanted/recipe/chalice_filled.json
 dbffdda60d8d0c391ed5b1a4c06e8dd2d4e9a6ec data/enchanted/recipe/circle_talisman.json
 501a71eaf2236fda7aed0fc356745ac5548dad86 data/enchanted/recipe/clay_jar.json
 6534b092c1ac652c3ed67668b1e58008cec74775 data/enchanted/recipe/distillery.json
@@ -107,7 +109,7 @@ b665bf187aa8b0a56c845a431da58ce248f9f12c data/enchanted/recipe/kettle/flying_oin
 ac548bb89f765577a8772a97fde570b18b6ec351 data/enchanted/recipe/poppet.json
 00e7a4b0b8e5d9bd9267f0b4f35ea40a3f9b9bd8 data/enchanted/recipe/poppet_shelf.json
 c0feb04b854d5c7fb4ebec97b07d62042f2374d6 data/enchanted/recipe/purified_milk.json
-b4ae88f0f05c7d47bb5c4b00c02a96e2c1dea0dd data/enchanted/recipe/quicklime.json
+cd430dd9e418769a06b6c318a08bb69ea9d07df2 data/enchanted/recipe/quicklime.json
 b9171b2551834936c8295a4b38d6c6292c0bbc3c data/enchanted/recipe/ritual_chalk.json
 8ec6e98d0fabdee480c5bbf47c2158bd25d13e79 data/enchanted/recipe/rowan_button.json
 302de7c867eee80ada5ba8206d9bd8ff4b34cc74 data/enchanted/recipe/rowan_fence.json
@@ -159,3 +161,5 @@ e341d6226975434e0f7a8d6e5be0de962e654957 data/enchanted/recipe/witch_cauldron/go
 c9f9a704697b4256ccc125ca7bdc09ca201c97c5 data/enchanted/recipe/witch_cauldron/otherwhere_chalk.json
 1365db52777809e1a9e9d4434acb080ecb64abde data/enchanted/recipe/witch_oven.json
 11396d73054a93356889c9ebd89e26c8bbf68735 data/enchanted/recipe/wood_ash.json
+b5f58083e02b8f172247fe65d4fcf96000fa6163 data/minecraft/advancement/recipes/misc/bone_meal.json
+df0b03687b690771ed851064bc53dc073f7319bc data/minecraft/recipe/bone_meal.json

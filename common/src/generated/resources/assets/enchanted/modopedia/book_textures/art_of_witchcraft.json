@@ -118,6 +118,42 @@
       "v": 315,
       "width": 90
     },
+    "rite/power": {
+      "height": 16,
+      "u": 178,
+      "v": 315,
+      "width": 16
+    },
+    "rite/sacrifices": {
+      "height": 16,
+      "u": 194,
+      "v": 331,
+      "width": 16
+    },
+    "rite/time": {
+      "height": 16,
+      "u": 178,
+      "v": 331,
+      "width": 16
+    },
+    "rite/weather/clear": {
+      "height": 16,
+      "u": 194,
+      "v": 315,
+      "width": 16
+    },
+    "rite/weather/raining": {
+      "height": 16,
+      "u": 210,
+      "v": 315,
+      "width": 16
+    },
+    "rite/weather/thundering": {
+      "height": 16,
+      "u": 226,
+      "v": 315,
+      "width": 16
+    },
     "separator": {
       "height": 6,
       "u": 0,

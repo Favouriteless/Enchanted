@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
 
-    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/distillery.png");
+    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/menus/distillery.png");
 
     public static final int COOK_BAR_XPOS = 69;
     public static final int COOK_BAR_YPOS = 12;

@@ -1,10 +1,7 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.MutagenPageBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.*;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
 import net.favouriteless.enchanted.common.Enchanted;
@@ -65,7 +62,8 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.ARTHANA.get().getDefaultInstance())
                 .children("getting_started/altars")
                 .entries(itemPaths(EItems.ARTHANA.get(), EItems.EARMUFFS.get(), EItems.BROOM.get(), EItems.TAGLOCK.get(),
-                                EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get()))
+                        EItems.BONE_NEEDLE.get(), EItems.ATTUNED_STONE.get(), EItems.WAYSTONE.get(), EItems.WOOD_ASH.get(),
+                        EItems.QUICKLIME.get(), EItems.CIRCLE_TALISMAN.get()))
                 .sortNum(0)
                 .build("getting_started", output);
 
@@ -85,11 +83,12 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("This involves two processes; fume collection and distillation. Both of these are detailed in this chapter.").toString())
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
                 .entries(blockPaths(EBlocks.WITCH_OVEN.get(), EBlocks.DISTILLERY.get()))
-                .entries(itemPaths(EItems.CLAY_JAR.get(), EItems.BREATH_OF_THE_GODDESS.get(), EItems.DEMONIC_BLOOD.get(),
-                                EItems.DIAMOND_VAPOUR.get(), EItems.ENDER_DEW.get(), EItems.EXHALE_OF_THE_HORNED_ONE.get(),
-                                EItems.FOUL_FUME.get(), EItems.GYPSUM.get(), EItems.HINT_OF_REBIRTH.get(),
-                                EItems.ODOUR_OF_PURITY.get(), EItems.OIL_OF_VITRIOL.get(), EItems.REEK_OF_MISFORTUNE.get(),
-                                EItems.REFINED_EVIL.get(), EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get()))
+                .entries(itemPaths(EItems.CLAY_JAR.get(), EItems.BREATH_OF_THE_GODDESS.get(),
+                        EItems.DEMONIC_BLOOD.get(), EItems.DIAMOND_VAPOUR.get(), EItems.ENDER_DEW.get(),
+                        EItems.EXHALE_OF_THE_HORNED_ONE.get(), EItems.FOUL_FUME.get(), EItems.GYPSUM.get(),
+                        EItems.HINT_OF_REBIRTH.get(), EItems.ODOUR_OF_PURITY.get(), EItems.OIL_OF_VITRIOL.get(),
+                        EItems.QUICKLIME.get(), EItems.REEK_OF_MISFORTUNE.get(), EItems.REFINED_EVIL.get(),
+                        EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get(), EItems.WOOD_ASH.get()))
                 .sortNum(1)
                 .build("extraction", output);
 
@@ -100,7 +99,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.WOLFSBANE_FLOWER.get().getDefaultInstance())
                 .children("herbology/mutated_plants")
                 .entries(blockPaths(EBlocks.BELLADONNA.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.MANDRAKE.get(),
-                                EBlocks.SNOWBELL.get(), EBlocks.WOLFSBANE.get(), EBlocks.GARLIC.get()))
+                        EBlocks.SNOWBELL.get(), EBlocks.WOLFSBANE.get(), EBlocks.GARLIC.get()))
                 .sortNum(2)
                 .build("herbology", output);
 
@@ -137,8 +136,7 @@ public class EContentSetProvider extends ContentSetProvider {
                         .then("Circle magic is the practice of using chalk circles and foci to manifest complex magical phenomenon.")
                         .paragraph("The fundamentals of circle magic and known rites are detailed in this chapter.").toString())
                 .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
-                        "circle_magic/creature", "circle_magic/curses", "circle_magic/infusion",
-                        "circle_magic/transposition", "circle_magic/world")
+                        "circle_magic/creature", "circle_magic/curses", "circle_magic/transposition", "circle_magic/world")
                 .sortNum(4)
                 .build("circle_magic", output);
 
@@ -150,8 +148,55 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("This chapter explains the fundamentals and some important items.").toString())
                 .entries("circle_magic/tutorial/performing_rites")
                 .entries(itemPaths(EItems.GOLDEN_CHALK.get(), EItems.RITUAL_CHALK.get(), EItems.NETHER_CHALK.get(),
-                        EItems.OTHERWHERE_CHALK.get(), EItems.BROOM.get()))
+                        EItems.OTHERWHERE_CHALK.get(), EItems.BROOM.get(), EItems.CIRCLE_TALISMAN.get()))
                 .build("circle_magic/tutorial", output);
+
+        CategoryBuilder.of("Binding")
+                .icon(Items.CHAIN.getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Binding is the act of linking a being or object to a magical effect or property, for example imbuing a broomstick with the power of flight.")
+                        .paragraph("Rites of this manner are explained in this chapter.").toString())
+                .entries(ritePaths("charging_stone", "bind_familiar", "bind_talisman", "waystone", "waystone_blooded", "infuse_broom"))
+                .build("circle_magic/binding", output);
+
+        CategoryBuilder.of("Creature")
+                .icon(Items.CREEPER_HEAD.getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Creature rites are used to change or limit the behaviour of mobs and other creatures.")
+                        .paragraph("Rites of this type are often used for protection, warding and imprisonment.").toString())
+                .entries(ritePaths("imprisonment", "protection", "protection_temporary", "sanctity"))
+                .build("circle_magic/creature", output);
+
+        CategoryBuilder.of("Curses")
+                .icon(Items.WITHER_ROSE.getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("A curse is a long-lasting, malicious form of magic intended to harm it's target.")
+                        .paragraph("There are several types of curses, each of which are explained in detail here.").toString())
+                .entries("circle_magic/curses/casting_curses")
+                .entries(ritePaths("blight", "curse_misfortune", "curse_overheating", "curse_sinking", "remove_misfortune",
+                        "remove_overheating", "remove_sinking"))
+                .build("circle_magic/curses", output);
+
+        CategoryBuilder.of("Transposition")
+                .icon(Items.ENDER_PEARL.getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Transposition rites are used to change the position of an object or being, for example, teleportation.")
+                        .paragraph("Summoning also falls under transposition as the summoned being is being moved to the circle.").toString())
+                .entries(ritePaths("summon_entity", "summon_familiar", "transpose_caster", "transpose_iron"))
+                .build("circle_magic/transposition", output);
+
+        CategoryBuilder.of("World")
+                .icon(Items.GRASS_BLOCK.getDefaultInstance())
+                .displayOnFrontPage(false)
+                .landingText(FormattedStringBuilder.begin()
+                        .then("World rites are a powerful form of circle magic in which a witch attempts to alter natural phenomenon.")
+                        .paragraph("This can prove dangerous if used improperly.").toString())
+                .entries(ritePaths("broiling", "fertility", "forest", "sky_wrath", "total_eclipse", "transpose_iron"))
+                .build("circle_magic/world", output);
     }
 
     @Override
@@ -230,6 +275,17 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("A simple needle can be fashioned by whittling a bone.").toString(),
                 EItems.BONE_NEEDLE.get());
 
+        craftingEntry(output, "Waystone", FormattedStringBuilder.begin()
+                        .then("Waystones are a type of stone which can be bound to the location of a block or entity and used to represent it in circle magic.")
+                        .paragraph("This can be accomplished via a ").boldCategoryLink("circle_magic/binding", "rite of binding").then(".").toString(),
+                EItems.WAYSTONE.get());
+
+        craftingEntry(output, "Circle Talisman", FormattedStringBuilder.begin()
+                        .then("Used for picking up and holding chalk glyphs via a ").boldEntryLink(ritePath("bind_talisman"), "rite of binding")
+                        .then(", talismans are an indispensable tool for circle magic.")
+                        .paragraph("The ornate and complex symbols engraved on the talisman can also indicate wealth.").toString(),
+                EItems.CIRCLE_TALISMAN.get());
+
         cauldronEntry(output, "Mutandis", EItems.MUTANDIS.get(), FormattedStringBuilder.begin()
                 .then("Mutandis is used to mutate plants into other species you could not normally obtain.")
                 .paragraph("Using this substance on a block can cause it to ").boldEntryLink(herbologyPath("mutations"), "mutate")
@@ -253,8 +309,6 @@ public class EContentSetProvider extends ContentSetProvider {
                         CraftingRecipeBuilder.of(itemId(EItems.SOFT_CLAY_JAR.get())).y(70)
                 )
                 .build(itemPath(EItems.CLAY_JAR.get()), output);
-
-
     }
 
     public void buildBrewItemEntries(BookContentOutput output) {
@@ -273,11 +327,11 @@ public class EContentSetProvider extends ContentSetProvider {
 
         kettleEntry(output, "Brew of the Grotesque", EItems.BREW_OF_THE_GROTESQUE.get(), FormattedStringBuilder.begin()
                 .then("This brew makes the drinker unrecognisably grotesque, tricking nearby mobs into believing the drinker is one of their own.")
-                .paragraph("Additionally, brew of the grotesque is used as a base in most curses.").toString());
+                .paragraph("Additionally, brew of the grotesque is used as a base in most ").boldEntryLink("circle_magic/curses", "curses").then(".").toString());
 
         kettleEntry(output, "Flying Ointment", EItems.FLYING_OINTMENT.get(), FormattedStringBuilder.begin()
                 .then("Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.")
-                .paragraph("Most notably, it can be used to ").bold("infuse broomsticks").toString());
+                .paragraph("Most notably, it can be used to ").boldEntryLink(ritePath("infuse_broomstick"), "infuse broomsticks").toString());
 
         kettleEntry(output, "Happenstance Oil", EItems.HAPPENSTANCE_OIL.get(), FormattedStringBuilder.begin()
                 .then("Clairvoyance is an indispensable tool for a witch in need of information.")
@@ -304,6 +358,18 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     public void buildExtractionItemEntries(BookContentOutput output) {
+        cookingEntry(output, "Wood Ash", FormattedStringBuilder.begin()
+                        .then("Simple ash has many uses, including making ").boldEntryLink(itemPath(EItems.RITUAL_CHALK.get()), "ritual chalk")
+                        .then(" and bone meal among other things.")
+                        .paragraph("As it has no magical properties, burning any sapling will work.").toString(),
+                EItems.WOOD_ASH.get());
+
+        cookingEntry(output, "Quicklime", FormattedStringBuilder.begin()
+                        .then("Burnt lime, or quicklime, one of the primary ingredients for ")
+                        .boldEntryLink(itemPath(EItems.GYPSUM.get()), "gypsum").then(", can be made using calcite.")
+                        .paragraph("Quicklime can be thrown at players to temporarily blind them.").toString(),
+                EItems.QUICKLIME.get());
+
         galleryEntry(output, "Breath of the Goddess", EItems.BREATH_OF_THE_GODDESS.get(), FormattedStringBuilder.begin()
                         .then("Due to it's silvery appearance, birch is sometimes called \"White Lady Of The Woods\" and is associated with the goddess Brigid.")
                         .paragraph("The smoke produced by burning birch has healing properties.").toString(),
@@ -764,12 +830,167 @@ public class EContentSetProvider extends ContentSetProvider {
                                         Map.of('G', new SimpleStateMatcher(List.of(EBlocks.GOLDEN_CHALK.get().defaultBlockState())))
                                 ))
                 )
-                .page(HeaderedTextBuilder.of("Chalk Circles", FormattedStringBuilder.begin()
+                .page(HeaderedTextBuilder.of("Glyphs and Foci", FormattedStringBuilder.begin()
                         .then("After a heart glyph, rites need chalk circles, drawn using ")
-                        .boldEntryLink(itemPath(EItems.RITUAL_CHALK.get()), "ritual chalk").then(", ")
-                        .boldEntryLink(itemPath(EItems.NETHER_CHALK.get()), "infernal chalk").then(" and ")
-                        .boldEntryLink(itemPath(EItems.OTHERWHERE_CHALK.get()), "otherwhere chalk").then(". ").toString()))
+                        .boldEntryLink(itemPath(EItems.RITUAL_CHALK.get()), "ritual").then(", ")
+                        .boldEntryLink(itemPath(EItems.NETHER_CHALK.get()), "infernal").then(" or ")
+                        .boldEntryLink(itemPath(EItems.OTHERWHERE_CHALK.get()), "otherwhere").then(" chalk. ")
+                        .paragraph("Foci, such as items living sacrifices, should be placed within the circles.")
+                        .paragraph("When all requirements are met, the heart glyph can be activated.").toString())
+                )
+                .page(RitePageBuilder.of(Enchanted.id("charging_stone")))
                 .build("circle_magic/tutorial/performing_rites", output);
+
+        riteEntry(output, "Charging Stones", EItems.ATTUNED_STONE_CHARGED.get(), EItems.ATTUNED_STONE_CHARGED.get(), FormattedStringBuilder.begin()
+                        .then("Gather power to imbue an attuned stone with magical energy.")
+                        .paragraph("This stone can be used for various purposes such as substituting an altar during circle magic rites.").toString()
+                , "charging_stone");
+
+        riteEntry(output, "Broomsticks", EItems.ENCHANTED_BROOMSTICK.get(), EItems.ENCHANTED_BROOMSTICK.get(), FormattedStringBuilder.begin()
+                        .then("The humble ").boldEntryLink(itemPath(EItems.BROOM.get()), "broomstick").then(" can be imbued with the power of flight using ")
+                        .boldEntryLink(itemPath(EItems.FLYING_OINTMENT.get()), "flying ointment").then(", creating a classic and effective means of transportation.")
+                        .paragraph("The witches association recommends practicing at low altitudes.").toString(),
+                "infuse_broom");
+
+        riteEntry(output, "Familiars", EItems.ARTHANA.get(), FormattedStringBuilder.begin()
+                        .then("Bind a familiar to yourself. This companion provides a variety of benefits depending on what type of creature it is. The tamed animal must be within the circle.")
+                        .paragraph("The ").boldCategoryLink("familiars", "familiars").then(" chapter discusses this in greater detail.").toString(),
+                "bind_familiar");
+
+        riteEntry(output, "Talisman", EItems.CIRCLE_TALISMAN.get(), FormattedStringBuilder.begin()
+                        .boldEntryLink(itemPath(EItems.CIRCLE_TALISMAN.get()), "Circle talismans").then(" can be used to easily pick up and move glyphs, reducing wasted chalk.")
+                        .paragraph("The bound talisman can be used on the ground to place the glyphs it holds.")
+                        .paragraph("Works with any and all glyphs.").toString(),
+                "bind_talisman", "bind_talisman_charged");
+
+        riteEntry(output, "Waystone", EItems.BOUND_WAYSTONE.get(), EItems.BOUND_WAYSTONE.get(), FormattedStringBuilder.begin()
+                        .then("A ").boldEntryLink(itemPath(EItems.WAYSTONE.get()), "waystone").then(" can be bound to a location to represent it in other rites, most notably in ")
+                        .boldCategoryLink("circle_magic/translocation", "translocation rites.")
+                        .paragraph("The waystone will be bound to the location the rite is cast at, or duplicated from an existing waystone.").toString(),
+                "waystone", "waystone_charged", "duplicate_waystone", "duplicate_waystone_charged");
+
+        riteEntry(output, "Blooded Waystone", EItems.BLOODED_WAYSTONE.get(), EItems.BLOODED_WAYSTONE.get(), FormattedStringBuilder.begin()
+                        .then("A blooded ").boldEntryLink(itemPath(EItems.WAYSTONE.get()), "waystone")
+                        .then(", similar to a regular waystone, is bound to a location. The difference is that it is bound to the location of an entity.")
+                        .paragraph("Unlike regular waystones, blooded waystones cannot be duplicated.").toString(),
+                "waystone_blooded", "waystone_blooded_charged");
+
+        EntryBuilder.of("Casting Curses")
+                .icon(Items.WITHER_ROSE.getDefaultInstance())
+                .page(HeaderedTextBuilder.of("Casting Curses", FormattedStringBuilder.begin()
+                        .then("Curses at their core are the same as any other circle magic, however the level of the curse is increased by the skill of the caster.")
+                        .paragraph("Witches with a cat familiar or those who perform the rite with a coven will be more skilled at cursing others.").toString()))
+                .page(HeaderedTextBuilder.of("Removing Curses", FormattedStringBuilder.begin()
+                        .then("To remove a curse, a witch must perform the appropriate cleansing rite.")
+                        .paragraph("Cleanses have a level raised in the same way as curses, making them more likely to succeed or fail. Failed removals will only make a curse stronger.").toString()))
+                .build("circle_magic/curses/casting_curses", output);
+
+        riteEntry(output, "Blight", Items.SPIDER_EYE, FormattedStringBuilder.begin()
+                    .then("Cause plants within a large area to wither, grass and dirt to decay, make animals sick and turn villagers into zombies.").toString(),
+                "blight");
+
+        riteEntry(output, "Misfortune", Items.ENDER_EYE, FormattedStringBuilder.begin()
+                    .then("Curse the afflicted to become prone to occasionally gaining an unfortunate effect such as weakness or mining fatigue.")
+                    .paragraph("The strength and duration of effects increases with the level of the curse.").toString(),
+                "curse_misfortune");
+
+        riteEntry(output, "Overheating", Items.BLAZE_POWDER, FormattedStringBuilder.begin()
+                        .then("Curse the afflicted to periodically overheat and catch fire while in hot biomes.")
+                        .paragraph("The duration of the flames increases with the level of the curse.").toString(),
+                "curse_overheating");
+
+        riteEntry(output, "Sinking", Items.WATER_BUCKET, FormattedStringBuilder.begin()
+                        .then("Curse the afflicted to become heavier in both water and air, making it difficult to swim or fly.")
+                        .paragraph("The weight of the target will increase with the level of the curse.").toString(),
+                "curse_sinking");
+
+        riteEntry(output, "Cleanse Misfortune", Items.ENDER_EYE, FormattedStringBuilder.begin()
+                        .then("Cleanse the targeted being of instances of misfortune.")
+                        .paragraph("If removal fails, it will bring even greater misfortune on the target.").toString(),
+                "remove_misfortune");
+
+        riteEntry(output, "Cleanse Overheating", Items.BLAZE_POWDER, FormattedStringBuilder.begin()
+                        .then("Cleanse a being of their tendency to overheat in certain biomes")
+                        .paragraph("If the cleansing fails, the target will grow even hotter.").toString(),
+                "remove_overheating");
+
+        riteEntry(output, "Cleanse Sinking", Items.WATER_BUCKET, FormattedStringBuilder.begin()
+                        .then("Assist the afflicted in losing weight, allowing them to swim and fly as normal.")
+                        .paragraph("Failing this rite will add more weight to the afflicted's shoulders.").toString(),
+                "remove_sinking");
+
+        riteEntry(output, "Broiling", Items.BEEF, FormattedStringBuilder.begin()
+                        .then("Summon a ring of flames to rapidly cook all raw foods dropped within the circle.")
+                        .paragraph("The heat is so intense that some food may be incinerated.").toString(),
+                "broiling");
+
+        riteEntry(output, "Fertility", Items.EMERALD, FormattedStringBuilder.begin()
+                        .then("A large scale rejuvenation rite which causes plants to grow, heals sick animals and cures zombified villagers.")
+                        .paragraph("The witches association recommends against liberal use of the rite of fertility following the overgrowth it leaves behind.").toString(),
+                "fertility", "fertility_charged");
+
+        riteEntry(output, "Forest", Items.OAK_SAPLING, FormattedStringBuilder.begin()
+                        .then("Grow a large sea of trees around the circle, sprouting a forest even in the most desolate conditions.")
+                        .paragraph("A sapling must be dropped within the circle to determine which type of tree to grow.").toString(),
+                "forest");
+
+        riteEntry(output, "Sky's Wrath", Items.LIGHTNING_ROD, FormattedStringBuilder.begin()
+                        .then("Summon a concentrated thunderstorm around the edges of the circle, causing lighting to strike.")
+                        .paragraph("Adding a ").boldEntryLink(ritePath("waystone"), "bound").then(" or ")
+                        .boldEntryLink(ritePath("waystone_blooded"), "blooded")
+                        .then(" waystone allows the caster to direct the lightning to that location.").toString(),
+                "sky_wrath", "sky_wrath_charged", "sky_wrath_waystone", "sky_wrath_waystone_charged", "sky_wrath_blooded",
+                "sky_wrath_blooded_charged");
+
+        riteEntry(output, "Total Eclipse", Items.CLOCK, FormattedStringBuilder.begin()
+                        .then("Summon the moon to cover the sky with darkness and blot out the sun.")
+                        .paragraph("This rite can be useful for witches who need to perform a different magic at night.").toString(),
+                "total_eclipse", "total_eclipse_charged");
+
+        riteEntry(output, "Transpose Iron", Items.RAW_IRON, FormattedStringBuilder.begin()
+                        .then("Transpose all useful iron from underneath the circle to the surface, leaving the stone behind.")
+                        .paragraph("The rite will consume all ores where it is placed and must be moved after each use.").toString(),
+                "transpose_iron");
+
+        riteEntry(output, "Imprisonment", Items.IRON_BARS, FormattedStringBuilder.begin()
+                        .then("Create a cage of fire, trapping monsters within the circle.")
+                        .paragraph("While powerful, this barrier is certainly not impenetrable. Projectiles and teleportation can still break through it.").toString(),
+                "imprisonment");
+
+        riteEntry(output, "Protection", Items.SHIELD, FormattedStringBuilder.begin()
+                        .then("Summon an impenetrable dome which can only be passed through by sneaking players.")
+                        .paragraph("Adding a ").boldEntryLink(ritePath("waystone"), "bound waystone")
+                        .then(" allows the caster to summon the dome at a different location.").toString(),
+                "protection", "protection_large", "protection_waystone", "protection_large_waystone");
+
+        riteEntry(output, "Temporary Protection", Items.SHULKER_SHELL, FormattedStringBuilder.begin()
+                        .then("Summon an impenetrable dome which cannot be passed through by anything for one minute.")
+                        .paragraph("Adding a ").boldEntryLink(ritePath("waystone"), "bound").then(" or ")
+                        .boldEntryLink(ritePath("waystone_blooded"), "blooded")
+                        .then(" waystone allows the caster to summon the dome at a different location.").toString(),
+                "protection_temporary", "protection_temporary_waystone", "protection_temporary_blooded");
+
+        riteEntry(output, "Sanctity", Items.FEATHER, FormattedStringBuilder.begin()
+                        .then("Create a place of refuge within the circle, pushing mobs away and preventing them from entering.")
+                        .paragraph("While strong, this barrier is not impenetrable. Projectiles and teleportation can still break through it.").toString(),
+                "sanctity");
+
+        riteEntry(output, "Summon Entity", Items.CHORUS_FRUIT, FormattedStringBuilder.begin()
+                        .then("Summon the taglocked being, causing them to teleport to the casting circle. Those wearing witch hunter clothing may be unaffected.")
+                        .paragraph("Unloaded or despawned entities cannot be summoned.").toString(),
+                "summon_entity");
+
+        riteEntry(output, "Summon Familiar", EItems.ARTHANA.get(), FormattedStringBuilder.begin()
+                        .then("Summon the familiar bound to the caster of the rite, causing them to teleport to the casting circle.")
+                        .paragraph("This rite is capable of summoning dismissed or deceased familiars.").toString(),
+                "summon_familiar");
+
+        riteEntry(output, "Transpose Caster", Items.ENDER_PEARL, FormattedStringBuilder.begin()
+                        .then("Teleports the caster of the rite to the location contained within a ")
+                        .boldEntryLink(ritePath("circle_magic/binding/waystone"), "bound").then(" or ")
+                        .boldEntryLink(ritePath("circle_magic/binding/waystone_blooded"), "blooded").then(" waystone.")
+                        .paragraph("The witches association has reported occasional instances of parts being left behind.").toString(),
+                "transpose_caster", "transpose_caster_blooded");
     }
 
 
@@ -784,12 +1005,22 @@ public class EContentSetProvider extends ContentSetProvider {
         craftingEntry(output, title, description, item, item);
     }
 
+    private void cookingEntry(BookContentOutput output, String title, String description, Item item) {
+        cookingEntry(output, title, description, item, item);
+    }
+
     /**
      * The first item should be the one the recipe is for. The others are just linked to the page.
      */
     private void craftingEntry(BookContentOutput output, String title, String description, Item item, Item... items) {
         headeredTextEntry(title, description, items)
                 .page(CraftingPageBuilder.of(itemId(item)))
+                .build(itemPath(item), output);
+    }
+
+    private void cookingEntry(BookContentOutput output, String title, String description, Item item, Item... items) {
+        headeredTextEntry(title, description, items)
+                .page(CookingPageBuilder.of(itemId(item)))
                 .build(itemPath(item), output);
     }
 
@@ -815,6 +1046,27 @@ public class EContentSetProvider extends ContentSetProvider {
         headeredTextEntry(title, description, item)
                 .page(KettleRecipeBuilder.of(Enchanted.id("kettle/" + itemId(item).getPath())))
                 .build(itemPath(item), output);
+    }
+
+    private void riteEntry(BookContentOutput output, String title, Item icon, String description, String... rites) {
+        riteEntry(title, icon, description, rites).build(ritePath(rites[0]), output);
+    }
+
+    private void riteEntry(BookContentOutput output, String title, Item icon, Item assigned, String description, String... rites) {
+        riteEntry(title, icon, description, rites).assignedItems(assigned).build(ritePath(rites[0]), output);
+    }
+
+    private EntryBuilder riteEntry(String title, Item icon, String description, String... rites) {
+        EntryBuilder builder = EntryBuilder.of(title)
+                .icon(icon.getDefaultInstance())
+                .page(HeaderedTextBuilder.of(title, description));
+
+        if(rites.length > 1)
+            builder.page(GalleryBuilder.of(Arrays.stream(rites).map(s -> RitePageBuilder.of(Enchanted.id(s))).toArray(PageComponentBuilder[]::new)));
+        else
+            builder.page(RitePageBuilder.of(Enchanted.id(rites[0])));
+
+        return builder;
     }
 
     private EntryBuilder blockEntry(String title, String description, BlockState state, String blockDescription, Item... items) {
@@ -877,10 +1129,6 @@ public class EContentSetProvider extends ContentSetProvider {
         return Arrays.stream(recipes).map(Enchanted::id).map(DistilleryPageBuilder::of).toArray(PageComponentBuilder[]::new);
     }
 
-    private String procureMutandis() {
-        return FormattedStringBuilder.begin().bold("Procurement:").linebreak("Use ").entryLink(itemPath(EItems.MUTANDIS.get()), "mutandis").then(" on a small plant.").toString();
-    }
-
     private String procureGrass() {
         return FormattedStringBuilder.begin().bold("Procurement:").linebreak("Dropped by tall and short grass").toString();
     }
@@ -915,12 +1163,28 @@ public class EContentSetProvider extends ContentSetProvider {
         return "blocks/" + BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
+    private String ritePath(ResourceLocation rite) {
+        return ritePath(rite.getPath());
+    }
+
+    private String ritePath(String rite) {
+        return "circle_magic/rites/" + rite;
+    }
+
     private String[] itemPaths(Item... items) {
         return Arrays.stream(items).map(this::itemPath).toArray(String[]::new);
     }
 
     private String[] blockPaths(Block... items) {
         return Arrays.stream(items).map(this::blockPath).toArray(String[]::new);
+    }
+
+    private String[] ritePaths(ResourceLocation... rites) {
+        return Arrays.stream(rites).map(this::ritePath).toArray(String[]::new);
+    }
+
+    private String[] ritePaths(String... rites) {
+        return Arrays.stream(rites).map(this::ritePath).toArray(String[]::new);
     }
 
     private String format(String string, Object... vars) {

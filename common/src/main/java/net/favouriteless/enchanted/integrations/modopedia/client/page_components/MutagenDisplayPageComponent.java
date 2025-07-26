@@ -7,6 +7,7 @@ import net.favouriteless.enchanted.api.MutagenManager;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.crops.CropBlockAgeFive;
 import net.favouriteless.enchanted.common.mutandis.MutagenInfo.MutagenSet;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookTexture;
@@ -104,12 +105,6 @@ public class MutagenDisplayPageComponent extends PageComponent {
         BookTexture tex = context.getBookTexture();
         Rectangle mutagen = tex.widgets().get("mutagen");
 
-        Minecraft.getInstance().getTextureManager()
-                .getTexture(Enchanted.id(""));
-
-        Minecraft.getInstance().getResourceManager()
-                .getResource(Enchanted.id("")).isPresent();
-
         int width = mutagen.width();
         int height = mutagen.height();
         int xo = mutagen.width() / 2;
@@ -150,9 +145,9 @@ public class MutagenDisplayPageComponent extends PageComponent {
         pose.popPose();
 
         Font font = Minecraft.getInstance().font;
-        Component weightTitle = Component.translatable(Enchanted.translationKey("tooltip", "mutagen_weight")).withStyle(context.getStyle().withBold(true));
+        Component weightTitle = Component.translatable(LangUtils.tooltip("mutagen_weight")).withStyle(context.getStyle().withBold(true));
         Component weight = Component.literal(String.valueOf(display.weight)).withStyle(context.getStyle());
-        Component extremis = Component.translatable(Enchanted.translationKey("tooltip", "mutagen_extremis")).withStyle(context.getStyle().withBold(true).withColor(0x732D2D));
+        Component extremis = Component.translatable(LangUtils.tooltip("mutagen_extremis")).withStyle(context.getStyle().withBold(true).withColor(0x732D2D));
 
         int yw = y + height + 2;
 
@@ -166,10 +161,10 @@ public class MutagenDisplayPageComponent extends PageComponent {
         if(context.isHovered(mouseX, mouseY, x - xo, y, width, height)) {
             List<Component> lines = new ArrayList<>();
 
-            lines.add(Component.translatable(Enchanted.translationKey("tooltip", "mutee")));
+            lines.add(Component.translatable(LangUtils.tooltip("mutee")));
             lines.add(display.mutee.getBlockState(BlockPos.ZERO).getBlock().getName().withStyle(ChatFormatting.GREEN));
             lines.add(Component.literal("")); // An empty line as a break.
-            lines.add(Component.translatable(Enchanted.translationKey("tooltip", "mutagens")));
+            lines.add(Component.translatable(LangUtils.tooltip("mutagens")));
             display.mutagens.stream().<Component>map(m -> m.getBlockState(BlockPos.ZERO).getBlock().getName().withStyle(ChatFormatting.GREEN)).forEach(lines::add);
 
             graphics.renderComponentTooltip(font, lines, mouseX, mouseY);

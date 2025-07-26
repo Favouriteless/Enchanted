@@ -1,4 +1,10 @@
 - ADDED: Circle magic section in the book.
+- ADDED: Filled chalice can be created via the crafting grid.
+- ADDED: Wood ash can be used to create bone meal in a more efficient recipe.
 
+- CHANGED: Cauldron recipes now use partial component matching.
+- CHANGED: Quicklime is now created by smelting calcite. The old recipe using wood ash has been removed.
 - CHANGED: Eating a creeper heart now has "undesirable" side effects.
 - CHANGED: Enchanted broomsticks now accelerate vertically at the same rate as they do on the XZ plane.
+
+- API: RiteType now uses a Pair codec for time ranges. This does not impact datapacks.

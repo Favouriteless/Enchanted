@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.enchanted.platform.JsonDataLoaderWrapper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -18,7 +19,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +27,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.function.BiFunction;
@@ -66,7 +65,7 @@ public class FabricCommonRegistryHelper implements CommonRegistryHelper {
 	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemsGenerator) {
 		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name,
 				() -> FabricItemGroup.builder()
-						.title(Component.translatable("tab." + Enchanted.MOD_ID + "." + name))
+						.title(Component.translatable(LangUtils.tab(name)))
 						.icon(iconSupplier)
 						.displayItems(itemsGenerator)
 						.build());

@@ -40,6 +40,12 @@ public class EBookTextureProvider extends BookTextureProvider {
                 .widget("distillery", 100, 265, 78, 113)
                 .widget("mutagen", 278, 315, 90, 88)
                 .widget("image_frame", 185, 265, 79, 46)
+                .widget("rite/power", 178, 315, 16, 16)
+                .widget("rite/weather/clear", 194, 315, 16, 16)
+                .widget("rite/weather/raining", 210, 315, 16, 16)
+                .widget("rite/weather/thundering", 226, 315, 16, 16)
+                .widget("rite/time", 178, 331, 16, 16)
+                .widget("rite/sacrifices", 194, 331, 16, 16)
                 .build("art_of_witchcraft", output);
     }
 

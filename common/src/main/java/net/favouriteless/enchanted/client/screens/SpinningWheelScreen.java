@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMenu> {
 
-    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/spinning_wheel.png");
+    private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/menus/spinning_wheel.png");
 
     public static final int ICONS_U = 176;
 

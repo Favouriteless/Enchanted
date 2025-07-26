@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.common.circle_magic;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.enchanted.api.Vec2i;
@@ -38,7 +39,7 @@ public class RiteType implements Comparable<RiteType> {
             Codec.INT.optionalFieldOf("power", 0).forGetter(r -> r.power),
             Codec.INT.optionalFieldOf("tick_power", 0).forGetter(r -> r.tickPower),
             RiteWeatherRequirement.CODEC.optionalFieldOf("weather", RiteWeatherRequirement.NONE).forGetter(r -> r.weather),
-            Codec.INT.listOf(2, 2).optionalFieldOf("time", List.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
+            Codec.pair(Codec.INT, Codec.INT).optionalFieldOf("time", Pair.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
             RiteFactory.codec().fieldOf("factory").forGetter(r -> r.factory)
     ).apply(instance, RiteType::new));
 
@@ -49,20 +50,20 @@ public class RiteType implements Comparable<RiteType> {
     private final int tickPower;
     private final RiteFactory factory;
     private final RiteWeatherRequirement weather;
-    private final List<Integer> timeRange;
+    private final Pair<Integer, Integer> timeRange;
 
     private final List<Vec2i> interiorPoints = new ArrayList<>();
     private int radius = 1;
 
     public RiteType(List<ItemStack> items, Map<Holder<CircleMagicShape>, Block> shapes, List<EntityType<?>> entities,
-                    int power, int tickPower, RiteWeatherRequirement weather, List<Integer> times, RiteFactory factory) {
+                    int power, int tickPower, RiteWeatherRequirement weather, Pair<Integer, Integer> timeRange, RiteFactory factory) {
         this.items = items;
         this.shapes = shapes;
         this.entities = entities;
         this.power = power;
         this.tickPower = tickPower;
         this.weather = weather;
-        this.timeRange = times;
+        this.timeRange = timeRange;
         this.factory = factory;
 
         shapes.keySet().stream().map(Holder::value).forEach(shape -> {
@@ -80,7 +81,7 @@ public class RiteType implements Comparable<RiteType> {
         long time = level.getDayTime() % Level.TICKS_PER_DAY;
         if(time < timeRange.getFirst())
             return false;
-        if(time > timeRange.getLast())
+        if(time > timeRange.getSecond())
             return false;
 
         for(Entry<Holder<CircleMagicShape>, Block> entry : shapes.entrySet()) {
@@ -135,6 +136,18 @@ public class RiteType implements Comparable<RiteType> {
 
     public int getPower() {
         return power;
+    }
+
+    public int getTickPower() {
+        return tickPower;
+    }
+
+    public RiteWeatherRequirement getWeatherRequirement() {
+        return weather;
+    }
+
+    public Pair<Integer, Integer> getTimeRange() {
+        return timeRange;
     }
 
     public int getRadius() {

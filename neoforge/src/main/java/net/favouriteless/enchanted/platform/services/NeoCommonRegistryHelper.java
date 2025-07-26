@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -76,7 +77,7 @@ public class NeoCommonRegistryHelper implements CommonRegistryHelper {
 	@Override
 	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemGenerator) {
 		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name, () -> CreativeModeTab.builder()
-				.title(Component.translatable("tab." + Enchanted.MOD_ID + "." + name))
+				.title(Component.translatable(LangUtils.tab(name)))
 				.icon(iconSupplier)
 				.displayItems(itemGenerator)
 				.build());

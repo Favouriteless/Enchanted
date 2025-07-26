@@ -1,19 +1,14 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.CauldronBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.DistilleryBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.ImageFrameBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.MutagenDisplayBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.*;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.ByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DistilleryPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.DoubleByproductPageBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.MutagenPageBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.*;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.ByproductRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.DistillingRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
@@ -127,7 +122,7 @@ public class ETemplateProvider extends TemplateProvider {
     protected void buildPages(BookOutput output) {
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.header.enchanted.fume_extraction"),
+                        HeaderBuilder.of(LangUtils.bookHeader("fume_extraction")),
                         SeparatorBuilder.of()
                                 .y(10),
                         ByproductRecipeBuilder.of("#recipe")
@@ -137,7 +132,7 @@ public class ETemplateProvider extends TemplateProvider {
 
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.header.enchanted.fume_extraction"),
+                        HeaderBuilder.of(LangUtils.bookHeader("fume_extraction")),
                         SeparatorBuilder.of()
                                 .y(10),
                         ByproductRecipeBuilder.of("#recipe1")
@@ -149,7 +144,7 @@ public class ETemplateProvider extends TemplateProvider {
 
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of("book.header.enchanted.distillation"),
+                        HeaderBuilder.of(LangUtils.bookHeader("distillation")),
                         SeparatorBuilder.of()
                                 .y(10),
                         DistillingRecipeBuilder.of("#recipe")
@@ -159,11 +154,19 @@ public class ETemplateProvider extends TemplateProvider {
 
         TemplateBuilder.of()
                 .components(
-                        HeaderBuilder.of(Enchanted.translationKey("book.header", "mutagen_info")),
+                        HeaderBuilder.of(LangUtils.bookHeader("mutagen_info")),
                         SeparatorBuilder.of().y(10),
                         MutagenDisplayBuilder.of("#result").x(50).y(25)
                 )
                 .build(MutagenPageBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .components(
+                        HeaderBuilder.of(LangUtils.bookHeader("circle_magic")),
+                        SeparatorBuilder.of().y(10),
+                        RiteBuilder.of("#rite").x(50).y(17)
+                )
+                .build(RitePageBuilder.ID.getPath(), output);
     }
 
 }

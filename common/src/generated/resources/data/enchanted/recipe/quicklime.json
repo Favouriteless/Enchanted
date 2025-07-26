@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:smelting",
   "category": "misc",
-  "ingredients": [
-    {
-      "item": "enchanted:wood_ash"
-    }
-  ],
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:calcite"
+  },
   "result": {
     "count": 1,
     "id": "enchanted:quicklime"

@@ -4,6 +4,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -34,9 +35,9 @@ public class ELanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add(Enchanted.translationKey("tab", "main"), "Enchanted");
+        add(LangUtils.tab("main"), "Enchanted");
 
-        add(Enchanted.translationKey("item", "bound_waystone.not_bound"), "Not bound");
+        add(LangUtils.item("bound_waystone.not_bound"), "Not bound");
 
         add("death.attack.enchanted.sacrifice", "%1$s was sacrificed.");
         add("death.attack.enchanted.sound", "%1$s had their eardrums pierced.");
@@ -73,6 +74,10 @@ public class ELanguageProvider extends LanguageProvider {
         addContainer(EBlocks.SPINNING_WHEEL, "Spinning Wheel");
         addContainer(EBlocks.WITCH_OVEN, "Witch's Oven");
 
+        addCircleShape("small_circle", "Small Circle");
+        addCircleShape("medium_circle", "Medium Circle");
+        addCircleShape("large_circle", "Large Circle");
+
         addRite("bind_familiar", "Rite of Binding");
         addRite("bind_talisman", "Rite of Binding");
         addRite("bind_talisman_charged", "Rite of Binding");
@@ -89,7 +94,7 @@ public class ELanguageProvider extends LanguageProvider {
         addRite("fertility_charged", "Rite of Fertility");
         addRite("forest", "Rite of Forest");
         addRite("imprisonment", "Rite of Imprisonment");
-        addRite("infusion_broom", "Rite of Infusion");
+        addRite("infuse_broom", "Rite of Infusion");
         addRite("protection", "Rite of Protection");
         addRite("protection_waystone", "Rite of Protection");
         addRite("protection_large", "Rite of Protection");
@@ -112,7 +117,7 @@ public class ELanguageProvider extends LanguageProvider {
         addRite("total_eclipse", "Rite of Total Eclipse");
         addRite("total_eclipse_charged", "Rite of Total Eclipse");
         addRite("transpose_caster_blooded", "Rite of Transposition");
-        addRite("transpose_caster_waystone", "Rite of Transposition");
+        addRite("transpose_caster", "Rite of Transposition");
         addRite("transpose_iron", "Rite of Transposition");
         addRite("waystone", "Rite of Binding");
         addRite("waystone_charged", "Rite of Binding");
@@ -129,6 +134,7 @@ public class ELanguageProvider extends LanguageProvider {
         addBookHeader("witch_cauldron_recipe", "Cauldron Recipe");
         addBookHeader("kettle_recipe", "Kettle Recipe");
         addBookHeader("mutagen_info", "Mutation");
+        addBookHeader("circle_magic", "Circle Magic");
 
         addTooltip("byproduct_recipe", "Byproduct Recipe");
         addTooltip("altar_power", "%1$s Altar Power");
@@ -137,55 +143,64 @@ public class ELanguageProvider extends LanguageProvider {
         addTooltip("mutagens", "Mutagens:");
         addTooltip("mutagen_extremis", "Extremis");
         addTooltip("disabled_totems", "Disabled (Enchanted: Witchcraft)");
+        addTooltip("rite_requirement.shapes", "Requires glyphs:");
+        addTooltip("rite_requirement.time_range", "Must be cast between %1$s and %2$s");
+        addTooltip("rite_requirement.power", "Requires %1$s power");
+        addTooltip("rite_requirement.power_tick", "Requires %1$s power per tick");
+        addTooltip("rite_requirement.weather", "Requires weather:");
+        addTooltip("rite_requirement.sacrifice", "Requires sacrifices:");
+        addTooltip("rite_requirement.weather.clear", "Clear");
+        addTooltip("rite_requirement.weather.raining", "Raining");
+        addTooltip("rite_requirement.weather.thundering", "Thundering");
 
-        add(Enchanted.translationKey("taglock", "failed"), "Taglock attempt failed");
-        add(Enchanted.translationKey("taglock", "failed.player"), "%1$s tried to taglock you");
+        add(LangUtils.key("taglock", "failed"), "Taglock attempt failed");
+        add(LangUtils.key("taglock", "failed.player"), "%1$s tried to taglock you");
 
         autoGenerateAll(); // All keys which weren't included are attempted to be automatically generated.
     }
 
     protected void addContainer(Supplier<? extends Block> block, String value) {
-        add(Enchanted.translationKey("container", BuiltInRegistries.BLOCK.getKey(block.get()).getPath()), value);
-    }
-
-    protected void addKey(String key, String value) {
-        add(Enchanted.translationKey("key", key), value);
+        add(LangUtils.key("container", BuiltInRegistries.BLOCK.getKey(block.get()).getPath()), value);
     }
 
     protected void addRite(String key, String value) {
-        add(Enchanted.translationKey("rite", key), value);
+        add(LangUtils.rite(key), value);
+    }
+
+    protected void addCircleShape(String shape, String value) {
+        add(LangUtils.circleShape(shape), value);
     }
 
     protected void addBookTitle(String key, String value) {
-        add(Enchanted.translationKey("book.title", key), value);
+        add(LangUtils.bookTitle(key), value);
     }
 
     protected void addBookSubtitle(String key, String value) {
-        add(Enchanted.translationKey("book.subtitle", key), value);
+        add(LangUtils.bookSubtitle(key), value);
     }
 
     protected void addBookHeader(String key, String value) {
-        add(Enchanted.translationKey("book.header", key), value);
+        add(LangUtils.bookHeader(key), value);
     }
 
     protected void addBookLandingText(String key, String value) {
-        add(Enchanted.translationKey("book.landing_text", key), value);
+        add(LangUtils.bookLandingText(key), value);
     }
 
     protected void addJeiCategory(String key, String value) {
-        add(Enchanted.translationKey("jei.category", key), value);
+        add(LangUtils.jeiCategory(key), value);
     }
 
     protected void addJei(String key, String value) {
-        add(Enchanted.translationKey("jei", key), value);
+        add(LangUtils.jei(key), value);
     }
 
     protected void addJei(Supplier<? extends Item> item, String value) {
-        add(Enchanted.translationKey("jei", BuiltInRegistries.ITEM.getKey(item.get()).getPath()), value);
+        add(LangUtils.jei(BuiltInRegistries.ITEM.getKey(item.get()).getPath()), value);
     }
 
     protected void addTooltip(String suffix, String value) {
-        add(Enchanted.translationKey("tooltip", suffix), value);
+        add(LangUtils.tooltip(suffix), value);
     }
 
     protected void autoGenerateAll() {

@@ -12,8 +12,8 @@ public class DeathPoppetEffectItem extends DeathPoppetItem {
 
 	protected Supplier<MobEffectInstance> deathEffect;
 
-	public DeathPoppetEffectItem(float failRate, PoppetColour colour, Supplier<MobEffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(failRate, colour, sourcePredicate, properties);
+	public DeathPoppetEffectItem(PoppetColour colour, Supplier<MobEffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate, Properties properties) {
+		super(colour, sourcePredicate, properties);
 		this.deathEffect = deathEffect;
 	}
 

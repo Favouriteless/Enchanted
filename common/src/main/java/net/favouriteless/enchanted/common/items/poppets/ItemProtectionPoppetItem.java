@@ -7,8 +7,8 @@ public class ItemProtectionPoppetItem extends PoppetItem {
 
 	public float damageMultiplier;
 
-	public ItemProtectionPoppetItem(float failRate, float damageMultiplier, PoppetColour colour, Properties properties) {
-		super(failRate, colour, properties);
+	public ItemProtectionPoppetItem(float damageMultiplier, PoppetColour colour, Properties properties) {
+		super(colour, properties);
 		this.damageMultiplier = damageMultiplier;
 	}
 

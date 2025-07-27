@@ -9,15 +9,15 @@ import java.util.function.Predicate;
 
 public class VoidPoppetItem extends DeathPoppetItem {
 
-	public VoidPoppetItem(float failRate, PoppetColour colour, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(failRate, colour, sourcePredicate, properties);
+	public VoidPoppetItem(PoppetColour colour, Predicate<DamageSource> sourcePredicate, Properties properties) {
+		super(colour, sourcePredicate, properties);
 	}
 
 	@Override
 	public void protect(Player player) {
 		player.setHealth(1);
 		Vec3 pos = player.position();
-		player.teleportTo(pos.x, 257.0D, pos.z);
+		player.teleportTo(pos.x, player.level().getMaxBuildHeight() + 2, pos.z);
 	}
 
 }

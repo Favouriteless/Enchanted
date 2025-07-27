@@ -135,6 +135,7 @@ public class ELanguageProvider extends LanguageProvider {
         addBookHeader("kettle_recipe", "Kettle Recipe");
         addBookHeader("mutagen_info", "Mutation");
         addBookHeader("circle_magic", "Circle Magic");
+        addBookHeader("weaving", "Weaving");
 
         addTooltip("byproduct_recipe", "Byproduct Recipe");
         addTooltip("altar_power", "%1$s Altar Power");

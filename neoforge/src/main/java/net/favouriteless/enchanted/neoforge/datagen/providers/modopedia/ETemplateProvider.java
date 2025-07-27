@@ -3,23 +3,23 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.components.*;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.*;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.ByproductRecipeBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.DistillingRecipeBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
+import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.*;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
+import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.SpinningRecipeProcessor;
 import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import org.apache.http.Header;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -46,37 +46,26 @@ public class ETemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(ByproductRecipeProcessor.ID)
                 .components(
-                        CraftingArrowBuilder.of()
-                                .x(22).y(2),
-                        CraftingFlameBuilder.of()
-                                .x(23).y(25),
-                        TooltipBuilder.of(new String[] { "tooltip.enchanted.byproduct_recipe"} )
-                                .x(22).y(3)
+                        CraftingArrowBuilder.of().x(22).y(2),
+                        CraftingFlameBuilder.of().x(23).y(25),
+                        TooltipBuilder.of(new String[] { "tooltip.enchanted.byproduct_recipe"} ).x(22).y(3)
                                 .width(16).height(13),
                         FramedItemGalleryBuilder.of("#p_inputs"),
-                        FramedItemGalleryBuilder.of("#p_jars")
-                                .y(24),
-                        FramedItemGalleryBuilder.of("#p_output")
-                                .x(44),
-                        FramedItemGalleryBuilder.of("#p_byproduct")
-                                .x(44).y(24)
+                        FramedItemGalleryBuilder.of("#p_jars").y(24),
+                        FramedItemGalleryBuilder.of("#p_output").x(44),
+                        FramedItemGalleryBuilder.of("#p_byproduct").x(44).y(24)
                 )
                 .build(ByproductRecipeBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(CauldronTypeRecipeProcessor.ID)
                 .components(
-                        CauldronBuilder.of()
-                                .x(5).y(49),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        HeaderBuilder.of("book.header.enchanted.witch_cauldron_recipe"),
-                        ItemGalleryBuilder.of("#p_inputs").
-                                x(50).y("#p_inputs_y"),
-                        ItemGalleryBuilder.of("#p_output")
-                                .x(42).y(84),
-                        TextBuilder.of("#p_power")
-                                .y(126)
+                        CauldronBuilder.of().x(5).y(49),
+                        SeparatorBuilder.of().y(10),
+                        HeaderBuilder.of(LangUtils.bookHeader("witch_cauldron_recipe")),
+                        ItemGalleryBuilder.of("#p_inputs").x(50).y("#p_inputs_y"),
+                        ItemGalleryBuilder.of("#p_output").x(42).y(84),
+                        TextBuilder.of("#p_power").y(126)
                                 .justify(Justify.CENTER)
                 )
                 .build(WitchCauldronRecipeBuilder.ID.getPath(), output);
@@ -84,17 +73,12 @@ public class ETemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(CauldronTypeRecipeProcessor.ID)
                 .components(
-                        CauldronBuilder.of()
-                                .x(5).y(49),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        HeaderBuilder.of("book.header.enchanted.kettle_recipe"),
-                        ItemGalleryBuilder.of("#p_inputs")
-                                .x(50).y("#p_inputs_y"),
-                        ItemGalleryBuilder.of("#p_output")
-                                .x(42).y(84),
-                        TextBuilder.of("#p_power")
-                                .y(126)
+                        CauldronBuilder.of().x(5).y(49),
+                        SeparatorBuilder.of().y(10),
+                        HeaderBuilder.of(LangUtils.bookHeader("kettle_recipe")),
+                        ItemGalleryBuilder.of("#p_inputs").x(50).y("#p_inputs_y"),
+                        ItemGalleryBuilder.of("#p_output").x(42).y(84),
+                        TextBuilder.of("#p_power").y(126)
                                 .justify(Justify.CENTER)
                 )
                 .build(KettleRecipeBuilder.ID.getPath(), output);
@@ -102,53 +86,53 @@ public class ETemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(DistillingRecipeProcessor.ID)
                 .components(
-                        DistilleryBuilder.of()
-                                .x("#p_x"),
-                        ItemGalleryBuilder.of("#p_input1")
-                                .x("#p_input1_x").y(2),
-                        ItemGalleryBuilder.of("#p_input2")
-                                .x("#p_input2_x").y(22),
-                        ItemGalleryBuilder.of("#p_output1")
-                                .x("#p_output1_x").y(95),
-                        ItemGalleryBuilder.of("#p_output2")
-                                .x("#p_output2_x").y(95),
-                        TextBuilder.of("#p_power")
-                                .y(113)
+                        DistilleryBuilder.of().x("#p_x"),
+                        ItemGalleryBuilder.of("#p_input1").x("#p_input1_x").y(2),
+                        ItemGalleryBuilder.of("#p_input2").x("#p_input2_x").y(22),
+                        ItemGalleryBuilder.of("#p_output1").x("#p_output1_x").y(95),
+                        ItemGalleryBuilder.of("#p_output2").x("#p_output2_x").y(95),
+                        TextBuilder.of("#p_power").y(113)
                                 .justify(Justify.CENTER)
                 )
                 .build(DistillingRecipeBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .processor(SpinningRecipeProcessor.ID)
+                .components(
+                    SpinningBuilder.of().x(6),
+                    ItemGalleryBuilder.of("#p_input1").x(42).y(2),
+                    ItemGalleryBuilder.of("#p_input2").x(8).y(75),
+                    ItemGalleryBuilder.of("#p_input3").x(76).y(75),
+                    ItemGalleryBuilder.of("#p_output").x(42).y(44),
+                    TextBuilder.of("#p_power").y(95)
+                            .justify(Justify.CENTER)
+                )
+                .build(SpinningRecipeBuilder.ID.getPath(), output);
     }
 
     protected void buildPages(BookOutput output) {
         TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of(LangUtils.bookHeader("fume_extraction")),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        ByproductRecipeBuilder.of("#recipe")
-                                .x(19).y(40)
+                        SeparatorBuilder.of().y(10),
+                        ByproductRecipeBuilder.of("#recipe").x(19).y(40)
                 )
                 .build(ByproductPageBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of(LangUtils.bookHeader("fume_extraction")),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        ByproductRecipeBuilder.of("#recipe1")
-                                .x(19).y(25),
-                        ByproductRecipeBuilder.of("#recipe2")
-                                .x(19).y(75)
+                        SeparatorBuilder.of().y(10),
+                        ByproductRecipeBuilder.of("#recipe1").x(19).y(25),
+                        ByproductRecipeBuilder.of("#recipe2").x(19).y(75)
                 )
                 .build(DoubleByproductPageBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
                 .components(
                         HeaderBuilder.of(LangUtils.bookHeader("distillation")),
-                        SeparatorBuilder.of()
-                                .y(10),
-                        DistillingRecipeBuilder.of("#recipe")
-                                .y(18)
+                        SeparatorBuilder.of().y(10),
+                        DistillingRecipeBuilder.of("#recipe").y(18)
                 )
                 .build(DistilleryPageBuilder.ID.getPath(), output);
 
@@ -167,6 +151,14 @@ public class ETemplateProvider extends TemplateProvider {
                         RiteBuilder.of("#rite").x(50).y(17)
                 )
                 .build(RitePageBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .components(
+                        HeaderBuilder.of(LangUtils.bookHeader("weaving")),
+                        SeparatorBuilder.of().y(10),
+                        SpinningRecipeBuilder.of("#recipe").y(18)
+                )
+                .build(SpinningPageBuilder.ID.getPath(), output);
     }
 
 }

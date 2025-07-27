@@ -25,7 +25,7 @@ import java.util.List;
 public class VoodooPoppetItem extends PoppetItem {
 
     public VoodooPoppetItem(Properties properties) {
-        super(0.0F, null, properties);
+        super(null, properties);
     }
 
     @Override

@@ -8,7 +8,7 @@
     {
       "components": [
         {
-          "header": "Protection (Temporary)",
+          "header": "Temporary Protection",
           "template": "modopedia:page/headered_text",
           "text": "Summon an impenetrable dome which cannot be passed through by anything for one minute.\n\nAdding a $(b)$(el:circle_magic/rites/waystone)bound$(/el)$(/b) or $(b)$(el:circle_magic/rites/waystone_blooded)blooded$(/el)$(/b) waystone allows the caster to summon the dome at a different location."
         }
@@ -35,5 +35,5 @@
       ]
     }
   ],
-  "title": "Protection (Temporary)"
+  "title": "Temporary Protection"
 }

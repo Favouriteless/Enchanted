@@ -12,6 +12,7 @@ public class EPageComponents {
     public static final ResourceLocation ID_CAULDRON = Enchanted.id("cauldron");
     public static final ResourceLocation ID_DISTILLERY = Enchanted.id("distillery");
     public static final ResourceLocation ID_IMAGE_FRAME = Enchanted.id("image_frame");
+    public static final ResourceLocation ID_SPINNING = Enchanted.id("spinning");
 
     public static void load() {
         PageComponentRegistry registry = PageComponentRegistry.get();
@@ -19,6 +20,7 @@ public class EPageComponents {
         registry.register(ID_CAULDRON, () -> new WidgetPageComponent("cauldron"));
         registry.register(ID_DISTILLERY, () -> new WidgetPageComponent("distillery"));
         registry.register(ID_IMAGE_FRAME, () -> new WidgetPageComponent("image_frame"));
+        registry.register(ID_SPINNING, () -> new WidgetPageComponent("spinning"));
         registry.register(MutagenDisplayPageComponent.ID, MutagenDisplayPageComponent::new);
         registry.register(RitePageComponent.ID, RitePageComponent::new);
     }

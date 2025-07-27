@@ -17,10 +17,7 @@ import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.HeaderBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.MultiblockBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.SeparatorBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CookingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
@@ -135,9 +132,9 @@ public class EContentSetProvider extends ContentSetProvider {
                 .landingText(FormattedStringBuilder.begin()
                         .then("Circle magic is the practice of using chalk circles and foci to manifest complex magical phenomenon.")
                         .paragraph("The fundamentals of circle magic and known rites are detailed in this chapter.").toString())
-                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging",
-                        "circle_magic/creature", "circle_magic/curses", "circle_magic/transposition", "circle_magic/world")
-                .sortNum(4)
+                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging", "circle_magic/creature",
+                        "circle_magic/curses", "circle_magic/transposition", "circle_magic/world")
+                .sortNum(5)
                 .build("circle_magic", output);
 
         CategoryBuilder.of("Fundamental Theory")
@@ -197,6 +194,20 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("This can prove dangerous if used improperly.").toString())
                 .entries(ritePaths("broiling", "fertility", "forest", "sky_wrath", "total_eclipse", "transpose_iron"))
                 .build("circle_magic/world", output);
+
+        CategoryBuilder.of("Poppetry")
+                .icon(EItems.SPINNING_WHEEL.get().getDefaultInstance())
+                .landingText(FormattedStringBuilder.begin()
+                        .then("Poppets are a type of sympathetic magic for transferring effects on a person to a doll or vice versa.")
+                        .paragraph("There are beneficial and harmful poppets, both of which are detailed in this chapter.").toString())
+                .entries(itemPath(EItems.POPPET.get()))
+                .entries(blockPath(EBlocks.POPPET_SHELF.get()))
+                .entries(itemPaths(EItems.POPPET_INFUSED.get(), EItems.POPPET_STURDY.get(), EItems.ARMOUR_POPPET.get(),
+                        EItems.EARTH_POPPET.get(), EItems.FIRE_POPPET.get(), EItems.HUNGER_POPPET.get(), EItems.MAGIC_POPPET.get(),
+                        EItems.TOOL_POPPET.get(), EItems.VOID_POPPET.get(), EItems.VOODOO_POPPET.get(), EItems.VOODOO_PROTECTION_POPPET.get(),
+                        EItems.WATER_POPPET.get()))
+                .sortNum(4)
+                .build("poppetry", output);
     }
 
     @Override
@@ -208,11 +219,12 @@ public class EContentSetProvider extends ContentSetProvider {
         buildHerbologyEntries(output);
         buildBrewingEntries(output);
         buildCircleMagicEntries(output);
+        buildPoppetryEntries(output);
     }
 
     public void buildItemEntries(BookContentOutput output) {
-        buildBrewItemEntries(output);
         buildExtractionItemEntries(output);
+        buildBrewItemEntries(output);
 
         craftingEntry(output, "Ritual Chalk", FormattedStringBuilder.begin()
                         .then("Ritual chalk is the most basic of the four types of chalk, used for drawing basic circles in rites.")
@@ -508,6 +520,38 @@ public class EContentSetProvider extends ContentSetProvider {
                         CraftingRecipeBuilder.of(itemId(EItems.DISTILLERY.get())).y(70)
                 )
                 .build(blockPath(EBlocks.DISTILLERY.get()), output);
+
+        EntryBuilder.of("Spinning")
+                .icon(EItems.SPINNING_WHEEL.get().getDefaultInstance())
+                .assignedItems(EItems.SPINNING_WHEEL.get())
+                .page(HeaderedTextBuilder.of("Spinning", FormattedStringBuilder.begin()
+                        .then("The spinning wheel is used by witches to weave materials together, this is especially prevalent in ")
+                        .boldCategoryLink("poppetry", "poppetry").then(".")
+                        .paragraph("Weaving consumes ").boldEntryLink(blockPath(EBlocks.ALTAR.get()), "altar power").then(", so the spinning wheel must be placed accordingly.").toString()))
+                .page(
+                        HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
+                        SeparatorBuilder.of().y(10),
+                        MultiblockBuilder.of().multiblock(new DenseMultiblock(List.of(List.of("D")), Map.of('D', new SimpleStateMatcher(List.of(EBlocks.SPINNING_WHEEL.get().defaultBlockState())))))
+                                .y(10).height(50),
+                        CraftingRecipeBuilder.of(itemId(EItems.SPINNING_WHEEL.get())).y(70)
+                )
+                .build(blockPath(EBlocks.SPINNING_WHEEL.get()), output);
+
+        EntryBuilder.of("Poppet Shelf")
+                .icon(EItems.POPPET_SHELF.get().getDefaultInstance())
+                .assignedItems(EItems.POPPET_SHELF.get())
+                .page(HeaderedTextBuilder.of("Poppet Shelf", FormattedStringBuilder.begin()
+                        .then("A poppet shelf allows the ").boldCategoryLink("poppetry", "poppets")
+                        .then(" held within it to be activated without being in a player's inventory.")
+                        .paragraph("A single shelf can hold up to four poppets, belonging to any player.").toString()))
+                .page(
+                        HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
+                        SeparatorBuilder.of().y(10),
+                        MultiblockBuilder.of().multiblock(new DenseMultiblock(List.of(List.of("D")), Map.of('D', new SimpleStateMatcher(List.of(EBlocks.POPPET_SHELF.get().defaultBlockState())))))
+                                .y(10).height(50),
+                        CraftingRecipeBuilder.of(itemId(EItems.POPPET_SHELF.get())).y(70)
+                )
+                .build(blockPath(EBlocks.POPPET_SHELF.get()), output);
 
         EntryBuilder.of("Fume Collection")
                 .icon(EItems.WITCH_OVEN.get().getDefaultInstance())
@@ -993,6 +1037,89 @@ public class EContentSetProvider extends ContentSetProvider {
                 "transpose_caster", "transpose_caster_blooded");
     }
 
+    public void buildPoppetryEntries(BookContentOutput output) {
+        EntryBuilder.of("Poppet Theory")
+                .icon(EItems.SPINNING_WHEEL.get().getDefaultInstance())
+                .assignedItems(EItems.POPPET.get())
+                .page(HeaderedTextBuilder.of("Poppetry", FormattedStringBuilder.begin()
+                        .then("Poppetry is the art of creating dolls, weaving magical materials into them using a ")
+                        .boldEntryLink(blockPath(EBlocks.SPINNING_WHEEL.get()), "spinning wheel", 0x582C69)
+                        .then(" and binding them to a living being to protect or harm them.")
+                        .paragraph("For a poppet to work, it needs to be in the target being's inventory or in a")
+                        .boldEntryLink(blockPath(EBlocks.POPPET_SHELF.get()), "poppet shelf").then(".").toString()))
+                .page(
+                        HeaderedTextBuilder.of("Creating Poppets", FormattedStringBuilder.begin()
+                                .then("Poppets need to be weaved with other materials using a ").boldEntryLink(blockPath(EBlocks.SPINNING_WHEEL.get()), "spinning wheel")
+                                .then(" after they have been crafted to gain an effect.").toString()),
+                        CraftingRecipeBuilder.of(itemId(EItems.POPPET.get())).y(69)
+                )
+                .build(itemPath(EItems.POPPET.get()), output);
+
+        spinningEntry(output, "Sturdy Poppets", FormattedStringBuilder.begin()
+                        .then("A ").bold("sturdy poppet").then(" is an upgraded ").boldEntryLink(itemPath(EItems.POPPET.get()), "poppet")
+                        .then(" which provides additional reinforcement.")
+                        .paragraph("Sturdy poppets will be able to withstand being used twice, rather than breaking after a single use.").toString(),
+                EItems.POPPET_STURDY.get());
+
+        spinningEntry(output, "Infused Poppets", FormattedStringBuilder.begin()
+                        .then("An ").bold("infused poppet").then(" is an upgraded ").boldEntryLink(itemPath(EItems.POPPET.get()), "poppet")
+                        .then(" capable of amplifying the effects of the materials woven into it.")
+                        .paragraph("Infused poppets will have an additional effect applied to them when triggered.").toString(),
+                EItems.POPPET_INFUSED.get());
+
+        spinningEntry(output, "Armour", FormattedStringBuilder.begin()
+                        .then("Protects a piece of wearable equipment belonging to the beneficiary when it breaks, restoring some of its durability.")
+                        .paragraph("If infused, the item is instead restored to full durability.").toString(),
+                EItems.ARMOUR_POPPET.get(), EItems.ARMOUR_POPPET_INFUSED.get(), EItems.ARMOUR_POPPET_STURDY.get());
+
+        spinningEntry(output, "Earth", FormattedStringBuilder.begin()
+                        .then("If the beneficiary were to take enough fall damage to die, they will instead live on one health.")
+                        .paragraph("When infused, the beneficiary will also gain ").bold().tooltip("Gives immunity to fall damage", "fall resistance").stopBold()
+                        .then(" for ten seconds.").toString(),
+                EItems.EARTH_POPPET.get(), EItems.EARTH_POPPET_INFUSED.get(), EItems.EARTH_POPPET_STURDY.get());
+
+        spinningEntry(output, "Fire", FormattedStringBuilder.begin()
+                        .then("When the beneficiary burns to death, they will instead remain at one health and the fire will be extinguished.")
+                        .paragraph("If infused, fire poppets also grant ten seconds of fire resistance.").toString(),
+                EItems.FIRE_POPPET.get(), EItems.FIRE_POPPET_INFUSED.get(), EItems.FIRE_POPPET_STURDY.get());
+
+        spinningEntry(output, "Hunger", FormattedStringBuilder.begin()
+                        .then("Protects the beneficiary from starving to death. Dying of starvation will instead fill the beneficiary's stomach.")
+                        .paragraph("Infused hunger poppets grant two minutes of saturation five.").toString(),
+                EItems.HUNGER_POPPET.get(), EItems.HUNGER_POPPET_INFUSED.get(), EItems.HUNGER_POPPET_STURDY.get());
+
+        spinningEntry(output, "Magic", FormattedStringBuilder.begin()
+                        .then("Taking fatal magic damage will instead cause the beneficiary to survive with one health.")
+                        .paragraph("When infused, it provides ").bold().tooltip("Gives immunity to magic damage", "magic resistance").stopBold()
+                        .then(" for ten seconds.").toString(),
+                EItems.MAGIC_POPPET.get(), EItems.MAGIC_POPPET_INFUSED.get(), EItems.MAGIC_POPPET_STURDY.get());
+
+        spinningEntry(output, "Tool", FormattedStringBuilder.begin()
+                        .then("Protects a piece of handheld equipment from destruction when it breaks, restoring some of its durability.")
+                        .paragraph("When infused, tool poppets will restore the tool to full durability.").toString(),
+                EItems.TOOL_POPPET.get(), EItems.TOOL_POPPET_INFUSED.get(), EItems.TOOL_POPPET_STURDY.get());
+
+        spinningEntry(output, "Void", FormattedStringBuilder.begin()
+                        .then("If the beneficiary falls into the void, a void poppet will transport them into the sky instead.")
+                        .paragraph("Infused void poppets will also grant ten seconds of ").bold().tooltip("Gives immunity to fall damage", "fall resistance").toString(),
+                EItems.VOID_POPPET.get(), EItems.VOID_POPPET_INFUSED.get(), EItems.VOID_POPPET_STURDY.get());
+
+        spinningEntry(output, "Voodoo", FormattedStringBuilder.begin()
+                        .then("Unlike other poppets, voodoo poppets are an effigy used to transfer damage to their target.")
+                        .paragraph("Burning a voodoo poppet in fire or lava, drowning it or poking needles into it will harm the target instead.").toString(),
+                EItems.VOODOO_POPPET.get());
+
+        spinningEntry(output, "Voodoo Protection", FormattedStringBuilder.begin()
+                        .then("Protects the beneficiary from voodoo poppets. When affected by a voodoo poppet, the poppet will break instead.")
+                        .paragraph("If infused, the holder of the poppet will also be struck by lightning.").toString(),
+                EItems.VOODOO_PROTECTION_POPPET.get(), EItems.VOODOO_PROTECTION_POPPET_INFUSED.get(), EItems.VOODOO_PROTECTION_POPPET_STURDY.get());
+
+        spinningEntry(output, "Water", FormattedStringBuilder.begin()
+                        .then("Prevents the beneficiary from drowning to death, instead leaving them at one health and granting five seconds of ")
+                        .bold().tooltip("Gives immunity to drowning damage", "drown resistance").stopBold()
+                        .paragraph("Infused water poppets will provide ten seconds of water breathing instead of resistance.").toString(),
+                EItems.WATER_POPPET.get(), EItems.WATER_POPPET_INFUSED.get(), EItems.WATER_POPPET_STURDY.get());
+    }
 
 
     private void galleryEntry(BookContentOutput output, String title, Item item, String description, PageComponentBuilder... galleryComponents) {
@@ -1046,6 +1173,20 @@ public class EContentSetProvider extends ContentSetProvider {
         headeredTextEntry(title, description, item)
                 .page(KettleRecipeBuilder.of(Enchanted.id("kettle/" + itemId(item).getPath())))
                 .build(itemPath(item), output);
+    }
+
+    private void spinningEntry(BookContentOutput output, String title, String description, Item... items) {
+        EntryBuilder builder = EntryBuilder.of(title)
+                .icon(items[0].getDefaultInstance())
+                .assignedItems(items)
+                .page(HeaderedTextBuilder.of(title, description));
+
+        if(items.length > 1)
+            builder.page(GalleryBuilder.of(Arrays.stream(items).map(i -> SpinningPageBuilder.of(spinningRecipe(i))).toArray(PageComponentBuilder[]::new)));
+        else
+            builder.page(SpinningPageBuilder.of(spinningRecipe(items[0])));
+
+        builder.build(itemPath(items[0]), output);
     }
 
     private void riteEntry(BookContentOutput output, String title, Item icon, String description, String... rites) {
@@ -1141,6 +1282,10 @@ public class EContentSetProvider extends ContentSetProvider {
 
     private ResourceLocation itemId(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);
+    }
+
+    private ResourceLocation spinningRecipe(Item item) {
+        return Enchanted.id("spinning/" + itemId(item).getPath());
     }
 
     private String gettingStartedPath(String path) {

@@ -1,0 +1,39 @@
+{
+  "components": [
+    {
+      "type": "enchanted:spinning",
+      "x": 6
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#p_input1",
+      "x": 42,
+      "y": 2
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#p_input2",
+      "x": 8,
+      "y": 75
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#p_input3",
+      "x": 76,
+      "y": 75
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#p_output",
+      "x": 42,
+      "y": 44
+    },
+    {
+      "type": "modopedia:text",
+      "justify": "center",
+      "text": "#p_power",
+      "y": 95
+    }
+  ],
+  "processor": "enchanted:spinning_recipe"
+}

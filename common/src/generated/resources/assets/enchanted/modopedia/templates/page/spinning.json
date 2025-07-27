@@ -1,0 +1,17 @@
+{
+  "components": [
+    {
+      "type": "modopedia:header",
+      "text": "book.header.enchanted.weaving"
+    },
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "recipe": "#recipe",
+      "template": "enchanted:recipe/spinning",
+      "y": 18
+    }
+  ]
+}

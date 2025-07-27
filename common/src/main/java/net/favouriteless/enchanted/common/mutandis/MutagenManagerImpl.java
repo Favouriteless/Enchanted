@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.common.mutandis;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
@@ -18,6 +19,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,8 +93,8 @@ public class MutagenManagerImpl implements MutagenManager {
         if(set == null)
             return false;
 
-        // 62 = max blocks / 2, 7 = average ticks per full crop
-        double chance = counts.getInt(set) / (62 * 7.0D) * 1.5D;
+        // 40 = max blocks, 7 = average ticks per full crop
+        double chance = Math.min(counts.getInt(set), 40) / (40 * 7.0D) * 1.5D;
         if(Math.random() >= chance)
             return false;
 
@@ -148,18 +150,18 @@ public class MutagenManagerImpl implements MutagenManager {
     }
 
     private MutagenSet getRandomWeighted(Object2DoubleMap<MutagenSet> weights) {
-        Object2DoubleMap<MutagenSet> cumulativeWeights = new Object2DoubleOpenHashMap<>(weights.size());
+        List<Pair<MutagenSet, Double>> cumulativeWeights = new ArrayList<>(weights.size());
         double sum = 0.0D;
 
         for(MutagenSet set : weights.keySet()) {
             sum += weights.getDouble(set);
-            cumulativeWeights.put(set, sum);
+            cumulativeWeights.add(Pair.of(set, sum));
         }
 
         double rand = Math.random();
-        for(Entry<MutagenSet> entry : cumulativeWeights.object2DoubleEntrySet()) {
-            if(entry.getDoubleValue() / sum > rand)
-                return entry.getKey();
+        for(Pair<MutagenSet, Double> pair : cumulativeWeights) {
+            if(pair.getSecond() / sum > rand)
+                return pair.getFirst();
         }
         return null;
     }

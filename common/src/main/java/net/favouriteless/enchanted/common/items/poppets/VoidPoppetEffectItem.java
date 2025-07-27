@@ -11,8 +11,8 @@ import java.util.function.Supplier;
 
 public class VoidPoppetEffectItem extends DeathPoppetEffectItem {
 
-	public VoidPoppetEffectItem(float failRate, PoppetColour colour, Supplier<MobEffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(failRate, colour, deathEffect, sourcePredicate, properties);
+	public VoidPoppetEffectItem(PoppetColour colour, Supplier<MobEffectInstance> deathEffect, Predicate<DamageSource> sourcePredicate, Properties properties) {
+		super(colour, deathEffect, sourcePredicate, properties);
 	}
 
 	@Override

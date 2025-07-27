@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
+// TODO: Rewrite poppets entirely. This code is very bad.
 public class PoppetUtils {
 
 	/**
@@ -70,7 +71,7 @@ public class PoppetUtils {
 	 * @return A {@link Queue} of {@link ItemStack}s belonging to player.
 	 */
 	public static Queue<ItemStack> getPoppetQueue(Player player, Predicate<PoppetItem> validPoppet) {
-		Queue<ItemStack> poppetQueue = new PriorityQueue<>(new PoppetComparator());
+		Queue<ItemStack> poppetQueue = new ArrayDeque<>();
 		for(ItemStack stack : player.getInventory().items) {
 			if(stack.getItem() instanceof PoppetItem poppet && validPoppet.test(poppet))
 				poppetQueue.add(stack);
@@ -90,7 +91,7 @@ public class PoppetUtils {
 	 * @return A {@link Queue} of {@link ItemStack}s belonging to player.
 	 */
 	public static Queue<PoppetEntry> getPoppetQueue(List<PoppetEntry> entries, Predicate<PoppetEntry> validPoppet) {
-		Queue<PoppetEntry> poppetQueue = new PriorityQueue<>(new PoppetEntryComparator());
+		Queue<PoppetEntry> poppetQueue = new ArrayDeque<>();
 		for(PoppetEntry entry : entries) {
 			if(validPoppet.test(entry))
 				poppetQueue.add(entry);
@@ -191,17 +192,14 @@ public class PoppetUtils {
 	 * @return A {@link PoppetUseResult} describing the outcome.
 	 */
 	private static PoppetUseResult tryUsePoppet(@NotNull Player owner, @NotNull ItemStack poppetStack, @Nullable ItemStack protectStack, @Nullable String shelfIdentifier) {
-		if(poppetStack.getItem() instanceof PoppetItem poppet && owner.level() instanceof ServerLevel level) {
-			if(Enchanted.RANDOM.nextFloat() > poppet.getFailRate()) {
-				if(protectStack != null && poppetStack.getItem() instanceof ItemProtectionPoppetItem protection)
-					protection.protect(protectStack);
-				else if(poppetStack.getItem() instanceof DeathPoppetItem death)
-					death.protect(owner);
+		if(poppetStack.getItem() instanceof PoppetItem && owner.level() instanceof ServerLevel level) {
+			if(protectStack != null && poppetStack.getItem() instanceof ItemProtectionPoppetItem protection)
+				protection.protect(protectStack);
+			else if(poppetStack.getItem() instanceof DeathPoppetItem death)
+				death.protect(owner);
 
-				level.playSound(null, owner.getX(), owner.getY(), owner.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.5F, 1.0F);
-				return PoppetUseResult.of(poppetStack.getItem(), damagePoppet(poppetStack, level, shelfIdentifier));
-			}
-			return PoppetUseResult.fail(poppetStack.getItem());
+			level.playSound(null, owner.getX(), owner.getY(), owner.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.5F, 1.0F);
+			return PoppetUseResult.of(poppetStack.getItem(), damagePoppet(poppetStack, level, shelfIdentifier));
 		}
 		return PoppetUseResult.pass();
 	}
@@ -278,23 +276,6 @@ public class PoppetUtils {
 				CommonServices.NETWORK.sendToAllPlayers(new PoppetAnimationPayload(result.type(), poppetItemOriginal, player.getId()), player.level().getServer());
 		}
 		return result;
-	}
-
-	// Comparators below used for sorting poppets for their usage order.
-	private static class PoppetComparator implements Comparator<ItemStack> {
-		@Override
-		public int compare(ItemStack o1, ItemStack o2) {
-			if(!(o1.getItem() instanceof PoppetItem) || !(o2.getItem() instanceof PoppetItem))
-				throw new IllegalStateException("Non-poppet item inside the poppet use queue");
-			return Math.round(Math.signum(((PoppetItem)o1.getItem()).getFailRate() - ((PoppetItem)o2.getItem()).getFailRate()));
-		}
-	}
-
-	private static class PoppetEntryComparator implements Comparator<PoppetEntry> {
-		@Override
-		public int compare(PoppetEntry o1, PoppetEntry o2) {
-			return Math.round(Math.signum(((PoppetItem)o1.item().getItem()).getFailRate() - ((PoppetItem)o2.item().getItem()).getFailRate()));
-		}
 	}
 
 }

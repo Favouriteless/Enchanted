@@ -8,8 +8,8 @@ import java.util.function.Predicate;
 
 public class FirePoppetItem extends DeathPoppetItem {
 
-	public FirePoppetItem(float failRate, PoppetColour colour, Predicate<DamageSource> sourcePredicate, Properties properties) {
-		super(failRate, colour, sourcePredicate, properties);
+	public FirePoppetItem(PoppetColour colour, Predicate<DamageSource> sourcePredicate, Properties properties) {
+		super(colour, sourcePredicate, properties);
 	}
 
 	@Override

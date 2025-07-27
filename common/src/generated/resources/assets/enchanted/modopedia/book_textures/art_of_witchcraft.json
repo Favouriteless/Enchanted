@@ -120,38 +120,38 @@
     },
     "rite/power": {
       "height": 16,
-      "u": 178,
-      "v": 315,
+      "u": 0,
+      "v": 353,
       "width": 16
     },
     "rite/sacrifices": {
       "height": 16,
-      "u": 194,
-      "v": 331,
+      "u": 16,
+      "v": 369,
       "width": 16
     },
     "rite/time": {
       "height": 16,
-      "u": 178,
-      "v": 331,
+      "u": 0,
+      "v": 369,
       "width": 16
     },
     "rite/weather/clear": {
       "height": 16,
-      "u": 194,
-      "v": 315,
+      "u": 16,
+      "v": 353,
       "width": 16
     },
     "rite/weather/raining": {
       "height": 16,
-      "u": 210,
-      "v": 315,
+      "u": 32,
+      "v": 353,
       "width": 16
     },
     "rite/weather/thundering": {
       "height": 16,
-      "u": 226,
-      "v": 315,
+      "u": 48,
+      "v": 353,
       "width": 16
     },
     "separator": {
@@ -165,6 +165,12 @@
       "u": 136,
       "v": 211,
       "width": 20
+    },
+    "spinning": {
+      "height": 93,
+      "u": 189,
+      "v": 315,
+      "width": 88
     }
   },
   "width": 386

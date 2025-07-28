@@ -16,31 +16,23 @@ public abstract class AbstractSpreadingBlock extends Block {
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if(!canSpreadOn(level.getBlockState(pos.below())))
             return;
-        if (random.nextInt(25) == 0) {
-            int i = 5;
 
-            for(BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-4, -1, -4), pos.offset(4, 1, 4))) {
-                if (level.getBlockState(blockpos).is(this)) {
-                    --i;
-                    if (i <= 0)
-                        return;
+        if(random.nextInt(25) != 0)
+            return;
 
-                }
-            }
-
-            BlockPos randomPos = pos.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2), random.nextInt(3) - 1);
-
-            for(int k = 0; k < 4; ++k) {
-                if (level.isEmptyBlock(randomPos) && state.canSurvive(level, randomPos))
-                    pos = randomPos;
-
-                randomPos = pos.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2), random.nextInt(3) - 1);
-            }
-
-            if (level.isEmptyBlock(randomPos) && state.canSurvive(level, randomPos))
-                level.setBlock(randomPos, state, 2);
+        int max = 5;
+        for(BlockPos p : BlockPos.betweenClosed(pos.offset(-4, -1, -4), pos.offset(4, 1, 4))) {
+            if(level.getBlockState(p).is(this) && --max <= 0)
+                return;
         }
 
+        for(int k = 0; k < 4; ++k) {
+            BlockPos p = pos.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2), random.nextInt(3) - 1);
+            if(level.isEmptyBlock(p) && state.canSurvive(level, p)) {
+                level.setBlockAndUpdate(p, state);
+                break;
+            }
+        }
     }
 
     public boolean canSpreadOn(BlockState block) {

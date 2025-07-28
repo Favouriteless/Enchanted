@@ -22,48 +22,60 @@ public class EPowerProvidersProvider extends PowerProvidersProvider {
 
     @Override
     protected void buildBlocks(Provider registries, TriConsumer<Block, Integer, Integer> output) {
-        output.accept(EBlocks.BELLADONNA.get(), 4, 20);
-        output.accept(EBlocks.BLOOD_POPPY.get(), 2, 10);
-        output.accept(EBlocks.EMBER_MOSS.get(), 4, 20);
-        output.accept(EBlocks.GLINT_WEED.get(), 2, 20);
-        output.accept(EBlocks.MANDRAKE.get(), 4, 20);
-        output.accept(EBlocks.SNOWBELL.get(), 4, 20);
-        output.accept(EBlocks.SPANISH_MOSS.get(), 3, 20);
-        output.accept(EBlocks.WATER_ARTICHOKE.get(), 4, 20);
+        // 2720 power pre-upgrades should be enough for everything.
+        addEnchantedCrops(output, EBlocks.BELLADONNA.get(), EBlocks.GARLIC.get(), EBlocks.MANDRAKE.get(),
+                EBlocks.SNOWBELL.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.WOLFSBANE.get());
 
-        output.accept(Blocks.BROWN_MUSHROOM, 3, 20);
-        output.accept(Blocks.BROWN_MUSHROOM_BLOCK, 3, 20);
-        output.accept(Blocks.CACTUS, 3, 50);
-        output.accept(Blocks.CARROTS, 4, 20);
-        output.accept(Blocks.COCOA, 3, 20);
-        output.accept(Blocks.DIRT, 1, 80);
-        output.accept(Blocks.DRAGON_EGG, 250, 1);
-        output.accept(Blocks.FARMLAND, 1, 100);
-        output.accept(Blocks.SHORT_GRASS, 3, 25);
-        output.accept(Blocks.GRASS_BLOCK, 2, 80);
-        output.accept(Blocks.MELON, 4, 20);
+        addCrops(output, Blocks.BEETROOTS, Blocks.CARROTS, Blocks.POTATOES, Blocks.WHEAT);
+
+        addNatural(output, Blocks.BAMBOO, Blocks.BROWN_MUSHROOM, Blocks.BROWN_MUSHROOM_BLOCK, Blocks.CACTUS, Blocks.COCOA,
+                Blocks.SHORT_GRASS, Blocks.LILY_PAD, Blocks.MELON, Blocks.PUMPKIN, Blocks.RED_MUSHROOM,
+                Blocks.RED_MUSHROOM_BLOCK, Blocks.SUGAR_CANE, Blocks.TALL_GRASS, Blocks.VINE);
+
+        // Mutated crops
+        output.accept(EBlocks.EMBER_MOSS.get(), 8, 10);
+        output.accept(EBlocks.GLINT_WEED.get(), 8, 10);
+        output.accept(EBlocks.SPANISH_MOSS.get(), 8, 10);
+        output.accept(EBlocks.BLOOD_POPPY.get(), 30, 5);
+
+        // Ground blocks
+        output.accept(Blocks.DIRT, 1, 100);
+        output.accept(Blocks.FARMLAND, 2, 50);
+        output.accept(Blocks.GRASS_BLOCK, 2, 50);
         output.accept(Blocks.MOSS_BLOCK, 2, 40);
-        output.accept(Blocks.MYCELIUM, 1, 50);
-        output.accept(Blocks.POTATOES, 4, 20);
-        output.accept(Blocks.PUMPKIN, 4, 20);
-        output.accept(Blocks.RED_MUSHROOM, 3, 20);
-        output.accept(Blocks.RED_MUSHROOM_BLOCK, 3, 20);
-        output.accept(Blocks.SUGAR_CANE, 3, 50);
-        output.accept(Blocks.TALL_GRASS, 3, 25);
-        output.accept(Blocks.VINE, 2, 50);
+        output.accept(Blocks.MYCELIUM, 2, 50);
         output.accept(Blocks.WATER, 1, 50);
-        output.accept(Blocks.WHEAT, 4, 20);
+
+        // Special blocks
+        output.accept(Blocks.DRAGON_EGG, 200, 1);
+        output.accept(Blocks.PITCHER_PLANT, 200, 1);
     }
 
     @Override
     protected void buildTags(Provider registries, TriConsumer<TagKey<Block>, Integer, Integer> output) {
-        output.accept(ETags.Blocks.LEAVES, 3, 100);
+        output.accept(ETags.Blocks.LEAVES, 3, 150);
         output.accept(ETags.Blocks.LOGS, 4, 50);
 
-        output.accept(BlockTags.FLOWERS, 4, 30);
-        output.accept(BlockTags.LEAVES, 3, 100);
-        output.accept(BlockTags.LOGS, 2, 50);
+        output.accept(BlockTags.LEAVES, 2, 150);
+        output.accept(BlockTags.LOGS, 4, 50);
+
+        output.accept(BlockTags.FLOWERS, 4, 40);
         output.accept(BlockTags.SAPLINGS, 4, 20);
+    }
+
+    private void addEnchantedCrops(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
+        for(Block block : blocks)
+            output.accept(block, 8, 20);
+    }
+
+    private void addCrops(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
+        for(Block block : blocks)
+            output.accept(block, 6, 20);
+    }
+
+    private void addNatural(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
+        for(Block block : blocks)
+            output.accept(block, 3, 20);
     }
 
 }

@@ -35,7 +35,7 @@ public class ServerConfig {
         builder.pop();
 
         builder.push("Altar Options");
-        altarRange = builder.comment("Range of altars").defineInRange("altar_range", 16, 1, Integer.MAX_VALUE);
+        altarRange = builder.comment("Range of altars").defineInRange("altar_range", 32, 1, Integer.MAX_VALUE);
         altarBaseRecharge = builder.comment("Multiplier for altar power recharge rates").defineInRange("altar_recharge_rate", 2.0D, 0.0D, Double.MAX_VALUE);
         builder.pop();
 

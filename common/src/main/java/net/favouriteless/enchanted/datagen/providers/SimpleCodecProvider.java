@@ -30,7 +30,7 @@ public abstract class SimpleCodecProvider<T> implements DataProvider {
     protected abstract void build(Provider registries, BiConsumer<ResourceLocation, T> output);
 
     @Override
-    public CompletableFuture<?> run(CachedOutput output) {
+    public final CompletableFuture<?> run(CachedOutput output) {
         return registries.thenCompose(registries -> run(output, registries));
     }
 

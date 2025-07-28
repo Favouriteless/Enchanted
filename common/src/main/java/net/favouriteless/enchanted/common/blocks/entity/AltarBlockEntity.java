@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-// TODO: Another rewrite, this code is bad.
+// TODO: Rewrite. Bad code.
 public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
 
     private final double rechargeRate = ServerConfig.INSTANCE.altarBaseRecharge.get();

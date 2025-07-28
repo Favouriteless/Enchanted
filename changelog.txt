@@ -1,5 +1,2 @@
-- ADDED: Poppetry section in the book.
-
-- CHANGED: Basic poppets do not have a chance to fail anymore, it was just annoying.
-- CHANGED: Adjusted RNG on mutandis to be slightly more favourable.
-- CHANGED: Hunger poppets have been dramatically buffed.
+- API: Power providers (blocks, tags) have been refactored and changed slightly. Check enchanted's files and/or the git wiki.
+- API: Altar power providers are now datagenned

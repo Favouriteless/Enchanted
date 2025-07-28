@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.Blocks;
 public class EData {
 
     public static final ResourceKey<Registry<AltarUpgrade>> ALTAR_UPGRADE_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/upgrade")), AltarUpgrade.CODEC);
-    public static final ResourceKey<Registry<PowerProvider<Block>>> ALTAR_BLOCK_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/block")), PowerProvider.BLOCK_CODEC);
-    public static final ResourceKey<Registry<PowerProvider<TagKey<Block>>>> ALTAR_TAG_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/tag")), PowerProvider.TAG_CODEC);
-    public static final ResourceKey<Registry<MutagenInfo>> MUTAGEN_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("mutagens")), MutagenInfo.CODEC, MutagenInfo.CODEC);
+    public static final ResourceKey<Registry<PowerProvider>> ALTAR_BLOCK_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/block")), PowerProvider.CODEC);
+    public static final ResourceKey<Registry<PowerProvider>> ALTAR_TAG_REGISTRY = register(ResourceKey.createRegistryKey(Enchanted.id("altar/tag")), PowerProvider.CODEC);
 
+    public static final ResourceKey<Registry<MutagenInfo>> MUTAGEN_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("mutagens")), MutagenInfo.CODEC, MutagenInfo.CODEC);
     public static final ResourceKey<Registry<CircleMagicShape>> CIRCLE_SHAPE_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("circle_magic/shape")), CircleMagicShape.CODEC, CircleMagicShape.CODEC);
     public static final ResourceKey<Registry<RiteType>> RITE_TYPES_REGISTRY = registerSynced(ResourceKey.createRegistryKey(Enchanted.id("circle_magic/rite")), RiteType.CODEC, RiteType.CODEC);
 
@@ -34,18 +34,6 @@ public class EData {
 
     private static <T> ResourceKey<Registry<T>> registerSynced(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
         return CommonServices.COMMON_REGISTRY.registerSyncedDataRegistry(key, codec, networkCodec);
-    }
-
-    private static Block createBlockKey(ResourceLocation key) {
-        Block block = BuiltInRegistries.BLOCK.get(key);
-        if(block != Blocks.AIR)
-            return block;
-        else
-            return null;
-    }
-
-    private static TagKey<Block> createBlockTagKey(ResourceLocation key) {
-        return TagKey.create(Registries.BLOCK, key);
     }
 
     public static void load() {}

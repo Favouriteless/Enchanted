@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-27T02:00:49.4989335	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-07-28T01:08:45.2428887	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 0a355320f4b99f02117338b3a1ee9a7d7b7a0580 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
 26fb888f6caeb2500273e7a86005c95fa89f6bba assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/binding.json
@@ -12,7 +12,7 @@ aa963a29babef146d097e3e3ecd3405c9ce3ea3f assets/enchanted/modopedia/books/art_of
 3014147239329d8b2f84485e60372dde5bfa3bb7 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/getting_started/altars.json
 bb419bf4747c4be0241bb5f93215f1dddbca2c40 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology.json
 7ca82056e4d0f6994b34d042e6919510faa03aa2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/herbology/mutated_plants.json
-9995a3bac18fd7c1893fe8d865dfec706fd512ae assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/poppetry.json
+edb4999f353687ead56822758da7b819372c4271 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/poppetry.json
 786052cd34987c9d7df44922470048cbdb793f89 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/alder_sapling.json
 4464732729e217891786dcdd8e2765575f0f62db assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/altar.json
 0059d9129706d0513ab2e0ec12695387c71a9af9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/belladonna.json
@@ -115,9 +115,9 @@ f76c9b6c67cfa4e5c299f53f3455b826c6710123 assets/enchanted/modopedia/books/art_of
 b83fb094d27c378cd78d62cd52107c4db82deb65 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/tear_of_the_goddess.json
 50e2a2803cc58531043efc5a3a34ededc235b9dc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/tool_poppet.json
 2ce2c960d75a148456436283b0fa0a5eba3faeb5 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/void_poppet.json
-476382e3f2d78456c8ea8254eb5e356e4c730bfc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/voodoo_poppet.json
-801e55ba733add62bcdaca3e7ecc02f5b40c4838 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/voodoo_protection_poppet.json
-e10f2d7acd2d49f89367f6fe44652004b2db9d7d assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/water_poppet.json
+5a6e9dd866ae6d77e80b0f122ba7f7d338faf1b8 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/voodoo_poppet.json
+efb3ced046e7c6a32112b9d884b3857025111a21 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/voodoo_protection_poppet.json
+8ff1e595c74c3d8fdf8b10e7d31791808b906d32 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/water_poppet.json
 d7011f22276306ea7df57f120f7a34401aa08f4c assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/waystone.json
 6a8191e6d2a16e5ca63f8dcfe8299e2243827bfb assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/whiff_of_magic.json
 d8266c43495b9dddbc9c1c5dee1d3751953087e2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/wood_ash.json

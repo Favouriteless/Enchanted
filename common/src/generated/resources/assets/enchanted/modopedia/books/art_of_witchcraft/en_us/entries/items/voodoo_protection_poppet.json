@@ -14,7 +14,7 @@
         {
           "header": "Voodoo Protection",
           "template": "modopedia:page/headered_text",
-          "text": "As the name suggests, protects the beneficiary from voodoo poppets. Instead, the voodoo poppet will break.\n\nWhen infused, the holder of the poppet will also be struck by lightning."
+          "text": "Protects the beneficiary from voodoo poppets. When affected by a voodoo poppet, the poppet will break instead.\n\nIf infused, the holder of the poppet will also be struck by lightning."
         }
       ]
     },

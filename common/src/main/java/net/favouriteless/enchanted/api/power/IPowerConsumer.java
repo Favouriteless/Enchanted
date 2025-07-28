@@ -20,9 +20,9 @@ import java.util.List;
 public interface IPowerConsumer {
 
     /**
-     * @return The {@link IPowerPosHolder} object containing this power consumer's positions.
+     * @return The {@link IPowerPosHolder} containing this power consumer's positions.
      */
-    @NotNull IPowerConsumer.IPowerPosHolder getPosHolder();
+    @NotNull IPowerPosHolder getPosHolder();
 
 
 

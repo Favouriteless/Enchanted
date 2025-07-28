@@ -14,7 +14,7 @@
         {
           "header": "Water",
           "template": "modopedia:page/headered_text",
-          "text": "Prevents the beneficiary from drowning to death, instead leaving them at one health and granting five seconds of $(t:Gives immunity to drowning damage)drown resistance$(/t)\n\nInfused water poppets will provide ten seconds of water breathing, instead of resistance."
+          "text": "Prevents the beneficiary from drowning to death, instead leaving them at one health and granting five seconds of $(b)$(t:Gives immunity to drowning damage)drown resistance$(/t)$(/b)\n\nInfused water poppets will provide ten seconds of water breathing instead of resistance."
         }
       ]
     },

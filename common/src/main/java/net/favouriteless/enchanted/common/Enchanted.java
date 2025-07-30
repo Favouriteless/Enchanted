@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common;
 
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
+import net.favouriteless.enchanted.common.curses.ECurses;
 import net.favouriteless.enchanted.common.init.*;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.mutandis.MutagenSavedData;
@@ -11,14 +12,11 @@ import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
-
 public class Enchanted {
 
     public static final String MOD_ID = "enchanted";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
 
-    public static final Random RANDOM = new Random();
     public static final RandomSource RANDOMSOURCE = RandomSource.create();
 
     public static void init() {
@@ -45,6 +43,8 @@ public class Enchanted {
         EData.load();
         ECreativeTab.load();
         ERiteFactories.load();
+
+        ECurses.load();
 
         EModopedia.initCommon();
     }

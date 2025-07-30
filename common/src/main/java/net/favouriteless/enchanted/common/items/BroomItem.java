@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.favouriteless.enchanted.common.init.ETags;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +25,7 @@ public class BroomItem extends Item {
 		if(!level.isClientSide) {
 			if(level.getBlockState(pos).is(ETags.Blocks.BROOM_SWEEPABLE))
 				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-			level.playSound(null, pos, ESoundEvents.BROOM_SWEEP.value(), SoundSource.PLAYERS, 1.0F, 0.8F + Enchanted.RANDOM.nextFloat() * 0.2F);
+			level.playSound(null, pos, ESoundEvents.BROOM_SWEEP.value(), SoundSource.PLAYERS, 1.0F, 0.8F + RandomUtils.nextFloat() * 0.2F);
 		}
 		return InteractionResult.sidedSuccess(level.isClientSide);
 	}

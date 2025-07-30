@@ -1,10 +1,10 @@
 package net.favouriteless.enchanted.common.blocks.crops;
 
-import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.entities.Mandrake;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
-import net.favouriteless.enchanted.common.entities.Mandrake;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Difficulty;
@@ -36,7 +36,7 @@ public class MandrakeBlock extends CropBlockAgeFive {
                     spawnMandrake(level, pos);
                     return;
                 } else { // 1/5 Chance to "wake up" mandrake at night
-                    if (Enchanted.RANDOM.nextInt(5) == 0) {
+                    if (RandomUtils.nextInt(5) == 0) {
                         spawnMandrake(level, pos);
                         return;
                     }

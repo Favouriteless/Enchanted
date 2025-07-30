@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.EParticleRenderTypes;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;
@@ -21,15 +21,15 @@ public class CauldronCookParticle extends TextureSheetParticle {
     protected CauldronCookParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed,
                                    double zSpeed, float red, float green, float blue) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min(red + (Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
-        this.gCol = Math.min(green + (Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
-        this.bCol = Math.min(blue + (Enchanted.RANDOM.nextInt(40) - 20)/255F, 1.0F);
+        this.rCol = Math.min(red + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
+        this.gCol = Math.min(green + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
+        this.bCol = Math.min(blue + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.6F);
         this.age = 0;
         this.lifetime = 80;
         this.hasPhysics = false;
-        this.circleStart = Enchanted.RANDOM.nextInt(5) + 10;
+        this.circleStart = RandomUtils.nextInt(5) + 10;
 
         this.xStart = x;
         this.zStart = z;

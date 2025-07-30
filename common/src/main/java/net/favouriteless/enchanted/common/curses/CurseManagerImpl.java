@@ -1,81 +1,110 @@
 package net.favouriteless.enchanted.common.curses;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.favouriteless.enchanted.api.curses.Curse;
+import net.favouriteless.enchanted.api.curses.Curse.Type;
+import net.favouriteless.enchanted.api.curses.CurseInstance;
 import net.favouriteless.enchanted.api.curses.CurseManager;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.UUID;
 
 public class CurseManagerImpl implements CurseManager {
 
 	public static final CurseManagerImpl INSTANCE = new CurseManagerImpl();
-	public static final int MAX_STRENGTH = 2;
 
-	private final Map<UUID, List<Curse>> activeCurses = new HashMap<>();
+	private final BiMap<ResourceLocation, Type<?>> types = HashBiMap.create();
 
-	private CurseManagerImpl() {}
+	private final Codec<Type<?>> typeCodec = ResourceLocation.CODEC.flatXmap(
+			r -> {
+				Type<?> c = getType(r);
+				return c != null ? DataResult.success(c) : DataResult.error(() -> "Unknown type " + r);
+			},
+			c -> {
+				ResourceLocation location = types.inverse().get(c);
+				return c != null ? DataResult.success(location) : DataResult.error(() -> "Unknown type " + location);
+			}
+	);
+	private final Codec<Curse> codec = typeCodec.dispatch("type", Curse::type, Type::codec);
 
 	@Override
-	public void createCurse(CurseType<?> type, ServerLevel level, UUID target, int strength) {
-		Curse curse = type.create();
-		curse.setTargetUUID(target);
-		curse.strength = strength;
-		addCurse(level, curse);
+	public void register(Type<?> type) {
+		if(types.containsKey(type.id()))
+			throw new IllegalArgumentException("Attempted to register a duplicate curse type: " + type.id());
+		else
+			types.put(type.id(), type);
 	}
 
 	@Override
-	public List<Curse> getCursesFor(ServerPlayer player) {
-		CurseSavedData data = CurseSavedData.get(player.serverLevel());
-		return data.get(player);
+	public void applyCurse(Type<?> type, UUID target, int curseLevel, ServerLevel level) {
+		Collection<CurseInstance> curses = getCurses(target, level);
+		curses.stream()
+				.filter(instance -> instance.getCurse().type().equals(type))
+				.findAny()
+				.ifPresentOrElse(
+						instance -> instance.setLevel(Math.max(instance.getLevel(), curseLevel)),
+						() -> curses.add(new CurseInstanceImpl(type.supplier().get(), target, curseLevel, 0))
+				);
+		CurseSavedData.get(level).setDirty();
 	}
 
 	@Override
-	public void removeCurse(ServerLevel level, Curse curse) {
-		CurseSavedData data = CurseSavedData.get(level);
-		data.get(curse.getTargetUUID()).remove(curse);
-		data.setDirty();
-		curse.remove(level);
+	public void removeCurse(Type<?> type, UUID target, ServerLevel level) {
+		CurseSavedData.get(level).setDirty();
+		getCurses(target, level).stream()
+				.filter(instance -> instance.getCurse().type().equals(type))
+				.findFirst()
+				.ifPresent(c -> ((CurseInstanceImpl)c).setRemoved());
 	}
 
-	private void addCurse(ServerLevel level, Curse curse) {
-		CurseSavedData data = CurseSavedData.get(level);
-		UUID target = curse.getTargetUUID();
+	@Override
+	public Collection<CurseInstance> getCurses(UUID target, ServerLevel level) {
+		return CurseSavedData.get(level).get(target);
+	}
 
-		List<Curse> curses = data.get(target);
-		Optional<Curse> optional = curses.stream().filter(c -> c.type == curse.type).findFirst();
+	@Override
+	public Type<?> getType(ResourceLocation id) {
+		return types.get(id);
+	}
 
-		if(optional.isPresent()) {
-			Curse existing = optional.get();
-			if(curse.strength < existing.strength)
-				return;
-			curses.remove(existing);
-		}
-		curses.add(curse);
-		data.setDirty();
+	@Override
+	public Codec<Type<?>> typeCodec() {
+		return typeCodec;
+	}
 
-		if(level.getServer().getPlayerList().getPlayer(target) != null)
-			activeCurses.put(target, curses);
+	@Override
+	public Codec<Curse> codec() {
+		return codec;
+	}
+
+	// ----------------------------------------- Non-API implementations below -----------------------------------------
+
+	public void initialisePlayer(ServerPlayer player) {
+		getCurses(player.getUUID(), player.serverLevel()).forEach(i -> i.getCurse().onInitialise(player, i.getLevel(), i.getAge()));
 	}
 
 	public void tick(ServerLevel level) {
-		if(level.dimension() != Level.OVERWORLD)
-			return;
+		for(ServerPlayer player : level.getPlayers(p -> true)) {
+			Iterator<CurseInstance> iterator = getCurses(player.getUUID(), level).iterator();
+			while(iterator.hasNext()) {
+				CurseInstanceImpl curse = (CurseInstanceImpl)iterator.next();
 
-		for(List<Curse> curses : activeCurses.values()) {
-			curses.forEach(c -> c.tick(level));
+				if(curse.isRemoved()) {
+					curse.getCurse().onRemove(player, curse.getLevel(), curse.getAge());
+					iterator.remove();
+					continue;
+				}
+
+				curse.tick(level);
+			}
 		}
-	}
-
-	public void playerLoggedIn(ServerPlayer player) {
-		CurseSavedData data = CurseSavedData.get(player.serverLevel());
-		UUID uuid = player.getUUID();
-		activeCurses.put(uuid, data.get(uuid));
-	}
-
-	public void playerLoggedOut(ServerPlayer player) { // Remove a player's curses when they log out
-		activeCurses.remove(player.getUUID());
 	}
 
 }

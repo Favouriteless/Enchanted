@@ -1,12 +1,13 @@
 package net.favouriteless.enchanted.common.curses;
 
-import net.favouriteless.enchanted.api.curses.Curse;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.enchanted.api.curses.CurseInstance;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -15,68 +16,44 @@ import java.util.*;
 
 public class CurseSavedData extends SavedData {
 
-	private static final String NAME = Enchanted.savedDataName("curses");
-	private final Map<UUID, List<Curse>> entries = new HashMap<>();
+    private static final String NAME = Enchanted.savedDataName("curses");
+    private static final Codec<CurseSavedData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.unboundedMap(UUIDUtil.STRING_CODEC, CurseInstance.codec().listOf().xmap(i -> (List<CurseInstance>)new ArrayList<>(i), l -> l)).fieldOf("entries").forGetter(data -> data.entries)
+    ).apply(instance, CurseSavedData::new));
 
-	public CurseSavedData() {
-		super();
-	}
+    private final Map<UUID, List<CurseInstance>> entries;
 
-	public static CurseSavedData get(ServerLevel level) {
-		return level.getServer().overworld().getDataStorage().computeIfAbsent(new Factory<>(CurseSavedData::new, CurseSavedData::load, null), NAME);
-	}
+    public CurseSavedData(Map<UUID, List<CurseInstance>> entries) {
+        super();
+        this.entries = new HashMap<>(entries);
+    }
 
-	public List<Curse> get(ServerPlayer player) {
-		return get(player.getUUID());
-	}
+    public CurseSavedData() {
+        this(new HashMap<>());
+    }
 
-	public List<Curse> get(UUID uuid) {
-		return entries.computeIfAbsent(uuid, k -> new ArrayList<>());
-	}
+    public static CurseSavedData get(ServerLevel level) {
+        return level.getServer().overworld().getDataStorage().computeIfAbsent(new Factory<>(CurseSavedData::new, CurseSavedData::load, null), NAME);
+    }
 
-	// -------------------- IMPLEMENTATION  DETAILS BELOW THIS POINT, NOT NEEDED FOR API USERS --------------------
+    public List<CurseInstance> get(ServerPlayer player) {
+        return get(player.getUUID());
+    }
 
-	private static CurseSavedData load(CompoundTag nbt, Provider registries) {
-		CurseSavedData data = new CurseSavedData();
+    public List<CurseInstance> get(UUID uuid) {
+        return entries.computeIfAbsent(uuid, k -> new ArrayList<>());
+    }
 
-		for(String key : nbt.getAllKeys()) {
-			UUID target = UUID.fromString(key);
-			List<Curse> curses = new ArrayList<>();
+    // ----------------------------------------- Non-API implementations below -----------------------------------------
 
-			for(Tag t : nbt.getList(key, Tag.TAG_COMPOUND)) {
-				CompoundTag tag = (CompoundTag)t;
-				Curse curse = CurseTypes.create(ResourceLocation.parse(tag.getString("type")));
+    private static CurseSavedData load(CompoundTag nbt, Provider registries) {
+        return CODEC.parse(NbtOps.INSTANCE, nbt.get("data")).getOrThrow();
+    }
 
-				if(curse == null) {
-					Enchanted.LOG.info("Found saved Curse with invalid type, skipping.");
-					continue;
-				}
-
-				curse.load(tag);
-				curses.add(curse);
-			}
-			data.entries.put(target, curses);
-		}
-		return data;
-	}
-
-	@Override
-	public CompoundTag save(CompoundTag nbt, Provider registries) {
-		for(UUID uuid : entries.keySet()) {
-			List<Curse> curses = entries.get(uuid);
-			if(curses.isEmpty())
-				continue;
-
-			ListTag list = new ListTag();
-			for(Curse curse : curses) {
-				CompoundTag curseTag = new CompoundTag();
-				curse.save(curseTag);
-				list.add(curseTag);
-			}
-
-			nbt.put(uuid.toString(), list);
-		}
-		return nbt;
-	}
+    @Override
+    public CompoundTag save(CompoundTag nbt, Provider registries) {
+        nbt.put("data", CODEC.encodeStart(NbtOps.INSTANCE, this).getOrThrow());
+        return nbt;
+    }
 
 }

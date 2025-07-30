@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 
@@ -15,8 +15,8 @@ public class BoilingParticle extends TextureSheetParticle {
         this.gCol = green;
         this.bCol = blue;
         this.sprites = sprites;
-        this.scale(Enchanted.RANDOM.nextFloat() * 0.4F);
-        this.lifetime = Enchanted.RANDOM.nextInt(10) + 5;
+        this.scale(RandomUtils.nextFloat() * 0.4F);
+        this.lifetime = RandomUtils.nextInt(10) + 5;
         this.setSpriteFromAge(sprites);
         this.hasPhysics = false;
     }

@@ -15,7 +15,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerDestroyItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 @EventBusSubscriber(modid = Enchanted.MOD_ID)
@@ -59,11 +58,6 @@ public class CommonEventsNeo {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         CommonEvents.onPlayerLoggedIn(event.getEntity());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerLoggedOut(PlayerLoggedOutEvent event) {
-        CommonEvents.onPlayerLoggedOut(event.getEntity());
     }
 
     @SubscribeEvent

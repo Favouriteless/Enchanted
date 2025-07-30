@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.EParticleRenderTypes;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 
@@ -10,9 +10,9 @@ public class CauldronBrewParticle extends TextureSheetParticle {
 
     protected CauldronBrewParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, float red, float green, float blue) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min(red + (Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
-        this.gCol = Math.min(green + (Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
-        this.bCol = Math.min(blue + (Enchanted.RANDOM.nextInt(20) - 10)/255F, 1.0F);
+        this.rCol = Math.min(red + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
+        this.gCol = Math.min(green + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
+        this.bCol = Math.min(blue + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.4F);
         this.lifetime = 200;

@@ -1,4 +1,1 @@
-- CHANGED: Default altar range increased by 50%. Delete your server configs to get this to apply.
-
-- API: Power providers (blocks, tags) have been refactored and changed slightly. Check enchanted's files and/or the git wiki.
-- API: Altar power providers are now datagenned
+- API: Curses have been rewritten from scratch.

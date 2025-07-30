@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.client.render.poppet;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -35,7 +35,7 @@ public class PoppetAnimation {
 		if(work > 0.2F && work < 0.55F) {
 			int maxOffset = widthScaled > heightScaled ? widthScaled / 80 : heightScaled / 80;
 			int offsetOffset = maxOffset/2;
-			poseStack.translate(Enchanted.RANDOM.nextInt(maxOffset)-offsetOffset, Enchanted.RANDOM.nextInt(maxOffset)-offsetOffset, 0);
+			poseStack.translate(RandomUtils.nextInt(maxOffset)-offsetOffset, RandomUtils.nextInt(maxOffset)-offsetOffset, 0);
 		}
 
 		poseStack.translate(widthScaled / 2.0F, heightScaled / 2.0F, -50.0D);

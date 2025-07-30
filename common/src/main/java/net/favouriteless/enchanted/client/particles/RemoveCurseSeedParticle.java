@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.particles.types.DelayedPosOptions;
-import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.circle_magic.rites.RemoveCurseRite;
+import net.favouriteless.enchanted.common.init.EParticleTypes;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
@@ -47,14 +47,14 @@ public class RemoveCurseSeedParticle extends NoRenderParticle {
 	}
 
 	private void spawnParticle() {
-		double cx = Enchanted.RANDOM.nextGaussian();
-		double cy = Enchanted.RANDOM.nextGaussian();
-		double cz = Enchanted.RANDOM.nextGaussian();
+		double cx = RandomUtils.nextGaussian();
+		double cy = RandomUtils.nextGaussian();
+		double cz = RandomUtils.nextGaussian();
 		double c = Math.cbrt(Math.random());
 		Vec3 pos = new Vec3(cx, cy, cz).normalize().scale(c * RADIUS).add(x, y, z);
 
 		level.addParticle(new DelayedPosOptions(EParticleTypes.REMOVE_CURSE.get(), new Vec3(x, y, z),
-						RemoveCurseRite.RAISE - age + Enchanted.RANDOM.nextInt(11)), pos.x, pos.y, pos.z, 0.0D, 0.0D,
+						RemoveCurseRite.RAISE - age + RandomUtils.nextInt(11)), pos.x, pos.y, pos.z, 0.0D, 0.0D,
 				0.0D);
 	}
 

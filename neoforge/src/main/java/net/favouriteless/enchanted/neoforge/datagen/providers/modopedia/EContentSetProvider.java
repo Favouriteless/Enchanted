@@ -132,8 +132,8 @@ public class EContentSetProvider extends ContentSetProvider {
                 .landingText(FormattedStringBuilder.begin()
                         .then("Circle magic is the practice of using chalk circles and foci to manifest complex magical phenomenon.")
                         .paragraph("The fundamentals of circle magic and known rites are detailed in this chapter.").toString())
-                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/charging", "circle_magic/creature",
-                        "circle_magic/curses", "circle_magic/transposition", "circle_magic/world")
+                .children("circle_magic/tutorial", "circle_magic/binding", "circle_magic/creature", "circle_magic/curses",
+                        "circle_magic/transposition", "circle_magic/world")
                 .sortNum(5)
                 .build("circle_magic", output);
 

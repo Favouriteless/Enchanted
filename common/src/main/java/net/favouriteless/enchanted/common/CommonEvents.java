@@ -35,12 +35,7 @@ public class CommonEvents {
 
     public static void onPlayerLoggedIn(Player player) {
         if(player instanceof ServerPlayer sp)
-            CurseManagerImpl.INSTANCE.playerLoggedIn(sp);
-    }
-
-    public static void onPlayerLoggedOut(Player player) {
-        if(player instanceof ServerPlayer sp)
-            CurseManagerImpl.INSTANCE.playerLoggedOut(sp);
+            CurseManagerImpl.INSTANCE.initialisePlayer(sp);
     }
 
 }

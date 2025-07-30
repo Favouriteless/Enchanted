@@ -5,6 +5,7 @@ import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.ETags.MobEffects;
 import net.favouriteless.enchanted.common.util.BlockPosUtils;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -103,7 +104,7 @@ public class BlightRite extends Rite {
             return;
 
         if(target != caster)
-            target.addEffect(new MobEffectInstance(effectHolder, 100 + Enchanted.RANDOM.nextInt(101), Enchanted.RANDOM.nextInt(3)));
+            target.addEffect(new MobEffectInstance(effectHolder, 100 + RandomUtils.nextInt(101), RandomUtils.nextInt(3)));
     }
 
 }

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -40,9 +40,9 @@ public class AnointingPasteItem extends Item {
 
     public static void spawnParticles(Level level, BlockPos pos) {
         for(int i = 0; i < 20; i++) {
-            double x = Enchanted.RANDOM.nextDouble() * 2;
-            double y = Enchanted.RANDOM.nextDouble() * 1.5D;
-            double z = Enchanted.RANDOM.nextDouble() * 2;
+            double x = RandomUtils.nextDouble() * 2;
+            double y = RandomUtils.nextDouble() * 1.5D;
+            double z = RandomUtils.nextDouble() * 2;
 
             level.addParticle(ParticleTypes.WITCH, pos.getX()-0.5D + x, pos.getY() + y, pos.getZ()-0.5D + z, 0.0D, 0.0D, 0.0D);
         }

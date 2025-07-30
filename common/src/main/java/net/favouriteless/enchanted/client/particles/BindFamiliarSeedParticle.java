@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.particles.types.DelayedPosOptions;
-import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.circle_magic.rites.BindFamiliarRite;
+import net.favouriteless.enchanted.common.init.EParticleTypes;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
@@ -39,15 +39,12 @@ public class BindFamiliarSeedParticle extends NoRenderParticle {
 	}
 
 	private void spawnParticle() {
-		double cx = Enchanted.RANDOM.nextGaussian();
-		double cy = Enchanted.RANDOM.nextGaussian();
-		double cz = Enchanted.RANDOM.nextGaussian();
 		double c = Math.cbrt(Math.random());
-		Vec3 pos = new Vec3(cx, cy, cz).normalize().scale(c * RADIUS).add(x, y, z);
+		Vec3 pos = new Vec3(RandomUtils.nextGaussian(), RandomUtils.nextGaussian(), RandomUtils.nextGaussian()).normalize().scale(c * RADIUS).add(x, y, z);
 
 		int fallTicks = BindFamiliarRite.BIND_TICKS - age;
-		if(Enchanted.RANDOM.nextFloat() < 0.3F)
-			fallTicks = Enchanted.RANDOM.nextInt(fallTicks);
+		if(RandomUtils.nextFloat() < 0.3F)
+			fallTicks = RandomUtils.nextInt(fallTicks);
 
 		level.addParticle(new DelayedPosOptions(EParticleTypes.BIND_FAMILIAR.get(), new Vec3(x, y, z), fallTicks), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
 	}

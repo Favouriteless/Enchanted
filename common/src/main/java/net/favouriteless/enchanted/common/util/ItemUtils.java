@@ -36,13 +36,13 @@ public class ItemUtils {
 			double width = EntityType.ITEM.getWidth();
 			double inverseWidth = 1.0D - width;
 			double radius = width / 2.0D;
-			double dx = Math.floor(x) + Enchanted.RANDOM.nextDouble() * inverseWidth + radius;
-			double dy = Math.floor(y) + Enchanted.RANDOM.nextDouble() * inverseWidth;
-			double dz = Math.floor(z) + Enchanted.RANDOM.nextDouble() * inverseWidth + radius;
+			double dx = Math.floor(x) + RandomUtils.nextDouble() * inverseWidth + radius;
+			double dy = Math.floor(y) + RandomUtils.nextDouble() * inverseWidth;
+			double dz = Math.floor(z) + RandomUtils.nextDouble() * inverseWidth + radius;
 
 			while(!item.isEmpty()) {
-				ItemEntity entity = new ItemEntity(level, dx, dy, dz, item.split(Enchanted.RANDOM.nextInt(21) + 10));
-				entity.setDeltaMovement(Enchanted.RANDOM.nextGaussian() * 0.05D, Enchanted.RANDOM.nextGaussian() * 0.05D + 0.2D, Enchanted.RANDOM.nextGaussian() * 0.05D);
+				ItemEntity entity = new ItemEntity(level, dx, dy, dz, item.split(RandomUtils.nextInt(21) + 10));
+				entity.setDeltaMovement(RandomUtils.nextGaussian() * 0.05D, RandomUtils.nextGaussian() * 0.05D + 0.2D, RandomUtils.nextGaussian() * 0.05D);
 				level.addFreshEntity(entity);
 			}
 		}

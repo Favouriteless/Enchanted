@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.common.items;
 
 import net.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
 import net.favouriteless.enchanted.api.taglock.IBedTaglock;
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import net.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
 import net.favouriteless.enchanted.common.init.EBlocks;
@@ -12,6 +11,7 @@ import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.favouriteless.enchanted.common.util.LangUtils;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -117,14 +117,14 @@ public class EmptyTaglockItem extends Item {
     }
 
     protected void fillTaglock(Player player, ItemStack stack, EntityRefData data) {
-        if(player instanceof ServerPlayer serverPlayer) {
+        if(player instanceof ServerPlayer sp) {
             ItemStack item = new ItemStack(EItems.TAGLOCK_FILLED.get(), 1);
             item.set(EDataComponents.ENTITY_REF.get(), data);
 
             ItemUtils.giveOrDrop(player, item);
 
             // Send sound packet to player
-            serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EXPERIENCE_ORB_PICKUP), SoundSource.MASTER, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, Enchanted.RANDOM.nextLong()));
+            sp.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EXPERIENCE_ORB_PICKUP), SoundSource.MASTER, sp.getX(), sp.getY(), sp.getZ(), 1.0F, 1.0F, RandomUtils.nextLong()));
             stack.shrink(1);
         }
     }

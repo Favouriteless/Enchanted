@@ -5,7 +5,6 @@ import net.favouriteless.enchanted.api.power.IPowerProvider;
 import net.favouriteless.enchanted.api.power.PowerHelper;
 import net.favouriteless.enchanted.client.client_handlers.block_entities.CauldronClientHandler;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
@@ -13,6 +12,7 @@ import net.favouriteless.enchanted.common.init.ETags.Blocks;
 import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.enchanted.common.recipes.recipe_inputs.ListInput;
 import net.favouriteless.enchanted.common.util.ItemUtils;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup.Provider;
@@ -141,7 +141,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 		long time = System.currentTimeMillis() - be.startTime;
 		double waterY = be.getWaterY(state);
 
-		if(be.isHot() && Enchanted.RANDOM.nextInt(10) > 2) {
+		if(be.isHot() && RandomUtils.nextInt(10) > 2) {
 			double dx = pos.getX() + 0.5D + (Math.random() - 0.5D) * be.getWaterWidth();
 			double dy = pos.getY() + waterY + 0.02D;
 			double dz = pos.getZ() + 0.5D + (Math.random() - 0.5D) * be.getWaterWidth();
@@ -154,7 +154,7 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 		if(!be.isComplete && be.cookProgress > 0 && be.cookProgress < be.cookDuration)
 			be.handleCookParticles(time);
-		else if(be.warmingUp == WARMING_MAX && be.hasItems && Enchanted.RANDOM.nextInt(10) > 6) {
+		else if(be.warmingUp == WARMING_MAX && be.hasItems && RandomUtils.nextInt(10) > 6) {
 			double xOffset = 0.5D + (Math.random() - 0.5D) * be.getWaterWidth();
 			double zOffset = 0.5D + (Math.random() - 0.5D) * be.getWaterWidth();
 			double dx = be.worldPosition.getX() + xOffset;
@@ -333,9 +333,9 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 			targetBlue = FastColor.ARGB32.blue(colour);
 		}
 		else {
-			targetRed = Enchanted.RANDOM.nextInt(80);
-			targetGreen = Enchanted.RANDOM.nextInt(80);
-			targetBlue = Enchanted.RANDOM.nextInt(80);
+			targetRed = RandomUtils.nextInt(80);
+			targetGreen = RandomUtils.nextInt(80);
+			targetBlue = RandomUtils.nextInt(80);
 		}
 	}
 

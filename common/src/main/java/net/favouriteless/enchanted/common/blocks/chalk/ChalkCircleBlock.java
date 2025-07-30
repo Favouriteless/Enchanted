@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.blocks.chalk;
 
-import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
@@ -47,7 +47,7 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
 
     @Override
     public BlockState getRandomState() {
-        return defaultBlockState().setValue(GLYPH, Enchanted.RANDOM.nextInt(48));
+        return defaultBlockState().setValue(GLYPH, RandomUtils.nextInt(48));
     }
 
 }

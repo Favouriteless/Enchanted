@@ -6,6 +6,7 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.familiars.FamiliarTypes;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -41,9 +42,9 @@ public class BindFamiliarRite extends Rite {
         level.playSound(null, target.getX(), target.getY(),  target.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
         double offset = target.getBbWidth() / 1.5D;
-        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + Enchanted.RANDOM.nextInt(10), offset, offset, offset, 0.0D);
+        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
         target.teleportTo(newPos.x, newPos.y, newPos.z);
-        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + Enchanted.RANDOM.nextInt(10), offset, offset, offset, 0.0D);
+        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
 
         level.sendParticles(EParticleTypes.BIND_FAMILIAR_SEED.get(), newPos.x, newPos.y, newPos.z, 1, 0, 0, 0, 0);
 

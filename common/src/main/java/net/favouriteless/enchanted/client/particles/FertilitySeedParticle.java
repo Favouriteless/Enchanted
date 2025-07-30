@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.particles.types.ColouredCircleOptions;
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
+import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
@@ -23,9 +23,9 @@ public class FertilitySeedParticle extends NoRenderParticle {
 	@Override
 	public void tick() {
 		for(int a = 0; a < 360; a+=2) {
-			double cx = Enchanted.RANDOM.nextGaussian();
-			double cy = Enchanted.RANDOM.nextGaussian();
-			double cz = Enchanted.RANDOM.nextGaussian();;
+			double cx = RandomUtils.nextGaussian();
+			double cy = RandomUtils.nextGaussian();
+			double cz = RandomUtils.nextGaussian();;
 			Vec3 pos = new Vec3(cx, cy, cz).normalize().scale(0.1D).add(x, y, z);
 
 			level.addParticle(new ColouredCircleOptions(EParticleTypes.FERTILITY.get(), 0xFFFFFF,

@@ -3,10 +3,14 @@ package net.favouriteless.enchanted.common.curses.curses;
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.api.curses.Curse;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.network.client.SinkingCursePayload;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.common.SyncedFlags;
 import net.minecraft.server.level.ServerPlayer;
 
+/**
+ *
+ * Attach player clone to apply
+ *
+ */
 public class CurseSinking implements Curse {
 
     private static final MapCodec<CurseSinking> CODEC = MapCodec.unit(CurseSinking::new);
@@ -23,12 +27,8 @@ public class CurseSinking implements Curse {
         if(isSwimming == wasSwimming && isFlying == wasFlying)
             return;
 
-        if(isSwimming)
-            CommonServices.NETWORK.sendToPlayer(new SinkingCursePayload(-0.025F * (strength + 1)), target);
-        else if(isFlying)
-            CommonServices.NETWORK.sendToPlayer(new SinkingCursePayload(-0.05F * (strength + 1)), target);
-        else
-            CommonServices.NETWORK.sendToPlayer(new SinkingCursePayload(0.0F), target);
+        float sink = isSwimming ? -0.025F * (strength + 1) : isFlying ? -0.05F * (strength + 1) : 0;
+        SyncedFlags.update(SyncedFlags.SINKING_FACTOR, sink, target);
 
         wasSwimming = isSwimming;
         wasFlying = isFlying;
@@ -36,12 +36,12 @@ public class CurseSinking implements Curse {
 
     @Override
     public void onRemove(ServerPlayer target, int strength, long age) {
-        CommonServices.NETWORK.sendToPlayer(new SinkingCursePayload(0), target);
+        SyncedFlags.update(SyncedFlags.SINKING_FACTOR, 0F, target);
     }
 
     @Override
     public Type<?> type() {
-        return null;
+        return TYPE;
     }
 
 }

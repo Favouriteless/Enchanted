@@ -44,19 +44,21 @@ public class PoppetAnimationPayload implements CustomPacketPayload {
 	}
 
 	public static void handle(PoppetAnimationPayload payload, PacketContext context) {
-		Minecraft mc = Minecraft.getInstance();
-		Entity entity = mc.level.getEntity(payload.entityId);
-		if(entity != null) {
-			if(payload.item.getItem() instanceof PoppetItem) {
-				PoppetColour colour = ((PoppetItem)payload.item.getItem()).colour;
-				mc.particleEngine.createTrackingEmitter(entity, new TwoColourOptions(EParticleTypes.POPPET.get(),
-						FastColor.ARGB32.color(colour.rPrimary, colour.gPrimary, colour.gSecondary),
-						FastColor.ARGB32.color(colour.rSecondary, colour.gSecondary, colour.bSecondary)), 40);
+		context.enqueueWork(() -> {
+			Minecraft mc = Minecraft.getInstance();
+			Entity entity = mc.level.getEntity(payload.entityId);
+			if(entity != null) {
+				if(payload.item.getItem() instanceof PoppetItem) {
+					PoppetColour colour = ((PoppetItem)payload.item.getItem()).colour;
+					mc.particleEngine.createTrackingEmitter(entity, new TwoColourOptions(EParticleTypes.POPPET.get(),
+							FastColor.ARGB32.color(colour.rPrimary, colour.gPrimary, colour.gSecondary),
+							FastColor.ARGB32.color(colour.rSecondary, colour.gSecondary, colour.bSecondary)), 40);
 
-				if(entity == mc.player)
-					PoppetAnimationManager.startAnimation(payload.result, payload.item);
+					if(entity == mc.player)
+						PoppetAnimationManager.startAnimation(payload.result, payload.item);
+				}
 			}
-		}
+		});
 	}
 
 }

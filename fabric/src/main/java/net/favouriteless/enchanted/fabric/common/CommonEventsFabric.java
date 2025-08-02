@@ -1,14 +1,16 @@
 package net.favouriteless.enchanted.fabric.common;
 
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.favouriteless.enchanted.api.curses.CurseManager;
 import net.favouriteless.enchanted.common.CommonEvents;
 import net.favouriteless.enchanted.common.effects.EffectEvents;
 import net.favouriteless.enchanted.common.poppet.PoppetEvents;
-import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +29,11 @@ public class CommonEventsFabric {
         EntitySleepEvents.ALLOW_SETTING_SPAWN.register((player, pos) -> {
             CommonEvents.onPlayerSleeping(player, pos);
             return true;
+        });
+
+        ServerPlayerEvents.COPY_FROM.register((original, player, alive) -> {
+            if(player instanceof ServerPlayer sp)
+                CurseManager.get().getCurses(sp.getUUID(), sp.serverLevel()).forEach(instance -> instance.getCurse().onInitialise(sp, instance.getStrength(), instance.getAge()));
         });
 
     }

@@ -21,14 +21,14 @@ public interface CurseInstance {
     /**
      * @return Level of this instance.
      */
-    int getLevel();
+    int getStrength();
 
     /**
      * Set the level of this instance. Will be clamped to {@link Curse#getMaxStrength()}.
      *
      * @param level level to be set as.
      */
-    void setLevel(int level);
+    void setStrength(int level);
 
     /**
      * @return Age (in ticks) of this instance, only increments when the target is online.

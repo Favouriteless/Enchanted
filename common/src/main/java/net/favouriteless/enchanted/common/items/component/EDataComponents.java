@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.items.component;
 
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,7 +22,7 @@ public class EDataComponents {
     public static final Supplier<DataComponentType<Map<ResourceLocation, Block>>> CIRCLE_MAGIC_SHAPE_MAP = register("circle_magic_shape_map", b -> b.persistent(CircleMagicShapeMap.CODEC).networkSynchronized(CircleMagicShapeMap.STREAM_CODEC).cacheEncoding());
 
     private static <T> Supplier<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
-        return CommonServices.COMMON_REGISTRY.register(BuiltInRegistries.DATA_COMPONENT_TYPE, name, () -> builder.apply(DataComponentType.builder()).build());
+        return EServices.REGISTRY.register(BuiltInRegistries.DATA_COMPONENT_TYPE, name, () -> builder.apply(DataComponentType.builder()).build());
     }
 
     public static void load() {} // Method which exists purely to load the class.

@@ -43,6 +43,7 @@ public class Enchanted {
         EData.load();
         ECreativeTab.load();
         ERiteFactories.load();
+        EAttachmentTypes.load();
 
         ECurses.load();
 

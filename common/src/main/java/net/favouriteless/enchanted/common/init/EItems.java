@@ -7,7 +7,7 @@ import net.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.poppets.*;
 import net.favouriteless.enchanted.common.poppet.PoppetColour;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -192,7 +192,7 @@ public class EItems {
 
 
 	private static <T extends Item> Supplier<T> register(String name, Supplier<T> itemSupplier) {
-		return CommonServices.COMMON_REGISTRY.register(BuiltInRegistries.ITEM, name, itemSupplier);
+		return EServices.REGISTRY.register(BuiltInRegistries.ITEM, name, itemSupplier);
 	}
 
 	private static Supplier<Item> registerItem(String name) {

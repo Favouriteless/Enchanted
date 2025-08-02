@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.init;
 
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.client.particles.types.*;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,7 +39,7 @@ public class EParticleTypes {
     public static final Supplier<ParticleType<DoubleOptions>> TRANSPOSITION_IRON_SEED = register("transposition_iron_seed", false, DoubleOptions::codec, DoubleOptions::streamCodec);
 
     private static <T extends ParticleType<?>> Supplier<T> register(String name, Supplier<T> particleTypeSupplier) {
-        return CommonServices.COMMON_REGISTRY.register(BuiltInRegistries.PARTICLE_TYPE, name, particleTypeSupplier);
+        return EServices.REGISTRY.register(BuiltInRegistries.PARTICLE_TYPE, name, particleTypeSupplier);
     }
 
     private static <T extends ParticleOptions> Supplier<ParticleType<T>> register(String name, boolean override, Function<ParticleType<T>, MapCodec<T>> codec,

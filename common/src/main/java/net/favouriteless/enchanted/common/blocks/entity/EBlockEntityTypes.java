@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.common.init.EBlocks;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -32,7 +32,7 @@ public class EBlockEntityTypes {
 
 
     private static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> type) {
-        return CommonServices.COMMON_REGISTRY.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, name, () -> type.get().build(null));
+        return EServices.REGISTRY.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, name, () -> type.get().build(null));
     }
 
     public static void load() {} // Method which exists purely to load the class.

@@ -7,15 +7,9 @@ import net.favouriteless.enchanted.common.altar.PowerProvider;
 import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.mutandis.MutagenInfo;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 public class EData {
 
@@ -29,11 +23,11 @@ public class EData {
 
 
     private static <T> ResourceKey<Registry<T>> register(ResourceKey<Registry<T>> key, Codec<T> codec) {
-        return CommonServices.COMMON_REGISTRY.registerDataRegistry(key, codec);
+        return EServices.REGISTRY.registerDataRegistry(key, codec);
     }
 
     private static <T> ResourceKey<Registry<T>> registerSynced(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
-        return CommonServices.COMMON_REGISTRY.registerSyncedDataRegistry(key, codec, networkCodec);
+        return EServices.REGISTRY.registerSyncedDataRegistry(key, codec, networkCodec);
     }
 
     public static void load() {}

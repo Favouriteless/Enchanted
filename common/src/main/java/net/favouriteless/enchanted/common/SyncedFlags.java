@@ -2,8 +2,7 @@ package net.favouriteless.enchanted.common;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.favouriteless.enchanted.common.network.client.flags.SyncedFloatPayload;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,8 +16,6 @@ public class SyncedFlags {
     private static final BiMap<Integer, Flag<?>> flags = HashBiMap.create();
     private static final Map<Flag<?>, Object> values = new HashMap<>();
 
-    public static final Flag<Float> SINKING_FACTOR = register(Float.class, 0.0F, SyncedFloatPayload::new);
-
     public static <T> void set(Flag<T> flag, T value) {
         values.put(flag, value);
     }
@@ -29,11 +26,11 @@ public class SyncedFlags {
     }
 
     public static <T> void update(Flag<T> flag, T value, ServerLevel level) {
-        CommonServices.NETWORK.sendToAllPlayers(flag.payloadConstructor().apply(flag, value), level.getServer());
+        EServices.NETWORK.sendToAllPlayers(flag.payloadConstructor().apply(flag, value), level.getServer());
     }
 
     public static <T> void update(Flag<T> flag, T value, ServerPlayer player) {
-        CommonServices.NETWORK.sendToPlayer(flag.payloadConstructor().apply(flag, value), player);
+        EServices.NETWORK.sendToPlayer(flag.payloadConstructor().apply(flag, value), player);
     }
 
     public static int getId(Flag<?> flag) {

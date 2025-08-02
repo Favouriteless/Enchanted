@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.blocks;
 
 import net.favouriteless.enchanted.common.blocks.entity.ContainerBlockEntityBase;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,7 +29,7 @@ public abstract class SimpleContainerBlockBase extends BaseEntityBlock {
 		if(!level.isClientSide) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if(blockEntity instanceof MenuProvider mp) {
-				CommonServices.PLATFORM.openMenu((ServerPlayer)player, mp, pos, BlockPos.STREAM_CODEC);
+				EServices.PLATFORM.openMenu((ServerPlayer)player, mp, pos, BlockPos.STREAM_CODEC);
 				return InteractionResult.SUCCESS;
 			}
 		}

@@ -7,7 +7,7 @@ import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup.Provider;
@@ -68,13 +68,13 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
                 boolean canBurn = be.canBurn(holder);
 
                 if(!be.isLit() && canBurn) {
-                    be.burnProgress = CommonServices.PLATFORM.getBurnTime(fuel, RecipeType.SMELTING);
+                    be.burnProgress = EServices.PLATFORM.getBurnTime(fuel, RecipeType.SMELTING);
                     be.burnDuration = be.burnProgress;
 
                     if(be.isLit()) {
                         isChanged = true;
 
-                        ItemStack remainder = CommonServices.PLATFORM.getCraftingRemainingItem(fuel);
+                        ItemStack remainder = EServices.PLATFORM.getCraftingRemainingItem(fuel);
                         fuel.shrink(1);
                         if(fuel.isEmpty())
                             be.inventory.set(2, remainder == null ? ItemStack.EMPTY : remainder);

@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
@@ -206,7 +206,7 @@ public class ECreativeTab {
 
 
     public static Supplier<CreativeModeTab> register(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemsGenerator) {
-        return CommonServices.COMMON_REGISTRY.registerCreativeTab(name, iconSupplier, itemsGenerator);
+        return EServices.REGISTRY.registerCreativeTab(name, iconSupplier, itemsGenerator);
     }
 
     public static void load() {} // Method which exists purely to load the class.

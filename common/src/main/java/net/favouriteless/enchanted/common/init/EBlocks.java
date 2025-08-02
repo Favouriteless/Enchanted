@@ -9,7 +9,7 @@ import net.favouriteless.enchanted.common.blocks.cauldrons.WitchCauldronBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import net.favouriteless.enchanted.common.blocks.crops.*;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.platform.services.CommonRegistryHelper;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
@@ -98,7 +98,7 @@ public class EBlocks {
     //public static final Supplier<Block> DEMON_HEART = register("demon_heart", DemonHeart::new);
 
     public static void registerFlammables() {
-        CommonRegistryHelper registry = CommonServices.COMMON_REGISTRY;
+        CommonRegistryHelper registry = EServices.REGISTRY;
         registry.setFlammable(ROWAN_LOG.get(), 5, 5);
         registry.setFlammable(ROWAN_PLANKS.get(), 5, 20);
         registry.setFlammable(ROWAN_STAIRS.get(), 5, 20);
@@ -128,7 +128,7 @@ public class EBlocks {
     //-------------------------------------------------------- UTILITY FUNCTIONS FOR CREATING BLOCKS --------------------------------------------------------
 
     public static <T extends Block> Supplier<T> register(String name, Supplier<T> blockSupplier) {
-        return CommonServices.COMMON_REGISTRY.register(BuiltInRegistries.BLOCK, name, blockSupplier);
+        return EServices.REGISTRY.register(BuiltInRegistries.BLOCK, name, blockSupplier);
     }
 
     public static ToIntFunction<BlockState> getLightValueLit(int lightValue) {

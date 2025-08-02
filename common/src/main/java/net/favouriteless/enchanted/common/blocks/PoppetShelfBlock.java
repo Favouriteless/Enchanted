@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.common.blocks;
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfManager;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,7 +55,7 @@ public class PoppetShelfBlock extends BaseEntityBlock {
 		if(!level.isClientSide) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if(blockEntity instanceof PoppetShelfBlockEntity be)
-				CommonServices.PLATFORM.openMenu((ServerPlayer)player, be, pos, BlockPos.STREAM_CODEC);
+				EServices.PLATFORM.openMenu((ServerPlayer)player, be, pos, BlockPos.STREAM_CODEC);
 		}
 		return InteractionResult.SUCCESS;
 	}

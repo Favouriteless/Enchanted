@@ -111,7 +111,7 @@ public class NeoCommonRegistryHelper implements CommonRegistryHelper {
 			return reg != null ? reg.register(name, entry) : null;
 		}
 
-		@SuppressWarnings({"unchecked"})
+		@SuppressWarnings("unchecked")
 		public <T> DeferredRegister<T> getDeferred(Registry<? super T> registry) {
             return (DeferredRegister<T>)registries.computeIfAbsent(registry.key().location(), (key) ->
 					DeferredRegister.create(registry.key().location(), Enchanted.MOD_ID)

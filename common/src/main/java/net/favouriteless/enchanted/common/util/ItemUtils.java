@@ -1,11 +1,8 @@
 package net.favouriteless.enchanted.common.util;
 
-import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -55,7 +52,7 @@ public class ItemUtils {
 	 * @return True if stack's burn value > 0.
 	 */
 	public static boolean isFuel(ItemStack stack) {
-		return CommonServices.PLATFORM.getBurnTime(stack, null) > 0;
+		return EServices.PLATFORM.getBurnTime(stack, null) > 0;
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class CurseManagerImpl implements CurseManager {
 				.filter(instance -> instance.getCurse().type().equals(type))
 				.findAny()
 				.ifPresentOrElse(
-						instance -> instance.setLevel(Math.max(instance.getLevel(), curseLevel)),
+						instance -> instance.setStrength(Math.max(instance.getStrength(), curseLevel)),
 						() -> curses.add(new CurseInstanceImpl(type.supplier().get(), target, curseLevel, 0))
 				);
 		CurseSavedData.get(level).setDirty();
@@ -87,7 +87,7 @@ public class CurseManagerImpl implements CurseManager {
 	// ----------------------------------------- Non-API implementations below -----------------------------------------
 
 	public void initialisePlayer(ServerPlayer player) {
-		getCurses(player.getUUID(), player.serverLevel()).forEach(i -> i.getCurse().onInitialise(player, i.getLevel(), i.getAge()));
+		getCurses(player.getUUID(), player.serverLevel()).forEach(i -> i.getCurse().onInitialise(player, i.getStrength(), i.getAge()));
 	}
 
 	public void tick(ServerLevel level) {
@@ -97,7 +97,7 @@ public class CurseManagerImpl implements CurseManager {
 				CurseInstanceImpl curse = (CurseInstanceImpl)iterator.next();
 
 				if(curse.isRemoved()) {
-					curse.getCurse().onRemove(player, curse.getLevel(), curse.getAge());
+					curse.getCurse().onRemove(player, curse.getStrength(), curse.getAge());
 					iterator.remove();
 					continue;
 				}

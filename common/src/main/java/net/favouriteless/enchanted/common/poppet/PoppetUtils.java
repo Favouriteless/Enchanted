@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.common.poppet;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
@@ -10,7 +9,7 @@ import net.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem
 import net.favouriteless.enchanted.common.network.client.PoppetAnimationPayload;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -273,7 +272,7 @@ public class PoppetUtils {
 	private static PoppetUseResult trySendAnimation(PoppetUseResult result, ItemStack poppetItemOriginal, Player player) {
 		if(result.isSuccess()) {
 			if(!player.level().isClientSide)
-				CommonServices.NETWORK.sendToAllPlayers(new PoppetAnimationPayload(result.type(), poppetItemOriginal, player.getId()), player.level().getServer());
+				EServices.NETWORK.sendToAllPlayers(new PoppetAnimationPayload(result.type(), poppetItemOriginal, player.getId()), player.level().getServer());
 		}
 		return result;
 	}

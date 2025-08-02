@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
@@ -19,7 +19,7 @@ public class ESoundEvents {
 	public static Holder<SoundEvent> REMOVE_CURSE = register("remove_curse", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("remove_curse")));
 
 	private static <T extends SoundEvent> Holder<SoundEvent> register(String name, Supplier<T> soundSupplier) {
-		return CommonServices.COMMON_REGISTRY.registerHolder(BuiltInRegistries.SOUND_EVENT, name, soundSupplier);
+		return EServices.REGISTRY.registerHolder(BuiltInRegistries.SOUND_EVENT, name, soundSupplier);
 	}
 
 	public static void load() {} // Method which exists purely to load the class.

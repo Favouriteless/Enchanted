@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.effects.EMobEffect;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,7 +19,7 @@ public class EMobEffects {
 	public static final Holder<MobEffect> GROTESQUE = register("grotesque", () -> new EMobEffect(MobEffectCategory.BENEFICIAL, 0x737335));
 
 	private static <T extends MobEffect> Holder<MobEffect> register(String name, Supplier<T> effectSupplier) {
-		return CommonServices.COMMON_REGISTRY.registerHolder(BuiltInRegistries.MOB_EFFECT, name, effectSupplier);
+		return EServices.REGISTRY.registerHolder(BuiltInRegistries.MOB_EFFECT, name, effectSupplier);
 	}
 
 	public static boolean isMagic(DamageSource source) {

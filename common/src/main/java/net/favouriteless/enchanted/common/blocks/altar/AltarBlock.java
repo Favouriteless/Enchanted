@@ -6,7 +6,7 @@ import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.multiblock.MultiBlockTools;
 import net.favouriteless.enchanted.common.multiblock.altar.AltarMultiBlock;
 import net.favouriteless.enchanted.common.multiblock.altar.AltarPartIndex;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -70,7 +70,7 @@ public class AltarBlock extends BaseEntityBlock {
                 if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
                     BlockEntity blockEntity = level.getBlockEntity(cornerPos);
                     if(blockEntity instanceof AltarBlockEntity be)
-                        CommonServices.PLATFORM.openMenu((ServerPlayer)player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
+                        EServices.PLATFORM.openMenu((ServerPlayer)player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
                 }
                 return InteractionResult.CONSUME;
             }

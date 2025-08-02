@@ -53,12 +53,12 @@ public class RemoveCurseRite extends Rite {
             if(!instance.getCurse().type().equals(curse))
                 continue;
 
-            double chance = (instance.getLevel() - removeLevel) * 0.2D; // 20% chance to fail per level difference.
+            double chance = (instance.getStrength() - removeLevel) * 0.2D; // 20% chance to fail per level difference.
 
             if(Math.random() > chance)
                 manager.removeCurse(curse, params.target, level);
             else
-                manager.applyCurse(curse, params.target, instance.getLevel() + 1, level);
+                manager.applyCurse(curse, params.target, instance.getStrength() + 1, level);
         }
         return false;
     }

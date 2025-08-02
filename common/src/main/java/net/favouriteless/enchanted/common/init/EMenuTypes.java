@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.menus.*;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -29,12 +29,12 @@ public class EMenuTypes {
     private static <T extends AbstractContainerMenu, C> Supplier<MenuType<T>> register(String name,
                                                                                            TriFunction<Integer, Inventory, C, T> factory,
                                                                                            StreamCodec<? super RegistryFriendlyByteBuf, C> codec) {
-        return CommonServices.COMMON_REGISTRY.registerMenu(name, factory, codec);
+        return EServices.REGISTRY.registerMenu(name, factory, codec);
     }
 
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name,
                                                                                     BiFunction<Integer, Inventory, T> factory) {
-        return CommonServices.COMMON_REGISTRY.registerMenu(name, factory);
+        return EServices.REGISTRY.registerMenu(name, factory);
     }
 
     public static void load() {} // Method which exists purely to load the class.

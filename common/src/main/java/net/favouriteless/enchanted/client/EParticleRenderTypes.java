@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.favouriteless.enchanted.integrations.IrisIntegrations;
-import net.favouriteless.enchanted.platform.CommonServices;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -33,7 +33,7 @@ public class EParticleRenderTypes {
     };
 
     public static ParticleRenderType translucentParticle() {
-        if(CommonServices.PLATFORM.isModLoaded("iris") && IrisIntegrations.isShaderpackLoaded())
+        if(EServices.PLATFORM.isModLoaded("iris") && IrisIntegrations.isShaderpackLoaded())
             return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
         return PARTICLE_TRANSLUCENT;
     }

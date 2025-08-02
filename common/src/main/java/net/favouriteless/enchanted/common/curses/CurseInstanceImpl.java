@@ -22,7 +22,7 @@ public class CurseInstanceImpl implements CurseInstance {
     public static final Codec<CurseInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Curse.codec().fieldOf("curse").forGetter(CurseInstance::getCurse),
             UUIDUtil.CODEC.fieldOf("target").forGetter(CurseInstance::getTargetUuid),
-            Codec.INT.fieldOf("level").forGetter(CurseInstance::getLevel),
+            Codec.INT.fieldOf("level").forGetter(CurseInstance::getStrength),
             Codec.LONG.fieldOf("age").forGetter(CurseInstance::getAge)
     ).apply(instance, CurseInstanceImpl::new));
 
@@ -65,12 +65,12 @@ public class CurseInstanceImpl implements CurseInstance {
     }
 
     @Override
-    public int getLevel() {
+    public int getStrength() {
         return level;
     }
 
     @Override
-    public void setLevel(int level) {
+    public void setStrength(int level) {
         this.level = Mth.clamp(level, 0, curse.getMaxStrength());
     }
 

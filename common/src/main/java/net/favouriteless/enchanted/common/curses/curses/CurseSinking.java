@@ -3,14 +3,10 @@ package net.favouriteless.enchanted.common.curses.curses;
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.api.curses.Curse;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.SyncedFlags;
+import net.favouriteless.enchanted.common.init.EAttachmentTypes;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.server.level.ServerPlayer;
 
-/**
- *
- * Attach player clone to apply
- *
- */
 public class CurseSinking implements Curse {
 
     private static final MapCodec<CurseSinking> CODEC = MapCodec.unit(CurseSinking::new);
@@ -28,7 +24,7 @@ public class CurseSinking implements Curse {
             return;
 
         float sink = isSwimming ? -0.025F * (strength + 1) : isFlying ? -0.05F * (strength + 1) : 0;
-        SyncedFlags.update(SyncedFlags.SINKING_FACTOR, sink, target);
+        EServices.ATTACHMENT.set(target, EAttachmentTypes.SINKING_FACTOR, sink);
 
         wasSwimming = isSwimming;
         wasFlying = isFlying;
@@ -36,7 +32,7 @@ public class CurseSinking implements Curse {
 
     @Override
     public void onRemove(ServerPlayer target, int strength, long age) {
-        SyncedFlags.update(SyncedFlags.SINKING_FACTOR, 0F, target);
+        EServices.ATTACHMENT.set(target, EAttachmentTypes.SINKING_FACTOR, 0.0F);
     }
 
     @Override

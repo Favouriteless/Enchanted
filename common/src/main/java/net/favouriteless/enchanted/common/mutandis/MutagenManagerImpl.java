@@ -137,15 +137,10 @@ public class MutagenManagerImpl implements MutagenManager {
     }
 
     private Object2DoubleMap<MutagenSet> getWeightedBlocks(Object2IntMap<MutagenSet> sets) {
-        Object2DoubleMap<MutagenSet> out = new Object2DoubleOpenHashMap<>(sets.size());
-        int total = 0;
-        for(MutagenSet set : sets.keySet())
-            total += set.weight();
+        int total = sets.keySet().stream().mapToInt(MutagenSet::weight).sum();
 
-        sets.forEach((set, i) -> out.put(set, 0.0D)); // Pre-initialise values so we don't have to check.
-        for(MutagenSet set : sets.keySet()) {
-            out.put(set, sets.getInt(set) * set.weight() / (double)total);
-        }
+        Object2DoubleMap<MutagenSet> out = new Object2DoubleOpenHashMap<>(sets.size());
+        sets.forEach((set, i) -> out.put(set, i * set.weight() / (double)total));
         return out;
     }
 

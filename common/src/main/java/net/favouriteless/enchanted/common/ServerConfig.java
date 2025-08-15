@@ -28,6 +28,7 @@ public class ServerConfig {
     public final IntValue curseWhisperMax;
     public final IntValue curseWhisperMin;
 
+    public final DoubleValue clumsyPerLevel;
 
     private ServerConfig(ModConfigSpec.Builder builder) {
         builder.push("Circle Magic Options");
@@ -53,8 +54,9 @@ public class ServerConfig {
         builder.pop();
 
         builder.push("Curse Options");
-        curseWhisperMin = builder.comment("The minimum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_min", 120, 0, Integer.MAX_VALUE);
-        curseWhisperMax = builder.comment("The maximum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_max", 240, 0, Integer.MAX_VALUE);
+        curseWhisperMin = builder.comment("Minimum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_min", 120, 0, Integer.MAX_VALUE);
+        curseWhisperMax = builder.comment("Maximum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_max", 240, 0, Integer.MAX_VALUE);
+        clumsyPerLevel = builder.comment("Chance for clumsy players to drop an item on each swing").defineInRange("clumsy_chance", 0.01D, 0, 1);
         builder.pop();
     }
 

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
 
-	@Inject(method="checkTotemDeathProtection", at=@At("HEAD"), cancellable=true)
+	@Inject(method = "checkTotemDeathProtection", at=@At("HEAD"), cancellable=true)
 	private void checkTotemDeathProtection(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
 		if(ServerConfig.INSTANCE.disableTotems.get())
 			cir.setReturnValue(false);

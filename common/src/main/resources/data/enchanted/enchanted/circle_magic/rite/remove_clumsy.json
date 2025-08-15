@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "id": "enchanted:taglock", "count": 1 },
+    { "id": "enchanted:breath_of_the_goddess", "count": 1 },
+    { "id": "enchanted:brew_of_sprouting", "count": 1 },
+    { "id": "minecraft:honey_bottle", "count": 1 },
+    { "id": "minecraft:water_bucket", "count": 1 }
+  ],
+  "shapes": {
+    "enchanted:small_circle": "enchanted:ritual_chalk"
+  },
+  "power": 2000,
+  "factory": { "type": "enchanted:remove_curse", "curse": "enchanted:clumsy" }
+}

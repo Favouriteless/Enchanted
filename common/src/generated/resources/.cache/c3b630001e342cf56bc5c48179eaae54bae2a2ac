@@ -1,9 +1,9 @@
-// 1.21.1	2025-07-28T01:08:45.2428887	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-08-15T03:27:13.3184092	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
-0a355320f4b99f02117338b3a1ee9a7d7b7a0580 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
+8c9127de4430d7152c6d0c19b6b764b35836dab2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
 26fb888f6caeb2500273e7a86005c95fa89f6bba assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/binding.json
 564e85188e3e88267e998913649cdc2fc5e0fc64 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/creature.json
-da777603f9c6c3a67c0768913a03921acba71036 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/curses.json
+48c5149f5cb08251eafd227c0cf83ced7c1ecdca assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/curses.json
 cb4414ce5d044ecef38e4adb4b668d6d4a98a129 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/transposition.json
 c4aa82e059727fe35bdfabffc41f5e91445f22d8 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/tutorial.json
 7ed78232085b7db4a161088e730d08704666475c assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/world.json
@@ -40,8 +40,9 @@ a9a110fe4607c43f8de281924baa08d5b50f23ac assets/enchanted/modopedia/books/art_of
 b39386e1bb9f2d00073cd303ff8d1d12254b80fb assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/blight.json
 5945581f493852c3e5496d613f0ed5a2024aca3d assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/broiling.json
 1d21e60c3110a9ff2566907d6fe49a7d738207ee assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/charging_stone.json
-8e376ebf20fa08d7e655c242fbc82b8fae003563 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_misfortune.json
-93c76500cea19cba64c97df95a0b7381b9b34982 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_overheating.json
+4baaf02ca93504e20693bc1c7014efe37a94162d assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_clumsy.json
+7573da597d3d7192640ea59700581808ff06f024 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_misfortune.json
+bad8fc30449372b4a5c1f0c39ce4e97e39beb26b assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_overheating.json
 08e8826a32f85d003bdc3cd816c6e82533caddfe assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/curse_sinking.json
 7944dd46b088a72f42319e3be8d45304ff4b25c1 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/fertility.json
 aced581da936c1fcdf3b834be32a54ea88fc6455 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/forest.json
@@ -49,6 +50,7 @@ b8bd7caffe2d1b0963289abd3ff64462c129b381 assets/enchanted/modopedia/books/art_of
 35aef9ae4d24da9587b78c08dec2ef19a7d6c460 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/infuse_broom.json
 0e5eeae7774c79d34a72ef2a535840b993e16486 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/protection.json
 a41303d19d82a1d8546fc9b50438fcbd02b481c6 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/protection_temporary.json
+12d850637c8bf6e4b9cb2218eff50332f9e40698 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/remove_clumsy.json
 7466deb4f1bb359fa70d68c96255bd8d4d952651 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/remove_misfortune.json
 3907a56e8c852ff171e6e7934868cd1ff058c1e9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/remove_overheating.json
 19a2825c1a9d63df9186a171d46d475b2586837a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/remove_sinking.json

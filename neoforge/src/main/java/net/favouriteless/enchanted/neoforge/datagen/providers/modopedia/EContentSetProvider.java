@@ -173,8 +173,8 @@ public class EContentSetProvider extends ContentSetProvider {
                         .then("A curse is a long-lasting, malicious form of magic intended to harm it's target.")
                         .paragraph("There are several types of curses, each of which are explained in detail here.").toString())
                 .entries("circle_magic/curses/casting_curses")
-                .entries(ritePaths("blight", "curse_misfortune", "curse_overheating", "curse_sinking", "remove_misfortune",
-                        "remove_overheating", "remove_sinking"))
+                .entries(ritePaths("blight", "curse_clumsy", "curse_misfortune", "curse_overheating", "curse_sinking",
+                        "remove_clumsy", "remove_misfortune", "remove_overheating", "remove_sinking"))
                 .build("circle_magic/curses", output);
 
         CategoryBuilder.of("Transposition")
@@ -930,16 +930,21 @@ public class EContentSetProvider extends ContentSetProvider {
                 .build("circle_magic/curses/casting_curses", output);
 
         riteEntry(output, "Blight", Items.SPIDER_EYE, FormattedStringBuilder.begin()
-                    .then("Cause plants within a large area to wither, grass and dirt to decay, make animals sick and turn villagers into zombies.").toString(),
+                        .then("Cause plants within a large area to wither, grass and dirt to decay, make animals sick and turn villagers into zombies.").toString(),
                 "blight");
 
+        riteEntry(output, "Clumsy", Items.SLIME_BALL, FormattedStringBuilder.begin()
+                        .then("Inflict a rapid loss of dexterity on the target, making it difficult to hold onto items while swinging them.")
+                        .paragraph("Items will be dropped more frequently at higher levels.").toString(),
+                "curse_clumsy");
+
         riteEntry(output, "Misfortune", Items.ENDER_EYE, FormattedStringBuilder.begin()
-                    .then("Curse the afflicted to become prone to occasionally gaining an unfortunate effect such as weakness or mining fatigue.")
-                    .paragraph("The strength and duration of effects increases with the level of the curse.").toString(),
+                        .then("The target will be cursed with misfortune, becoming prone to occasionally gaining an unfortunate effect such as weakness or mining fatigue.")
+                        .paragraph("The strength and duration of effects increases with the level of the curse.").toString(),
                 "curse_misfortune");
 
         riteEntry(output, "Overheating", Items.BLAZE_POWDER, FormattedStringBuilder.begin()
-                        .then("Curse the afflicted to periodically overheat and catch fire while in hot biomes.")
+                        .then("Curse a being with overheating, causing them to periodically catch fire while in hot biomes.")
                         .paragraph("The duration of the flames increases with the level of the curse.").toString(),
                 "curse_overheating");
 
@@ -947,6 +952,11 @@ public class EContentSetProvider extends ContentSetProvider {
                         .then("Curse the afflicted to become heavier in both water and air, making it difficult to swim or fly.")
                         .paragraph("The weight of the target will increase with the level of the curse.").toString(),
                 "curse_sinking");
+
+        riteEntry(output, "Cleanse Clumsy", Items.SLIME_BALL, FormattedStringBuilder.begin()
+                        .then("Restore the dexterity of the targeted being, allowing them to use tools as normal again.")
+                        .paragraph("Failing this rite will cause further degradation of the afflicted's dexterity.").toString(),
+                "remove_clumsy");
 
         riteEntry(output, "Cleanse Misfortune", Items.ENDER_EYE, FormattedStringBuilder.begin()
                         .then("Cleanse the targeted being of instances of misfortune.")

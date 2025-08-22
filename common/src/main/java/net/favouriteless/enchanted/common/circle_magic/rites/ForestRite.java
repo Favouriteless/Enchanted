@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.common.circle_magic.rites;
 
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.util.BlockPosUtils;
-import net.favouriteless.enchanted.mixin.common.SaplingBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -64,7 +63,7 @@ public class ForestRite extends Rite {
             if(!level.getBlockState(tree).canBeReplaced() || !state.canSurvive(level, tree))
                 return;
 
-            if(((SaplingBlockAccessor)sapling).getTreeGrower().growTree(level, level.getChunkSource().getGenerator(), tree, state, level.random)) {
+            if(sapling.treeGrower.growTree(level, level.getChunkSource().getGenerator(), tree, state, level.random)) {
                 level.playSound(null, pos, SoundEvents.FUNGUS_PLACE, SoundSource.MASTER, 3.0F, 1.0F);
                 usedPositions.add(tree);
             }

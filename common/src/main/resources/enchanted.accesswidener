@@ -7,3 +7,6 @@ accessible method net/minecraft/client/renderer/blockentity/BlockEntityRenderers
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
 accessible field net/minecraft/client/KeyMapping key Lcom/mojang/blaze3d/platform/InputConstants$Key;
 accessible method net/minecraft/world/entity/LivingEntity getCurrentSwingDuration ()I
+accessible field net/minecraft/client/resources/sounds/AbstractSoundInstance volume F
+accessible field net/minecraft/world/level/block/SaplingBlock treeGrower Lnet/minecraft/world/level/block/grower/TreeGrower;
+accessible method net/minecraft/world/entity/monster/ZombieVillager startConverting (Ljava/util/UUID;I)V

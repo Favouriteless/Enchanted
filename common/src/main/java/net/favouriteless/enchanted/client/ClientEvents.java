@@ -4,7 +4,6 @@ import net.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.util.LangUtils;
-import net.favouriteless.enchanted.mixin.client.AbstractSoundInstanceAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,7 +11,6 @@ import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
@@ -37,16 +35,13 @@ public class ClientEvents {
 
 	public static void playSound(SoundInstance soundInstance) {
 		Minecraft mc = Minecraft.getInstance();
-		Player player = mc.player;
 
-		if(player != null) {
-			if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() == EItems.EARMUFFS.get()) {
-				if(soundInstance instanceof AbstractSoundInstance sound) {
-					AbstractSoundInstanceAccessor accessor = (AbstractSoundInstanceAccessor)sound;
-					accessor.setVolume(accessor.getVolume() * 0.06F);
-				}
-			}
-		}
+        if(mc.player == null)
+            return;
+        if(mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() != EItems.EARMUFFS.get())
+            return;
+        if(soundInstance instanceof AbstractSoundInstance sound)
+            sound.volume *= 0.06F;
 	}
 
 }

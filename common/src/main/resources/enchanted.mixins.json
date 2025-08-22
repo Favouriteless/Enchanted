@@ -8,12 +8,9 @@
     "common.LivingEntityMixin",
     "common.LootTableMixin",
     "common.MobMixin",
-    "common.SaplingBlockAccessor",
-    "common.ServerLevelMixin",
-    "common.ZombieVillagerAccessor"
+    "common.ServerLevelMixin"
   ],
   "client": [
-    "client.AbstractSoundInstanceAccessor",
     "client.LocalPlayerMixin"
   ],
   "server": [

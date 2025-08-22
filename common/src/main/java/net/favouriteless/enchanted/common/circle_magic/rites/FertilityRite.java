@@ -4,7 +4,6 @@ import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.util.BlockPosUtils;
 import net.favouriteless.enchanted.common.util.RandomUtils;
-import net.favouriteless.enchanted.mixin.common.ZombieVillagerAccessor;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -84,7 +83,7 @@ public class FertilityRite extends Rite {
 
     protected void applyCureEffects(UUID casterUUID, LivingEntity target) {
         if(target instanceof ZombieVillager villager) {
-            ((ZombieVillagerAccessor)villager).invokeStartConverting(casterUUID, RandomUtils.nextInt(2401) + 3600);
+            villager.startConverting(casterUUID, RandomUtils.nextInt(2401) + 3600);
             return;
         }
 

@@ -12,16 +12,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class SimpleContainerBlockBase extends BaseEntityBlock {
+import java.util.function.Function;
 
-	public SimpleContainerBlockBase(Properties properties) {
-		super(properties);
+public abstract class SimpleContainerBlockBase<B extends SimpleContainerBlockBase<?>> extends EBaseEntityBlock<B> {
+
+	public SimpleContainerBlockBase(Function<Properties, B> factory, Properties properties) {
+		super(factory, properties);
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package net.favouriteless.enchanted.fabric.client;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
@@ -75,7 +74,8 @@ public class EnchantedClientFabric implements ClientModInitializer {
                 EBlocks.EMBER_MOSS.get(),
                 EBlocks.SPANISH_MOSS.get(),
                 EBlocks.BLOOD_POPPY.get(),
-                EBlocks.WITCH_CAULDRON.get()
+                EBlocks.WITCH_CAULDRON.get(),
+                EBlocks.KETTLE.get()
         );
     }
 

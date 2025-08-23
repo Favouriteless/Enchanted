@@ -42,8 +42,7 @@ public class EJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new SpinningCategory(guiHelper));
         registration.addRecipeCategories(new DistillingCategory(guiHelper));
         registration.addRecipeCategories(new RiteCategory(guiHelper));
-        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.CAULDRON, Component.translatable("jei.category.enchanted.witch_cauldron"), EItems.WITCH_CAULDRON.get()));
-        registration.addRecipeCategories(new CauldronTypeRecipeCategory<>(guiHelper, EJeiRecipeTypes.KETTLE, Component.translatable("jei.category.enchanted.kettle"), EItems.KETTLE.get()));
+        registration.addRecipeCategories(new KettleRecipeCategory(guiHelper, EJeiRecipeTypes.KETTLE, Component.translatable("jei.category.enchanted.kettle"), EItems.KETTLE.get()));
 //        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS, EItems.MUTANDIS.get(), Component.translatable("jei.category.enchanted.mutandis")));
 //        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS_EXTREMIS, EItems.MUTANDIS_EXTREMIS.get(), Component.translatable("jei.category.enchanted.mutandis_extremis")));
     }
@@ -52,7 +51,6 @@ public class EJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(EJeiRecipeTypes.BYPRODUCT, RecipeUtils.getRecipes(ERecipeTypes.BYPRODUCT.get()));
         registration.addRecipes(EJeiRecipeTypes.SPINNING, RecipeUtils.getRecipes(ERecipeTypes.SPINNING.get()));
-        registration.addRecipes(EJeiRecipeTypes.CAULDRON, RecipeUtils.getRecipes(ERecipeTypes.WITCH_CAULDRON.get()));
         registration.addRecipes(EJeiRecipeTypes.KETTLE, RecipeUtils.getRecipes(ERecipeTypes.KETTLE.get()));
         registration.addRecipes(EJeiRecipeTypes.DISTILLING, RecipeUtils.getRecipes(ERecipeTypes.DISTILLING.get()));
 
@@ -79,7 +77,6 @@ public class EJeiPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(EItems.WITCH_OVEN.get().getDefaultInstance(), EJeiRecipeTypes.BYPRODUCT);
         registration.addRecipeCatalyst(EItems.SPINNING_WHEEL.get().getDefaultInstance(), EJeiRecipeTypes.SPINNING);
-        registration.addRecipeCatalyst(EItems.WITCH_CAULDRON.get().getDefaultInstance(), EJeiRecipeTypes.CAULDRON);
         registration.addRecipeCatalyst(EItems.KETTLE.get().getDefaultInstance(), EJeiRecipeTypes.KETTLE);
         registration.addRecipeCatalyst(EItems.DISTILLERY.get().getDefaultInstance(), EJeiRecipeTypes.DISTILLING);
         registration.addRecipeCatalyst(EItems.GOLDEN_CHALK.get().getDefaultInstance(), EJeiRecipeTypes.RITE);

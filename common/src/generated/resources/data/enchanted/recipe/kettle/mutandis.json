@@ -1,5 +1,5 @@
 {
-  "type": "enchanted:witch_cauldron",
+  "type": "enchanted:kettle",
   "cook_colour": "1A4723",
   "final_colour": "3E804E",
   "ingredients": [
@@ -16,7 +16,6 @@
       "id": "minecraft:egg"
     }
   ],
-  "power": 0,
   "result": {
     "count": 6,
     "id": "enchanted:mutandis"

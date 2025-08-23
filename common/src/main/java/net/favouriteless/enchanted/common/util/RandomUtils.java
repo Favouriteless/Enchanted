@@ -31,7 +31,7 @@ public class RandomUtils {
     }
 
     public static float nextFloat() {
-        return RANDOM.nextInt();
+        return RANDOM.nextFloat();
     }
 
     public static float nextFloat(float upper) {

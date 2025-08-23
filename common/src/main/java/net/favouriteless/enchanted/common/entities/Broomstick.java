@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.entities;
 
-import net.favouriteless.enchanted.client.client_handlers.entities.BroomstickEntityClientHandler;
+import net.favouriteless.enchanted.client.ClientProxy;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -72,7 +72,7 @@ public class Broomstick extends Entity {
         tickLerp();
         if(isControlledByLocalInstance()) {
             if(level().isClientSide) {
-                BroomstickEntityClientHandler.controlBroom(this);
+                ClientProxy.controlBroom(this);
                 handleRotationTick();
                 handleMovementTick();
             }

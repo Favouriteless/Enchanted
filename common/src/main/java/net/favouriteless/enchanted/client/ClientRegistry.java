@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.client;
 
 import net.favouriteless.enchanted.client.particles.*;
-import net.favouriteless.enchanted.client.render.blockentity.CauldronWaterRenderer;
+import net.favouriteless.enchanted.client.render.blockentity.KettleWaterRenderer;
 import net.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import net.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import net.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
@@ -17,9 +17,6 @@ import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
@@ -29,14 +26,11 @@ import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ClientRegistry {
@@ -56,8 +50,7 @@ public class ClientRegistry {
         EntityRenderers.register(EEntityTypes.FAMILIAR_CAT.get(), FamiliarCatRenderer::new);
         EntityRenderers.register(EEntityTypes.VOODOO_ITEM.get(), ItemEntityRenderer::new);
 
-        BlockEntityRenderers.register(EBlockEntityTypes.WITCH_CAULDRON.get(), context -> new CauldronWaterRenderer<>(12));
-        BlockEntityRenderers.register(EBlockEntityTypes.KETTLE.get(), context -> new CauldronWaterRenderer<>(8));
+        BlockEntityRenderers.register(EBlockEntityTypes.KETTLE.get(), context -> new KettleWaterRenderer<>(6, 0.0625F, 0.3125F));
         BlockEntityRenderers.register(EBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
         BlockEntityRenderers.register(EBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
     }

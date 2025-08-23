@@ -27,7 +27,7 @@ public abstract class LocalPlayerMixin {
 
 		if(!cast.swinging || cast.swingTime >= cast.getCurrentSwingDuration() / 2 || cast.swingTime < 0) {
 			double dropChance = EServices.ATTACHMENT.get(this, EAttachmentTypes.CLUMSY_CHANCE);
-			if(Math.random() < 0.04D)
+			if(Math.random() < dropChance)
 				drop(true);
 		}
 	}

@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.neoforge.datagen.providers;
 
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
-import net.favouriteless.enchanted.common.blocks.cauldrons.KettleBlock;
+import net.favouriteless.enchanted.common.blocks.KettleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import net.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
@@ -103,7 +103,10 @@ public class BlockstateProvider extends BlockStateProvider {
 
 	private void kettleWithItem(Block block) {
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-				.modelFile(models().getExistingFile(state.getValue(KettleBlock.TYPE) == 0 ? modLoc("block/kettle") : state.getValue(KettleBlock.TYPE) == 1 ? modLoc("block/kettle_hanging") : modLoc("block/kettle_hanging_beam")))
+				.modelFile(models().getExistingFile(
+                        state.getValue(KettleBlock.TYPE) == KettleBlock.Type.GROUND ? modLoc("block/kettle") :
+                        state.getValue(KettleBlock.TYPE) == KettleBlock.Type.HANGING ? modLoc("block/kettle_hanging") : modLoc("block/kettle_hanging_beam"))
+                )
 				.rotationY((int)state.getValue(KettleBlock.FACING).toYRot() % 360)
 				.build()
 		);

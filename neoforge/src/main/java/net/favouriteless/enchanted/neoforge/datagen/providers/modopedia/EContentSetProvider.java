@@ -232,16 +232,16 @@ public class EContentSetProvider extends ContentSetProvider {
                         .boldEntryLink(itemPath(EItems.TEAR_OF_THE_GODDESS.get()), "Tear of the Goddess").then(".").toString(),
                 EItems.RITUAL_CHALK.get());
 
-        cauldronEntry(output, "Golden Chalk", EItems.GOLDEN_CHALK.get(), FormattedStringBuilder.begin()
+        kettleEntry(output, "Golden Chalk", EItems.GOLDEN_CHALK.get(), FormattedStringBuilder.begin()
                 .then("Chalk is vital for performing circle magic and among chalks golden chalk is the most important.")
                 .paragraph("The ").boldEntryLink("circle_magic/tutorial/performing_rites", "heart glyph").then(" for ")
                 .boldCategoryLink("circle_magic", "circle magic").then(" is drawn using golden chalk.").toString());
 
-        cauldronEntry(output, "Infernal Chalk", EItems.NETHER_CHALK.get(), FormattedStringBuilder.begin()
+        kettleEntry(output, "Infernal Chalk", EItems.NETHER_CHALK.get(), FormattedStringBuilder.begin()
                         .then("Infusing chalk with blaze powder binds it to the nether and enables it to better conduct heat.")
                         .paragraph("Infernal chalk is used for many rites involving the nether, demonic beings or fire.").toString());
 
-        cauldronEntry(output, "Otherwhere Chalk", EItems.OTHERWHERE_CHALK.get(), FormattedStringBuilder.begin()
+        kettleEntry(output, "Otherwhere Chalk", EItems.OTHERWHERE_CHALK.get(), FormattedStringBuilder.begin()
                         .then("Materials from the end can be infused into chalk to create a rich, purple chalk with special properties.")
                         .paragraph("Typically, otherwhere chalk is used in circle magic rites involving teleportation, transposition, relocation or the end.").toString());
 
@@ -298,13 +298,13 @@ public class EContentSetProvider extends ContentSetProvider {
                         .paragraph("The ornate and complex symbols engraved on the talisman can also indicate wealth.").toString(),
                 EItems.CIRCLE_TALISMAN.get());
 
-        cauldronEntry(output, "Mutandis", EItems.MUTANDIS.get(), FormattedStringBuilder.begin()
+        kettleEntry(output, "Mutandis", EItems.MUTANDIS.get(), FormattedStringBuilder.begin()
                 .then("Mutandis is used to mutate plants into other species you could not normally obtain.")
                 .paragraph("Using this substance on a block can cause it to ").boldEntryLink(herbologyPath("mutations"), "mutate")
                 .then(" into a different block under the right conditions.").toString()
         );
 
-        cauldronEntry(output, "Mutandis Extremis", EItems.MUTANDIS_EXTREMIS.get(), FormattedStringBuilder.begin()
+        kettleEntry(output, "Mutandis Extremis", EItems.MUTANDIS_EXTREMIS.get(), FormattedStringBuilder.begin()
                 .then("Mutandis Extremis, an enhanced form of ").boldEntryLink(itemPath(EItems.MUTANDIS.get()), "mutandis").then(", performs a very similar function.")
                 .paragraph("Extremis is able to create more advanced ").boldEntryLink(herbologyPath("mutations"), "mutations")
                 .then(" such as ").boldEntryLink(blockPath(EBlocks.BLOOD_POPPY.get()), "Blood Poppies").then(".").toString()
@@ -366,7 +366,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .then(", spirit of otherwhere is a derivation of ").boldEntryLink(itemPath(EItems.REDSTONE_SOUP.get()), "redstone soup").then(" imbued with the same properties as the End and its inhabitants.")
                 .paragraph("This infusion is extremely toxic and should not be ingested.").toString());
 
-        cauldronEntry(output, "Drop of Luck", EItems.DROP_OF_LUCK.get(), formatItems("Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:%s)Redstone Soup$().", EItems.REDSTONE_SOUP.get()));
+        kettleEntry(output, "Drop of Luck", EItems.DROP_OF_LUCK.get(), formatItems("Liquid luck, or drop of luck, is a potion which enhances the luck of anybody who drinks it and can be used in rites or the creation of magical items.\n\nFamously, it's a core ingredient in $(b)$(el:%s)Redstone Soup$().", EItems.REDSTONE_SOUP.get()));
     }
 
     public void buildExtractionItemEntries(BookContentOutput output) {
@@ -1171,12 +1171,6 @@ public class EContentSetProvider extends ContentSetProvider {
 
     private void blockEntry(BookContentOutput output, String title, String description, CropBlockAgeFive block, String procurement, Item... items) {
         blockEntry(title, description, block.defaultBlockState().setValue(CropBlockAgeFive.AGE_FIVE, 4), procurement, items).build(blockPath(block), output);
-    }
-
-    private void cauldronEntry(BookContentOutput output, String title, Item item, String description) {
-        headeredTextEntry(title, description, item)
-                .page(WitchCauldronRecipeBuilder.of(Enchanted.id("witch_cauldron/" + itemId(item).getPath())))
-                .build(itemPath(item), output);
     }
 
     private void kettleEntry(BookContentOutput output, String title, Item item, String description) {

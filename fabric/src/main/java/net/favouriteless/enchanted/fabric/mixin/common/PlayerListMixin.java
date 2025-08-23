@@ -18,9 +18,4 @@ public class PlayerListMixin {
         CommonEvents.onPlayerLoggedIn(player);
     }
 
-    @Inject(method="remove", at=@At("HEAD"))
-    private void placeNewPlayer(ServerPlayer player, CallbackInfo ci) {
-        CommonEvents.onPlayerLoggedOut(player);
-    }
-
 }

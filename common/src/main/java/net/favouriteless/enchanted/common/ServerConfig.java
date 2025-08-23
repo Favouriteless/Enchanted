@@ -19,7 +19,6 @@ public class ServerConfig {
     public final IntValue altarRange;
     public final DoubleValue altarBaseRecharge;
 
-    public final BooleanValue cauldronItemSpoil;
     public final BooleanValue kettleItemSpoil;
 
     public final BooleanValue hoeOnlySeeds;
@@ -40,10 +39,6 @@ public class ServerConfig {
         altarBaseRecharge = builder.comment("Multiplier for altar power recharge rates").defineInRange("altar_recharge_rate", 2.0D, 0.0D, Double.MAX_VALUE);
         builder.pop();
 
-        builder.push("Cauldron Options");
-        cauldronItemSpoil = builder.comment("Allow incorrect items to spoil brew").define("cauldron_item_spoil", true);
-        builder.pop();
-
         builder.push("Kettle Options");
         kettleItemSpoil = builder.comment("Allow incorrect items to spoil brew").define("kettle_item_spoil", true);
         builder.pop();
@@ -56,7 +51,7 @@ public class ServerConfig {
         builder.push("Curse Options");
         curseWhisperMin = builder.comment("Minimum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_min", 120, 0, Integer.MAX_VALUE);
         curseWhisperMax = builder.comment("Maximum amount of time in seconds between curses whispering at players.").defineInRange("curse_whisper_max", 240, 0, Integer.MAX_VALUE);
-        clumsyPerLevel = builder.comment("Chance for clumsy players to drop an item on each swing").defineInRange("clumsy_chance", 0.01D, 0, 1);
+        clumsyPerLevel = builder.comment("Chance for clumsy players to drop an item on each swing").defineInRange("clumsy_chance", 0.02D, 0, 1);
         builder.pop();
     }
 

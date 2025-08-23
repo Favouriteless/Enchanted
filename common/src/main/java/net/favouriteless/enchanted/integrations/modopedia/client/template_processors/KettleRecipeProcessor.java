@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.template_processors;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
+import net.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CauldronTypeRecipeProcessor implements TemplateProcessor {
+public class KettleRecipeProcessor implements TemplateProcessor {
 
-    public static final ResourceLocation ID = Enchanted.id("cauldron_type_recipe");
+    public static final ResourceLocation ID = Enchanted.id("kettle_recipe");
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
@@ -34,7 +34,7 @@ public class CauldronTypeRecipeProcessor implements TemplateProcessor {
 
         RecipeHolder<?> holder = optional.get();
 
-        if(holder.value() instanceof CauldronTypeRecipe recipe) {
+        if(holder.value() instanceof KettleRecipe recipe) {
             List<List<ItemStack>> inputs = new ArrayList<>();
             recipe.getInputs().forEach(i -> inputs.add(List.of(i)));
 
@@ -46,7 +46,7 @@ public class CauldronTypeRecipeProcessor implements TemplateProcessor {
             lookup.set("p_power", Variable.of(Component.translatable(LangUtils.tooltip("altar_power"), recipe.getPower()).getString()));
         }
         else {
-            throw new IllegalArgumentException("CauldronTypeRecipe template must use a CauldronTypeRecipe recipe.");
+            throw new IllegalArgumentException("KettleRecipe template must use a kettle recipe.");
         }
     }
 

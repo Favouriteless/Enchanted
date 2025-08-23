@@ -1,17 +1,18 @@
 package net.favouriteless.enchanted.client;
 
-import net.favouriteless.enchanted.common.blocks.entity.CauldronBlockEntity;
+import net.favouriteless.enchanted.common.blocks.entity.KettleBlockEntity;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CauldronBubblingSoundInstance extends AbstractTickableSoundInstance {
+public class BubblingSoundInstance extends AbstractTickableSoundInstance {
 
-	private final CauldronBlockEntity<?> be;
+	private final KettleBlockEntity be;
 
-	public CauldronBubblingSoundInstance(CauldronBlockEntity<?> be) {
+	public BubblingSoundInstance(KettleBlockEntity be) {
 		super(ESoundEvents.CAULDRON_BUBBLING.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 		BlockPos pos = be.getBlockPos();
 

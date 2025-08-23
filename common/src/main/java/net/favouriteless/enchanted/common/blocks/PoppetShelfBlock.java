@@ -1,17 +1,15 @@
 package net.favouriteless.enchanted.common.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfManager;
-import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.common.util.ItemUtils;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,24 +18,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PoppetShelfBlock extends BaseEntityBlock {
+public class PoppetShelfBlock extends EBaseEntityBlock<PoppetShelfBlock> {
 
 	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
-	private final MapCodec<PoppetShelfBlock> codec = simpleCodec(PoppetShelfBlock::new);
-
 	public PoppetShelfBlock(Properties properties) {
-		super(properties);
+		super(PoppetShelfBlock::new, properties);
 	}
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new PoppetShelfBlockEntity(pos, state);
-	}
-
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return codec;
 	}
 
 	@Override

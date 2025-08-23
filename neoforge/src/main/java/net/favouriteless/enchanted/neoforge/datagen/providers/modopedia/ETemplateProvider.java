@@ -7,19 +7,17 @@ import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.reci
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
-import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.CauldronTypeRecipeProcessor;
+import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.KettleRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.SpinningRecipeProcessor;
 import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import org.apache.http.Header;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -58,7 +56,7 @@ public class ETemplateProvider extends TemplateProvider {
                 .build(ByproductRecipeBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
-                .processor(CauldronTypeRecipeProcessor.ID)
+                .processor(KettleRecipeProcessor.ID)
                 .components(
                         CauldronBuilder.of().x(5).y(49),
                         SeparatorBuilder.of().y(10),
@@ -71,7 +69,7 @@ public class ETemplateProvider extends TemplateProvider {
                 .build(WitchCauldronRecipeBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
-                .processor(CauldronTypeRecipeProcessor.ID)
+                .processor(KettleRecipeProcessor.ID)
                 .components(
                         CauldronBuilder.of().x(5).y(49),
                         SeparatorBuilder.of().y(10),

@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-15T03:27:13.3184092	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-08-20T15:49:38.9523927	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 8c9127de4430d7152c6d0c19b6b764b35836dab2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
 26fb888f6caeb2500273e7a86005c95fa89f6bba assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/binding.json
@@ -82,7 +82,7 @@ bd54a6e60d8e4790edd260f24502c23d33a312b4 assets/enchanted/modopedia/books/art_of
 e425ee4b7202b83dcb0b332ee5cb311464485512 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/clay_jar.json
 ef9c70ecdda5091fcf85142cc25e7897de881730 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/demonic_blood.json
 94ef1008d28546534527bd2c8a6d07e0fa8c9a4e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/diamond_vapour.json
-04a8540241d87d473aca7f661e1e6fb4704b0f40 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/drop_of_luck.json
+4b0f04c9bad41eb77f92b1d094fb61cbe48943ea assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/drop_of_luck.json
 21304a14afee7d4756a9bbbce152c789265c50a9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/earmuffs.json
 cfc932dc7bfc96af4f183287415c684185bf1d65 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/earth_poppet.json
 64bfc6bb50d12087183136eddc89aab280c53544 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/ender_dew.json
@@ -90,20 +90,20 @@ aacd844113fa27d86855778bd489d9b4990f5ae4 assets/enchanted/modopedia/books/art_of
 05473322a0bc03e2c6f94c045a9c793eb9a091fc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/fire_poppet.json
 ec9e38888df269f07201b34741021d0a78e0f033 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/flying_ointment.json
 ff4da2d906c8dc29f7f616e2632072a6f9179d4f assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/foul_fume.json
-b610c9754e42f4e44961c57c2af9b5f9dd862222 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/golden_chalk.json
+581f368a6ef7fb5bb63daeae2803d6be819f3a4a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/golden_chalk.json
 a402aa33f5280dad038a78f743efd7479da08538 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/gypsum.json
 489e773a964ea2addfc7d9adb3745be75145becd assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/happenstance_oil.json
 43940aabb755e9a1df6265552a2de42634be4e99 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/hint_of_rebirth.json
 12cae4142f0e01441363aa42710c5b00e2243e96 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/hunger_poppet.json
 1f376cfe8c6ae164618574abe414a3fbe946ea62 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/infused_poppet.json
 9daa055c486c4ec5621211420c110747fb1d4318 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/magic_poppet.json
-1bb9e6cec60e51eb05ca915524bbca56a9b6d98c assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/mutandis.json
-396214d780d6ef4b4c8f80988181f1eca7ec2aab assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/mutandis_extremis.json
+953bb700fd9a14d5c751ed27f0c9012e4a9da0cc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/mutandis.json
+093ea9adc73820afe5a08c2227bc0463f03f7bc0 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/mutandis_extremis.json
 4534590fd0e5520c7164bd2208f6a5c568e18218 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/mystic_unguent.json
-644187425622448c07eff1ee3136fe46fe7eea69 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/nether_chalk.json
+7285b079781bf9e1536d59941c9b6b308a5d4876 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/nether_chalk.json
 7917c269a905afd3620baf0286c370dafa8a9390 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/odour_of_purity.json
 c582d6ce30b4fc522648753b823027c6c3382a0e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/oil_of_vitriol.json
-e70d8d4445e63df437722d71306e1ff4bbb37cd3 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/otherwhere_chalk.json
+5fc8aa3ae57aaa56128bcad64430b9bc572c8ee8 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/otherwhere_chalk.json
 0dac667fdf976abc21d4cf11fc39a202caf5eafa assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/poppet.json
 1abe90fdd25bacfcb7f232bf2e2ef017f9b80543 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/quicklime.json
 0842bdf80c4b4305e3678df4317597232590cddf assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/items/redstone_soup.json

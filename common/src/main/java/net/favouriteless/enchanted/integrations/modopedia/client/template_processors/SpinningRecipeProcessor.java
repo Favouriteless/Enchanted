@@ -1,18 +1,12 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.template_processors;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.recipes.CauldronTypeRecipe;
 import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
-import net.favouriteless.modopedia.api.book.BookTexture;
-import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
-import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
-import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
-import net.favouriteless.modopedia.client.page_components.item_displays.GridItemDisplay;
 import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

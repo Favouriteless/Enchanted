@@ -1,8 +1,18 @@
 package net.favouriteless.enchanted.common.util;
 
 import net.favouriteless.enchanted.common.Enchanted;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public class LangUtils {
+
+    public static MutableComponent translatable(String prefix, String suffix) {
+        return Component.translatable(key(prefix, suffix));
+    }
+
+    public static MutableComponent translatable(String prefix, String suffix, Object... args) {
+        return Component.translatable(key(prefix, suffix), args);
+    }
 
     public static String key(String prefix, String suffix) {
         return key(Enchanted.MOD_ID, prefix, suffix);

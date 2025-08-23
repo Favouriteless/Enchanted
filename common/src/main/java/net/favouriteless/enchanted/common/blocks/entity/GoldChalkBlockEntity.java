@@ -109,7 +109,7 @@ public class GoldChalkBlockEntity extends BlockEntity implements IPowerConsumer 
                     be.cancel();
             }
             else {
-                IPowerProvider provider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
+                IPowerProvider provider = PowerHelper.tryGetProvider(level, be.posHolder);
                 int power = be.type.getPower();
 
                 if(power == 0 || (provider != null && provider.tryConsume(power))) {
@@ -247,7 +247,7 @@ public class GoldChalkBlockEntity extends BlockEntity implements IPowerConsumer 
     }
 
     public boolean tryConsumePower(int amount) {
-        IPowerProvider provider = PowerHelper.tryGetPowerProvider(level, posHolder);
+        IPowerProvider provider = PowerHelper.tryGetProvider(level, posHolder);
         return amount == 0 || provider != null && provider.tryConsume(amount);
     }
 

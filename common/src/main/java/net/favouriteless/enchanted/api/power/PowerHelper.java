@@ -3,7 +3,6 @@ package net.favouriteless.enchanted.api.power;
 import net.favouriteless.enchanted.api.power.IPowerConsumer.IPowerPosHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class PowerHelper {
 	 * @return The first valid {@link IPowerProvider} found in level in the
 	 * positions provided by holder.
 	 */
-	public static IPowerProvider tryGetPowerProvider(Level level, IPowerPosHolder holder) {
+	public static IPowerProvider tryGetProvider(Level level, IPowerPosHolder holder) {
 		List<BlockPos> providers = holder.getPositions();
 		while(!providers.isEmpty()) {
 			if(level != null) {

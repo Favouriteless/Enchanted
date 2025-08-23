@@ -15,7 +15,6 @@ import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -63,10 +62,10 @@ public class EmptyTaglockItem extends Item {
                 fillTaglockEntity(player, stack, target);
             }
             else {
-                player.displayClientMessage(Component.translatable(LangUtils.key("taglock", "failed")).withStyle(ChatFormatting.RED), false);
+                player.displayClientMessage(LangUtils.translatable("taglock", "failed").withStyle(ChatFormatting.RED), false);
 
                 if(target instanceof ServerPlayer sp)
-                    sp.displayClientMessage(Component.translatable(LangUtils.key("taglock", "failed.player"), player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
+                    sp.displayClientMessage(LangUtils.translatable("taglock", "failed.player", player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
             }
 
         }

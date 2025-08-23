@@ -5,7 +5,7 @@
     [ "WKW" ]
   ],
   "key": {
-    "K": { "type": "modopedia:simple", "states": [ "enchanted:kettle[type=2,facing=north]" ] },
+    "K": { "type": "modopedia:simple", "states": [ "enchanted:kettle[type=hanging_beam,facing=north]" ] },
     "F": { "type": "modopedia:simple", "states": [ "minecraft:campfire[lit=true]" ] },
     "W": { "type": "modopedia:simple", "states": [ "minecraft:cobblestone_wall" ] }
   }

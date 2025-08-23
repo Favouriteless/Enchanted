@@ -1,1 +1,10 @@
+- ADDED: Curse of clumsy
+
+- CHANGED: All witch cauldron recipes now use the kettle instead. The kettle's recipe has been adjusted to account for this change.
+- CHANGED: Kettle now has a new model
+
+- FIXED: Enchanted causes specific sounds in other mods to be louder.
+
 - API: Curses have been rewritten from scratch.
+- API: Kettle has been rewritten from scratch
+

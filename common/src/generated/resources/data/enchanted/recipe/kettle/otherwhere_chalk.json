@@ -1,7 +1,7 @@
 {
-  "type": "enchanted:witch_cauldron",
-  "cook_colour": "54011A",
-  "final_colour": "9C012F",
+  "type": "enchanted:kettle",
+  "cook_colour": "31154A",
+  "final_colour": "490D82",
   "ingredients": [
     {
       "count": 1,
@@ -9,7 +9,11 @@
     },
     {
       "count": 1,
-      "id": "minecraft:blaze_powder"
+      "id": "enchanted:tear_of_the_goddess"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:ender_pearl"
     },
     {
       "count": 1,
@@ -19,6 +23,6 @@
   "power": 2000,
   "result": {
     "count": 1,
-    "id": "enchanted:nether_chalk"
+    "id": "enchanted:otherwhere_chalk"
   }
 }

@@ -55,7 +55,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DistilleryBlockEntity be) {
-        IPowerProvider powerProvider = PowerHelper.tryGetPowerProvider(level, be.posHolder);
+        IPowerProvider powerProvider = PowerHelper.tryGetProvider(level, be.posHolder);
 
         boolean wasBurning = be.isBurning;
         RecipeHolder<DistillingRecipe> recipe = be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).orElse(null);

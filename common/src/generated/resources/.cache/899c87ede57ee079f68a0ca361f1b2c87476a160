@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-11T23:26:48.2356501	Block States: enchanted
+// 1.21.1	2025-08-20T18:13:08.3102635	Block States: enchanted
 e93b287b15b3ec550e29b0328739c299615aea73 assets/enchanted/blockstates/alder_button.json
 52666512cd1a17c0d59a305121618997d62f4a3b assets/enchanted/blockstates/alder_fence.json
 7bc792527b5eeb21d879c64622ed0250181b0560 assets/enchanted/blockstates/alder_fence_gate.json
@@ -32,7 +32,7 @@ e9ba57e97167cfa48c00986355e6d21a1eee755e assets/enchanted/blockstates/hawthorn_s
 822cc908954426407793e590c921dd606fbcd6cf assets/enchanted/blockstates/hawthorn_slab.json
 d91232ee87ca533a2baca026b63c3a3872971b0c assets/enchanted/blockstates/hawthorn_stairs.json
 ee4716e677494743b4975d26a9abfd5316119d76 assets/enchanted/blockstates/infinity_egg.json
-35353009d521825a0a99634ae3c826fc731d41fb assets/enchanted/blockstates/kettle.json
+42575af9828e8b4d68247c703a2daa03e05c2f3b assets/enchanted/blockstates/kettle.json
 a94880c7ddda05946cd2cfb32e480583e015063f assets/enchanted/blockstates/mandrake.json
 233ed983b9d38d14062d805164be1b63191a69b2 assets/enchanted/blockstates/nether_chalk.json
 233ed983b9d38d14062d805164be1b63191a69b2 assets/enchanted/blockstates/otherwhere_chalk.json

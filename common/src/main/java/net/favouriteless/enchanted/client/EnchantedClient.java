@@ -37,4 +37,9 @@ public class EnchantedClient {
         return Minecraft.getInstance().getResourceManager().getResource(tex).isPresent() ? tex : null;
     }
 
+    public static double getGameTime() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(true);
+    }
+
 }

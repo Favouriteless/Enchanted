@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.common.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.blocks.entity.WitchOvenBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -12,7 +11,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,7 +27,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class WitchOvenBlock extends SimpleContainerBlockBase {
+public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlock> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -39,16 +37,9 @@ public class WitchOvenBlock extends SimpleContainerBlockBase {
     private static final VoxelShape SHAPE_EAST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(2.0D/16, 0.0D, 5.0D/16, 8.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
     private static final VoxelShape SHAPE_WEST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(8.0D/16, 0.0D, 5.0D/16, 14.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
 
-    private final MapCodec<WitchOvenBlock> codec = simpleCodec(WitchOvenBlock::new);
-
     public WitchOvenBlock(Properties properties) {
-        super(properties);
+        super(WitchOvenBlock::new, properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return codec;
     }
 
     @Nullable
@@ -112,4 +103,5 @@ public class WitchOvenBlock extends SimpleContainerBlockBase {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide ? null : createTickerHelper(type, EBlockEntityTypes.WITCH_OVEN.get(), WitchOvenBlockEntity::serverTick);
     }
+
 }

@@ -5,10 +5,8 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 
 public class RitePageBuilder extends TemplateComponentBuilder {
 

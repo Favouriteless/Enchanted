@@ -2,8 +2,8 @@ package net.favouriteless.enchanted.integrations.jei;
 
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
-import net.favouriteless.enchanted.common.menus.DistilleryMenu;
 import net.favouriteless.enchanted.common.init.EMenuTypes;
+import net.favouriteless.enchanted.common.menus.DistilleryMenu;
 import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;

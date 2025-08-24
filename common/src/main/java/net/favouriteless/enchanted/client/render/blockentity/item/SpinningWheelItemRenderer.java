@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.client.render.blockentity.item;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import net.favouriteless.enchanted.common.init.EBlocks;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

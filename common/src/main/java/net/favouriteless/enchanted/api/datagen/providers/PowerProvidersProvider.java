@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.api.datagen.providers;
 
 import com.google.common.collect.Sets;
 import net.favouriteless.enchanted.common.altar.PowerProvider;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
@@ -15,7 +14,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import org.apache.logging.log4j.util.TriConsumer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class PowerProvidersProvider implements DataProvider {

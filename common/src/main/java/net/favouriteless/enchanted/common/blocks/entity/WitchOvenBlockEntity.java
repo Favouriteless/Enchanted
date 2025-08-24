@@ -2,11 +2,11 @@ package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
 import net.favouriteless.enchanted.common.blocks.WitchOvenBlock;
-import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.common.init.ERecipeTypes;
+import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.menus.WitchOvenMenu;
 import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
-import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

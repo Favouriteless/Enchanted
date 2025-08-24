@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import org.jetbrains.annotations.Nullable;
 
 public class NeoPlatformHelper implements PlatformHelper {
@@ -50,6 +52,11 @@ public class NeoPlatformHelper implements PlatformHelper {
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack item) {
         return item.getCraftingRemainingItem();
+    }
+
+    @Override
+    public int getBucketCapacity() {
+        return FluidType.BUCKET_VOLUME;
     }
 
 }

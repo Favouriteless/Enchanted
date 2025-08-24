@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.menus;
 
-import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.WitchOvenBlockEntity;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.EMenuTypes;
 import net.favouriteless.enchanted.common.menus.slots.FuelSlot;

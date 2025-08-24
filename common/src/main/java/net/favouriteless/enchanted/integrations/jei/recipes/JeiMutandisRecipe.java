@@ -1,8 +1,6 @@
 package net.favouriteless.enchanted.integrations.jei.recipes;
 
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.favouriteless.enchanted.common.init.ETags.Blocks;
-import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;
 import net.minecraft.core.HolderSet.Named;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;

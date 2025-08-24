@@ -2,8 +2,8 @@ package net.favouriteless.enchanted.common.poppet;
 
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

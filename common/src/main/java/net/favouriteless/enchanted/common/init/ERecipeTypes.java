@@ -1,6 +1,9 @@
 package net.favouriteless.enchanted.common.init;
 
-import net.favouriteless.enchanted.common.recipes.*;
+import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
+import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
+import net.favouriteless.enchanted.common.recipes.KettleRecipe;
+import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
 import net.favouriteless.enchanted.common.recipes.serializers.SimpleSerializer;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.registries.BuiltInRegistries;

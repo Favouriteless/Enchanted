@@ -2,8 +2,12 @@ package net.favouriteless.enchanted.integrations.jei;
 
 import mezz.jei.api.recipe.RecipeType;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.recipes.*;
-import net.favouriteless.enchanted.integrations.jei.recipes.*;
+import net.favouriteless.enchanted.common.recipes.ByproductRecipe;
+import net.favouriteless.enchanted.common.recipes.DistillingRecipe;
+import net.favouriteless.enchanted.common.recipes.KettleRecipe;
+import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
+import net.favouriteless.enchanted.integrations.jei.recipes.JeiMutandisRecipe;
+import net.favouriteless.enchanted.integrations.jei.recipes.JeiRiteRecipe;
 
 public class EJeiRecipeTypes {
 

@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix4f;
 
 public class KettleWaterRenderer<T extends KettleBlockEntity> implements BlockEntityRenderer<T> {
@@ -47,7 +46,7 @@ public class KettleWaterRenderer<T extends KettleBlockEntity> implements BlockEn
         float f = be.getWater() / (float)be.getWaterCapacity();
 
         pose.pushPose();
-        pose.translate(0.5D, Mth.lerp(waterStart, waterEnd, f), 0.5D);
+        pose.translate(0.5D, Mth.lerp(f, waterStart, waterEnd), 0.5D);
 
         Matrix4f p = pose.last().pose();
         vertex(buffer, p, apothem, 0, -apothem, r, g, b, a, sprite.getU((0.5F + apothem)), sprite.getV((0.5F - apothem)), packedLight);

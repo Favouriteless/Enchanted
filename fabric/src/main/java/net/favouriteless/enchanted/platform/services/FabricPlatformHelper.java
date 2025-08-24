@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.platform.services;
 
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -74,6 +75,11 @@ public class FabricPlatformHelper implements PlatformHelper {
     public ItemStack getCraftingRemainingItem(ItemStack item) {
         Item remaining = item.getItem().getCraftingRemainingItem();
         return remaining != null ? new ItemStack(remaining) : ItemStack.EMPTY;
+    }
+
+    @Override
+    public int getBucketCapacity() {
+        return (int)FluidConstants.BUCKET;
     }
 
 }

@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.network.client.flags;
 
 import io.netty.buffer.ByteBuf;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.SyncedFlags;
 import net.favouriteless.enchanted.common.SyncedFlags.Flag;
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.platform.PacketContext;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

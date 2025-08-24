@@ -6,10 +6,10 @@ import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.RiteTargetingType;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
-import net.favouriteless.enchanted.common.circle_magic.rites.TransposeCasterEntityRite;
-import net.favouriteless.enchanted.common.circle_magic.rites.TransposeCasterWaystoneRite;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
+import net.favouriteless.enchanted.common.circle_magic.rites.TransposeCasterEntityRite;
+import net.favouriteless.enchanted.common.circle_magic.rites.TransposeCasterWaystoneRite;
 import net.minecraft.resources.ResourceLocation;
 
 public record TransposeCasterFactory(RiteTargetingType target) implements RiteFactory {

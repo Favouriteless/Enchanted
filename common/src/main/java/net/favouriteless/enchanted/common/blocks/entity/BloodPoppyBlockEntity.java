@@ -4,10 +4,10 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class BloodPoppyBlockEntity extends BlockEntity {

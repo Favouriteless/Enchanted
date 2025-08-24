@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.client.render.entity;
 
-import net.favouriteless.enchanted.client.ClientConfig;
-import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.favouriteless.enchanted.client.ClientConfig;
+import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

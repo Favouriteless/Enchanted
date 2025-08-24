@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.client.render.poppet;
 
-import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;

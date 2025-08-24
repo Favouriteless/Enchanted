@@ -1,7 +1,10 @@
 - ADDED: Curse of clumsy
 
 - CHANGED: All witch cauldron recipes now use the kettle instead. The kettle's recipe has been adjusted to account for this change.
-- CHANGED: Kettle now has a new model
+- CHANGED: Kettle now has a new model.
+- CHANGED: Breaking a kettle with a result in it will drop the result.
+- CHANGED: Kettles now support standard NeoForge and Fabric fluid transfer APIs
+- CHANGED: Kettles now give an audio indication for completing or failing a brew.
 
 - FIXED: Enchanted causes specific sounds in other mods to be louder.
 

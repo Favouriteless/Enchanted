@@ -14,23 +14,22 @@ import net.favouriteless.enchanted.common.init.ETags.Blocks;
 import net.favouriteless.enchanted.common.recipes.KettleRecipe;
 import net.favouriteless.enchanted.common.recipes.recipe_inputs.ListInput;
 import net.favouriteless.enchanted.common.util.ColourUtils;
-import net.favouriteless.enchanted.common.util.ColourUtils.AHSV;
 import net.favouriteless.enchanted.common.util.ColourUtils.ARGB;
 import net.favouriteless.enchanted.common.util.ContainerUtils;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.enchanted.common.util.RandomUtils;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.util.FastColor;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,8 +43,8 @@ import java.util.List;
 
 public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer {
 
+    private static final int WATER_CAPACITY = EServices.PLATFORM.getBucketCapacity();
     private static final int COOK_DURATION = 160;
-    private static final int WATER_CAPACITY = 1000;
     private static final byte MAX_HEAT = 80;
     private static final float BLEND_TIME = 10;
 
@@ -55,7 +54,7 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
     private final List<RecipeHolder<KettleRecipe>> recipes = new ArrayList<>();
     private final SimplePowerPosHolder powerHolder;
 
-    private ItemStack result = null;
+    @NotNull private ItemStack result = ItemStack.EMPTY;
 
     private int water = 0;
     private byte heat = 0;
@@ -124,6 +123,7 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
             be.result = recipe.assemble(ListInput.of(be.inventory), level.registryAccess());
             be.colour = recipe.getFinalColour();
             be.isComplete = true;
+            level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 2, 1);
         }
         else {
             be.isFailed = true;
@@ -190,6 +190,58 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
         return true;
     }
 
+    public ItemStack takeItem() {
+        if(isFailed || !isComplete || result.isEmpty())
+            return ItemStack.EMPTY;
+
+        water -= water / result.getCount() + 1;
+        if(water < 0)
+            water = 0;
+
+        ItemStack out = result.split(1);
+        if(result.isEmpty())
+            resetValues();
+
+        updateBlock();
+        return out;
+    }
+
+    public int drain(int amount) {
+        int drained = Math.min(0, water - amount);
+        water -= drained;
+
+        if(drained == 0)
+            return drained;
+
+        boolean update = false;
+        if(water == 0) {
+            resetValues();
+            update = true;
+        }
+        else if(isInUse()) {
+            setFailed();
+            update = true;
+        }
+
+        if(update)
+            updateBlock();
+        return drained;
+    }
+
+    public int fill(int amount) {
+        int added = Math.min(amount, WATER_CAPACITY - water);
+        water += added;
+        if(added != 0) {
+            setChanged();
+            updateBlock();
+        }
+        return added;
+    }
+
+    private boolean isInUse() {
+        return isFailed || isComplete || progress > 0 || !inventory.isEmpty();
+    }
+
     private void updateRecipes() {
         if(level == null)
             return;
@@ -211,11 +263,25 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
         }
     }
 
+    private void resetValues() {
+        isComplete = false;
+        isFailed = false;
+        progress = 0;
+        water = 0;
+        heat = 0;
+        colour = WATER_COLOUR;
+        result = ItemStack.EMPTY;
+        inventory.clear();
+        recipes.clear();
+        setChanged();
+    }
+
     private void setFailed() {
         isFailed = true;
         isComplete = false;
         colour = FAIL_COLOUR;
-        result = null;
+        result = ItemStack.EMPTY;
+        inventory.clear();
     }
 
     @Override
@@ -223,8 +289,8 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
         super.saveAdditional(tag, registries);
         saveSynced(tag, registries);
 
-        if(result != null)
-            tag.put("result", ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, result).getOrThrow());
+        if(!result.isEmpty())
+            tag.put("result", result.save(registries));
         tag.put("powerHolder", powerHolder.serialize());
     }
 
@@ -243,11 +309,9 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
         loadSynced(tag, registries);
         ContainerUtils.loadAllItems(tag, inventory, registries); // We have to do this instead of super because it's a dynamically sized inventory.
 
-        if(tag.contains("result"))
-            result = ItemStack.CODEC.parse(NbtOps.INSTANCE, tag.get("result")).getOrThrow();
-        if(tag.contains("posHolder"))
+        result = ItemStack.parseOptional(registries, tag.getCompound("result"));
+        if(tag.contains("powerHolder"))
             powerHolder.deserialize(tag.getCompound("powerHolder"));
-
         if(tag.contains("CustomName", 8))
             setCustomName(Component.Serializer.fromJson(tag.getString("CustomName"), registries));
     }
@@ -272,16 +336,6 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
     private void setRecipes(Collection<RecipeHolder<KettleRecipe>> recipes) {
         this.recipes.clear();
         this.recipes.addAll(recipes);
-    }
-
-    public int addWater(int amount) {
-        int added = Math.min(amount, WATER_CAPACITY - water);
-        water += added;
-        if(added != 0) {
-            setChanged();
-            updateBlock();
-        }
-        return added;
     }
 
     public int getWaterCapacity() {
@@ -312,6 +366,14 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
         return heat >= MAX_HEAT;
     }
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public boolean isFailed() {
+        return isFailed;
+    }
+
     public static boolean providesHeat(BlockState state) {
         return state.is(Blocks.HEAT_SOURCES) && (!state.getValues().containsKey(BlockStateProperties.LIT) || state.getValue(BlockStateProperties.LIT));
     }
@@ -335,7 +397,7 @@ public class KettleBlockEntity extends ContainerBlockEntityBase implements IPowe
 
     @Override
     public NonNullList<ItemStack> getDroppableInventory() {
-        return NonNullList.create();
+        return NonNullList.withSize(1, result);
     }
 
     @Override

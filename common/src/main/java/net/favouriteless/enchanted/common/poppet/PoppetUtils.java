@@ -4,8 +4,8 @@ import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.favouriteless.enchanted.common.items.poppets.DeathPoppetItem;
-import net.favouriteless.enchanted.common.items.poppets.PoppetItem;
 import net.favouriteless.enchanted.common.items.poppets.ItemProtectionPoppetItem;
+import net.favouriteless.enchanted.common.items.poppets.PoppetItem;
 import net.favouriteless.enchanted.common.network.client.PoppetAnimationPayload;
 import net.favouriteless.enchanted.common.poppet.PoppetShelfSavedData.PoppetEntry;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
@@ -23,7 +23,10 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.Queue;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 // TODO: Rewrite poppets entirely. This code is very bad.

@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.integrations.modopedia.client.page_components.RitePageComponent;
 import net.favouriteless.enchanted.integrations.modopedia.client.page_components.MutagenDisplayPageComponent;
+import net.favouriteless.enchanted.integrations.modopedia.client.page_components.RitePageComponent;
 import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
 import net.favouriteless.modopedia.client.page_components.WidgetPageComponent;
 import net.minecraft.resources.ResourceLocation;

@@ -2,8 +2,8 @@ package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.EParticleRenderTypes;
 import net.favouriteless.enchanted.client.particles.types.TwoColourOptions;
-import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 
 public class PoppetParticle extends SimpleAnimatedParticle {
 

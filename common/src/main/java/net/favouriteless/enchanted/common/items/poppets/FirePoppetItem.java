@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.items.poppets;
 
 import net.favouriteless.enchanted.common.poppet.PoppetColour;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Predicate;
 

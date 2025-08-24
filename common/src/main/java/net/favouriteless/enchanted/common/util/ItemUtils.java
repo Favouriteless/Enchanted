@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.common.util;
 
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

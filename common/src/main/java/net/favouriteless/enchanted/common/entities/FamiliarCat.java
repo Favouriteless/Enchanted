@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.entities;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.api.familiars.FamiliarHelper;
 import net.favouriteless.enchanted.api.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.api.familiars.IFamiliarEntry;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;

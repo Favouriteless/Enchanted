@@ -3,15 +3,10 @@ package net.favouriteless.enchanted.api.datagen.builders.modopedia.components;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
-import net.favouriteless.enchanted.common.circle_magic.RiteType;
-import net.favouriteless.enchanted.integrations.modopedia.client.page_components.MutagenDisplayPageComponent;
 import net.favouriteless.enchanted.integrations.modopedia.client.page_components.RitePageComponent;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 
 public class RiteBuilder extends PageComponentBuilder {
 

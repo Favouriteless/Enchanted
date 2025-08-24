@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.client.screens;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.menus.AltarMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;

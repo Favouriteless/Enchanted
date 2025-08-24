@@ -1,10 +1,10 @@
 package net.favouriteless.enchanted.common.multiblock.altar;
 
-import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
-import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
+import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.multiblock.IMultiBlockType;
+import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

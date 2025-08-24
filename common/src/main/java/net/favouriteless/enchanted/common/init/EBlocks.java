@@ -4,8 +4,6 @@ import net.favouriteless.enchanted.common.blocks.*;
 import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import net.favouriteless.enchanted.common.blocks.altar.CandelabraBlock;
 import net.favouriteless.enchanted.common.blocks.altar.ChaliceBlock;
-import net.favouriteless.enchanted.common.blocks.KettleBlock;
-import net.favouriteless.enchanted.common.blocks.WitchCauldronBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.ChalkCircleBlock;
 import net.favouriteless.enchanted.common.blocks.chalk.GoldChalkBlock;
 import net.favouriteless.enchanted.common.blocks.crops.*;

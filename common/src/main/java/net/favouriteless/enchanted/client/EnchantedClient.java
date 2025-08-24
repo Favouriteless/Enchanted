@@ -3,14 +3,10 @@ package net.favouriteless.enchanted.client;
 import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.init.EKeybinds;
 import net.favouriteless.enchanted.integrations.modopedia.EModopedia;
-import net.favouriteless.enchanted.integrations.modopedia.client.init.EBookScreenFactories;
-import net.favouriteless.enchanted.integrations.modopedia.client.init.EPageComponents;
-import net.favouriteless.enchanted.integrations.modopedia.client.init.ETemplateProcessors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 

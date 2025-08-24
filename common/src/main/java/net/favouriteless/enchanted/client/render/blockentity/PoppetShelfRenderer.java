@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.client.render.blockentity;
 
-import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
-import net.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
+import net.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

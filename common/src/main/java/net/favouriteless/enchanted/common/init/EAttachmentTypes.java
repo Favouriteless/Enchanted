@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.init;
 
 import com.mojang.serialization.Codec;
-import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.platform.EAttachmentType;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.network.codec.ByteBufCodecs;
 
 public class EAttachmentTypes {

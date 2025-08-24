@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.circle_magic;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
+import net.favouriteless.enchanted.common.init.EData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.Registry;

@@ -1,12 +1,12 @@
 package net.favouriteless.enchanted.client.render.blockentity;
 
-import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import net.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
-import net.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.favouriteless.enchanted.client.render.model.ModelLayerLocations;
+import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.blocks.SpinningWheelBlock;
+import net.favouriteless.enchanted.common.blocks.entity.SpinningWheelBlockEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;

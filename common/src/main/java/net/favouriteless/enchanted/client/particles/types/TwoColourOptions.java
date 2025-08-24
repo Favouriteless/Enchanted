@@ -8,9 +8,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.FastColor;
-import org.joml.Vector3f;
 
 public class TwoColourOptions implements ParticleOptions {
 

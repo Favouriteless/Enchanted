@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.familiars;
 
-import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.api.familiars.FamiliarType;
+import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;

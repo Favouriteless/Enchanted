@@ -6,11 +6,11 @@ import net.favouriteless.enchanted.api.circle_magic.RiteFactory;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.circle_magic.RiteTargetingType;
 import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
+import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;
+import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
 import net.favouriteless.enchanted.common.circle_magic.rites.SkyWrathEntityRite;
 import net.favouriteless.enchanted.common.circle_magic.rites.SkyWrathRite;
 import net.favouriteless.enchanted.common.circle_magic.rites.SkyWrathWaystoneRite;
-import net.favouriteless.enchanted.common.circle_magic.rites.Rite.BaseRiteParams;
-import net.favouriteless.enchanted.common.circle_magic.rites.Rite.RiteParams;
 import net.minecraft.resources.ResourceLocation;
 
 public record SkyWrathFactory(RiteTargetingType target) implements RiteFactory {

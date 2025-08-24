@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.init;
 
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.ByproductRecipeProcessor;
-import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.KettleRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.DistillingRecipeProcessor;
+import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.KettleRecipeProcessor;
 import net.favouriteless.enchanted.integrations.modopedia.client.template_processors.SpinningRecipeProcessor;
 import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 

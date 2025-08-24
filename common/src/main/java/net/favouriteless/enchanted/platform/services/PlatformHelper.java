@@ -62,4 +62,9 @@ public interface PlatformHelper {
      */
     ItemStack getCraftingRemainingItem(ItemStack item);
 
+    /**
+     * @return Capacity of a bucket in fluid units (mB on NeoForge, droplets on Fabric)
+     */
+    int getBucketCapacity();
+
 }

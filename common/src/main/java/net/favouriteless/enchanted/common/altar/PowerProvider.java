@@ -9,8 +9,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Optional;
-
 public record PowerProvider(int power, int limit) {
 
     public static final Codec<PowerProvider> CODEC = RecordCodecBuilder.create(instance -> instance.group(

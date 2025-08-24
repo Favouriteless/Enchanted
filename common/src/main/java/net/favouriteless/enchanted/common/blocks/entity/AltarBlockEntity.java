@@ -1,14 +1,14 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.api.power.IPowerConsumer;
 import net.favouriteless.enchanted.api.power.IPowerProvider;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.altar.AltarBlockData;
-import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
 import net.favouriteless.enchanted.common.altar.AltarUpgradeData;
 import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import net.favouriteless.enchanted.common.menus.AltarMenu;
+import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;

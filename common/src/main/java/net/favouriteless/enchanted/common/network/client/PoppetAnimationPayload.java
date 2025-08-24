@@ -1,13 +1,13 @@
 package net.favouriteless.enchanted.common.network.client;
 
 import net.favouriteless.enchanted.client.particles.types.TwoColourOptions;
-import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.client.render.poppet.PoppetAnimationManager;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.items.poppets.PoppetItem;
-import net.favouriteless.enchanted.platform.PacketContext;
 import net.favouriteless.enchanted.common.poppet.PoppetColour;
 import net.favouriteless.enchanted.common.poppet.PoppetUseResult.ResultType;
+import net.favouriteless.enchanted.platform.PacketContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

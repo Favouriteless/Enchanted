@@ -1,12 +1,12 @@
 package net.favouriteless.enchanted.client.render.entity;
 
-import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.client.render.model.ModelLayerLocations;
-import net.favouriteless.enchanted.client.render.model.entity.BroomstickModel;
-import net.favouriteless.enchanted.common.entities.Broomstick;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.favouriteless.enchanted.client.render.model.ModelLayerLocations;
+import net.favouriteless.enchanted.client.render.model.entity.BroomstickModel;
+import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.entities.Broomstick;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;

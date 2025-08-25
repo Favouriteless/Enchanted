@@ -16,6 +16,7 @@ import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.fabric.common.transfer.EFluidContainerWrapper;
+import net.favouriteless.enchanted.fabric.common.transfer.KettleInvWrapper;
 import net.neoforged.fml.config.ModConfig.Type;
 
 public class EnchantedFabric implements ModInitializer {

@@ -61,7 +61,7 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
             if(!level.isClientSide) {
-                ItemStack result = kettle.takeItem(1, false);
+                ItemStack result = kettle.takeItem(false);
                 if(!result.isEmpty()) {
                     ItemUtils.giveOrDrop(player, result);
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);

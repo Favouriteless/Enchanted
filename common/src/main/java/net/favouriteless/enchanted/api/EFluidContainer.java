@@ -27,6 +27,11 @@ public interface EFluidContainer {
     int getFluidAmount();
 
     /**
+     * Set the amount of fluid this container holds.
+     */
+    void setFluidAmount(int amount);
+
+    /**
      * Attempt to add fluid to the container.
      *
      * @param amount The volume of fluid to add.

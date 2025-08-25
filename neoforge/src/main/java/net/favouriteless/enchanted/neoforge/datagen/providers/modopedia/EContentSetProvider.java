@@ -3,7 +3,6 @@ package net.favouriteless.enchanted.neoforge.datagen.providers.modopedia;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.FramedImageBuilder;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.page.*;
 import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.KettleRecipeBuilder;
-import net.favouriteless.enchanted.api.datagen.builders.modopedia.templates.recipe.WitchCauldronRecipeBuilder;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.DistilleryBlock;
 import net.favouriteless.enchanted.common.blocks.FumeFunnelBlock;
@@ -11,13 +10,15 @@ import net.favouriteless.enchanted.common.blocks.WitchOvenBlock;
 import net.favouriteless.enchanted.common.blocks.crops.CropBlockAgeFive;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
-import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.HeaderBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.MultiblockBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.SeparatorBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CookingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
@@ -25,7 +26,6 @@ import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
 import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
-import net.favouriteless.modopedia.client.multiblock.state_matchers.TagStateMatcher;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -602,7 +602,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.WITCH_CAULDRON.get().getDefaultInstance())
                 .assignedItems(EItems.WITCH_CAULDRON.get(), EItems.ANOINTING_PASTE.get())
                 .page(
-                        HeaderedTextBuilder.of("Witch's Cauldron", "The witch's cauldron is the most important brewing tool at a witch's disposal, enabling you to brew complex potions."),
+                        HeaderedTextBuilder.of("Witch's Cauldron", "This block is currently being reworked and is non-functional. Use the kettle instead."),
                         CraftingRecipeBuilder.of(itemId(EItems.ANOINTING_PASTE.get())).y(70)
                 )
                 .page(BlockPageBuilder.of(FormattedStringBuilder.begin()
@@ -800,25 +800,16 @@ public class EContentSetProvider extends ContentSetProvider {
         EntryBuilder.of("Creating Brews")
                 .icon(EItems.WITCH_CAULDRON.get().getDefaultInstance())
                 .page(HeaderedTextBuilder.of("Brews and Potions", FormattedStringBuilder.begin()
-                        .then("Creating a brew, infusion or potion is a simple process, requiring either a ")
-                        .boldEntryLink(blockPath(EBlocks.WITCH_CAULDRON.get()), "witch's cauldron", 0x582C69).then(" or ").boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle", 0x582C69).then(".")
+                        .then("Creating a brew, infusion or potion is a simple process, requiring a ")
+                        .boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle", 0x582C69).then(".")
                         .paragraph("First, you must fill your ")
-                        .boldEntryLink(blockPath(EBlocks.WITCH_CAULDRON.get()), "cauldron").then(" or ").boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle")
+                        .boldEntryLink(blockPath(EBlocks.KETTLE.get()), "kettle")
                         .then(" with water from a bucket. You will know it is full if no more water can fit.").toString())
                 )
                 .page(
                         MultiblockBuilder.of()
                                 .y(70).height(60)
-                                .multiblock(new DenseMultiblock(
-                                        List.of(
-                                                List.of("H"),
-                                                List.of("C")
-                                        ),
-                                        Map.of(
-                                                'C', new SimpleStateMatcher(List.of(EBlocks.WITCH_CAULDRON.get().defaultBlockState())),
-                                                'H', new TagStateMatcher(ETags.Blocks.HEAT_SOURCES)
-                                        )
-                                )),
+                                .multiblockId(Enchanted.id("kettle")),
                         HeaderedTextBuilder.of("Heat Sources", "Next, place a heat source underneath your vessel such as fire, lava or a campfire. After a few seconds, the water should begin to boil.")
                 )
                 .page(HeaderedTextBuilder.of("Adding Ingredients", FormattedStringBuilder.begin()

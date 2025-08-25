@@ -6,7 +6,7 @@
   ],
   "key": {
     "K": { "type": "modopedia:simple", "states": [ "enchanted:kettle[type=hanging_beam,facing=north]" ] },
-    "F": { "type": "modopedia:simple", "states": [ "minecraft:campfire[lit=true]" ] },
+    "F": { "type": "modopedia:tag", "tag": "enchanted:heat_sources" },
     "W": { "type": "modopedia:simple", "states": [ "minecraft:cobblestone_wall" ] }
   }
 }

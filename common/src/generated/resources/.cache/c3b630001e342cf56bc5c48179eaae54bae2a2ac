@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-20T15:49:38.9523927	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
+// 1.21.1	2025-08-25T10:43:29.5303686	Modopedia BookContent[enchanted]: art_of_witchcraft[en_us]
 63e2738a603f53bdf1e901c321ff19df22ca918e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/brewing.json
 8c9127de4430d7152c6d0c19b6b764b35836dab2 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic.json
 26fb888f6caeb2500273e7a86005c95fa89f6bba assets/enchanted/modopedia/books/art_of_witchcraft/en_us/categories/circle_magic/binding.json
@@ -30,10 +30,10 @@ e2d6fe1e46893817bef9e390251d9f474f50725f assets/enchanted/modopedia/books/art_of
 e364482277b37a8cf52da30b027d55d000873a3d assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/spanish_moss.json
 6bbd7fe206d434f58de61c6cf2675552652fa1cc assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/spinning_wheel.json
 db46b878092209bba4152982b5b7255b6b409884 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/water_artichoke.json
-dbe5f50dbb97d6ed04eae9789a4ae997a69d89a3 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/witch_cauldron.json
+439b7d0ecccfc22e4f36985aa2c1820398aaffe6 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/witch_cauldron.json
 104428a833951e5f46b7d55aeccf9f153ace07a5 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/witch_oven.json
 5ff2c4e37f477188cd30ab6e32cc3782720fc619 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/blocks/wolfsbane.json
-a9a110fe4607c43f8de281924baa08d5b50f23ac assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/brewing.json
+57c19a4557a5216736a190919ef22c9455e017f4 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/brewing/brewing.json
 15bb523aa46e14c741a9513b457163fd1773e20e assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/curses/casting_curses.json
 884081c282fb35d149975c79c5f57714fd85aee9 assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/bind_familiar.json
 09c86ba501d05f7fc68ce8211270cfdc2b9b547a assets/enchanted/modopedia/books/art_of_witchcraft/en_us/entries/circle_magic/rites/bind_talisman.json

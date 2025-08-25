@@ -38,7 +38,7 @@ public class ByproductCategory extends AbstractRecipeCategory<ByproductRecipe> {
         );
 
 
-        background = helper.createDrawable(Enchanted.id("textures/gui/witch_oven.png"), 40, 10, getWidth(), getHeight());
+        background = helper.createDrawable(Enchanted.id("textures/gui/menus/witch_oven.png"), 40, 10, getWidth(), getHeight());
         fire = helper.createAnimatedRecipeFlame(120);
         arrow = helper.createAnimatedRecipeArrow(120);
     }

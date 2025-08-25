@@ -39,14 +39,14 @@ public class SpinningCategory extends AbstractRecipeCategory<SpinningRecipe> {
         );
 
 
-        background = helper.createDrawable(Enchanted.id("textures/gui/spinning_wheel.png"), 20, 10, getWidth(), 60);
+        background = helper.createDrawable(Enchanted.id("textures/gui/menus/spinning_wheel.png"), 20, 10, getWidth(), 60);
 
         leftArrow = helper.createAnimatedDrawable(
-                helper.createDrawable(Enchanted.id("textures/gui/spinning_wheel.png"), 176, 0, 15, 20),
+                helper.createDrawable(Enchanted.id("textures/gui/menus/spinning_wheel.png"), 176, 0, 15, 20),
                 120, IDrawableAnimated.StartDirection.BOTTOM, false
         );
         rightArrow = helper.createAnimatedDrawable(
-                helper.createDrawable(Enchanted.id("textures/gui/spinning_wheel.png"), 176, 20, 15, 20),
+                helper.createDrawable(Enchanted.id("textures/gui/menus/spinning_wheel.png"), 176, 20, 15, 20),
                 120, IDrawableAnimated.StartDirection.BOTTOM, false
         );
     }

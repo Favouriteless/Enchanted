@@ -34,14 +34,14 @@ public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe>
         );
 
 
-        background = helper.createDrawable(Enchanted.id("textures/gui/distillery.png"), 4, 5, getWidth(), getHeight());
+        background = helper.createDrawable(Enchanted.id("textures/gui/menus/distillery.png"), 4, 5, getWidth(), getHeight());
 
         bubbles = helper.createAnimatedDrawable(
-                helper.createDrawable(Enchanted.id("textures/gui/distillery.png"), 176, 0, 12, 29),
+                helper.createDrawable(Enchanted.id("textures/gui/menus/distillery.png"), 176, 0, 12, 29),
                 120, IDrawableAnimated.StartDirection.BOTTOM, false
         );
         arrow = helper.createAnimatedDrawable(
-                helper.createDrawable(Enchanted.id("textures/gui/distillery.png"), 176, 29, 57, 61),
+                helper.createDrawable(Enchanted.id("textures/gui/menus/distillery.png"), 176, 29, 57, 61),
                 120, IDrawableAnimated.StartDirection.LEFT, false
         );
     }

@@ -206,7 +206,7 @@ public class ERecipeProvider extends RecipeProvider {
 						.unlockedBy(getHasName(EItems.CHALICE.get()), has(EItems.CHALICE.get())).save(output);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BONE_MEAL, 4)
 						.requires(EItems.WOOD_ASH.get(), 2).requires(Items.BONE)
-						.unlockedBy(getHasName(EItems.WOOD_ASH.get()), has(EItems.WOOD_ASH.get())).save(output);
+						.unlockedBy(getHasName(EItems.WOOD_ASH.get()), has(EItems.WOOD_ASH.get())).save(output, Enchanted.id("bone_meal"));
 
 
 		buttonBuilder(EItems.ALDER_BUTTON.get(), Ingredient.of(EItems.ALDER_PLANKS.get()))

@@ -31,7 +31,7 @@ public class KettleWaterRenderer<T extends KettleBlockEntity> implements BlockEn
 
     @Override
     public void render(T be, float partialTicks, PoseStack pose, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if(be.getWater() == 0)
+        if(be.getFluidAmount() == 0)
             return;
 
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.translucent());
@@ -43,7 +43,7 @@ public class KettleWaterRenderer<T extends KettleBlockEntity> implements BlockEn
         int g = colour.g();
         int b = colour.b();
 
-        float f = be.getWater() / (float)be.getWaterCapacity();
+        float f = be.getFluidAmount() / (float)be.getFluidCapacity();
 
         pose.pushPose();
         pose.translate(0.5D, Mth.lerp(f, waterStart, waterEnd), 0.5D);

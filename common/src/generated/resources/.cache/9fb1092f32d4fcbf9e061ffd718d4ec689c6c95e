@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-20T18:13:08.3059649	Recipes
+// 1.21.1	2025-08-25T04:45:14.1832469	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -17,6 +17,7 @@ d540ccb2db94a62812e99365ffb319c47879454c data/enchanted/advancement/recipes/deco
 cd84ee3db5ddaad7c8ca36c406fb8589433dd870 data/enchanted/advancement/recipes/decorations/rowan_fence.json
 1956798043d501d98b9a6401a9d4284736fd25a3 data/enchanted/advancement/recipes/misc/anointing_paste.json
 7b7a8f60524690b700516c796722fbe763a80e69 data/enchanted/advancement/recipes/misc/attuned_stone.json
+a5f0b2a9ca1ed52a4448f29ba25b3c1272173783 data/enchanted/advancement/recipes/misc/bone_meal.json
 9b08524fea1b87f741a4ae95058db9ab110a4bdc data/enchanted/advancement/recipes/misc/bone_needle.json
 e5826bedb09b330cfd7acee192c60f3392354a1b data/enchanted/advancement/recipes/misc/broom.json
 8906f830043b65ddddeada5c4dd667187316498e data/enchanted/advancement/recipes/misc/chalice_filled.json
@@ -61,6 +62,7 @@ bcf7862d8b682acbf1aed770e670e7b36e9ff674 data/enchanted/recipe/anointing_paste.j
 086171cb67aab99bd0e14dce86908f8b67251c64 data/enchanted/recipe/arthana.json
 b2caf09e79ff2f6508086e84f45af4dc15fe95eb data/enchanted/recipe/art_of_witchcraft.json
 158cb17cd01bf0205798ce6e66a9c5d9c879313a data/enchanted/recipe/attuned_stone.json
+df0b03687b690771ed851064bc53dc073f7319bc data/enchanted/recipe/bone_meal.json
 6c85cfa58049dc7f4d968d6fec25bd1609c87353 data/enchanted/recipe/bone_needle.json
 e3d84740234d9a5735b97926ff95833c230c2754 data/enchanted/recipe/broom.json
 762fa97aff920b6b473d424730c77928969ec49d data/enchanted/recipe/byproduct/breath_of_the_goddess_birch_sapling.json
@@ -161,5 +163,3 @@ c59326f5fb99a39086e1a2139a0ed2b0753eeb2a data/enchanted/recipe/taglock_kit.json
 8b88b7e4642291d884898711709c0d53e11bdbc0 data/enchanted/recipe/wicker_bundle.json
 1365db52777809e1a9e9d4434acb080ecb64abde data/enchanted/recipe/witch_oven.json
 11396d73054a93356889c9ebd89e26c8bbf68735 data/enchanted/recipe/wood_ash.json
-b5f58083e02b8f172247fe65d4fcf96000fa6163 data/minecraft/advancement/recipes/misc/bone_meal.json
-df0b03687b690771ed851064bc53dc073f7319bc data/minecraft/recipe/bone_meal.json

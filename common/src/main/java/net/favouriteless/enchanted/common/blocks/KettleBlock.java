@@ -3,9 +3,9 @@ package net.favouriteless.enchanted.common.blocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.blocks.entity.KettleBlockEntity;
 import net.favouriteless.enchanted.common.util.ItemUtils;
+import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -19,8 +19,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SupportType;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -35,9 +37,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
-public class KettleBlock extends EBaseEntityBlock<KettleBlock> implements BucketPickup {
+public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
 
     public static EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
     public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -50,15 +50,18 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> implements Bucket
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        // OVERRIDDEN FOR INFO: Interactions involving fluids are handled by the respective loader APIs; transfer on fabric & caps on neoforge
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        // INFO: Interactions involving fluids are handled by the respective loader APIs; transfer on fabric & caps on neoforge
+        if(EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult))
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
             if(!level.isClientSide) {
-                ItemStack result = kettle.takeItem();
+                ItemStack result = kettle.takeItem(1, false);
                 if(!result.isEmpty()) {
                     ItemUtils.giveOrDrop(player, result);
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -166,17 +169,6 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> implements Bucket
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
-
-    @Override
-    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor level, BlockPos pos, BlockState state) {
-        return null;
-    }
-
-    @Override
-    public Optional<SoundEvent> getPickupSound() {
-        return Optional.empty();
-    }
-
 
     public enum Type implements StringRepresentable {
         GROUND,

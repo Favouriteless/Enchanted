@@ -10,14 +10,12 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ContainerBlockEntityBase extends BlockEntity implements Container, Nameable {
+public abstract class ContainerBlockEntityBase extends EBlockEntity implements Container, Nameable {
 
     protected NonNullList<ItemStack> inventory;
     private Component name;
@@ -25,13 +23,6 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
     public ContainerBlockEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state, NonNullList<ItemStack> inventory) {
         super(type, pos, state);
         this.inventory = inventory;
-    }
-
-    protected void updateBlock() {
-        if(level == null || level.isClientSide)
-            return;
-        BlockState state = level.getBlockState(worldPosition);
-        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
     }
 
     public NonNullList<ItemStack> getDroppableInventory() {
@@ -124,8 +115,6 @@ public abstract class ContainerBlockEntityBase extends BlockEntity implements Co
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        if (level.getBlockEntity(worldPosition) != this)
-            return false;
         return player.distanceToSqr(worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D) <= 64.0D;
     }
 

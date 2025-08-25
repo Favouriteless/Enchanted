@@ -3,12 +3,13 @@ package net.favouriteless.enchanted.neoforge.common;
 import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.entities.FamiliarCat;
 import net.favouriteless.enchanted.common.entities.Mandrake;
+import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
+import net.favouriteless.enchanted.neoforge.common.capabilities.*;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper.DataRegistryRegisterable;
 import net.favouriteless.enchanted.platform.services.NeoNetworkHelper;
@@ -19,7 +20,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities.FluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
@@ -60,9 +62,12 @@ public class EnchantedNeo {
 
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, EBlockEntityTypes.WITCH_OVEN.get(), SidedInvWrapper::new);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, EBlockEntityTypes.DISTILLERY.get(), SidedInvWrapper::new);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, EBlockEntityTypes.SPINNING_WHEEL.get(), SidedInvWrapper::new);
+        event.registerBlockEntity(ItemHandler.BLOCK, EBlockEntityTypes.WITCH_OVEN.get(), SidedInvWrapper::new);
+        event.registerBlockEntity(ItemHandler.BLOCK, EBlockEntityTypes.DISTILLERY.get(), SidedInvWrapper::new);
+        event.registerBlockEntity(ItemHandler.BLOCK, EBlockEntityTypes.SPINNING_WHEEL.get(), SidedInvWrapper::new);
+
+        event.registerBlockEntity(ItemHandler.BLOCK, EBlockEntityTypes.KETTLE.get(), KettleInvWrapper::new);
+        event.registerBlockEntity(FluidHandler.BLOCK, EBlockEntityTypes.KETTLE.get(), EFluidContainerWrapper::new);
     }
 
 }

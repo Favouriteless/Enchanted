@@ -47,7 +47,9 @@ public class CurseSavedData extends SavedData {
     // ----------------------------------------- Non-API implementations below -----------------------------------------
 
     private static CurseSavedData load(CompoundTag nbt, Provider registries) {
-        return CODEC.parse(NbtOps.INSTANCE, nbt.get("data")).getOrThrow();
+        return CODEC.parse(NbtOps.INSTANCE, nbt.get("data"))
+                .resultOrPartial(s -> Enchanted.LOG.error("Failed to load curses, discarding."))
+                .orElse(new CurseSavedData());
     }
 
     @Override

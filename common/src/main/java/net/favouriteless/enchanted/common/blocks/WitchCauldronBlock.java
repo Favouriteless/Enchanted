@@ -17,7 +17,7 @@ public class WitchCauldronBlock extends BaseEntityBlock {
 
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
 
-    private final MapCodec<KettleBlock> codec = simpleCodec(KettleBlock::new);
+    private final MapCodec<WitchCauldronBlock> codec = simpleCodec(WitchCauldronBlock::new);
 
     public WitchCauldronBlock(Properties properties) {
         super(properties);

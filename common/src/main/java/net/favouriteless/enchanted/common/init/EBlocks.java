@@ -66,7 +66,7 @@ public class EBlocks {
     public static final Supplier<SlabBlock> HAWTHORN_SLAB = register("hawthorn_slab", () -> slab(Blocks.OAK_SLAB));
     public static final Supplier<StairBlock> HAWTHORN_STAIRS = register("hawthorn_stairs", () -> stairs(HAWTHORN_PLANKS.get()));;
     public static final Supplier<InfinityEggBlock> INFINITY_EGG = register("infinity_egg", () -> new InfinityEggBlock(copy(Blocks.DRAGON_EGG).noLootTable()));
-    public static final Supplier<KettleBlock> KETTLE = register("kettle", () -> new KettleBlock(copy(Blocks.CAULDRON).noOcclusion()));
+    public static final Supplier<KettleBlock> KETTLE = register("kettle", () -> new KettleBlock(copy(Blocks.CAULDRON)));
     public static final Supplier<MandrakeBlock> MANDRAKE = register("mandrake", () -> new MandrakeBlock(copy(Blocks.CARROTS)));
     public static final Supplier<ChalkCircleBlock> NETHER_CHALK = register("nether_chalk", () -> new ChalkCircleBlock(ParticleTypes.FLAME));
     public static final Supplier<ChalkCircleBlock> OTHERWHERE_CHALK = register("otherwhere_chalk", () -> new ChalkCircleBlock(ParticleTypes.DRAGON_BREATH));

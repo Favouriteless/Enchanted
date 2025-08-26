@@ -25,7 +25,7 @@ public class ClientEventsNeo {
 
     @SubscribeEvent
     public static void onRenderGuiPost(RenderGuiEvent.Post event) {
-        ClientEvents.onRenderGui(event.getGuiGraphics(), event.getPartialTick().getRealtimeDeltaTicks());
+        ClientEvents.onRenderGui(event.getGuiGraphics(), event.getPartialTick().getGameTimeDeltaPartialTick(true));
     }
 
     @SubscribeEvent

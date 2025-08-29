@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.CircleMagicShape;
 import net.minecraft.resources.ResourceKey;
 
 public class ECircleMagicShapes {

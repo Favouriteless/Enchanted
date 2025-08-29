@@ -5,7 +5,6 @@ import net.favouriteless.enchanted.client.particles.types.ColouredCircleOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 
 public class CircleMagicParticle extends TextureSheetParticle {
@@ -70,21 +69,15 @@ public class CircleMagicParticle extends TextureSheetParticle {
         return EParticleRenderTypes.translucentParticle();
     }
 
-    public static class Factory implements ParticleProvider<ColouredCircleOptions> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<ColouredCircleOptions> {
 
-        private final SpriteSet sprites;
-
-        public Factory(SpriteSet pSprites) {
-            this.sprites = pSprites;
-        }
-
-        @Nullable
         @Override
         public Particle createParticle(ColouredCircleOptions data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             CircleMagicParticle particle = new CircleMagicParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(),
-                    data.getGreen(), data.getBlue(), data.getCenter(), data.getRadius());
+                    data.getGreen(), data.getBlue(), data.center(), data.radius());
             particle.pickSprite(sprites);
             return particle;
         }
+
     }
 }

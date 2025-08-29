@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api;
 
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo.MutagenSet;
-import net.favouriteless.enchanted.common.mutandis.MutagenManagerImpl;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenInfo.MutagenSet;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenManagerImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;

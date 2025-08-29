@@ -2,11 +2,11 @@ package net.favouriteless.enchanted.common.init;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.altar.AltarUpgrade;
-import net.favouriteless.enchanted.common.altar.PowerProvider;
-import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
-import net.favouriteless.enchanted.common.circle_magic.RiteType;
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo;
+import net.favouriteless.enchanted.common.enchanted.altar.AltarUpgrade;
+import net.favouriteless.enchanted.common.enchanted.altar.PowerProvider;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.CircleMagicShape;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteType;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenInfo;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

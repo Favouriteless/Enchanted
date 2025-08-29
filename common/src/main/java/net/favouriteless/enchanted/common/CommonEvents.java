@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common;
 
-import net.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
-import net.favouriteless.enchanted.api.taglock.IBedTaglock;
-import net.favouriteless.enchanted.common.circle_magic.RiteManager;
-import net.favouriteless.enchanted.common.curses.CurseManagerImpl;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteManager;
+import net.favouriteless.enchanted.common.enchanted.curses.CurseManagerImpl;
+import net.favouriteless.enchanted.common.enchanted.BedTaglockSavedData;
+import net.favouriteless.enchanted.common.enchanted.BedTaglockSavedData.BedTaglockData;
 import net.favouriteless.enchanted.common.items.component.EntityRefData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +20,7 @@ public class CommonEvents {
 
         if(player.level().getBlockEntity(pos) instanceof BedBlockEntity bed) {
             BedTaglockSavedData data = BedTaglockSavedData.get(player.level());
-            IBedTaglock entry = data.getEntry(bed);
+            BedTaglockData entry = data.getEntry(bed);
             entry.setData(EntityRefData.of(player.getUUID(), player.getDisplayName().getString()));
             data.setDirty();
         }

@@ -40,7 +40,7 @@ public class TranspositionIronSeedParticle extends NoRenderParticle {
 		@Override
 		public Particle createParticle(DoubleOptions data, ClientLevel level, double x, double y, double z,
 												 double xSpeed, double ySpeed, double zSpeed) {
-			return new TranspositionIronSeedParticle(level, x, y, z, data.getValue());
+			return new TranspositionIronSeedParticle(level, x, y, z, data.value());
 		}
 
 	}

@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.entities;
 
-import net.favouriteless.enchanted.common.poppet.PoppetUtils;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;

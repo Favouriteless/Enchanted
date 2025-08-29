@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.mixin.common;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.favouriteless.enchanted.common.mutandis.MutagenManagerImpl;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenManagerImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

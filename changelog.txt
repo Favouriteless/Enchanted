@@ -1,16 +1,1 @@
-- ADDED: Curse of clumsy
-- ADDED: Portugese translation (not including book)
-
-- CHANGED: All witch cauldron recipes now use the kettle instead. The kettle's recipe has been adjusted to account for this change.
-- CHANGED: Kettle now has a new model.
-- CHANGED: Breaking a kettle with a result in it will drop the result.
-- CHANGED: Kettles now support standard NeoForge and Fabric fluid transfer APIs.
-- CHANGED: Kettles can now output their result item via hoppers or fabric/neo item transfer APIs.
-- CHANGED: Kettles now give an audio indication for completing or failing a brew.
-
-- FIXED: Enchanted makes bumblezone's ambient sounds louder.
-- FIXED: Missing textures in JEI plugin.
-- FIXED: Cauldrons can crash under certain conditions.
-
-- API: Curses have been rewritten from scratch.
-- API: Kettle has been rewritten from scratch.
+- FIXED: Poppet activation animation is stuttery.

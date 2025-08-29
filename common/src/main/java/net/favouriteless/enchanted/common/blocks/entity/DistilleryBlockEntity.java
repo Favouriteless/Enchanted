@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
-import net.favouriteless.enchanted.api.power.IPowerConsumer;
-import net.favouriteless.enchanted.api.power.IPowerProvider;
-import net.favouriteless.enchanted.api.power.PowerHelper;
-import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.api.altar.PowerConsumer;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
+import net.favouriteless.enchanted.api.altar.PowerHelper;
+import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.menus.DistilleryMenu;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DistilleryBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider, WorldlyContainer {
+public class DistilleryBlockEntity extends ContainerBlockEntityBase implements PowerConsumer, MenuProvider, WorldlyContainer {
 
     private static final int[] TOP_SLOTS = new int[] { 1, 2 };
     private static final int[] SIDE_SLOTS = new int[] { 0 };
@@ -55,7 +55,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DistilleryBlockEntity be) {
-        IPowerProvider powerProvider = PowerHelper.tryGetProvider(level, be.posHolder);
+        PowerProvider powerProvider = PowerHelper.tryGetProvider(level, be.posHolder);
 
         boolean wasBurning = be.isBurning;
         RecipeHolder<DistillingRecipe> recipe = be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).orElse(null);
@@ -193,7 +193,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements I
 
     @Override
     @NotNull
-    public IPowerConsumer.IPowerPosHolder getPosHolder() {
+    public PowerConsumer.PowerPosHolder getPosHolder() {
         return posHolder;
     }
 

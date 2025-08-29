@@ -6,7 +6,7 @@ import com.mojang.math.Axis;
 import net.favouriteless.enchanted.api.MutagenManager;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.crops.CropBlockAgeFive;
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo.MutagenSet;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenInfo.MutagenSet;
 import net.favouriteless.enchanted.common.util.LangUtils;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;

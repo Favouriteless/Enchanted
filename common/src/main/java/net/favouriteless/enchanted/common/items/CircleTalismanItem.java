@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;

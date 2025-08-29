@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.api.circle_magic;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.enchanted.common.circle_magic.RiteFactoryRegistryImpl;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteFactoryRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.integrations.jei.recipes;
 
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.favouriteless.enchanted.common.circle_magic.RiteType;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.init.EData;
 import net.favouriteless.enchanted.integrations.jei.EJeiRecipeTypes;
 import net.minecraft.client.Minecraft;

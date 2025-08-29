@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api.curses;
 
 import com.mojang.serialization.Codec;
-import net.favouriteless.enchanted.common.curses.CurseInstanceImpl;
+import net.favouriteless.enchanted.common.enchanted.curses.CurseInstanceImpl;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;

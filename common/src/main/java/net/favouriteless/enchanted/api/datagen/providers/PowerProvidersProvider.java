@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api.datagen.providers;
 
 import com.google.common.collect.Sets;
-import net.favouriteless.enchanted.common.altar.PowerProvider;
+import net.favouriteless.enchanted.common.enchanted.altar.PowerProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;

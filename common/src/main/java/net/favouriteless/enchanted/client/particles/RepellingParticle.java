@@ -70,7 +70,7 @@ public class RepellingParticle extends TextureSheetParticle {
 
 		public Particle createParticle(ColouredCircleOptions data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			RepellingParticle particle = new RepellingParticle(level, x, y, z, data.getRed(), data.getGreen(),
-					data.getBlue(), data.getCenter());
+					data.getBlue(), data.center());
 			particle.pickSprite(this.sprite);
 			return particle;
 		}

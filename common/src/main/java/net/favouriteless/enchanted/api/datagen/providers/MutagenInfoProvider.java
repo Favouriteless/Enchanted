@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.api.datagen.providers;
 
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo;
-import net.favouriteless.enchanted.common.mutandis.MutagenInfo.MutagenSet;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenInfo;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenInfo.MutagenSet;
 import net.favouriteless.enchanted.datagen.providers.SimpleCodecProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;

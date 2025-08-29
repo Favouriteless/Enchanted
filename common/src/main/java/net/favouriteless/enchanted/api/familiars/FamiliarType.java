@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.api.familiars;
 
 import net.favouriteless.enchanted.common.entities.FamiliarCat;
-import net.favouriteless.enchanted.common.familiars.CatFamiliarType;
-import net.favouriteless.enchanted.common.familiars.FamiliarTypes;
+import net.favouriteless.enchanted.common.enchanted.familiars.CatFamiliarType;
+import net.favouriteless.enchanted.common.enchanted.familiars.EFamiliarTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -13,14 +13,14 @@ import net.minecraft.world.entity.animal.Cat;
 import java.util.function.Supplier;
 
 /**
- * A {@link FamiliarType} defines which {@link EntityType} creates what type of familiar, as well as defining logic for
- * creating a new familiar {@link Entity} given an input of an {@link Entity} of the specified type. {@link FamiliarType}s
- * should be registered using {@link FamiliarTypes#register(ResourceLocation, FamiliarType)} so Enchanted knows they exist.
+ * A {@link FamiliarType} defines which {@link EntityType} creates which type of familiar, as well as defining logic for
+ * creating a new familiar {@link Entity} given an input of an {@link Entity} of the specified type.
+ * {@link FamiliarType}s should be registered using {@link EFamiliarTypes#register(ResourceLocation, FamiliarType)}.
  *
  * <p>See {@link CatFamiliarType} for an example implementation of a {@link FamiliarType}</p>
  *
- * @param <T> The {@link Entity} class of the "input" entity (for example {@link Cat}).
- * @param <C> The {@link Entity} class of the "output" entity (for example {@link FamiliarCat}).
+ * @param <T> The {@link Entity} class of the input entity (e.g. {@link Cat}).
+ * @param <C> The {@link Entity} class of the output entity (e.g. {@link FamiliarCat}).
  */
 public abstract class FamiliarType<T extends TamableAnimal, C extends TamableAnimal> {
 

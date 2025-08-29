@@ -7,17 +7,9 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.FastColor.ARGB32;
 
-public class ColourOptions implements ParticleOptions {
-
-    private final ParticleType<ColourOptions> particleType;
-    private final int colour;
-
-    public ColourOptions(ParticleType<ColourOptions> particleType, int colour) {
-        this.particleType = particleType;
-        this.colour = colour;
-    }
+public record ColourOptions(ParticleType<ColourOptions> particleType, int colour) implements ParticleOptions {
 
     public static MapCodec<ColourOptions> codec(ParticleType<ColourOptions> type) {
         return Codec.INT.xmap(i -> new ColourOptions(type, i), o -> o.colour).fieldOf("colour");
@@ -29,19 +21,19 @@ public class ColourOptions implements ParticleOptions {
     }
 
     public float getRed() {
-        return FastColor.ARGB32.red(colour) / 255.0F;
+        return ARGB32.red(colour) / 255.0F;
     }
 
     public float getGreen() {
-        return FastColor.ARGB32.green(colour) / 255.0F;
+        return ARGB32.green(colour) / 255.0F;
     }
 
     public float getBlue() {
-        return FastColor.ARGB32.blue(colour) / 255.0F;
+        return ARGB32.blue(colour) / 255.0F;
     }
 
     public float getAlpha() {
-        return FastColor.ARGB32.alpha(colour) / 255.0F;
+        return ARGB32.alpha(colour) / 255.0F;
     }
 
     @Override

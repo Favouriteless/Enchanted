@@ -2,10 +2,9 @@ package net.favouriteless.enchanted.fabric.mixin.common;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.favouriteless.enchanted.common.poppet.PoppetEvents;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetEvents;
 import net.favouriteless.enchanted.fabric.common.CommonEventsFabric;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

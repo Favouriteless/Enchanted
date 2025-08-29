@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.api.curses;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.enchanted.common.circle_magic.rites.Rite;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.Rite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 

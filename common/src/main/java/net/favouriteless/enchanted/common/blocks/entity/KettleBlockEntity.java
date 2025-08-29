@@ -1,14 +1,14 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.api.EFluidContainer;
-import net.favouriteless.enchanted.api.power.IPowerConsumer;
-import net.favouriteless.enchanted.api.power.IPowerProvider;
-import net.favouriteless.enchanted.api.power.PowerHelper;
+import net.favouriteless.enchanted.api.altar.PowerConsumer;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
+import net.favouriteless.enchanted.api.altar.PowerHelper;
 import net.favouriteless.enchanted.client.ClientProxy;
 import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, IPowerConsumer {
+public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, PowerConsumer {
 
     private static final int WATER_CAPACITY = EServices.FLUID.getBucketCapacity();
     private static final int COOK_DURATION = 160;
@@ -118,7 +118,7 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
         }
 
         KettleRecipe recipe = be.recipes.getFirst().value();
-        IPowerProvider provider = PowerHelper.tryGetProvider(level, be.powerHolder);
+        PowerProvider provider = PowerHelper.tryGetProvider(level, be.powerHolder);
 
         if(recipe.getPower() == 0 || (provider != null && provider.tryConsume(recipe.getPower()))) {
             be.result = recipe.assemble(ListInput.of(be.ingredients), level.registryAccess());
@@ -205,6 +205,9 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
      * @return The {@link ItemStack} removed from the kettle.
      */
     public ItemStack takeItem(boolean simulate) {
+        if(result.isEmpty())
+            return ItemStack.EMPTY;
+
         ItemStack out = takeItemNoUpdate(simulate);
         if(!simulate)
             checkResultEmpty();
@@ -446,7 +449,7 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     @Override
-    public IPowerPosHolder getPosHolder() {
+    public PowerPosHolder getPosHolder() {
         return powerHolder;
     }
 

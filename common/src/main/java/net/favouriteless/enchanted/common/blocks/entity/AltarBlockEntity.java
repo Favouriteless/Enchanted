@@ -1,14 +1,14 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
-import net.favouriteless.enchanted.api.power.IPowerConsumer;
-import net.favouriteless.enchanted.api.power.IPowerProvider;
+import net.favouriteless.enchanted.api.altar.PowerConsumer;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.common.altar.AltarBlockData;
-import net.favouriteless.enchanted.common.altar.AltarUpgradeData;
+import net.favouriteless.enchanted.common.enchanted.altar.AltarBlockData;
+import net.favouriteless.enchanted.common.enchanted.altar.AltarUpgradeData;
 import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import net.favouriteless.enchanted.common.menus.AltarMenu;
-import net.favouriteless.enchanted.common.stateobservers.AltarStateObserver;
+import net.favouriteless.enchanted.common.enchanted.stateobservers.AltarStateObserver;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 // TODO: Rewrite. Bad code.
-public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowerProvider {
+public class AltarBlockEntity extends BlockEntity implements MenuProvider, PowerProvider {
 
     private final double rechargeRate = ServerConfig.INSTANCE.altarBaseRecharge.get();
     private final AltarBlockData altarBlockData = new AltarBlockData();
@@ -177,7 +177,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, IPowe
                         BlockPos currentPos = startingPos.offset(x, y, z);
 
                         if(posWithinRange(currentPos, range)) {
-                            if(level.getBlockEntity(currentPos) instanceof IPowerConsumer consumer)
+                            if(level.getBlockEntity(currentPos) instanceof PowerConsumer consumer)
                                 consumer.getPosHolder().add(worldPosition); // Notify consumers that this altar exists.
 
                             addBlock(level.getBlockState(currentPos).getBlock());

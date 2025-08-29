@@ -4,7 +4,7 @@ import net.favouriteless.enchanted.common.entities.VoodooItemEntity;
 import net.favouriteless.enchanted.common.init.EDamageTypes;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
-import net.favouriteless.enchanted.common.poppet.PoppetUtils;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

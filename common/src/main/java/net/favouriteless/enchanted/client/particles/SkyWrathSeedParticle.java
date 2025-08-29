@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.client.particles;
 
 import net.favouriteless.enchanted.client.particles.types.DelayedPosOptions;
-import net.favouriteless.enchanted.common.circle_magic.rites.SkyWrathRite;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.SkyWrathRite;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.NoRenderParticle;

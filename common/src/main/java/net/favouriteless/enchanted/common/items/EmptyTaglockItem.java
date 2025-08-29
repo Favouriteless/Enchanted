@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.items;
 
-import net.favouriteless.enchanted.api.taglock.BedTaglockSavedData;
-import net.favouriteless.enchanted.api.taglock.IBedTaglock;
 import net.favouriteless.enchanted.common.blocks.crops.BloodPoppyBlock;
 import net.favouriteless.enchanted.common.blocks.entity.BloodPoppyBlockEntity;
+import net.favouriteless.enchanted.common.enchanted.BedTaglockSavedData;
+import net.favouriteless.enchanted.common.enchanted.BedTaglockSavedData.BedTaglockData;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags.EntityTypes;
@@ -86,7 +86,7 @@ public class EmptyTaglockItem extends Item {
 
                 if(be instanceof BedBlockEntity bed) {
                     BedTaglockSavedData data = BedTaglockSavedData.get(level);
-                    IBedTaglock entry = data.getEntry(bed);
+                    BedTaglockData entry = data.getEntry(bed);
 
                     if(entry == null)
                         return InteractionResult.CONSUME;

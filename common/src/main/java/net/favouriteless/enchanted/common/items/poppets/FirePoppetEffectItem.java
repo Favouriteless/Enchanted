@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.items.poppets;
 
-import net.favouriteless.enchanted.common.poppet.PoppetColour;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetColour;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.common.blocks;
 
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
-import net.favouriteless.enchanted.common.poppet.PoppetShelfManager;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfManager;
 import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.common.items.poppets;
 
-import net.favouriteless.enchanted.common.poppet.PoppetColour;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetColour;
 import net.minecraft.world.item.ItemStack;
 
 public class ItemProtectionPoppetItem extends PoppetItem {

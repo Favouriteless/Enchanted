@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.entities;
 
+import net.favouriteless.enchanted.api.familiars.FamiliarEntry;
 import net.favouriteless.enchanted.api.familiars.FamiliarHelper;
-import net.favouriteless.enchanted.api.familiars.FamiliarSavedData;
-import net.favouriteless.enchanted.api.familiars.IFamiliarEntry;
+import net.favouriteless.enchanted.common.enchanted.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.DamageTypeTags;
@@ -25,13 +25,11 @@ public class FamiliarCat extends Cat {
 
 	@Override
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
-		if(player.isCrouching() && hand == InteractionHand.MAIN_HAND) {
-			if(!level().isClientSide) {
-				if(player.getUUID().equals(getOwnerUUID())) {
-					FamiliarHelper.dismiss(this);
-					return InteractionResult.sidedSuccess(level().isClientSide);
-				}
-			}
+		if(player.isCrouching() && hand == InteractionHand.MAIN_HAND && player.getUUID().equals(getOwnerUUID())) {
+            if(!level().isClientSide)
+                FamiliarHelper.get().dismiss(this);
+
+            return InteractionResult.sidedSuccess(level().isClientSide);
 		}
 		return super.mobInteract(player, hand);
 	}
@@ -39,14 +37,14 @@ public class FamiliarCat extends Cat {
 	@Override
 	public void tick() {
 		super.tick();
-		if(!level().isClientSide) {
+        if(level().isClientSide)
+            return;
 
-			IFamiliarEntry entry = FamiliarSavedData.get(level()).getEntry(getOwnerUUID());
-			if(entry == null || !getUUID().equals(entry.getUUID())) {
-				discard();
-				Enchanted.LOG.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
-			}
-		}
+        FamiliarEntry entry = FamiliarSavedData.get(level()).getEntry(getOwnerUUID());
+        if(entry == null || !getUUID().equals(entry.getUUID())) {
+            discard();
+            Enchanted.LOG.info(String.format("Found familiar with non-matching UUID for %s, discarding.", getOwnerUUID()));
+        }
 	}
 
 	@Override
@@ -54,7 +52,7 @@ public class FamiliarCat extends Cat {
 		super.addAdditionalSaveData(nbt);
 		if(!level().isClientSide) {
 			FamiliarSavedData data = FamiliarSavedData.get(level());
-			IFamiliarEntry entry = data.getEntry(getOwnerUUID());
+			FamiliarEntry entry = data.getEntry(getOwnerUUID());
 			if(entry != null) {
 				entry.setNbt(nbt);
 				data.setDirty();
@@ -66,7 +64,7 @@ public class FamiliarCat extends Cat {
 	public void die(DamageSource cause) {
 		super.die(cause);
 		if(!level().isClientSide)
-			FamiliarHelper.dismiss(this);
+			FamiliarHelper.get().dismiss(this);
 	}
 
 	public static AttributeSupplier createCatAttributes() {

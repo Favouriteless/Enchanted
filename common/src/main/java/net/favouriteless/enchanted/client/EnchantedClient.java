@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.client;
 
-import net.favouriteless.enchanted.common.circle_magic.CircleMagicShape;
+import net.favouriteless.enchanted.common.enchanted.circle_magic.CircleMagicShape;
 import net.favouriteless.enchanted.common.init.EKeybinds;
 import net.favouriteless.enchanted.integrations.modopedia.EModopedia;
 import net.minecraft.client.Minecraft;

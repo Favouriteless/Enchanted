@@ -4,7 +4,7 @@ import net.favouriteless.enchanted.api.curses.CurseManager;
 import net.favouriteless.enchanted.common.CommonEvents;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.effects.EffectEvents;
-import net.favouriteless.enchanted.common.poppet.PoppetEvents;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetEvents;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;

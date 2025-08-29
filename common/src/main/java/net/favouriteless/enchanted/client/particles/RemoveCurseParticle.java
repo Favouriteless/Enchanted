@@ -74,7 +74,7 @@ public class RemoveCurseParticle extends TextureSheetParticle {
 
 		public Particle createParticle(DelayedPosOptions data, ClientLevel level, double x, double y, double z,
 									   double xSpeed, double ySpeed, double zSpeed) {
-			RemoveCurseParticle particle = new RemoveCurseParticle(level, x, y, z, data.getCenter(), data.getDelay());
+			RemoveCurseParticle particle = new RemoveCurseParticle(level, x, y, z, data.center(), data.delay());
 			particle.pickSprite(this.sprite);
 			return particle;
 		}

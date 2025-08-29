@@ -2,7 +2,6 @@ package net.favouriteless.enchanted.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.common.blocks.entity.KettleBlockEntity;
 import net.favouriteless.enchanted.common.util.ColourUtils.ARGB;
 import net.minecraft.client.Minecraft;
@@ -34,10 +33,11 @@ public class KettleWaterRenderer<T extends KettleBlockEntity> implements BlockEn
         if(be.getFluidAmount() == 0)
             return;
 
+        Minecraft mc = Minecraft.getInstance();
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.translucent());
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(WATER_TEXTURE);
+        TextureAtlasSprite sprite = mc.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(WATER_TEXTURE);
 
-        ARGB colour = be.getColour(EnchantedClient.getGameTime());
+        ARGB colour = be.getColour(mc.level.getGameTime() + partialTicks);
         int a = colour.a();
         int r = colour.r();
         int g = colour.g();

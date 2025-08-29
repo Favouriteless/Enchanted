@@ -6,7 +6,7 @@ import net.favouriteless.enchanted.common.items.brews.SimpleEffectBrewItem;
 import net.favouriteless.enchanted.common.items.brews.throwable.LoveBrewItem;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
 import net.favouriteless.enchanted.common.items.poppets.*;
-import net.favouriteless.enchanted.common.poppet.PoppetColour;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetColour;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;

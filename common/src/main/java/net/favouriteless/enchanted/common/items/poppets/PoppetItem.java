@@ -2,8 +2,8 @@ package net.favouriteless.enchanted.common.items.poppets;
 
 import net.favouriteless.enchanted.common.items.TaglockFilledItem;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.common.poppet.PoppetColour;
-import net.favouriteless.enchanted.common.poppet.PoppetUtils;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetColour;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

@@ -49,7 +49,7 @@ public class ProtectionSeedParticle extends NoRenderParticle {
 		@Override
 		public Particle createParticle(DoubleOptions data, ClientLevel level, double x, double y, double z,
 									   double xSpeed, double ySpeed, double zSpeed) {
-			return new ProtectionSeedParticle(level, x, y, z, data.getValue());
+			return new ProtectionSeedParticle(level, x, y, z, data.value());
 		}
 
 	}

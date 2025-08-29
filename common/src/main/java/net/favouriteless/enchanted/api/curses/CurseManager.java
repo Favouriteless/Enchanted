@@ -2,7 +2,7 @@ package net.favouriteless.enchanted.api.curses;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.enchanted.api.curses.Curse.Type;
-import net.favouriteless.enchanted.common.curses.CurseManagerImpl;
+import net.favouriteless.enchanted.common.enchanted.curses.CurseManagerImpl;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 

@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
-import net.favouriteless.enchanted.api.power.IPowerConsumer;
-import net.favouriteless.enchanted.api.power.IPowerProvider;
-import net.favouriteless.enchanted.api.power.PowerHelper;
-import net.favouriteless.enchanted.common.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.api.altar.PowerConsumer;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
+import net.favouriteless.enchanted.api.altar.PowerHelper;
+import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.menus.SpinningWheelMenu;
 import net.favouriteless.enchanted.common.recipes.SpinningRecipe;
@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implements IPowerConsumer, MenuProvider, WorldlyContainer {
+public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implements PowerConsumer, MenuProvider, WorldlyContainer {
 
 	private static final int[] INPUT_SLOTS = new int[] { 0, 1, 2 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 3 };
@@ -54,7 +54,7 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 		RecipeHolder<SpinningRecipe> recipe = be.spinCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 3)), level).orElse(null);
 		boolean wasSpinning = be.spinProgress > 0;
 
-		IPowerProvider provider = PowerHelper.tryGetProvider(level, be.posHolder);
+		PowerProvider provider = PowerHelper.tryGetProvider(level, be.posHolder);
 		// Can fit result and has enough power to spin
 		if(recipe != null && be.canSpin(recipe) && (recipe.value().getPower() == 0 ||
 				(provider != null && provider.tryConsume((double)recipe.value().getPower() / be.spinDuration)))) {
@@ -160,7 +160,7 @@ public class SpinningWheelBlockEntity extends ContainerBlockEntityBase implement
 	}
 
 	@Override
-	public @NotNull IPowerPosHolder getPosHolder() {
+	public @NotNull PowerConsumer.PowerPosHolder getPosHolder() {
 		return posHolder;
 	}
 

@@ -1,10 +1,10 @@
 package net.favouriteless.enchanted.common;
 
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.curses.ECurses;
+import net.favouriteless.enchanted.common.enchanted.curses.ECurses;
 import net.favouriteless.enchanted.common.init.*;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.common.mutandis.MutagenSavedData;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenSavedData;
 import net.favouriteless.enchanted.integrations.modopedia.EModopedia;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.resources.ResourceLocation;

@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.common.menus.PoppetShelfMenu;
-import net.favouriteless.enchanted.common.poppet.PoppetShelfInventory;
-import net.favouriteless.enchanted.common.poppet.PoppetShelfManager;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfInventory;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;

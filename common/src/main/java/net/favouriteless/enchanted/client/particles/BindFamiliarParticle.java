@@ -99,7 +99,7 @@ public class BindFamiliarParticle extends TextureSheetParticle {
 		}
 
 		public Particle createParticle(DelayedPosOptions data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			BindFamiliarParticle particle = new BindFamiliarParticle(level, x, y, z, data.getCenter(), data.getDelay(), sprite);
+			BindFamiliarParticle particle = new BindFamiliarParticle(level, x, y, z, data.center(), data.delay(), sprite);
 			particle.pickSprite(this.sprite);
 			return particle;
 		}

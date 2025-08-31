@@ -1,5 +1,6 @@
 package net.favouriteless.enchanted.platform.services;
 
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil;
@@ -25,6 +26,11 @@ public class FabricFluidHelper implements FluidHelper {
         return Optional.ofNullable(FluidStorage.SIDED.find(level, pos, hitResult.getDirection()))
                 .map(s -> FluidStorageUtil.interactWithFluidStorage(s, player, hand))
                 .orElse(false);
+    }
+
+    @Override
+    public boolean playerHoldingFluidContainer(Player player, InteractionHand hand) {
+        return ContainerItemContext.forPlayerInteraction(player, hand).find(FluidStorage.ITEM) == null;
     }
 
 }

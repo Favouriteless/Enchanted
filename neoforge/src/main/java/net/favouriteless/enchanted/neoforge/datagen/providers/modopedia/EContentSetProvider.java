@@ -247,7 +247,8 @@ public class EContentSetProvider extends ContentSetProvider {
 
         craftingEntry(output, "Brooms", FormattedStringBuilder.begin()
                         .then("A broom can be used to sweep chalk away quickly, without having to spend time erasing it.")
-                        .paragraph("Conveniently, a broom can also make for an excellent method of transportation with some preparation.").toString(),
+                        .paragraph("Conveniently, a broom can also make for an excellent method of transportation with ")
+                        .boldEntryLink(ritePath("infuse_broom"), "some preparation.").toString(),
                 EItems.BROOM.get());
 
         craftingEntry(output, "Earmuffs", FormattedStringBuilder.begin()
@@ -343,7 +344,7 @@ public class EContentSetProvider extends ContentSetProvider {
 
         kettleEntry(output, "Flying Ointment", EItems.FLYING_OINTMENT.get(), FormattedStringBuilder.begin()
                 .then("Flying ointment is a brew which seems to defy gravity; anything imbued with it will gain the property of flight, including people who ingest it.")
-                .paragraph("Most notably, it can be used to ").boldEntryLink(ritePath("infuse_broomstick"), "infuse broomsticks").toString());
+                .paragraph("Most notably, it can be used to ").boldEntryLink(ritePath("infuse_broom"), "infuse broomsticks").toString());
 
         kettleEntry(output, "Happenstance Oil", EItems.HAPPENSTANCE_OIL.get(), FormattedStringBuilder.begin()
                 .then("Clairvoyance is an indispensable tool for a witch in need of information.")

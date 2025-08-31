@@ -51,8 +51,10 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         // INFO: Interactions involving fluids are handled by the respective loader APIs; transfer on fabric & caps on neoforge
-        if(EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult))
+        if(EServices.FLUID.playerHoldingFluidContainer(player, hand)) {
+            EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

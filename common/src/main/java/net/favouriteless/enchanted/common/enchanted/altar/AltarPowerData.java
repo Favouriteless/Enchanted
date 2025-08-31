@@ -25,8 +25,8 @@ import java.util.Optional;
 
 public class AltarPowerData {
 
-    private double powerMultiplier; // Gets recalculated when upgrades change.
-    private double rechargeMultiplier; // Gets recalculated when upgrades change.
+    private double powerMultiplier = 1; // Gets recalculated when upgrades change.
+    private double rechargeMultiplier = 1; // Gets recalculated when upgrades change.
 
     private int capacity = 0; // Raw capacity, no multipliers applied.
 
@@ -77,8 +77,6 @@ public class AltarPowerData {
      *
      * @param level {@link Level} to grab registries from.
      * @param block The {@link Block} to add.
-     *
-     * @return Amount of power added.
      */
     public void addBlock(Level level, Block block) {
         tryChangeBlock(level, block, this::applyAdd);
@@ -89,8 +87,6 @@ public class AltarPowerData {
      *
      * @param level {@link Level} to grab registries from.
      * @param block The {@link Block} to remove.
-     *
-     * @return Amount of power removed.
      */
     public void removeBlock(Level level, Block block) {
         tryChangeBlock(level, block, this::applyRemove);
@@ -117,8 +113,8 @@ public class AltarPowerData {
     }
 
     private void calculateUpgrades() {
-        powerMultiplier = 0;
-        rechargeMultiplier = 0;
+        powerMultiplier = 1;
+        rechargeMultiplier = 1;
 
         for(ResourceLocation type : upgrades.keySet()) {
             double highestPower = 0.0D;
@@ -227,8 +223,8 @@ public class AltarPowerData {
     }
 
     public void reset() {
-        powerMultiplier = 0;
-        rechargeMultiplier = 0;
+        powerMultiplier = 1;
+        rechargeMultiplier = 1;
         upgrades.clear();
         blocks.clear();
         tags.clear();

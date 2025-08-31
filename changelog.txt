@@ -1,1 +1,4 @@
+- API: Altars rewritten from scratch. Potential bugfixes but I can't actually name what those are, it was just weird before.
+
 - FIXED: Poppet activation animation is stuttery.
+- FIXED: Using water on a full kettle places the water instead.

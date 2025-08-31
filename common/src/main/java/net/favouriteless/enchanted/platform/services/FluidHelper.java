@@ -19,16 +19,10 @@ public interface FluidHelper {
      * Attempt to fill or drain an in-world fluid container using an {@link ItemStack}. It will attempt to fill the item
      * from the block first, then attempt to fill the block from the item if that fails.
      *
-     * @param stack
-     * @param state
-     * @param level
-     * @param pos
-     * @param player
-     * @param hand
-     * @param hitResult
-     *
      * @return True if an interaction took place, otherwise false.
      */
     boolean tryItemInteraction(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult);
+
+    boolean playerHoldingFluidContainer(Player player, InteractionHand hand);
 
 }

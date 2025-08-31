@@ -15,15 +15,14 @@ import net.minecraft.world.item.ItemStack;
 
 public class AltarMenu extends AbstractContainerMenu {
 
-    public final AltarBlockEntity blockEntity;
-    private final ContainerLevelAccess canInteractWithCallable;
     private final ContainerData data;
+    private final ContainerLevelAccess canInteractWithCallable;
 
-    public AltarMenu(final int id, final AltarBlockEntity be, ContainerData data) {
+    public AltarMenu(int id, AltarBlockEntity be, ContainerData data) {
         super(EMenuTypes.ALTAR.get(), id);
-        this.blockEntity = be;
-        this.canInteractWithCallable = ContainerLevelAccess.create(be.getLevel(), be.getBlockPos());
         this.data = data;
+        this.canInteractWithCallable = ContainerLevelAccess.create(be.getLevel(), be.getBlockPos());
+
         addDataSlots(this.data);
     }
 
@@ -39,13 +38,13 @@ public class AltarMenu extends AbstractContainerMenu {
         return data.get(1);
     }
 
-    public int getRechargeMultiplier() {
-        return data.get(2);
+    public double getRechargeMultiplier() {
+        return data.get(2) / 100.0D;
     }
 
     @Override
-    public ItemStack quickMoveStack(Player var1, int var2) {
-        return null;
+    public ItemStack quickMoveStack(Player player, int slot) {
+        return ItemStack.EMPTY; // Altar has no item slots anyway.
     }
 
     @Override

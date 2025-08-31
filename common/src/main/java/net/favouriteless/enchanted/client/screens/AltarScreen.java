@@ -42,7 +42,7 @@ public class AltarScreen extends AbstractContainerScreen<AltarMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics gui, int x, int y) {
-        String powerString = String.format("%s/%s (%sx)", menu.getCurrentPower(), menu.getMaxPower(), menu.getRechargeMultiplier());
+        String powerString = String.format("%s/%s (%.2fx)", menu.getCurrentPower(), menu.getMaxPower(), menu.getRechargeMultiplier());
         int xOffset = font.width(powerString) / 2;
         int yOffset = font.lineHeight / 2;
         gui.drawString(font, powerString, imageWidth / 2 - xOffset, imageHeight / 2 - yOffset, Color.darkGray.getRGB(), false);

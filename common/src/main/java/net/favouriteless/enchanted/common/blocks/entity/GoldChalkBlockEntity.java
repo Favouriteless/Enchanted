@@ -4,7 +4,7 @@ import net.favouriteless.enchanted.api.altar.PowerConsumer;
 import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.PowerHelper;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteManager;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.Rite;

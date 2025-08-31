@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.common.init;
 
 import net.favouriteless.enchanted.api.circle_magic.RiteFactoryRegistry;
-import net.favouriteless.enchanted.common.circle_magic.rites.factory.*;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.factory.*;
 
 public class ERiteFactories {

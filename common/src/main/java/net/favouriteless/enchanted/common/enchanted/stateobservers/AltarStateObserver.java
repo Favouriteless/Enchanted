@@ -1,18 +1,15 @@
 package net.favouriteless.enchanted.common.enchanted.stateobservers;
 
 import net.favouriteless.enchanted.api.altar.PowerConsumer;
-import net.favouriteless.enchanted.api.altar.PowerProvider;
-import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import net.favouriteless.stateobserver.api.StateChangeSet.StateChange;
 import net.favouriteless.stateobserver.api.StateObserver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
- * StateObserver implementation for {@link AltarBlockEntity}. This is used to notify every nearby {@link PowerConsumer}
- * of the {@link PowerProvider} near them. Changes to the power/upgrades are also calculated in this StateObserver.
+ * StateObserver implementation for {@link AltarBlockEntity}. Used to notify altars when a nearby block changes, and to
+ * notify {@link PowerConsumer}s that an altar is nearby.
  */
 public class AltarStateObserver extends StateObserver {
 
@@ -23,25 +20,25 @@ public class AltarStateObserver extends StateObserver {
     @Override
     protected void handleChanges() {
         if(!getLevel().isClientSide) {
-            BlockEntity be = getLevel().getBlockEntity(getPos());
-            if(be instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
+            if(getLevel().getBlockEntity(getPos()) instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
 
                 for(StateChange change : getChangeSet().getChanges()) { // For all changes
-                    if(altar.posWithinRange(change.pos(), ServerConfig.INSTANCE.altarRange.get())) { // Change is relevant
-                        if(!change.oldState().is(change.newState().getBlock())) { // Block actually changed
-                            if(getLevel().getBlockEntity(change.pos()) instanceof PowerConsumer consumer)
-                                consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.
+                    if(!altar.posWithinRange(change.pos()))
+                        continue;
+                    if(change.oldState().is(change.newState().getBlock()))
+                        continue;
 
-                            altar.removeBlock(change.oldState().getBlock());
-                            altar.addBlock(change.newState().getBlock());
-                        }
-                        if(altar.posIsUpgrade(change.pos())) {
-                            altar.removeUpgrade(change.oldState().getBlock());
-                            altar.addUpgrade(change.newState().getBlock());
-                        }
+                    if(getLevel().getBlockEntity(change.pos()) instanceof PowerConsumer consumer)
+                        consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.
+
+                    altar.removeBlock(change.oldState().getBlock());
+                    altar.addBlock(change.newState().getBlock());
+
+                    if(altar.posIsUpgrade(change.pos())) {
+                        altar.removeUpgrade(change.oldState().getBlock());
+                        altar.addUpgrade(change.newState().getBlock());
                     }
                 }
-
             }
         }
     }

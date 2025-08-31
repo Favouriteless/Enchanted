@@ -19,14 +19,15 @@ public class PowerHelper {
 	 * positions provided by holder.
 	 */
 	public static PowerProvider tryGetProvider(Level level, PowerPosHolder holder) {
-		List<BlockPos> providers = holder.getPositions();
+        if(level == null)
+            return null;
+
+        List<BlockPos> providers = holder.getPositions();
 		while(!providers.isEmpty()) {
-			if(level != null) {
-				BlockPos pos = providers.getFirst();
-				if(level.getBlockEntity(pos) instanceof PowerProvider provider)
-					return provider;
-                providers.remove(pos);
-			}
+            BlockPos pos = providers.getFirst();
+            if(level.getBlockEntity(pos) instanceof PowerProvider provider)
+                return provider;
+            providers.remove(pos); // Remove "fake" entries
 		}
 		return null;
 	}

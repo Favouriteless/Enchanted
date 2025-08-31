@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.api.altar;
 
 import net.favouriteless.enchanted.api.ISerializable;
-import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
@@ -46,15 +45,15 @@ public interface PowerConsumer {
 
         /**
          * Remove a {@link BlockPos} from the list of available altar positions.
-         * @param altarPos position of the altar being removed from this holder.
+         * @param pos position of the altar being removed from this holder.
          */
-        void remove(BlockPos altarPos);
+        void remove(BlockPos pos);
 
         /**
          * Add a {@link BlockPos} to the list of available altar positions.
-         * @param altarPos position of the altar being added to this holder.
+         * @param pos position of the altar being added to this holder.
          */
-        void add(BlockPos altarPos);
+        void add(BlockPos pos);
 
     }
 

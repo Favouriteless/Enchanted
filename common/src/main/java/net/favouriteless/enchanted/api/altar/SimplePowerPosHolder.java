@@ -1,17 +1,16 @@
-package net.favouriteless.enchanted.common.enchanted.altar;
+package net.favouriteless.enchanted.api.altar;
 
 import net.favouriteless.enchanted.api.altar.PowerConsumer.PowerPosHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple {@link PowerPosHolder} implementation which stores
- * the provided {@link BlockPos} by their distance from the holder.
+ * Simple {@link PowerPosHolder} implementation which stores the provided {@link BlockPos} by their distance from the
+ * holder.
  */
 public class SimplePowerPosHolder implements PowerPosHolder {
 
@@ -23,36 +22,34 @@ public class SimplePowerPosHolder implements PowerPosHolder {
 	}
 
 	@Override
-	@NotNull
 	public List<BlockPos> getPositions() {
 		return altars;
 	}
 
 	@Override
-	public void remove(BlockPos altarPos) {
-		altars.remove(altarPos);
+	public void remove(BlockPos pos) {
+		altars.remove(pos);
 	}
 
 	@Override
-	public void add(BlockPos altarPos) {
-		if(altars.isEmpty()) {
-			altars.add(altarPos);
-		}
-		else {
-			if(altars.contains(altarPos))
-				return;
+	public void add(BlockPos pos) {
+        if(altars.isEmpty()) {
+            altars.add(pos);
+            return;
+        }
+        if(altars.contains(pos))
+            return;
 
-			for(int i = 0; i < altars.size(); i++) { // Crude sorting algorithm. Inserts new pos in correct place.
-				if(pos.distSqr(altarPos) < pos.distSqr(altars.get(i))) {
-					altars.add(i, altarPos);
-					return;
-				}
-				else if(i == altars.size() - 1) {
-					altars.add(altarPos);
-					return;
-				}
-			}
-		}
+        for(int i = 0; i < altars.size(); i++) { // Inserts new pos in sorted place.
+            if(this.pos.distSqr(pos) < this.pos.distSqr(altars.get(i))) {
+                altars.add(i, pos);
+                return;
+            }
+            else if(i == altars.size() - 1) {
+                altars.add(pos);
+                return;
+            }
+        }
 	}
 
 	@Override

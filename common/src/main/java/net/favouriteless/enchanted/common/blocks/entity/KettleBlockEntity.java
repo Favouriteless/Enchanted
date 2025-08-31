@@ -8,7 +8,7 @@ import net.favouriteless.enchanted.client.ClientProxy;
 import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.common.enchanted.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;

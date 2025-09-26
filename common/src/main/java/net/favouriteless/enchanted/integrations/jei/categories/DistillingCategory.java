@@ -43,11 +43,15 @@ public class DistillingCategory implements IRecipeCategory<DistillingRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DistillingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, recipe.getItemsIn().get(0));
-        int offset = 0;
+        int offset = 20;
         for (ItemStack i : recipe.getItemsIn()) {
-            if (offset != 0)
-                builder.addSlot(RecipeIngredientRole.INPUT, 50, offset).addIngredient(VanillaTypes.ITEM_STACK, i);
+            // Special case "container" items. Will break if multiple stacks are present.
+            // Should probably be a tag check.
+            if (i.is(EItems.CLAY_JAR.get())) {
+                builder.addSlot(RecipeIngredientRole.INPUT, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, i);
+                continue;
+            }
+            builder.addSlot(RecipeIngredientRole.INPUT, 50, offset).addIngredient(VanillaTypes.ITEM_STACK, i);
             offset += 20;
         }
         offset = 0;

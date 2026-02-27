@@ -37,6 +37,7 @@ public class DataGenerators {
 		gen.addProvider(true, new EBiomeTagProvider(output, provider, fileHelper));
 		gen.addProvider(true, new EDamageTypeTagProvider(output, provider, fileHelper));
 		gen.addProvider(true, new ERecipeProvider(output, provider));
+		gen.addProvider(true, new ECompostMapProvider(output, provider));
 
 		// Assets
 		gen.addProvider(true, new BlockstateProvider(output, fileHelper));

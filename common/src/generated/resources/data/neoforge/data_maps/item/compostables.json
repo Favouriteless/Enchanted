@@ -1,0 +1,34 @@
+{
+  "values": {
+    "enchanted:belladonna_flower": {
+      "chance": 0.65
+    },
+    "enchanted:belladonna_seeds": {
+      "chance": 0.3
+    },
+    "enchanted:garlic": {
+      "chance": 0.45
+    },
+    "enchanted:mandrake_root": {
+      "chance": 0.65
+    },
+    "enchanted:mandrake_seeds": {
+      "chance": 0.3
+    },
+    "enchanted:snowbell_seeds": {
+      "chance": 0.3
+    },
+    "enchanted:water_artichoke": {
+      "chance": 0.65
+    },
+    "enchanted:water_artichoke_seeds": {
+      "chance": 0.3
+    },
+    "enchanted:wolfsbane_flower": {
+      "chance": 0.65
+    },
+    "enchanted:wolfsbane_seeds": {
+      "chance": 0.3
+    }
+  }
+}

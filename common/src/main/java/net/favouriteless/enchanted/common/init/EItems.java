@@ -251,6 +251,7 @@ public class EItems {
 	}
 
 	public static void registerCompostables() {
+		// See ECompostMapProvider in data generation for Neoforge registration, as Neoforge does not use this map
 		ComposterBlock.COMPOSTABLES.put(WATER_ARTICHOKE_SEEDS.get(), 0.3F);
 		ComposterBlock.COMPOSTABLES.put(WATER_ARTICHOKE.get(), 0.65F);
 		ComposterBlock.COMPOSTABLES.put(SNOWBELL_SEEDS.get(), 0.3F);

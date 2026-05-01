@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Favouriteless/Enchanted/refs/heads/1.21.1/.github/resources/mod_pages/title_banner.png" alt="Enchanted banner"/>
+  <img src="https://i.imgur.com/J0pKkKr.png" alt="Enchanted banner"/>
 </p>
 <p align="center">
     <a href="https://discord.gg/UkVgJ9nb5y">
@@ -26,7 +26,7 @@ Enchanted provides several distinct and unique branches of magic for witches to 
 - **Poppetry** - Create poppets to protect yourself from death or make a voodoo doll of your friends.
 
 <p>
-    <img src="https://raw.githubusercontent.com/Favouriteless/Enchanted/refs/heads/1.21.1/.github/resources/mod_pages/rites_banner.png" alt="Circle magic image"/>
+    <img src="https://i.imgur.com/2Up42Gi.png" alt="Circle magic image"/>
 </p>
 
 # Getting Started
@@ -48,6 +48,6 @@ Enchanted is the product of thousands of hours of development and made possible 
 - **Can you add X thing?** - Feel free to leave suggestions on the discord. I read and consider all feedback.
 - **Will you backport content?** - If I add new content on a version it will not be backported. Sometimes a community member decides to backport it themselves (thanks ACCBDD!) and I'll merge it officially and provide bugfixes, but I don't usually backport anything myself.
 
-![Banner of a player riding a broomstick](https://raw.githubusercontent.com/Favouriteless/Enchanted/refs/heads/1.21.1/.github/resources/mod_pages/broom_banner.png)
+![Banner of a player riding a broomstick](https://i.imgur.com/NN4DFkA.png)
 
 ### Huge credits to Emoniph and his Witchery mod for inspiring this project. Please check out the original.

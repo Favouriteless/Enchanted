@@ -36,7 +36,8 @@ public class ProtectionRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        super.onStart(params);
+        if(!super.onStart(params))
+            return false;
 
         Block block = blocksPlayers ? EBlocks.PROTECTION_BARRIER_BLOCKING.get() : EBlocks.PROTECTION_BARRIER.get();
         generateSphere(targetLevel, targetPos, state -> {

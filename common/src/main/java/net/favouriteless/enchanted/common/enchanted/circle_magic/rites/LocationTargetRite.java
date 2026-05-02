@@ -21,8 +21,8 @@ public abstract class LocationTargetRite extends Rite {
     protected boolean onStart(RiteParams params) {
         findTargetLocation(params);
         if(targetLevel == null || targetPos == null)
-            cancel();
-        return false;
+            return cancel();
+        return true;
     }
 
     protected void findTargetLocation(RiteParams params) {

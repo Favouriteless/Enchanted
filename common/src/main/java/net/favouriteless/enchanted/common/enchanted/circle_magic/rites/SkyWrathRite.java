@@ -17,7 +17,8 @@ public class SkyWrathRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        super.onStart(params);
+        if(!super.onStart(params))
+            return false;
 
         targetLevel.sendParticles(EParticleTypes.SKY_WRATH_SEED.get(),
                 pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D,

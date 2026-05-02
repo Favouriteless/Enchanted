@@ -17,7 +17,9 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        super.onStart(params);
+        if(!super.onStart(params))
+            return false;
+
         Entity transposee = getTransposee(params);
         if(transposee == null)
             return cancel();

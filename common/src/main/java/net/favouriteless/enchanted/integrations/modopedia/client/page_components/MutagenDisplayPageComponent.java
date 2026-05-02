@@ -19,6 +19,7 @@ import net.favouriteless.modopedia.api.book.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.favouriteless.modopedia.client.multiblock.DenseMultiblock;
 import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
+import net.favouriteless.modopedia.client.multiblock.render.MultiblockRenderer;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
 import net.favouriteless.modopedia.client.page_widgets.PageImageButton;
 import net.favouriteless.modopedia.platform.ClientServices;
@@ -84,13 +85,13 @@ public class MutagenDisplayPageComponent extends PageComponent {
                                 new DenseMultiblock(
                                         List.of(List.of("m")),
                                         Map.of('m', new SimpleStateMatcher(List.of(mutee)))
-                                ), level
+                                ), level.dimension()
                         ),
                         set.mutagens().stream().map(b -> new PlacedMultiblock(
                                 new DenseMultiblock(
                                         List.of(List.of("m")),
                                         Map.of('m', new SimpleStateMatcher(List.of(getState(b))))
-                                ), level)
+                                ), level.dimension())
                         ).toList(),
                         set.weight(),
                         set.extremis()
@@ -223,45 +224,9 @@ public class MutagenDisplayPageComponent extends PageComponent {
         pose.mulPose(Axis.YP.rotationDegrees((context.getTicks() + partialTicks) / 2.0F));
         pose.translate(-0.5F, -0.5F, -0.5F);
 
-        renderBlock(multiblock, pose, bufferSource, partialTicks);
-        renderBlockEntity(multiblock, pose, bufferSource, partialTicks);
+        MultiblockRenderer.render(multiblock, pose, bufferSource, partialTicks);
 
         pose.popPose();
-    }
-
-    protected void renderBlock(PlacedMultiblock multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
-        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
-        BlockState state = multiblock.getBlockState(BlockPos.ZERO);
-        if(state.getRenderShape() != RenderShape.MODEL)
-            return;
-
-        pose.pushPose();
-        for(RenderType type : ClientServices.PLATFORM.getRenderTypes(multiblock, BlockPos.ZERO, state)) {
-            VertexConsumer buffer = bufferSource.getBuffer(type);
-
-            Vec3 offset = state.getOffset(multiblock, BlockPos.ZERO);
-            pose.translate(-offset.x, -offset.y, -offset.z);
-
-            dispatcher.renderBatched(state, BlockPos.ZERO, multiblock, pose, buffer, false, RANDOM);
-        }
-        pose.popPose();
-    }
-
-    protected void renderBlockEntity(PlacedMultiblock multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
-        Minecraft mc = Minecraft.getInstance();
-
-        BlockEntity be = multiblock.getBlockEntity(BlockPos.ZERO);
-        if(be == null)
-            return;
-
-        be.setLevel(mc.level);
-
-        try {
-            BlockEntityRenderer<BlockEntity> renderer = mc.getBlockEntityRenderDispatcher().getRenderer(be);
-            if(renderer != null)
-                renderer.render(be, partialTicks, pose, bufferSource, 0xF000F0, OverlayTexture.NO_OVERLAY);
-        }
-        catch(Exception ignored) {}
     }
 
     protected void changeImage(int by) {

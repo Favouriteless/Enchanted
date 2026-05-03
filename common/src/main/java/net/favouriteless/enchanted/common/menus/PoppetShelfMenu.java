@@ -21,23 +21,25 @@ public class PoppetShelfMenu extends AbstractContainerMenu {
 	public PoppetShelfMenu(int id, Inventory playerInventory, PoppetShelfBlockEntity be) {
 		super(EMenuTypes.POPPET_SHELF.get(), id);
 
+        /* Typically you would use a dummy container on the client, but because the items are rendered in-world it's
+         * better to grab the BE so we don't have to sync changes again.*/
 		for(int i = 0; i < be.getInventory().getContainerSize(); i++)
 			addSlot(new PoppetSlot(be.getInventory(), i, 47 + i*22, 18));
 
-		for (int y = 0; y < 3; y++) { // Main Inventory
-			for (int x = 0; x < 9; x++) {
+		for(int y = 0; y < 3; y++) { // Main Inventory
+			for(int x = 0; x < 9; x++) {
 				addSlot(new Slot(playerInventory, x + (y * 9) + 9, 8 + (x * 18), 49 + (y * 18)));
 			}
 		}
-		for (int x = 0; x < 9; x++) { // Hotbar
+		for(int x = 0; x < 9; x++) { // Hotbar
 			addSlot(new Slot(playerInventory, x, 8 + (18 * x), 49 + 58));
 		}
 
 		this.containerAccess = ContainerLevelAccess.create(be.getLevel(), be.getBlockPos());
 	}
 
-	public PoppetShelfMenu(int id, Inventory playerInventory, BlockPos pos) {
-		this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, pos, PoppetShelfBlockEntity.class));
+	public PoppetShelfMenu(int id, Inventory inventory, BlockPos pos) {
+		this(id, inventory, MenuUtils.getBlockEntity(inventory, pos, PoppetShelfBlockEntity.class));
 	}
 
 	@Override
@@ -74,6 +76,8 @@ public class PoppetShelfMenu extends AbstractContainerMenu {
 		return stillValid(containerAccess, player, EBlocks.POPPET_SHELF.get());
 	}
 
+
+
 	public static class PoppetSlot extends Slot {
 
 		public PoppetSlot(Container container, int index, int x, int y) {
@@ -84,6 +88,7 @@ public class PoppetShelfMenu extends AbstractContainerMenu {
 		public boolean mayPlace(ItemStack itemStack) {
 			return itemStack.getItem() instanceof PoppetItem;
 		}
+
 	}
 
 }

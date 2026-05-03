@@ -1082,7 +1082,7 @@ public class EContentSetProvider extends ContentSetProvider {
 
         spinningEntry(output, "Fire", FormattedStringBuilder.begin()
                         .then("When the beneficiary burns to death, they will instead remain at one health and the fire will be extinguished.")
-                        .paragraph("If infused, fire poppets also grant ten seconds of fire resistance.").toString(),
+                        .paragraph("If infused, fire poppets also grant thirty seconds of fire resistance.").toString(),
                 EItems.FIRE_POPPET.get(), EItems.FIRE_POPPET_INFUSED.get(), EItems.FIRE_POPPET_STURDY.get());
 
         spinningEntry(output, "Hunger", FormattedStringBuilder.begin()
@@ -1139,7 +1139,7 @@ public class EContentSetProvider extends ContentSetProvider {
     }
 
     /**
-     * The first item should be the one the recipe is for. The others are just linked to the page.
+     * The first stack should be the one the recipe is for. The others are just linked to the page.
      */
     private void craftingEntry(BookContentOutput output, String title, String description, Item item, Item... items) {
         headeredTextEntry(title, description, items)

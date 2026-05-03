@@ -1,10 +1,11 @@
 package net.favouriteless.enchanted.common.blocks;
 
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfManager;
+import net.favouriteless.enchanted.common.enchanted.poppet.shelf.PoppetShelfManager;
 import net.favouriteless.enchanted.common.util.ItemUtils;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -27,42 +28,36 @@ public class PoppetShelfBlock extends EBaseEntityBlock<PoppetShelfBlock> {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new PoppetShelfBlockEntity(pos, state);
-	}
-
-	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
-	}
-
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPE;
-	}
-
-	@Override
 	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if(!level.isClientSide) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if(blockEntity instanceof PoppetShelfBlockEntity be)
-				EServices.PLATFORM.openMenu((ServerPlayer)player, be, pos, BlockPos.STREAM_CODEC);
-		}
+		if(!level.isClientSide && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity be)
+            EServices.PLATFORM.openMenu((ServerPlayer)player, be, pos, BlockPos.STREAM_CODEC);
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-		if(state.getBlock() != newState.getBlock()) {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
-			if(blockEntity instanceof PoppetShelfBlockEntity) {
-				PoppetShelfBlockEntity shelf = (PoppetShelfBlockEntity) blockEntity;
-				if(!world.isClientSide)
-					ItemUtils.dropContentsNoChange(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), shelf.getInventory());
-				PoppetShelfManager.removeShelf(shelf);
-			}
-			super.onRemove(state, world, blockPos, newState, isMoving);
-		}
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        super.onRemove(state, level, pos, newState, isMoving);
+        if(state.is(newState.getBlock())) return;
+
+        if(level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity shelf) {
+            ItemUtils.dropContentsNoChange(level, pos.getX(), pos.getY(), pos.getZ(), shelf.getInventory());
+            PoppetShelfManager.get(serverLevel).remove(serverLevel, pos);
+        }
 	}
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PoppetShelfBlockEntity(pos, state);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
 
 }

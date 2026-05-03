@@ -14,6 +14,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +42,7 @@ public class RiteType implements Comparable<RiteType> {
             Codec.INT.optionalFieldOf("tick_power", 0).forGetter(r -> r.tickPower),
             RiteWeatherRequirement.CODEC.optionalFieldOf("weather", RiteWeatherRequirement.NONE).forGetter(r -> r.weather),
             Codec.pair(Codec.INT, Codec.INT).optionalFieldOf("time", Pair.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
+            ResourceKey.codec(Registries.DIMENSION).listOf().optionalFieldOf("dimensions", List.of()).forGetter(r -> r.dimensions),
             RiteFactory.codec().fieldOf("factory").forGetter(r -> r.factory)
     ).apply(instance, RiteType::new));
 
@@ -51,12 +54,14 @@ public class RiteType implements Comparable<RiteType> {
     private final RiteFactory factory;
     private final RiteWeatherRequirement weather;
     private final Pair<Integer, Integer> timeRange;
+    private final List<ResourceKey<Level>> dimensions;
 
     private final List<Vec2i> interiorPoints = new ArrayList<>();
     private int radius = 1;
 
     public RiteType(List<ItemStack> items, Map<Holder<CircleMagicShape>, Block> shapes, List<EntityType<?>> entities,
-                    int power, int tickPower, RiteWeatherRequirement weather, Pair<Integer, Integer> timeRange, RiteFactory factory) {
+                    int power, int tickPower, RiteWeatherRequirement weather, Pair<Integer, Integer> timeRange,
+                    List<ResourceKey<Level>> dimensions, RiteFactory factory) {
         this.items = items;
         this.shapes = shapes;
         this.entities = entities;
@@ -64,6 +69,7 @@ public class RiteType implements Comparable<RiteType> {
         this.tickPower = tickPower;
         this.weather = weather;
         this.timeRange = timeRange;
+        this.dimensions = dimensions;
         this.factory = factory;
 
         shapes.keySet().stream().map(Holder::value).forEach(shape -> {
@@ -75,6 +81,8 @@ public class RiteType implements Comparable<RiteType> {
 
 
     public boolean matches(Level level, BlockPos pos, List<Entity> inputs) {
+        if(!dimensions.isEmpty() && !dimensions.contains(level.dimension()))
+            return false;
         if(!weather.check(level))
             return false;
 
@@ -114,7 +122,7 @@ public class RiteType implements Comparable<RiteType> {
     }
 
     /**
-     * @return A copy of this RiteRequirements' item list.
+     * @return A copy of this RiteRequirements' stack list.
      */
     public List<ItemStack> getItems() {
         return items.stream().map(ItemStack::copy).collect(Collectors.toList());

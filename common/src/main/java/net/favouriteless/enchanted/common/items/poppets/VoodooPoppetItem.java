@@ -1,18 +1,14 @@
 package net.favouriteless.enchanted.common.items.poppets;
 
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetHelper;
 import net.favouriteless.enchanted.common.entities.VoodooItemEntity;
-import net.favouriteless.enchanted.common.init.EDamageTypes;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
-import net.favouriteless.enchanted.common.init.EItems;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,29 +26,8 @@ public class VoodooPoppetItem extends PoppetItem {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if(PoppetUtils.isBound(stack) && entity instanceof Player player) {
-            ItemStack offHand = player.getOffhandItem();
-
-            if(offHand.getItem() == EItems.BONE_NEEDLE.get() || offHand.getItem() == EItems.ICY_NEEDLE.get()) {
-                if(PoppetUtils.isBound(stack)) {
-                    if(level instanceof ServerLevel serverLevel) {
-                        ServerPlayer target = PoppetUtils.getBoundPlayer(stack, serverLevel);
-                        if(target != null && !target.isCreative() && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)player, stack)) {
-                            target.hurt(EDamageTypes.source(level, EDamageTypes.VOODOO, player), 2.0F);
-                            stack.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
-                            offHand.shrink(1);
-                        }
-                    }
-                }
-            }
-            else if(level instanceof ServerLevel serverLevel) {
-                ServerPlayer target = PoppetUtils.getBoundPlayer(stack, serverLevel);
-                if(target != null && !target.isCreative() && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)player, stack)) {
-                    target.addDeltaMovement(player.getLookAngle().normalize().scale(1.0D));
-                    target.hurtMarked = true;
-                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-                }
-            }
+        if(PoppetHelper.isBound(stack) && entity instanceof ServerPlayer user) {
+            // TODO: Voodoo & voodoo protection implementation
         }
         return super.finishUsingItem(stack, level, entity);
     }
@@ -61,7 +36,7 @@ public class VoodooPoppetItem extends PoppetItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getMainHandItem();
-            if(PoppetUtils.isBound(stack)) {
+            if(PoppetHelper.isBound(stack)) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }
@@ -71,16 +46,16 @@ public class VoodooPoppetItem extends PoppetItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        if(PoppetUtils.isBound(stack))
-            tooltip.add(Component.literal(PoppetUtils.getBoundName(stack)).withStyle(ChatFormatting.RED));
+        if(PoppetHelper.isBound(stack))
+            tooltip.add(Component.literal(PoppetHelper.getData(stack).name()).withStyle(ChatFormatting.RED));
     }
 
-    // This overrides an IForgeItem method.
+    // Soft implements NeoForge's IItemExtension#hasCustomEntity
     public boolean hasCustomEntity(ItemStack stack) {
         return true;
     }
 
-    // This overrides an IForgeItem method.
+    // Soft implements NeoForge's IItemExtension#createEntity
     public Entity createEntity(Level level, Entity item, ItemStack stack) {
         VoodooItemEntity voodoo = new VoodooItemEntity(EEntityTypes.VOODOO_ITEM.get(), level);
         voodoo.setPos(item.position());
@@ -90,6 +65,13 @@ public class VoodooPoppetItem extends PoppetItem {
         if(item instanceof ItemEntity itemEntity && itemEntity.getOwner() != null)
             voodoo.setThrower(itemEntity.getOwner());
         return voodoo;
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        if(PoppetHelper.isBound(stack))
+            return Component.translatable(getDescriptionId(stack)).withStyle(ChatFormatting.RED);
+        return super.getName(stack);
     }
 
 }

@@ -198,7 +198,7 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     /**
-     * Remove an item from the result stack and check if the kettle should be reset or updated.
+     * Remove an stack from the result stack and check if the kettle should be reset or updated.
      *
      * @param simulate If true, an output will be simulated without any changes.
      *
@@ -215,7 +215,7 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     /**
-     * Remove an item from the result stack WITHOUT checking if the kettle needs to be reset or updated. Used by the
+     * Remove an stack from the result stack WITHOUT checking if the kettle needs to be reset or updated. Used by the
      * storage wrapper on Fabric.
      *
      * @param simulate If true, an output will be simulated without any changes.

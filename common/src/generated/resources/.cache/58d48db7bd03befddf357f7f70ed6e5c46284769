@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-19T01:43:06.1118246	Tags for minecraft:block mod id enchanted
+// 1.21.1	2025-09-23T22:54:39.8223982	Tags for minecraft:block mod id enchanted
 ecb125cfed15964e52ec0bb787bb3dab40a6b4ea data/c/tags/block/stripped_logs.json
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/block/alder_logs.json
 69c396cb051bbe9a130e6979b67065e5041b179d data/enchanted/tags/block/blight_decayable_blocks.json
@@ -36,6 +36,7 @@ b1bf603e14a40fa231fcff7776962ebc9b20d72e data/enchanted/tags/block/rowan_logs.js
 a63c9ec100ada9b80c9c27ba66474b9ccdaff9ef data/minecraft/tags/block/fences.json
 db79e7fde09cdd640b1b64f690b5471b2911d128 data/minecraft/tags/block/fence_gates.json
 115f6d9fa2c6915eed7935e8b664a6a502fc0624 data/minecraft/tags/block/leaves.json
+6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/block/logs.json
 6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/block/logs_that_burn.json
 15f25336a7876d1c20a793265f7774f0f87273bf data/minecraft/tags/block/mineable/axe.json
 65016d2c23aaa1f7f03bf7d3a5c6026f533af162 data/minecraft/tags/block/mineable/hoe.json

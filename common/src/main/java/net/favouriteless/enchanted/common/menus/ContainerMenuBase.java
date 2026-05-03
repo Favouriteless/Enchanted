@@ -8,12 +8,12 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.Block;
 
-public abstract class MenuBase<T extends ContainerBlockEntityBase> extends AbstractContainerMenu {
+public abstract class ContainerMenuBase<T extends ContainerBlockEntityBase> extends AbstractContainerMenu {
 
 	protected final T blockEntity;
 	protected final Block block;
 
-	protected MenuBase(MenuType<?> type, int id, T blockEntity, Block block) {
+	protected ContainerMenuBase(MenuType<?> type, int id, T blockEntity, Block block) {
 		super(type, id);
 		this.block = block;
 		this.blockEntity = blockEntity;

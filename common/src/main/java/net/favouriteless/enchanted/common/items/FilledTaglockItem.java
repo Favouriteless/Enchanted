@@ -12,9 +12,9 @@ import net.minecraft.world.item.UseAnim;
 import java.util.List;
 import java.util.UUID;
 
-public class TaglockFilledItem extends Item {
+public class FilledTaglockItem extends Item {
 
-    public TaglockFilledItem(Properties properties) {
+    public FilledTaglockItem(Properties properties) {
         super(properties);
     }
 

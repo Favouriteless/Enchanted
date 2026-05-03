@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,9 +19,9 @@ public class PoppetAnimation {
 	private final ItemStack item;
 	protected int ticks;
 
-	public PoppetAnimation(ItemStack item, int ticks) {
-		this.item = item;
-		this.ticks = ticks;
+	public PoppetAnimation(Item item) {
+		this.item = new ItemStack(item);
+		this.ticks = DURATION;
 	}
 
 	public void render(PoseStack poseStack, float partialTicks, int width, int height) {
@@ -56,15 +57,6 @@ public class PoppetAnimation {
 
 		poseStack.popPose();
 		bufferSource.endBatch();
-	}
-
-
-	public ItemStack getItem() {
-		return item;
-	}
-
-	public int getTicks() {
-		return ticks;
 	}
 
 	public void tick() {

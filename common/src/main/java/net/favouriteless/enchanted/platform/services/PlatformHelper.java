@@ -13,8 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 public interface PlatformHelper {
 
-    String getPlatformName();
-
+    /**
+     * @return True if a mod with the given ID is loaded
+     */
     boolean isModLoaded(String modId);
 
     boolean isDevelopmentEnvironment();
@@ -28,8 +29,7 @@ public interface PlatformHelper {
      * @param data The data to be passed to the menu.
      * @param codec The codec used to encode the data.
      */
-    <T> void openMenu(ServerPlayer player, MenuProvider provider,
-                      T data, StreamCodec<? super RegistryFriendlyByteBuf, T> codec);
+    <T> void openMenu(ServerPlayer player, MenuProvider provider, T data, StreamCodec<? super RegistryFriendlyByteBuf, T> codec);
 
     /**
      * Open a {@link AbstractContainerMenu} for a {@link BlockEntity}, the {@link BlockPos} of the entity will be written to the buffer

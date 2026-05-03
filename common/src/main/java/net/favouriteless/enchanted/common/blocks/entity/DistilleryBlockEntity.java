@@ -225,7 +225,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
         boolean matching = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, inventory.get(index));
         inventory.set(index, stack);
 
-        if(index < 3 && !matching) { // If the item changed was one of the inputs, recalculate.
+        if(index < 3 && !matching) { // If the stack changed was one of the inputs, recalculate.
             cookDuration = getTotalCookTime(level, this);
             cookProgress = 0;
             setChanged();

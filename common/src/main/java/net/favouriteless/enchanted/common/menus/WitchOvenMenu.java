@@ -22,7 +22,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class WitchOvenMenu extends MenuBase<WitchOvenBlockEntity> {
+public class WitchOvenMenu extends ContainerMenuBase<WitchOvenBlockEntity> {
 
     private final ContainerData data;
 

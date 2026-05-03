@@ -139,6 +139,8 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
                 .addTag(ETags.Blocks.FENCE_GATES);
         tag(BlockTags.LEAVES)
                 .addTag(ETags.Blocks.LEAVES);
+        tag(BlockTags.LOGS)
+                .addTag(ETags.Blocks.LOGS);
         tag(BlockTags.LOGS_THAT_BURN)
                 .addTag(ETags.Blocks.LOGS);
         tag(BlockTags.PLANKS)

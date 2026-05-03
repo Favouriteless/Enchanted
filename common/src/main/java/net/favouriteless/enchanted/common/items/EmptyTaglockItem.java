@@ -88,7 +88,7 @@ public class EmptyTaglockItem extends Item {
                     BedTaglockSavedData data = BedTaglockSavedData.get(level);
                     BedTaglockData entry = data.getEntry(bed);
 
-                    if(entry == null)
+                    if(entry == null || entry.getData() == null)
                         return InteractionResult.CONSUME;
 
                     fillTaglock(context.getPlayer(), context.getItemInHand(), entry.getData());

@@ -129,7 +129,7 @@ public class WitchOvenBlockEntity extends ContainerBlockEntityBase implements Me
     }
 
     /**
-     * Create the result for a smelting recipe. Does not check if item can fit.
+     * Create the result for a smelting recipe. Does not check if stack can fit.
      */
     private void burn(@NotNull RecipeHolder<SmeltingRecipe> recipe) {
         ItemStack input = getInput();

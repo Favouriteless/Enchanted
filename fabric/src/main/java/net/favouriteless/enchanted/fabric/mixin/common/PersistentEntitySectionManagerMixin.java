@@ -15,7 +15,7 @@ public class PersistentEntitySectionManagerMixin<T extends EntityAccess> {
 
     @Inject(method="addEntity", at=@At("HEAD"), cancellable = true)
     private void addEntity(T e, boolean worldGenSpawned, CallbackInfoReturnable<Boolean> cir) {
-        if(e instanceof Entity entity && entity.getClass().equals(ItemEntity.class)) {
+        if(e instanceof Entity entity && entity.getClass().equals(ItemEntity.class)) { // Class compare because we do not want to trigger on subclasses
             if(((ItemEntity)entity).getItem().getItem() == EItems.VOODOO_POPPET.get()) {
                 entity.level().addFreshEntity(EItems.VOODOO_POPPET.get().createEntity(entity.level(), entity, ((ItemEntity)entity).getItem()));
                 cir.setReturnValue(false);

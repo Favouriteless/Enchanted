@@ -19,25 +19,25 @@ public class AltarStateObserver extends StateObserver {
 
     @Override
     protected void handleChanges() {
-        if(!getLevel().isClientSide) {
-            if(getLevel().getBlockEntity(getPos()) instanceof AltarBlockEntity altar) { // Only apply this StateObserver to altars.
+        if(getLevel().isClientSide)
+            return;
 
-                for(StateChange change : getChangeSet().getChanges()) { // For all changes
-                    if(!altar.posWithinRange(change.pos()))
-                        continue;
-                    if(change.oldState().is(change.newState().getBlock()))
-                        continue;
+        if(getLevel().getBlockEntity(getPos()) instanceof AltarBlockEntity altar) {
+            for(StateChange change : getChangeSet().getChanges()) {
+                if(!altar.posWithinRange(change.pos()))
+                    continue;
+                if(change.oldState().is(change.newState().getBlock()))
+                    continue;
 
-                    if(getLevel().getBlockEntity(change.pos()) instanceof PowerConsumer consumer)
-                        consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this Altar if present.
+                if(getLevel().getBlockEntity(change.pos()) instanceof PowerConsumer consumer)
+                    consumer.getPosHolder().add(getPos()); // Subscribe power consumer to this altar if present.
 
-                    altar.removeBlock(change.oldState().getBlock());
-                    altar.addBlock(change.newState().getBlock());
+                altar.removeBlock(change.oldState().getBlock());
+                altar.addBlock(change.newState().getBlock());
 
-                    if(altar.posIsUpgrade(change.pos())) {
-                        altar.removeUpgrade(change.oldState().getBlock());
-                        altar.addUpgrade(change.newState().getBlock());
-                    }
+                if(altar.posIsUpgrade(change.pos())) {
+                    altar.removeUpgrade(change.oldState().getBlock());
+                    altar.addUpgrade(change.newState().getBlock());
                 }
             }
         }

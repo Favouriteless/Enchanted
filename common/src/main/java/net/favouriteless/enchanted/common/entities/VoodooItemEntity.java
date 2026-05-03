@@ -1,8 +1,10 @@
 package net.favouriteless.enchanted.common.entities;
 
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUtils;
+import net.favouriteless.enchanted.common.enchanted.poppet.PoppetHelper;
+import net.favouriteless.enchanted.common.util.EntityUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -33,42 +35,47 @@ public class VoodooItemEntity extends ItemEntity {
     @Override
     public void tick() {
         super.tick();
-        if(level() instanceof ServerLevel level && PoppetUtils.isBound(getItem())) {
+        if(level() instanceof ServerLevel level && PoppetHelper.isBound(getItem())) {
             ItemStack item = getItem();
-            ServerPlayer target = PoppetUtils.getBoundPlayer(item, level);
+            ServerPlayer owner = ((ServerPlayer)getOwner());
+            ServerPlayer target = EntityUtils.tryFindPlayer(level, PoppetHelper.getData(item).uuid()); // Not NPE, we already checked
 
-            if(target != null) {
-                if(isInWaterOrBubble())
-                    ++underWaterTicks;
-                else
-                    underWaterTicks = 0;
+            if(target == null)
+                return;
 
-                if(underWaterTicks > 20 && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)getOwner(), item) && target.hurt(level.damageSources().drown(), 1.0F))
-                    hurt(1);
-                else if(isInLava() && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)getOwner(), item) && target.hurt(level.damageSources().lava(), 4.0F)) {
-                    target.igniteForSeconds(15);
-                    hurt(4);
-                }
-                else if(level.getBlockState(blockPosition()).is(Blocks.FIRE) && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)getOwner(), item) && target.hurt(level.damageSources().inFire(), 1)) {
-                    if(target.getRemainingFireTicks() < 0)
-                        target.igniteForSeconds(8.0F);
-                    target.setRemainingFireTicks(target.getRemainingFireTicks() + 1);
-                }
-                else if(level.getBlockState(blockPosition()).is(Blocks.SOUL_FIRE) && PoppetUtils.tryVoodooPlayer(target, (ServerPlayer)getOwner(), item) && target.hurt(level.damageSources().inFire(), 2)) {
-                    if(target.getRemainingFireTicks() < 0)
-                        target.igniteForSeconds(8.0F);
-                    target.setRemainingFireTicks(target.getRemainingFireTicks() + 1);
-                }
+            if(isInWaterOrBubble())
+                ++underWaterTicks;
+            else
+                underWaterTicks = 0;
 
+            if(underWaterTicks > 20 && tryHurt(owner, target, level.damageSources().drown(), 1)) {
+            }
+            else if(isInLava() && tryHurt(owner, target, level.damageSources().lava(), 4)) {
+                target.igniteForSeconds(15);
+            }
+            else if(level.getBlockState(blockPosition()).is(Blocks.FIRE) && tryHurt(owner, target, level.damageSources().inFire(), 1) ||
+                    level.getBlockState(blockPosition()).is(Blocks.SOUL_FIRE) && tryHurt(owner, target, level.damageSources().inFire(), 2)
+            ) {
+                if(target.getRemainingFireTicks() < 0)
+                    target.igniteForSeconds(8.0F);
+                target.setRemainingFireTicks(target.getRemainingFireTicks() + 1);
             }
         }
+    }
+
+    public boolean tryHurt(ServerPlayer owner, ServerPlayer target, DamageSource source, int amount) {
+        if(PoppetHelper.tryUseVoodoo(owner, target, getItem()) && target.hurt(source, amount)) {
+            hurt(amount);
+            return true;
+        }
+        return false;
     }
 
     public void hurt(int amount) {
         ItemStack item = getItem();
 
         if(level().isClientSide)
-            return;;
+            return;
 
         health = health - amount;
         item.setDamageValue(item.getMaxDamage() - health);

@@ -38,7 +38,7 @@ public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfMenu> 
 
     @Override
     protected void renderLabels(GuiGraphics gui, int x, int y) {
-        gui.drawString(font, title, (imageWidth / 2 - font.width(title) / 2), titleLabelY, Color.DARK_GRAY.getRGB(), false);
+        gui.drawString(font, title, (imageWidth / 2 - font.width(title) / 2), titleLabelY, 0x404040, false);
     }
 
 }

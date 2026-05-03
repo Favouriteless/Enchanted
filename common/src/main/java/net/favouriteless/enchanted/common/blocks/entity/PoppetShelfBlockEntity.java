@@ -1,17 +1,19 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
+import net.favouriteless.enchanted.common.enchanted.poppet.shelf.PoppetShelfInventory;
+import net.favouriteless.enchanted.common.enchanted.poppet.shelf.PoppetShelfManager;
 import net.favouriteless.enchanted.common.menus.PoppetShelfMenu;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfInventory;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -36,7 +38,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 	public void updateBlock() {
 		if(level != null && !level.isClientSide) {
 			BlockState state = level.getBlockState(worldPosition);
-			level.sendBlockUpdated(worldPosition, state, state, 2);
+			level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
 		}
 	}
 
@@ -53,9 +55,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 
 	@Override
 	public CompoundTag getUpdateTag(Provider registries) {
-		CompoundTag tag = new CompoundTag();
-		getInventory().save(tag, registries);
-		return tag;
+		return getInventory().save(registries);
 	}
 
 	/**
@@ -63,10 +63,10 @@ public class PoppetShelfBlockEntity extends BlockEntity implements MenuProvider 
 	 */
 	public PoppetShelfInventory getInventory() {
 		if(inventory == null) {
-			if(level.isClientSide)
-				inventory = new PoppetShelfInventory(level, worldPosition);
-			else
-				inventory = PoppetShelfManager.getInventoryFor(this);
+            if(level instanceof ServerLevel serverLevel)
+                inventory = PoppetShelfManager.get(serverLevel).getOrCreate(serverLevel, worldPosition);
+            else
+                inventory = PoppetShelfInventory.forClient();
 		}
 		return inventory;
 	}

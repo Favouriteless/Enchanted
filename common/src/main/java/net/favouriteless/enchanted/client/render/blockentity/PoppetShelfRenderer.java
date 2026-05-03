@@ -3,7 +3,7 @@ package net.favouriteless.enchanted.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.favouriteless.enchanted.common.blocks.entity.PoppetShelfBlockEntity;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetShelfInventory;
+import net.favouriteless.enchanted.common.enchanted.poppet.shelf.PoppetShelfInventory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -22,22 +22,24 @@ public class PoppetShelfRenderer implements BlockEntityRenderer<PoppetShelfBlock
             new Vector3f(0.3125F, 0.515F, 0.6875F)
     };
 
-    public PoppetShelfRenderer(Context context) {
-
-    }
+    public PoppetShelfRenderer(Context context) {}
 
     @Override
-    public void render(PoppetShelfBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        PoppetShelfInventory inventory = blockEntity.getInventory();
-        for(int i = 0; i < inventory.size(); i++) {
-            ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-            poseStack.pushPose();
-            poseStack.translate(ITEM_POS[i].x(), ITEM_POS[i].y(), ITEM_POS[i].z());
-            poseStack.mulPose(Axis.XP.rotationDegrees(90));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(90 * i));
-            poseStack.scale(0.3F, 0.3F, 0.3F);
-            renderer.renderStatic(inventory.get(i), ItemDisplayContext.FIXED, 15728880, OverlayTexture.NO_OVERLAY, poseStack, buffer, blockEntity.getLevel(), 0);
-            poseStack.popPose();
+    public void render(PoppetShelfBlockEntity shelf, float partialTicks, PoseStack pose, MultiBufferSource bufferSource, int light, int overlay) {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        PoppetShelfInventory inventory = shelf.getInventory();
+
+        for(int i = 0; i < inventory.getContainerSize(); i++) {
+            pose.pushPose();
+
+            pose.translate(ITEM_POS[i].x(), ITEM_POS[i].y(), ITEM_POS[i].z());
+            pose.mulPose(Axis.XP.rotationDegrees(90));
+            pose.mulPose(Axis.ZP.rotationDegrees(90 * i));
+            pose.scale(0.3F, 0.3F, 0.3F);
+
+            itemRenderer.renderStatic(inventory.getItem(i), ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, pose, bufferSource, shelf.getLevel(), 0);
+
+            pose.popPose();
         }
     }
 

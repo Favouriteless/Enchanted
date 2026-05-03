@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.client.particles;
 
-import net.favouriteless.enchanted.client.EParticleRenderTypes;
+import net.favouriteless.enchanted.client.init.EParticleRenderTypes;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
 import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.minecraft.client.multiplayer.ClientLevel;

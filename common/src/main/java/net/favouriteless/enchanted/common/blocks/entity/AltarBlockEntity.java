@@ -8,7 +8,7 @@ import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import net.favouriteless.enchanted.common.enchanted.altar.AltarPowerData;
 import net.favouriteless.enchanted.common.menus.AltarMenu;
 import net.favouriteless.enchanted.common.enchanted.stateobservers.AltarStateObserver;
-import net.favouriteless.enchanted.common.util.NonSettableContainerData;
+import net.favouriteless.enchanted.common.util.ImmutableContainerData;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
@@ -222,7 +222,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return new AltarMenu(id, this, new NonSettableContainerData() {
+        return new AltarMenu(id, this, new ImmutableContainerData() {
             @Override
             public int get(int index) {
                 return switch(index) {

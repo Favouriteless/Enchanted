@@ -13,11 +13,6 @@ import org.jetbrains.annotations.Nullable;
 public class NeoPlatformHelper implements PlatformHelper {
 
     @Override
-    public String getPlatformName() {
-        return "NeoForge";
-    }
-
-    @Override
     public boolean isModLoaded(String modId) {
         return ModList.get().isLoaded(modId);
     }

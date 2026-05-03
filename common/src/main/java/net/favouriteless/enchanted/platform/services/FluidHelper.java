@@ -23,6 +23,9 @@ public interface FluidHelper {
      */
     boolean tryItemInteraction(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult);
 
+    /**
+     * @return True if the given player is holding a fluid container in the given hand.
+     */
     boolean playerHoldingFluidContainer(Player player, InteractionHand hand);
 
 }

@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.client;
+package net.favouriteless.enchanted.client.init;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;

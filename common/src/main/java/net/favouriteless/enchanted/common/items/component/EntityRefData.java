@@ -3,10 +3,12 @@ package net.favouriteless.enchanted.common.items.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.favouriteless.enchanted.common.util.EntityUtils;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 
 import java.util.UUID;
 
@@ -23,8 +25,20 @@ public record EntityRefData(UUID uuid, String name) {
             EntityRefData::new
     );
 
-    public static EntityRefData of(@NotNull UUID uuid, @NotNull String name) {
+    public static EntityRefData of(UUID uuid, String name) {
         return new EntityRefData(uuid, name);
     }
+
+    /**
+     * Searches for the entity this {@link EntityRefData} is for across all levels.
+     *
+     * @param level any level.
+     *
+     * @return The matching entity if one was found, otherwise {@code null}.
+     */
+    public Entity tryGetEntity(ServerLevel level) {
+        return EntityUtils.tryGetEntity(level, uuid);
+    }
+
 
 }

@@ -31,11 +31,9 @@ public class CommonEventsNeo {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onArmourHurt(ArmorHurtEvent event) {
         event.getArmorMap().forEach((slot, entry) -> {
-            if(PoppetEvents.onArmourHurt(event.getEntity(), slot, entry.armorItemStack, entry.newDamage)) {
+            if(PoppetEvents.onArmourHurt(event.getEntity(), slot, entry.armorItemStack, entry.newDamage))
                 event.setCanceled(true);
-            }
-        }
-        );
+        });
     }
 
     @SubscribeEvent

@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.client.particles;
 
-import net.favouriteless.enchanted.client.EParticleRenderTypes;
+import net.favouriteless.enchanted.client.init.EParticleRenderTypes;
 import net.favouriteless.enchanted.client.particles.types.DelayedPosOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;

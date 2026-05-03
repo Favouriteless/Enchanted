@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.client.particles;
 
-import net.favouriteless.enchanted.client.EParticleRenderTypes;
+import net.favouriteless.enchanted.client.init.EParticleRenderTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;

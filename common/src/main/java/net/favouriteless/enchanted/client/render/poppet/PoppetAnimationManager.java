@@ -1,10 +1,9 @@
 package net.favouriteless.enchanted.client.render.poppet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.favouriteless.enchanted.common.enchanted.poppet.PoppetUseResult.ResultType;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -18,14 +17,12 @@ public class PoppetAnimationManager {
 	private static final Vector3f DIFFUSE_LIGHT_1 = Util.make(new Vector3f(-0.2F, 0.24F, 0.7F), Vector3f::normalize);
 
 	/**
-	 * Starts the corresponding animation for result with the given item
+	 * Starts the corresponding animation for result with the given stack
 	 * @param result
-	 * @param itemStack
+	 * @param item
 	 */
-	public static void startAnimation(ResultType result, ItemStack itemStack) {
-		switch(result) {
-			case SUCCESS, SUCCESS_BREAK -> startAnimation(new PoppetAnimation(itemStack, 120));
-		}
+	public static void startAnimation(Item item) {
+        startAnimation(new PoppetAnimation(item));
 	}
 
 	public static void startAnimation(PoppetAnimation animation) {

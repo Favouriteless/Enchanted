@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.client;
+package net.favouriteless.enchanted.client.init;
 
 import net.favouriteless.enchanted.client.particles.*;
 import net.favouriteless.enchanted.client.render.blockentity.KettleWaterRenderer;

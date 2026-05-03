@@ -16,7 +16,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class DistilleryMenu extends MenuBase<DistilleryBlockEntity> {
+public class DistilleryMenu extends ContainerMenuBase<DistilleryBlockEntity> {
 
     private final ContainerData data;
 

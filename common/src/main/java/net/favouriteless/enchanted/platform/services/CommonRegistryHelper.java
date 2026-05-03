@@ -81,11 +81,18 @@ public interface CommonRegistryHelper {
 
     /**
      * Register a non-synced datapack registry.
+     *
+     * @param key {@link ResourceKey} pointing to the registry.
+     * @param codec {@link Codec} for the objects the registry contains.
      */
     <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec);
 
     /**
      * Register a synced datapack registry.
+     *
+     * @param key {@link ResourceKey} pointing to the registry.
+     * @param codec {@link Codec} for the objects the registry contains.
+     * @param networkCodec Network {@link Codec} for the objects the registry contains.
      */
     <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec);
 

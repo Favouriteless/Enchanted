@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.neoforge.client;
 
 import net.favouriteless.enchanted.client.ClientConfig;
-import net.favouriteless.enchanted.client.ClientRegistry;
-import net.favouriteless.enchanted.client.EShaders;
+import net.favouriteless.enchanted.client.init.ClientRegistry;
+import net.favouriteless.enchanted.client.init.EShaders;
 import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import net.favouriteless.enchanted.common.Enchanted;

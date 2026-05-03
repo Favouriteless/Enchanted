@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class SpinningWheelMenu extends MenuBase<SpinningWheelBlockEntity> {
+public class SpinningWheelMenu extends ContainerMenuBase<SpinningWheelBlockEntity> {
 
 	private final ContainerData data;
 

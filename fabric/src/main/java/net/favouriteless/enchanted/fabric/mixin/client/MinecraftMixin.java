@@ -1,6 +1,6 @@
 package net.favouriteless.enchanted.fabric.mixin.client;
 
-import net.favouriteless.enchanted.client.ClientRegistry;
+import net.favouriteless.enchanted.client.init.ClientRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfig;
 import org.objectweb.asm.Opcodes;

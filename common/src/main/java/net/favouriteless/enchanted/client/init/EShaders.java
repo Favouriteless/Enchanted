@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.client;
+package net.favouriteless.enchanted.client.init;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;

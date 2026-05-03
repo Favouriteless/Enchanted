@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -26,8 +27,8 @@ public class NeoNetworkHelper implements NetworkHelper {
         final PayloadRegistrar registrar = event.registrar("1");
 
         clientPackets.forEach(r -> r.playClient(registrar));
-        serverPackets.forEach(r -> r.playClient(registrar));
-        bidirectionalPackets.forEach(r -> r.playClient(registrar));
+        serverPackets.forEach(r -> r.playServer(registrar));
+        bidirectionalPackets.forEach(r -> r.playBidirectional(registrar));
     }
 
     @Override
@@ -64,6 +65,11 @@ public class NeoNetworkHelper implements NetworkHelper {
     @Override
     public void sendToServer(CustomPacketPayload payload) {
         PacketDistributor.sendToServer(payload);
+    }
+
+    @Override
+    public void sendToTracking(CustomPacketPayload payload, Entity entity) {
+        PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
     }
 
     private record PayloadRegisterable<T extends CustomPacketPayload>(Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, PacketContext> handler) {

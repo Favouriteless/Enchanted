@@ -1,8 +1,7 @@
 package net.favouriteless.enchanted.fabric.mixin.client;
 
 import com.google.common.collect.ImmutableList;
-import net.favouriteless.enchanted.client.EParticleRenderTypes;
-import net.favouriteless.enchanted.client.EnchantedClient;
+import net.favouriteless.enchanted.client.init.EParticleRenderTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleRenderType;

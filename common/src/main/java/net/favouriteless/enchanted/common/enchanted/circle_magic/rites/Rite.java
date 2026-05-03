@@ -7,6 +7,7 @@ import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteManager;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
+import net.favouriteless.enchanted.common.util.EntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleOptions;
@@ -110,25 +111,20 @@ public abstract class Rite {
      * Perform a check on all players and all levels to find an Entity. The result of this check will be cached.
      */
     protected @Nullable Entity findEntity(UUID uuid) {
-        Entity out;
+        Entity entity;
 
         if(entityCache.containsKey(uuid)) { // Cache our entities first since we're usually trying to grab the same one anyway
-            out = entityCache.get(uuid).get();
-            if(out != null)
-                return out;
+            entity = entityCache.get(uuid).get();
+            if(entity != null)
+                return entity;
             entityCache.remove(uuid);
         }
 
-        out = level.getServer().getPlayerList().getPlayer(uuid);
-        if(out != null)
-            return cacheAndReturn(uuid, out);
+        entity = EntityUtils.tryGetEntity(level, uuid);
+        if(entity != null)
+            entityCache.put(uuid, new WeakReference<>(entity));
 
-        for(ServerLevel dim : level.getServer().getAllLevels()) {
-            out = dim.getEntity(uuid);
-            if(out != null)
-                return cacheAndReturn(uuid, out);
-        }
-        return null;
+        return entity;
     }
 
     /**
@@ -208,10 +204,6 @@ public abstract class Rite {
         return pos;
     }
 
-    private Entity cacheAndReturn(UUID uuid, Entity entity) {
-        entityCache.put(uuid, new WeakReference<>(entity));
-        return entity;
-    }
 
 
     public record BaseRiteParams(RiteType type, ServerLevel level, BlockPos pos, int tickPower) {}

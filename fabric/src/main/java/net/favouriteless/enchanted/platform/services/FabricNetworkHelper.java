@@ -11,7 +11,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +54,18 @@ public class FabricNetworkHelper implements NetworkHelper {
 
     @Override
     public void sendToAllPlayers(CustomPacketPayload payload, MinecraftServer server) {
-        server.getPlayerList().getPlayers().forEach(player -> ServerPlayNetworking.send(player, payload));
+        server.getPlayerList().broadcastAll(ServerPlayNetworking.createS2CPacket(payload));
     }
 
     @Override
     public void sendToServer(CustomPacketPayload payload) {
         ClientPlayNetworking.send(payload);
+    }
+
+    @Override
+    public void sendToTracking(CustomPacketPayload payload, Entity entity) {
+        if(entity.level().getChunkSource() instanceof ServerChunkCache cache)
+            cache.broadcast(entity, ServerPlayNetworking.createS2CPacket(payload));
     }
 
     public record ClientPayloadRegisterable<T extends CustomPacketPayload>(Type<T> type, BiConsumer<T, PacketContext> handler) {

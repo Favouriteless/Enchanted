@@ -106,7 +106,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
         "fabric-api",
         "stateobserver",
         "geckolib",
-        "forge-config-api-port-fabric",
+        "forge-config-api-port",
         "modopedia"
     )
 

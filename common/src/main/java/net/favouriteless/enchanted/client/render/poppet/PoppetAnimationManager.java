@@ -16,11 +16,6 @@ public class PoppetAnimationManager {
 	private static final Vector3f DIFFUSE_LIGHT_0 = Util.make(new Vector3f(0.2F, 0.24F, -0.7F), Vector3f::normalize);
 	private static final Vector3f DIFFUSE_LIGHT_1 = Util.make(new Vector3f(-0.2F, 0.24F, 0.7F), Vector3f::normalize);
 
-	/**
-	 * Starts the corresponding animation for result with the given stack
-	 * @param result
-	 * @param item
-	 */
 	public static void startAnimation(Item item) {
         startAnimation(new PoppetAnimation(item));
 	}

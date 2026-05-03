@@ -27,7 +27,7 @@ public class PoppetReference {
     /**
      * Attempt to consume the referenced poppet and notify clients about the changes.
      *
-     * @param server Server instance to grab {@link ServerLevel ServerLevels} from.
+     * @param player Player the poppet is activating for.
      * @param predicate Predicate to be run with the referenced poppet. If the item should be consumed/updated, return
      *                  true. The provided itemstack is a copy, treat it like a transaction.
      *

@@ -33,8 +33,8 @@ public class PoppetEvents {
         if(p instanceof ServerPlayer player) {
             PoppetHelper.tryTriggerAll(player, stack -> {
                 if(stack.getItem() instanceof ItemPoppetItem poppet && poppet.canProtect(item)) {
-                    poppet.protect(stack);
-                    player.setItemInHand(hand, stack);
+                    poppet.protect(item);
+                    player.setItemInHand(hand, item);
                     return true;
                 }
                 return false;

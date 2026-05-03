@@ -23,7 +23,11 @@ public class RestoreItemPoppetEffect implements ItemPoppetEffect {
 
     @Override
     public void protect(ItemStack stack) {
-        stack.setDamageValue(Mth.ceil(stack.getMaxDamage() * (1.0F - restoreMultiplier)));
+        int max = stack.getMaxDamage();
+        float f = 1.0F - restoreMultiplier;
+        int dur = Mth.floor(max * f);
+
+        stack.setDamageValue(dur);
     }
 
 }

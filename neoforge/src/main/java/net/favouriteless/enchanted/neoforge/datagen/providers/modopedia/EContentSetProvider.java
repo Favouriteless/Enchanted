@@ -835,9 +835,9 @@ public class EContentSetProvider extends ContentSetProvider {
                         HeaderedTextBuilder.of("Mutandis", FormattedStringBuilder.begin()
                                 .then("Using mutandis on a block will make it start ").bold("mutating")
                                 .then(", giving it a chance to turn into a different block based on nearby ")
-                                .bold("mutagens").then(".").toString()),
+                                .bold("mutagens").then(" after a few minutes.").toString()),
                         FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/mutation.png"))
-                                .x(10).y(75)
+                                .x(10).y(78)
                 )
                 .page(HeaderedTextBuilder.of("Mutagens", FormattedStringBuilder.begin()
                         .bold("Mutagens").then(" are the blocks a witch needs to place in the area surrounding a mutating plant. The more mutagens you place, the more likely it is for the plant to mutate.")
@@ -851,7 +851,7 @@ public class EContentSetProvider extends ContentSetProvider {
                 .icon(EItems.CIRCLE_TALISMAN.get().getDefaultInstance())
                 .page(
                         HeaderedTextBuilder.of("Performing Rites", FormattedStringBuilder.begin()
-                                .then("To perform circle magic, there are three basic steps a witch must follow; drawing the correct glyphs, adding foci and lastly, activating the rite.").toString()),
+                                .then("To perform circle magic, there are three basic steps a witch must follow; drawing glyphs of the correct colour, adding foci and lastly, activating the rite.").toString()),
                         FramedImageBuilder.of(Enchanted.id("textures/gui/modopedia/circle_magic.png")).x(10).y(80)
                 )
                 .page(
@@ -871,7 +871,7 @@ public class EContentSetProvider extends ContentSetProvider {
                         .boldEntryLink(itemPath(EItems.RITUAL_CHALK.get()), "ritual").then(", ")
                         .boldEntryLink(itemPath(EItems.NETHER_CHALK.get()), "infernal").then(" or ")
                         .boldEntryLink(itemPath(EItems.OTHERWHERE_CHALK.get()), "otherwhere").then(" chalk. ")
-                        .paragraph("Foci, such as items living sacrifices, should be placed within the circles.")
+                        .paragraph("Foci, such as items or living sacrifices, should be placed within the circles.")
                         .paragraph("When all requirements are met, the heart glyph can be activated.").toString())
                 )
                 .page(RitePageBuilder.of(Enchanted.id("charging_stone")))

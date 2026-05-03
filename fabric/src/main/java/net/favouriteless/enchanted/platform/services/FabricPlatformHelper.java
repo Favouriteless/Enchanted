@@ -19,11 +19,6 @@ import org.jetbrains.annotations.Nullable;
 public class FabricPlatformHelper implements PlatformHelper {
 
     @Override
-    public String getPlatformName() {
-        return "Fabric";
-    }
-
-    @Override
     public boolean isModLoaded(String modId) {
         return FabricLoader.getInstance().isModLoaded(modId);
     }

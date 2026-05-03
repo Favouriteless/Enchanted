@@ -109,7 +109,7 @@ public class PoppetHelper {
         return tryTriggerCarried(player, usePredicate) || tryTriggerShelved(player, usePredicate);
     }
 
-    public static boolean tryUseVoodoo(ServerPlayer attacker, ServerPlayer target, ItemStack poppet) {
+    public static boolean tryUseVoodoo(ServerPlayer attacker, ServerPlayer target) {
         // Attempt to use infused poppets first to prioritise them over regular ones.
         boolean blockedInfused = tryTriggerAll(target, stack -> stack.getItem() == EItems.VOODOO_PROTECTION_POPPET_INFUSED.get());
         boolean blocked = blockedInfused || tryTriggerAll(target, stack ->
@@ -117,10 +117,8 @@ public class PoppetHelper {
                 stack.getItem() == EItems.VOODOO_PROTECTION_POPPET_STURDY.get()
         );
 
-        if(!blocked)
-            return true;
-        if(!blockedInfused || attacker == null)
-            return false;
+        if(!blockedInfused)
+            return !blocked;
 
         ServerLevel level = attacker.serverLevel();
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);

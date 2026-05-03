@@ -36,14 +36,15 @@ public class PoppetShelfBlock extends EBaseEntityBlock<PoppetShelfBlock> {
 
 	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onRemove(state, level, pos, newState, isMoving);
-        if(state.is(newState.getBlock())) return;
+        if(state.is(newState.getBlock()))
+            return;
 
         if(level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity shelf) {
             ItemUtils.dropContentsNoChange(level, pos.getX(), pos.getY(), pos.getZ(), shelf.getInventory());
             PoppetShelfManager.get(serverLevel).remove(serverLevel, pos);
         }
-	}
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

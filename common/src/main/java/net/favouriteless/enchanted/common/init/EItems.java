@@ -80,7 +80,7 @@ public class EItems {
 	public static final Supplier<Item> DROP_OF_LUCK = registerItem("drop_of_luck");
 	public static final Supplier<EarmuffsItem> EARMUFFS = register("earmuffs", () -> new EarmuffsItem(ArmorMaterials.LEATHER, Type.HELMET, props().stacksTo(1).rarity(Rarity.RARE)));
     public static final Supplier<PlayerPoppetItem> EARTH_POPPET = registerPlayerPoppet("earth_poppet", PoppetColour.EARTH, 1, PoppetPredicates.EARTH);
-    public static final Supplier<PlayerPoppetItem> EARTH_POPPET_INFUSED = registerPlayerPoppet("infused_earth_poppet", PoppetColour.EARTH, 1, PoppetPredicates.EARTH, () -> new MobEffectInstance(EMobEffects.FALL_RESISTANCE, 200));
+    public static final Supplier<PlayerPoppetItem> EARTH_POPPET_INFUSED = registerPlayerPoppet("infused_earth_poppet", PoppetColour.EARTH, 1, PoppetPredicates.EARTH, () -> new MobEffectInstance(EMobEffects.FALL_RESISTANCE, 600));
     public static final Supplier<PlayerPoppetItem> EARTH_POPPET_STURDY = registerPlayerPoppet("sturdy_earth_poppet", PoppetColour.EARTH, 2, PoppetPredicates.EARTH);
 	public static final Supplier<BlockItem> EMBER_MOSS = registerBlock("ember_moss", EBlocks.EMBER_MOSS);
 	public static final Supplier<Item> ENCHANTED_BROOMSTICK = register("enchanted_broomstick", () -> new BroomstickItem(props().stacksTo(1).rarity(Rarity.EPIC)));
@@ -121,7 +121,7 @@ public class EItems {
 	public static final Supplier<BlockItem> INFINITY_EGG = registerBlock("infinity_egg", EBlocks.INFINITY_EGG);
 	public static final Supplier<BlockItem> KETTLE = registerBlock("kettle", EBlocks.KETTLE);
 	public static final Supplier<PlayerPoppetItem> MAGIC_POPPET = registerPlayerPoppet("magic_poppet", PoppetColour.MAGIC, 1, PoppetPredicates.MAGIC);
-	public static final Supplier<PlayerPoppetItem> MAGIC_POPPET_INFUSED = registerPlayerPoppet("infused_magic_poppet", PoppetColour.MAGIC, 1, PoppetPredicates.MAGIC, () -> new MobEffectInstance(EMobEffects.MAGIC_RESISTANCE, 200));
+	public static final Supplier<PlayerPoppetItem> MAGIC_POPPET_INFUSED = registerPlayerPoppet("infused_magic_poppet", PoppetColour.MAGIC, 1, PoppetPredicates.MAGIC, () -> new MobEffectInstance(EMobEffects.MAGIC_RESISTANCE, 600));
 	public static final Supplier<PlayerPoppetItem> MAGIC_POPPET_STURDY = registerPlayerPoppet("sturdy_magic_poppet", PoppetColour.MAGIC, 2, PoppetPredicates.MAGIC);
 	public static final Supplier<Item> MANDRAKE_ROOT = registerItem("mandrake_root");
 	public static final Supplier<ItemNameBlockItem> MANDRAKE_SEEDS = registerBlockNamed("mandrake_seeds", EBlocks.MANDRAKE);
@@ -180,7 +180,7 @@ public class EItems {
 	public static final Supplier<Item> WATER_ARTICHOKE = registerFood("water_artichoke", 3, MobEffects.HUNGER, 100, 0, 1.0F);
 	public static final Supplier<ArtichokeSeedsItem> WATER_ARTICHOKE_SEEDS = register("water_artichoke_seeds", () -> new ArtichokeSeedsItem(props()));
 	public static final Supplier<PlayerPoppetItem> WATER_POPPET = registerPlayerPoppet("water_poppet", PoppetColour.WATER, 1, PoppetPredicates.WATER, () -> new MobEffectInstance(EMobEffects.DROWN_RESISTANCE, 100));
-	public static final Supplier<PlayerPoppetItem> WATER_POPPET_INFUSED = registerPlayerPoppet("infused_water_poppet", PoppetColour.WATER, 1, PoppetPredicates.WATER, () -> new MobEffectInstance(MobEffects.WATER_BREATHING, 200));
+	public static final Supplier<PlayerPoppetItem> WATER_POPPET_INFUSED = registerPlayerPoppet("infused_water_poppet", PoppetColour.WATER, 1, PoppetPredicates.WATER, () -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600));
 	public static final Supplier<PlayerPoppetItem> WATER_POPPET_STURDY = registerPlayerPoppet("sturdy_water_poppet", PoppetColour.WATER, 2, PoppetPredicates.WATER, () -> new MobEffectInstance(EMobEffects.DROWN_RESISTANCE, 100));
 	public static final Supplier<WaystoneItem> WAYSTONE = register("waystone", () -> new WaystoneItem(props()));
 	public static final Supplier<Item> WHIFF_OF_MAGIC = registerItem("whiff_of_magic");

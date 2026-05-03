@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.enchanted.poppet.effects;
 
 import net.favouriteless.enchanted.api.poppets.ItemPoppetEffect;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Predicate;
@@ -22,7 +23,7 @@ public class RestoreItemPoppetEffect implements ItemPoppetEffect {
 
     @Override
     public void protect(ItemStack stack) {
-        stack.setDamageValue(Math.round(stack.getMaxDamage() * (1.0F - restoreMultiplier)));
+        stack.setDamageValue(Mth.ceil(stack.getMaxDamage() * (1.0F - restoreMultiplier)));
     }
 
 }

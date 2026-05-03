@@ -4,12 +4,16 @@ import net.favouriteless.enchanted.common.enchanted.poppet.PoppetHelper;
 import net.favouriteless.enchanted.common.util.EntityUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Blocks;
+import oshi.hardware.SoundCard;
 
 public class VoodooItemEntity extends ItemEntity {
 
@@ -64,11 +68,16 @@ public class VoodooItemEntity extends ItemEntity {
     }
 
     public boolean tryHurt(ServerPlayer owner, ServerPlayer target, DamageSource source, int amount) {
-        if(PoppetHelper.tryUseVoodoo(owner, target, getItem()) && target.hurt(source, amount)) {
-            hurt(amount);
-            return true;
+        if(!PoppetHelper.tryUseVoodoo(owner, target)) {
+            level().explode(this, getX(), getY(), getZ(), 1.0F, ExplosionInteraction.NONE);
+            discard();
+            return false;
         }
-        return false;
+
+        if(target.hurt(source, amount))
+            hurt(amount);
+
+        return true;
     }
 
     public void hurt(int amount) {

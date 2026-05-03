@@ -1,11 +1,12 @@
 package net.favouriteless.enchanted.common.blocks.altar;
 
 import com.mojang.serialization.MapCodec;
+import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.blocks.entity.AltarBlockEntity;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
-import net.favouriteless.enchanted.common.enchanted.multiblock.MultiBlockTools;
-import net.favouriteless.enchanted.common.enchanted.multiblock.altar.AltarMultiBlock;
-import net.favouriteless.enchanted.common.enchanted.multiblock.altar.AltarPartIndex;
+import net.favouriteless.enchanted.common.enchanted.altar.AltarHelper;
+import net.favouriteless.enchanted.common.enchanted.altar.AltarPart;
+import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -29,62 +31,69 @@ import org.jetbrains.annotations.Nullable;
 
 public class AltarBlock extends BaseEntityBlock {
 
-    public static final EnumProperty<AltarPartIndex> FORMED = EnumProperty.create("formed", AltarPartIndex.class);
+    public static final EnumProperty<AltarPart> PART = EnumProperty.create("formed", AltarPart.class);
     public static final BooleanProperty FACING_X = BooleanProperty.create("facing_x");
 
     public final MapCodec<AltarBlock> codec = simpleCodec(AltarBlock::new);
 
     public AltarBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(defaultBlockState().setValue(FORMED, AltarPartIndex.UNFORMED).setValue(FACING_X, true));
+        this.registerDefaultState(defaultBlockState().setValue(PART, AltarPart.UNFORMED).setValue(FACING_X, true));
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if(!world.isClientSide())
-            MultiBlockTools.formMultiblock(AltarMultiBlock.INSTANCE, world, pos);
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if(!level.isClientSide)
+            AltarHelper.tryFormAltar(level, pos);
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(!world.isClientSide()) {
-            if(state != newState && state.getValue(FORMED) != AltarPartIndex.UNFORMED)
-                MultiBlockTools.breakMultiblock(AltarMultiBlock.INSTANCE, world, pos, state);
-        }
-        super.onRemove(state, world, pos, newState, isMoving);
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        AltarPart part = state.getValue(PART);
+
+        if(part == AltarPart.UNFORMED || state.equals(newState))
+            return;
+
+        if(part == AltarPart.P000)
+            level.removeBlockEntity(pos);
+
+        // We pass newState to here to avoid re-setting this block to an altar (dupe bug)
+        AltarHelper.tryUnformAltar(level, pos, state);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FORMED);
-        builder.add(FACING_X);
+        builder.add(PART).add(FACING_X);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if(state.getValue(FORMED) != AltarPartIndex.UNFORMED) {
-            if (!level.isClientSide) {
-                BlockPos cornerPos = AltarMultiBlock.INSTANCE.getBottomLowerLeft(level, pos, state);
-                BlockState cornerState = level.getBlockState(cornerPos);
+        if(state.getValue(PART) == AltarPart.UNFORMED)
+            return InteractionResult.PASS;
 
-                if (cornerState.getValue(FORMED) == AltarPartIndex.P000) {
-                    BlockEntity blockEntity = level.getBlockEntity(cornerPos);
-                    if(blockEntity instanceof AltarBlockEntity be)
-                        EServices.PLATFORM.openMenu((ServerPlayer)player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
-                }
-                return InteractionResult.CONSUME;
-            }
+        if(level.isClientSide)
             return InteractionResult.SUCCESS;
+
+        BlockPos corePos = AltarHelper.getCorePos(pos, state);
+        BlockState coreState = level.getBlockState(corePos);
+
+        if(!coreState.is(EBlocks.ALTAR.get()) || coreState.getValue(PART) != AltarPart.P000) {
+            Enchanted.LOG.warn("Altar located at {} was in an invalid state", corePos.toShortString());
+            AltarHelper.tryUnformAltar(level, corePos, state);
+            return InteractionResult.CONSUME;
         }
-        return InteractionResult.PASS;
+
+        if(level.getBlockEntity(corePos) instanceof AltarBlockEntity be)
+            EServices.PLATFORM.openMenu((ServerPlayer)player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
+
+        return InteractionResult.CONSUME;
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(FORMED) == AltarPartIndex.P000 ? new AltarBlockEntity(pos, state) : null;
+        return state.getValue(PART) == AltarPart.P000 ? new AltarBlockEntity(pos, state) : null;
     }
-
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

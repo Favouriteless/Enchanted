@@ -76,6 +76,11 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
 
     @Override
     public void saveAdditional(CompoundTag nbt, Provider registries) {
+        // Completely beyond me why this is even called on the client, but it is. Us modders can never begin to fathom
+        // the depths of Mojang's genius.
+        if(level == null || level.isClientSide)
+            return;
+
         nbt.putDouble("power", power);
         nbt.put("powerData", powerData.save(level));
     }
@@ -121,12 +126,13 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
             for(int y = 0; y < (range+2) * 2; y++) {
                 for(int z = 0; z < (range+2) * 2; z++) {
                     BlockPos currentPos = startingPos.offset(x, y, z);
-                    if(posWithinRange(currentPos)) {
-                        if(level.getBlockEntity(currentPos) instanceof PowerConsumer consumer)
-                            consumer.getPosHolder().add(worldPosition); // Notify consumers that this altar exists.
+                    if(!posWithinRange(currentPos))
+                        continue;
 
-                        addBlock(level.getBlockState(currentPos).getBlock());
-                    }
+                    if(level.getBlockEntity(currentPos) instanceof PowerConsumer consumer)
+                        consumer.getPosHolder().add(worldPosition); // Notify consumers that this altar exists.
+
+                    addBlock(level.getBlockState(currentPos).getBlock());
                 }
             }
         }

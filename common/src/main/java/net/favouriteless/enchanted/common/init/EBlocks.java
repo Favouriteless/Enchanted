@@ -43,7 +43,7 @@ public class EBlocks {
     public static final Supplier<SlabBlock> ALDER_SLAB = register("alder_slab", () -> slab(Blocks.OAK_SLAB));
     public static final Supplier<StairBlock> ALDER_STAIRS = register("alder_stairs", () -> stairs(ALDER_PLANKS.get()));
     public static final Supplier<AltarBlock> ALTAR = register("altar", () -> new AltarBlock(copy(Blocks.STONE).pushReaction(PushReaction.BLOCK).requiresCorrectToolForDrops()));
-    public static final Supplier<CropBlockAgeFive> BELLADONNA = register("belladonna", () -> new BelladonnaBlock(copy(Blocks.WHEAT)));
+    public static final Supplier<CropBlockAgeFive> BELLADONNA = register("belladonna", () -> new CropBlockAgeFive(EItems.BELLADONNA_SEEDS, copy(Blocks.WHEAT)));
     public static final Supplier<BloodPoppyBlock> BLOOD_POPPY = register("blood_poppy", () -> new BloodPoppyBlock(copy(Blocks.POPPY)));
     public static final Supplier<CandelabraBlock> CANDELABRA = register("candelabra", CandelabraBlock::new);
     public static final Supplier<ChaliceBlock> CHALICE = register("chalice", () -> new ChaliceBlock(false, Properties.of().strength(1.0F, 6.0F).noOcclusion()));
@@ -52,7 +52,7 @@ public class EBlocks {
     public static final Supplier<EmberMossBlock> EMBER_MOSS = register("ember_moss", () -> new EmberMossBlock(copy(Blocks.POPPY).lightLevel((a) -> 6).randomTicks()));
     public static final Supplier<FumeFunnelBlock> FUME_FUNNEL = register("fume_funnel", () -> new FumeFunnelBlock(0.2D, copy(Blocks.ANVIL)));
     public static final Supplier<FumeFunnelBlock> FUME_FUNNEL_FILTERED = register("fume_funnel_filtered", () -> new FumeFunnelBlock(0.35D, copy(Blocks.ANVIL)));
-    public static final Supplier<GarlicBlock> GARLIC = register("garlic", () -> new GarlicBlock(copy(Blocks.CARROTS)));
+    public static final Supplier<CropBlockAgeFive> GARLIC = register("garlic", () -> new CropBlockAgeFive(EItems.GARLIC, copy(Blocks.CARROTS)));
     public static final Supplier<GlintWeedBlock> GLINT_WEED = register("glint_weed", () -> new GlintWeedBlock(copy(Blocks.POPPY).lightLevel((a) -> 14).randomTicks()));
     public static final Supplier<GoldChalkBlock> GOLDEN_CHALK = register("golden_chalk", GoldChalkBlock::new);
     public static final Supplier<ButtonBlock> HAWTHORN_BUTTON = register("hawthorn_button", EBlocks::woodenButton);
@@ -84,14 +84,14 @@ public class EBlocks {
     public static final Supplier<SaplingBlock> ROWAN_SAPLING = register("rowan_sapling", () -> sapling(ETreeGrowers.ROWAN));
     public static final Supplier<SlabBlock> ROWAN_SLAB = register("rowan_slab", () -> slab(Blocks.OAK_SLAB));
     public static final Supplier<StairBlock> ROWAN_STAIRS = register("rowan_stairs", () -> stairs(ROWAN_PLANKS.get()));
-    public static final Supplier<SnowbellBlock> SNOWBELL = register("snowbell", () -> new SnowbellBlock(copy(Blocks.WHEAT)));
+    public static final Supplier<CropBlockAgeFive> SNOWBELL = register("snowbell", () -> new CropBlockAgeFive(EItems.SNOWBELL_SEEDS, copy(Blocks.WHEAT)));
     public static final Supplier<VineBlock> SPANISH_MOSS = register("spanish_moss", () -> new VineBlock(copy(Blocks.VINE)));
     public static final Supplier<SpinningWheelBlock> SPINNING_WHEEL = register("spinning_wheel", () -> new SpinningWheelBlock(copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final Supplier<ArtichokeBlock> WATER_ARTICHOKE = register("water_artichoke", () -> new ArtichokeBlock(copy(Blocks.WHEAT).sound(SoundType.LILY_PAD)));
     public static final Supplier<HayBlock> WICKER_BUNDLE = register("wicker_bundle", () -> new HayBlock(copy(Blocks.HAY_BLOCK)));
     public static final Supplier<WitchCauldronBlock> WITCH_CAULDRON = register("witch_cauldron", () -> new WitchCauldronBlock(copy(Blocks.CAULDRON).noOcclusion()));
     public static final Supplier<WitchOvenBlock> WITCH_OVEN = register("witch_oven", () -> new WitchOvenBlock(copy(Blocks.ANVIL)));
-    public static final Supplier<WolfsbaneBlock> WOLFSBANE = register("wolfsbane", () -> new WolfsbaneBlock(copy(Blocks.WHEAT)));
+    public static final Supplier<CropBlockAgeFive> WOLFSBANE = register("wolfsbane", () -> new CropBlockAgeFive(EItems.WOLFSBANE_SEEDS, copy(Blocks.WHEAT)));
 
     //public static final Supplier<Block> DEMON_HEART = register("demon_heart", DemonHeart::new);
 

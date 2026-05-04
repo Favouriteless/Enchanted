@@ -10,7 +10,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,11 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MandrakeBlock extends CropBlockAgeFive {
 
     public MandrakeBlock(Properties properties) {
-        super(properties);
-    }
-
-    protected ItemLike getBaseSeedId() {
-        return EItems.MANDRAKE_SEEDS.get();
+        super(EItems.MANDRAKE_SEEDS, properties);
     }
 
     @Override

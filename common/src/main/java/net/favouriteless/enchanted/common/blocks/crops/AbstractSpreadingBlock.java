@@ -38,4 +38,5 @@ public abstract class AbstractSpreadingBlock extends Block {
     public boolean canSpreadOn(BlockState block) {
         return true;
     }
+
 }

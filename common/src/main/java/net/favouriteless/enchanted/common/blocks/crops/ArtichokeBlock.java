@@ -12,9 +12,10 @@ import net.minecraft.world.level.material.Fluids;
 public class ArtichokeBlock extends CropBlockAgeFive {
 
     public ArtichokeBlock(Properties properties) {
-        super(properties);
+        super(EItems.WATER_ARTICHOKE_SEEDS, properties);
     }
 
+    @Override
     protected ItemLike getBaseSeedId() {
         return EItems.WATER_ARTICHOKE_SEEDS.get();
     }

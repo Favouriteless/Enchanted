@@ -30,7 +30,7 @@ public class FabricFluidHelper implements FluidHelper {
 
     @Override
     public boolean playerHoldingFluidContainer(Player player, InteractionHand hand) {
-        return ContainerItemContext.forPlayerInteraction(player, hand).find(FluidStorage.ITEM) == null;
+        return ContainerItemContext.forPlayerInteraction(player, hand).find(FluidStorage.ITEM) != null;
     }
 
 }

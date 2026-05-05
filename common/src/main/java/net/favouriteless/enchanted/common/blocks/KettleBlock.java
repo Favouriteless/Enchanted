@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -61,18 +62,18 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
-            if(!level.isClientSide) {
-                ItemStack result = kettle.takeItem(false);
-                if(!result.isEmpty()) {
-                    ItemUtils.giveOrDrop(player, result);
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    return InteractionResult.CONSUME;
-                }
-                return InteractionResult.PASS;
-            }
-            return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
-        }
+         if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
+             if(level.isClientSide)
+                 return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+
+             ItemStack result = kettle.takeItem(false);
+             if(result.isEmpty())
+                 return InteractionResult.PASS;
+
+             ItemUtils.giveOrDrop(player, result, EquipmentSlot.MAINHAND);
+             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+             return InteractionResult.CONSUME;
+         }
         return InteractionResult.PASS;
     }
 

@@ -68,6 +68,7 @@ public class EBlocks {
     public static final Supplier<InfinityEggBlock> INFINITY_EGG = register("infinity_egg", () -> new InfinityEggBlock(copy(Blocks.DRAGON_EGG).noLootTable()));
     public static final Supplier<KettleBlock> KETTLE = register("kettle", () -> new KettleBlock(copy(Blocks.CAULDRON)));
     public static final Supplier<MandrakeBlock> MANDRAKE = register("mandrake", () -> new MandrakeBlock(copy(Blocks.CARROTS)));
+    public static final Supplier<MortarBlock> MORTAR = register("mortar", () -> new MortarBlock(copy(Blocks.STONECUTTER)));
     public static final Supplier<ChalkCircleBlock> NETHER_CHALK = register("nether_chalk", () -> new ChalkCircleBlock(ParticleTypes.FLAME));
     public static final Supplier<ChalkCircleBlock> OTHERWHERE_CHALK = register("otherwhere_chalk", () -> new ChalkCircleBlock(ParticleTypes.DRAGON_BREATH));
     public static final Supplier<PoppetShelfBlock> POPPET_SHELF = register("poppet_shelf", () -> new PoppetShelfBlock(copy(Blocks.ENCHANTING_TABLE).noOcclusion()));

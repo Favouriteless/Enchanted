@@ -9,11 +9,11 @@ import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ItemModelProvider extends net.neoforged.neoforge.client.model.generators.ItemModelProvider {
+public class EItemModelProvider extends net.neoforged.neoforge.client.model.generators.ItemModelProvider {
 
 	private static ModelFile ITEM_GENERATED;
 
-	public ItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+	public EItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, Enchanted.MOD_ID, existingFileHelper);
 	}
 

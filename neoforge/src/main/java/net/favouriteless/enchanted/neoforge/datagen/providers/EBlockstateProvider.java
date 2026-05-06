@@ -18,9 +18,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class BlockstateProvider extends BlockStateProvider {
+public class EBlockstateProvider extends BlockStateProvider {
 
-	public BlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+	public EBlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
 		super(output, Enchanted.MOD_ID, exFileHelper);
 	}
 
@@ -78,6 +78,7 @@ public class BlockstateProvider extends BlockStateProvider {
 		complexWithItem(EBlocks.CANDELABRA.get());
 		kettleWithItem(EBlocks.KETTLE.get());
 		complexWithItem(EBlocks.POPPET_SHELF.get());
+        complexWithItem(EBlocks.MORTAR.get());
 
 		cropsWithItem(EBlocks.BELLADONNA.get(), "crop");
 		cropsWithItem(EBlocks.SNOWBELL.get(), "cross");

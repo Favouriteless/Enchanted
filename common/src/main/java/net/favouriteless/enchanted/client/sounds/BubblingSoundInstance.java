@@ -1,4 +1,4 @@
-package net.favouriteless.enchanted.client;
+package net.favouriteless.enchanted.client.sounds;
 
 import net.favouriteless.enchanted.common.blocks.entity.KettleBlockEntity;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
@@ -38,17 +38,17 @@ public class BubblingSoundInstance extends AbstractTickableSoundInstance {
 			stop();
 		else {
 			if(be.isHot()) {
-				if(volume < 1.0F)
-					volume += 0.05F;
-				else
-					volume = 1.0F;
-			}
-			else {
-				if(volume < 0.0F)
-					volume -= 0.05F;
-				else
-					volume = 0.0F;
-			}
+                if(volume < 1.0F)
+                    volume += 0.05F;
+                else
+                    volume = 1.0F;
+            }
+            else {
+                if(volume > 0.0F)
+                    volume -= 0.05F;
+                else
+                    volume = 0.0F;
+            }
 		}
 	}
 

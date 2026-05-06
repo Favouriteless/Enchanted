@@ -16,6 +16,7 @@ public class ESoundEvents {
 	public static Holder<SoundEvent> CHALK_WRITE = register("chalk_write", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("chalk_write")));
 	public static Holder<SoundEvent> CURSE_CAST = register("curse_cast", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("curse_cast")));
 	public static Holder<SoundEvent> CURSE_WHISPER = register("curse_whisper", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("curse_whisper")));
+    public static Holder<SoundEvent> MORTAR = register("mortar", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("mortar")));
 	public static Holder<SoundEvent> REMOVE_CURSE = register("remove_curse", () -> SoundEvent.createVariableRangeEvent(Enchanted.id("remove_curse")));
 
 	private static <T extends SoundEvent> Holder<SoundEvent> register(String name, Supplier<T> soundSupplier) {

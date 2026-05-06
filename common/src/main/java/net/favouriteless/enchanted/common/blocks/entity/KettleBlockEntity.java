@@ -2,13 +2,13 @@ package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.api.EFluidContainer;
 import net.favouriteless.enchanted.api.altar.PowerConsumer;
-import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.PowerHelper;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
+import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.client.ClientProxy;
 import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.particles.types.ColourOptions;
 import net.favouriteless.enchanted.common.ServerConfig;
-import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;
@@ -20,7 +20,6 @@ import net.favouriteless.enchanted.common.util.ContainerUtils;
 import net.favouriteless.enchanted.common.util.RandomUtils;
 import net.favouriteless.enchanted.platform.EServices;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -346,17 +345,16 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         ContainerUtils.saveAllItems(tag, ingredients, registries);
         if(!result.isEmpty())
             tag.put("result", result.save(registries));
         tag.put("powerHolder", powerHolder.serialize());
-
-        saveSynced(tag, registries);
     }
 
-    private void saveSynced(CompoundTag tag, Provider registries) {
+    @Override
+    protected void saveSynced(CompoundTag tag, Provider registries) {
         tag.putInt("water", water);
         tag.putByte("heat", heat);
         tag.putBoolean("isFailed", isFailed);
@@ -367,8 +365,8 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     @Override
-    public void loadAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
-        loadSynced(tag, registries);
+    public void loadAdditional(@NotNull CompoundTag tag, @NotNull Provider registries) {
+        super.loadAdditional(tag, registries);
         ContainerUtils.loadAllItems(tag, ingredients, registries); // We have to use this version because it's a dynamically sized inventory.
         result = ItemStack.parseOptional(registries, tag.getCompound("result"));
 
@@ -376,7 +374,8 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
             powerHolder.deserialize(tag.getCompound("powerHolder"));
     }
 
-    private void loadSynced(CompoundTag tag, Provider registries) {
+    @Override
+    protected void loadSynced(CompoundTag tag, Provider registries) {
         water = tag.getInt("water");
         heat = tag.getByte("heat");
         isFailed = tag.getBoolean("isFailed");
@@ -439,13 +438,6 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(Provider registries) {
-        CompoundTag nbt = new CompoundTag();
-        saveSynced(nbt, registries);
-        return nbt;
     }
 
     @Override

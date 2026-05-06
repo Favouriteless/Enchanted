@@ -126,6 +126,7 @@ public class EItems {
 	public static final Supplier<Item> MANDRAKE_ROOT = registerItem("mandrake_root");
 	public static final Supplier<ItemNameBlockItem> MANDRAKE_SEEDS = registerBlockNamed("mandrake_seeds", EBlocks.MANDRAKE);
 	public static final Supplier<Item> MELLIFLUOUS_HUNGER = registerItem("mellifluous_hunger");
+    public static final Supplier<BlockItem> MORTAR = registerBlock("mortar", EBlocks.MORTAR);
 	public static final Supplier<Item> MUTANDIS = register("mutandis", () -> new MutandisItem(false));
 	public static final Supplier<Item> MUTANDIS_EXTREMIS = register("mutandis_extremis", () -> new MutandisItem(true));
 	public static final Supplier<SimpleEffectBrewItem> MYSTIC_UNGUENT = registerBrew("mystic_unguent", () -> MobEffects.WEAKNESS, 1200, 1);

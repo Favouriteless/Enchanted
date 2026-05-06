@@ -40,8 +40,8 @@ public class DataGenerators {
 		gen.addProvider(true, new ECompostMapProvider(output, provider));
 
 		// Assets
-		gen.addProvider(true, new BlockstateProvider(output, fileHelper));
-		gen.addProvider(true, new ItemModelProvider(output, fileHelper));
+		gen.addProvider(true, new EBlockstateProvider(output, fileHelper));
+		gen.addProvider(true, new EItemModelProvider(output, fileHelper));
 		gen.addProvider(true, new ELanguageProvider(output));
 		gen.addProvider(true, ELootTableProvider.create(output, provider));
 

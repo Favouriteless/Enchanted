@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-25T04:45:14.1832469	Recipes
+// 1.21.1	2026-05-04T23:41:21.8816876	Recipes
 f47c47f1b37304c8bb3c724267a46cb86ea4969a data/enchanted/advancement/recipes/building_blocks/alder_planks.json
 1cecf9f5bb1c06d348ffd3efc7e8115143e91562 data/enchanted/advancement/recipes/building_blocks/alder_slab.json
 d26672980aecad21d8089e394a83f31c64aa8307 data/enchanted/advancement/recipes/building_blocks/alder_stairs.json
@@ -114,6 +114,7 @@ f84b307fa2986efb60eee8a8cd1aa4c1a33e6e0e data/enchanted/recipe/kettle/nether_cha
 025336e56706ab7908c9162d9180486bd83ec222 data/enchanted/recipe/kettle/redstone_soup.json
 79efb19b20a5d4708333e31efc1f4776ff3560e8 data/enchanted/recipe/kettle/soul_of_the_world.json
 9c284aff7698e872a42018bee60fadfc3b7820ce data/enchanted/recipe/kettle/spirit_of_otherwhere.json
+14d881cc3d76794850487877bc3c97a6650f34d4 data/enchanted/recipe/mortar/bone_needle.json
 ac548bb89f765577a8772a97fde570b18b6ec351 data/enchanted/recipe/poppet.json
 00e7a4b0b8e5d9bd9267f0b4f35ea40a3f9b9bd8 data/enchanted/recipe/poppet_shelf.json
 c0feb04b854d5c7fb4ebec97b07d62042f2374d6 data/enchanted/recipe/purified_milk.json

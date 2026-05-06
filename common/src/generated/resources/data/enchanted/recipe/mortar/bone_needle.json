@@ -1,0 +1,11 @@
+{
+  "type": "enchanted:mortar",
+  "cook_colour": "FFFFFF",
+  "ingredient": {
+    "item": "minecraft:bone"
+  },
+  "result": {
+    "count": 1,
+    "id": "enchanted:bone_needle"
+  }
+}

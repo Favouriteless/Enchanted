@@ -7,12 +7,15 @@ import net.favouriteless.enchanted.api.datagen.builders.recipe.SpinningRecipeBui
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags;
+import net.favouriteless.enchanted.common.recipes.MortarRecipe;
 import net.favouriteless.enchanted.neoforge.datagen.builders.EShapedRecipeBuilder;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -42,6 +45,7 @@ public class ERecipeProvider extends RecipeProvider {
 		buildSpinningRecipes(output, registries);
 		buildDistillingRecipes(output, registries);
 		buildKettleRecipes(output, registries);
+        buildMortarRecipes(output, registries);
 	}
 
 	protected void buildShapedRecipes(RecipeOutput output, Provider registries) {
@@ -387,7 +391,11 @@ public class ERecipeProvider extends RecipeProvider {
                 .finalColor(0x801D1D).save(output);
 	}
 
-	protected static void spinning(RecipeOutput output, ItemLike result, ItemLike first, Item second, Item third) {
+    protected void buildMortarRecipes(RecipeOutput output, Provider registries) {
+        mortar(output, new ItemStack(EItems.BONE_NEEDLE.get()), 0xFFFFFF, Items.BONE);
+    }
+
+    protected static void spinning(RecipeOutput output, ItemLike result, ItemLike first, Item second, Item third) {
 		SpinningRecipeBuilder.create(result, first, second, third).power(500).save(output);
 	}
 
@@ -455,5 +463,10 @@ public class ERecipeProvider extends RecipeProvider {
 				.pattern("#W#")
 				.save(output);
 	}
+
+    protected static void mortar(RecipeOutput output, ItemStack result, int colour, ItemLike... ingredients) {
+        ResourceLocation id = Enchanted.id("mortar/" + BuiltInRegistries.ITEM.getKey(result.getItem()).getPath());
+        output.accept(id, new MortarRecipe(Ingredient.of(ingredients), result, colour), null);
+    }
 
 }

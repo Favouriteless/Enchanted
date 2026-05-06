@@ -227,6 +227,10 @@ public class ERecipeProvider extends RecipeProvider {
 				.requires(Items.INK_SAC).requires(Items.BOOK).requires(Items.FEATHER)
 				.requires(EItems.BELLADONNA_SEEDS.get())
 				.unlockedBy(getHasName(EItems.BELLADONNA_SEEDS.get()), has(EItems.BELLADONNA_SEEDS.get())).save(output, Enchanted.id("art_of_witchcraft"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EItems.ENT_TWIG.get())
+                .requires(Items.STICK).requires(EItems.BREATH_OF_THE_GODDESS.get()).requires(EItems.ANOINTING_PASTE.get())
+                .unlockedBy(getHasName(EItems.BREATH_OF_THE_GODDESS.get()), has(EItems.BREATH_OF_THE_GODDESS.get())).save(output);
 	}
 
 	protected void buildSmeltingRecipes(RecipeOutput output, Provider registries) {
@@ -287,9 +291,6 @@ public class ERecipeProvider extends RecipeProvider {
 	protected void buildDistillingRecipes(RecipeOutput output, Provider registries) {
 		DistillingRecipeBuilder.create(new ItemStack(EItems.CLAY_JAR.get(), 3), new ItemStack(EItems.BREATH_OF_THE_GODDESS.get()), new ItemStack(Items.LAPIS_LAZULI))
 				.results(EItems.TEAR_OF_THE_GODDESS.get(), EItems.WHIFF_OF_MAGIC.get(), Items.SLIME_BALL, EItems.FOUL_FUME.get()).save(output);
-		DistillingRecipeBuilder.create(new ItemStack(EItems.CLAY_JAR.get(), 2), new ItemStack(EItems.DEMON_HEART.get()), new ItemStack(EItems.DIAMOND_VAPOUR.get()))
-				.results(new ItemStack(EItems.DEMONIC_BLOOD.get(), 2))
-				.results(EItems.REFINED_EVIL.get()).save(output);
 		DistillingRecipeBuilder.create(new ItemStack(EItems.CLAY_JAR.get(), 3), new ItemStack(Items.DIAMOND), new ItemStack(EItems.OIL_OF_VITRIOL.get()))
 				.results(new ItemStack(EItems.DIAMOND_VAPOUR.get(), 2))
 				.results(EItems.ODOUR_OF_PURITY.get()).save(output);

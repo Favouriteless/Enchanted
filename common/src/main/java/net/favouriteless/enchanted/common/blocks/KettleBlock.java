@@ -13,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +69,7 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
              if(result.isEmpty())
                  return InteractionResult.PASS;
 
-             ItemUtils.giveOrDrop(player, result, EquipmentSlot.MAINHAND);
+             ItemUtils.giveOrDrop(player, result);
              level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
              return InteractionResult.CONSUME;
          }

@@ -171,7 +171,15 @@ public class MortarBlockEntity extends EBlockEntity {
     }
 
     public int getMaxProgress() {
-        return PROGRESS_PER_ITEM * input.getCount();
+        return PROGRESS_PER_ITEM * (result.isEmpty() ? input.getCount() : result.getCount());
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public int getColour() {
+        return colour;
     }
 
     @Override

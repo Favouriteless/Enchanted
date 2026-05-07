@@ -2,6 +2,7 @@ package net.favouriteless.enchanted.client.init;
 
 import net.favouriteless.enchanted.client.particles.*;
 import net.favouriteless.enchanted.client.render.blockentity.KettleWaterRenderer;
+import net.favouriteless.enchanted.client.render.blockentity.MortarRenderer;
 import net.favouriteless.enchanted.client.render.blockentity.PoppetShelfRenderer;
 import net.favouriteless.enchanted.client.render.blockentity.SpinningWheelRenderer;
 import net.favouriteless.enchanted.client.render.entity.BroomstickRenderer;
@@ -50,7 +51,8 @@ public class ClientRegistry {
         EntityRenderers.register(EEntityTypes.FAMILIAR_CAT.get(), FamiliarCatRenderer::new);
         EntityRenderers.register(EEntityTypes.VOODOO_ITEM.get(), ItemEntityRenderer::new);
 
-        BlockEntityRenderers.register(EBlockEntityTypes.KETTLE.get(), context -> new KettleWaterRenderer<>(6, 0.0625F, 0.3125F));
+        BlockEntityRenderers.register(EBlockEntityTypes.KETTLE.get(), KettleWaterRenderer::new);
+        BlockEntityRenderers.register(EBlockEntityTypes.MORTAR.get(), MortarRenderer::new);
         BlockEntityRenderers.register(EBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelRenderer::new);
         BlockEntityRenderers.register(EBlockEntityTypes.POPPET_SHELF.get(), PoppetShelfRenderer::new);
     }

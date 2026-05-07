@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: Add clearer VFX and migrate this away from random ticks to allow more control over it.
 public class MutagenManagerImpl implements MutagenManager {
 
     public static final MutagenManagerImpl INSTANCE = new MutagenManagerImpl();

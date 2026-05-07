@@ -1,12 +1,12 @@
 {
-  "items": [
-    { "id": "enchanted:bound_waystone", "count": 2 },
-    { "id": "enchanted:ender_dew", "count": 1 },
-    { "id": "enchanted:quicklime", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "factory": { "type": "enchanted:duplicate_item", "item": "enchanted:waystone", "count": 2 }
+    "items": [
+        { "id": "enchanted:bound_waystone", "count": 2 },
+        { "id": "enchanted:ender_dew", "count": 1 },
+        { "id": "enchanted:quicklime", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "factory": { "type": "enchanted:duplicate_item", "item": "enchanted:waystone", "count": 2 }
 }

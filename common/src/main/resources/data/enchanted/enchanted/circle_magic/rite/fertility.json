@@ -1,14 +1,14 @@
 {
-  "items": [
-    { "id": "enchanted:hint_of_rebirth", "count": 1 },
-    { "id": "enchanted:diamond_vapour", "count": 1 },
-    { "id": "enchanted:quicklime", "count": 1 },
-    { "id": "enchanted:gypsum", "count": 1 },
-    { "id": "enchanted:mutandis", "count": 1 },
-    { "id": "minecraft:bone_meal", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "factory": { "type": "enchanted:fertility", "radius": 25 }
+    "items": [
+        { "id": "enchanted:hint_of_rebirth", "count": 1 },
+        { "id": "enchanted:diamond_vapour", "count": 1 },
+        { "id": "enchanted:quicklime", "count": 1 },
+        { "id": "enchanted:gypsum", "count": 1 },
+        { "id": "enchanted:mutandis", "count": 1 },
+        { "id": "minecraft:bone_meal", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "factory": { "type": "enchanted:fertility", "radius": 25 }
 }

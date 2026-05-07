@@ -1,14 +1,14 @@
 {
-  "items": [
-    { "id": "enchanted:taglock", "count": 1 },
-    { "id": "enchanted:breath_of_the_goddess", "count": 1 },
-    { "id": "enchanted:brew_of_the_depths", "count": 1 },
-    { "id": "minecraft:bone_meal", "count": 1 },
-    { "id": "minecraft:nether_wart", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "power": 2000,
-  "factory": { "type": "enchanted:remove_curse", "curse": "enchanted:sinking" }
+    "items": [
+        { "id": "enchanted:taglock", "count": 1 },
+        { "id": "enchanted:breath_of_the_goddess", "count": 1 },
+        { "id": "enchanted:brew_of_the_depths", "count": 1 },
+        { "id": "minecraft:bone_meal", "count": 1 },
+        { "id": "minecraft:nether_wart", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "power": 2000,
+    "factory": { "type": "enchanted:remove_curse", "curse": "enchanted:sinking" }
 }

@@ -1,8 +1,8 @@
 {
-  "items": [
-    { "id": "enchanted:circle_talisman", "count": 1 },
-    { "id": "minecraft:redstone", "count": 1 }
-  ],
-  "power": 1000,
-  "factory": { "type": "enchanted:bind_talisman" }
+    "items": [
+        { "id": "enchanted:circle_talisman", "count": 1 },
+        { "id": "minecraft:redstone", "count": 1 }
+    ],
+    "power": 1000,
+    "factory": { "type": "enchanted:bind_talisman" }
 }

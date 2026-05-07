@@ -1,13 +1,17 @@
 {
-  "items": [
-    { "id": "enchanted:bound_waystone", "count": 1 },
-    { "id": "minecraft:obsidian", "count": 1 },
-    { "id": "minecraft:redstone", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "power": 500,
-  "tick_power": 4,
-  "factory": { "type": "enchanted:protection", "radius": 4, "target": "location" }
+    "items": [
+        { "id": "enchanted:bound_waystone", "count": 1 },
+        { "id": "minecraft:obsidian", "count": 1 },
+        { "id": "minecraft:redstone", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "power": 500,
+    "tick_power": 4,
+    "factory": {
+        "type": "enchanted:protection",
+        "radius": 4,
+        "target": "location"
+    }
 }

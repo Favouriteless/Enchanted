@@ -1,15 +1,18 @@
 {
-  "items": [
-    { "id": "enchanted:attuned_stone", "count": 1 },
-    { "id": "enchanted:wood_ash", "count": 1 },
-    { "id": "enchanted:quicklime", "count": 1 },
-    { "id": "minecraft:glowstone_dust", "count": 1 },
-    { "id": "minecraft:redstone", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk",
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 2000,
-  "factory": { "type": "enchanted:create_item", "items": [ { "id": "enchanted:attuned_stone_charged", "count": 1 } ] }
+    "items": [
+        { "id": "enchanted:attuned_stone", "count": 1},
+        { "id": "enchanted:wood_ash", "count": 1 },
+        { "id": "enchanted:quicklime", "count": 1 },
+        { "id": "minecraft:glowstone_dust", "count": 1 },
+        { "id": "minecraft:redstone", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk",
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 2000,
+    "factory": {
+        "type": "enchanted:create_item",
+        "items": [ { "id": "enchanted:attuned_stone_charged", "count": 1 } ]
+    }
 }

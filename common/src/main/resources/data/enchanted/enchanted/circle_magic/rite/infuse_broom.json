@@ -1,12 +1,15 @@
 {
-  "items": [
-    { "id": "enchanted:broom", "count": 1 },
-    { "id": "enchanted:flying_ointment", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk",
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 3000,
-  "factory": { "type": "enchanted:create_item", "items": [ { "id": "enchanted:enchanted_broomstick", "count": 1 } ] }
+    "items": [
+        { "id": "enchanted:broom", "count": 1 },
+        { "id": "enchanted:flying_ointment", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk",
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 3000,
+    "factory": {
+        "type": "enchanted:create_item",
+        "items": [ { "id": "enchanted:enchanted_broomstick",  "count": 1 } ]
+    }
 }

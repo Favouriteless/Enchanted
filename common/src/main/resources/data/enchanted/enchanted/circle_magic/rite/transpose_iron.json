@@ -1,13 +1,13 @@
 {
-  "items": [
-    { "id": "enchanted:diamond_vapour", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 },
-    { "id": "minecraft:ender_pearl", "count": 1 },
-    { "id": "minecraft:iron_ingot", "count": 1 },
-    { "id": "minecraft:blaze_powder", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:large_circle": "enchanted:otherwhere_chalk"
-  },
-  "factory": { "type": "enchanted:transpose_blocks", "tag": "minecraft:iron_ores" }
+    "items": [
+        { "id": "enchanted:diamond_vapour", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 },
+        { "id": "minecraft:ender_pearl", "count": 1 },
+        { "id": "minecraft:iron_ingot", "count": 1 },
+        { "id": "minecraft:blaze_powder", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:large_circle": "enchanted:otherwhere_chalk"
+    },
+    "factory": { "type": "enchanted:transpose_blocks", "tag": "minecraft:iron_ores" }
 }

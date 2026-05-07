@@ -1,1 +1,2 @@
+- FIXED: Time field on rites does not work in certain situations.
 - FIXED: Certain kettle recipes fail when collected using a bottle.

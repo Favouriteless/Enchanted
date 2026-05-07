@@ -1,14 +1,14 @@
 {
-  "items": [
-    { "id": "enchanted:tear_of_the_goddess", "count": 1 },
-    { "id": "enchanted:odour_of_purity", "count": 1 },
-    { "id": "enchanted:whiff_of_magic", "count": 1 },
-    { "id": "enchanted:demonic_blood", "count": 1 },
-    { "id": "minecraft:diamond", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 8000,
-  "factory": { "type": "enchanted:bind_familiar" }
+    "items": [
+        { "id": "enchanted:tear_of_the_goddess", "count": 1 },
+        { "id": "enchanted:odour_of_purity", "count": 1 },
+        { "id": "enchanted:whiff_of_magic", "count": 1 },
+        { "id": "enchanted:demonic_blood", "count": 1 },
+        { "id": "minecraft:diamond", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 8000,
+    "factory": { "type": "enchanted:bind_familiar" }
 }

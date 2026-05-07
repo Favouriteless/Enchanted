@@ -1,8 +1,8 @@
 {
-  "items": [
-    { "id": "enchanted:circle_talisman", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 },
-    { "id": "minecraft:glowstone_dust", "count": 1 }
-  ],
-  "factory": { "type": "enchanted:bind_talisman" }
+    "items": [
+        { "id": "enchanted:circle_talisman", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 },
+        { "id": "minecraft:glowstone_dust", "count": 1 }
+    ],
+    "factory": { "type": "enchanted:bind_talisman" }
 }

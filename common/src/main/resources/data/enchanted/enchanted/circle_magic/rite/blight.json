@@ -1,15 +1,18 @@
 {
-  "items": [
-    { "id": "enchanted:attuned_stone_charged", "count": 1 },
-    { "id": "enchanted:redstone_soup", "count": 1 },
-    { "id": "enchanted:reek_of_misfortune", "count": 1 },
-    { "id": "minecraft:glistering_melon_slice", "count": 1 },
-    { "id": "minecraft:rotten_flesh", "count": 1 },
-    { "id": "minecraft:diamond", "count": 1 },
-    { "id": "minecraft:fermented_spider_eye", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:nether_chalk"
-  },
-  "factory": { "type": "enchanted:blight", "radius": 50 }
+    "items": [
+        { "id": "enchanted:attuned_stone_charged", "count": 1 },
+        { "id": "enchanted:redstone_soup", "count": 1 },
+        { "id": "enchanted:reek_of_misfortune", "count": 1 },
+        { "id": "minecraft:glistering_melon_slice", "count": 1 },
+        { "id": "minecraft:rotten_flesh", "count": 1 },
+        { "id": "minecraft:diamond", "count": 1 },
+        { "id": "minecraft:fermented_spider_eye", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:nether_chalk"
+    },
+    "factory": {
+        "type": "enchanted:blight",
+        "radius": 50
+    }
 }

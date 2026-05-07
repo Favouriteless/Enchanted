@@ -1,6 +1,6 @@
 [versions]
 # Enchanted
-    enchanted = "4.2.6"
+    enchanted = "4.2.7"
 
 # Common
     stateobserver = "1.6.3"

@@ -1,5 +1,1 @@
-- ADDED: Recipe for crafting ent twigs. This is a temporary addition and will be removed when I add Ents.
-
-- REMOVED: Demon heart item. It was unobtainable and had no uses as demons have been scrapped.
-
-- FIXED: Kettles do not accept water on Fabric.
+- FIXED: Certain kettle recipes fail when collected using a bottle.

@@ -26,7 +26,7 @@ public record KettleInvWrapper(KettleBlockEntity kettle, @Nullable Direction sid
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return amount > 0 ? kettle.takeItem(simulate) : ItemStack.EMPTY;
+        return amount > 0 ? kettle.takeItem(ItemStack.EMPTY, simulate) : ItemStack.EMPTY;
     }
 
     @Override

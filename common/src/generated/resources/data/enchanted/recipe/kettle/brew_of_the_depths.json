@@ -28,6 +28,7 @@
       "id": "enchanted:odour_of_purity"
     }
   ],
+  "requires_bottle": true,
   "result": {
     "count": 3,
     "id": "enchanted:brew_of_the_depths"

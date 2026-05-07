@@ -310,57 +310,67 @@ public class ERecipeProvider extends RecipeProvider {
 				.inputs(Items.POPPY, Items.GOLDEN_CARROT, Items.LILY_PAD, Items.COCOA_BEANS, EItems.WHIFF_OF_MAGIC.get(),
 						EItems.WATER_ARTICHOKE.get())
 				.cookColor(0xB046A5)
-				.finalColor(0xF78FEB).save(output);
+				.finalColor(0xF78FEB)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.BREW_OF_SPROUTING.get(), 3), 0)
 				.inputs(EItems.ROWAN_SAPLING.get(), EItems.TONGUE_OF_DOG.get(), EItems.ALDER_SAPLING.get(),
 						EItems.MANDRAKE_ROOT.get(), EItems.HAWTHORN_SAPLING.get(), Items.POPPY)
 				.cookColor(0x5C3C16)
-				.finalColor(0x805A2B).save(output);
+				.finalColor(0x805A2B)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.BREW_OF_THE_DEPTHS.get(), 3), 0)
 				.inputs(Items.LILY_PAD, Items.INK_SAC, EItems.MANDRAKE_ROOT.get(), EItems.TEAR_OF_THE_GODDESS.get(),
 						EItems.WATER_ARTICHOKE.get(), EItems.ODOUR_OF_PURITY.get())
 				.cookColor(0x186EA8)
-				.finalColor(0x54BAD6).save(output);
+				.finalColor(0x54BAD6)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.BREW_OF_THE_GROTESQUE.get(), 3), 750)
 				.inputs(EItems.MUTANDIS_EXTREMIS.get(), EItems.MANDRAKE_ROOT.get(), EItems.WATER_ARTICHOKE.get(),
 						Items.GOLDEN_APPLE, EItems.TONGUE_OF_DOG.get(), Items.POISONOUS_POTATO)
 				.cookColor(0x362A21)
-				.finalColor(0x805F46).save(output);
+				.finalColor(0x805F46)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.FLYING_OINTMENT.get()), 3000)
 				.inputs(EItems.REDSTONE_SOUP.get())
 				.inputs(PotionContents.createItemStack(Items.POTION, Potions.LONG_SWIFTNESS))
 				.inputs(Items.DIAMOND, Items.FEATHER, EItems.WOOL_OF_BAT.get(), EItems.BELLADONNA_FLOWER.get())
 				.cookColor(0x706615)
-				.finalColor(0xDBC72A).save(output);
+				.finalColor(0xDBC72A)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.HAPPENSTANCE_OIL.get()), 2000)
 				.inputs(EItems.REDSTONE_SOUP.get())
 				.inputs(PotionContents.createItemStack(Items.POTION, Potions.LONG_NIGHT_VISION))
 				.inputs(Items.ENDER_EYE, Items.GOLDEN_CARROT, Items.SPIDER_EYE, EItems.MANDRAKE_ROOT.get())
 				.cookColor(0x320F6E)
-				.finalColor(0x541AB8).save(output);
+				.finalColor(0x541AB8)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.MYSTIC_UNGUENT.get()), 3000)
 				.inputs(EItems.REDSTONE_SOUP.get())
 				.inputs(PotionContents.createItemStack(Items.POTION, Potions.STRONG_STRENGTH))
 				.inputs(Items.DIAMOND, EItems.ROWAN_SAPLING.get(), EItems.CREEPER_HEART.get(), EItems.DEMONIC_BLOOD.get())
 				.cookColor(0x183016)
-				.finalColor(0x1C5E16).save(output);
+				.finalColor(0x1C5E16)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.REDSTONE_SOUP.get()), 1000)
 				.inputs(Items.REDSTONE, EItems.DROP_OF_LUCK.get(), EItems.WOOL_OF_BAT.get(), EItems.TONGUE_OF_DOG.get(),
 						EItems.BELLADONNA_FLOWER.get(), EItems.MANDRAKE_ROOT.get())
 				.cookColor(0x801E17)
-				.finalColor(0xDE311D).save(output);
+				.finalColor(0xDE311D)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.SOUL_OF_THE_WORLD.get(), 2), 4000)
 				.inputs(EItems.REDSTONE_SOUP.get())
 				.inputs(PotionContents.createItemStack(Items.POTION, Potions.LONG_REGENERATION))
 				.inputs(EItems.ROWAN_SAPLING.get(), EItems.ATTUNED_STONE.get(), EItems.MANDRAKE_ROOT.get(), Items.GOLDEN_APPLE)
 				.cookColor(0x0D5C19)
-				.finalColor(0x09991F).save(output);
+				.finalColor(0x09991F)
+                .requiresBottle().save(output);
 		KettleRecipeBuilder.of(new ItemStack(EItems.SPIRIT_OF_OTHERWHERE.get(), 2), 4000)
 				.inputs(EItems.REDSTONE_SOUP.get())
 				.inputs(PotionContents.createItemStack(Items.POTION, Potions.LONG_SWIFTNESS))
 				.inputs(EItems.WOOL_OF_BAT.get(), Items.ENDER_EYE, Items.ENDER_EYE, EItems.DROP_OF_LUCK.get())
 				.cookColor(0x2F1645)
-				.finalColor(0x4E1680).save(output);
+				.finalColor(0x4E1680)
+                .requiresBottle().save(output);
         KettleRecipeBuilder.of(new ItemStack(EItems.GOLDEN_CHALK.get()), 3000)
                 .inputs(EItems.MANDRAKE_ROOT.get(), Items.GOLD_NUGGET, EItems.RITUAL_CHALK.get())
                 .cookColor(0x594000)

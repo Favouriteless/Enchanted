@@ -34,6 +34,7 @@
     }
   ],
   "power": 3000,
+  "requires_bottle": true,
   "result": {
     "count": 1,
     "id": "enchanted:flying_ointment"

@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.page_components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.datafixers.util.Pair;
 import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.CircleMagicShape;
@@ -79,9 +78,11 @@ public class RitePageComponent extends PageComponent {
             addRequirement(tex, "rite/power", powerLines);
 
         if(rite.getTimeRange() != null) {
-            Pair<Integer, Integer> range = rite.getTimeRange();
-            if(range.getFirst() != 0 || range.getSecond() != Level.TICKS_PER_DAY)
-                addRequirement(tex, "rite/time", List.of(Component.translatable(LangUtils.tooltip("rite_requirement.time_range")).withStyle(ChatFormatting.GREEN)));
+            List<Integer> range = rite.getTimeRange();
+            int start = range.getFirst();
+            int end = range.getLast();
+            if(start != 0 || end != Level.TICKS_PER_DAY)
+                addRequirement(tex, "rite/time", List.of(Component.translatable(LangUtils.tooltip("rite_requirement.time_range"), start, end).withStyle(ChatFormatting.GREEN)));
         }
 
         if(rite.getWeatherRequirement() != RiteWeatherRequirement.NONE) {

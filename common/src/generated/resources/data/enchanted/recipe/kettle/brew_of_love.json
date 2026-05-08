@@ -28,6 +28,7 @@
       "id": "enchanted:water_artichoke"
     }
   ],
+  "requires_bottle": true,
   "result": {
     "count": 3,
     "id": "enchanted:brew_of_love"

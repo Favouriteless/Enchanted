@@ -1,11 +1,11 @@
 {
-  "items": [
-    { "id": "minecraft:stone_axe", "count": 1 },
-    { "id": "enchanted:quicklime", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "power": 3000,
-  "factory": { "type": "enchanted:total_eclipse" }
+    "items": [
+        { "id": "minecraft:stone_axe", "count": 1 },
+        { "id": "enchanted:quicklime", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "power": 3000,
+    "factory": { "type": "enchanted:total_eclipse" }
 }

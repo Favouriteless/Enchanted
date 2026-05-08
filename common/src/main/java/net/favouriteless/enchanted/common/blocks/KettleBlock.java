@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -51,28 +52,29 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         // INFO: Interactions involving fluids are handled by the respective loader APIs; transfer on fabric & caps on neoforge
-        if(EServices.FLUID.playerHoldingFluidContainer(player, hand)) {
-            EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        if(level.getBlockEntity(pos) instanceof KettleBlockEntity be) {
+            if(!be.isComplete() && EServices.FLUID.playerHoldingFluidContainer(player, hand)) {
+                EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            }
         }
-
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
-            if(!level.isClientSide) {
-                ItemStack result = kettle.takeItem(false);
-                if(!result.isEmpty()) {
-                    ItemUtils.giveOrDrop(player, result);
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    return InteractionResult.CONSUME;
-                }
-                return InteractionResult.PASS;
-            }
-            return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
-        }
+         if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
+             if(level.isClientSide)
+                 return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+
+             ItemStack result = kettle.takeItem(player.getItemInHand(InteractionHand.MAIN_HAND), false);
+             if(result.isEmpty())
+                 return InteractionResult.PASS;
+
+             ItemUtils.giveOrDrop(player, result, EquipmentSlot.MAINHAND);
+             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+             return InteractionResult.CONSUME;
+         }
         return InteractionResult.PASS;
     }
 

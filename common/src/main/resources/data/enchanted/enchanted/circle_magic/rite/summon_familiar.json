@@ -1,12 +1,12 @@
 {
-  "items": [
-    { "id": "enchanted:breath_of_the_goddess", "count": 1 },
-    { "id": "enchanted:hint_of_rebirth", "count": 1 },
-    { "id": "enchanted:whiff_of_magic", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 1000,
-  "factory": { "type": "enchanted:summon_familiar" }
+    "items": [
+        { "id": "enchanted:breath_of_the_goddess", "count": 1 },
+        { "id": "enchanted:hint_of_rebirth", "count": 1 },
+        { "id": "enchanted:whiff_of_magic", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 1000,
+    "factory": { "type": "enchanted:summon_familiar" }
 }

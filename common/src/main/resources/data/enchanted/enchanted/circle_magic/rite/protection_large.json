@@ -1,12 +1,12 @@
 {
-  "items": [
-    { "id": "minecraft:obsidian", "count": 1 },
-    { "id": "minecraft:glowstone_dust", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 1000,
-  "tick_power": 6,
-  "factory": { "type": "enchanted:protection", "radius": 6 }
+    "items": [
+        { "id": "minecraft:obsidian", "count": 1 },
+        { "id": "minecraft:glowstone_dust", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 1000,
+    "tick_power": 6,
+    "factory": { "type": "enchanted:protection", "radius": 6 }
 }

@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.common.enchanted.circle_magic;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.enchanted.api.Vec2i;
@@ -41,7 +40,7 @@ public class RiteType implements Comparable<RiteType> {
             Codec.INT.optionalFieldOf("power", 0).forGetter(r -> r.power),
             Codec.INT.optionalFieldOf("tick_power", 0).forGetter(r -> r.tickPower),
             RiteWeatherRequirement.CODEC.optionalFieldOf("weather", RiteWeatherRequirement.NONE).forGetter(r -> r.weather),
-            Codec.pair(Codec.INT, Codec.INT).optionalFieldOf("time", Pair.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
+            Codec.INT.listOf(2, 2).optionalFieldOf("time", List.of(0, Level.TICKS_PER_DAY)).forGetter(r -> r.timeRange),
             ResourceKey.codec(Registries.DIMENSION).listOf().optionalFieldOf("dimensions", List.of()).forGetter(r -> r.dimensions),
             RiteFactory.codec().fieldOf("factory").forGetter(r -> r.factory)
     ).apply(instance, RiteType::new));
@@ -53,14 +52,14 @@ public class RiteType implements Comparable<RiteType> {
     private final int tickPower;
     private final RiteFactory factory;
     private final RiteWeatherRequirement weather;
-    private final Pair<Integer, Integer> timeRange;
+    private final List<Integer> timeRange; // timeRange always has a length of 2
     private final List<ResourceKey<Level>> dimensions;
 
     private final List<Vec2i> interiorPoints = new ArrayList<>();
     private int radius = 1;
 
     public RiteType(List<ItemStack> items, Map<Holder<CircleMagicShape>, Block> shapes, List<EntityType<?>> entities,
-                    int power, int tickPower, RiteWeatherRequirement weather, Pair<Integer, Integer> timeRange,
+                    int power, int tickPower, RiteWeatherRequirement weather, List<Integer> timeRange,
                     List<ResourceKey<Level>> dimensions, RiteFactory factory) {
         this.items = items;
         this.shapes = shapes;
@@ -89,7 +88,7 @@ public class RiteType implements Comparable<RiteType> {
         long time = level.getDayTime() % Level.TICKS_PER_DAY;
         if(time < timeRange.getFirst())
             return false;
-        if(time > timeRange.getSecond())
+        if(time > timeRange.getLast())
             return false;
 
         for(Entry<Holder<CircleMagicShape>, Block> entry : shapes.entrySet()) {
@@ -154,7 +153,7 @@ public class RiteType implements Comparable<RiteType> {
         return weather;
     }
 
-    public Pair<Integer, Integer> getTimeRange() {
+    public List<Integer> getTimeRange() {
         return timeRange;
     }
 

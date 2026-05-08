@@ -1,14 +1,17 @@
 {
-  "items": [
-    { "id": "enchanted:taglock", "count": 1 },
-    { "id": "enchanted:exhale_of_the_horned_one", "count": 1 },
-    { "id": "enchanted:brew_of_the_grotesque", "count": 1 },
-    { "id": "enchanted:demonic_blood", "count": 1 },
-    { "id": "minecraft:blaze_rod", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:nether_chalk"
-  },
-  "power": 2000,
-  "factory": { "type": "enchanted:apply_curse", "curse": "enchanted:overheating" }
+    "items": [
+        { "id": "enchanted:taglock", "count": 1 },
+        { "id": "enchanted:exhale_of_the_horned_one", "count": 1 },
+        { "id": "enchanted:brew_of_the_grotesque", "count": 1 },
+        { "id": "enchanted:demonic_blood", "count": 1 },
+        { "id": "minecraft:blaze_rod", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:nether_chalk"
+    },
+    "power": 2000,
+    "factory": {
+        "type": "enchanted:apply_curse",
+        "curse": "enchanted:overheating"
+    }
 }

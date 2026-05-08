@@ -74,7 +74,6 @@ public class EItems {
 	public static final Supplier<Item> CONDENSED_FEAR = registerItem("condensed_fear");
 	public static final Supplier<Item> CREEPER_HEART = register("creeper_heart", () -> new CreeperHeartItem(props()));
 	public static final Supplier<Item> DEMONIC_BLOOD = registerItem("demonic_blood");
-	public static final Supplier<Item> DEMON_HEART = registerItem("demon_heart");
 	public static final Supplier<Item> DIAMOND_VAPOUR = registerItem("diamond_vapour");
 	public static final Supplier<BlockItem> DISTILLERY = registerBlock("distillery", EBlocks.DISTILLERY);
 	public static final Supplier<Item> DROP_OF_LUCK = registerItem("drop_of_luck");

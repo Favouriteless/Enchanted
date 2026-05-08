@@ -1,12 +1,12 @@
 {
-  "items": [
-    { "id": "minecraft:obsidian", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:ritual_chalk"
-  },
-  "power": 1000,
-  "tick_power": 6,
-  "factory": { "type": "enchanted:protection", "radius": 4, "duration": 1200, "blocks_players": true }
+    "items": [
+        { "id": "minecraft:obsidian", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:ritual_chalk"
+    },
+    "power": 1000,
+    "tick_power": 6,
+    "factory": { "type": "enchanted:protection", "radius": 4, "duration": 1200, "blocks_players": true }
 }

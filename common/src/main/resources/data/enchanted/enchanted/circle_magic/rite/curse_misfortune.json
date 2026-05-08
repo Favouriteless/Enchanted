@@ -1,14 +1,17 @@
 {
-  "items": [
-    { "id": "enchanted:taglock", "count": 1 },
-    { "id": "enchanted:exhale_of_the_horned_one", "count": 1 },
-    { "id": "enchanted:brew_of_the_grotesque", "count": 1 },
-    { "id": "minecraft:gunpowder", "count": 1 },
-    { "id": "minecraft:fermented_spider_eye", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:nether_chalk"
-  },
-  "power": 2000,
-  "factory": { "type": "enchanted:apply_curse", "curse": "enchanted:misfortune" }
+    "items": [
+        { "id": "enchanted:taglock", "count": 1 },
+        { "id": "enchanted:exhale_of_the_horned_one", "count": 1 },
+        { "id": "enchanted:brew_of_the_grotesque", "count": 1 },
+        { "id": "minecraft:gunpowder", "count": 1 },
+        { "id": "minecraft:fermented_spider_eye", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:nether_chalk"
+    },
+    "power": 2000,
+    "factory": {
+        "type": "enchanted:apply_curse",
+        "curse": "enchanted:misfortune"
+    }
 }

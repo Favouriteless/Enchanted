@@ -1,6 +1,7 @@
 package net.favouriteless.enchanted.common.blocks.crops;
 
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -8,12 +9,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
+import java.util.function.Supplier;
+
 public class CropBlockAgeFive extends CropBlock {
 
     public static final IntegerProperty AGE_FIVE = IntegerProperty.create("age", 0, 4);
 
-    public CropBlockAgeFive(Properties properties) {
+    private final Supplier<? extends ItemLike> seedItem;
+
+    public CropBlockAgeFive(Supplier<? extends ItemLike> seedItem, Properties properties) {
         super(properties);
+        this.seedItem = seedItem;
     }
 
     @Override
@@ -34,6 +40,11 @@ public class CropBlockAgeFive extends CropBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE_FIVE);
+    }
+
+    @Override
+    protected ItemLike getBaseSeedId() {
+        return seedItem.get();
     }
 
 }

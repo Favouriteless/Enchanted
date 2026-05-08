@@ -32,6 +32,7 @@ public class KettleRecipeBuilder {
         private final ItemStack result;
         private final int power;
 
+        private boolean requiresBottle = false;
         private int cookColour = 0x2D155E;
         private int finalColour = 0x4A1AAD;
 
@@ -63,6 +64,11 @@ public class KettleRecipeBuilder {
             return this;
         }
 
+        public Builder requiresBottle() {
+            requiresBottle = true;
+            return this;
+        }
+
         @Override
         @NotNull
         public Item getResult() {
@@ -71,7 +77,7 @@ public class KettleRecipeBuilder {
 
         @Override
         public void save(RecipeOutput output, ResourceLocation id) {
-            output.accept(id, new KettleRecipe(inputs, result, power, cookColour, finalColour), null);
+            output.accept(id, new KettleRecipe(inputs, result, power, requiresBottle, cookColour, finalColour), null);
         }
 
     }

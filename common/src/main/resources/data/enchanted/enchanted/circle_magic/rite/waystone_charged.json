@@ -1,13 +1,16 @@
 {
-  "items": [
-    { "id": "enchanted:waystone", "count": 1 },
-    { "id": "enchanted:ender_dew", "count": 1 },
-    { "id": "enchanted:wood_ash", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 },
-    { "id": "minecraft:glowstone_dust", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "factory": { "type": "enchanted:location_bound_create_item", "items": [ { "id": "enchanted:bound_waystone", "count": 1 } ] }
+    "items": [
+        { "id": "enchanted:waystone", "count": 1 },
+        { "id": "enchanted:ender_dew", "count": 1 },
+        { "id": "enchanted:wood_ash", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 },
+        { "id": "minecraft:glowstone_dust", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "factory": {
+        "type": "enchanted:location_bound_create_item",
+        "items": [ { "id": "enchanted:bound_waystone",  "count": 1 } ]
+    }
 }

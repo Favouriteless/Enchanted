@@ -1,11 +1,11 @@
 {
-  "items": [
-    { "id": "minecraft:iron_axe", "count": 1 },
-    { "id": "enchanted:quicklime", "count": 1 },
-    { "id": "enchanted:attuned_stone_charged", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "factory": { "type": "enchanted:total_eclipse" }
+    "items": [
+        { "id": "minecraft:iron_axe", "count": 1 },
+        { "id": "enchanted:quicklime", "count": 1 },
+        { "id": "enchanted:attuned_stone_charged", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "factory": { "type": "enchanted:total_eclipse" }
 }

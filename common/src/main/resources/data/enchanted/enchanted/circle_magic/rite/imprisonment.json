@@ -1,12 +1,12 @@
 {
-  "items": [
-    { "id": "minecraft:slime_ball", "count": 1 },
-    { "id": "minecraft:redstone", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "power": 500,
-  "tick_power": 3,
-  "factory": { "type": "enchanted:imprisonment" }
+    "items": [
+        { "id": "minecraft:slime_ball", "count": 1 },
+        { "id": "minecraft:redstone", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "power": 500,
+    "tick_power": 3,
+    "factory": { "type": "enchanted:imprisonment" }
 }

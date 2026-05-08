@@ -1,13 +1,13 @@
 {
-  "items": [
-    { "id": "enchanted:waystone", "count": 1 },
-    { "id": "enchanted:taglock", "count": 1 },
-    { "id": "enchanted:ender_dew", "count": 1 },
-    { "id": "minecraft:iron_axe", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:medium_circle": "enchanted:otherwhere_chalk"
-  },
-  "power": 3000,
-  "factory": { "type": "enchanted:summon_entity" }
+    "items": [
+        { "id": "enchanted:waystone", "count": 1 },
+        { "id": "enchanted:taglock", "count": 1 },
+        { "id": "enchanted:ender_dew", "count": 1 },
+        { "id": "minecraft:iron_axe", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:medium_circle": "enchanted:otherwhere_chalk"
+    },
+    "power": 3000,
+    "factory": { "type": "enchanted:summon_entity" }
 }

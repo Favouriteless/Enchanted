@@ -29,6 +29,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -204,9 +205,17 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
      *
      * @return The {@link ItemStack} removed from the kettle.
      */
-    public ItemStack takeItem(boolean simulate) {
+    public ItemStack takeItem(ItemStack stack, boolean simulate) {
         if(result.isEmpty())
             return ItemStack.EMPTY;
+
+        if(!recipes.isEmpty() && recipes.getFirst().value().requiresBottle()) {
+            if(!stack.is(Items.GLASS_BOTTLE))
+                return ItemStack.EMPTY;
+
+            if(!simulate)
+                stack.shrink(1);
+        }
 
         ItemStack out = takeItemNoUpdate(simulate);
         if(!simulate)

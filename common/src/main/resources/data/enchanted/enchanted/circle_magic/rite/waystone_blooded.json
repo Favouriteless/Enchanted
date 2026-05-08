@@ -1,14 +1,17 @@
 {
-  "items": [
-    { "id": "enchanted:waystone", "count": 1 },
-    { "id": "enchanted:ender_dew", "count": 1 },
-    { "id": "enchanted:taglock", "count": 1 },
-    { "id": "minecraft:slime_ball", "count": 1 },
-    { "id": "minecraft:snowball", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:ritual_chalk"
-  },
-  "power": 500,
-  "factory": { "type": "enchanted:entity_bound_create_item", "items": [ { "id": "enchanted:blooded_waystone", "count": 1 } ] }
+    "items": [
+        { "id": "enchanted:waystone", "count": 1 },
+        { "id": "enchanted:ender_dew", "count": 1 },
+        { "id": "enchanted:taglock", "count": 1 },
+        { "id": "minecraft:slime_ball", "count": 1 },
+        { "id": "minecraft:snowball", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:ritual_chalk"
+    },
+    "power": 500,
+    "factory": {
+        "type": "enchanted:entity_bound_create_item",
+        "items": [ { "id": "enchanted:blooded_waystone", "count": 1 } ]
+    }
 }

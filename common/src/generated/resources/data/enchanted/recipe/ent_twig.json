@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "enchanted:breath_of_the_goddess"
+    },
+    {
+      "item": "enchanted:anointing_paste"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "enchanted:ent_twig"
+  }
+}

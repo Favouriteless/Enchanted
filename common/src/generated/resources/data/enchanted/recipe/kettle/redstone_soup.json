@@ -29,6 +29,7 @@
     }
   ],
   "power": 1000,
+  "requires_bottle": true,
   "result": {
     "count": 1,
     "id": "enchanted:redstone_soup"

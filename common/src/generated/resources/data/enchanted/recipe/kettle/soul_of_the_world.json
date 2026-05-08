@@ -34,6 +34,7 @@
     }
   ],
   "power": 4000,
+  "requires_bottle": true,
   "result": {
     "count": 2,
     "id": "enchanted:soul_of_the_world"

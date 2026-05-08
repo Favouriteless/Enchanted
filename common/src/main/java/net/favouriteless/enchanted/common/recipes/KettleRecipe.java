@@ -25,6 +25,7 @@ public class KettleRecipe implements Recipe<ListInput> {
             ItemStack.CODEC.listOf().fieldOf("ingredients").forGetter(recipe -> recipe.inputs),
             ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
             Codec.INT.optionalFieldOf("power", 0).forGetter(recipe -> recipe.power),
+            Codec.BOOL.optionalFieldOf("requires_bottle", false).forGetter(recipe -> recipe.requiresBottle),
             EExtraCodecs.HEX_INT.optionalFieldOf("cook_colour", 0x2D155E).forGetter(recipe -> recipe.cookColour),
             EExtraCodecs.HEX_INT.optionalFieldOf("final_colour", 0x4A1AAD).forGetter(recipe -> recipe.finalColour)
     ).apply(instance, KettleRecipe::new));
@@ -33,6 +34,7 @@ public class KettleRecipe implements Recipe<ListInput> {
             ItemStack.LIST_STREAM_CODEC, recipe -> recipe.inputs,
             ItemStack.STREAM_CODEC, recipe -> recipe.result,
             ByteBufCodecs.INT, recipe -> recipe.power,
+            ByteBufCodecs.BOOL, recipe -> recipe.requiresBottle,
             ByteBufCodecs.INT, recipe -> recipe.cookColour,
             ByteBufCodecs.INT, recipe -> recipe.finalColour,
             KettleRecipe::new
@@ -41,15 +43,17 @@ public class KettleRecipe implements Recipe<ListInput> {
     protected final List<ItemStack> inputs;
     protected final ItemStack result;
     protected final int power;
+    protected final boolean requiresBottle;
 
     protected final int cookColour;
     protected final int finalColour;
 
-    public KettleRecipe(List<ItemStack> inputs, ItemStack result, int power, int cookColour, int finalColour) {
+    public KettleRecipe(List<ItemStack> inputs, ItemStack result, int power, boolean requiresBottle, int cookColour, int finalColour) {
         super();
         this.inputs = inputs;
         this.result = result;
         this.power = power;
+        this.requiresBottle = requiresBottle;
         this.cookColour = cookColour;
         this.finalColour = finalColour;
     }
@@ -95,6 +99,10 @@ public class KettleRecipe implements Recipe<ListInput> {
 
     public int getFinalColour() {
         return finalColour;
+    }
+
+    public boolean requiresBottle() {
+        return requiresBottle;
     }
 
     @Override

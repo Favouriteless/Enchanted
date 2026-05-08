@@ -34,6 +34,7 @@
     }
   ],
   "power": 2000,
+  "requires_bottle": true,
   "result": {
     "count": 1,
     "id": "enchanted:happenstance_oil"

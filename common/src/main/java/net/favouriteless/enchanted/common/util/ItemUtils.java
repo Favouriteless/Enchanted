@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -86,6 +87,17 @@ public class ItemUtils {
 		entity.setThrower(player);
 		player.level().addFreshEntity(player);
 	}
+
+
+    public static void giveOrDrop(Player player, ItemStack item, EquipmentSlot slot) {
+        ItemStack current = player.getItemBySlot(slot);
+        if(current.isEmpty())
+            player.setItemSlot(slot, item);
+        else if(ItemStack.isSameItemSameComponents(current, item) && current.getCount() + item.getCount() < current.getMaxStackSize())
+            current.grow(item.getCount());
+        else
+            giveOrDrop(player, item);
+    }
 
 	public static CompoundTag saveAllItems(CompoundTag tag, List<ItemStack> items, HolderLookup.Provider registries) {
 		ListTag list = new ListTag();

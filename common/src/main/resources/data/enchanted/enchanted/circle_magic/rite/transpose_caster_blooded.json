@@ -1,9 +1,9 @@
 {
-  "items": [
-    { "id": "enchanted:blooded_waystone", "count": 1 }
-  ],
-  "shapes": {
-    "enchanted:small_circle": "enchanted:otherwhere_chalk"
-  },
-  "factory": { "type": "enchanted:transpose_caster", "target": "entity" }
+    "items": [
+        { "id": "enchanted:blooded_waystone", "count": 1 }
+    ],
+    "shapes": {
+        "enchanted:small_circle": "enchanted:otherwhere_chalk"
+    },
+    "factory": { "type": "enchanted:transpose_caster",  "target": "entity" }
 }

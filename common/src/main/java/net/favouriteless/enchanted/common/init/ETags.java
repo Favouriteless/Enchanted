@@ -51,11 +51,13 @@ public class ETags {
     public static class Items {
         public static final TagKey<Item> ALDER_LOGS = createItemTag("alder_logs");
         public static final TagKey<Item> ARMORS = createItemTag("armors");
-        public static final TagKey<Item> ARMOR_POPPET_BLACKLIST = createItemTag("armor_poppet_blacklist");
+        public static final TagKey<Item> ARMOUR_POPPET_BLACKLIST = createItemTag("armour_poppet_blacklist");
+        public static final TagKey<Item> ARMOUR_POPPET_WHITELIST = createItemTag("armour_poppet_whitelist");
         public static final TagKey<Item> CHALICES = createItemTag("chalices");
         public static final TagKey<Item> CHALKS = createItemTag("chalks");
         public static final TagKey<Item> LEAVES = createItemTag("leaves");
         public static final TagKey<Item> FENCE_GATES = createItemTag("fence_gates");
+        public static final TagKey<Item> FOODS_VEGETABLES = createItemTag("foods/vegetables");
         public static final TagKey<Item> HAWTHORN_LOGS = createItemTag("hawthorn_logs");
         public static final TagKey<Item> LOGS = createItemTag("logs");
         public static final TagKey<Item> PLANKS = createItemTag("planks");

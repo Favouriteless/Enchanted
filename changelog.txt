@@ -1,6 +1,1 @@
-IMPORTANT: Legacy poppet and poppet shelf code has been rewritten from scratch. This update will delete the contents of poppet shelves, move the poppets to a different inventory before updating if you want to keep them.
-IMPORTANT: Updating to Modopedia 1.1.10 is recommended
-
-- CHANGED: Slight alterations to phrasing on various book pages to improve clarity.
-- CHANGED: Increased resistance duration on applicable poppets by up to 3 times.
-- CHANGED: Updated effects for voodoo protection poppets.
+- FIXED (?): Armour poppets can potentially save non-armour items under some conditions.

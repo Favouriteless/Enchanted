@@ -14,19 +14,11 @@
       "required": false
     },
     {
-      "id": "#c:hoes",
+      "id": "#c:tools/shield",
       "required": false
     },
     {
-      "id": "#c:shears",
-      "required": false
-    },
-    {
-      "id": "#c:shields",
-      "required": false
-    },
-    {
-      "id": "#c:spears",
+      "id": "#c:tools/spear",
       "required": false
     }
   ]

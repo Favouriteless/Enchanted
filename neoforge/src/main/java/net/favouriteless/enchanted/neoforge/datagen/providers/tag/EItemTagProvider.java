@@ -1,13 +1,12 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.tag;
 
 import net.favouriteless.enchanted.common.Enchanted;
+import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.ETags.Blocks;
-import net.favouriteless.enchanted.common.init.EItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -50,6 +49,8 @@ public class EItemTagProvider extends ItemTagsProvider {
         copy(Blocks.WOODEN_STAIRS, ETags.Items.WOODEN_STAIRS);
 
         // Other tags
+        tag(ETags.Items.ARMOUR_POPPET_WHITELIST)
+                .addTag(Tags.Items.ARMORS);
         tag(ETags.Items.ARMORS)
                 .add(EItems.EARMUFFS.get(), Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE,
                         Items.LEATHER_HELMET, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE,
@@ -58,7 +59,7 @@ public class EItemTagProvider extends ItemTagsProvider {
                         Items.IRON_HELMET, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE,
                         Items.DIAMOND_HELMET, Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE,
                         Items.NETHERITE_HELMET)
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "armors"));
+                .addOptionalTag(Tags.Items.ARMORS.location());
         tag(ETags.Items.RAW_FOODS)
                 .add(Items.BEEF, Items.KELP, Items.POTATO, Items.CHORUS_FRUIT, Items.CHICKEN, Items.COD, Items.MUTTON,
                         Items.PORKCHOP, Items.RABBIT, Items.SALMON);
@@ -71,19 +72,19 @@ public class EItemTagProvider extends ItemTagsProvider {
         tag(ETags.Items.TOOL_POPPET_WHITELIST)
                 .addTags(ItemTags.SWORDS, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES, ItemTags.HOES)
                 .addOptionalTag(Tags.Items.TOOLS)
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "tools"))
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "hoes"))
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "shears"))
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "shields"))
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "spears"));
+                .addOptionalTag(Tags.Items.TOOLS.location())
+                .addOptionalTag(Tags.Items.TOOLS_SHIELD.location())
+                .addOptionalTag(Tags.Items.TOOLS_SPEAR.location());
         tag(ETags.Items.WITCH_OVEN_BLACKLIST)
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "ores"))
-                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "raw_materials"));
+                .addOptionalTag(Tags.Items.ORES.location())
+                .addOptionalTag(Tags.Items.RAW_MATERIALS.location());
     }
 
     public void addVanillaTags(Provider provider) {
         tag(ItemTags.FENCE_GATES)
                 .addTag(ETags.Items.FENCE_GATES);
+        tag(ItemTags.HEAD_ARMOR)
+                .add(EItems.EARMUFFS.get());
         tag(ItemTags.LEAVES)
                 .addTag(ETags.Items.LEAVES);
         tag(ItemTags.LOGS)

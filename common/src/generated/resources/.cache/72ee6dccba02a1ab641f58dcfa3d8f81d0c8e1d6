@@ -1,6 +1,7 @@
-// 1.21.1	2025-06-11T23:26:48.2325232	Tags for minecraft:item mod id enchanted
+// 1.21.1	2026-05-23T06:57:29.1231084	Tags for minecraft:item mod id enchanted
 123a7429e38219f04121d70ae9d6e353a3c61d48 data/enchanted/tags/item/alder_logs.json
 ac41ab0b8b50a71598c8941992e2e888088cc931 data/enchanted/tags/item/armors.json
+b84dad76b0a8c397cb5f712f9170a9f92090cd4a data/enchanted/tags/item/armour_poppet_whitelist.json
 e7ff58a601c24e056dc5521f018555f7e596ec4e data/enchanted/tags/item/chalices.json
 cc0b47d4892d7d2ed9f5813df5bc1d69754bd3ef data/enchanted/tags/item/chalks.json
 11c11e8d3eb37d55c44dfbad3c5d2fc892bd4fd2 data/enchanted/tags/item/fence_gates.json
@@ -16,7 +17,7 @@ b1bf603e14a40fa231fcff7776962ebc9b20d72e data/enchanted/tags/item/rowan_logs.jso
 f3f1ba69836a2f3b765ad58fd489fbfe29dc2227 data/enchanted/tags/item/swords.json
 8afe3314b72b43f9c1df12f4603ba4adcac78eeb data/enchanted/tags/item/tools.json
 181fea80d046f4ab0fe3aa89579ae39eb6bc9c87 data/enchanted/tags/item/tool_poppet_blacklist.json
-531f7ff71be1bfb3dd8f43b48429635694d53640 data/enchanted/tags/item/tool_poppet_whitelist.json
+1d06a2f2b8125b18116502a9ef19dad08b76c606 data/enchanted/tags/item/tool_poppet_whitelist.json
 dabc65ca5a83023dd1609d9a0f8602348c139aa2 data/enchanted/tags/item/witch_oven_blacklist.json
 09fa319e4f951e64d631d30587a55495dc4c74a4 data/enchanted/tags/item/wooden_buttons.json
 0a3dba649516045ab1e81041515bc9f491c3e1c7 data/enchanted/tags/item/wooden_fences.json
@@ -24,6 +25,7 @@ dabc65ca5a83023dd1609d9a0f8602348c139aa2 data/enchanted/tags/item/witch_oven_bla
 08b6def3e9de617893655d4017801562f26b4bb1 data/enchanted/tags/item/wooden_slabs.json
 990b5a153ba74d4169b814216548205322d8dc22 data/enchanted/tags/item/wooden_stairs.json
 db79e7fde09cdd640b1b64f690b5471b2911d128 data/minecraft/tags/item/fence_gates.json
+ec8ef773d0a5358e96f85364e18e71a24bcd68fe data/minecraft/tags/item/head_armor.json
 115f6d9fa2c6915eed7935e8b664a6a502fc0624 data/minecraft/tags/item/leaves.json
 6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/item/logs.json
 6300f7d8da269a5dcee09988742bf91315883e2a data/minecraft/tags/item/logs_that_burn.json

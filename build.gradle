@@ -7,7 +7,7 @@ subprojects {
     repositories {
         maven {
             name = "Favouriteless Releases"
-            url = "https://maven.favouriteless.net/releases"
+            url = "https://maven.favouriteless.dev/releases"
         }
 
         maven {

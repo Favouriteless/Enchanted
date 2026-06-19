@@ -1,2 +1,1 @@
-- CHANGED: Various entity targetting rites now choose their position on execution, rather than on cast.
-- FIXED: EntityBoundCreateItemRite can crash and/or not find its target.
+- FIXED: JEI/EMI's recipe transfer button does not behave correctly with distillery recipes.

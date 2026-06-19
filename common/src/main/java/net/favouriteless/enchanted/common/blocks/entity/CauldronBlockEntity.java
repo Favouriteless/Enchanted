@@ -208,13 +208,13 @@ public abstract class CauldronBlockEntity<T extends CauldronTypeRecipe> extends 
 
 			if(!itemOut.isEmpty()) {
 				if(player != null)
-					PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : new ItemStack(itemOut.getItem()));
+					PlayerInventoryHelper.tryGiveItem(player, isFailed ? new ItemStack(Items.WATER_BUCKET) : itemOut.split(1));
 				else
-					level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), new ItemStack(itemOut.getItem())));
+					level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), itemOut.split(1)));
 
 				level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
-			itemOut.shrink(1);
+
 			if(itemOut.isEmpty()) {
 				inventory.clear();
 				potentialRecipes.clear();

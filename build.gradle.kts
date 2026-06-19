@@ -20,7 +20,7 @@ subprojects {
         maven("https://dvs1.progwml6.com/files/maven/") { name = "Progwml6 Maven" }
         maven("https://maven.architectury.dev/") { name = "Architectury Maven" }
         maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") { name = "Geckolib Maven" }
-        maven("https://maven.favouriteless.net/releases") { name = "Favouriteless Maven" }
+        maven("https://maven.favouriteless.dev/releases") { name = "Favouriteless Maven" }
     }
 
 }

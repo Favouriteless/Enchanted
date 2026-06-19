@@ -144,7 +144,7 @@ tasks.register<TaskPublishCurseForge>("publishToCurseForge") {
         "patchouli-fabric",
         "smartbrainlib",
         "stateobserver",
-        "forge-config-api-port-fabric"
+        "forge-config-api-port"
     )
 
     //debugMode = true

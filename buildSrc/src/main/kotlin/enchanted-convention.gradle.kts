@@ -111,7 +111,7 @@ publishing {
         }
         else maven {
             name = "FavouritelessReleases"
-            url = uri("https://maven.favouriteless.net/releases")
+            url = uri("https://maven.favouriteless.dev/releases")
 
             credentials {
                 username = System.getenv("FAVOURITELESS_MAVEN_USER")

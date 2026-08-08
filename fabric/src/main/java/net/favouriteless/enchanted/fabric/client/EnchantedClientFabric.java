@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.favouriteless.enchanted.client.ClientConfig;
+import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.init.ClientRegistry;
 import net.favouriteless.enchanted.client.init.EShaders;
-import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EBlocks;
@@ -43,7 +43,7 @@ public class EnchantedClientFabric implements ClientModInitializer {
         CoreShaderRegistrationCallback.EVENT.register(context -> EShaders.load((name, format, callback) -> {
             try {
                 context.register(Enchanted.id(name), format, callback);
-            } catch(IOException e) {
+            } catch (IOException e) {
                 Enchanted.LOG.error("Failed to load ShaderInstance: {}", name);
             }
         }));
@@ -56,7 +56,8 @@ public class EnchantedClientFabric implements ClientModInitializer {
     }
 
     private static void registerBlockRenderTypes() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
+        BlockRenderLayerMap.INSTANCE.putBlocks(
+                RenderType.cutout(),
                 EBlocks.GOLDEN_CHALK.get(),
                 EBlocks.RITUAL_CHALK.get(),
                 EBlocks.NETHER_CHALK.get(),

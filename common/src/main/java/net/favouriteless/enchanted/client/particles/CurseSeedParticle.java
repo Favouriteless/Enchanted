@@ -11,42 +11,43 @@ import net.minecraft.util.Mth;
 
 public class CurseSeedParticle extends NoRenderParticle {
 
-	private static final double RADIUS = 1.5D;
-	private static final double Y_INCREMENT = 0.2D;
-	private double yOffset = 0.0D;
+    private static final double RADIUS = 1.5D;
+    private static final double Y_INCREMENT = 0.2D;
+    private double yOffset = 0.0D;
 
-	protected CurseSeedParticle(ClientLevel level, double x, double y, double z) {
-		super(level, x, y, z);
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.lifetime = 20;
-	}
+    protected CurseSeedParticle(ClientLevel level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.lifetime = 20;
+    }
 
-	@Override
-	public void tick() {
-		if(age++ < lifetime) {
-			float angle = age * 20 * Mth.DEG_TO_RAD;
-			for(int i = 0; i < 20; i += 5) {
-				double cx = x + Mth.sin(angle+i) * RADIUS;
-				double cy = y + Math.random() + yOffset;
-				double cz = z + Mth.cos(angle+i) * RADIUS;
+    @Override
+    public void tick() {
+        if (age++ < lifetime) {
+            float angle = age * 20 * Mth.DEG_TO_RAD;
+            for (int i = 0; i < 20; i += 5) {
+                double cx = x + Mth.sin(angle + i) * RADIUS;
+                double cy = y + Math.random() + yOffset;
+                double cz = z + Mth.cos(angle + i) * RADIUS;
 
-				level.addParticle(ParticleTypes.SOUL, cx, cy, cz, 0.0D, 0.0D, 0.0D);
-			}
-			yOffset += Y_INCREMENT;
-		}
-		else
-			remove();
-	}
+                level.addParticle(ParticleTypes.SOUL, cx, cy, cz, 0.0D, 0.0D, 0.0D);
+            }
+            yOffset += Y_INCREMENT;
+        } else {
+            remove();
+        }
+    }
 
-	public static class Factory implements ParticleProvider<SimpleParticleType> {
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
 
-		public Factory(SpriteSet sprites) {}
+        public Factory(SpriteSet sprites) {
+        }
 
-		public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			return new CurseSeedParticle(level, x, y, z);
-		}
-	}
+        public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new CurseSeedParticle(level, x, y, z);
+        }
+    }
 
 }

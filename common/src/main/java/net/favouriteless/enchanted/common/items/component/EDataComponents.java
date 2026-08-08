@@ -25,6 +25,7 @@ public class EDataComponents {
         return EServices.REGISTRY.register(BuiltInRegistries.DATA_COMPONENT_TYPE, name, () -> builder.apply(DataComponentType.builder()).build());
     }
 
-    public static void load() {} // Method which exists purely to load the class.
+    public static void load() {
+    } // Method which exists purely to load the class.
 
 }

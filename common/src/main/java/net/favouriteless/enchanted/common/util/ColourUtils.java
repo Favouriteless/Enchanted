@@ -34,12 +34,13 @@ public class ColourUtils {
         float s = max != 0 ? d / max : 0;
         float h = 0;
 
-        if(max == r)
+        if (max == r) {
             h = (60 * (g - b) / d);
-        else if(max == g)
+        } else if (max == g) {
             h = (60 * (b - r) / d) + 120;
-        else if(max == b)
+        } else if (max == b) {
             h = (60 * (r - g) / d) + 240;
+        }
 
         return new AHSV(a, h, s, max);
     }
@@ -54,7 +55,7 @@ public class ColourUtils {
         float r, g, b;
         r = g = b = m;
 
-        switch((int)Math.floor(h)) {
+        switch ((int) Math.floor(h)) {
             case 0:
                 r += c;
                 g += x;
@@ -75,9 +76,8 @@ public class ColourUtils {
                 b += x;
         }
 
-        return new ARGB((int)(a * 255.0F + 0.5F), (int)(r * 255 + 0.5F), (int)(g * 255 + 0.5F), (int)(b * 255 + 0.5F));
+        return new ARGB((int) (a * 255.0F + 0.5F), (int) (r * 255 + 0.5F), (int) (g * 255 + 0.5F), (int) (b * 255 + 0.5F));
     }
-
 
 
     public record ARGB(int a, int r, int g, int b) {}

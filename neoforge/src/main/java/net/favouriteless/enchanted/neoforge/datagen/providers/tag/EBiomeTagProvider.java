@@ -23,9 +23,11 @@ public class EBiomeTagProvider extends BiomeTagsProvider {
 
     public void addEnchantedTags(Provider provider) {
         tag(ETags.Biomes.OVERHEATING_BIOMES)
-                .add(Biomes.BADLANDS, Biomes.BAMBOO_JUNGLE, Biomes.DESERT, Biomes.ERODED_BADLANDS, Biomes.JUNGLE,
+                .add(
+                        Biomes.BADLANDS, Biomes.BAMBOO_JUNGLE, Biomes.DESERT, Biomes.ERODED_BADLANDS, Biomes.JUNGLE,
                         Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.SPARSE_JUNGLE, Biomes.WINDSWEPT_SAVANNA,
-                        Biomes.WOODED_BADLANDS);
+                        Biomes.WOODED_BADLANDS
+                );
     }
 
 }

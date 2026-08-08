@@ -27,7 +27,7 @@ public class PoppetReference {
     /**
      * Attempt to consume the referenced poppet and notify clients about the changes.
      *
-     * @param player Player the poppet is activating for.
+     * @param player    Player the poppet is activating for.
      * @param predicate Predicate to be run with the referenced poppet. If the item should be consumed/updated, return
      *                  true. The provided itemstack is a copy, treat it like a transaction.
      *
@@ -36,18 +36,21 @@ public class PoppetReference {
     public boolean tryConsume(ServerPlayer player, Predicate<ItemStack> predicate) {
         ItemStack copy = stack.copy();
 
-        if(predicate.test(copy)) {
+        if (predicate.test(copy)) {
             copy.setDamageValue(copy.getDamageValue() + 1);
-            if(copy.getDamageValue() >= copy.getMaxDamage())
+            if (copy.getDamageValue() >= copy.getMaxDamage()) {
                 copy.shrink(1);
+            }
 
             ServerLevel level = player.server.getLevel(shelf.dimension());
             PoppetShelfInventory inv = PoppetShelfManager.get(level).get(shelf);
 
-            if(inv != null)
+            if (inv != null) {
                 inv.setItem(slot, copy);
-            if(level.getBlockEntity(shelf.pos()) instanceof PoppetShelfBlockEntity be)
+            }
+            if (level.getBlockEntity(shelf.pos()) instanceof PoppetShelfBlockEntity be) {
                 be.updateBlock();
+            }
 
             PoppetHelper.doTriggerAnimation(player, stack.getItem());
             return true;

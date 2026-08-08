@@ -21,9 +21,9 @@ public class CauldronCookParticle extends TextureSheetParticle {
     protected CauldronCookParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed,
                                    double zSpeed, float red, float green, float blue) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min(red + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
-        this.gCol = Math.min(green + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
-        this.bCol = Math.min(blue + (RandomUtils.nextInt(40) - 20)/255F, 1.0F);
+        this.rCol = Math.min(red + (RandomUtils.nextInt(40) - 20) / 255F, 1.0F);
+        this.gCol = Math.min(green + (RandomUtils.nextInt(40) - 20) / 255F, 1.0F);
+        this.bCol = Math.min(blue + (RandomUtils.nextInt(40) - 20) / 255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.6F);
         this.age = 0;
@@ -46,12 +46,13 @@ public class CauldronCookParticle extends TextureSheetParticle {
         zo = z;
         if (age++ >= lifetime) {
             alpha -= 0.1F;
-            if(alpha <= 0)
+            if (alpha <= 0) {
                 remove();
+            }
         }
 
-        if(age >= circleStart) {
-            if(age == circleStart) { // Just started rotating
+        if (age >= circleStart) {
+            if (age == circleStart) { // Just started rotating
                 xd = 0;
                 yd = 0;
                 zd = 0;

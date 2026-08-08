@@ -106,12 +106,15 @@ public class ClientRegistry {
         Map<ResourceLocation, Block> shapes = stack.get(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get());
         Block block = shapes.get(id);
 
-        if(block == EBlocks.RITUAL_CHALK.get())
+        if (block == EBlocks.RITUAL_CHALK.get()) {
             return 0.3F;
-        if(block == EBlocks.NETHER_CHALK.get())
+        }
+        if (block == EBlocks.NETHER_CHALK.get()) {
             return 0.6F;
-        if(block == EBlocks.OTHERWHERE_CHALK.get())
+        }
+        if (block == EBlocks.OTHERWHERE_CHALK.get()) {
             return 0.9F;
+        }
         return 0.0F;
     }
 

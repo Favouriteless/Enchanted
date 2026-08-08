@@ -20,6 +20,7 @@ public class CauldronBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject jsonObject, RegistryOps<JsonElement> registryOps) {}
+    protected void build(JsonObject jsonObject, RegistryOps<JsonElement> registryOps) {
+    }
 
 }

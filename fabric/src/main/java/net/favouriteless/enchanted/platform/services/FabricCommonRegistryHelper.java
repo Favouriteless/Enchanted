@@ -34,58 +34,60 @@ import java.util.function.Supplier;
 
 public class FabricCommonRegistryHelper implements CommonRegistryHelper {
 
-	@Override
-	public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
-		T value = entry.get();
-		Registry.register(registry, Enchanted.id(name), value);
-		return () -> value;
-	}
+    @Override
+    public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
+        T value = entry.get();
+        Registry.register(registry, Enchanted.id(name), value);
+        return () -> value;
+    }
 
-	@Override
-	public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
-		return Registry.registerForHolder(registry, Enchanted.id(name), entry.get());
-	}
+    @Override
+    public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
+        return Registry.registerForHolder(registry, Enchanted.id(name), entry.get());
+    }
 
-	@Override
-	public <T extends AbstractContainerMenu, C> Supplier<MenuType<T>> registerMenu(String name, TriFunction<Integer, Inventory, C, T> factory, StreamCodec<? super RegistryFriendlyByteBuf, C> codec) {
-		return register(BuiltInRegistries.MENU, name, () -> new ExtendedScreenHandlerType<>(factory::apply, codec));
-	}
+    @Override
+    public <T extends AbstractContainerMenu, C> Supplier<MenuType<T>> registerMenu(String name, TriFunction<Integer, Inventory, C, T> factory, StreamCodec<? super RegistryFriendlyByteBuf, C> codec) {
+        return register(BuiltInRegistries.MENU, name, () -> new ExtendedScreenHandlerType<>(factory::apply, codec));
+    }
 
-	@Override
-	public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, BiFunction<Integer, Inventory, T> factory) {
-		return register(BuiltInRegistries.MENU, name, () -> new MenuType<>(factory::apply, FeatureFlags.VANILLA_SET));
-	}
+    @Override
+    public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, BiFunction<Integer, Inventory, T> factory) {
+        return register(BuiltInRegistries.MENU, name, () -> new MenuType<>(factory::apply, FeatureFlags.VANILLA_SET));
+    }
 
-	@Override
-	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
-		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
-	}
+    @Override
+    public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
+    }
 
-	@Override
-	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemsGenerator) {
-		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name,
-				() -> FabricItemGroup.builder()
-						.title(Component.translatable(LangUtils.tab(name)))
-						.icon(iconSupplier)
-						.displayItems(itemsGenerator)
-						.build());
-	}
+    @Override
+    public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemsGenerator) {
+        return register(
+                BuiltInRegistries.CREATIVE_MODE_TAB, name,
+                () -> FabricItemGroup.builder()
+                                     .title(Component.translatable(LangUtils.tab(name)))
+                                     .icon(iconSupplier)
+                                     .displayItems(itemsGenerator)
+                                     .build()
+        );
+    }
 
-	@Override
-	public <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec) {
-		DynamicRegistries.register(key, codec);
-		return key;
-	}
+    @Override
+    public <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec) {
+        DynamicRegistries.register(key, codec);
+        return key;
+    }
 
-	@Override
-	public <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
-		DynamicRegistries.registerSynced(key, codec, networkCodec);
-		return key;
-	}
+    @Override
+    public <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
+        DynamicRegistries.registerSynced(key, codec, networkCodec);
+        return key;
+    }
 
-	@Override
-	public void setFlammable(Block block, int igniteOdds, int burnOdds) {
-		FlammableBlockRegistry.getDefaultInstance().add(block, igniteOdds, burnOdds);
-	}
+    @Override
+    public void setFlammable(Block block, int igniteOdds, int burnOdds) {
+        FlammableBlockRegistry.getDefaultInstance().add(block, igniteOdds, burnOdds);
+    }
 
 }

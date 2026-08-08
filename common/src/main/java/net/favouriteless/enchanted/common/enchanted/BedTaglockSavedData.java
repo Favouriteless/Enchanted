@@ -47,10 +47,11 @@ public class BedTaglockSavedData extends SavedData {
      * @return An instance of {@link BedTaglockSavedData} belonging to level.
      */
     public static BedTaglockSavedData get(Level level) {
-        if(level instanceof ServerLevel serverLevel)
+        if (level instanceof ServerLevel serverLevel) {
             return serverLevel.getDataStorage().computeIfAbsent(new Factory<>(BedTaglockSavedData::new, BedTaglockSavedData::load, null), NAME);
-        else
+        } else {
             throw new RuntimeException("Game attempted to load serverside taglock (bed) data from a clientside world.");
+        }
     }
 
     // -------------------- IMPLEMENTATION  DETAILS BELOW THIS POINT, NOT NEEDED FOR API USERS --------------------
@@ -63,8 +64,8 @@ public class BedTaglockSavedData extends SavedData {
         BedTaglockSavedData data = new BedTaglockSavedData();
         ListTag entryList = nbt.getList("entryList", Tag.TAG_COMPOUND);
 
-        for(Tag e : entryList) {
-            CompoundTag entryNbt = (CompoundTag)e; // This cast should be safe.
+        for (Tag e : entryList) {
+            CompoundTag entryNbt = (CompoundTag) e; // This cast should be safe.
             data.getEntry(BlockPos.of(entryNbt.getLong("key"))).deserialize(entryNbt);
         }
 
@@ -76,7 +77,7 @@ public class BedTaglockSavedData extends SavedData {
         ListTag list = new ListTag();
 
         entries.forEach((pos, data) -> {
-            if(data.getData() != null) {
+            if (data.getData() != null) {
                 CompoundTag entryTag = data.serialize();
                 entryTag.putLong("key", pos.asLong());
             }
@@ -87,12 +88,12 @@ public class BedTaglockSavedData extends SavedData {
     }
 
 
-
     public static class BedTaglockData implements ISerializable<CompoundTag> {
 
         private EntityRefData data = null;
 
-        private BedTaglockData() {}
+        private BedTaglockData() {
+        }
 
         @Override
         public CompoundTag serialize() {
@@ -104,8 +105,8 @@ public class BedTaglockSavedData extends SavedData {
         @Override
         public void deserialize(CompoundTag tag) {
             data = EntityRefData.CODEC.parse(NbtOps.INSTANCE, tag.get("data"))
-                    .resultOrPartial(e -> Enchanted.LOG.error("Tried to load invalid Taglock data: '{}'", e))
-                    .orElse(null);
+                                      .resultOrPartial(e -> Enchanted.LOG.error("Tried to load invalid Taglock data: '{}'", e))
+                                      .orElse(null);
         }
 
         public EntityRefData getData() {

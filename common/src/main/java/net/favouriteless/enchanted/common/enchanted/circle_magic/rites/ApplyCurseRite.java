@@ -2,9 +2,9 @@ package net.favouriteless.enchanted.common.enchanted.circle_magic.rites;
 
 import net.favouriteless.enchanted.api.curses.Curse.Type;
 import net.favouriteless.enchanted.api.curses.CurseManager;
-import net.favouriteless.enchanted.common.enchanted.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.api.familiars.FamiliarEntry;
 import net.favouriteless.enchanted.common.enchanted.familiars.EFamiliarTypes;
+import net.favouriteless.enchanted.common.enchanted.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,8 +20,9 @@ public class ApplyCurseRite extends Rite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        if(params.target == null)
+        if (params.target == null) {
             return cancel();
+        }
 
         FamiliarEntry familiar = FamiliarSavedData.get(level).getEntry(params.caster);
 

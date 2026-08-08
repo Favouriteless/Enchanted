@@ -18,7 +18,9 @@ import java.util.function.Supplier;
 @Mixin(EnchantedLog.class)
 public abstract class EnchantedLogMixin extends RotatedPillarBlock {
 
-    @Shadow @Final private Supplier<Block> stripped;
+    @Shadow
+    @Final
+    private Supplier<Block> stripped;
 
     public EnchantedLogMixin(Properties properties) {
         super(properties);
@@ -27,8 +29,9 @@ public abstract class EnchantedLogMixin extends RotatedPillarBlock {
     @Override
     public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
         ItemStack itemStack = context.getItemInHand();
-        if (!itemStack.canPerformAction(itemAbility))
+        if (!itemStack.canPerformAction(itemAbility)) {
             return null;
+        }
 
         return itemAbility == ItemAbilities.AXE_STRIP ? stripped.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)) : null;
     }

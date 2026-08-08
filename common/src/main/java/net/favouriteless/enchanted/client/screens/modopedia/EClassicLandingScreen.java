@@ -28,8 +28,9 @@ public class EClassicLandingScreen<T extends BookType & LockedViewProvider> exte
     @Override
     protected ScreenPage initFirstPage() {
         String rawLandingText = book.getRawLandingText();
-        if(rawLandingText != null)
+        if (rawLandingText != null) {
             rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
+        }
 
         int lineWidth = texture.pages().getFirst().width();
         int lineHeight = Minecraft.getInstance().font.lineHeight;
@@ -40,7 +41,7 @@ public class EClassicLandingScreen<T extends BookType & LockedViewProvider> exte
         FixedRectangle r = texture.titleBacker();
 
         Component title = this.title.copy().withStyle(ChatFormatting.BLACK);
-        int titleX = r.width() / 2 - font.width(title) / 2 ;
+        int titleX = r.width() / 2 - font.width(title) / 2;
         return new LandingScreenPage(this, title, Component.empty(), titleX, r.height() / 2 - 4, 10, landingText, 0, 0);
     }
 

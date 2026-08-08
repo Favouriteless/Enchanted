@@ -54,9 +54,9 @@ public class SpinningCategory extends AbstractRecipeCategory<SpinningRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SpinningRecipe recipe, IFocusGroup focuses) {
         List<ItemStack> inputs = recipe.getInputs();
-        for(int i = 0; i < inputs.size(); i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             builder.addSlot(RecipeIngredientRole.INPUT, SLOT_POSITIONS[i][0], SLOT_POSITIONS[i][1])
-                    .addIngredient(VanillaTypes.ITEM_STACK, inputs.get(i));
+                   .addIngredient(VanillaTypes.ITEM_STACK, inputs.get(i));
         }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 110, 25).addIngredient(VanillaTypes.ITEM_STACK, RecipeUtils.getResultItem(recipe));
     }
@@ -64,15 +64,15 @@ public class SpinningCategory extends AbstractRecipeCategory<SpinningRecipe> {
     @Override
     public void draw(SpinningRecipe recipe, IRecipeSlotsView slots, GuiGraphics graphics, double mouseX, double mouseY) {
         background.draw(graphics);
-        leftArrow.draw(graphics,7,16);
-        rightArrow.draw(graphics,44,16);
-        drawPowerCost(graphics,recipe);
+        leftArrow.draw(graphics, 7, 16);
+        rightArrow.draw(graphics, 44, 16);
+        drawPowerCost(graphics, recipe);
     }
 
     private void drawPowerCost(GuiGraphics graphics, SpinningRecipe recipe) {
         Minecraft mc = Minecraft.getInstance();
         String text = "Required Altar Power : " + recipe.getPower();
-        graphics.drawString(mc.font, text, getWidth()/2 - mc.font.width(text)/2, 65, Color.DARK_GRAY.getRGB(), false);
+        graphics.drawString(mc.font, text, getWidth() / 2 - mc.font.width(text) / 2, 65, Color.DARK_GRAY.getRGB(), false);
     }
 
 }

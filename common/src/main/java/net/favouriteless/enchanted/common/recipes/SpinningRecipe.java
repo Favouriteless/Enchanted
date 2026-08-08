@@ -20,7 +20,7 @@ import java.util.List;
 
 public class SpinningRecipe implements Recipe<ListInput> {
 
-    public static final MapCodec<SpinningRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group (
+    public static final MapCodec<SpinningRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ItemStack.CODEC.listOf(3, 3).fieldOf("ingredients").forGetter(recipe -> recipe.inputs),
             ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
             Codec.INT.optionalFieldOf("power", 0).forGetter(recipe -> recipe.power),
@@ -57,23 +57,27 @@ public class SpinningRecipe implements Recipe<ListInput> {
 
     @Override
     public boolean matches(ListInput input, Level level) {
-        if(input.size() != 3)
+        if (input.size() != 3) {
             return false;
+        }
 
-        if(!ItemUtils.isSameItemPartial(input.getItem(0), inputs.getFirst()) ||
-                input.getItem(0).getCount() < inputs.getFirst().getCount()) // If "main" input does not match
+        if (!ItemUtils.isSameItemPartial(input.getItem(0), inputs.getFirst()) || input.getItem(0).getCount() < inputs.getFirst().getCount()) { // If "main" input does not match
             return false;
+        }
 
-        for(int i = 1; i < inputs.size(); i++) {
+        for (int i = 1; i < inputs.size(); i++) {
             ItemStack neededCopy = inputs.get(i).copy();
 
-            if(ItemUtils.isSameItemPartial(input.getItem(1), neededCopy))
+            if (ItemUtils.isSameItemPartial(input.getItem(1), neededCopy)) {
                 neededCopy.shrink(input.getItem(1).getCount());
-            if(ItemUtils.isSameItemPartial(input.getItem(2), neededCopy))
+            }
+            if (ItemUtils.isSameItemPartial(input.getItem(2), neededCopy)) {
                 neededCopy.shrink(input.getItem(2).getCount());
+            }
 
-            if(!neededCopy.isEmpty()) // If not empty then there was not enough of this item
+            if (!neededCopy.isEmpty()) { // If not empty then there was not enough of this item
                 return false;
+            }
         }
         return true;
     }

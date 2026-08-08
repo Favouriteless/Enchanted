@@ -13,24 +13,25 @@ public class FamiliarHelperImpl implements FamiliarHelper {
 
     public static final FamiliarHelperImpl INSTANCE = new FamiliarHelperImpl();
 
-    private FamiliarHelperImpl() {}
+    private FamiliarHelperImpl() {
+    }
 
-	@Override
+    @Override
     public void dismiss(TamableAnimal entity) {
-		FamiliarSavedData data = FamiliarSavedData.get(entity.level());
+        FamiliarSavedData data = FamiliarSavedData.get(entity.level());
 
-		FamiliarEntry entry = data.getEntry(entity.getOwnerUUID());
+        FamiliarEntry entry = data.getEntry(entity.getOwnerUUID());
 
-		entry.setDismissed(true);
-		entry.setNbt(entity.saveWithoutId(new CompoundTag()));
-		data.setDirty();
+        entry.setDismissed(true);
+        entry.setNbt(entity.saveWithoutId(new CompoundTag()));
+        data.setDirty();
 
-		double width = entity.getBbWidth();
-		double height = entity.getBbHeight();
-		((ServerLevel)entity.level()).sendParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY(), entity.getZ(), 30, width, height, width, 0.0D);
+        double width = entity.getBbWidth();
+        double height = entity.getBbHeight();
+        ((ServerLevel) entity.level()).sendParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY(), entity.getZ(), 30, width, height, width, 0.0D);
 
-		entity.level().playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
-		entity.discard();
-	}
+        entity.level().playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        entity.discard();
+    }
 
 }

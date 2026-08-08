@@ -34,33 +34,37 @@ public class ImprisonmentRite extends Rite {
     protected boolean onTick(RiteParams params) {
         Vec3 center = pos.getBottomCenter();
         List<Entity> entities = level.getEntities(
-                (Entity)null,
+                (Entity) null,
                 new AABB(center.subtract(OUTER_RADIUS, 0, OUTER_RADIUS), center.add(OUTER_RADIUS, 4, OUTER_RADIUS)),
                 e -> e.getType().is(EntityTypes.MONSTERS) &&
-                        new Vec3(e.getX()-center.x, 0, e.getZ()-center.z).lengthSqr() > INNER_RADIUS_SQR &&
-                        new Vec3(e.getX()-center.x, 0, e.getZ()-center.z).lengthSqr() < OUTER_RADIUS_SQR
+                        new Vec3(e.getX() - center.x, 0, e.getZ() - center.z).lengthSqr() > INNER_RADIUS_SQR &&
+                        new Vec3(e.getX() - center.x, 0, e.getZ() - center.z).lengthSqr() < OUTER_RADIUS_SQR
         );
 
-        for(Entity entity : entities) {
+        for (Entity entity : entities) {
             Entity toApply = EntityUtils.getControllingEntity(entity);
 
-            Vec3 local = new Vec3(toApply.getX()-center.x, 0, toApply.getZ()-center.z);
+            Vec3 local = new Vec3(toApply.getX() - center.x, 0, toApply.getZ() - center.z);
             Vec3 vel = toApply.getDeltaMovement();
             vel = new Vec3(vel.x, 0, vel.z);
 
             double dot = vel.dot(local) / local.dot(local); // + if entity moving away from center, - if towards
-            if(dot > 0)
+            if (dot > 0) {
                 toApply.addDeltaMovement(local.scale(-dot));
+            }
 
             double d = local.lengthSqr();
-            if(d > (INNER_RADIUS - 0.3F) * (INNER_RADIUS - 0.3F))
+            if (d > (INNER_RADIUS - 0.3F) * (INNER_RADIUS - 0.3F)) {
                 toApply.addDeltaMovement(local.scale(-ATTRACT_FACTOR / d));
+            }
         }
 
 
-        if(params.ticks() % (ImprisonmentCageParticle.LIFETIME + 15) == 0) { // 15 ticks for the fade time
-            level.sendParticles(EParticleTypes.IMPRISONMENT_CAGE_SEED.get(), pos.getX()+0.5D,
-                    pos.getY()+0.2D, pos.getZ()+0.5D, 1, 0, 0, 0, 0);
+        if (params.ticks() % (ImprisonmentCageParticle.LIFETIME + 15) == 0) { // 15 ticks for the fade time
+            level.sendParticles(
+                    EParticleTypes.IMPRISONMENT_CAGE_SEED.get(), pos.getX() + 0.5D,
+                    pos.getY() + 0.2D, pos.getZ() + 0.5D, 1, 0, 0, 0, 0
+            );
         }
         return true;
     }

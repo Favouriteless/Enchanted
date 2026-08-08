@@ -22,7 +22,7 @@ public class SpinningWheelContainerHandler implements IGuiContainerHandler<Spinn
 
             @Override
             public Rect2i getArea() {
-                return new Rect2i(86,25,34,34);
+                return new Rect2i(86, 25, 34, 34);
             }
 
             @Override

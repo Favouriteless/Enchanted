@@ -36,7 +36,7 @@ public enum AltarPart implements StringRepresentable {
     }
 
     public static AltarPart getByOffset(int dx, int dz) {
-        return VALUES[dx*3 + dz + 1];
+        return VALUES[dx * 3 + dz + 1];
     }
 
     public int getX() {

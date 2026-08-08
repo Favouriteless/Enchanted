@@ -26,12 +26,13 @@ public class SpinningRecipeProcessor implements TemplateProcessor {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
-        if(optional.isEmpty())
+        if (optional.isEmpty()) {
             throw new IllegalArgumentException(id + " is not a valid recipe.");
+        }
 
         RecipeHolder<?> holder = optional.get();
 
-        if(holder.value() instanceof SpinningRecipe recipe) {
+        if (holder.value() instanceof SpinningRecipe recipe) {
             List<ItemStack> inputs = recipe.getInputs();
 
             lookup.set("p_input1", Variable.of(new SimpleItemDisplay(inputs.get(0))));
@@ -39,8 +40,7 @@ public class SpinningRecipeProcessor implements TemplateProcessor {
             lookup.set("p_input3", Variable.of(new SimpleItemDisplay(inputs.get(2))));
             lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
             lookup.set("p_power", Variable.of(Component.translatable(LangUtils.tooltip("altar_power"), recipe.getPower()).getString()));
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("SpinningRecipe template must use a SpinningRecipe recipe.");
         }
     }

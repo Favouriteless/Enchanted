@@ -16,19 +16,21 @@ public class EntityUtils {
      * Searches for an entity with a matching {@link UUID} across all levels.
      *
      * @param level any level.
-     * @param uuid the uuid to search for.
+     * @param uuid  the uuid to search for.
      *
      * @return The matching entity if one was found, otherwise {@code null}.
      */
     public static Entity tryGetEntity(ServerLevel level, UUID uuid) {
         Entity out = tryFindPlayer(level, uuid);
-        if(out != null)
+        if (out != null) {
             return out;
+        }
 
-        for(ServerLevel dim : level.getServer().getAllLevels()) {
+        for (ServerLevel dim : level.getServer().getAllLevels()) {
             out = dim.getEntity(uuid);
-            if(out != null)
+            if (out != null) {
                 return out;
+            }
         }
         return null;
     }

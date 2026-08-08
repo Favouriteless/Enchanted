@@ -46,8 +46,8 @@ public class EJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new DistillingCategory(guiHelper));
         registration.addRecipeCategories(new RiteCategory(guiHelper));
         registration.addRecipeCategories(new KettleRecipeCategory(guiHelper, EJeiRecipeTypes.KETTLE, Component.translatable("jei.category.enchanted.kettle"), EItems.KETTLE.get()));
-//        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS, EItems.MUTANDIS.get(), Component.translatable("jei.category.enchanted.mutandis")));
-//        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS_EXTREMIS, EItems.MUTANDIS_EXTREMIS.get(), Component.translatable("jei.category.enchanted.mutandis_extremis")));
+        //        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS, EItems.MUTANDIS.get(), Component.translatable("jei.category.enchanted.mutandis")));
+        //        registration.addRecipeCategories(new MutandisCategory(guiHelper, EJeiRecipeTypes.MUTANDIS_EXTREMIS, EItems.MUTANDIS_EXTREMIS.get(), Component.translatable("jei.category.enchanted.mutandis_extremis")));
     }
 
     @Override
@@ -83,8 +83,8 @@ public class EJeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(EItems.KETTLE.get().getDefaultInstance(), EJeiRecipeTypes.KETTLE);
         registration.addRecipeCatalyst(EItems.DISTILLERY.get().getDefaultInstance(), EJeiRecipeTypes.DISTILLING);
         registration.addRecipeCatalyst(EItems.GOLDEN_CHALK.get().getDefaultInstance(), EJeiRecipeTypes.RITE);
-//        registration.addRecipeCatalyst(EItems.MUTANDIS.get().getDefaultInstance(), EJeiRecipeTypes.MUTANDIS);
-//        registration.addRecipeCatalyst(EItems.MUTANDIS_EXTREMIS.get().getDefaultInstance(), EJeiRecipeTypes.MUTANDIS_EXTREMIS);
+        //        registration.addRecipeCatalyst(EItems.MUTANDIS.get().getDefaultInstance(), EJeiRecipeTypes.MUTANDIS);
+        //        registration.addRecipeCatalyst(EItems.MUTANDIS_EXTREMIS.get().getDefaultInstance(), EJeiRecipeTypes.MUTANDIS_EXTREMIS);
     }
 
     @Override

@@ -22,7 +22,7 @@ public record TransposeCasterFactory(RiteTargetingType target) implements RiteFa
 
     @Override
     public Rite create(BaseRiteParams baseParams, RiteParams params) {
-        return switch(target) {
+        return switch (target) {
             case DEFAULT, LOCATION -> new TransposeCasterWaystoneRite(baseParams, params);
             case ENTITY -> new TransposeCasterEntityRite(baseParams, params);
         };

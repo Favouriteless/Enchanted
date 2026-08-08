@@ -22,56 +22,62 @@ import java.util.Map;
 
 public class CircleTalismanItem extends Item {
 
-	public CircleTalismanItem(Properties properties) {
-		super(properties);
-	}
+    public CircleTalismanItem(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		Level level = context.getLevel();
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
 
-		if(!level.isClientSide) {
-			ItemStack stack = context.getItemInHand();
+        if (!level.isClientSide) {
+            ItemStack stack = context.getItemInHand();
 
-			if(!(stack.getItem() instanceof CircleTalismanItem))
-				return InteractionResult.CONSUME;
+            if (!(stack.getItem() instanceof CircleTalismanItem)) {
+                return InteractionResult.CONSUME;
+            }
 
-			Registry<CircleMagicShape> registry = level.registryAccess().registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY);
+            Registry<CircleMagicShape> registry = level.registryAccess().registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY);
 
-			BlockPos clicked = context.getClickedPos();
-			BlockPos pos = level.getBlockState(clicked).canBeReplaced() ? clicked : clicked.above();
+            BlockPos clicked = context.getClickedPos();
+            BlockPos pos = level.getBlockState(clicked).canBeReplaced() ? clicked : clicked.above();
 
-			Map<ResourceLocation, Block> shapes = stack.get(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get());
-			if(shapes.isEmpty())
-				return InteractionResult.CONSUME;
+            Map<ResourceLocation, Block> shapes = stack.get(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get());
+            if (shapes.isEmpty()) {
+                return InteractionResult.CONSUME;
+            }
 
-			boolean valid = level.getBlockState(pos).canBeReplaced() && EBlocks.GOLDEN_CHALK.get().canSurvive(null, level, pos);
-			if(!valid)
-				return sendFail(context.getPlayer());
+            boolean valid = level.getBlockState(pos).canBeReplaced() && EBlocks.GOLDEN_CHALK.get().canSurvive(null, level, pos);
+            if (!valid) {
+                return sendFail(context.getPlayer());
+            }
 
-			Map<CircleMagicShape, Block> toPlace = new HashMap<>();
-			for(ResourceLocation location : shapes.keySet()) {
-				CircleMagicShape shape = registry.get(location);
-				if(shape == null)
-					continue;
+            Map<CircleMagicShape, Block> toPlace = new HashMap<>();
+            for (ResourceLocation location : shapes.keySet()) {
+                CircleMagicShape shape = registry.get(location);
+                if (shape == null) {
+                    continue;
+                }
 
-				if(!shape.canPlace(level, pos))
-					return sendFail(context.getPlayer());
-				else
-					toPlace.put(shape, shapes.get(location));
-			}
-			toPlace.forEach((shape, block) -> shape.place(level, pos, block, context));
-			level.setBlockAndUpdate(pos, EBlocks.GOLDEN_CHALK.get().getRandomState());
-			stack.set(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get(), new HashMap<>());
-		}
+                if (!shape.canPlace(level, pos)) {
+                    return sendFail(context.getPlayer());
+                } else {
+                    toPlace.put(shape, shapes.get(location));
+                }
+            }
+            toPlace.forEach((shape, block) -> shape.place(level, pos, block, context));
+            level.setBlockAndUpdate(pos, EBlocks.GOLDEN_CHALK.get().getRandomState());
+            stack.set(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get(), new HashMap<>());
+        }
 
-		return InteractionResult.sidedSuccess(level.isClientSide);
-	}
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 
-	protected InteractionResult sendFail(Player player) {
-		if(player != null)
-			player.displayClientMessage(Component.literal("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
-		return InteractionResult.CONSUME;
-	}
+    protected InteractionResult sendFail(Player player) {
+        if (player != null) {
+            player.displayClientMessage(Component.literal("All blocks must be valid spots.").withStyle(ChatFormatting.RED), true);
+        }
+        return InteractionResult.CONSUME;
+    }
 
 }

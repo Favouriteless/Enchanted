@@ -37,10 +37,10 @@ public class Mandrake extends Monster implements GeoEntity {
 
     public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
-                .add(Attributes.ATTACK_DAMAGE, 1.0D)
-                .build();
+                      .add(Attributes.MAX_HEALTH, 20.0D)
+                      .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                      .add(Attributes.ATTACK_DAMAGE, 1.0D)
+                      .build();
     }
 
     @Override
@@ -103,21 +103,26 @@ public class Mandrake extends Monster implements GeoEntity {
 
         @Override
         public void tick() {
-            if(--this.ticksUntilNextAttack <= 0) {
-                List<LivingEntity> entitiesInRange = mob.level().getEntitiesOfClass(LivingEntity.class,
-                        new AABB(this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
-                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8), entity -> !(entity instanceof Mandrake) );
+            if (--this.ticksUntilNextAttack <= 0) {
+                List<LivingEntity> entitiesInRange = mob.level().getEntitiesOfClass(
+                        LivingEntity.class,
+                        new AABB(
+                                this.mob.position().x - 8, this.mob.position().y - 8, this.mob.position().z - 8,
+                                this.mob.position().x + 8, this.mob.position().y + 8, this.mob.position().z + 8
+                        ), entity -> !(entity instanceof Mandrake)
+                );
 
-                for(LivingEntity entity : entitiesInRange) {
-                    if(entity instanceof Player player && player.isCreative())
+                for (LivingEntity entity : entitiesInRange) {
+                    if (entity instanceof Player player && player.isCreative()) {
                         continue;
+                    }
 
-                    if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() != EItems.EARMUFFS.get()) {
+                    if (entity.getItemBySlot(EquipmentSlot.HEAD).getItem() != EItems.EARMUFFS.get()) {
                         entity.hurt(EDamageTypes.source(level(), EDamageTypes.SOUND, mob), 1.0F);
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                     }
                 }
-                this.mob.level().playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundSource.HOSTILE, 10.0F,0.85F + random.nextFloat() * 0.1F);
+                this.mob.level().playSound(null, this.mob.getX(), this.mob.getY(), this.mob.getZ(), SoundEvents.GHAST_HURT, SoundSource.HOSTILE, 10.0F, 0.85F + random.nextFloat() * 0.1F);
 
                 this.ticksUntilNextAttack = 30;
             }

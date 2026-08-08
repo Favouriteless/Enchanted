@@ -24,12 +24,11 @@ public class CreeperHeartItem extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         Vec3 pos = entity.position();
 
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             entity.hurt(EDamageTypes.source(level, EDamageTypes.INTERNAL_EXPLOSION, entity), Float.MAX_VALUE);
             level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
             stack.shrink(1);
-        }
-        else {
+        } else {
             level.addParticle(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z, 0, 0, 0);
         }
 

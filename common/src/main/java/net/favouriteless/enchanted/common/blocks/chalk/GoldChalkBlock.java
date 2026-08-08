@@ -43,9 +43,9 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(state != newState) {
-//            if(level.getBlockEntity(key) instanceof ChalkGoldBlockEntity be)
-//                be.clearRite();
+        if (state != newState) {
+            //            if(level.getBlockEntity(key) instanceof ChalkGoldBlockEntity be)
+            //                be.clearRite();
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
@@ -62,8 +62,9 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof GoldChalkBlockEntity be)
+        if (level.getBlockEntity(pos) instanceof GoldChalkBlockEntity be) {
             be.use(level, pos, player);
+        }
         return InteractionResult.SUCCESS;
     }
 
@@ -77,7 +78,7 @@ public class GoldChalkBlock extends AbstractChalkBlock implements EntityBlock {
     @SuppressWarnings("unchecked")
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(
             BlockEntityType<A> serverType, BlockEntityType<E> clientType, BlockEntityTicker<? super E> ticker) {
-        return clientType == serverType ? (BlockEntityTicker<A>)ticker : null;
+        return clientType == serverType ? (BlockEntityTicker<A>) ticker : null;
     }
 
 }

@@ -51,27 +51,28 @@ public class DistillingCategory extends AbstractRecipeCategory<DistillingRecipe>
         List<ItemStack> inputs = recipe.inputs();
 
         boolean hasJars = false;
-        for(ItemStack stack : inputs) {
-            if(stack.is(EItems.CLAY_JAR.get())) {
+        for (ItemStack stack : inputs) {
+            if (stack.is(EItems.CLAY_JAR.get())) {
                 hasJars = true;
                 break;
             }
         }
 
         int offset;
-        if(hasJars)
+        if (hasJars) {
             builder.addSlot(RecipeIngredientRole.INPUT, 28, 30).addIngredient(VanillaTypes.ITEM_STACK, inputs.getFirst());
+        }
 
         offset = 0;
-        for(ItemStack i : recipe.inputs()) {
-            if(!i.is(EItems.CLAY_JAR.get())) {
+        for (ItemStack i : recipe.inputs()) {
+            if (!i.is(EItems.CLAY_JAR.get())) {
                 builder.addSlot(RecipeIngredientRole.INPUT, 50, 20 + offset).addIngredient(VanillaTypes.ITEM_STACK, i);
                 offset += 20;
             }
         }
 
         offset = 0;
-        for(ItemStack i : recipe.outputs()) {
+        for (ItemStack i : recipe.outputs()) {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 2 + offset).addIngredient(VanillaTypes.ITEM_STACK, i);
             offset += 19;
         }

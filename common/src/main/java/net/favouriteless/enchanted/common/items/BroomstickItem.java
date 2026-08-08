@@ -12,32 +12,35 @@ import net.minecraft.world.level.Level;
 
 public class BroomstickItem extends Item {
 
-	public BroomstickItem(Properties properties) {
-		super(properties);
-	}
+    public BroomstickItem(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	public boolean isFoil(ItemStack pStack) {
-		return true;
-	}
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 
-	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		Level level = context.getLevel();
-		Player player = context.getPlayer();
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        Player player = context.getPlayer();
 
-		if(!level.isClientSide) {
-			BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
+        if (!level.isClientSide) {
+            BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
 
-			Broomstick broom = EEntityTypes.BROOMSTICK.get().create(level);
-			broom.setPos(pos.getX()+0.5D, pos.getY(), pos.getZ()+0.5D);
-			broom.setYRot(player.getYRot());;
-			level.addFreshEntity(broom);
+            Broomstick broom = EEntityTypes.BROOMSTICK.get().create(level);
+            broom.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+            broom.setYRot(player.getYRot());
+            ;
+            level.addFreshEntity(broom);
 
-			if(!player.getAbilities().instabuild) // Player not in creative
-				context.getItemInHand().shrink(1);
-		}
-		return InteractionResult.sidedSuccess(level.isClientSide);
-	}
+            if (!player.getAbilities().instabuild) // Player not in creative
+            {
+                context.getItemInHand().shrink(1);
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 
 }

@@ -27,50 +27,58 @@ public class DistillingRecipeBuilder extends ERecipeBuilder {
     }
 
     public static DistillingRecipeBuilder create(ItemStack... inputs) {
-        if(inputs.length > 3)
+        if (inputs.length > 3) {
             throw new IllegalStateException("Distillery recipes cannot have more than 3 inputs.");
+        }
         return new DistillingRecipeBuilder(List.of(inputs));
     }
 
     public static DistillingRecipeBuilder create(ItemLike... inputs) {
-        if(inputs.length > 3)
+        if (inputs.length > 3) {
             throw new IllegalStateException("Distillery recipes cannot have more than 3 inputs.");
+        }
 
         List<ItemStack> stacks = new ArrayList<>();
-        for(ItemLike input : inputs)
+        for (ItemLike input : inputs) {
             stacks.add(new ItemStack(input));
+        }
 
         return new DistillingRecipeBuilder(stacks);
     }
 
     public DistillingRecipeBuilder results(ItemStack... results) {
         Collections.addAll(this.results, results);
-        if(this.results.size() > 4)
+        if (this.results.size() > 4) {
             throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagens.");
+        }
         return this;
     }
 
     public DistillingRecipeBuilder results(ItemLike... results) {
         ItemStack[] stacks = new ItemStack[results.length];
-        for(int i = 0; i < results.length; i++)
+        for (int i = 0; i < results.length; i++) {
             stacks[i] = new ItemStack(results[i]);
+        }
 
         Collections.addAll(this.results, stacks);
-        if(this.results.size() > 4)
+        if (this.results.size() > 4) {
             throw new IllegalStateException("Distillery recipes cannot have more than 4 mutagens.");
+        }
         return this;
     }
 
     public DistillingRecipeBuilder duration(int duration) {
-        if(duration < 1)
+        if (duration < 1) {
             throw new IllegalArgumentException("Distillery recipes cannot have a duration smaller than 1.");
+        }
         this.duration = duration;
         return this;
     }
 
     public DistillingRecipeBuilder power(int power) {
-        if(power < 0)
+        if (power < 0) {
             throw new IllegalArgumentException("Distillery recipes cannot have a power smaller than 0.");
+        }
         this.power = power;
         return this;
     }
@@ -89,9 +97,11 @@ public class DistillingRecipeBuilder extends ERecipeBuilder {
     @Override
     protected String getDefaultName() {
         StringBuilder name = new StringBuilder();
-        for(ItemStack item : inputs)
-            if(item.getItem() != EItems.CLAY_JAR.get())
+        for (ItemStack item : inputs) {
+            if (item.getItem() != EItems.CLAY_JAR.get()) {
                 name.append(BuiltInRegistries.ITEM.getKey(item.getItem()).getPath()).append("_");
+            }
+        }
         name.deleteCharAt(name.length() - 1); // Delete trailing _
 
         return name.toString();

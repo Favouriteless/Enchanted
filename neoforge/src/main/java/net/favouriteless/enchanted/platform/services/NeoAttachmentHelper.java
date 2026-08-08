@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.platform.services;
 
 import com.mojang.serialization.Codec;
-import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.platform.EAttachmentType;
+import net.favouriteless.enchanted.platform.EServices;
 import net.favouriteless.enchanted.platform.NeoAttachmentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -34,16 +34,18 @@ public class NeoAttachmentHelper implements AttachmentHelper {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T get(Object holder, EAttachmentType<T> attachment) {
-        if(holder instanceof IAttachmentHolder attachHolder)
-            return attachHolder.getData((AttachmentType<T>)attachment.getAttachment());
+        if (holder instanceof IAttachmentHolder attachHolder) {
+            return attachHolder.getData((AttachmentType<T>) attachment.getAttachment());
+        }
         return attachment.getDefault();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> void set(Object holder, EAttachmentType<T> attachment, T data) {
-        if(holder instanceof IAttachmentHolder attachHolder)
-            attachHolder.setData((AttachmentType<T>)attachment.getAttachment(), data);
+        if (holder instanceof IAttachmentHolder attachHolder) {
+            attachHolder.setData((AttachmentType<T>) attachment.getAttachment(), data);
+        }
     }
 
 }

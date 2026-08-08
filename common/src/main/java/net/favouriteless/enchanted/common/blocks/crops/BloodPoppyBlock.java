@@ -35,10 +35,11 @@ public class BloodPoppyBlock extends FlowerBlock implements EntityBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if(level.isClientSide || state.getValue(FILLED) || !(entity instanceof LivingEntity))
+        if (level.isClientSide || state.getValue(FILLED) || !(entity instanceof LivingEntity)) {
             return;
+        }
 
-        if(level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
+        if (level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
             poppy.setTaglockData(EntityRefData.of(entity.getUUID(), entity.getDisplayName().getString()));
             level.setBlockAndUpdate(pos, state.setValue(FILLED, true));
         }
@@ -50,10 +51,11 @@ public class BloodPoppyBlock extends FlowerBlock implements EntityBlock {
     }
 
     public static void reset(Level level, BlockPos pos) {
-        if(level.isClientSide)
+        if (level.isClientSide) {
             return;
+        }
 
-        if(level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
+        if (level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
             BlockState state = level.getBlockState(pos);
             level.setBlockAndUpdate(pos, state.setValue(FILLED, false));
 

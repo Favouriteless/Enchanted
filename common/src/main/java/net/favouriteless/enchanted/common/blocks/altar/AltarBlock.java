@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -43,19 +42,22 @@ public class AltarBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if(!level.isClientSide)
+        if (!level.isClientSide) {
             AltarHelper.tryFormAltar(level, pos);
+        }
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         AltarPart part = state.getValue(PART);
 
-        if(part == AltarPart.UNFORMED || state.equals(newState))
+        if (part == AltarPart.UNFORMED || state.equals(newState)) {
             return;
+        }
 
-        if(part == AltarPart.P000)
+        if (part == AltarPart.P000) {
             level.removeBlockEntity(pos);
+        }
 
         // We pass newState to here to avoid re-setting this block to an altar (dupe bug)
         AltarHelper.tryUnformAltar(level, pos, state);
@@ -68,23 +70,26 @@ public class AltarBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if(state.getValue(PART) == AltarPart.UNFORMED)
+        if (state.getValue(PART) == AltarPart.UNFORMED) {
             return InteractionResult.PASS;
+        }
 
-        if(level.isClientSide)
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
+        }
 
         BlockPos corePos = AltarHelper.getCorePos(pos, state);
         BlockState coreState = level.getBlockState(corePos);
 
-        if(!coreState.is(EBlocks.ALTAR.get()) || coreState.getValue(PART) != AltarPart.P000) {
+        if (!coreState.is(EBlocks.ALTAR.get()) || coreState.getValue(PART) != AltarPart.P000) {
             Enchanted.LOG.warn("Altar located at {} was in an invalid state", corePos.toShortString());
             AltarHelper.tryUnformAltar(level, corePos, state);
             return InteractionResult.CONSUME;
         }
 
-        if(level.getBlockEntity(corePos) instanceof AltarBlockEntity be)
-            EServices.PLATFORM.openMenu((ServerPlayer)player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
+        if (level.getBlockEntity(corePos) instanceof AltarBlockEntity be) {
+            EServices.PLATFORM.openMenu((ServerPlayer) player, be, be.getBlockPos(), BlockPos.STREAM_CODEC);
+        }
 
         return InteractionResult.CONSUME;
     }

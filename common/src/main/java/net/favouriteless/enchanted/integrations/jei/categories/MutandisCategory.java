@@ -30,8 +30,8 @@ public class MutandisCategory extends AbstractRecipeCategory<JeiMutandisRecipe> 
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JeiMutandisRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT,27,35).addItemStacks(recipe.getInputs());
-        builder.addSlot(RecipeIngredientRole.OUTPUT,76,35).addItemStack(recipe.getOutput());
+        builder.addSlot(RecipeIngredientRole.INPUT, 27, 35).addItemStacks(recipe.getInputs());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 76, 35).addItemStack(recipe.getOutput());
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MutandisCategory extends AbstractRecipeCategory<JeiMutandisRecipe> 
     private void drawText(GuiGraphics graphics, String text, int x, int y, int colour) {
         Minecraft mc = Minecraft.getInstance();
         int width = mc.font.width(text);
-        if(width > 150) {
+        if (width > 150) {
             drawText(graphics, text.substring(0, text.length() / 2), x, y, colour);
             drawText(graphics, text.substring(text.length() / 2), x, y + 10, colour);
             return;

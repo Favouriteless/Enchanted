@@ -37,7 +37,7 @@ public interface NetworkHelper {
      * Attempt to send a packet to a specific player FROM the server.
      *
      * @param payload {@link CustomPacketPayload} to be sent.
-     * @param player {@link ServerPlayer} receiving the packet.
+     * @param player  {@link ServerPlayer} receiving the packet.
      */
     void sendToPlayer(CustomPacketPayload payload, ServerPlayer player);
 
@@ -45,7 +45,7 @@ public interface NetworkHelper {
      * Attempt to send a packet to all players FROM the server.
      *
      * @param payload {@link CustomPacketPayload} to be sent.
-     * @param server Access to {@link MinecraftServer} for Fabric to grab players from.
+     * @param server  Access to {@link MinecraftServer} for Fabric to grab players from.
      */
     void sendToAllPlayers(CustomPacketPayload payload, MinecraftServer server);
 
@@ -60,7 +60,7 @@ public interface NetworkHelper {
      * Send a packet to all players tracking the given entity.
      *
      * @param payload {@link CustomPacketPayload} to be sent.
-     * @param entity Entity being tracked.
+     * @param entity  Entity being tracked.
      */
     void sendToTracking(CustomPacketPayload payload, Entity entity);
 

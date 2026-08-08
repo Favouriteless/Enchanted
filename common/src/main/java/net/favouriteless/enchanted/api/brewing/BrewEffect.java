@@ -12,7 +12,7 @@ public interface BrewEffect {
     /**
      * Called when a brew with this effect is consumed by a player.
      *
-     * @param player The {@link Player} who consumed the brew.
+     * @param player   The {@link Player} who consumed the brew.
      * @param strength The strength of the brew effect.
      */
     void onConsumed(Player player, int strength);
@@ -20,21 +20,20 @@ public interface BrewEffect {
     /**
      * Called when a brew with this effect is splashed in a level.
      *
-     * @param level The {@link Level} the brew was splashed in.
-     * @param pos The position the brew impacted a block or entity at.
-     * @param type The {@link SplashType} of the impact.
+     * @param level    The {@link Level} the brew was splashed in.
+     * @param pos      The position the brew impacted a block or entity at.
+     * @param type     The {@link SplashType} of the impact.
      * @param strength The strength of the brew effect.
      */
     void onSplashed(Level level, Vec3 pos, SplashType type, int strength);
-
 
 
     /**
      * Represents a type of splash effect, determined by the type of brew being splashed. It is up to the implementer to
      * define these, but the javadocs contain general guidelines.
      * <p>
-     *     <b>IMPORTANT:</b> New splash types may be added in the future. Implementers should provide a sensible default
-     *     case, such as standard {@link SplashType#SPLASH}.
+     * <b>IMPORTANT:</b> New splash types may be added in the future. Implementers should provide a sensible default
+     * case, such as standard {@link SplashType#SPLASH}.
      * </p>
      */
     enum SplashType {

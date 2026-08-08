@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class ArtichokeSeedsItem extends ItemNameBlockItem {
-    
+
     public ArtichokeSeedsItem(Properties properties) {
         super(EBlocks.WATER_ARTICHOKE.get(), properties);
     }

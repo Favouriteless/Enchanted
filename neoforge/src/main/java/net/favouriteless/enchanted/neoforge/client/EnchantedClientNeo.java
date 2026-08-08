@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.neoforge.client;
 
 import net.favouriteless.enchanted.client.ClientConfig;
+import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.init.ClientRegistry;
 import net.favouriteless.enchanted.client.init.EShaders;
-import net.favouriteless.enchanted.client.EnchantedClient;
 import net.favouriteless.enchanted.client.render.blockentity.item.SpinningWheelItemRenderer;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.init.EItems;
@@ -64,17 +64,20 @@ public class EnchantedClientNeo {
 
     @SubscribeEvent
     public static void registerClientExtensions(final RegisterClientExtensionsEvent event) {
-        event.registerItem(new IClientItemExtensions() {
-            private BlockEntityWithoutLevelRenderer renderer;
+        event.registerItem(
+                new IClientItemExtensions() {
+                    private BlockEntityWithoutLevelRenderer renderer;
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                if(renderer == null)
-                    renderer = new SpinningWheelItemRenderer();
+                    @Override
+                    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                        if (renderer == null) {
+                            renderer = new SpinningWheelItemRenderer();
+                        }
 
-                return renderer;
-            }
-        }, EItems.SPINNING_WHEEL.get());
+                        return renderer;
+                    }
+                }, EItems.SPINNING_WHEEL.get()
+        );
     }
 
     @SubscribeEvent
@@ -82,7 +85,7 @@ public class EnchantedClientNeo {
         EShaders.load((name, format, callback) -> {
             try {
                 event.registerShader(new ShaderInstance(event.getResourceProvider(), Enchanted.id(name), format), callback);
-            } catch(IOException e) {
+            } catch (IOException e) {
                 Enchanted.LOG.error("Failed to load ShaderInstance: {}", name);
             }
         });

@@ -28,7 +28,8 @@ public class ECreativeTab {
             EBlocks.OTHERWHERE_CHALK
     );
 
-    public static final Supplier<CreativeModeTab> TAB = register("main",
+    public static final Supplier<CreativeModeTab> TAB = register(
+            "main",
             () -> EItems.ENCHANTED_BROOMSTICK.get().getDefaultInstance(),
             (params, out) -> {
                 out.accept(EItems.ALDER_LOG.get());
@@ -194,21 +195,22 @@ public class ECreativeTab {
 
 
                 out.accept(EItems.CIRCLE_TALISMAN.get());
-                for(Supplier<? extends Block> block : SHAPE_BLOCKS) {
-                    for(ResourceLocation id : SHAPE_IDS) {
+                for (Supplier<? extends Block> block : SHAPE_BLOCKS) {
+                    for (ResourceLocation id : SHAPE_IDS) {
                         ItemStack stack = new ItemStack(EItems.CIRCLE_TALISMAN.get());
                         stack.set(EDataComponents.CIRCLE_MAGIC_SHAPE_MAP.get(), new HashMap<>(Map.of(id, block.get())));
                         out.accept(stack);
                     }
                 }
-            });
-
+            }
+    );
 
 
     public static Supplier<CreativeModeTab> register(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemsGenerator) {
         return EServices.REGISTRY.registerCreativeTab(name, iconSupplier, itemsGenerator);
     }
 
-    public static void load() {} // Method which exists purely to load the class.
+    public static void load() {
+    } // Method which exists purely to load the class.
 
 }

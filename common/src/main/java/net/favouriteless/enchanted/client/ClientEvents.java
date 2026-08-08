@@ -19,29 +19,33 @@ import java.util.List;
 
 public class ClientEvents {
 
-	public static void onRenderGui(GuiGraphics graphics, float partialTicks) {
-		PoppetAnimationManager.render(graphics, partialTicks, graphics.guiWidth(), graphics.guiHeight());
-	}
+    public static void onRenderGui(GuiGraphics graphics, float partialTicks) {
+        PoppetAnimationManager.render(graphics, partialTicks, graphics.guiWidth(), graphics.guiHeight());
+    }
 
-	public static void clientTickPost() {
-		PoppetAnimationManager.tick();
-	}
+    public static void clientTickPost() {
+        PoppetAnimationManager.tick();
+    }
 
 
-	public static void onItemTooltip(ItemStack item, List<Component> toolTips, TooltipFlag flags) {
-		if(item.getItem() == Items.TOTEM_OF_UNDYING && ServerConfig.INSTANCE.disableTotems.get())
-			toolTips.add(Component.translatable(LangUtils.tooltip("disabled_totems")).withStyle(ChatFormatting.RED));
-	}
+    public static void onItemTooltip(ItemStack item, List<Component> toolTips, TooltipFlag flags) {
+        if (item.getItem() == Items.TOTEM_OF_UNDYING && ServerConfig.INSTANCE.disableTotems.get()) {
+            toolTips.add(Component.translatable(LangUtils.tooltip("disabled_totems")).withStyle(ChatFormatting.RED));
+        }
+    }
 
-	public static void playSound(SoundInstance soundInstance) {
-		Minecraft mc = Minecraft.getInstance();
+    public static void playSound(SoundInstance soundInstance) {
+        Minecraft mc = Minecraft.getInstance();
 
-        if(mc.player == null)
+        if (mc.player == null) {
             return;
-        if(mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() != EItems.EARMUFFS.get())
+        }
+        if (mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() != EItems.EARMUFFS.get()) {
             return;
-        if(soundInstance instanceof AbstractSoundInstance sound)
+        }
+        if (soundInstance instanceof AbstractSoundInstance sound) {
             sound.volume *= 0.06F;
-	}
+        }
+    }
 
 }

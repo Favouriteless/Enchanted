@@ -52,17 +52,21 @@ public class EItemTagProvider extends ItemTagsProvider {
         tag(ETags.Items.ARMOUR_POPPET_WHITELIST)
                 .addTag(Tags.Items.ARMORS);
         tag(ETags.Items.ARMORS)
-                .add(EItems.EARMUFFS.get(), Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE,
+                .add(
+                        EItems.EARMUFFS.get(), Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE,
                         Items.LEATHER_HELMET, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE,
                         Items.GOLDEN_HELMET, Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_CHESTPLATE,
                         Items.CHAINMAIL_HELMET, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE,
                         Items.IRON_HELMET, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE,
                         Items.DIAMOND_HELMET, Items.NETHERITE_BOOTS, Items.NETHERITE_LEGGINGS, Items.NETHERITE_CHESTPLATE,
-                        Items.NETHERITE_HELMET)
+                        Items.NETHERITE_HELMET
+                )
                 .addOptionalTag(Tags.Items.ARMORS.location());
         tag(ETags.Items.RAW_FOODS)
-                .add(Items.BEEF, Items.KELP, Items.POTATO, Items.CHORUS_FRUIT, Items.CHICKEN, Items.COD, Items.MUTTON,
-                        Items.PORKCHOP, Items.RABBIT, Items.SALMON);
+                .add(
+                        Items.BEEF, Items.KELP, Items.POTATO, Items.CHORUS_FRUIT, Items.CHICKEN, Items.COD, Items.MUTTON,
+                        Items.PORKCHOP, Items.RABBIT, Items.SALMON
+                );
         tag(ETags.Items.SWORDS)
                 .add(EItems.ARTHANA.get());
         tag(ETags.Items.TOOLS)

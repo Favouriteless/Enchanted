@@ -20,8 +20,9 @@ public class ServerLevelMixin {
             )
     )
     public void randomTick(BlockState instance, ServerLevel level, BlockPos pos, RandomSource random, Operation<Void> original) {
-        if(MutagenManagerImpl.INSTANCE.randomTick(level, pos))
+        if (MutagenManagerImpl.INSTANCE.randomTick(level, pos)) {
             return;
+        }
 
         original.call(instance, level, pos, random);
     }

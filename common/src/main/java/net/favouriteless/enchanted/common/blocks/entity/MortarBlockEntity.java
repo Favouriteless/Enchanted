@@ -28,8 +28,10 @@ public class MortarBlockEntity extends EBlockEntity {
 
     private final CachedCheck<SingleRecipeInput, MortarRecipe> recipeCheck;
 
-    @NotNull private ItemStack input = ItemStack.EMPTY;
-    @NotNull private ItemStack result = ItemStack.EMPTY;
+    @NotNull
+    private ItemStack input = ItemStack.EMPTY;
+    @NotNull
+    private ItemStack result = ItemStack.EMPTY;
     private int progress = 0;
     private int colour = 0;
     private int grindTicks = 0;
@@ -47,24 +49,28 @@ public class MortarBlockEntity extends EBlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, MortarBlockEntity be) {
-        if(be.firstTick)
+        if (be.firstTick) {
             be.firstTick();
-        if(be.grindTicks <= 0)
+        }
+        if (be.grindTicks <= 0) {
             return;
+        }
 
         SingleRecipeInput recipeInput = new SingleRecipeInput(be.input);
         RecipeHolder<MortarRecipe> recipe = be.recipeCheck.getRecipeFor(recipeInput, level).orElse(null);
-        if(recipe == null)
+        if (recipe == null) {
             return;
+        }
 
         be.grindTicks--;
 
         int maxProgress = be.getMaxProgress();
 
-        if(be.progress >= maxProgress)
+        if (be.progress >= maxProgress) {
             return;
+        }
 
-        if(++be.progress == maxProgress) {
+        if (++be.progress == maxProgress) {
             be.result = recipe.value().assemble(recipeInput, level.registryAccess());
             be.result.setCount(be.input.getCount());
             be.input = ItemStack.EMPTY;
@@ -75,23 +81,27 @@ public class MortarBlockEntity extends EBlockEntity {
     }
 
     public static void clientTick(Level level, BlockPos pos, BlockState state, MortarBlockEntity be) {
-        if(be.firstTick)
+        if (be.firstTick) {
             be.firstTick();
-        if(be.grindTicks == 0)
+        }
+        if (be.grindTicks == 0) {
             return;
+        }
 
         // Pestle animation uses different var to avoid the "slingshot" effect when client ticks occur while the result
         // packet is still in transit
         be.oPestleTicks = be.pestleTicks++;
 
-        if(be.input.isEmpty())
+        if (be.input.isEmpty()) {
             return;
+        }
 
-        if(RandomUtils.nextFloat() > 0.5F)
+        if (RandomUtils.nextFloat() > 0.5F) {
             return;
+        }
 
         double width = 0.375D;
-        double hWidth = width/2;
+        double hWidth = width / 2;
 
         double x = pos.getX() + 0.5D + (RandomUtils.nextDouble(width) - hWidth);
         double y = pos.getY() + 0.3D + (RandomUtils.nextDouble(width) - hWidth);
@@ -104,26 +114,30 @@ public class MortarBlockEntity extends EBlockEntity {
     }
 
     public void grind() {
-        if(!input.isEmpty())
+        if (!input.isEmpty()) {
             grindTicks = MAX_GRIND_TICKS;
+        }
     }
 
     public boolean addIngredient(ItemStack stack) {
-        if(stack.isEmpty() || !result.isEmpty())
+        if (stack.isEmpty() || !result.isEmpty()) {
             return false;
+        }
 
         RecipeHolder<MortarRecipe> recipe = recipeCheck.getRecipeFor(new SingleRecipeInput(stack), level).orElse(null);
-        if(recipe == null)
+        if (recipe == null) {
             return false;
+        }
 
         int count = input.getCount();
 
-        if(input.isEmpty())
+        if (input.isEmpty()) {
             input = stack.copyWithCount(1);
-        else if(ItemStack.isSameItemSameComponents(input, stack) && count < input.getMaxStackSize() && count < MAX_ITEMS)
+        } else if (ItemStack.isSameItemSameComponents(input, stack) && count < input.getMaxStackSize() && count < MAX_ITEMS) {
             input.grow(1);
-        else
+        } else {
             return false;
+        }
 
         stack.shrink(1);
         colour = recipe.value().getColour();
@@ -133,13 +147,14 @@ public class MortarBlockEntity extends EBlockEntity {
 
     private void firstTick() {
         firstTick = false;
-        if(level.isClientSide)
+        if (level.isClientSide) {
             ClientProxy.startMortarSound(this);
+        }
     }
 
     public ItemStack takeResult() {
         ItemStack out = result;
-        if(!out.isEmpty()) {
+        if (!out.isEmpty()) {
             grindTicks = 0;
             progress = 0;
             result = ItemStack.EMPTY;
@@ -150,7 +165,7 @@ public class MortarBlockEntity extends EBlockEntity {
 
     public ItemStack takeIngredient() {
         ItemStack out = input.split(1);
-        if(!out.isEmpty()) {
+        if (!out.isEmpty()) {
             grindTicks = 0;
             progress = 0;
             updateBlock();
@@ -189,10 +204,13 @@ public class MortarBlockEntity extends EBlockEntity {
 
     @Override
     protected void saveSynced(CompoundTag tag, Provider registries) {
-        if(!input.isEmpty())
+        if (!input.isEmpty()) {
             tag.put("input", input.save(registries));
-        if(!result.isEmpty()) // Result is sent so MortarBlock knows how to handle use interactions
+        }
+        if (!result.isEmpty()) // Result is sent so MortarBlock knows how to handle use interactions
+        {
             tag.put("result", result.save(registries));
+        }
 
         tag.putInt("progress", progress);
         tag.putInt("colour", colour);

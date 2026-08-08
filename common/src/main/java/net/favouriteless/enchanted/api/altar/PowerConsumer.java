@@ -23,7 +23,6 @@ public interface PowerConsumer {
     PowerPosHolder getPosHolder();
 
 
-
     /**
      * Holds and sorts the positions of every {@link PowerProvider}
      * this {@link PowerConsumer} is subscribed to.
@@ -45,12 +44,14 @@ public interface PowerConsumer {
 
         /**
          * Remove a {@link BlockPos} from the list of available altar positions.
+         *
          * @param pos position of the altar being removed from this holder.
          */
         void remove(BlockPos pos);
 
         /**
          * Add a {@link BlockPos} to the list of available altar positions.
+         *
          * @param pos position of the altar being added to this holder.
          */
         void add(BlockPos pos);

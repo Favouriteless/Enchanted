@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.enchanted.circle_magic.rites;
 
-import net.favouriteless.enchanted.common.enchanted.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.api.familiars.FamiliarType;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.enchanted.familiars.EFamiliarTypes;
+import net.favouriteless.enchanted.common.enchanted.familiars.FamiliarSavedData;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
 import net.favouriteless.enchanted.common.init.ESoundEvents;
 import net.favouriteless.enchanted.common.util.RandomUtils;
@@ -32,19 +32,20 @@ public class BindFamiliarRite extends Rite {
     @Override
     protected boolean onStart(RiteParams params) {
         Entity target = findEntity(params.target);
-        if(target == null)
+        if (target == null) {
             return cancel();
+        }
 
         Vec3 newPos = new Vec3(OFFSET.x + pos.getX(), OFFSET.y + pos.getY(), OFFSET.z + pos.getZ());
 
         target.setNoGravity(true);
 
-        level.playSound(null, target.getX(), target.getY(),  target.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
         double offset = target.getBbWidth() / 1.5D;
-        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
+        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
         target.teleportTo(newPos.x, newPos.y, newPos.z);
-        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(),  target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
+        level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 20 + RandomUtils.nextInt(10), offset, offset, offset, 0.0D);
 
         level.sendParticles(EParticleTypes.BIND_FAMILIAR_SEED.get(), newPos.x, newPos.y, newPos.z, 1, 0, 0, 0, 0);
 
@@ -54,22 +55,24 @@ public class BindFamiliarRite extends Rite {
     @Override
     protected boolean onTick(RiteParams params) {
         Entity target = findEntity(params.target);
-        if(target == null)
+        if (target == null) {
             return false;
+        }
 
-        if(params.ticks() == START_SOUND)
-            level.playSound(null, target.getX(),  target.getY(),  target.getZ(), ESoundEvents.BIND_FAMILIAR.value(), SoundSource.MASTER, 1.5F, 1.0F);
+        if (params.ticks() == START_SOUND) {
+            level.playSound(null, target.getX(), target.getY(), target.getZ(), ESoundEvents.BIND_FAMILIAR.value(), SoundSource.MASTER, 1.5F, 1.0F);
+        }
 
-        if(params.ticks() < BIND_TICKS) {
+        if (params.ticks() < BIND_TICKS) {
             double dx = (pos.getX() + OFFSET.x + Math.random() * 0.2D) - 0.1D;
             double dy = ((pos.getY() + OFFSET.y + Math.random() * 0.2D) - 0.1D) - target.getBbHeight() / 2.0D;
             double dz = (pos.getZ() + OFFSET.z + Math.random() * 0.2D) - 0.1D;
             target.teleportTo(dx, dy, dz);
-        }
-        else {
+        } else {
             FamiliarType<?, ?> type = EFamiliarTypes.getByInput(target.getType());
-            if(type == null)
+            if (type == null) {
                 return false;
+            }
 
             TamableAnimal familiar = type.getFor(level);
             familiar.setPos(target.getX(), target.getY(), target.getZ());
@@ -94,9 +97,10 @@ public class BindFamiliarRite extends Rite {
     @Override
     protected UUID findTargetUUID(ServerLevel level, BlockPos pos, RiteParams params) {
         List<TamableAnimal> potentials = level.getEntitiesOfClass(TamableAnimal.class, type.getBounds(pos), e -> EFamiliarTypes.getByInput(e.getType()) != null);
-        for(TamableAnimal animal : potentials) {
-            if(animal.getOwnerUUID() != null && animal.getOwnerUUID().equals(params.caster))
+        for (TamableAnimal animal : potentials) {
+            if (animal.getOwnerUUID() != null && animal.getOwnerUUID().equals(params.caster)) {
                 return animal.getUUID();
+            }
         }
         return null;
     }

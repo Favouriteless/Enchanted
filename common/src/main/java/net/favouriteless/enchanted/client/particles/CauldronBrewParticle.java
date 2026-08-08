@@ -10,9 +10,9 @@ public class CauldronBrewParticle extends TextureSheetParticle {
 
     protected CauldronBrewParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, float red, float green, float blue) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.rCol = Math.min(red + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
-        this.gCol = Math.min(green + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
-        this.bCol = Math.min(blue + (RandomUtils.nextInt(20) - 10)/255F, 1.0F);
+        this.rCol = Math.min(red + (RandomUtils.nextInt(20) - 10) / 255F, 1.0F);
+        this.gCol = Math.min(green + (RandomUtils.nextInt(20) - 10) / 255F, 1.0F);
+        this.bCol = Math.min(blue + (RandomUtils.nextInt(20) - 10) / 255F, 1.0F);
 
         this.scale(random.nextFloat() * 0.4F);
         this.lifetime = 200;
@@ -37,11 +37,12 @@ public class CauldronBrewParticle extends TextureSheetParticle {
             yd *= 0.93D;
             zd *= 0.93D;
 
-            if(onGround) {
+            if (onGround) {
                 alpha -= 0.1F;
 
-                if(alpha <= 0)
+                if (alpha <= 0) {
                     remove();
+                }
             }
         }
     }

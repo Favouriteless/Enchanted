@@ -20,8 +20,8 @@ public class DuplicateItemRite extends Rite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        for(ItemStack stack : params.consumedItems) {
-            if(stack.getItem() == targetItem) {
+        for (ItemStack stack : params.consumedItems) {
+            if (stack.getItem() == targetItem) {
                 ItemStack copy = stack.copy();
                 copy.setCount(count);
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, copy);

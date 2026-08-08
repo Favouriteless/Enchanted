@@ -41,12 +41,14 @@ public class ClientProxy {
         Minecraft mc = Minecraft.getInstance();
 
         Entity entity = mc.level.getEntity(id);
-        if(entity == null)
+        if (entity == null) {
             return;
+        }
 
         PoppetColour colour = item instanceof PoppetItem poppet ? poppet.getColour() : null;
-        if(colour != null)
+        if (colour != null) {
             mc.particleEngine.createTrackingEmitter(entity, new TwoColourOptions(EParticleTypes.POPPET.get(), colour.primary(), colour.secondary()), 40);
+        }
 
         mc.level.playSound(mc.player, entity, SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.5F, 1.0F);
         PoppetAnimationManager.startAnimation(item);

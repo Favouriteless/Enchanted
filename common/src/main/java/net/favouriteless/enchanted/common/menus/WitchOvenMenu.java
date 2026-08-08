@@ -69,36 +69,40 @@ public class WitchOvenMenu extends ContainerMenuBase<WitchOvenBlockEntity> {
             ItemStack originalItem = slotItem.copy();
 
             if (index < 5) { // If slot from oven
-                if (!moveItemStackTo(slotItem, 5, 41, true))
+                if (!moveItemStackTo(slotItem, 5, 41, true)) {
                     return ItemStack.EMPTY;
-            } else if(hasRecipe(slotItem)) { // Item has viable recipe
-                if(!moveItemStackTo(slotItem, 0, 1, false))
+                }
+            } else if (hasRecipe(slotItem)) { // Item has viable recipe
+                if (!moveItemStackTo(slotItem, 0, 1, false)) {
                     return ItemStack.EMPTY;
-            }
-            else if(ItemUtils.isFuel(slotItem)) { // Item is fuel
-                if(!moveItemStackTo(slotItem, 2, 3, false))
+                }
+            } else if (ItemUtils.isFuel(slotItem)) { // Item is fuel
+                if (!moveItemStackTo(slotItem, 2, 3, false)) {
                     return ItemStack.EMPTY;
-            }
-            else if(originalItem.getItem() == EItems.CLAY_JAR.get()) { // Item is clay jar
-                if(!moveItemStackTo(slotItem, 1, 2, false))
+                }
+            } else if (originalItem.getItem() == EItems.CLAY_JAR.get()) { // Item is clay jar
+                if (!moveItemStackTo(slotItem, 1, 2, false)) {
                     return ItemStack.EMPTY;
-            }
-            else if(index < 32) { // Item is in main player inventory but cannot be processed
-                if(!moveItemStackTo(slotItem, 32, 41, false))
+                }
+            } else if (index < 32) { // Item is in main player inventory but cannot be processed
+                if (!moveItemStackTo(slotItem, 32, 41, false)) {
                     return ItemStack.EMPTY;
-            }
-            else if(index < 41) { // Item is in player hotbar but cannot be processed
-                if(!moveItemStackTo(slotItem, 5, 32, false))
+                }
+            } else if (index < 41) { // Item is in player hotbar but cannot be processed
+                if (!moveItemStackTo(slotItem, 5, 32, false)) {
                     return ItemStack.EMPTY;
+                }
             }
 
-            if (slotItem.isEmpty()) // If slot was made empty, replace with empty stack
+            if (slotItem.isEmpty()) { // If slot was made empty, replace with empty stack
                 slot.set(ItemStack.EMPTY);
-            else
+            } else {
                 slot.setChanged();
+            }
 
-            if (slotItem.getCount() == originalItem.getCount())
+            if (slotItem.getCount() == originalItem.getCount()) {
                 return ItemStack.EMPTY;
+            }
 
             slot.onTake(player, slotItem);
         }

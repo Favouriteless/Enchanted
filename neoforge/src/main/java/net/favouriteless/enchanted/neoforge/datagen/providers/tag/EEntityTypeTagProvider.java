@@ -25,21 +25,27 @@ public class EEntityTypeTagProvider extends IntrinsicHolderTagsProvider<EntityTy
 
     public void addEnchantedTags() {
         tag(EntityTypes.GROTESQUE_IMMUNE)
-                .add(EntityType.ENDER_DRAGON, EntityType.ELDER_GUARDIAN, EntityType.PILLAGER, EntityType.EVOKER,
+                .add(
+                        EntityType.ENDER_DRAGON, EntityType.ELDER_GUARDIAN, EntityType.PILLAGER, EntityType.EVOKER,
                         EntityType.VINDICATOR, EntityType.RAVAGER, EntityType.IRON_GOLEM, EntityType.WARDEN,
-                        EntityType.VEX, EntityType.WITCH, EntityType.PIGLIN_BRUTE);
+                        EntityType.VEX, EntityType.WITCH, EntityType.PIGLIN_BRUTE
+                );
         tag(EntityTypes.MONSTERS)
-                .add(EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.DROWNED,
+                .add(
+                        EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.DROWNED,
                         EntityType.ELDER_GUARDIAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GIANT,
                         EntityType.GUARDIAN, EntityType.HOGLIN, EntityType.HUSK, EntityType.ILLUSIONER,
                         EntityType.MAGMA_CUBE, EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,
                         EntityType.PILLAGER, EntityType.RAVAGER, EntityType.SHULKER, EntityType.SILVERFISH,
                         EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.STRAY, EntityType.VEX,
                         EntityType.WITCH, EntityType.WITHER_SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER,
-                        EntityType.ZOMBIFIED_PIGLIN, EntityType.ZOGLIN, EntityType.WARDEN);
+                        EntityType.ZOMBIFIED_PIGLIN, EntityType.ZOGLIN, EntityType.WARDEN
+                );
         tag(EntityTypes.TAGLOCK_BLACKLIST)
-                .add(EntityType.ENDER_DRAGON, EntityType.WITHER, EntityType.WARDEN, EEntityTypes.FAMILIAR_CAT.get(),
-                        EntityType.ALLAY);
+                .add(
+                        EntityType.ENDER_DRAGON, EntityType.WITHER, EntityType.WARDEN, EEntityTypes.FAMILIAR_CAT.get(),
+                        EntityType.ALLAY
+                );
     }
 
 }

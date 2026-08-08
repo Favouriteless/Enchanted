@@ -126,9 +126,11 @@ public class ELanguageProvider extends LanguageProvider {
 
         addBookTitle("art_of_witchcraft", "Art of Witchcraft");
         addBookSubtitle("art_of_witchcraft", "A guide to magic");
-        addBookLandingText("art_of_witchcraft", FormattedStringBuilder.begin()
-                .bold("Witchcraft").then(" is the art of bringing out and using the magical effects of seemingly mundane objects.")
-                .paragraph("This book aims to explain the various schools of witchcraft.").toString());
+        addBookLandingText(
+                "art_of_witchcraft", FormattedStringBuilder.begin()
+                                                           .bold("Witchcraft").then(" is the art of bringing out and using the magical effects of seemingly mundane objects.")
+                                                           .paragraph("This book aims to explain the various schools of witchcraft.").toString()
+        );
         addBookHeader("fume_extraction", "Fume Extraction");
         addBookHeader("distillation", "Distillation");
         addBookHeader("witch_cauldron_recipe", "Cauldron Recipe");
@@ -212,12 +214,14 @@ public class ELanguageProvider extends LanguageProvider {
     }
 
     protected <T> void autoGenerate(Registry<T> registry, Function<T, String> idGetter) {
-        for(Entry<ResourceKey<T>, T> entry : registry.entrySet()) {
-            if(!entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID))
+        for (Entry<ResourceKey<T>, T> entry : registry.entrySet()) {
+            if (!entry.getKey().location().getNamespace().equals(Enchanted.MOD_ID)) {
                 continue;
+            }
             String id = idGetter.apply(entry.getValue());
-            if(!usedKeys.contains(id))
+            if (!usedKeys.contains(id)) {
                 add(id, getAutoName(entry.getKey().location().getPath()));
+            }
         }
     }
 
@@ -225,13 +229,15 @@ public class ELanguageProvider extends LanguageProvider {
         String[] words = path.split("_");
 
         StringBuilder builder = new StringBuilder();
-        for(String word : words) {
-            if(!builder.isEmpty())
+        for (String word : words) {
+            if (!builder.isEmpty()) {
                 builder.append(" ");
-            if(!lowerCaseWords.contains(word))
+            }
+            if (!lowerCaseWords.contains(word)) {
                 builder.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
-            else
+            } else {
                 builder.append(word);
+            }
         }
 
         return builder.toString();

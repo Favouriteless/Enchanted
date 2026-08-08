@@ -9,48 +9,49 @@ import net.minecraft.sounds.SoundSource;
 
 public class MortarSoundInstance extends AbstractTickableSoundInstance {
 
-	private final MortarBlockEntity be;
+    private final MortarBlockEntity be;
 
-	public MortarSoundInstance(MortarBlockEntity be) {
-		super(ESoundEvents.MORTAR.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
-		BlockPos pos = be.getBlockPos();
+    public MortarSoundInstance(MortarBlockEntity be) {
+        super(ESoundEvents.MORTAR.value(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
+        BlockPos pos = be.getBlockPos();
 
-		this.be = be;
-		this.looping = true;
-		this.delay = 0;
-		this.x = pos.getX() + 0.5D;
-		this.y = pos.getY() + 0.5D;
-		this.z = pos.getZ() + 0.5D;
-		this.volume = be.getGrindTicks() > 0 ? 1.0F : 0.0F;
-	}
+        this.be = be;
+        this.looping = true;
+        this.delay = 0;
+        this.x = pos.getX() + 0.5D;
+        this.y = pos.getY() + 0.5D;
+        this.z = pos.getZ() + 0.5D;
+        this.volume = be.getGrindTicks() > 0 ? 1.0F : 0.0F;
+    }
 
-	public boolean canPlaySound() {
-		return !be.isRemoved();
-	}
+    public boolean canPlaySound() {
+        return !be.isRemoved();
+    }
 
-	public boolean canStartSilent() {
-		return true;
-	}
+    public boolean canStartSilent() {
+        return true;
+    }
 
-	@Override
-	public void tick() {
-		if(be.isRemoved()) {
+    @Override
+    public void tick() {
+        if (be.isRemoved()) {
             stop();
             return;
         }
 
-        if(be.getGrindTicks() > 0) {
-            if(volume < 1.0F)
+        if (be.getGrindTicks() > 0) {
+            if (volume < 1.0F) {
                 volume += 0.05F;
-            else
+            } else {
                 volume = 1.0F;
-        }
-        else {
-            if(volume > 0.0F)
+            }
+        } else {
+            if (volume > 0.0F) {
                 volume -= 0.1F;
-            else
+            } else {
                 volume = 0.0F;
+            }
         }
-	}
+    }
 
 }

@@ -22,39 +22,39 @@ import org.jetbrains.annotations.Nullable;
 
 public class SpinningWheelBlock extends SimpleContainerBlockBase<SpinningWheelBlock> {
 
-	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final VoxelShape X_SHAPE = Shapes.box(0.0625, 0, 0.3125, 0.9375, 0.8125, 0.6875);
-	public static final VoxelShape Z_SHAPE = Shapes.box(0.3125, 0, 0.0625, 0.6875, 0.8125, 0.9375);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final VoxelShape X_SHAPE = Shapes.box(0.0625, 0, 0.3125, 0.9375, 0.8125, 0.6875);
+    public static final VoxelShape Z_SHAPE = Shapes.box(0.3125, 0, 0.0625, 0.6875, 0.8125, 0.9375);
 
-	public SpinningWheelBlock(Properties properties) {
-		super(SpinningWheelBlock::new, properties);
-	}
+    public SpinningWheelBlock(Properties properties) {
+        super(SpinningWheelBlock::new, properties);
+    }
 
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new SpinningWheelBlockEntity(pos, state);
-	}
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new SpinningWheelBlockEntity(pos, state);
+    }
 
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
-	}
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-		return (pState.getValue(FACING).getAxis() == Axis.X) ? Z_SHAPE : X_SHAPE;
-	}
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return (pState.getValue(FACING).getAxis() == Axis.X) ? Z_SHAPE : X_SHAPE;
+    }
 
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return createSidedTickerHelper(level, type, EBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelBlockEntity::serverTick, SpinningWheelBlockEntity::clientTick);
-	}
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createSidedTickerHelper(level, type, EBlockEntityTypes.SPINNING_WHEEL.get(), SpinningWheelBlockEntity::serverTick, SpinningWheelBlockEntity::clientTick);
+    }
 
 }

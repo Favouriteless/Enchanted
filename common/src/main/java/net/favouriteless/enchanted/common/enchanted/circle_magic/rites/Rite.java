@@ -70,21 +70,24 @@ public abstract class Rite {
     protected void onStop(RiteParams params) {
     }
 
-    protected void saveAdditional(CompoundTag tag, ServerLevel level) {}
+    protected void saveAdditional(CompoundTag tag, ServerLevel level) {
+    }
 
-    protected void loadAdditional(CompoundTag tag, ServerLevel level) {}
+    protected void loadAdditional(CompoundTag tag, ServerLevel level) {
+    }
 
     /**
      * Refund the items used to start this rite and detatch from chalk.
      */
     protected boolean cancel() {
         level.playSound(null, pos, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.MASTER, 1.0F, 1.0F);
-        for(ItemStack stack : params.consumedItems) {
-            ItemEntity entity = new ItemEntity(level, pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, stack);
+        for (ItemStack stack : params.consumedItems) {
+            ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
             level.addFreshEntity(entity);
         }
-        if(level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk)
+        if (level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk) {
             chalk.detatch();
+        }
         return false;
     }
 
@@ -93,18 +96,21 @@ public abstract class Rite {
      * Charged attuned stones will just have their charge consumed.
      */
     protected void consumeItem(ItemEntity entity) {
-        if(!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
+        if (!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
             params.consumedItems.add(entity.getItem());
             entity.discard();
-        }
-        else {
+        } else {
             entity.setItem(new ItemStack(EItems.ATTUNED_STONE.get(), entity.getItem().getCount()));
         }
 
-        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHICKEN_EGG,
-                SoundSource.MASTER, 1.0f, 1.0f);
-        ((ServerLevel)entity.level()).sendParticles(ParticleTypes.CLOUD, entity.getX(), entity.getY(), entity.getZ(),
-                1, 0, 0, 0, 0);
+        entity.level().playSound(
+                null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHICKEN_EGG,
+                SoundSource.MASTER, 1.0f, 1.0f
+        );
+        ((ServerLevel) entity.level()).sendParticles(
+                ParticleTypes.CLOUD, entity.getX(), entity.getY(), entity.getZ(),
+                1, 0, 0, 0, 0
+        );
     }
 
     /**
@@ -113,16 +119,18 @@ public abstract class Rite {
     protected @Nullable Entity findEntity(UUID uuid) {
         Entity entity;
 
-        if(entityCache.containsKey(uuid)) { // Cache our entities first since we're usually trying to grab the same one anyway
+        if (entityCache.containsKey(uuid)) { // Cache our entities first since we're usually trying to grab the same one anyway
             entity = entityCache.get(uuid).get();
-            if(entity != null)
+            if (entity != null) {
                 return entity;
+            }
             entityCache.remove(uuid);
         }
 
         entity = EntityUtils.tryGetEntity(level, uuid);
-        if(entity != null)
+        if (entity != null) {
             entityCache.put(uuid, new WeakReference<>(entity));
+        }
 
         return entity;
     }
@@ -132,8 +140,8 @@ public abstract class Rite {
      * {@link Rite#onStart(RiteParams)}. Override this if you want to change it for some reason.
      */
     protected UUID findTargetUUID(ServerLevel level, BlockPos pos, RiteParams params) {
-        for(ItemStack stack : params.consumedItems) {
-            if(stack.has(EDataComponents.ENTITY_REF.get())) {
+        for (ItemStack stack : params.consumedItems) {
+            if (stack.has(EDataComponents.ENTITY_REF.get())) {
                 return stack.get(EDataComponents.ENTITY_REF.get()).uuid();
             }
         }
@@ -144,21 +152,25 @@ public abstract class Rite {
      * Spawn random particles around the center of this rite.
      */
     protected void randomParticles(ParticleOptions options) {
-        level.sendParticles(options, pos.getX(), pos.getY(), pos.getZ(),
-                25, 1.5D, 1.5D, 1.5D, 0.0D);
+        level.sendParticles(
+                options, pos.getX(), pos.getY(), pos.getZ(),
+                25, 1.5D, 1.5D, 1.5D, 0.0D
+        );
     }
 
     // ----------------------------------- NON-API IMPLEMENTATIONS BELOW THIS POINT -----------------------------------
 
     public boolean tick() {
-        if(level.isLoaded(pos)) {
-            if(tickPower > 0) {
-                if(!(level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk) || !chalk.tryConsumePower(tickPower))
+        if (level.isLoaded(pos)) {
+            if (tickPower > 0) {
+                if (!(level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk) || !chalk.tryConsumePower(tickPower)) {
                     return stop();
+                }
             }
 
-            if(!onTick(params))
+            if (!onTick(params)) {
                 return stop();
+            }
         }
         params.ticks++;
         return true;
@@ -166,7 +178,7 @@ public abstract class Rite {
 
     public void start() {
         params.target = findTargetUUID(level, pos, params);
-        if(!onStart(params)) {
+        if (!onStart(params)) {
             stop();
             RiteManager.removeRite(level, this);
         }
@@ -175,8 +187,9 @@ public abstract class Rite {
     public boolean stop() {
         onStop(params);
 
-        if(level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk)
+        if (level.getBlockEntity(pos) instanceof GoldChalkBlockEntity chalk) {
             chalk.detatch();
+        }
         return false;
     }
 
@@ -205,18 +218,19 @@ public abstract class Rite {
     }
 
 
-
     public record BaseRiteParams(RiteType type, ServerLevel level, BlockPos pos, int tickPower) {}
 
     public static class RiteParams {
 
         public static final Codec<RiteParams> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                UUIDUtil.CODEC.fieldOf("caster").forGetter(p -> p.caster),
-                UUIDUtil.CODEC.optionalFieldOf("target").forGetter(p -> Optional.ofNullable(p.target)),
-                ItemStack.CODEC.listOf().fieldOf("consumed_items").forGetter(p -> p.consumedItems),
-                Codec.INT.fieldOf("ticks").forGetter(p -> p.ticks)
-        ).apply(instance, (caster, target, consumedItems, ticks) ->
-                new RiteParams(caster, target.orElse(null), consumedItems, ticks))
+                                                                                        UUIDUtil.CODEC.fieldOf("caster").forGetter(p -> p.caster),
+                                                                                        UUIDUtil.CODEC.optionalFieldOf("target").forGetter(p -> Optional.ofNullable(p.target)),
+                                                                                        ItemStack.CODEC.listOf().fieldOf("consumed_items").forGetter(p -> p.consumedItems),
+                                                                                        Codec.INT.fieldOf("ticks").forGetter(p -> p.ticks)
+                                                                                ).apply(
+                                                                                        instance, (caster, target, consumedItems, ticks) ->
+                                                                                                new RiteParams(caster, target.orElse(null), consumedItems, ticks)
+                                                                                )
         );
 
         public final List<ItemStack> consumedItems; // Mutable

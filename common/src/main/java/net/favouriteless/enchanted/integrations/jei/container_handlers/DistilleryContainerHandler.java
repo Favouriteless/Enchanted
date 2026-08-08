@@ -21,7 +21,7 @@ public class DistilleryContainerHandler implements IGuiContainerHandler<Distille
 
             @Override
             public Rect2i getArea() {
-                return new Rect2i(69,12,56,62);
+                return new Rect2i(69, 12, 56, 62);
             }
 
             @Override

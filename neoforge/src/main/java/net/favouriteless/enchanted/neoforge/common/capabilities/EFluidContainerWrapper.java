@@ -29,15 +29,17 @@ public record EFluidContainerWrapper(EFluidContainer container, Direction side) 
 
     @Override
     public int fill(FluidStack stack, FluidAction action) {
-        if(stack.isEmpty() || !stack.is(container.getFluid()))
+        if (stack.isEmpty() || !stack.is(container.getFluid())) {
             return 0;
+        }
         return container.fill(stack.getAmount(), action == FluidAction.SIMULATE);
     }
 
     @Override
     public FluidStack drain(FluidStack stack, FluidAction action) {
-        if(!stack.is(container.getFluid()))
+        if (!stack.is(container.getFluid())) {
             return stack;
+        }
         return new FluidStack(container.getFluid(), container.drain(stack.getAmount(), action == FluidAction.SIMULATE));
     }
 

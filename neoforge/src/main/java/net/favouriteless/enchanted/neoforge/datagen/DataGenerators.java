@@ -22,38 +22,38 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = Enchanted.MOD_ID)
 public class DataGenerators {
 
-	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
-		ExistingFileHelper fileHelper = event.getExistingFileHelper();
-		DataGenerator gen = event.getGenerator();
-		PackOutput output = gen.getPackOutput();
-		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent event) {
+        ExistingFileHelper fileHelper = event.getExistingFileHelper();
+        DataGenerator gen = event.getGenerator();
+        PackOutput output = gen.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
 
-		// Data
-		EBlockTagProvider blockTagProvider = gen.addProvider(true, new EBlockTagProvider(output, provider, fileHelper));
-		gen.addProvider(true, new EItemTagProvider(output, provider, fileHelper, blockTagProvider.contentsGetter()));
-		gen.addProvider(true, new EEntityTypeTagProvider(output, provider, fileHelper));
-		gen.addProvider(true, new EMobEffectTagProvider(output, provider, fileHelper));
-		gen.addProvider(true, new EBiomeTagProvider(output, provider, fileHelper));
-		gen.addProvider(true, new EDamageTypeTagProvider(output, provider, fileHelper));
-		gen.addProvider(true, new ERecipeProvider(output, provider));
-		gen.addProvider(true, new ECompostMapProvider(output, provider));
+        // Data
+        EBlockTagProvider blockTagProvider = gen.addProvider(true, new EBlockTagProvider(output, provider, fileHelper));
+        gen.addProvider(true, new EItemTagProvider(output, provider, fileHelper, blockTagProvider.contentsGetter()));
+        gen.addProvider(true, new EEntityTypeTagProvider(output, provider, fileHelper));
+        gen.addProvider(true, new EMobEffectTagProvider(output, provider, fileHelper));
+        gen.addProvider(true, new EBiomeTagProvider(output, provider, fileHelper));
+        gen.addProvider(true, new EDamageTypeTagProvider(output, provider, fileHelper));
+        gen.addProvider(true, new ERecipeProvider(output, provider));
+        gen.addProvider(true, new ECompostMapProvider(output, provider));
 
-		// Assets
-		gen.addProvider(true, new EBlockstateProvider(output, fileHelper));
-		gen.addProvider(true, new EItemModelProvider(output, fileHelper));
-		gen.addProvider(true, new ELanguageProvider(output));
-		gen.addProvider(true, ELootTableProvider.create(output, provider));
+        // Assets
+        gen.addProvider(true, new EBlockstateProvider(output, fileHelper));
+        gen.addProvider(true, new EItemModelProvider(output, fileHelper));
+        gen.addProvider(true, new ELanguageProvider(output));
+        gen.addProvider(true, ELootTableProvider.create(output, provider));
 
-		// Modopedia
-		gen.addProvider(true, new EBookTextureProvider(provider, output));
-		gen.addProvider(true, new ETemplateProvider(provider, output));
-		gen.addProvider(true, new EBookProvider(provider, output));
-		gen.addProvider(true, new EContentSetProvider(provider, output));
+        // Modopedia
+        gen.addProvider(true, new EBookTextureProvider(provider, output));
+        gen.addProvider(true, new ETemplateProvider(provider, output));
+        gen.addProvider(true, new EBookProvider(provider, output));
+        gen.addProvider(true, new EContentSetProvider(provider, output));
 
-		// Enchanted
-		gen.addProvider(true, new EMutagenInfoProvider(output, provider));
-		gen.addProvider(true, new EPowerProvidersProvider(output, provider));
-	}
+        // Enchanted
+        gen.addProvider(true, new EMutagenInfoProvider(output, provider));
+        gen.addProvider(true, new EPowerProvidersProvider(output, provider));
+    }
 
 }

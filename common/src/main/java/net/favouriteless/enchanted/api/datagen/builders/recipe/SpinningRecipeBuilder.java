@@ -22,14 +22,16 @@ public class SpinningRecipeBuilder extends ERecipeBuilder {
         this.result = new ItemStack(result.asItem());
         this.inputs = List.of(inputs);
 
-        if(inputs.length > 3)
+        if (inputs.length > 3) {
             throw new IllegalArgumentException("Tried to create spinning recipe with more than 3 inputs.");
+        }
     }
 
     public static SpinningRecipeBuilder create(ItemLike result, ItemLike... items) {
         ItemStack[] inputs = new ItemStack[items.length];
-        for(int i = 0; i < items.length; i++)
+        for (int i = 0; i < items.length; i++) {
             inputs[i] = items[i].asItem().getDefaultInstance();
+        }
 
         return new SpinningRecipeBuilder(result, inputs);
     }

@@ -19,7 +19,8 @@ public class MultiPlayerGameModeMixin {
     @Inject(method = "method_41929", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"))
     private void itemBreakUseItem(InteractionHand interactionHand, Player player, MutableObject mutableObject, int i, CallbackInfoReturnable<Packet> cir,
                                   @Local(ordinal = 0) ItemStack itemStack, @Local(ordinal = 1) ItemStack itemStack2) {
-        if(itemStack2.isEmpty())
+        if (itemStack2.isEmpty()) {
             CommonEventsFabric.playerDestroyItemEvent(player, itemStack, interactionHand);
+        }
     }
 }

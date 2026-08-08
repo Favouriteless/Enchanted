@@ -14,7 +14,8 @@ import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.Rite.Base
 import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.Rite.RiteParams;
 import net.minecraft.resources.ResourceLocation;
 
-public record ProtectionFactory(RiteTargetingType target, int radius, int duration, boolean blocksPlayers) implements RiteFactory {
+public record ProtectionFactory(RiteTargetingType target, int radius, int duration,
+                                boolean blocksPlayers) implements RiteFactory {
 
     public static final ResourceLocation ID = Enchanted.id("protection");
 
@@ -27,7 +28,7 @@ public record ProtectionFactory(RiteTargetingType target, int radius, int durati
 
     @Override
     public Rite create(BaseRiteParams baseParams, RiteParams params) {
-        return switch(target) {
+        return switch (target) {
             case DEFAULT -> new ProtectionRite(baseParams, params, radius, duration, blocksPlayers);
             case LOCATION -> new ProtectionWaystoneRite(baseParams, params, radius, duration, blocksPlayers);
             case ENTITY -> new ProtectionEntityRite(baseParams, params, radius, duration, blocksPlayers);

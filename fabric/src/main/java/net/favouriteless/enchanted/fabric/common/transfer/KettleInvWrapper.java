@@ -26,8 +26,9 @@ public class KettleInvWrapper extends SnapshotParticipant<Snapshot> implements S
     public long extract(ItemVariant variant, long maxAmount, TransactionContext transaction) {
         StoragePreconditions.notBlank(variant);
 
-        if(!variant.matches(kettle.getResult()))
+        if (!variant.matches(kettle.getResult())) {
             return 0;
+        }
 
         updateSnapshots(transaction);
         return kettle.takeItemNoUpdate(false).getCount();

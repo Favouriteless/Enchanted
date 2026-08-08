@@ -22,7 +22,7 @@ public class AltarHelper {
      * Searches for a valid altar in level which contains pos and forms an altar there if one is found.
      *
      * @param level the level to search in.
-     * @param pos the pos of the altar block to search from.
+     * @param pos   the pos of the altar block to search from.
      *
      * @return {@code true} if an altar is formed, otherwise {@code false}.
      */
@@ -30,19 +30,21 @@ public class AltarHelper {
         MutableBlockPos mp = pos.mutable();
 
         // Check is split into the max values for X and Z individually improve performance.
-        for(int x = 0; x < LENGTH; x++) {
-            for(int z = 0; z < WIDTH; z++) {
+        for (int x = 0; x < LENGTH; x++) {
+            for (int z = 0; z < WIDTH; z++) {
                 mp.setX(pos.getX() - x).setZ(pos.getZ() - z);
-                if(tryFormAltarX(level, mp))
+                if (tryFormAltarX(level, mp)) {
                     return true;
+                }
             }
         }
 
-        for(int x = 0; x < WIDTH; x++) {
-            for(int z = 0; z < LENGTH; z++) {
+        for (int x = 0; x < WIDTH; x++) {
+            for (int z = 0; z < LENGTH; z++) {
                 mp.setX(pos.getX() - x).setZ(pos.getZ() - z);
-                if(tryFormAltarZ(level, mp))
+                if (tryFormAltarZ(level, mp)) {
                     return true;
+                }
             }
         }
 
@@ -53,7 +55,7 @@ public class AltarHelper {
      * Attempts to unform the altar at the given position.
      *
      * @param level the level to search in.
-     * @param pos the pos of core block of the altar.
+     * @param pos   the pos of core block of the altar.
      * @param state the state of the altar block, in case it was broken.
      */
     public static void tryUnformAltar(Level level, BlockPos pos, BlockState state) {
@@ -72,10 +74,11 @@ public class AltarHelper {
     }
 
     private static boolean formAltar(Level level, BlockPos pos, boolean facingX) {
-        setAltar(level, pos, facingX, (old, x, z) ->
-                EBlocks.ALTAR.get().defaultBlockState()
-                        .setValue(AltarBlock.PART, AltarPart.getByOffset(x, z))
-                        .setValue(AltarBlock.FACING_X, facingX)
+        setAltar(
+                level, pos, facingX, (old, x, z) ->
+                        EBlocks.ALTAR.get().defaultBlockState()
+                                     .setValue(AltarBlock.PART, AltarPart.getByOffset(x, z))
+                                     .setValue(AltarBlock.FACING_X, facingX)
         );
         return true;
     }
@@ -84,7 +87,7 @@ public class AltarHelper {
         int xMax;
         int zMax;
 
-        if(facingX) {
+        if (facingX) {
             xMax = LENGTH;
             zMax = WIDTH;
         } else {
@@ -94,13 +97,14 @@ public class AltarHelper {
 
         MutableBlockPos mp = pos.mutable();
 
-        for(int x = 0; x < xMax; x++) {
-            for(int z = 0; z < zMax; z++) {
+        for (int x = 0; x < xMax; x++) {
+            for (int z = 0; z < zMax; z++) {
                 mp.setX(pos.getX() + x).setZ(pos.getZ() + z);
                 BlockState newState = stateFunction.get(level.getBlockState(mp), x, z);
 
-                if(newState != null)
+                if (newState != null) {
                     level.setBlockAndUpdate(mp, newState);
+                }
             }
         }
     }
@@ -112,12 +116,13 @@ public class AltarHelper {
     private static boolean isValidAltar(Level level, BlockPos pos, int xMax, int zMax) {
         MutableBlockPos mp = pos.mutable();
 
-        for(int x = 0; x < xMax; x++) {
-            for(int z = 0; z < zMax; z++) {
+        for (int x = 0; x < xMax; x++) {
+            for (int z = 0; z < zMax; z++) {
                 mp.setX(pos.getX() + x).setZ(pos.getZ() + z);
 
-                if(!isUnformedAltar(level.getBlockState(mp)))
+                if (!isUnformedAltar(level.getBlockState(mp))) {
                     return false;
+                }
             }
         }
         return true;

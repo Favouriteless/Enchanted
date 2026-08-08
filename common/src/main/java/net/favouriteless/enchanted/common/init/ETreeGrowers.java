@@ -17,7 +17,8 @@ public class ETreeGrowers {
                                     ResourceKey<ConfiguredFeature<?, ?>> mega,
                                     ResourceKey<ConfiguredFeature<?, ?>> normal,
                                     ResourceKey<ConfiguredFeature<?, ?>> flowers) {
-        return new TreeGrower(name,
+        return new TreeGrower(
+                name,
                 mega != null ? Optional.of(mega) : Optional.empty(),
                 normal != null ? Optional.of(normal) : Optional.empty(),
                 flowers != null ? Optional.of(flowers) : Optional.empty()

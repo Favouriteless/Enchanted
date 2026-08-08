@@ -5,6 +5,7 @@ import net.minecraft.world.inventory.ContainerData;
 public abstract class ImmutableContainerData implements ContainerData {
 
     @Override
-    public void set(int index, int value) {}
+    public void set(int index, int value) {
+    }
 
 }

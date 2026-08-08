@@ -11,7 +11,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
 
-public record DelayedPosOptions(ParticleType<DelayedPosOptions> particleType, Vec3 center, int delay) implements ParticleOptions {
+public record DelayedPosOptions(ParticleType<DelayedPosOptions> particleType, Vec3 center,
+                                int delay) implements ParticleOptions {
 
     public static MapCodec<DelayedPosOptions> codec(ParticleType<DelayedPosOptions> type) {
         return RecordCodecBuilder.mapCodec(instance -> instance.group(

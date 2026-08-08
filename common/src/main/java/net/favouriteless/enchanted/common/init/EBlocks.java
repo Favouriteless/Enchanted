@@ -64,7 +64,8 @@ public class EBlocks {
     public static final Supplier<PressurePlateBlock> HAWTHORN_PRESSURE_PLATE = register("hawthorn_pressure_plate", () -> woodenPressurePlate(MapColor.CLAY));
     public static final Supplier<SaplingBlock> HAWTHORN_SAPLING = register("hawthorn_sapling", () -> sapling(ETreeGrowers.HAWTHORN));
     public static final Supplier<SlabBlock> HAWTHORN_SLAB = register("hawthorn_slab", () -> slab(Blocks.OAK_SLAB));
-    public static final Supplier<StairBlock> HAWTHORN_STAIRS = register("hawthorn_stairs", () -> stairs(HAWTHORN_PLANKS.get()));;
+    public static final Supplier<StairBlock> HAWTHORN_STAIRS = register("hawthorn_stairs", () -> stairs(HAWTHORN_PLANKS.get()));
+    ;
     public static final Supplier<InfinityEggBlock> INFINITY_EGG = register("infinity_egg", () -> new InfinityEggBlock(copy(Blocks.DRAGON_EGG).noLootTable()));
     public static final Supplier<KettleBlock> KETTLE = register("kettle", () -> new KettleBlock(copy(Blocks.CAULDRON)));
     public static final Supplier<MandrakeBlock> MANDRAKE = register("mandrake", () -> new MandrakeBlock(copy(Blocks.CARROTS)));
@@ -136,12 +137,14 @@ public class EBlocks {
 
     private static RotatedPillarBlock log(MapColor topColor, MapColor barkColor) {
         return new RotatedPillarBlock(Properties.ofFullCopy(Blocks.OAK_LOG)
-                .mapColor(state -> state.getValue(RotatedPillarBlock.AXIS) == Axis.Y ? topColor : barkColor));
+                                                .mapColor(state -> state.getValue(RotatedPillarBlock.AXIS) == Axis.Y ? topColor : barkColor));
     }
 
     private static EnchantedLog strippableLog(MapColor topColor, MapColor barkColor, Supplier<RotatedPillarBlock> stripped) {
-        return new EnchantedLog(Properties.ofFullCopy(Blocks.OAK_LOG)
-                .mapColor(state -> state.getValue(RotatedPillarBlock.AXIS) == Axis.Y ? topColor : barkColor), stripped);
+        return new EnchantedLog(
+                Properties.ofFullCopy(Blocks.OAK_LOG)
+                          .mapColor(state -> state.getValue(RotatedPillarBlock.AXIS) == Axis.Y ? topColor : barkColor), stripped
+        );
     }
 
     private static ButtonBlock woodenButton() {
@@ -157,9 +160,11 @@ public class EBlocks {
     }
 
     private static PressurePlateBlock woodenPressurePlate(MapColor mapColor) {
-        return new PressurePlateBlock(BlockSetType.OAK, Properties.of().mapColor(mapColor).forceSolidOn()
-                .instrument(NoteBlockInstrument.BASS).noCollission().strength(0.5F).ignitedByLava()
-                .pushReaction(PushReaction.DESTROY));
+        return new PressurePlateBlock(
+                BlockSetType.OAK, Properties.of().mapColor(mapColor).forceSolidOn()
+                                            .instrument(NoteBlockInstrument.BASS).noCollission().strength(0.5F).ignitedByLava()
+                                            .pushReaction(PushReaction.DESTROY)
+        );
     }
 
     private static LeavesBlock leaves() {
@@ -194,6 +199,7 @@ public class EBlocks {
         return Properties.ofFullCopy(block);
     }
 
-    public static void load() {} // Method which exists purely to load the class.
+    public static void load() {
+    } // Method which exists purely to load the class.
 
 }

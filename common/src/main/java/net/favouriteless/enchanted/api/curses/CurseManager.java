@@ -31,10 +31,10 @@ public interface CurseManager {
      * Apply a curse to a given target player. Initialisation of the curse may be deferred if the target player is not
      * online.
      *
-     * @param type Type of curse to apply.
-     * @param target Target to apply the curse to.
+     * @param type       Type of curse to apply.
+     * @param target     Target to apply the curse to.
      * @param curseLevel Level to apply the curse at.
-     * @param level {@link ServerLevel} to grab save data from.
+     * @param level      {@link ServerLevel} to grab save data from.
      */
     void applyCurse(Type<?> type, UUID target, int curseLevel, ServerLevel level);
 
@@ -42,9 +42,9 @@ public interface CurseManager {
      * Remove a curse from a given target player. Removal of the curse may be deferred if the target player is not
      * online.
      *
-     * @param type Type of curse to remove.
+     * @param type   Type of curse to remove.
      * @param target Target to remove the curse from.
-     * @param level {@link ServerLevel} to grab save data from.
+     * @param level  {@link ServerLevel} to grab save data from.
      */
     void removeCurse(Type<?> type, UUID target, ServerLevel level);
 
@@ -52,7 +52,7 @@ public interface CurseManager {
      * Get all curses currently attached to a given player.
      *
      * @param target {@link UUID} of the target player.
-     * @param level {@link ServerLevel} to grab save data from.
+     * @param level  {@link ServerLevel} to grab save data from.
      *
      * @return A {@link Collection} containing all curses targeting the given player.
      */

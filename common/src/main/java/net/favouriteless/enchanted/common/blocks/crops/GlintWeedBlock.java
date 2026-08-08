@@ -18,8 +18,8 @@ public class GlintWeedBlock extends AbstractSpreadingBlock {
         BlockState state1 = level.getBlockState(pos.below());
         BlockState state2 = level.getBlockState(pos.above());
 
-        return (!level.isEmptyBlock(pos.below()) && state1.isFaceSturdy(level, pos.below(), Direction.UP) || state1.is(BlockTags.LEAVES) ) ||
-                (!level.isEmptyBlock(pos.above()) && state2.isFaceSturdy(level, pos.above(), Direction.DOWN) || state2.is(BlockTags.LEAVES) );
+        return (!level.isEmptyBlock(pos.below()) && state1.isFaceSturdy(level, pos.below(), Direction.UP) || state1.is(BlockTags.LEAVES)) ||
+                (!level.isEmptyBlock(pos.above()) && state2.isFaceSturdy(level, pos.above(), Direction.DOWN) || state2.is(BlockTags.LEAVES));
     }
 
     @Override

@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
@@ -20,7 +19,7 @@ import net.favouriteless.enchanted.fabric.common.transfer.KettleInvWrapper;
 import net.neoforged.fml.config.ModConfig.Type;
 
 public class EnchantedFabric implements ModInitializer {
-    
+
     @Override
     public void onInitialize() {
         Enchanted.init();
@@ -31,7 +30,6 @@ public class EnchantedFabric implements ModInitializer {
         registerStrippables();
         registerStorages();
 
-        NeoForgeConfigRegistry.INSTANCE.register(Enchanted.MOD_ID, Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
         NeoForgeConfigRegistry.INSTANCE.register(Enchanted.MOD_ID, Type.SERVER, ServerConfig.SPEC, "enchanted-server.toml");
     }
 

@@ -27,14 +27,20 @@ public class EMobEffectTagProvider extends IntrinsicHolderTagsProvider<MobEffect
 
     public void addEnchantedTags(Provider provider) {
         tag(ETags.MobEffects.BLIGHT_EFFECTS)
-                .add(MobEffects.BLINDNESS.getKey(),  MobEffects.CONFUSION.getKey(), MobEffects.HUNGER.getKey(), MobEffects.POISON.getKey(),
-                        MobEffects.WEAKNESS.getKey(), MobEffects.WITHER.getKey());
+                .add(
+                        MobEffects.BLINDNESS.getKey(), MobEffects.CONFUSION.getKey(), MobEffects.HUNGER.getKey(), MobEffects.POISON.getKey(),
+                        MobEffects.WEAKNESS.getKey(), MobEffects.WITHER.getKey()
+                );
         tag(ETags.MobEffects.FERTILITY_CURE_EFFECTS)
-                .add(MobEffects.BLINDNESS.getKey(),  MobEffects.CONFUSION.getKey(), MobEffects.HUNGER.getKey(), MobEffects.POISON.getKey(),
-                        MobEffects.WEAKNESS.getKey(), MobEffects.WITHER.getKey());
+                .add(
+                        MobEffects.BLINDNESS.getKey(), MobEffects.CONFUSION.getKey(), MobEffects.HUNGER.getKey(), MobEffects.POISON.getKey(),
+                        MobEffects.WEAKNESS.getKey(), MobEffects.WITHER.getKey()
+                );
         tag(ETags.MobEffects.MISFORTUNE_EFFECTS)
-                .add(MobEffects.BLINDNESS.getKey(),  MobEffects.CONFUSION.getKey(), MobEffects.DIG_SLOWDOWN.getKey(), MobEffects.HUNGER.getKey(),
-                        MobEffects.MOVEMENT_SLOWDOWN.getKey(), MobEffects.UNLUCK.getKey(), MobEffects.WEAKNESS.getKey());
+                .add(
+                        MobEffects.BLINDNESS.getKey(), MobEffects.CONFUSION.getKey(), MobEffects.DIG_SLOWDOWN.getKey(), MobEffects.HUNGER.getKey(),
+                        MobEffects.MOVEMENT_SLOWDOWN.getKey(), MobEffects.UNLUCK.getKey(), MobEffects.WEAKNESS.getKey()
+                );
     }
 
 }

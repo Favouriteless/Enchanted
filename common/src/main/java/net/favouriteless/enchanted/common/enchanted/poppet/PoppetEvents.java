@@ -13,45 +13,52 @@ import net.minecraft.world.item.ItemStack;
 public class PoppetEvents {
 
     public static boolean onLivingEntityHurt(LivingEntity entity, float amount, DamageSource source) {
-        if(entity instanceof ServerPlayer player) {
-            if(amount < player.getHealth())
+        if (entity instanceof ServerPlayer player) {
+            if (amount < player.getHealth()) {
                 return false;
+            }
 
-            return PoppetHelper.tryTriggerAll(player, stack -> {
-                if(stack.getItem() instanceof PlayerPoppetItem poppet && poppet.protectsAgainst(source)) {
-                    poppet.protect(player);
-                    return true;
-                }
-                return false;
-            });
+            return PoppetHelper.tryTriggerAll(
+                    player, stack -> {
+                        if (stack.getItem() instanceof PlayerPoppetItem poppet && poppet.protectsAgainst(source)) {
+                            poppet.protect(player);
+                            return true;
+                        }
+                        return false;
+                    }
+            );
         }
         return false;
     }
 
 
     public static void onPlayerItemBreak(Player p, ItemStack item, InteractionHand hand) {
-        if(p instanceof ServerPlayer player) {
-            PoppetHelper.tryTriggerAll(player, stack -> {
-                if(stack.getItem() instanceof ItemPoppetItem poppet && poppet.canProtect(item)) {
-                    poppet.protect(item);
-                    player.setItemInHand(hand, item);
-                    return true;
-                }
-                return false;
-            });
+        if (p instanceof ServerPlayer player) {
+            PoppetHelper.tryTriggerAll(
+                    player, stack -> {
+                        if (stack.getItem() instanceof ItemPoppetItem poppet && poppet.canProtect(item)) {
+                            poppet.protect(item);
+                            player.setItemInHand(hand, item);
+                            return true;
+                        }
+                        return false;
+                    }
+            );
         }
     }
 
     public static boolean onArmourHurt(LivingEntity entity, EquipmentSlot slot, ItemStack item, float damage) {
-        if(entity instanceof ServerPlayer player && (item.getMaxDamage() - item.getDamageValue()) <= damage) {
-            PoppetHelper.tryTriggerAll(player, stack -> {
-                if(stack.getItem() instanceof ItemPoppetItem poppet && poppet.canProtect(item)) {
-                    poppet.protect(item);
-                    player.setItemSlot(slot, item);
-                    return true;
-                }
-                return false;
-            });
+        if (entity instanceof ServerPlayer player && (item.getMaxDamage() - item.getDamageValue()) <= damage) {
+            PoppetHelper.tryTriggerAll(
+                    player, stack -> {
+                        if (stack.getItem() instanceof ItemPoppetItem poppet && poppet.canProtect(item)) {
+                            poppet.protect(item);
+                            player.setItemSlot(slot, item);
+                            return true;
+                        }
+                        return false;
+                    }
+            );
         }
         return false;
     }

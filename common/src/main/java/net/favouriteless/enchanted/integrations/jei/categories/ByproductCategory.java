@@ -46,13 +46,13 @@ public class ByproductCategory extends AbstractRecipeCategory<ByproductRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ByproductRecipe recipe, IFocusGroup focuses) {
         List<ItemStack> itemsOut = new ArrayList<>();
-        for(ItemStack stack : recipe.getInput().getItems()) {
+        for (ItemStack stack : recipe.getInput().getItems()) {
             Minecraft mc = Minecraft.getInstance();
             mc.level.getRecipeManager().getRecipeFor(net.minecraft.world.item.crafting.RecipeType.SMELTING, new SingleRecipeInput(stack), mc.level)
                     .ifPresent(holder -> itemsOut.add(RecipeUtils.getResultItem(holder)));
         }
 
-        if(!itemsOut.isEmpty()) {
+        if (!itemsOut.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 13, 7).addIngredients(recipe.getInput());
             builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 7).addItemStacks(itemsOut);
             builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 43).addIngredient(VanillaTypes.ITEM_STACK, RecipeUtils.getResultItem(recipe));

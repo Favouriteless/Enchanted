@@ -24,7 +24,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         // North
-        if(random.nextInt(10) > 7) {
+        if (random.nextInt(10) > 7) {
             double x = pos.getX() + 0.475D + random.nextDouble() * 0.05D;
             double y = pos.getY() + 0.678D;
             double z = pos.getZ() + 0.225D + random.nextDouble() * 0.05D;
@@ -32,7 +32,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
         // West
-        if(random.nextInt(10) > 7) {
+        if (random.nextInt(10) > 7) {
             double x = pos.getX() + 0.225D + random.nextDouble() * 0.05D;
             double y = pos.getY() + 0.678D;
             double z = pos.getZ() + 0.475D + random.nextDouble() * 0.05D;
@@ -40,7 +40,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
         // Center
-        if(random.nextInt(10) > 7) {
+        if (random.nextInt(10) > 7) {
             double x = pos.getX() + 0.475D + random.nextDouble() * 0.05D;
             double y = pos.getY() + 0.778D;
             double z = pos.getZ() + 0.475D + random.nextDouble() * 0.05D;
@@ -48,7 +48,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
         // East
-        if(random.nextInt(10) > 7) {
+        if (random.nextInt(10) > 7) {
             double x = pos.getX() + 0.725D + random.nextDouble() * 0.05D;
             double y = pos.getY() + 0.678D;
             double z = pos.getZ() + 0.475D + random.nextDouble() * 0.05D;
@@ -56,7 +56,7 @@ public class CandelabraBlock extends AltarDecorationBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
         }
         // South
-        if(random.nextInt(10) > 7) {
+        if (random.nextInt(10) > 7) {
             double x = pos.getX() + 0.475D + random.nextDouble() * 0.05D;
             double y = pos.getY() + 0.678D;
             double z = pos.getZ() + 0.725D + random.nextDouble() * 0.05D;

@@ -17,62 +17,65 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpinningWheelMenu extends ContainerMenuBase<SpinningWheelBlockEntity> {
 
-	private final ContainerData data;
+    private final ContainerData data;
 
-	public SpinningWheelMenu(int id, Inventory playerInventory, SpinningWheelBlockEntity be, ContainerData data) {
-		super(EMenuTypes.SPINNING_WHEEL.get(), id, be, EBlocks.SPINNING_WHEEL.get());
-		this.data = data;
+    public SpinningWheelMenu(int id, Inventory playerInventory, SpinningWheelBlockEntity be, ContainerData data) {
+        super(EMenuTypes.SPINNING_WHEEL.get(), id, be, EBlocks.SPINNING_WHEEL.get());
+        this.data = data;
 
-		addSlot(new NonJarInputSlot(be, 0, 45, 23)); // Main input
-		addSlot(new NonJarInputSlot(be, 1, 33, 47)); // Ingredient input
-		addSlot(new NonJarInputSlot(be, 2, 57, 47)); // Ingredient input
-		addSlot(new OutputSlot(be, 3, 130, 35)); // Spinning wheel output
+        addSlot(new NonJarInputSlot(be, 0, 45, 23)); // Main input
+        addSlot(new NonJarInputSlot(be, 1, 33, 47)); // Ingredient input
+        addSlot(new NonJarInputSlot(be, 2, 57, 47)); // Ingredient input
+        addSlot(new OutputSlot(be, 3, 130, 35)); // Spinning wheel output
 
-		addInventorySlots(playerInventory, 8, 84);
-		addDataSlots(data);
-	}
+        addInventorySlots(playerInventory, 8, 84);
+        addDataSlots(data);
+    }
 
-	public SpinningWheelMenu(int id, Inventory playerInventory, BlockPos pos) {
-		this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, pos, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
-	}
+    public SpinningWheelMenu(int id, Inventory playerInventory, BlockPos pos) {
+        this(id, playerInventory, MenuUtils.getBlockEntity(playerInventory, pos, SpinningWheelBlockEntity.class), new SimpleContainerData(2));
+    }
 
-	public int getSpinProgress() {
-		return data.get(0);
-	}
+    public int getSpinProgress() {
+        return data.get(0);
+    }
 
-	public int getSpinDuration() {
-		return data.get(1);
-	}
+    public int getSpinDuration() {
+        return data.get(1);
+    }
 
-	@Override
-	@NotNull
-	public ItemStack quickMoveStack(@NotNull Player player, int index) {
-		Slot slot = slots.get(index);
+    @Override
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
+        Slot slot = slots.get(index);
 
-		if (slot.hasItem()) {
-			ItemStack slotItem = slot.getItem();
-			ItemStack originalItem = slotItem.copy();
+        if (slot.hasItem()) {
+            ItemStack slotItem = slot.getItem();
+            ItemStack originalItem = slotItem.copy();
 
-			if (index < 4) { // If container slot
-				if (!moveItemStackTo(slotItem, 4, 40, true))
-					return ItemStack.EMPTY;
-			}
-			else { // If in player inventory
-				if(!moveItemStackTo(slotItem, 0, 4, false))
-					return ItemStack.EMPTY;
-			}
+            if (index < 4) { // If container slot
+                if (!moveItemStackTo(slotItem, 4, 40, true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else { // If in player inventory
+                if (!moveItemStackTo(slotItem, 0, 4, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
 
-			if (slotItem.isEmpty())
-				slot.set(ItemStack.EMPTY);
-			else
-				slot.setChanged();
+            if (slotItem.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
 
-			if (slotItem.getCount() == originalItem.getCount())
-				return ItemStack.EMPTY;
+            if (slotItem.getCount() == originalItem.getCount()) {
+                return ItemStack.EMPTY;
+            }
 
-			slot.onTake(player, slotItem);
-		}
-		return ItemStack.EMPTY;
-	}
+            slot.onTake(player, slotItem);
+        }
+        return ItemStack.EMPTY;
+    }
 
 }

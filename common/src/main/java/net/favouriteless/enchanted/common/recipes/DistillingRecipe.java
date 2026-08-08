@@ -40,8 +40,9 @@ public record DistillingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, 
     @Override
     public List<ItemStack> outputs() {
         List<ItemStack> out = new ArrayList<>();
-        for(ItemStack stack : outputs)
+        for (ItemStack stack : outputs) {
             out.add(stack.copy());
+        }
         return out;
     }
 
@@ -49,10 +50,10 @@ public record DistillingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, 
     public boolean matches(ListInput inv, Level level) {
         int requiredItems = inputs().size();
 
-        for(ItemStack stack : inputs()) {
-            for(int i = 0; i < 3; i++) {
+        for (ItemStack stack : inputs()) {
+            for (int i = 0; i < 3; i++) {
                 ItemStack item = inv.getItem(i);
-                if(ItemUtils.isSameItemPartial(item, stack) && item.getCount() >= stack.getCount()) {
+                if (ItemUtils.isSameItemPartial(item, stack) && item.getCount() >= stack.getCount()) {
                     requiredItems--;
                     break;
                 }

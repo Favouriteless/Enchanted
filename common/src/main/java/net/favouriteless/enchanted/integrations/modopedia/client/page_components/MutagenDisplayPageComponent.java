@@ -1,7 +1,6 @@
 package net.favouriteless.enchanted.integrations.modopedia.client.page_components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.favouriteless.enchanted.api.MutagenManager;
 import net.favouriteless.enchanted.common.Enchanted;
@@ -22,16 +21,11 @@ import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
 import net.favouriteless.modopedia.client.multiblock.render.MultiblockRenderer;
 import net.favouriteless.modopedia.client.multiblock.state_matchers.SimpleStateMatcher;
 import net.favouriteless.modopedia.client.page_widgets.PageImageButton;
-import net.favouriteless.modopedia.platform.ClientServices;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -41,11 +35,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,17 +60,18 @@ public class MutagenDisplayPageComponent extends PageComponent {
         super.init(book, lookup, level);
 
         BookTexture texture = BookTextureRegistry.get().getTexture(book.getTexture());
-        if(texture == null || !texture.widgets().containsKey("mutagen"))
+        if (texture == null || !texture.widgets().containsKey("mutagen")) {
             throw new IllegalStateException("MutagenInfoPageComponent has been created on a book texture with no mutagen widget");
+        }
 
         displays = new ArrayList<>(); // Re-initialise every time.
 
         Block result = BuiltInRegistries.BLOCK.get(lookup.get("result").as(ResourceLocation.class));
 
-        for(Entry<Block, List<MutagenSet>> entry : MutagenManager.get().getMutagensFor(level, result).entrySet()) {
+        for (Entry<Block, List<MutagenSet>> entry : MutagenManager.get().getMutagensFor(level, result).entrySet()) {
             BlockState mutee = getState(entry.getKey());
 
-            for(MutagenSet set : entry.getValue()) {
+            for (MutagenSet set : entry.getValue()) {
                 displays.add(new MutagenDisplay( // This looks stupid (it is), but ModelData grabbing is dependent on having a BlockAndTintGetter, so we use modopedia multiblocks as a substitute.
                         new PlacedMultiblock(
                                 new DenseMultiblock(
@@ -88,10 +80,11 @@ public class MutagenDisplayPageComponent extends PageComponent {
                                 ), level.dimension()
                         ),
                         set.mutagens().stream().map(b -> new PlacedMultiblock(
-                                new DenseMultiblock(
-                                        List.of(List.of("m")),
-                                        Map.of('m', new SimpleStateMatcher(List.of(getState(b))))
-                                ), level.dimension())
+                                                            new DenseMultiblock(
+                                                                    List.of(List.of("m")),
+                                                                    Map.of('m', new SimpleStateMatcher(List.of(getState(b))))
+                                                            ), level.dimension()
+                                                    )
                         ).toList(),
                         set.weight(),
                         set.extremis()
@@ -132,7 +125,7 @@ public class MutagenDisplayPageComponent extends PageComponent {
         float x1 = 23 * Mth.sin(aStart); // 23 is the radius of the circle.
         float y1 = 23 * Mth.cos(aStart);
 
-        for(PlacedMultiblock multiblock : display.mutagens) {
+        for (PlacedMultiblock multiblock : display.mutagens) {
             pose.pushPose();
             pose.translate(x1, y1, 0);
             render(context, multiblock, pose, bufferSource, 10, partialTicks);
@@ -155,11 +148,12 @@ public class MutagenDisplayPageComponent extends PageComponent {
         graphics.drawString(font, weightTitle, x - font.width(weightTitle) / 2, yw, 0, false);
         graphics.drawString(font, weight, x - font.width(weight) / 2, yw + font.lineHeight, 0, false);
 
-        if(display.extremis)
+        if (display.extremis) {
             graphics.drawString(font, extremis, x - font.width(extremis) / 2, y - 7, 0, false);
+        }
 
 
-        if(context.isHovered(mouseX, mouseY, x - xo, y, width, height)) {
+        if (context.isHovered(mouseX, mouseY, x - xo, y, width, height)) {
             List<Component> lines = new ArrayList<>();
 
             lines.add(Component.translatable(LangUtils.tooltip("mutee")));
@@ -174,8 +168,9 @@ public class MutagenDisplayPageComponent extends PageComponent {
 
     @Override
     public void initWidgets(PageWidgetHolder holder, BookRenderContext context) {
-        if(displays.size() < 2)
+        if (displays.size() < 2) {
             return;
+        }
 
         BookTexture bookTex = context.getBookTexture();
         ResourceLocation tex = bookTex.location();
@@ -186,12 +181,16 @@ public class MutagenDisplayPageComponent extends PageComponent {
         int xo = mutagen.width() / 2;
 
         leftButton = holder.addRenderableWidget(
-                new PageImageButton(tex, x - xo, y + mutagen.height() + 11, left.width(), left.height(),
-                        left.u(), left.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(-1))
+                new PageImageButton(
+                        tex, x - xo, y + mutagen.height() + 11, left.width(), left.height(),
+                        left.u(), left.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(-1)
+                )
         );
         rightButton = holder.addRenderableWidget(
-                new PageImageButton(tex, x + xo - right.width(), y + mutagen.height() + 11, right.width(), right.height(),
-                        right.u(), right.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(1))
+                new PageImageButton(
+                        tex, x + xo - right.width(), y + mutagen.height() + 11, right.width(), right.height(),
+                        right.u(), right.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(1)
+                )
         );
 
         updateWidgetVisibility();
@@ -207,10 +206,10 @@ public class MutagenDisplayPageComponent extends PageComponent {
 
     protected BlockState getState(Block block) {
         return block.defaultBlockState() // There's a bunch of properties for which the display would look far better with defaults.
-                .trySetValue(CropBlock.AGE, CropBlock.MAX_AGE)
-                .trySetValue(CropBlockAgeFive.AGE_FIVE, 4)
-                .trySetValue(BlockStateProperties.LIT, true)
-                .trySetValue(BlockStateProperties.BERRIES, true);
+                    .trySetValue(CropBlock.AGE, CropBlock.MAX_AGE)
+                    .trySetValue(CropBlockAgeFive.AGE_FIVE, 4)
+                    .trySetValue(BlockStateProperties.LIT, true)
+                    .trySetValue(BlockStateProperties.BERRIES, true);
     }
 
     protected void render(BookRenderContext context, PlacedMultiblock multiblock, PoseStack pose, MultiBufferSource bufferSource, float scale, float partialTicks) {
@@ -235,25 +234,23 @@ public class MutagenDisplayPageComponent extends PageComponent {
     }
 
     protected void updateWidgetVisibility() {
-        if(selected <= 0) {
+        if (selected <= 0) {
             selected = 0;
             leftButton.active = false;
-        }
-        else {
+        } else {
             leftButton.active = true;
         }
 
-        if(selected >= displays.size() - 1) {
+        if (selected >= displays.size() - 1) {
             selected = displays.size() - 1;
             rightButton.active = false;
-        }
-        else {
+        } else {
             rightButton.active = true;
         }
     }
 
 
-
-    private record MutagenDisplay(PlacedMultiblock mutee, List<PlacedMultiblock> mutagens, int weight, boolean extremis) {}
+    private record MutagenDisplay(PlacedMultiblock mutee, List<PlacedMultiblock> mutagens, int weight,
+                                  boolean extremis) {}
 
 }

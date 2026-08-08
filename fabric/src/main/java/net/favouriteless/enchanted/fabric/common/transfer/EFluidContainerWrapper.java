@@ -36,12 +36,14 @@ public class EFluidContainerWrapper extends SingleVariantStorage<FluidVariant> {
 
     @Override
     protected void onFinalCommit() {
-        int diff = (int)amount - container.getFluidAmount();
+        int diff = (int) amount - container.getFluidAmount();
 
-        if(diff < 0) // We don't care about diff if nothing changed.
+        if (diff < 0) // We don't care about diff if nothing changed.
+        {
             container.drain(-diff, false);
-        else if(diff > 0)
+        } else if (diff > 0) {
             container.fill(diff, false);
+        }
     }
 
 }

@@ -29,7 +29,7 @@ public abstract class EBaseEntityBlock<B extends EBaseEntityBlock<?>> extends Ba
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createSidedTickerHelper(
             Level level, BlockEntityType<A> serverType, BlockEntityType<E> clientType,
             BlockEntityTicker<? super E> serverTicker, BlockEntityTicker<? super E> clientTicker) {
-        return clientType == serverType ? !level.isClientSide ? (BlockEntityTicker<A>)serverTicker : (BlockEntityTicker<A>)clientTicker : null;
+        return clientType == serverType ? !level.isClientSide ? (BlockEntityTicker<A>) serverTicker : (BlockEntityTicker<A>) clientTicker : null;
     }
 
 }

@@ -2,9 +2,9 @@ package net.favouriteless.enchanted.common;
 
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
 import net.favouriteless.enchanted.common.enchanted.curses.ECurses;
+import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenSavedData;
 import net.favouriteless.enchanted.common.init.*;
 import net.favouriteless.enchanted.common.items.component.EDataComponents;
-import net.favouriteless.enchanted.common.enchanted.mutandis.MutagenSavedData;
 import net.favouriteless.enchanted.integrations.modopedia.EModopedia;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.resources.ResourceLocation;
@@ -24,8 +24,9 @@ public class Enchanted {
         loadRegistries();
 
         StateObserverManager.get().registerGlobalListener((level, pos, old, state) -> {
-            if(old.getBlock() != state.getBlock() || !state.isRandomlyTicking())
+            if (old.getBlock() != state.getBlock() || !state.isRandomlyTicking()) {
                 MutagenSavedData.get(level).remove(pos);
+            }
         });
     }
 

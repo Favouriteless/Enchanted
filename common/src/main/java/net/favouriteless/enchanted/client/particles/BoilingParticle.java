@@ -23,10 +23,11 @@ public class BoilingParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        if(age++ >= lifetime)
+        if (age++ >= lifetime) {
             remove();
-        else
+        } else {
             setSpriteFromAge(sprites);
+        }
     }
 
     @Override

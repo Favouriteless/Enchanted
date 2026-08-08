@@ -23,14 +23,18 @@ public class EPowerProvidersProvider extends PowerProvidersProvider {
     @Override
     protected void buildBlocks(Provider registries, TriConsumer<Block, Integer, Integer> output) {
         // 2720 power pre-upgrades should be enough for everything.
-        addEnchantedCrops(output, EBlocks.BELLADONNA.get(), EBlocks.GARLIC.get(), EBlocks.MANDRAKE.get(),
-                EBlocks.SNOWBELL.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.WOLFSBANE.get());
+        addEnchantedCrops(
+                output, EBlocks.BELLADONNA.get(), EBlocks.GARLIC.get(), EBlocks.MANDRAKE.get(),
+                EBlocks.SNOWBELL.get(), EBlocks.WATER_ARTICHOKE.get(), EBlocks.WOLFSBANE.get()
+        );
 
         addCrops(output, Blocks.BEETROOTS, Blocks.CARROTS, Blocks.POTATOES, Blocks.WHEAT);
 
-        addNatural(output, Blocks.BAMBOO, Blocks.BROWN_MUSHROOM, Blocks.BROWN_MUSHROOM_BLOCK, Blocks.CACTUS, Blocks.COCOA,
+        addNatural(
+                output, Blocks.BAMBOO, Blocks.BROWN_MUSHROOM, Blocks.BROWN_MUSHROOM_BLOCK, Blocks.CACTUS, Blocks.COCOA,
                 Blocks.SHORT_GRASS, Blocks.LILY_PAD, Blocks.MELON, Blocks.PUMPKIN, Blocks.RED_MUSHROOM,
-                Blocks.RED_MUSHROOM_BLOCK, Blocks.SUGAR_CANE, Blocks.TALL_GRASS, Blocks.VINE);
+                Blocks.RED_MUSHROOM_BLOCK, Blocks.SUGAR_CANE, Blocks.TALL_GRASS, Blocks.VINE
+        );
 
         // Mutated crops
         output.accept(EBlocks.EMBER_MOSS.get(), 8, 10);
@@ -64,18 +68,21 @@ public class EPowerProvidersProvider extends PowerProvidersProvider {
     }
 
     private void addEnchantedCrops(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
-        for(Block block : blocks)
+        for (Block block : blocks) {
             output.accept(block, 8, 20);
+        }
     }
 
     private void addCrops(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
-        for(Block block : blocks)
+        for (Block block : blocks) {
             output.accept(block, 6, 20);
+        }
     }
 
     private void addNatural(TriConsumer<Block, Integer, Integer> output, Block... blocks) {
-        for(Block block : blocks)
+        for (Block block : blocks) {
             output.accept(block, 3, 20);
+        }
     }
 
 }

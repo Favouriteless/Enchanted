@@ -33,31 +33,35 @@ public class MortarBlock extends EBaseEntityBlock<MortarBlock> {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof MortarBlockEntity be && !stack.isEmpty())
+        if (level.getBlockEntity(pos) instanceof MortarBlockEntity be && !stack.isEmpty()) {
             return be.addIngredient(stack) ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof MortarBlockEntity be) {
-            if(player.isCrouching()) {
+        if (level.getBlockEntity(pos) instanceof MortarBlockEntity be) {
+            if (player.isCrouching()) {
                 ItemStack out = be.takeResult();
 
-                if(out.isEmpty())
+                if (out.isEmpty()) {
                     out = be.takeIngredient();
+                }
 
-                if(!out.isEmpty()) {
+                if (!out.isEmpty()) {
                     ItemUtils.giveOrDrop(player, out, EquipmentSlot.MAINHAND);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
 
-            if(be.getInput().isEmpty())
+            if (be.getInput().isEmpty()) {
                 return InteractionResult.PASS;
-            if(!level.isClientSide)
+            }
+            if (!level.isClientSide) {
                 be.grind();
+            }
 
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

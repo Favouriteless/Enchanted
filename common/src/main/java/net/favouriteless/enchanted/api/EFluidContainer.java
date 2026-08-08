@@ -34,7 +34,7 @@ public interface EFluidContainer {
     /**
      * Attempt to add fluid to the container.
      *
-     * @param amount The volume of fluid to add.
+     * @param amount   The volume of fluid to add.
      * @param simulate If true, the fluid will not actually be added.
      *
      * @return The amount of fluid the container accepted.
@@ -44,7 +44,7 @@ public interface EFluidContainer {
     /**
      * Attempt to drain fluid from the container.
      *
-     * @param amount The volume of fluid to drain.
+     * @param amount   The volume of fluid to drain.
      * @param simulate If true, the fluid will not actually be added.
      *
      * @return The amount of fluid the container was able to remove.

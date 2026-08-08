@@ -46,6 +46,7 @@ public interface FamiliarEntry {
 
     /**
      * Set the dismissed state of a familiar.
+     *
      * @param value If the familiar should be dismissed or not.
      */
     void setDismissed(boolean value);

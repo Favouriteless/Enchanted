@@ -12,28 +12,28 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class InfinityEggBlock extends FallingBlock {
 
-	private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+    private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 
-	private MapCodec<InfinityEggBlock> codec = simpleCodec(InfinityEggBlock::new);
+    private MapCodec<InfinityEggBlock> codec = simpleCodec(InfinityEggBlock::new);
 
-	public InfinityEggBlock(Properties properties) {
-		super(properties);
-	}
+    public InfinityEggBlock(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	protected MapCodec<? extends FallingBlock> codec() {
-		return codec;
-	}
+    @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return codec;
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext collisionContext) {
-		return SHAPE;
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext collisionContext) {
+        return SHAPE;
+    }
 
-	@Override
-	protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-		return false;
-	}
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
+    }
 
 
 }

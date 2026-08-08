@@ -40,32 +40,38 @@ public class FertilityRite extends Rite {
     protected boolean onStart(RiteParams params) {
         UUID caster = params.caster;
         level.getEntitiesOfClass(LivingEntity.class, type.getBounds(pos), e -> e.position().distanceToSqr(pos.getCenter()) < radiusSq)
-                .forEach(entity -> applyCureEffects(caster, entity));
+             .forEach(entity -> applyCureEffects(caster, entity));
 
         return true;
     }
 
     @Override
     protected boolean onTick(RiteParams params) {
-        if(params.ticks() % TICKS_PER_BLOCK != 0)
+        if (params.ticks() % TICKS_PER_BLOCK != 0) {
             return true;
+        }
 
         BlockPosUtils.iterableSphereHollow(pos, step).forEach(spherePos -> {
-            if(Math.random() > bonemealChance)
+            if (Math.random() > bonemealChance) {
                 return;
+            }
 
             BlockState state = level.getBlockState(spherePos);
-            if(state.isAir())
+            if (state.isAir()) {
                 return;
+            }
 
-            if(state.getBlock() instanceof BonemealableBlock block)
+            if (state.getBlock() instanceof BonemealableBlock block) {
                 block.performBonemeal(level, level.random, spherePos, state);
+            }
         });
 
-        if(params.ticks() % (TICKS_PER_BLOCK*5) == 0) {
+        if (params.ticks() % (TICKS_PER_BLOCK * 5) == 0) {
             level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.1F, 1.0F);
-            level.sendParticles(EParticleTypes.FERTILITY_SEED.get(), pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D,
-                    1, 0, 0, 0, 0);
+            level.sendParticles(
+                    EParticleTypes.FERTILITY_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                    1, 0, 0, 0, 0
+            );
         }
 
         return step++ < radius;
@@ -82,15 +88,16 @@ public class FertilityRite extends Rite {
     }
 
     protected void applyCureEffects(UUID casterUUID, LivingEntity target) {
-        if(target instanceof ZombieVillager villager) {
+        if (target instanceof ZombieVillager villager) {
             villager.startConverting(casterUUID, RandomUtils.nextInt(2401) + 3600);
             return;
         }
 
         List<Holder<MobEffect>> toRemove = new ArrayList<>();
-        for(Holder<MobEffect> effect : target.getActiveEffectsMap().keySet()) {
-            if(effect.is(ETags.MobEffects.FERTILITY_CURE_EFFECTS))
+        for (Holder<MobEffect> effect : target.getActiveEffectsMap().keySet()) {
+            if (effect.is(ETags.MobEffects.FERTILITY_CURE_EFFECTS)) {
                 toRemove.add(effect);
+            }
         }
 
         toRemove.forEach(target::removeEffect);

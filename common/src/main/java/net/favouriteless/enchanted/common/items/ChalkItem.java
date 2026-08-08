@@ -25,14 +25,15 @@ public class ChalkItem extends BlockItem {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if(context.getClickedFace() != Direction.UP)
+        if (context.getClickedFace() != Direction.UP) {
             return InteractionResult.PASS;
+        }
 
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
 
-        if(state.getBlock() instanceof AbstractChalkBlock) {
+        if (state.getBlock() instanceof AbstractChalkBlock) {
             tryPlaceChalk(level, pos, context);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -40,14 +41,15 @@ public class ChalkItem extends BlockItem {
         BlockPos targetPos = pos.above();
         BlockState targetState = level.getBlockState(targetPos);
 
-        if(targetState.canBeReplaced() && chalkBlock.canSurvive(chalkBlock.defaultBlockState(), level, targetPos))
+        if (targetState.canBeReplaced() && chalkBlock.canSurvive(chalkBlock.defaultBlockState(), level, targetPos)) {
             tryPlaceChalk(level, targetPos, context);
+        }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private void tryPlaceChalk(Level level, BlockPos pos, UseOnContext context) {
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             level.setBlockAndUpdate(pos, chalkBlock.getRandomState());
         }
         Player player = context.getPlayer();

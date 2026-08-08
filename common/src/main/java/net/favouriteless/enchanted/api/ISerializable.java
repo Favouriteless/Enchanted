@@ -5,7 +5,8 @@ package net.favouriteless.enchanted.api;
  */
 public interface ISerializable<T> {
 
-	T serialize();
-	void deserialize(T data);
+    T serialize();
+
+    void deserialize(T data);
 
 }

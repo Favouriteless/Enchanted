@@ -13,12 +13,15 @@ public class MobMixin {
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void setTarget(LivingEntity target, CallbackInfo ci) {
-        if(target == null)
+        if (target == null) {
             return;
-        if(((Mob)(Object)this).getLastAttacker() == target)
+        }
+        if (((Mob) (Object) this).getLastAttacker() == target) {
             return;
-        if(target.hasEffect(EMobEffects.GROTESQUE))
+        }
+        if (target.hasEffect(EMobEffects.GROTESQUE)) {
             ci.cancel();
+        }
     }
 
 }

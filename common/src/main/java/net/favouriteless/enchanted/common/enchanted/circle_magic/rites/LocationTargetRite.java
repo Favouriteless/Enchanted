@@ -20,8 +20,9 @@ public abstract class LocationTargetRite extends Rite {
     @Override
     protected boolean onStart(RiteParams params) {
         findTargetLocation(params);
-        if(targetLevel == null || targetPos == null)
+        if (targetLevel == null || targetPos == null) {
             return cancel();
+        }
         return true;
     }
 
@@ -32,18 +33,22 @@ public abstract class LocationTargetRite extends Rite {
 
     @Override
     protected void saveAdditional(CompoundTag tag, ServerLevel level) {
-        if(targetPos != null)
+        if (targetPos != null) {
             tag.put("targetPos", BlockPos.CODEC.encodeStart(NbtOps.INSTANCE, targetPos).getOrThrow());
-        if(targetLevel != null)
+        }
+        if (targetLevel != null) {
             tag.putString("targetLevel", targetLevel.dimension().location().toString());
+        }
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, ServerLevel level) {
-        if(tag.contains("targetPos"))
+        if (tag.contains("targetPos")) {
             targetPos = BlockPos.CODEC.parse(NbtOps.INSTANCE, tag.get("targetPos")).getOrThrow();
-        if(tag.contains("targetLevel"))
+        }
+        if (tag.contains("targetLevel")) {
             targetLevel = level.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(tag.getString("targetLevel"))));
+        }
     }
 
 }

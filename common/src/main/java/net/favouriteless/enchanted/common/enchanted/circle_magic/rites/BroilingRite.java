@@ -30,44 +30,51 @@ public class BroilingRite extends Rite {
 
     @Override
     protected boolean onTick(RiteParams params) {
-        if(params.ticks() % 5 != 0)
+        if (params.ticks() % 5 != 0) {
             return true;
+        }
 
         AABB bounds = new AABB(
                 pos.getX() - CIRCLE_RADIUS, pos.getY(), pos.getZ() - CIRCLE_RADIUS,
                 pos.getX() + CIRCLE_RADIUS + 1, pos.getY() + 1, pos.getZ() + CIRCLE_RADIUS + 1
         );
 
-        List<ItemEntity> toCook = level.getEntitiesOfClass(ItemEntity.class, bounds, e ->
-                e.position().subtract(pos.getCenter()).lengthSqr() < RADIUS_SQR && e.getItem().is(ETags.Items.RAW_FOODS));
+        List<ItemEntity> toCook = level.getEntitiesOfClass(
+                ItemEntity.class, bounds, e ->
+                        e.position().subtract(pos.getCenter()).lengthSqr() < RADIUS_SQR && e.getItem().is(ETags.Items.RAW_FOODS)
+        );
 
-        if(toCook.isEmpty())
+        if (toCook.isEmpty()) {
             return false;
+        }
 
         ItemEntity item = toCook.getFirst();
         SingleRecipeInput input = new SingleRecipeInput(item.getItem());
         RecipeHolder<SmeltingRecipe> recipe = smeltCheck.getRecipeFor(input, level).orElse(null);
 
-        if(recipe == null)
+        if (recipe == null) {
             return false;
+        }
 
         int total = item.getItem().getCount();
         int burned = 0;
-        for(int i = 0; i < total; i++) {
-            if(Math.random() < burnChance)
+        for (int i = 0; i < total; i++) {
+            if (Math.random() < burnChance) {
                 burned++;
+            }
         }
 
 
-        if(burned < total) {
+        if (burned < total) {
             ItemStack out = recipe.value().assemble(input, level.registryAccess());
             out.setCount(total - burned);
             level.addFreshEntity(new ItemEntity(level, item.getX(), item.getY(), item.getZ(), out));
         }
-        if(burned > 0) {
+        if (burned > 0) {
             int count = burned / 16; // int division, no remainder
-            if(Math.random() < (burned % 16) / 16f)
+            if (Math.random() < (burned % 16) / 16f) {
                 count += 1;
+            }
             level.addFreshEntity(new ItemEntity(level, item.getX(), item.getY(), item.getZ(), new ItemStack(Items.CHARCOAL, count)));
         }
 

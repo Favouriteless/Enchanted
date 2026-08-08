@@ -31,20 +31,21 @@ public class VoodooPoppetItem extends PoppetItem {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if(PoppetHelper.isBound(stack) && entity instanceof ServerPlayer player) {
+        if (PoppetHelper.isBound(stack) && entity instanceof ServerPlayer player) {
             EntityRefData data = PoppetHelper.getData(stack);
             ServerPlayer target = EntityUtils.tryFindPlayer(player.serverLevel(), data.uuid());
-            if(target == null)
+            if (target == null) {
                 return stack;
+            }
 
             ItemStack offhand = player.getOffhandItem();
 
-            if(!PoppetHelper.tryUseVoodoo(player, target)) {
+            if (!PoppetHelper.tryUseVoodoo(player, target)) {
                 stack.hurtAndBreak(stack.getMaxDamage(), player, EquipmentSlot.MAINHAND);
                 return stack;
             }
 
-            if(offhand.is(EItems.BONE_NEEDLE.get()) || offhand.is(EItems.ICY_NEEDLE.get())) {
+            if (offhand.is(EItems.BONE_NEEDLE.get()) || offhand.is(EItems.ICY_NEEDLE.get())) {
                 target.hurt(EDamageTypes.source(player.serverLevel(), EDamageTypes.VOODOO), 2.0F);
                 stack.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
                 offhand.shrink(1);
@@ -60,9 +61,9 @@ public class VoodooPoppetItem extends PoppetItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if(hand == InteractionHand.MAIN_HAND) {
+        if (hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getMainHandItem();
-            if(PoppetHelper.isBound(stack)) {
+            if (PoppetHelper.isBound(stack)) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }
@@ -72,8 +73,9 @@ public class VoodooPoppetItem extends PoppetItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        if(PoppetHelper.isBound(stack))
+        if (PoppetHelper.isBound(stack)) {
             tooltip.add(Component.literal(PoppetHelper.getData(stack).name()).withStyle(ChatFormatting.RED));
+        }
     }
 
     // Soft implements NeoForge's IItemExtension#hasCustomEntity
@@ -88,8 +90,9 @@ public class VoodooPoppetItem extends PoppetItem {
         voodoo.setDeltaMovement(item.getDeltaMovement());
         voodoo.setItem(stack);
         voodoo.setPickUpDelay(40);
-        if(item instanceof ItemEntity itemEntity && itemEntity.getOwner() != null)
+        if (item instanceof ItemEntity itemEntity && itemEntity.getOwner() != null) {
             voodoo.setThrower(itemEntity.getOwner());
+        }
         return voodoo;
     }
 

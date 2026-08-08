@@ -52,7 +52,8 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
 
     // Result is exposed by Capabilities (NeoForge) and Transfer API (Fabric).
     // Ingredients are not exposed by any API.
-    @NotNull private ItemStack result = ItemStack.EMPTY;
+    @NotNull
+    private ItemStack result = ItemStack.EMPTY;
     private final NonNullList<ItemStack> ingredients = NonNullList.create();
     private List<RecipeHolder<KettleRecipe>> recipes = new ArrayList<>();
 
@@ -76,42 +77,49 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, KettleBlockEntity be) {
-        if(be.firstTick)
+        if (be.firstTick) {
             be.firstTick();
-        if(be.isFailed || be.isComplete)
+        }
+        if (be.isFailed || be.isComplete) {
             return;
+        }
 
-        if(!be.providesHeat(level.getBlockState(pos.below())) || be.water != WATER_CAPACITY) {
+        if (!be.providesHeat(level.getBlockState(pos.below())) || be.water != WATER_CAPACITY) {
             boolean update = be.progress > 0 || be.isHot();
             be.progress = 0;
             be.heat = 0;
 
-            if(!be.ingredients.isEmpty()) {
+            if (!be.ingredients.isEmpty()) {
                 update = true;
                 be.fail();
             }
 
-            if(update) // Only send update if we failed or need to stop boiling.
+            if (update) // Only send update if we failed or need to stop boiling.
+            {
                 be.updateBlock();
+            }
 
             be.setChanged();
             return;
         }
 
-        if(!be.isHot()) {
+        if (!be.isHot()) {
             be.heat++;
-            if(be.isHot())
+            if (be.isHot()) {
                 be.updateBlock();
+            }
             be.setChanged();
             return;
         }
 
-        if(be.recipes.size() != 1 || !be.recipes.getFirst().value().fullMatch(ListInput.of(be.ingredients)))
+        if (be.recipes.size() != 1 || !be.recipes.getFirst().value().fullMatch(ListInput.of(be.ingredients))) {
             return;
+        }
 
-        if(be.progress < COOK_DURATION) {
-            if(be.progress++ == 0 || be.progress == COOK_DURATION)
+        if (be.progress < COOK_DURATION) {
+            if (be.progress++ == 0 || be.progress == COOK_DURATION) {
                 be.updateBlock(); // Only send update if we just started or finished cooking.
+            }
             be.setChanged();
             return;
         }
@@ -119,13 +127,12 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
         KettleRecipe recipe = be.recipes.getFirst().value();
         PowerProvider provider = PowerHelper.tryGetProvider(level, be.powerHolder);
 
-        if(recipe.getPower() == 0 || (provider != null && provider.tryConsume(recipe.getPower()))) {
+        if (recipe.getPower() == 0 || (provider != null && provider.tryConsume(recipe.getPower()))) {
             be.result = recipe.assemble(ListInput.of(be.ingredients), level.registryAccess());
             be.colour = recipe.getFinalColour();
             be.isComplete = true;
             level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 2, 1);
-        }
-        else {
+        } else {
             be.isFailed = true;
         }
         be.setChanged();
@@ -133,28 +140,29 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     public static void clientTick(Level level, BlockPos pos, BlockState state, KettleBlockEntity be) {
-        if(be.firstTick)
+        if (be.firstTick) {
             be.firstTick();
+        }
 
-        double waterY = Mth.lerp((float)be.water / WATER_CAPACITY, 0.0625D, 0.3125D);
+        double waterY = Mth.lerp((float) be.water / WATER_CAPACITY, 0.0625D, 0.3125D);
 
-        if(be.isHot() && RandomUtils.nextFloat() < 0.8F) {
+        if (be.isHot() && RandomUtils.nextFloat() < 0.8F) {
             double dx = pos.getX() + 0.5D + (Math.random() - 0.5D) * 0.375D; // 0.375 is width of water
             double dy = pos.getY() + waterY + 0.025D;
             double dz = pos.getZ() + 0.5D + (Math.random() - 0.5D) * 0.375D;
             level.addParticle(new ColourOptions(EParticleTypes.BOILING.get(), be.colour), dx, dy, dz, 0, 0, 0);
         }
 
-        if(be.isFailed)
+        if (be.isFailed) {
             return;
+        }
 
-        if(!be.isComplete && be.progress > 0) {
+        if (!be.isComplete && be.progress > 0) {
             double dx = pos.getX() + Math.random();
             double dy = pos.getY() + Math.random();
             double dz = pos.getZ() + Math.random();
             level.addParticle(new ColourOptions(EParticleTypes.KETTLE_COOK.get(), be.colour), dx, dy, dz, 0D, 0D, 0D);
-        }
-        else if(be.isHot() && be.hasItems && RandomUtils.nextInt(10) > 6) {
+        } else if (be.isHot() && be.hasItems && RandomUtils.nextInt(10) > 6) {
             double xo = 0.5D + (Math.random() - 0.5D) * 0.375D; // 0.375 is width of water
             double zo = 0.5D + (Math.random() - 0.5D) * 0.375D;
             double dx = pos.getX() + xo;
@@ -168,26 +176,25 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     /**
      * Add an ingredient to the kettle and refresh recipes. This is not exposed via Capabilities or the Transfer API.
      * Ingredients are considered voided once added, but stored for recipe matching
-
+     *
      * @return true if the ItemStack was added, otherwise false.
      */
     public boolean addItem(ItemStack stack) {
-        if(isComplete || isFailed || !isWaterFull() || !isHot())
+        if (isComplete || isFailed || !isWaterFull() || !isHot()) {
             return false;
+        }
 
         ingredients.add(stack);
         updateRecipes();
 
-        if(recipes.isEmpty()) {
-            if(ServerConfig.INSTANCE.kettleItemSpoil.get()) {
+        if (recipes.isEmpty()) {
+            if (ServerConfig.INSTANCE.kettleItemSpoil.get()) {
                 fail();
-            }
-            else {
+            } else {
                 ingredients.remove(stack);
                 updateRecipes();
             }
-        }
-        else {
+        } else {
             colour = recipes.getFirst().value().getCookColour();
         }
 
@@ -204,12 +211,14 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
      * @return The {@link ItemStack} removed from the kettle.
      */
     public ItemStack takeItem(boolean simulate) {
-        if(result.isEmpty())
+        if (result.isEmpty()) {
             return ItemStack.EMPTY;
+        }
 
         ItemStack out = takeItemNoUpdate(simulate);
-        if(!simulate)
+        if (!simulate) {
             checkResultEmpty();
+        }
         return out;
     }
 
@@ -222,22 +231,26 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
      * @return The {@link ItemStack} removed from the kettle.
      */
     public ItemStack takeItemNoUpdate(boolean simulate) {
-        if(isFailed || !isComplete || result.isEmpty())
+        if (isFailed || !isComplete || result.isEmpty()) {
             return ItemStack.EMPTY;
+        }
 
-        if(simulate)
+        if (simulate) {
             return result.copyWithCount(1);
+        }
 
         water -= water / result.getCount() + 1;
-        if(water < 0)
+        if (water < 0) {
             water = 0;
+        }
 
         return result.split(1);
     }
 
     public void checkResultEmpty() {
-        if(result.isEmpty())
+        if (result.isEmpty()) {
             resetValues();
+        }
         setChanged();
         updateBlock();
     }
@@ -245,39 +258,43 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     @Override
     public int drain(int amount, boolean simulate) {
         int drained = Math.min(water, amount);
-        if(simulate)
+        if (simulate) {
             return drained;
+        }
 
         water -= drained;
 
-        if(drained == 0)
+        if (drained == 0) {
             return drained;
+        }
 
         boolean update = false;
-        if(water == 0) {
+        if (water == 0) {
             resetValues();
             update = true;
-        }
-        else if(isFailed || isComplete || progress > 0 || !ingredients.isEmpty()) {
+        } else if (isFailed || isComplete || progress > 0 || !ingredients.isEmpty()) {
             fail();
             update = true;
         }
 
-        if(update)
+        if (update) {
             updateBlock();
+        }
         return drained;
     }
 
     @Override
     public int fill(int amount, boolean simulate) {
-        if(isComplete || isFailed)
+        if (isComplete || isFailed) {
             return 0;
+        }
 
         int added = Math.min(amount, WATER_CAPACITY - water);
-        if(simulate)
+        if (simulate) {
             return added;
+        }
         water += added;
-        if(added != 0) {
+        if (added != 0) {
             setChanged();
             updateBlock();
         }
@@ -286,23 +303,24 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
 
     private void firstTick() {
         firstTick = false;
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             updateRecipes();
             updateBlock();
-        }
-        else {
+        } else {
             ClientProxy.startBubblingSound(this);
         }
     }
 
     private void updateRecipes() {
-        if(level == null)
+        if (level == null) {
             return;
+        }
 
-        if(recipes.isEmpty())
+        if (recipes.isEmpty()) {
             recipes = level.getRecipeManager().getRecipesFor(ERecipeTypes.KETTLE.get(), ListInput.of(ingredients), level);
-        else
+        } else {
             recipes.removeIf(h -> !h.value().matches(ListInput.of(ingredients), level));
+        }
     }
 
     private void fail() {
@@ -312,8 +330,9 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
         result = ItemStack.EMPTY;
         ingredients.clear();
 
-        if(level != null && !level.isClientSide)
+        if (level != null && !level.isClientSide) {
             level.playSound(null, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
     }
 
     /**
@@ -348,8 +367,9 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     protected void saveAdditional(@NotNull CompoundTag tag, @NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         ContainerUtils.saveAllItems(tag, ingredients, registries);
-        if(!result.isEmpty())
+        if (!result.isEmpty()) {
             tag.put("result", result.save(registries));
+        }
         tag.put("powerHolder", powerHolder.serialize());
     }
 
@@ -370,8 +390,9 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
         ContainerUtils.loadAllItems(tag, ingredients, registries); // We have to use this version because it's a dynamically sized inventory.
         result = ItemStack.parseOptional(registries, tag.getCompound("result"));
 
-        if(tag.contains("powerHolder"))
+        if (tag.contains("powerHolder")) {
             powerHolder.deserialize(tag.getCompound("powerHolder"));
+        }
     }
 
     @Override
@@ -383,7 +404,7 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
         progress = tag.getInt("progress");
         int c = tag.getInt("colour");
 
-        if(level != null && level.isClientSide && oldColour != c) {
+        if (level != null && level.isClientSide && oldColour != c) {
             oldColour = colour;
             blendStart = EnchantedClient.getGameTime();
             hasItems = tag.getBoolean("hasItems");
@@ -409,14 +430,14 @@ public class KettleBlockEntity extends EBlockEntity implements EFluidContainer, 
     }
 
     public ARGB getColour(double currentTime) {
-        float f = (float)Math.min((currentTime - blendStart) / BLEND_TIME, 1);
+        float f = (float) Math.min((currentTime - blendStart) / BLEND_TIME, 1);
         ARGB s = ColourUtils.intToARGB(oldColour);
         ARGB e = ColourUtils.intToARGB(colour);
         return new ARGB(
                 160,
-                (int)Mth.lerp(f, s.r(), e.r()),
-                (int)Mth.lerp(f, s.g(), e.g()),
-                (int)Mth.lerp(f, s.b(), e.b())
+                (int) Mth.lerp(f, s.r(), e.r()),
+                (int) Mth.lerp(f, s.g(), e.g()),
+                (int) Mth.lerp(f, s.b(), e.b())
         );
     }
 

@@ -20,35 +20,39 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Player.class)
 public class PlayerMixin {
 
-    @Shadow @Final private Abilities abilities;
+    @Shadow
+    @Final
+    private Abilities abilities;
 
     @Inject(method = "interactOn", at = @At(value = "RETURN", ordinal = 1))
     private void itemBreakInteractOn(Entity entityToInteractOn, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir,
                                      @Local(ordinal = 0) ItemStack itemStack, @Local(ordinal = 1) ItemStack itemStack2) {
-        if(!abilities.instabuild && itemStack.isEmpty())
-            CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
+        if (!abilities.instabuild && itemStack.isEmpty()) {
+            CommonEventsFabric.playerDestroyItemEvent((Player) (Object) this, itemStack2, hand);
+        }
     }
 
     @Inject(method = "interactOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"))
     private void itemBreakInteractOn1(Entity entityToInteractOn, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir,
                                       @Local(ordinal = 0) ItemStack itemStack, @Local(ordinal = 1) ItemStack itemStack2) {
-        if(!abilities.instabuild && itemStack.isEmpty())
-            CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, itemStack2, hand);
+        if (!abilities.instabuild && itemStack.isEmpty()) {
+            CommonEventsFabric.playerDestroyItemEvent((Player) (Object) this, itemStack2, hand);
+        }
     }
 
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V", shift = Shift.AFTER))
     private void itemBreakAttack(Entity target, CallbackInfo ci, @Local ItemStack itemStack) {
         ItemStack original;
-        if(itemStack.isEmpty()) {
+        if (itemStack.isEmpty()) {
             itemStack.setCount(1);
             original = itemStack.copy();
             original.setDamageValue(original.getMaxDamage() - 1);
             itemStack.setCount(0);
-        }
-        else
+        } else {
             original = itemStack.copy();
+        }
 
-        CommonEventsFabric.playerDestroyItemEvent((Player)(Object)this, original, InteractionHand.MAIN_HAND);
+        CommonEventsFabric.playerDestroyItemEvent((Player) (Object) this, original, InteractionHand.MAIN_HAND);
     }
 
 }

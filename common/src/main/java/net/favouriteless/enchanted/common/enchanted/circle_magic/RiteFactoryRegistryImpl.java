@@ -15,12 +15,14 @@ public class RiteFactoryRegistryImpl implements RiteFactoryRegistry {
     private final BiMap<ResourceLocation, MapCodec<? extends RiteFactory>> typeCodecs = HashBiMap.create();
     private final Codec<RiteFactory> CODEC = ResourceLocation.CODEC.dispatch(RiteFactory::id, typeCodecs::get);
 
-    private RiteFactoryRegistryImpl() {}
+    private RiteFactoryRegistryImpl() {
+    }
 
     @Override
     public void register(ResourceLocation id, MapCodec<? extends RiteFactory> codec) {
-        if(typeCodecs.containsKey(id))
+        if (typeCodecs.containsKey(id)) {
             throw new IllegalArgumentException("Attempted to register a duplicate RiteFactory: " + id.toString());
+        }
         typeCodecs.put(id, codec);
     }
 

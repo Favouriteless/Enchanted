@@ -31,16 +31,18 @@ public class FabricAttachmentHelper implements AttachmentHelper {
     @Override
     @SuppressWarnings({ "unchecked", "UnstableApiUsage" })
     public <T> T get(Object holder, EAttachmentType<T> attachment) {
-        if(holder instanceof AttachmentTarget target)
-            return target.getAttachedOrCreate((AttachmentType<T>)attachment.getAttachment());
+        if (holder instanceof AttachmentTarget target) {
+            return target.getAttachedOrCreate((AttachmentType<T>) attachment.getAttachment());
+        }
         return attachment.getDefault();
     }
 
     @Override
     @SuppressWarnings({ "unchecked", "UnstableApiUsage" })
     public <T> void set(Object holder, EAttachmentType<T> attachment, T data) {
-        if(holder instanceof AttachmentTarget target)
-            target.setAttached((AttachmentType<T>)attachment.getAttachment(), data);
+        if (holder instanceof AttachmentTarget target) {
+            target.setAttached((AttachmentType<T>) attachment.getAttachment(), data);
+        }
     }
 
 }

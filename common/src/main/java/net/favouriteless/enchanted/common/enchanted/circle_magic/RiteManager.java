@@ -50,9 +50,10 @@ public class RiteManager extends SavedData {
 
     public static Rite getRiteAt(ServerLevel level, BlockPos pos) {
         RiteManager manager = get(level);
-        for(Rite rite : manager.activeRites) {
-            if(rite.getPos().equals(pos))
+        for (Rite rite : manager.activeRites) {
+            if (rite.getPos().equals(pos)) {
                 return rite;
+            }
         }
         return null;
     }
@@ -63,10 +64,11 @@ public class RiteManager extends SavedData {
         ListTag riteList = new ListTag();
         Registry<RiteType> registry = level.registryAccess().registryOrThrow(EData.RITE_TYPES_REGISTRY);
 
-        for(Rite rite : activeRites) {
+        for (Rite rite : activeRites) {
             ResourceLocation typeId = registry.getKey(rite.getType());
-            if(typeId == null)
+            if (typeId == null) {
                 continue;
+            }
 
             CompoundTag riteTag = rite.save();
 
@@ -84,7 +86,7 @@ public class RiteManager extends SavedData {
         ListTag riteList = tag.getList("rites", CompoundTag.TAG_COMPOUND);
         Registry<RiteType> registry = level.registryAccess().registryOrThrow(EData.RITE_TYPES_REGISTRY);
 
-        for(int i = 0; i < riteList.size(); i++) {
+        for (int i = 0; i < riteList.size(); i++) {
             try {
                 CompoundTag riteTag = riteList.getCompound(i);
 
@@ -95,8 +97,7 @@ public class RiteManager extends SavedData {
                 rite.load(riteTag);
 
                 manager.activeRites.add(rite);
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 Enchanted.LOG.error("Failed to load Rite, skipping: {}", e.getMessage());
             }
         }

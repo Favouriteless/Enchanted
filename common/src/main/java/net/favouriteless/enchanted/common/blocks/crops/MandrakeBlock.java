@@ -25,7 +25,7 @@ public class MandrakeBlock extends CropBlockAgeFive {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
 
-        if(!level.isClientSide() && level.getDifficulty() != Difficulty.PEACEFUL) {
+        if (!level.isClientSide() && level.getDifficulty() != Difficulty.PEACEFUL) {
             if (state.is(EBlocks.MANDRAKE.get()) && state.getValue(AGE_FIVE) == 4) {
                 if (level.isDay()) {
                     spawnMandrake(level, pos);

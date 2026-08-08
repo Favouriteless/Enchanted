@@ -35,8 +35,8 @@ public class ChalkCircleBlock extends AbstractChalkBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if(this.particleType != null) {
-            if(random.nextInt(6) == 1) {
+        if (this.particleType != null) {
+            if (random.nextInt(6) == 1) {
                 double dx = random.nextDouble();
                 double dz = random.nextDouble();
 

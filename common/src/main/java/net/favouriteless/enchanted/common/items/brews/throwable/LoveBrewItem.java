@@ -12,24 +12,24 @@ import java.util.List;
 
 public class LoveBrewItem extends ThrowableBrewItem {
 
-	public static final double RANGE = 4.0D;
+    public static final double RANGE = 4.0D;
 
-	public LoveBrewItem() {
-		super(new Properties());
-	}
+    public LoveBrewItem() {
+        super(new Properties());
+    }
 
-	@Override
-	public void applyEffect(Entity owner, Level level, Vec3 pos) {
-		List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, RANGE, RANGE)));
-		for(Animal animal : animals) {
-			Player source = owner instanceof Player ? (Player)owner : null;
-			animal.setInLove(source);
-		}
-	}
+    @Override
+    public void applyEffect(Entity owner, Level level, Vec3 pos) {
+        List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, RANGE, RANGE)));
+        for (Animal animal : animals) {
+            Player source = owner instanceof Player ? (Player) owner : null;
+            animal.setInLove(source);
+        }
+    }
 
-	@Override
-	public int getColour() {
-		return 0xF78FEB;
-	}
+    @Override
+    public int getColour() {
+        return 0xF78FEB;
+    }
 
 }

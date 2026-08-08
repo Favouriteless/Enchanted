@@ -26,8 +26,8 @@ public interface CommonRegistryHelper {
      * Register an object into either A.) A vanilla registry (fabric) or B.) A deferred registry (neoforge).
      *
      * @param registry The registry to be used for this object.
-     * @param name The name of the object. Will automatically use Enchanted's namespace.
-     * @param entry A supplier providing a *new* instance of the object.
+     * @param name     The name of the object. Will automatically use Enchanted's namespace.
+     * @param entry    A supplier providing a *new* instance of the object.
      *
      * @return A {@link Supplier} providing the registered object.
      */
@@ -37,8 +37,8 @@ public interface CommonRegistryHelper {
      * Register an object into either A.) A vanilla registry (fabric) or B.) A deferred registry (neoforge).
      *
      * @param registry The registry to be used for this object.
-     * @param name The name of the object. Will automatically use Enchanted's namespace.
-     * @param entry A supplier providing a *new* instance of the object.
+     * @param name     The name of the object. Will automatically use Enchanted's namespace.
+     * @param entry    A supplier providing a *new* instance of the object.
      *
      * @return A {@link Holder} providing the registered object.
      */
@@ -63,7 +63,7 @@ public interface CommonRegistryHelper {
     /**
      * Register a {@link SimpleJsonResourceReloadListener}.
      *
-     * @param id ID of the loader, only used by Fabric.
+     * @param id     ID of the loader, only used by Fabric.
      * @param loader An instance of the ReloadListener.
      */
     void register(ResourceLocation id, SimpleJsonResourceReloadListener loader);
@@ -71,8 +71,8 @@ public interface CommonRegistryHelper {
     /**
      * Creates a new {@link CreativeModeTab} and registers it.
      *
-     * @param name The name of the tab.
-     * @param iconSupplier A {@link Supplier} returning the icon of the tab.
+     * @param name           The name of the tab.
+     * @param iconSupplier   A {@link Supplier} returning the icon of the tab.
      * @param itemsGenerator A {@link DisplayItemsGenerator} used to add items to the tab.
      *
      * @return A new {@link CreativeModeTab} with the specified icon and generator.
@@ -82,7 +82,7 @@ public interface CommonRegistryHelper {
     /**
      * Register a non-synced datapack registry.
      *
-     * @param key {@link ResourceKey} pointing to the registry.
+     * @param key   {@link ResourceKey} pointing to the registry.
      * @param codec {@link Codec} for the objects the registry contains.
      */
     <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec);
@@ -90,8 +90,8 @@ public interface CommonRegistryHelper {
     /**
      * Register a synced datapack registry.
      *
-     * @param key {@link ResourceKey} pointing to the registry.
-     * @param codec {@link Codec} for the objects the registry contains.
+     * @param key          {@link ResourceKey} pointing to the registry.
+     * @param codec        {@link Codec} for the objects the registry contains.
      * @param networkCodec Network {@link Codec} for the objects the registry contains.
      */
     <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec);

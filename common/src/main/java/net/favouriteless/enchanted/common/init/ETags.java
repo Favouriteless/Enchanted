@@ -95,7 +95,6 @@ public class ETags {
     }
 
 
-
     private static <T> TagKey<T> createTag(ResourceKey<? extends Registry<T>> registry, String name) {
         return TagKey.create(registry, Enchanted.id(name));
     }

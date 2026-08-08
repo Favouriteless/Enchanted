@@ -42,10 +42,11 @@ public class CircleMagicParticle extends TextureSheetParticle {
         xo = x;
         yo = y;
         zo = z;
-        if(age++ >= lifetime) {
+        if (age++ >= lifetime) {
             alpha -= 0.01F;
-            if(alpha <= 0)
+            if (alpha <= 0) {
                 remove();
+            }
         }
 
         double angle = Math.toRadians(ANGLE);
@@ -73,8 +74,10 @@ public class CircleMagicParticle extends TextureSheetParticle {
 
         @Override
         public Particle createParticle(ColouredCircleOptions data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            CircleMagicParticle particle = new CircleMagicParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(),
-                    data.getGreen(), data.getBlue(), data.center(), data.radius());
+            CircleMagicParticle particle = new CircleMagicParticle(
+                    level, x, y, z, xSpeed, ySpeed, zSpeed, data.getRed(),
+                    data.getGreen(), data.getBlue(), data.center(), data.radius()
+            );
             particle.pickSprite(sprites);
             return particle;
         }

@@ -21,6 +21,7 @@ public interface PowerProvider {
      * Attempt to consume power from this {@link PowerProvider}.
      *
      * @param amount The amount of power to be consumed.
+     *
      * @return True if the power was consumed, false if the power was not consumed (e.g. there was not enough power)
      */
     boolean tryConsume(double amount);

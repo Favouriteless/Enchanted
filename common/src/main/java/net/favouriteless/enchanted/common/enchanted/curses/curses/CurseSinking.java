@@ -20,8 +20,9 @@ public class CurseSinking implements Curse {
         boolean isSwimming = target.isInWater();
         boolean isFlying = target.isFallFlying();
 
-        if(isSwimming == wasSwimming && isFlying == wasFlying)
+        if (isSwimming == wasSwimming && isFlying == wasFlying) {
             return;
+        }
 
         float sink = isSwimming ? -0.025F * (strength + 1) : isFlying ? -0.05F * (strength + 1) : 0;
         EServices.ATTACHMENT.set(target, EAttachmentTypes.SINKING_FACTOR, sink);

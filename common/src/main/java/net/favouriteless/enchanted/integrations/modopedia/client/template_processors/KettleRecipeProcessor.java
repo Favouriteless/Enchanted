@@ -29,23 +29,23 @@ public class KettleRecipeProcessor implements TemplateProcessor {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
-        if(optional.isEmpty())
+        if (optional.isEmpty()) {
             throw new IllegalArgumentException(id + " is not a valid recipe.");
+        }
 
         RecipeHolder<?> holder = optional.get();
 
-        if(holder.value() instanceof KettleRecipe recipe) {
+        if (holder.value() instanceof KettleRecipe recipe) {
             List<List<ItemStack>> inputs = new ArrayList<>();
             recipe.getInputs().forEach(i -> inputs.add(List.of(i)));
 
-            int rows = (int)Math.ceil(inputs.size() / 5.0F);
+            int rows = (int) Math.ceil(inputs.size() / 5.0F);
 
             lookup.set("p_inputs_y", Variable.of(35 - rows * 8)); // 35 is right in the center of the ingredients area
             lookup.set("p_inputs", Variable.of(new GridItemDisplay(recipe.getInputs().stream().<ItemDisplay>map(SimpleItemDisplay::new).toList(), 5, 16, true)));
             lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
             lookup.set("p_power", Variable.of(Component.translatable(LangUtils.tooltip("altar_power"), recipe.getPower()).getString()));
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("KettleRecipe template must use a kettle recipe.");
         }
     }

@@ -20,6 +20,7 @@ public class ImageFrameBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject jsonObject, RegistryOps<JsonElement> registryOps) {}
+    protected void build(JsonObject jsonObject, RegistryOps<JsonElement> registryOps) {
+    }
 
 }

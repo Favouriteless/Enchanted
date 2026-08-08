@@ -29,12 +29,13 @@ public class PoppetHelper {
     /**
      * Bind a poppet to the given player. Player must be online so their username can be grabbed.
      *
-     * @param stack Item to bind, will be ignored if it is not a poppet.
+     * @param stack  Item to bind, will be ignored if it is not a poppet.
      * @param player Player to bind the poppet to.
      */
     public static void bind(ItemStack stack, Player player) {
-        if(stack.getItem() instanceof PoppetItem)
+        if (stack.getItem() instanceof PoppetItem) {
             stack.set(EDataComponents.ENTITY_REF.get(), new EntityRefData(player.getUUID(), player.getDisplayName().getString()));
+        }
     }
 
     /**
@@ -43,8 +44,9 @@ public class PoppetHelper {
      * @param stack Item to unbind, will be ignored if it is not a poppet.
      */
     public static void unbind(ItemStack stack) {
-        if(stack.getItem() instanceof PoppetItem)
+        if (stack.getItem() instanceof PoppetItem) {
             stack.set(EDataComponents.ENTITY_REF.get(), null);
+        }
     }
 
     /**
@@ -81,13 +83,14 @@ public class PoppetHelper {
     }
 
     public static boolean tryTriggerCarried(ServerPlayer player, Predicate<ItemStack> usePredicate) {
-        for(ItemStack stack : player.getInventory().items) {
+        for (ItemStack stack : player.getInventory().items) {
             Item item = stack.getItem(); // Grab item early because if it shrinks to 0 this will return air
 
-            if(usePredicate.test(stack) && PoppetHelper.isBoundTo(stack, player)) {
+            if (usePredicate.test(stack) && PoppetHelper.isBoundTo(stack, player)) {
                 stack.setDamageValue(stack.getDamageValue() + 1);
-                if(stack.getDamageValue() >= stack.getMaxDamage())
+                if (stack.getDamageValue() >= stack.getMaxDamage()) {
                     stack.shrink(1);
+                }
 
                 PoppetHelper.doTriggerAnimation(player, item);
                 return true;
@@ -98,9 +101,10 @@ public class PoppetHelper {
 
     public static boolean tryTriggerShelved(ServerPlayer player, Predicate<ItemStack> usePredicate) {
         PoppetShelfManager manager = PoppetShelfManager.get(player.serverLevel());
-        for(PoppetReference ref : manager.getPoppets(player)) {
-            if(ref.tryConsume(player, usePredicate))
+        for (PoppetReference ref : manager.getPoppets(player)) {
+            if (ref.tryConsume(player, usePredicate)) {
                 return true;
+            }
         }
         return false;
     }
@@ -112,13 +116,15 @@ public class PoppetHelper {
     public static boolean tryUseVoodoo(ServerPlayer attacker, ServerPlayer target) {
         // Attempt to use infused poppets first to prioritise them over regular ones.
         boolean blockedInfused = tryTriggerAll(target, stack -> stack.getItem() == EItems.VOODOO_PROTECTION_POPPET_INFUSED.get());
-        boolean blocked = blockedInfused || tryTriggerAll(target, stack ->
-                stack.getItem() == EItems.VOODOO_PROTECTION_POPPET.get() ||
-                stack.getItem() == EItems.VOODOO_PROTECTION_POPPET_STURDY.get()
+        boolean blocked = blockedInfused || tryTriggerAll(
+                target, stack ->
+                        stack.getItem() == EItems.VOODOO_PROTECTION_POPPET.get() ||
+                                stack.getItem() == EItems.VOODOO_PROTECTION_POPPET_STURDY.get()
         );
 
-        if(!blockedInfused)
+        if (!blockedInfused) {
             return !blocked;
+        }
 
         ServerLevel level = attacker.serverLevel();
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);

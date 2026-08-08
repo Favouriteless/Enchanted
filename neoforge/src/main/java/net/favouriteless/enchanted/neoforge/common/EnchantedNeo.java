@@ -1,6 +1,5 @@
 package net.favouriteless.enchanted.neoforge.common;
 
-import net.favouriteless.enchanted.common.CommonConfig;
 import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.blocks.entity.EBlockEntityTypes;
@@ -9,7 +8,8 @@ import net.favouriteless.enchanted.common.entities.Mandrake;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EEntityTypes;
 import net.favouriteless.enchanted.common.init.EItems;
-import net.favouriteless.enchanted.neoforge.common.capabilities.*;
+import net.favouriteless.enchanted.neoforge.common.capabilities.EFluidContainerWrapper;
+import net.favouriteless.enchanted.neoforge.common.capabilities.KettleInvWrapper;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper;
 import net.favouriteless.enchanted.platform.services.NeoCommonRegistryHelper.DataRegistryRegisterable;
 import net.favouriteless.enchanted.platform.services.NeoNetworkHelper;
@@ -30,11 +30,10 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 @Mod(Enchanted.MOD_ID)
 @EventBusSubscriber(modid = Enchanted.MOD_ID)
 public class EnchantedNeo {
-    
+
     public EnchantedNeo(IEventBus bus, ModContainer container) {
         Enchanted.init();
 
-        container.registerConfig(Type.COMMON, CommonConfig.SPEC, "enchanted-common.toml");
         container.registerConfig(Type.SERVER, ServerConfig.SPEC, "enchanted-server.toml");
 
         NeoCommonRegistryHelper.getRegistryMap().register(bus);
@@ -55,7 +54,7 @@ public class EnchantedNeo {
 
     @SubscribeEvent
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        for(DataRegistryRegisterable<?> registerable : NeoCommonRegistryHelper.dataRegistryRegisterables) {
+        for (DataRegistryRegisterable<?> registerable : NeoCommonRegistryHelper.dataRegistryRegisterables) {
             registerable.register(event);
         }
     }

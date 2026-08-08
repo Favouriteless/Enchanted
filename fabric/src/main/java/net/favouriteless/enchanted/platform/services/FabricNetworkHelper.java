@@ -1,11 +1,11 @@
 package net.favouriteless.enchanted.platform.services;
 
-import net.favouriteless.enchanted.platform.PacketContext;
-import net.favouriteless.enchanted.platform.FabricClientPacketContext;
-import net.favouriteless.enchanted.platform.FabricServerPacketContext;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.favouriteless.enchanted.platform.FabricClientPacketContext;
+import net.favouriteless.enchanted.platform.FabricServerPacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -64,11 +64,13 @@ public class FabricNetworkHelper implements NetworkHelper {
 
     @Override
     public void sendToTracking(CustomPacketPayload payload, Entity entity) {
-        if(entity.level().getChunkSource() instanceof ServerChunkCache cache)
+        if (entity.level().getChunkSource() instanceof ServerChunkCache cache) {
             cache.broadcast(entity, ServerPlayNetworking.createS2CPacket(payload));
+        }
     }
 
-    public record ClientPayloadRegisterable<T extends CustomPacketPayload>(Type<T> type, BiConsumer<T, PacketContext> handler) {
+    public record ClientPayloadRegisterable<T extends CustomPacketPayload>(Type<T> type,
+                                                                           BiConsumer<T, PacketContext> handler) {
 
         public void register() {
             ClientPlayNetworking.registerGlobalReceiver(type, (payload, context) -> handler.accept(payload, new FabricClientPacketContext(context)));

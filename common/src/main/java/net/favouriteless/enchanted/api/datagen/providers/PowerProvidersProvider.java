@@ -44,19 +44,25 @@ public abstract class PowerProvidersProvider implements DataProvider {
         final Set<ResourceLocation> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
-        buildBlocks(registries, (block, power, limit) -> {
-            ResourceLocation id = getId(block);
-            if(!set.add(id))
-                throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-            generated.add(DataProvider.saveStable(output, registries, PowerProvider.CODEC, new PowerProvider(power, limit), pathProvider.json(id)));
-        });
+        buildBlocks(
+                registries, (block, power, limit) -> {
+                    ResourceLocation id = getId(block);
+                    if (!set.add(id)) {
+                        throw new IllegalStateException("Duplicate " + getName() + ": " + id);
+                    }
+                    generated.add(DataProvider.saveStable(output, registries, PowerProvider.CODEC, new PowerProvider(power, limit), pathProvider.json(id)));
+                }
+        );
 
-        buildTags(registries, (tag, power, limit) -> {
-            ResourceLocation id = getId(tag);
-            if(!set.add(id))
-                throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-            generated.add(DataProvider.saveStable(output, registries, PowerProvider.CODEC, new PowerProvider(power, limit), pathProvider.json(id)));
-        });
+        buildTags(
+                registries, (tag, power, limit) -> {
+                    ResourceLocation id = getId(tag);
+                    if (!set.add(id)) {
+                        throw new IllegalStateException("Duplicate " + getName() + ": " + id);
+                    }
+                    generated.add(DataProvider.saveStable(output, registries, PowerProvider.CODEC, new PowerProvider(power, limit), pathProvider.json(id)));
+                }
+        );
 
         return CompletableFuture.allOf(generated.toArray(CompletableFuture[]::new));
     }

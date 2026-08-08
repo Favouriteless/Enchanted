@@ -47,8 +47,9 @@ public class KettleRecipeBuilder {
         }
 
         public Builder inputs(ItemLike... inputs) {
-            for(ItemLike item : inputs)
+            for (ItemLike item : inputs) {
                 this.inputs.add(item.asItem().getDefaultInstance());
+            }
 
             return this;
         }

@@ -18,10 +18,11 @@ public class PoppetParticle extends SimpleAnimatedParticle {
         this.lifetime = 60 + this.random.nextInt(12);
         this.setSpriteFromAge(sprites);
 
-        if(this.random.nextInt(4) == 0)
+        if (this.random.nextInt(4) == 0) {
             this.setColor(r1, g1, b1);
-        else
+        } else {
             this.setColor(r, g, b);
+        }
     }
 
     @Override
@@ -40,9 +41,11 @@ public class PoppetParticle extends SimpleAnimatedParticle {
         @Override
         public Particle createParticle(TwoColourOptions data, ClientLevel level, double x, double y, double z,
                                        double xSpeed, double ySpeed, double zSpeed) {
-            return new PoppetParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites,
+            return new PoppetParticle(
+                    level, x, y, z, xSpeed, ySpeed, zSpeed, sprites,
                     data.getRedFirst(), data.getGreenFirst(), data.getBlueFirst(),
-                    data.getRedSecond(), data.getGreenSecond(), data.getBlueSecond());
+                    data.getRedSecond(), data.getGreenSecond(), data.getBlueSecond()
+            );
         }
     }
 

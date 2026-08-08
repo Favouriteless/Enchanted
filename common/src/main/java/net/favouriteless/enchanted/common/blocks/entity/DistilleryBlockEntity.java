@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.api.altar.PowerConsumer;
-import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.PowerHelper;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
 import net.favouriteless.enchanted.common.init.EItems;
 import net.favouriteless.enchanted.common.init.ERecipeTypes;
@@ -60,39 +60,41 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
         boolean wasBurning = be.isBurning;
         RecipeHolder<DistillingRecipe> recipe = be.recipeCheck.getRecipeFor(ListInput.of(be.inventory.subList(0, 4)), level).orElse(null);
 
-        if(recipe != null && be.canDistill(recipe) &&
+        if (recipe != null && be.canDistill(recipe) &&
                 (recipe.value().power() == 0 || powerProvider != null &&
-                        powerProvider.tryConsume((double)recipe.value().power() / recipe.value().duration()))) {
+                        powerProvider.tryConsume((double) recipe.value().power() / recipe.value().duration()))) {
             be.isBurning = true;
 
-            if(++be.cookProgress == be.cookDuration) {
+            if (++be.cookProgress == be.cookDuration) {
                 be.cookProgress = 0;
                 be.distill(recipe);
             }
-        }
-        else {
+        } else {
             be.isBurning = false;
-            if(be.cookProgress > 0)
+            if (be.cookProgress > 0) {
                 be.cookProgress = Mth.clamp(be.cookProgress - 2, 0, be.cookDuration);
+            }
         }
 
 
-        if(wasBurning != be.isBurning)
+        if (wasBurning != be.isBurning) {
             level.setBlock(be.worldPosition, level.getBlockState(be.worldPosition).setValue(AbstractFurnaceBlock.LIT, be.isBurning), 3);
+        }
 
         be.setChanged();
     }
 
     /**
      * Attempt to distill the items in this {@link DistilleryBlockEntity}'s input slots.
+     *
      * @param recipe The {@link DistillingRecipe} to use.
      */
     private void distill(@NotNull RecipeHolder<DistillingRecipe> recipe) {
-        for(ItemStack recipeItem : recipe.value().inputs()) { // First, attempt to remove the input items.
-            for(int i = 0; i < 3; i++) {
+        for (ItemStack recipeItem : recipe.value().inputs()) { // First, attempt to remove the input items.
+            for (int i = 0; i < 3; i++) {
                 ItemStack inputItem = inventory.get(i);
-                if(ItemUtils.isSameItemPartial(inputItem, recipeItem)) {
-                    if(inputItem.getCount() >= recipeItem.getCount()) {
+                if (ItemUtils.isSameItemPartial(inputItem, recipeItem)) {
+                    if (inputItem.getCount() >= recipeItem.getCount()) {
                         inputItem.shrink(recipeItem.getCount());
                         break;
                     }
@@ -102,22 +104,23 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
 
         List<ItemStack> itemsOut = recipe.value().outputs();
 
-        for(ItemStack recipeItem : itemsOut) {
-            for(int i = 3; i < inventory.size(); i++) { // First, stack the result into existing slots.
+        for (ItemStack recipeItem : itemsOut) {
+            for (int i = 3; i < inventory.size(); i++) { // First, stack the result into existing slots.
                 ItemStack outputItem = inventory.get(i);
 
-                if(ItemStack.isSameItemSameComponents(recipeItem, outputItem)) {
+                if (ItemStack.isSameItemSameComponents(recipeItem, outputItem)) {
                     int amount = Math.min(outputItem.getMaxStackSize() - outputItem.getCount(), recipeItem.getCount());
                     outputItem.grow(amount);
                     recipeItem.shrink(amount);
 
-                    if(recipeItem.isEmpty())
+                    if (recipeItem.isEmpty()) {
                         break;
+                    }
                 }
             }
-            if(!recipeItem.isEmpty()) {
-                for(int i = 3; i < inventory.size(); i++) { // After, stack the result into the first empty slot
-                    if(inventory.get(i).isEmpty()) {
+            if (!recipeItem.isEmpty()) {
+                for (int i = 3; i < inventory.size(); i++) { // After, stack the result into the first empty slot
+                    if (inventory.get(i).isEmpty()) {
                         inventory.set(i, recipeItem);
                         break;
                     }
@@ -133,16 +136,17 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
         List<ItemStack> itemsOut = new ArrayList<>(recipe.value().outputs());
 
         Iterator<ItemStack> iterator = itemsOut.iterator();
-        while(iterator.hasNext()) { // First, check if the output for the recipe can fit by stacking with items.
+        while (iterator.hasNext()) { // First, check if the output for the recipe can fit by stacking with items.
             ItemStack result = iterator.next();
 
-            for(int i = 3; i < inventory.size(); i++) {
+            for (int i = 3; i < inventory.size(); i++) {
                 ItemStack output = inventory.get(i);
 
-                if(!ItemStack.isSameItemSameComponents(result, output))
+                if (!ItemStack.isSameItemSameComponents(result, output)) {
                     continue;
+                }
 
-                if(result.getCount() + output.getCount() <= output.getMaxStackSize()) {
+                if (result.getCount() + output.getCount() <= output.getMaxStackSize()) {
                     iterator.remove();
                     break;
                 }
@@ -151,9 +155,10 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
         }
 
         int emptySpaces = 0;
-        for(int i = 3; i < inventory.size(); i++) {
-            if(inventory.get(i).isEmpty())
+        for (int i = 3; i < inventory.size(); i++) {
+            if (inventory.get(i).isEmpty()) {
                 emptySpaces++;
+            }
         }
 
         return emptySpaces >= itemsOut.size(); // If there are same/more empty, we know the output should fit.
@@ -199,20 +204,22 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
 
     @Override
     public int[] getSlotsForFace(@NotNull Direction face) {
-        if(face == Direction.UP)
+        if (face == Direction.UP) {
             return TOP_SLOTS;
-        else if(face == Direction.DOWN)
+        } else if (face == Direction.DOWN) {
             return BOTTOM_SLOTS;
-        else
+        } else {
             return SIDE_SLOTS;
+        }
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, Direction face) {
-        if(index < 3)
+        if (index < 3) {
             return index != 0 || stack.is(EItems.CLAY_JAR.get()); // Only let jars into slot 0
-        else
+        } else {
             return false;
+        }
     }
 
     @Override
@@ -225,7 +232,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
         boolean matching = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, inventory.get(index));
         inventory.set(index, stack);
 
-        if(index < 3 && !matching) { // If the stack changed was one of the inputs, recalculate.
+        if (index < 3 && !matching) { // If the stack changed was one of the inputs, recalculate.
             cookDuration = getTotalCookTime(level, this);
             cookProgress = 0;
             setChanged();
@@ -235,7 +242,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
-            return switch(index) {
+            return switch (index) {
                 case 0 -> cookProgress;
                 case 1 -> cookDuration;
                 default -> 0;
@@ -244,7 +251,7 @@ public class DistilleryBlockEntity extends ContainerBlockEntityBase implements P
 
         @Override
         public void set(int index, int value) {
-            switch(index) {
+            switch (index) {
                 case 0:
                     cookProgress = value;
                 case 1:

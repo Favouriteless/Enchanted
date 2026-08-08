@@ -48,7 +48,7 @@ public class EffectsPlayerPoppetEffect implements PlayerPoppetEffect {
     @Override
     public void protect(Player player) {
         player.setHealth(1);
-        for(Supplier<MobEffectInstance> supplier : effects) {
+        for (Supplier<MobEffectInstance> supplier : effects) {
             player.addEffect(supplier.get());
         }
     }

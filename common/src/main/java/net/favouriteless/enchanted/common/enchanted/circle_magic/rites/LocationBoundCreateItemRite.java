@@ -20,7 +20,7 @@ public class LocationBoundCreateItemRite extends Rite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        for(ItemStack stack : items) {
+        for (ItemStack stack : items) {
             stack.set(EDataComponents.BLOCK_POS.get(), pos);
             stack.set(EDataComponents.LEVEL_KEY.get(), level.dimension());
             ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());

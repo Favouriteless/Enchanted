@@ -55,34 +55,37 @@ public class DistilleryMenu extends ContainerMenuBase<DistilleryBlockEntity> {
         ItemStack itemstack;
         Slot slot = slots.get(index);
 
-        if(slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotItem = slot.getItem();
             itemstack = slotItem.copy();
 
-            if(index < 7) { // If container slot
-                if(!this.moveItemStackTo(slotItem, 7, 43, true))
+            if (index < 7) { // If container slot
+                if (!this.moveItemStackTo(slotItem, 7, 43, true)) {
                     return ItemStack.EMPTY;
-            }
-            else if(itemstack.getItem() == EItems.CLAY_JAR.get()) { // Item is clay jar
-                if(!moveItemStackTo(slotItem, 0, 1, false))
+                }
+            } else if (itemstack.getItem() == EItems.CLAY_JAR.get()) { // Item is clay jar
+                if (!moveItemStackTo(slotItem, 0, 1, false)) {
                     return ItemStack.EMPTY;
-            }
-            else if(index < 34) { // Item is in main player inventory and cannot fit
-                if(moveItemStackTo(slotItem, 1, 3, false) || !this.moveItemStackTo(slotItem, 34, 43, false))
+                }
+            } else if (index < 34) { // Item is in main player inventory and cannot fit
+                if (moveItemStackTo(slotItem, 1, 3, false) || !this.moveItemStackTo(slotItem, 34, 43, false)) {
                     return ItemStack.EMPTY;
-            }
-            else { // Item is in player hotbar and cannot fit
-                if(moveItemStackTo(slotItem, 1, 3, false) || !this.moveItemStackTo(slotItem, 7, 34, false))
+                }
+            } else { // Item is in player hotbar and cannot fit
+                if (moveItemStackTo(slotItem, 1, 3, false) || !this.moveItemStackTo(slotItem, 7, 34, false)) {
                     return ItemStack.EMPTY;
+                }
             }
 
-            if(slotItem.isEmpty())
+            if (slotItem.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
-            else
+            } else {
                 slot.setChanged();
+            }
 
-            if(slotItem.getCount() == itemstack.getCount())
+            if (slotItem.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
+            }
 
             slot.onTake(player, slotItem);
         }

@@ -17,7 +17,8 @@ public class PoppetShelfInventory implements Container {
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
-    private PoppetShelfInventory() {}
+    private PoppetShelfInventory() {
+    }
 
     public static PoppetShelfInventory forServer(PoppetShelfIdentifier id, PoppetShelfManager data) {
         return new ServerPoppetShelfInventory(id, data);
@@ -55,8 +56,9 @@ public class PoppetShelfInventory implements Container {
     @Override
     public ItemStack removeItem(int slot, int amount) {
         ItemStack out = ContainerHelper.removeItem(items, slot, amount);
-        if(!out.isEmpty())
+        if (!out.isEmpty()) {
             setChanged();
+        }
         return out;
     }
 
@@ -67,13 +69,15 @@ public class PoppetShelfInventory implements Container {
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        if(!getItem(slot).equals(stack))
+        if (!getItem(slot).equals(stack)) {
             setChanged();
+        }
         items.set(slot, stack);
     }
 
     @Override
-    public void setChanged() {}
+    public void setChanged() {
+    }
 
     @Override
     public boolean stillValid(Player player) {
@@ -82,7 +86,7 @@ public class PoppetShelfInventory implements Container {
 
     @Override
     public void clearContent() {
-        if(!items.isEmpty()) {
+        if (!items.isEmpty()) {
             items.clear();
             setChanged();
         }
@@ -111,7 +115,7 @@ public class PoppetShelfInventory implements Container {
         @Override
         public void setItem(int slot, ItemStack stack) {
             ItemStack old = getItem(slot);
-            if(old != stack) { // If item changes we want to make sure the UUID cache is updated.
+            if (old != stack) { // If item changes we want to make sure the UUID cache is updated.
                 data.dereference(old);
                 data.reference(id, slot, stack);
             }
@@ -121,16 +125,18 @@ public class PoppetShelfInventory implements Container {
         @Override
         public ItemStack removeItem(int slot, int amount) {
             ItemStack old = getItem(slot);
-            if(old.getCount() - amount <= 0)
+            if (old.getCount() - amount <= 0) {
                 data.dereference(old); // Dereference before because DataComponents get nulled after
+            }
             return super.removeItem(slot, amount);
         }
 
         @Override
         public ItemStack removeItemNoUpdate(int slot) {
             ItemStack old = getItem(slot);
-            if(!old.isEmpty())
+            if (!old.isEmpty()) {
                 data.dereference(old);
+            }
             return super.removeItemNoUpdate(slot);
         }
 

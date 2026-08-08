@@ -15,8 +15,9 @@ public class EBlockEntity extends BlockEntity {
     }
 
     protected void updateBlock() {
-        if(level == null || level.isClientSide)
+        if (level == null || level.isClientSide) {
             return;
+        }
         BlockState state = level.getBlockState(worldPosition);
         level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
     }

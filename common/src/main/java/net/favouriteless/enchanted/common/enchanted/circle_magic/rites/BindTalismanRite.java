@@ -28,14 +28,16 @@ public class BindTalismanRite extends Rite {
         Registry<CircleMagicShape> registry = level.registryAccess().registryOrThrow(EData.CIRCLE_SHAPE_REGISTRY);
 
         Map<CircleMagicShape, Block> shapes = new HashMap<>();
-        for(CircleMagicShape shape : registry) {
+        for (CircleMagicShape shape : registry) {
             Block block = shape.getBlockAt(level, pos);
-            if(block != null)
+            if (block != null) {
                 shapes.put(shape, block);
+            }
         }
 
-        if(shapes.isEmpty())
+        if (shapes.isEmpty()) {
             return cancel();
+        }
 
         HashMap<ResourceLocation, Block> component = new HashMap<>();
         shapes.forEach((shape, block) -> component.put(registry.getKey(shape), block));

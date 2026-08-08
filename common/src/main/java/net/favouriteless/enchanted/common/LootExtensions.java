@@ -35,15 +35,18 @@ public class LootExtensions {
     public static void tryRoll(LootTable table, LootContext context, Consumer<ItemStack> output) {
         Registry<LootTable> registry = context.getLevel().getServer().reloadableRegistries().get().registryOrThrow(Registries.LOOT_TABLE);
         LootExtension extension = extensions.get(registry.getKey(table));
-        if(extension == null)
+        if (extension == null) {
             return;
+        }
 
-        if(!extension.predicate().test(context))
+        if (!extension.predicate().test(context)) {
             return;
+        }
 
         LootTable extended = registry.get(extension.table());
-        if(extended == null)
+        if (extended == null) {
             return;
+        }
 
         extended.getRandomItemsRaw(context, output);
     }

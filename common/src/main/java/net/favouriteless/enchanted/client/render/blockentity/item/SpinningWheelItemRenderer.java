@@ -12,24 +12,25 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpinningWheelItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-	private static SpinningWheelBlockEntity dummyBe;
+    private static SpinningWheelBlockEntity dummyBe;
 
-	public SpinningWheelItemRenderer() {
-		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
-	}
+    public SpinningWheelItemRenderer() {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    }
 
-	@Override
-	public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
-		if(dummyBe == null)
-			dummyBe = new SpinningWheelBlockEntity(BlockPos.ZERO, EBlocks.SPINNING_WHEEL.get().defaultBlockState());
+    @Override
+    public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
+        if (dummyBe == null) {
+            dummyBe = new SpinningWheelBlockEntity(BlockPos.ZERO, EBlocks.SPINNING_WHEEL.get().defaultBlockState());
+        }
 
-		poseStack.pushPose();
-		Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, light, overlay);
-		poseStack.popPose();
-	}
+        poseStack.pushPose();
+        Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(dummyBe, poseStack, buffer, light, overlay);
+        poseStack.popPose();
+    }
 
-	public static SpinningWheelItemRenderer getInstance() {
-		return new SpinningWheelItemRenderer();
-	}
+    public static SpinningWheelItemRenderer getInstance() {
+        return new SpinningWheelItemRenderer();
+    }
 
 }

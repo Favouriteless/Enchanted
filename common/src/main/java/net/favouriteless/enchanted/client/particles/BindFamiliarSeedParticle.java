@@ -14,49 +14,50 @@ import net.minecraft.world.phys.Vec3;
 
 public class BindFamiliarSeedParticle extends NoRenderParticle {
 
-	private static final double RADIUS = 4.5D;
-	public static final double ORB_RADIUS = 0.7D;
+    private static final double RADIUS = 4.5D;
+    public static final double ORB_RADIUS = 0.7D;
 
-	protected BindFamiliarSeedParticle(ClientLevel pLevel, double x, double y, double z) {
-		super(pLevel, x, y, z);
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.lifetime = 300;
-		this.hasPhysics = false;
-	}
+    protected BindFamiliarSeedParticle(ClientLevel pLevel, double x, double y, double z) {
+        super(pLevel, x, y, z);
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.lifetime = 300;
+        this.hasPhysics = false;
+    }
 
-	@Override
-	public void tick() {
-		if(age++ < lifetime) {
-			if(age < 200) {
-				spawnParticle();
-				spawnParticle();
-			}
-		}
-		else
-			remove();
-	}
+    @Override
+    public void tick() {
+        if (age++ < lifetime) {
+            if (age < 200) {
+                spawnParticle();
+                spawnParticle();
+            }
+        } else {
+            remove();
+        }
+    }
 
-	private void spawnParticle() {
-		double c = Math.cbrt(Math.random());
-		Vec3 pos = new Vec3(RandomUtils.nextGaussian(), RandomUtils.nextGaussian(), RandomUtils.nextGaussian()).normalize().scale(c * RADIUS).add(x, y, z);
+    private void spawnParticle() {
+        double c = Math.cbrt(Math.random());
+        Vec3 pos = new Vec3(RandomUtils.nextGaussian(), RandomUtils.nextGaussian(), RandomUtils.nextGaussian()).normalize().scale(c * RADIUS).add(x, y, z);
 
-		int fallTicks = BindFamiliarRite.BIND_TICKS - age;
-		if(RandomUtils.nextFloat() < 0.3F)
-			fallTicks = RandomUtils.nextInt(fallTicks);
+        int fallTicks = BindFamiliarRite.BIND_TICKS - age;
+        if (RandomUtils.nextFloat() < 0.3F) {
+            fallTicks = RandomUtils.nextInt(fallTicks);
+        }
 
-		level.addParticle(new DelayedPosOptions(EParticleTypes.BIND_FAMILIAR.get(), new Vec3(x, y, z), fallTicks), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
-	}
+        level.addParticle(new DelayedPosOptions(EParticleTypes.BIND_FAMILIAR.get(), new Vec3(x, y, z), fallTicks), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
+    }
 
-	public static class Factory implements ParticleProvider<SimpleParticleType> {
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
 
-		public Factory(SpriteSet sprites) {
-		}
+        public Factory(SpriteSet sprites) {
+        }
 
-		public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			return new BindFamiliarSeedParticle(level, x, y, z);
-		}
-	}
+        public Particle createParticle(SimpleParticleType data, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new BindFamiliarSeedParticle(level, x, y, z);
+        }
+    }
 
 }

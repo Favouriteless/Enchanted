@@ -20,41 +20,44 @@ import org.jetbrains.annotations.NotNull;
 
 public class ProtectionBarrierBlock extends BarrierBlock {
 
-	private final boolean blocksPlayers;
+    private final boolean blocksPlayers;
 
-	public ProtectionBarrierBlock(boolean blocksPlayers, Properties properties) {
-		super(properties);
-		this.blocksPlayers = blocksPlayers;
-	}
+    public ProtectionBarrierBlock(boolean blocksPlayers, Properties properties) {
+        super(properties);
+        this.blocksPlayers = blocksPlayers;
+    }
 
-	@Override
-	@NotNull
-	public VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		if(context instanceof EntityCollisionContext entityContext) {
-			Entity entity = entityContext.getEntity();
-			if(!blocksPlayers && entity instanceof Player player && player.isCrouching())
-				return Shapes.empty();
-		}
-		return super.getCollisionShape(state, level, pos, context);
-	}
+    @Override
+    @NotNull
+    public VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        if (context instanceof EntityCollisionContext entityContext) {
+            Entity entity = entityContext.getEntity();
+            if (!blocksPlayers && entity instanceof Player player && player.isCrouching()) {
+                return Shapes.empty();
+            }
+        }
+        return super.getCollisionShape(state, level, pos, context);
+    }
 
-	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-		if(entity instanceof Player player && player.isCrouching())
-			player.makeStuckInBlock(state, new Vec3(0.75D, 0.15F, 0.75D));
-	}
+    @Override
+    public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+        if (entity instanceof Player player && player.isCrouching()) {
+            player.makeStuckInBlock(state, new Vec3(0.75D, 0.15F, 0.75D));
+        }
+    }
 
-	@Override
-	protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-		return false;
-	}
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
+    }
 
-	@Override
-	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if(state.getValue(WATERLOGGED))
-			level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
-		else
-			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-	}
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+        } else {
+            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        }
+    }
 
 }

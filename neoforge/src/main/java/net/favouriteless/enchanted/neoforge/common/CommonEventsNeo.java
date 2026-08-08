@@ -31,19 +31,21 @@ public class CommonEventsNeo {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onArmourHurt(ArmorHurtEvent event) {
         event.getArmorMap().forEach((slot, entry) -> {
-            if(PoppetEvents.onArmourHurt(event.getEntity(), slot, entry.armorItemStack, entry.newDamage))
+            if (PoppetEvents.onArmourHurt(event.getEntity(), slot, entry.armorItemStack, entry.newDamage)) {
                 event.setCanceled(true);
+            }
         });
     }
 
     @SubscribeEvent
     public static void onLivingHurt(LivingDamageEvent.Pre event) {
-        if(EffectEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getOriginalDamage())) {
+        if (EffectEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getOriginalDamage())) {
             event.setNewDamage(0);
             return;
         }
-        if(PoppetEvents.onLivingEntityHurt(event.getEntity(), event.getOriginalDamage(), event.getSource()))
+        if (PoppetEvents.onLivingEntityHurt(event.getEntity(), event.getOriginalDamage(), event.getSource())) {
             event.setNewDamage(0);
+        }
     }
 
     @SubscribeEvent
@@ -63,14 +65,16 @@ public class CommonEventsNeo {
 
     @SubscribeEvent
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        for(SimpleJsonResourceReloadListener loader : NeoCommonRegistryHelper.dataLoaders)
+        for (SimpleJsonResourceReloadListener loader : NeoCommonRegistryHelper.dataLoaders) {
             event.addListener(loader);
+        }
     }
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
-        if(event.getEntity() instanceof ServerPlayer player)
+        if (event.getEntity() instanceof ServerPlayer player) {
             CurseManager.get().getCurses(player.getUUID(), player.serverLevel()).forEach(instance -> instance.getCurse().onInitialise(player, instance.getStrength(), instance.getAge()));
+        }
     }
 
 }

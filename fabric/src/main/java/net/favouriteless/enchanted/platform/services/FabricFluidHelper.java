@@ -18,14 +18,14 @@ public class FabricFluidHelper implements FluidHelper {
 
     @Override
     public int getBucketCapacity() {
-        return (int)FluidConstants.BUCKET;
+        return (int) FluidConstants.BUCKET;
     }
 
     @Override
     public boolean tryItemInteraction(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         return Optional.ofNullable(FluidStorage.SIDED.find(level, pos, hitResult.getDirection()))
-                .map(s -> FluidStorageUtil.interactWithFluidStorage(s, player, hand))
-                .orElse(false);
+                       .map(s -> FluidStorageUtil.interactWithFluidStorage(s, player, hand))
+                       .orElse(false);
     }
 
     @Override

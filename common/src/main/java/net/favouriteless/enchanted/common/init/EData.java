@@ -30,6 +30,7 @@ public class EData {
         return EServices.REGISTRY.registerSyncedDataRegistry(key, codec, networkCodec);
     }
 
-    public static void load() {}
+    public static void load() {
+    }
 
 }

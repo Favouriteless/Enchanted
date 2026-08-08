@@ -33,8 +33,9 @@ public class EParticleRenderTypes {
     };
 
     public static ParticleRenderType translucentParticle() {
-        if(EServices.PLATFORM.isModLoaded("iris") && IrisIntegrations.isShaderpackLoaded())
+        if (EServices.PLATFORM.isModLoaded("iris") && IrisIntegrations.isShaderpackLoaded()) {
             return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        }
         return PARTICLE_TRANSLUCENT;
     }
 

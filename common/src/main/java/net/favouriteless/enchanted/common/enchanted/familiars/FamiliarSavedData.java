@@ -39,8 +39,8 @@ public class FamiliarSavedData extends SavedData {
     /**
      * Set a {@link Player}'s familiar directly by specifying the {@link FamiliarType} and {@link TamableAnimal}.
      *
-     * @param owner The {@link UUID} of the familiar's owner.
-     * @param type The {@link FamiliarType} of the familiar.
+     * @param owner    The {@link UUID} of the familiar's owner.
+     * @param type     The {@link FamiliarType} of the familiar.
      * @param familiar The familiar to be used.
      */
     public void setFamiliar(UUID owner, FamiliarType<?, ?> type, TamableAnimal familiar) {
@@ -54,10 +54,11 @@ public class FamiliarSavedData extends SavedData {
      * @return An instance of {@link FamiliarSavedData} belonging to level.
      */
     public static FamiliarSavedData get(Level level) {
-        if(level instanceof ServerLevel serverLevel)
+        if (level instanceof ServerLevel serverLevel) {
             return serverLevel.getServer().overworld().getDataStorage().computeIfAbsent(new Factory<>(FamiliarSavedData::new, FamiliarSavedData::load, null), NAME);
-        else
+        } else {
             throw new RuntimeException("Game attempted to load serverside familiar data from a clientside world.");
+        }
     }
 
 
@@ -65,7 +66,7 @@ public class FamiliarSavedData extends SavedData {
 
     private static FamiliarSavedData load(CompoundTag nbt, Provider registries) {
         FamiliarSavedData data = new FamiliarSavedData();
-        for(String key : nbt.getAllKeys()) {
+        for (String key : nbt.getAllKeys()) {
             CompoundTag tag = nbt.getCompound(key);
             FamiliarEntry entry = new FamiliarEntryImpl(
                     EFamiliarTypes.get(ResourceLocation.parse(tag.getString("type"))),
@@ -81,10 +82,10 @@ public class FamiliarSavedData extends SavedData {
 
     @Override
     public CompoundTag save(@NotNull CompoundTag nbt, Provider provider) {
-        for(UUID uuid : entries.keySet()) {
+        for (UUID uuid : entries.keySet()) {
             CompoundTag tag = new CompoundTag();
             FamiliarEntry entry = entries.get(uuid);
-            if(entry != null) {
+            if (entry != null) {
                 tag.putUUID("uuid", entry.getUUID());
                 tag.putString("type", entry.getType().getId().toString());
                 tag.put("nbt", entry.getNbt());
@@ -94,7 +95,6 @@ public class FamiliarSavedData extends SavedData {
         }
         return nbt;
     }
-
 
 
     public static class FamiliarEntryImpl implements FamiliarEntry {

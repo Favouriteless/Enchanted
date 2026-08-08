@@ -38,11 +38,14 @@ public abstract class SimpleCodecProvider<T> implements DataProvider {
         final Set<ResourceLocation> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
-        build(registries, (id, t) -> {
-            if(!set.add(id))
-                throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-            generated.add(DataProvider.saveStable(output, registries, codec, t, pathProvider.json(id)));
-        });
+        build(
+                registries, (id, t) -> {
+                    if (!set.add(id)) {
+                        throw new IllegalStateException("Duplicate " + getName() + ": " + id);
+                    }
+                    generated.add(DataProvider.saveStable(output, registries, codec, t, pathProvider.json(id)));
+                }
+        );
         return CompletableFuture.allOf(generated.toArray(CompletableFuture[]::new));
     }
 

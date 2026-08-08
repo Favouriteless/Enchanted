@@ -18,7 +18,7 @@ public class CurseSavedData extends SavedData {
 
     private static final String NAME = Enchanted.savedDataName("curses");
     private static final Codec<CurseSavedData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(UUIDUtil.STRING_CODEC, CurseInstance.codec().listOf().xmap(i -> (List<CurseInstance>)new ArrayList<>(i), l -> l)).fieldOf("entries").forGetter(data -> data.entries)
+            Codec.unboundedMap(UUIDUtil.STRING_CODEC, CurseInstance.codec().listOf().xmap(i -> (List<CurseInstance>) new ArrayList<>(i), l -> l)).fieldOf("entries").forGetter(data -> data.entries)
     ).apply(instance, CurseSavedData::new));
 
     private final Map<UUID, List<CurseInstance>> entries;
@@ -48,8 +48,8 @@ public class CurseSavedData extends SavedData {
 
     private static CurseSavedData load(CompoundTag nbt, Provider registries) {
         return CODEC.parse(NbtOps.INSTANCE, nbt.get("data"))
-                .resultOrPartial(s -> Enchanted.LOG.error("Failed to load curses, discarding."))
-                .orElse(new CurseSavedData());
+                    .resultOrPartial(s -> Enchanted.LOG.error("Failed to load curses, discarding."))
+                    .orElse(new CurseSavedData());
     }
 
     @Override

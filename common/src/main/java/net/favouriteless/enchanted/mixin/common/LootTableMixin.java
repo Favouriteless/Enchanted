@@ -16,7 +16,7 @@ public class LootTableMixin {
 
     @Inject(method = "getRandomItemsRaw(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V", at = @At("TAIL"))
     private void getRandomItemsRaw(LootContext context, Consumer<ItemStack> output, CallbackInfo ci) {
-        LootExtensions.tryRoll((LootTable)(Object)this, context, output);
+        LootExtensions.tryRoll((LootTable) (Object) this, context, output);
     }
 
 }

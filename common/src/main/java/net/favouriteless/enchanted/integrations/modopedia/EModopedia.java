@@ -10,7 +10,8 @@ public class EModopedia {
     public static void initClient() {
         EPageComponents.load();
         ETemplateProcessors.load();
-        EBookScreenFactories.load();;
+        EBookScreenFactories.load();
+        ;
     }
 
     public static void initCommon() {

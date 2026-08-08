@@ -12,7 +12,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.FastColor.ARGB32;
 import net.minecraft.world.phys.Vec3;
 
-public record ColouredCircleOptions(ParticleType<ColouredCircleOptions> particleType, int colour, Vec3 center, float radius) implements ParticleOptions {
+public record ColouredCircleOptions(ParticleType<ColouredCircleOptions> particleType, int colour, Vec3 center,
+                                    float radius) implements ParticleOptions {
 
     public static MapCodec<ColouredCircleOptions> codec(ParticleType<ColouredCircleOptions> type) {
         return RecordCodecBuilder.mapCodec(instance -> instance.group(

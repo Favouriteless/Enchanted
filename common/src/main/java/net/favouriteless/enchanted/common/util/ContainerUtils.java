@@ -12,9 +12,10 @@ public class ContainerUtils {
     public static void saveAllItems(CompoundTag tag, NonNullList<ItemStack> items, HolderLookup.Provider registries) {
         ListTag listtag = new ListTag();
 
-        for(ItemStack stack : items) {
-            if(!stack.isEmpty())
+        for (ItemStack stack : items) {
+            if (!stack.isEmpty()) {
                 listtag.add(stack.save(registries, new CompoundTag()));
+            }
         }
 
         tag.put("Items", listtag);
@@ -23,7 +24,7 @@ public class ContainerUtils {
     public static void loadAllItems(CompoundTag tag, NonNullList<ItemStack> items, HolderLookup.Provider registries) {
         ListTag list = tag.getList("Items", Tag.TAG_COMPOUND);
 
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             CompoundTag item = list.getCompound(i);
             items.add(ItemStack.parse(registries, item).orElse(ItemStack.EMPTY));
         }

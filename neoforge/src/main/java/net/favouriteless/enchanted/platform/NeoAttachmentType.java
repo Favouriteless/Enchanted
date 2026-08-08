@@ -16,13 +16,15 @@ public class NeoAttachmentType<T> implements EAttachmentType<T> {
     public NeoAttachmentType(Supplier<T> defaultSupplier, Codec<T> codec,
                              StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec, boolean copyOnDeath) {
         Builder<T> builder = AttachmentType.builder(defaultSupplier);
-        if(codec != null) {
+        if (codec != null) {
             builder.serialize(codec);
-            if(copyOnDeath)
+            if (copyOnDeath) {
                 builder.copyOnDeath();
+            }
         }
-        if(streamCodec != null)
+        if (streamCodec != null) {
             builder.sync(streamCodec);
+        }
 
         this.attachment = builder.build();
         this.defaultSupplier = defaultSupplier;

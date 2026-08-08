@@ -17,8 +17,9 @@ public class BloodedWaystoneItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        if(stack.has(EDataComponents.ENTITY_REF.get()))
+        if (stack.has(EDataComponents.ENTITY_REF.get())) {
             tooltip.add(Component.literal(stack.get(EDataComponents.ENTITY_REF.get()).name()).withStyle(ChatFormatting.GRAY));
+        }
         super.appendHoverText(stack, context, tooltip, flag);
     }
 

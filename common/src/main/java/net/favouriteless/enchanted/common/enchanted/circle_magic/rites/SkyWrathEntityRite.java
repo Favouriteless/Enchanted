@@ -12,8 +12,8 @@ public class SkyWrathEntityRite extends SkyWrathRite {
     @Override
     protected void findTargetLocation(RiteParams params) {
         Entity target = findEntity(params.target);
-        if(target != null) {
-            targetLevel = (ServerLevel)target.level();
+        if (target != null) {
+            targetLevel = (ServerLevel) target.level();
             targetPos = target.blockPosition();
         }
     }

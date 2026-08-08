@@ -32,10 +32,10 @@ public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlock> {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    private static final VoxelShape SHAPE_NORTH = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(5.0D/16, 0.0D, 8.0D/16, 11.0D/16, 1.0D, 14.0D/16), BooleanOp.OR);
-    private static final VoxelShape SHAPE_SOUTH = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(5.0D/16, 0.0D, 2.0D/16, 11.0D/16, 1.0D, 8.0D/16), BooleanOp.OR);
-    private static final VoxelShape SHAPE_EAST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(2.0D/16, 0.0D, 5.0D/16, 8.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
-    private static final VoxelShape SHAPE_WEST = Shapes.join(Shapes.box(1.0D/16, 0.0D, 1.0D/16, 15.0D/16, 12.0D/16, 15.0D/16), Shapes.box(8.0D/16, 0.0D, 5.0D/16, 14.0D/16, 1.0D, 11.0D/16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_NORTH = Shapes.join(Shapes.box(1.0D / 16, 0.0D, 1.0D / 16, 15.0D / 16, 12.0D / 16, 15.0D / 16), Shapes.box(5.0D / 16, 0.0D, 8.0D / 16, 11.0D / 16, 1.0D, 14.0D / 16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_SOUTH = Shapes.join(Shapes.box(1.0D / 16, 0.0D, 1.0D / 16, 15.0D / 16, 12.0D / 16, 15.0D / 16), Shapes.box(5.0D / 16, 0.0D, 2.0D / 16, 11.0D / 16, 1.0D, 8.0D / 16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_EAST = Shapes.join(Shapes.box(1.0D / 16, 0.0D, 1.0D / 16, 15.0D / 16, 12.0D / 16, 15.0D / 16), Shapes.box(2.0D / 16, 0.0D, 5.0D / 16, 8.0D / 16, 1.0D, 11.0D / 16), BooleanOp.OR);
+    private static final VoxelShape SHAPE_WEST = Shapes.join(Shapes.box(1.0D / 16, 0.0D, 1.0D / 16, 15.0D / 16, 12.0D / 16, 15.0D / 16), Shapes.box(8.0D / 16, 0.0D, 5.0D / 16, 14.0D / 16, 1.0D, 11.0D / 16), BooleanOp.OR);
 
     public WitchOvenBlock(Properties properties) {
         super(WitchOvenBlock::new, properties);
@@ -61,11 +61,12 @@ public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlock> {
     @Override
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
-            double d0 = (double)pos.getX() + 0.5D;
+            double d0 = (double) pos.getX() + 0.5D;
             double d1 = pos.getY();
-            double d2 = (double)pos.getZ() + 0.5D;
-            if (random.nextDouble() < 0.1D)
+            double d2 = (double) pos.getZ() + 0.5D;
+            if (random.nextDouble() < 0.1D) {
                 world.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+            }
 
             Direction direction = state.getValue(FACING);
             Direction.Axis direction$axis = direction.getAxis();
@@ -80,7 +81,7 @@ public class WitchOvenBlock extends SimpleContainerBlockBase<WitchOvenBlock> {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return switch(state.getValue(FACING)) {
+        return switch (state.getValue(FACING)) {
             case SOUTH -> SHAPE_SOUTH;
             case EAST -> SHAPE_EAST;
             case WEST -> SHAPE_WEST;

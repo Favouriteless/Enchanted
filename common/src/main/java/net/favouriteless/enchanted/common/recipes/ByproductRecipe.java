@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 public class ByproductRecipe implements Recipe<SingleRecipeInput> {
 
-    public static final MapCodec<ByproductRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group (
+    public static final MapCodec<ByproductRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
             ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
     ).apply(instance, ByproductRecipe::new));

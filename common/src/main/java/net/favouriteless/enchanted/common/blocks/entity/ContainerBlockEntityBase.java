@@ -58,8 +58,9 @@ public abstract class ContainerBlockEntityBase extends EBlockEntity implements C
         super.saveAdditional(tag, registries);
         ContainerHelper.saveAllItems(tag, inventory, registries);
 
-        if(name != null)
+        if (name != null) {
             tag.putString("CustomName", Component.Serializer.toJson(name, registries));
+        }
     }
 
     @Override
@@ -67,8 +68,9 @@ public abstract class ContainerBlockEntityBase extends EBlockEntity implements C
         super.loadAdditional(tag, registries);
         ContainerHelper.loadAllItems(tag, inventory, registries);
 
-        if(tag.contains("CustomName", 8))
+        if (tag.contains("CustomName", 8)) {
             name = Component.Serializer.fromJson(tag.getString("CustomName"), registries);
+        }
     }
 
     @Override
@@ -83,9 +85,10 @@ public abstract class ContainerBlockEntityBase extends EBlockEntity implements C
 
     @Override
     public boolean isEmpty() {
-        for(ItemStack stack : inventory) {
-            if(!stack.isEmpty())
+        for (ItemStack stack : inventory) {
+            if (!stack.isEmpty()) {
                 return false;
+            }
         }
         return true;
     }

@@ -24,7 +24,7 @@ public abstract class AbstractRandomCurse implements Curse {
 
     @Override
     public void tick(ServerPlayer target, int strength, long age) {
-        if(next <= age) {
+        if (next <= age) {
             execute(target, strength, age);
             next = age + RandomUtils.nextLong(min * 20L, max * 20L);
         }

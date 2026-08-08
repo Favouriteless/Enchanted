@@ -25,18 +25,21 @@ public class CurseMisfortune extends AbstractRandomCurse {
     @Override
     protected void execute(ServerPlayer target, int strength, long age) {
         Holder<MobEffect> effect = BuiltInRegistries.MOB_EFFECT.getOrCreateTag(MobEffects.MISFORTUNE_EFFECTS).getRandomElement(random).orElse(null);
-        if(effect == null)
+        if (effect == null) {
             return;
+        }
 
         int effectLevel = 0;
         int duration = 30;
-        for(int i = 0; i < strength; i++) {
-            if(Math.random() < 0.25D)
+        for (int i = 0; i < strength; i++) {
+            if (Math.random() < 0.25D) {
                 effectLevel++; // Every additional curse level has a 25% weight to increase the effect level
-            if(Math.random() < 0.25D)
+            }
+            if (Math.random() < 0.25D) {
                 duration += 15; // Every additional curse level has a 25% weight to increase duration by 15 seconds
+            }
         }
-        target.addEffect(new MobEffectInstance(effect, duration*20, effectLevel));
+        target.addEffect(new MobEffectInstance(effect, duration * 20, effectLevel));
     }
 
     @Override

@@ -33,8 +33,9 @@ public class PoppetItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if(hand != InteractionHand.MAIN_HAND)
+        if (hand != InteractionHand.MAIN_HAND) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
+        }
 
         ItemStack main = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack off = player.getItemInHand(InteractionHand.OFF_HAND);
@@ -42,14 +43,15 @@ public class PoppetItem extends Item {
         boolean validMain = !PoppetHelper.isBound(main);
         boolean validOff = off.getItem() == EItems.TAGLOCK_FILLED.get() || off.has(EDataComponents.ENTITY_REF.get());
 
-        if(!validMain || !validOff)
+        if (!validMain || !validOff) {
             return InteractionResultHolder.pass(main);
+        }
 
-        if(level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel serverLevel) {
             EntityRefData data = off.get(EDataComponents.ENTITY_REF.get());
             Player target = EntityUtils.tryFindPlayer(serverLevel, data.uuid()); // Not NPE, already checked stack has component
 
-            if(target != null) {
+            if (target != null) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.consume(main);
             }
@@ -60,16 +62,17 @@ public class PoppetItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if(entity instanceof Player player) {
+        if (entity instanceof Player player) {
             ItemStack off = player.getOffhandItem();
 
-            if(off.getItem() != EItems.TAGLOCK_FILLED.get() || !off.has(EDataComponents.ENTITY_REF.get()))
+            if (off.getItem() != EItems.TAGLOCK_FILLED.get() || !off.has(EDataComponents.ENTITY_REF.get())) {
                 return stack;
+            }
 
             UUID uuid = off.get(EDataComponents.ENTITY_REF.get()).uuid(); // Not NPE, already checked stack has component
             Player target = level.getPlayerByUUID(uuid);
 
-            if(target != null) {
+            if (target != null) {
                 PoppetHelper.bind(stack, target);
                 off.consume(1, player);
             }
@@ -95,14 +98,16 @@ public class PoppetItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        if(PoppetHelper.isBound(stack))
+        if (PoppetHelper.isBound(stack)) {
             tooltip.add(Component.literal(stack.get(EDataComponents.ENTITY_REF.get()).name()).withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override
     public Component getName(ItemStack stack) {
-        if(PoppetHelper.isBound(stack))
+        if (PoppetHelper.isBound(stack)) {
             return Component.translatable(getDescriptionId(stack)).withStyle(ChatFormatting.YELLOW);
+        }
         return super.getName(stack);
     }
 

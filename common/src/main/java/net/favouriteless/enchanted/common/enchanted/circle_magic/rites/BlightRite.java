@@ -45,39 +45,44 @@ public class BlightRite extends Rite {
     protected boolean onStart(RiteParams params) {
         Entity caster = level.getEntity(params.caster);
         level.getEntitiesOfClass(LivingEntity.class, type.getBounds(pos), e -> e.position().distanceToSqr(pos.getCenter()) < radiusSq)
-                .forEach(entity -> applyBlightEffects(caster, entity));
+             .forEach(entity -> applyBlightEffects(caster, entity));
 
         return true;
     }
 
     @Override
     protected boolean onTick(RiteParams params) {
-        if(params.ticks() % TICKS_PER_BLOCK != 0)
+        if (params.ticks() % TICKS_PER_BLOCK != 0) {
             return true;
+        }
 
         BlockPosUtils.iterableSphereHollow(pos, step).forEach(spherePos -> {
-            if(Math.random() > decayChance)
+            if (Math.random() > decayChance) {
                 return;
+            }
 
             BlockState state = level.getBlockState(spherePos);
-            if(state.isAir())
+            if (state.isAir()) {
                 return;
-
-            if(state.is(ETags.Blocks.BLIGHT_DECAYABLE_BLOCKS)) {
-                Holder<Block> holder = BuiltInRegistries.BLOCK.getOrCreateTag(ETags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOMSOURCE).orElse(null);
-                if(holder == null)
-                    return;
-                level.setBlockAndUpdate(spherePos, holder.value().defaultBlockState());
             }
-            else if(state.is(ETags.Blocks.BLIGHT_DECAYABLE_PLANTS)) {
+
+            if (state.is(ETags.Blocks.BLIGHT_DECAYABLE_BLOCKS)) {
+                Holder<Block> holder = BuiltInRegistries.BLOCK.getOrCreateTag(ETags.Blocks.BLIGHT_DECAY_BLOCKS).getRandomElement(Enchanted.RANDOMSOURCE).orElse(null);
+                if (holder == null) {
+                    return;
+                }
+                level.setBlockAndUpdate(spherePos, holder.value().defaultBlockState());
+            } else if (state.is(ETags.Blocks.BLIGHT_DECAYABLE_PLANTS)) {
                 level.setBlockAndUpdate(spherePos, Blocks.DEAD_BUSH.defaultBlockState());
             }
         });
 
-        if(params.ticks() % (TICKS_PER_BLOCK*5) == 0) {
+        if (params.ticks() % (TICKS_PER_BLOCK * 5) == 0) {
             level.playSound(null, pos, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.1F, 1.0F);
-            level.sendParticles(EParticleTypes.BLIGHT_SEED.get(), pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D,
-                    1, 0, 0, 0, 0);
+            level.sendParticles(
+                    EParticleTypes.BLIGHT_SEED.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                    1, 0, 0, 0, 0
+            );
         }
 
         return step++ < radius;
@@ -94,17 +99,19 @@ public class BlightRite extends Rite {
     }
 
     protected void applyBlightEffects(Entity caster, LivingEntity target) {
-        if(target instanceof Villager villager && Math.random() < zombieChance) {
+        if (target instanceof Villager villager && Math.random() < zombieChance) {
             villager.convertTo(EntityType.ZOMBIE_VILLAGER, false);
             return;
         }
 
         Holder<MobEffect> effectHolder = BuiltInRegistries.MOB_EFFECT.getOrCreateTag(MobEffects.BLIGHT_EFFECTS).getRandomElement(Enchanted.RANDOMSOURCE).orElse(null);
-        if(effectHolder == null)
+        if (effectHolder == null) {
             return;
+        }
 
-        if(target != caster)
+        if (target != caster) {
             target.addEffect(new MobEffectInstance(effectHolder, 100 + RandomUtils.nextInt(101), RandomUtils.nextInt(3)));
+        }
     }
 
 }

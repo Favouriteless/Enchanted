@@ -8,7 +8,6 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 
-import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 public class ECompostMapProvider extends DataMapProvider {

@@ -13,7 +13,8 @@ public record JeiRiteRecipe(ResourceLocation id, RiteType rite) {
     public static void register(IRecipeRegistration registration) {
         Registry<RiteType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(EData.RITE_TYPES_REGISTRY);
 
-        registration.addRecipes(EJeiRecipeTypes.RITE,
+        registration.addRecipes(
+                EJeiRecipeTypes.RITE,
                 registry.entrySet().stream()
                         .filter(e -> e.getValue().getOutputs() != null)
                         .map(e -> new JeiRiteRecipe(e.getKey().location(), e.getValue()))

@@ -38,101 +38,104 @@ import java.util.function.Supplier;
 
 public class NeoCommonRegistryHelper implements CommonRegistryHelper {
 
-	private static final RegistryMap registryMap = new RegistryMap();
+    private static final RegistryMap registryMap = new RegistryMap();
 
-	public static final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>();
-	public static final List<DataRegistryRegisterable<?>> dataRegistryRegisterables = new ArrayList<>();
+    public static final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>();
+    public static final List<DataRegistryRegisterable<?>> dataRegistryRegisterables = new ArrayList<>();
 
-	public static RegistryMap getRegistryMap() {
-		return registryMap;
-	}
-
-
-	public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
-		return registryMap.register(registry, name, entry);
-	}
-
-	@Override
-	public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
-		return registryMap.register(registry, name, entry);
-	}
-
-	@Override
-	public <T extends AbstractContainerMenu, C> Supplier<MenuType<T>> registerMenu(String name,
-																				   TriFunction<Integer, Inventory, C, T> factory,
-																				   StreamCodec<? super RegistryFriendlyByteBuf, C> codec) {
-		return register(BuiltInRegistries.MENU, name, () -> new MenuType<>((IContainerFactory<T>)(id, inv, buf) -> factory.apply(id, inv, codec.decode(buf)), FeatureFlags.DEFAULT_FLAGS));
-	}
-
-	@Override
-	public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, BiFunction<Integer, Inventory, T> factory) {
-		return register(BuiltInRegistries.MENU, name, () -> new MenuType<>(factory::apply, FeatureFlags.DEFAULT_FLAGS));
-	}
-
-	@Override
-	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
-		dataLoaders.add(loader);
-	}
-
-	@Override
-	public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemGenerator) {
-		return register(BuiltInRegistries.CREATIVE_MODE_TAB, name, () -> CreativeModeTab.builder()
-				.title(Component.translatable(LangUtils.tab(name)))
-				.icon(iconSupplier)
-				.displayItems(itemGenerator)
-				.build());
-	}
-
-	@Override
-	public <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec) {
-		dataRegistryRegisterables.add(new DataRegistryRegisterable<>(key, codec, null));
-		return key;
-	}
-
-	@Override
-	public <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
-		dataRegistryRegisterables.add(new DataRegistryRegisterable<>(key, codec, networkCodec));
-		return key;
-	}
-
-	@Override
-	public void setFlammable(Block block, int igniteOdds, int burnOdds) {
-		((FireBlock)Blocks.FIRE).setFlammable(block, igniteOdds, burnOdds);
-	}
+    public static RegistryMap getRegistryMap() {
+        return registryMap;
+    }
 
 
+    public <C, T extends C> Supplier<T> register(Registry<C> registry, String name, Supplier<T> entry) {
+        return registryMap.register(registry, name, entry);
+    }
 
-	public static class RegistryMap {
+    @Override
+    public <C, T extends C> Holder<C> registerHolder(Registry<C> registry, String name, Supplier<T> entry) {
+        return registryMap.register(registry, name, entry);
+    }
 
-		private final Map<ResourceLocation, DeferredRegister<?>> registries = new HashMap<>();
+    @Override
+    public <T extends AbstractContainerMenu, C> Supplier<MenuType<T>> registerMenu(String name,
+                                                                                   TriFunction<Integer, Inventory, C, T> factory,
+                                                                                   StreamCodec<? super RegistryFriendlyByteBuf, C> codec) {
+        return register(BuiltInRegistries.MENU, name, () -> new MenuType<>((IContainerFactory<T>) (id, inv, buf) -> factory.apply(id, inv, codec.decode(buf)), FeatureFlags.DEFAULT_FLAGS));
+    }
 
-		private <C, T extends C> DeferredHolder<C, T> register(Registry<C> registry, String name, Supplier<T> entry) {
-			DeferredRegister<C> reg = getDeferred(registry);
-			return reg != null ? reg.register(name, entry) : null;
-		}
+    @Override
+    public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenu(String name, BiFunction<Integer, Inventory, T> factory) {
+        return register(BuiltInRegistries.MENU, name, () -> new MenuType<>(factory::apply, FeatureFlags.DEFAULT_FLAGS));
+    }
 
-		@SuppressWarnings("unchecked")
-		public <T> DeferredRegister<T> getDeferred(Registry<? super T> registry) {
-            return (DeferredRegister<T>)registries.computeIfAbsent(registry.key().location(), (key) ->
-					DeferredRegister.create(registry.key().location(), Enchanted.MOD_ID)
-			);
-		}
+    @Override
+    public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
+        dataLoaders.add(loader);
+    }
 
-		public void register(IEventBus bus) {
-			registries.values().forEach(reg -> reg.register(bus));
-		}
+    @Override
+    public Supplier<CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> iconSupplier, DisplayItemsGenerator itemGenerator) {
+        return register(
+                BuiltInRegistries.CREATIVE_MODE_TAB, name, () -> CreativeModeTab.builder()
+                                                                                .title(Component.translatable(LangUtils.tab(name)))
+                                                                                .icon(iconSupplier)
+                                                                                .displayItems(itemGenerator)
+                                                                                .build()
+        );
+    }
 
-	}
+    @Override
+    public <T> ResourceKey<Registry<T>> registerDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec) {
+        dataRegistryRegisterables.add(new DataRegistryRegisterable<>(key, codec, null));
+        return key;
+    }
 
-	public record DataRegistryRegisterable<T>(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
+    @Override
+    public <T> ResourceKey<Registry<T>> registerSyncedDataRegistry(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
+        dataRegistryRegisterables.add(new DataRegistryRegisterable<>(key, codec, networkCodec));
+        return key;
+    }
 
-		public void register(DataPackRegistryEvent.NewRegistry event) {
-			if(networkCodec == null)
-				event.dataPackRegistry(key, codec);
-			else
-				event.dataPackRegistry(key, codec, networkCodec);
-		}
+    @Override
+    public void setFlammable(Block block, int igniteOdds, int burnOdds) {
+        ((FireBlock) Blocks.FIRE).setFlammable(block, igniteOdds, burnOdds);
+    }
 
-	}
+
+    public static class RegistryMap {
+
+        private final Map<ResourceLocation, DeferredRegister<?>> registries = new HashMap<>();
+
+        private <C, T extends C> DeferredHolder<C, T> register(Registry<C> registry, String name, Supplier<T> entry) {
+            DeferredRegister<C> reg = getDeferred(registry);
+            return reg != null ? reg.register(name, entry) : null;
+        }
+
+        @SuppressWarnings("unchecked")
+        public <T> DeferredRegister<T> getDeferred(Registry<? super T> registry) {
+            return (DeferredRegister<T>) registries.computeIfAbsent(
+                    registry.key().location(), (key) ->
+                            DeferredRegister.create(registry.key().location(), Enchanted.MOD_ID)
+            );
+        }
+
+        public void register(IEventBus bus) {
+            registries.values().forEach(reg -> reg.register(bus));
+        }
+
+    }
+
+    public record DataRegistryRegisterable<T>(ResourceKey<Registry<T>> key, Codec<T> codec, Codec<T> networkCodec) {
+
+        public void register(DataPackRegistryEvent.NewRegistry event) {
+            if (networkCodec == null) {
+                event.dataPackRegistry(key, codec);
+            } else {
+                event.dataPackRegistry(key, codec, networkCodec);
+            }
+        }
+
+    }
 
 }

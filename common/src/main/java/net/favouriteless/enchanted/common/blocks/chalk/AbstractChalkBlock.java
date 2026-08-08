@@ -29,8 +29,9 @@ public abstract class AbstractChalkBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide()) {
-            if (!state.canSurvive(level, pos))
+            if (!state.canSurvive(level, pos)) {
                 level.removeBlock(pos, false);
+            }
         }
     }
 

@@ -32,8 +32,9 @@ public class CommonEventsFabric {
         });
 
         ServerPlayerEvents.COPY_FROM.register((original, player, alive) -> {
-            if(player instanceof ServerPlayer sp)
+            if (player instanceof ServerPlayer sp) {
                 CurseManager.get().getCurses(sp.getUUID(), sp.serverLevel()).forEach(instance -> instance.getCurse().onInitialise(sp, instance.getStrength(), instance.getAge()));
+            }
         });
 
     }

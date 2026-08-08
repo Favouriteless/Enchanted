@@ -41,9 +41,9 @@ public interface CurseInstance {
     UUID getTargetUuid();
 
     /**
-     * @return {@link ServerPlayer} this instance is targeting, or null if they are offline.
-     *
      * @param level {@link ServerLevel} to grab the player lists from.
+     *
+     * @return {@link ServerPlayer} this instance is targeting, or null if they are offline.
      */
     @Nullable ServerPlayer getTarget(ServerLevel level);
 

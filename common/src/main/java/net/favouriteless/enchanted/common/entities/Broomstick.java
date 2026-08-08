@@ -62,29 +62,30 @@ public class Broomstick extends Entity {
 
     @Override
     public void tick() {
-        if(getHurtTime() > 0)
+        if (getHurtTime() > 0) {
             setHurtTime(getHurtTime() - 1);
-        if(getDamage() > 0.0F)
+        }
+        if (getDamage() > 0.0F) {
             setDamage(getDamage() - 1.0F);
+        }
 
         super.tick();
 
         tickLerp();
-        if(isControlledByLocalInstance()) {
-            if(level().isClientSide) {
+        if (isControlledByLocalInstance()) {
+            if (level().isClientSide) {
                 ClientProxy.controlBroom(this);
                 handleRotationTick();
                 handleMovementTick();
-            }
-            else {
+            } else {
                 setDeltaMovement(getDeltaMovement().scale(0.75D));
 
-                if(level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(0, 1.0D, 0)).isEmpty())
+                if (level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(0, 1.0D, 0)).isEmpty()) {
                     setDeltaMovement(getDeltaMovement().add(0.0D, -0.01D, 0.0D));
+                }
             }
             move(MoverType.SELF, getDeltaMovement());
-        }
-        else {
+        } else {
             setDeltaMovement(Vec3.ZERO);
         }
     }
@@ -100,8 +101,8 @@ public class Broomstick extends Entity {
 
         // If W or S is held, only decelerate the sideways components of the velocity.
         velocity = forward.scale(velocity.dot(forward) * (inputAcceleration == 0 ? 0.85D : 1.0D) + acceleration)
-                .add(up.scale(velocity.dot(up) * (inputClimb == 0 ? 0.85D : 1.0D)))
-                .add(left.scale(velocity.dot(left) * 0.85D));
+                          .add(up.scale(velocity.dot(up) * (inputClimb == 0 ? 0.85D : 1.0D)))
+                          .add(left.scale(velocity.dot(left) * 0.85D));
 
         velocity = velocity.add(0, inputClimb * ACCELERATION, 0); // Include vertical movement
 
@@ -115,24 +116,25 @@ public class Broomstick extends Entity {
         deltaRotY += inputTurn;
         deltaRotX += inputClimb * -inputAcceleration;
 
-        if(inputClimb == 0 || inputAcceleration == 0) {
-            if(Math.abs(getXRot()) < Math.abs(deltaRotX))
+        if (inputClimb == 0 || inputAcceleration == 0) {
+            if (Math.abs(getXRot()) < Math.abs(deltaRotX)) {
                 deltaRotX = -getXRot();
-            else if(getXRot() > 0) {
-                if(deltaRotX > 0)
+            } else if (getXRot() > 0) {
+                if (deltaRotX > 0) {
                     deltaRotX = 0;
+                }
                 deltaRotX--;
-            }
-            else if(getXRot() < 0) {
-                if(deltaRotX < 0)
+            } else if (getXRot() < 0) {
+                if (deltaRotX < 0) {
                     deltaRotX = 0;
+                }
                 deltaRotX++;
             }
         }
 
         setYRot(getYRot() + deltaRotY);
         controller.setYRot(controller.getYRot() + deltaRotY);
-        setXRot((float)Mth.clamp(getXRot() + deltaRotX, -MAX_TILT, MAX_TILT));
+        setXRot((float) Mth.clamp(getXRot() + deltaRotX, -MAX_TILT, MAX_TILT));
         deltaRotX *= 0.8F;
         deltaRotY *= 0.8F;
     }
@@ -148,18 +150,20 @@ public class Broomstick extends Entity {
     }
 
     @Override
-    protected void playSwimSound(float pVolume) {}
+    protected void playSwimSound(float pVolume) {
+    }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {}
+    protected void playStepSound(BlockPos pos, BlockState state) {
+    }
 
     protected void tickLerp() {
-        if(isControlledByLocalInstance()) {
+        if (isControlledByLocalInstance()) {
             lerpSteps = 0;
             syncPacketPositionCodec(getX(), getY(), getZ());
         }
 
-        if(lerpSteps > 0) {
+        if (lerpSteps > 0) {
             lerpPositionAndRotationStep(lerpSteps, lerpX, lerpY, lerpZ, lerpYRot, lerpXRot);
             lerpSteps--;
         }
@@ -192,14 +196,14 @@ public class Broomstick extends Entity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if(player.isSecondaryUseActive()) {
+        if (player.isSecondaryUseActive()) {
             return InteractionResult.SUCCESS;
-        }
-        else {
-            if(!level().isClientSide)
+        } else {
+            if (!level().isClientSide) {
                 return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
-            else
+            } else {
                 return InteractionResult.SUCCESS;
+            }
         }
     }
 
@@ -229,8 +233,9 @@ public class Broomstick extends Entity {
 
     public boolean isControlledByLocalInstance() {
         Entity entity = getControllingPassenger();
-        if(entity instanceof Player)
+        if (entity instanceof Player) {
             return ((Player) entity).isLocalPlayer();
+        }
 
         return !level().isClientSide;
     }
@@ -239,8 +244,9 @@ public class Broomstick extends Entity {
     @Override
     public LivingEntity getControllingPassenger() {
         List<Entity> list = getPassengers();
-        if(list.isEmpty())
+        if (list.isEmpty()) {
             return null;
+        }
         return list.getFirst() instanceof LivingEntity le ? le : null;
     }
 
@@ -265,36 +271,35 @@ public class Broomstick extends Entity {
 
     @Override
     public void push(@NotNull Entity entity) {
-        if(entity instanceof Broomstick) {
-            if(entity.getBoundingBox().minY < getBoundingBox().maxY)
+        if (entity instanceof Broomstick) {
+            if (entity.getBoundingBox().minY < getBoundingBox().maxY) {
                 super.push(entity);
-        }
-        else if(entity.getBoundingBox().minY <= getBoundingBox().minY) {
+            }
+        } else if (entity.getBoundingBox().minY <= getBoundingBox().minY) {
             super.push(entity);
         }
     }
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float pAmount) {
-        if(isInvulnerableTo(source)) {
+        if (isInvulnerableTo(source)) {
             return false;
-        }
-        else if(!level().isClientSide && !isRemoved()) {
+        } else if (!level().isClientSide && !isRemoved()) {
             setHurtDir(-getHurtDir());
             setHurtTime(10);
             setDamage(getDamage() + pAmount * 10.0F);
             markHurt();
             boolean isSurvivalPlayer = source.getEntity() instanceof Player && ((Player) source.getEntity()).getAbilities().instabuild;
-            if(isSurvivalPlayer || getDamage() > 40.0F) {
-                if(!isSurvivalPlayer && level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
+            if (isSurvivalPlayer || getDamage() > 40.0F) {
+                if (!isSurvivalPlayer && level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                     spawnAtLocation(EItems.ENCHANTED_BROOMSTICK.get());
+                }
 
                 discard();
             }
 
             return true;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -332,22 +337,28 @@ public class Broomstick extends Entity {
 
     public void setInputs(boolean forward, boolean backward, boolean left, boolean right, boolean up, boolean down) {
         inputAcceleration = 0;
-        if(forward)
+        if (forward) {
             inputAcceleration++;
-        if(backward)
+        }
+        if (backward) {
             inputAcceleration--;
+        }
 
         inputTurn = 0;
-        if(left)
+        if (left) {
             inputTurn--;
-        if(right)
+        }
+        if (right) {
             inputTurn++;
+        }
 
         inputClimb = 0;
-        if(up)
+        if (up) {
             inputClimb++;
-        if(down)
+        }
+        if (down) {
             inputClimb--;
+        }
     }
 
 }

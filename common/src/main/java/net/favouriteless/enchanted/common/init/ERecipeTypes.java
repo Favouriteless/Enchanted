@@ -30,14 +30,17 @@ public class ERecipeTypes {
     }
 
     private static <T extends Recipe<?>> Supplier<RecipeType<T>> register(String name) {
-        return EServices.REGISTRY.register(BuiltInRegistries.RECIPE_TYPE, name, () -> new RecipeType<>() {
-            @Override
-            public String toString() {
-                return name;
-            }
-        });
+        return EServices.REGISTRY.register(
+                BuiltInRegistries.RECIPE_TYPE, name, () -> new RecipeType<>() {
+                    @Override
+                    public String toString() {
+                        return name;
+                    }
+                }
+        );
     }
 
-    public static void load() {} // Method which exists purely to load the class.
+    public static void load() {
+    } // Method which exists purely to load the class.
 
 }

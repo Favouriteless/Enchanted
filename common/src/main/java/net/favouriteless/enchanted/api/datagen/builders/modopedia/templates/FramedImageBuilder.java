@@ -36,22 +36,22 @@ public class FramedImageBuilder extends TemplateComponentBuilder {
 
     @Override
     public FramedImageBuilder x(int x) {
-        return (FramedImageBuilder)super.x(x);
+        return (FramedImageBuilder) super.x(x);
     }
 
     @Override
     public FramedImageBuilder x(String x) {
-        return (FramedImageBuilder)super.x(x);
+        return (FramedImageBuilder) super.x(x);
     }
 
     @Override
     public FramedImageBuilder y(int y) {
-        return (FramedImageBuilder)super.y(y);
+        return (FramedImageBuilder) super.y(y);
     }
 
     @Override
     public FramedImageBuilder y(String y) {
-        return (FramedImageBuilder)super.y(y);
+        return (FramedImageBuilder) super.y(y);
     }
 
     @Override

@@ -22,12 +22,14 @@ public class KettleWaterRenderer implements BlockEntityRenderer<KettleBlockEntit
     private static final float WATER_START = 0.0625F;
     private static final float WATER_END = 0.3125F;
 
-    public KettleWaterRenderer(Context ctx) {}
+    public KettleWaterRenderer(Context ctx) {
+    }
 
     @Override
     public void render(KettleBlockEntity be, float partialTicks, PoseStack pose, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if(be.getFluidAmount() == 0)
+        if (be.getFluidAmount() == 0) {
             return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.translucent());
@@ -35,7 +37,7 @@ public class KettleWaterRenderer implements BlockEntityRenderer<KettleBlockEntit
         ARGB colour = be.getColour(mc.level.getGameTime() + partialTicks);
 
         pose.pushPose();
-        pose.translate(0.5D, Mth.lerp(be.getFluidAmount() / (float)be.getFluidCapacity(), WATER_START, WATER_END), 0.5D);
+        pose.translate(0.5D, Mth.lerp(be.getFluidAmount() / (float) be.getFluidCapacity(), WATER_START, WATER_END), 0.5D);
         RenderUtils.quad(pose, buffer, sprite, APOTHEM, colour, packedLight);
         pose.popPose();
     }

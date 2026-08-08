@@ -49,22 +49,25 @@ public class SpinningWheelScreen extends AbstractContainerScreen<SpinningWheelMe
         int edgeSpacingY = (height - imageHeight) / 2;
         gui.blit(TEXTURE, edgeSpacingX, edgeSpacingY, 0, 0, imageWidth, imageHeight);
 
-        double progression = (double)menu.getSpinProgress() / menu.getSpinDuration();
+        double progression = (double) menu.getSpinProgress() / menu.getSpinDuration();
 
-        int barSize = (int)Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
-        if(menu.getSlot(1).hasItem())
+        int barSize = (int) Math.round(BAR_HEIGHT * Math.min(progression * 10.0D, 1.0D));
+        if (menu.getSlot(1).hasItem()) {
             gui.blit(TEXTURE, leftPos + BAR0_XPOS, topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR0_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
-        if(menu.getSlot(2).hasItem())
+        }
+        if (menu.getSlot(2).hasItem()) {
             gui.blit(TEXTURE, leftPos + BAR1_XPOS, topPos + BAR_YPOS + BAR_HEIGHT - barSize, ICONS_U, BAR1_ICON_V + BAR_HEIGHT - barSize, BAR_WIDTH, barSize);
+        }
 
-        if(progression > 0.1D) { // If over 10%, spin wheel
+        if (progression > 0.1D) { // If over 10%, spin wheel
 
-            int frame = (int)Math.round((progression - 0.1D) * 200) % 3;
+            int frame = (int) Math.round((progression - 0.1D) * 200) % 3;
 
-            if(frame == 0)
+            if (frame == 0) {
                 gui.blit(TEXTURE, leftPos + WHEEL_XPOS, topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME2_V, WHEEL_SIZE, WHEEL_SIZE);
-            else if(frame == 2)
+            } else if (frame == 2) {
                 gui.blit(TEXTURE, leftPos + WHEEL_XPOS, topPos + WHEEL_YPOS, ICONS_U, WHEEL_FRAME1_V, WHEEL_SIZE, WHEEL_SIZE);
+            }
         }
 
     }

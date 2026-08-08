@@ -1,9 +1,9 @@
 package net.favouriteless.enchanted.common.enchanted.circle_magic.rites;
 
 import net.favouriteless.enchanted.client.particles.types.DoubleOptions;
+import net.favouriteless.enchanted.common.enchanted.stateobservers.ProtectionRiteObserver;
 import net.favouriteless.enchanted.common.init.EBlocks;
 import net.favouriteless.enchanted.common.init.EParticleTypes;
-import net.favouriteless.enchanted.common.enchanted.stateobservers.ProtectionRiteObserver;
 import net.favouriteless.enchanted.common.util.BlockPosUtils;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
@@ -36,17 +36,22 @@ public class ProtectionRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        if(!super.onStart(params))
+        if (!super.onStart(params)) {
             return false;
+        }
 
         Block block = blocksPlayers ? EBlocks.PROTECTION_BARRIER_BLOCKING.get() : EBlocks.PROTECTION_BARRIER.get();
-        generateSphere(targetLevel, targetPos, state -> {
-            if(!state.getFluidState().isEmpty())
-                return state.getFluidState().getType() == Fluids.WATER ? block.defaultBlockState().setValue(BarrierBlock.WATERLOGGED, true) : block.defaultBlockState();
-            if(state.isAir())
-                return block.defaultBlockState();
-            return null;
-        });
+        generateSphere(
+                targetLevel, targetPos, state -> {
+                    if (!state.getFluidState().isEmpty()) {
+                        return state.getFluidState().getType() == Fluids.WATER ? block.defaultBlockState().setValue(BarrierBlock.WATERLOGGED, true) : block.defaultBlockState();
+                    }
+                    if (state.isAir()) {
+                        return block.defaultBlockState();
+                    }
+                    return null;
+                }
+        );
 
         getOrCreateObserver(targetLevel, targetPos);
         targetLevel.playSound(null, targetPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.MASTER, 1.0f, 1.0f);
@@ -57,10 +62,12 @@ public class ProtectionRite extends LocationTargetRite {
     protected boolean onTick(RiteParams params) {
         observer.checkChanges();
 
-        if(params.ticks() % 20 == 0) {
-            targetLevel.sendParticles(new DoubleOptions(EParticleTypes.PROTECTION_SEED.get(), radius),
-                    targetPos.getX()+0.5d, targetPos.getY()+0.6d, targetPos.getZ()+0.5d,
-                    1, 0, 0, 0, 0);
+        if (params.ticks() % 20 == 0) {
+            targetLevel.sendParticles(
+                    new DoubleOptions(EParticleTypes.PROTECTION_SEED.get(), radius),
+                    targetPos.getX() + 0.5d, targetPos.getY() + 0.6d, targetPos.getZ() + 0.5d,
+                    1, 0, 0, 0, 0
+            );
         }
         return params.ticks() < duration;
     }
@@ -70,11 +77,14 @@ public class ProtectionRite extends LocationTargetRite {
         targetLevel.playSound(null, targetPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.MASTER, 1.0f, 0.5f);
         StateObserverManager.get().removeObserver(observer);
 
-        generateSphere(targetLevel, targetPos, state -> {
-            if(state.is(EBlocks.PROTECTION_BARRIER.get()) || state.is(EBlocks.PROTECTION_BARRIER_BLOCKING.get()))
-                return state.getValue(BarrierBlock.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-            return null;
-        });
+        generateSphere(
+                targetLevel, targetPos, state -> {
+                    if (state.is(EBlocks.PROTECTION_BARRIER.get()) || state.is(EBlocks.PROTECTION_BARRIER_BLOCKING.get())) {
+                        return state.getValue(BarrierBlock.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                    }
+                    return null;
+                }
+        );
 
     }
 
@@ -87,17 +97,22 @@ public class ProtectionRite extends LocationTargetRite {
     protected void generateSphere(ServerLevel level, BlockPos pos, Function<BlockState, BlockState> stateGetter) {
         BlockPosUtils.iterableSphereHollow(pos, radius).forEach(spherePos -> {
             BlockState state = stateGetter.apply(level.getBlockState(spherePos));
-            if(state != null)
+            if (state != null) {
                 level.setBlockAndUpdate(spherePos, state);
+            }
         });
     }
 
     protected void getOrCreateObserver(ServerLevel level, BlockPos pos) {
-        if(observer == null)
+        if (observer == null) {
             observer = StateObserverManager.get().getObserver(level, pos, ProtectionRiteObserver.class);
-        if(observer == null)
-            observer = StateObserverManager.get().addObserver(new ProtectionRiteObserver(level, pos,
-                    radius + 1, radius + 1, radius + 1, blocksPlayers ? EBlocks.PROTECTION_BARRIER_BLOCKING.get() : EBlocks.PROTECTION_BARRIER.get(), radius));
+        }
+        if (observer == null) {
+            observer = StateObserverManager.get().addObserver(new ProtectionRiteObserver(
+                    level, pos,
+                    radius + 1, radius + 1, radius + 1, blocksPlayers ? EBlocks.PROTECTION_BARRIER_BLOCKING.get() : EBlocks.PROTECTION_BARRIER.get(), radius
+            ));
+        }
     }
 
 }

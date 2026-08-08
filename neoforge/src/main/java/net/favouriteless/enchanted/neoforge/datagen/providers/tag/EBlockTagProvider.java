@@ -1,8 +1,8 @@
 package net.favouriteless.enchanted.neoforge.datagen.providers.tag;
 
 import net.favouriteless.enchanted.common.Enchanted;
-import net.favouriteless.enchanted.common.init.ETags;
 import net.favouriteless.enchanted.common.init.EBlocks;
+import net.favouriteless.enchanted.common.init.ETags;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -46,11 +46,15 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(ETags.Blocks.CHALICES)
                 .add(EBlocks.CHALICE.get(), EBlocks.CHALICE_FILLED.get());
         tag(ETags.Blocks.CHALKS)
-                .add(EBlocks.GOLDEN_CHALK.get(), EBlocks.RITUAL_CHALK.get(), EBlocks.NETHER_CHALK.get(),
-                        EBlocks.OTHERWHERE_CHALK.get());
+                .add(
+                        EBlocks.GOLDEN_CHALK.get(), EBlocks.RITUAL_CHALK.get(), EBlocks.NETHER_CHALK.get(),
+                        EBlocks.OTHERWHERE_CHALK.get()
+                );
         tag(ETags.Blocks.CROPS)
-                .add(EBlocks.BELLADONNA.get(), EBlocks.SNOWBELL.get(), EBlocks.MANDRAKE.get(), EBlocks.GARLIC.get(),
-                        EBlocks.WOLFSBANE.get());
+                .add(
+                        EBlocks.BELLADONNA.get(), EBlocks.SNOWBELL.get(), EBlocks.MANDRAKE.get(), EBlocks.GARLIC.get(),
+                        EBlocks.WOLFSBANE.get()
+                );
         tag(ETags.Blocks.EMBER_MOSS_SPREADS_ON)
                 .add(Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.SAND);
         tag(ETags.Blocks.FENCES)
@@ -96,8 +100,10 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
         tag(ETags.Blocks.WOODEN_BUTTONS)
                 .add(EBlocks.ROWAN_BUTTON.get(), EBlocks.ALDER_BUTTON.get(), EBlocks.HAWTHORN_BUTTON.get());
         tag(ETags.Blocks.WOODEN_PRESSURE_PLATES)
-                .add(EBlocks.ROWAN_PRESSURE_PLATE.get(), EBlocks.ALDER_PRESSURE_PLATE.get(),
-                        EBlocks.HAWTHORN_PRESSURE_PLATE.get());
+                .add(
+                        EBlocks.ROWAN_PRESSURE_PLATE.get(), EBlocks.ALDER_PRESSURE_PLATE.get(),
+                        EBlocks.HAWTHORN_PRESSURE_PLATE.get()
+                );
         tag(ETags.Blocks.WOODEN_SLABS)
                 .add(EBlocks.ROWAN_SLAB.get(), EBlocks.ALDER_SLAB.get(), EBlocks.HAWTHORN_SLAB.get());
         tag(ETags.Blocks.WOODEN_FENCES)
@@ -116,17 +122,21 @@ public class EBlockTagProvider extends IntrinsicHolderTagsProvider<Block> {
     public void addVanillaTags(Provider provider) {
         // Mineable
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .addTags(ETags.Blocks.LOGS, ETags.Blocks.WOODEN_FENCES, ETags.Blocks.WOODEN_STAIRS,
-                        ETags.Blocks.WOODEN_SLABS)
+                .addTags(
+                        ETags.Blocks.LOGS, ETags.Blocks.WOODEN_FENCES, ETags.Blocks.WOODEN_STAIRS,
+                        ETags.Blocks.WOODEN_SLABS
+                )
                 .add(EBlocks.SPINNING_WHEEL.get());
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .addTag(ETags.Blocks.LEAVES)
                 .add(EBlocks.WICKER_BUNDLE.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .addTag(ETags.Blocks.CHALICES)
-                .add(EBlocks.WITCH_OVEN.get(), EBlocks.FUME_FUNNEL.get(), EBlocks.FUME_FUNNEL_FILTERED.get(),
+                .add(
+                        EBlocks.WITCH_OVEN.get(), EBlocks.FUME_FUNNEL.get(), EBlocks.FUME_FUNNEL_FILTERED.get(),
                         EBlocks.WITCH_CAULDRON.get(), EBlocks.DISTILLERY.get(), EBlocks.KETTLE.get(),
-                        EBlocks.ALTAR.get(), EBlocks.POPPET_SHELF.get());
+                        EBlocks.ALTAR.get(), EBlocks.POPPET_SHELF.get()
+                );
 
         // Other tags
         tag(BlockTags.CLIMBABLE)

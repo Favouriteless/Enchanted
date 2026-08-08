@@ -22,12 +22,12 @@ public class EBookProvider extends BookProvider {
     @Override
     protected void build(Provider provider, BiConsumer<String, Book> output) {
         BookBuilder.of(LangUtils.bookTitle("art_of_witchcraft"))
-                .subtitle(LangUtils.bookSubtitle("art_of_witchcraft"))
-                .landingText(LangUtils.bookLandingText("art_of_witchcraft"))
-                .texture(Enchanted.id("art_of_witchcraft"))
-                .tab(Enchanted.id("main"))
-                .type(new EClassicBookType(LockedViewType.HIDDEN))
-                .build("art_of_witchcraft", output);
+                   .subtitle(LangUtils.bookSubtitle("art_of_witchcraft"))
+                   .landingText(LangUtils.bookLandingText("art_of_witchcraft"))
+                   .texture(Enchanted.id("art_of_witchcraft"))
+                   .tab(Enchanted.id("main"))
+                   .type(new EClassicBookType(LockedViewType.HIDDEN))
+                   .build("art_of_witchcraft", output);
     }
 
 }

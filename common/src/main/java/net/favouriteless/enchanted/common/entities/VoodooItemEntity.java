@@ -4,8 +4,6 @@ import net.favouriteless.enchanted.common.enchanted.poppet.PoppetHelper;
 import net.favouriteless.enchanted.common.util.EntityUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -13,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Blocks;
-import oshi.hardware.SoundCard;
 
 public class VoodooItemEntity extends ItemEntity {
 
@@ -31,51 +28,54 @@ public class VoodooItemEntity extends ItemEntity {
 
     @Override
     public void setItem(ItemStack stack) {
-        if(stack.isDamageableItem())
+        if (stack.isDamageableItem()) {
             this.health = stack.getMaxDamage() - stack.getDamageValue();
+        }
         super.setItem(stack);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if(level() instanceof ServerLevel level && PoppetHelper.isBound(getItem())) {
+        if (level() instanceof ServerLevel level && PoppetHelper.isBound(getItem())) {
             ItemStack item = getItem();
-            ServerPlayer owner = ((ServerPlayer)getOwner());
+            ServerPlayer owner = ((ServerPlayer) getOwner());
             ServerPlayer target = EntityUtils.tryFindPlayer(level, PoppetHelper.getData(item).uuid()); // Not NPE, we already checked
 
-            if(target == null)
+            if (target == null) {
                 return;
+            }
 
-            if(isInWaterOrBubble())
+            if (isInWaterOrBubble()) {
                 ++underWaterTicks;
-            else
+            } else {
                 underWaterTicks = 0;
+            }
 
-            if(underWaterTicks > 20 && tryHurt(owner, target, level.damageSources().drown(), 1)) {
-            }
-            else if(isInLava() && tryHurt(owner, target, level.damageSources().lava(), 4)) {
+            if (underWaterTicks > 20 && tryHurt(owner, target, level.damageSources().drown(), 1)) {
+            } else if (isInLava() && tryHurt(owner, target, level.damageSources().lava(), 4)) {
                 target.igniteForSeconds(15);
-            }
-            else if(level.getBlockState(blockPosition()).is(Blocks.FIRE) && tryHurt(owner, target, level.damageSources().inFire(), 1) ||
+            } else if (level.getBlockState(blockPosition()).is(Blocks.FIRE) && tryHurt(owner, target, level.damageSources().inFire(), 1) ||
                     level.getBlockState(blockPosition()).is(Blocks.SOUL_FIRE) && tryHurt(owner, target, level.damageSources().inFire(), 2)
             ) {
-                if(target.getRemainingFireTicks() < 0)
+                if (target.getRemainingFireTicks() < 0) {
                     target.igniteForSeconds(8.0F);
+                }
                 target.setRemainingFireTicks(target.getRemainingFireTicks() + 1);
             }
         }
     }
 
     public boolean tryHurt(ServerPlayer owner, ServerPlayer target, DamageSource source, int amount) {
-        if(!PoppetHelper.tryUseVoodoo(owner, target)) {
+        if (!PoppetHelper.tryUseVoodoo(owner, target)) {
             level().explode(this, getX(), getY(), getZ(), 1.0F, ExplosionInteraction.NONE);
             discard();
             return false;
         }
 
-        if(target.hurt(source, amount))
+        if (target.hurt(source, amount)) {
             hurt(amount);
+        }
 
         return true;
     }
@@ -83,8 +83,9 @@ public class VoodooItemEntity extends ItemEntity {
     public void hurt(int amount) {
         ItemStack item = getItem();
 
-        if(level().isClientSide)
+        if (level().isClientSide) {
             return;
+        }
 
         health = health - amount;
         item.setDamageValue(item.getMaxDamage() - health);

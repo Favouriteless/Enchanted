@@ -17,7 +17,7 @@ public abstract class AltarDecorationBlock extends Block {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide()) {
             if (!state.canSurvive(level, pos)) {
-                level.destroyBlock(pos,true, null);
+                level.destroyBlock(pos, true, null);
             }
         }
     }

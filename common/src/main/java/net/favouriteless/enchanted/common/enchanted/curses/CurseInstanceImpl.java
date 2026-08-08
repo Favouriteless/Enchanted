@@ -45,13 +45,14 @@ public class CurseInstanceImpl implements CurseInstance {
      */
     public void tick(ServerLevel level) {
         ServerPlayer target = getTarget(level);
-        if(target == null)
+        if (target == null) {
             return;
+        }
 
         curse.tick(target, this.level, ++age);
 
-        if(nextWhisper <= age) {
-            target.connection.send(new ClientboundSoundEntityPacket(ESoundEvents.CURSE_WHISPER, SoundSource.AMBIENT, target, 0.1F, (float)Math.random() * 0.15F + 0.85F, RandomUtils.nextLong()));
+        if (nextWhisper <= age) {
+            target.connection.send(new ClientboundSoundEntityPacket(ESoundEvents.CURSE_WHISPER, SoundSource.AMBIENT, target, 0.1F, (float) Math.random() * 0.15F + 0.85F, RandomUtils.nextLong()));
             int min = ServerConfig.INSTANCE.curseWhisperMin.get();
             int max = ServerConfig.INSTANCE.curseWhisperMax.get();
             nextWhisper = age + RandomUtils.nextLong(min * 20L, max * 20L);
@@ -87,8 +88,9 @@ public class CurseInstanceImpl implements CurseInstance {
     @Override
     public ServerPlayer getTarget(ServerLevel level) {
         ServerPlayer player = targetCache != null ? targetCache.get() : null;
-        if(player != null)
+        if (player != null) {
             return player;
+        }
 
         targetCache = new WeakReference<>(level.getServer().getPlayerList().getPlayer(target));
         return targetCache.get();

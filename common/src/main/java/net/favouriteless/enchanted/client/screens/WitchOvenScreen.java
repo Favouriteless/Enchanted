@@ -68,8 +68,9 @@ public class WitchOvenScreen extends AbstractContainerScreen<WitchOvenMenu> {
         int burnDuration = menu.getBurnDuration();
         int burnProgress = menu.getBurnProgress();
 
-        if (burnDuration == 0)
+        if (burnDuration == 0) {
             burnDuration = 200;
+        }
 
         return burnProgress * 13 / burnDuration;
     }

@@ -1,7 +1,7 @@
 package net.favouriteless.enchanted.platform.services;
 
-import net.favouriteless.enchanted.platform.PacketContext;
 import net.favouriteless.enchanted.platform.NeoPacketContext;
+import net.favouriteless.enchanted.platform.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -72,7 +72,9 @@ public class NeoNetworkHelper implements NetworkHelper {
         PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
     }
 
-    private record PayloadRegisterable<T extends CustomPacketPayload>(Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, PacketContext> handler) {
+    private record PayloadRegisterable<T extends CustomPacketPayload>(Type<T> type,
+                                                                      StreamCodec<? super RegistryFriendlyByteBuf, T> codec,
+                                                                      BiConsumer<T, PacketContext> handler) {
 
         private void playClient(PayloadRegistrar registrar) {
             registrar.playToClient(type, codec, (payload, context) -> handler.accept(payload, new NeoPacketContext(context)));

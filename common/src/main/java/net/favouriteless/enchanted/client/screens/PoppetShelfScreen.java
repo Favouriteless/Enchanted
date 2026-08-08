@@ -8,8 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-import java.awt.*;
-
 public class PoppetShelfScreen extends AbstractContainerScreen<PoppetShelfMenu> {
 
     private static final ResourceLocation TEXTURE = Enchanted.id("textures/gui/menus/poppet_shelf.png");

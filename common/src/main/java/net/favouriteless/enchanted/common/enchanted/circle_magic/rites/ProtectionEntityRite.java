@@ -11,12 +11,13 @@ public class ProtectionEntityRite extends ProtectionRite {
 
     @Override
     protected void findTargetLocation(RiteParams params) {
-        if(params.target != null) {
+        if (params.target != null) {
             Entity target = findEntity(params.target);
-            if(target == null)
+            if (target == null) {
                 return;
+            }
 
-            targetLevel = (ServerLevel)target.level();
+            targetLevel = (ServerLevel) target.level();
             targetPos = target.blockPosition();
         }
     }

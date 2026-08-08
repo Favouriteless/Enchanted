@@ -19,7 +19,7 @@ public class CreateItemRite extends Rite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        for(ItemStack stack : items) {
+        for (ItemStack stack : items) {
             ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
             level.addFreshEntity(itemEntity);
         }

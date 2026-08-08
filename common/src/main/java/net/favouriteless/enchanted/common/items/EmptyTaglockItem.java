@@ -46,26 +46,30 @@ public class EmptyTaglockItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        if(target.getType().is(EntityTypes.TAGLOCK_BLACKLIST))
+        if (target.getType().is(EntityTypes.TAGLOCK_BLACKLIST)) {
             return InteractionResult.PASS;
+        }
 
-        if(!player.level().isClientSide) {
+        if (!player.level().isClientSide) {
             double failChance = 0.2D;
-            if(!player.isCrouching())
+            if (!player.isCrouching()) {
                 failChance += 0.2D;
-            if(!facingAway(player, target))
-                failChance += 0.4D;
-            if(target.getType() != EntityType.PLAYER)
-                failChance = 0;
-
-            if(Math.random() >= failChance) {
-                fillTaglockEntity(player, stack, target);
             }
-            else {
+            if (!facingAway(player, target)) {
+                failChance += 0.4D;
+            }
+            if (target.getType() != EntityType.PLAYER) {
+                failChance = 0;
+            }
+
+            if (Math.random() >= failChance) {
+                fillTaglockEntity(player, stack, target);
+            } else {
                 player.displayClientMessage(LangUtils.translatable("taglock", "failed").withStyle(ChatFormatting.RED), false);
 
-                if(target instanceof ServerPlayer sp)
+                if (target instanceof ServerPlayer sp) {
                     sp.displayClientMessage(LangUtils.translatable("taglock", "failed.player", player.getDisplayName().getString()).withStyle(ChatFormatting.RED), false);
+                }
             }
 
         }
@@ -78,18 +82,19 @@ public class EmptyTaglockItem extends Item {
         BlockState state = level.getBlockState(context.getClickedPos());
         BlockPos pos = context.getClickedPos();
 
-        if(state.getBlock() instanceof BedBlock) {
-            if(!level.isClientSide) {
+        if (state.getBlock() instanceof BedBlock) {
+            if (!level.isClientSide) {
                 BlockEntity be = state.getValue(BedBlock.PART) == BedPart.HEAD ?
-                        level.getBlockEntity(pos) :
-                        level.getBlockEntity(pos.relative(BedBlock.getConnectedDirection(state)));
+                                 level.getBlockEntity(pos) :
+                                 level.getBlockEntity(pos.relative(BedBlock.getConnectedDirection(state)));
 
-                if(be instanceof BedBlockEntity bed) {
+                if (be instanceof BedBlockEntity bed) {
                     BedTaglockSavedData data = BedTaglockSavedData.get(level);
                     BedTaglockData entry = data.getEntry(bed);
 
-                    if(entry == null || entry.getData() == null)
+                    if (entry == null || entry.getData() == null) {
                         return InteractionResult.CONSUME;
+                    }
 
                     fillTaglock(context.getPlayer(), context.getItemInHand(), entry.getData());
                     entry.setData(null);
@@ -97,10 +102,9 @@ public class EmptyTaglockItem extends Item {
                 }
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        else if(state.getBlock() == EBlocks.BLOOD_POPPY.get()) {
-            if(!level.isClientSide) {
-                if(level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
+        } else if (state.getBlock() == EBlocks.BLOOD_POPPY.get()) {
+            if (!level.isClientSide) {
+                if (level.getBlockEntity(pos) instanceof BloodPoppyBlockEntity poppy) {
                     fillTaglock(context.getPlayer(), context.getItemInHand(), poppy.getTaglockData());
                     BloodPoppyBlock.reset(level, pos);
                 }
@@ -116,7 +120,7 @@ public class EmptyTaglockItem extends Item {
     }
 
     protected void fillTaglock(Player player, ItemStack stack, EntityRefData data) {
-        if(player instanceof ServerPlayer sp) {
+        if (player instanceof ServerPlayer sp) {
             ItemStack item = new ItemStack(EItems.TAGLOCK_FILLED.get(), 1);
             item.set(EDataComponents.ENTITY_REF.get(), data);
 
@@ -128,14 +132,14 @@ public class EmptyTaglockItem extends Item {
         }
     }
 
-    protected boolean facingAway(Player source, Entity target){
+    protected boolean facingAway(Player source, Entity target) {
         Vec3 sourceLook = source.getLookAngle().normalize();
         Vec3 targetLook = target.getLookAngle().normalize();
 
-        Vec2 v1 = new Vec2((float)sourceLook.x, (float)sourceLook.z);
-        Vec2 v2 = new Vec2((float)targetLook.x, (float)targetLook.z);
+        Vec2 v1 = new Vec2((float) sourceLook.x, (float) sourceLook.z);
+        Vec2 v2 = new Vec2((float) targetLook.x, (float) targetLook.z);
 
-        return !(Math.acos((v1.x * v2.x + v1.y *v2.y) / (Mth.sqrt(v1.x * v1.x + v1.y * v1.y) * Mth.sqrt(v2.x * v2.x + v2.y * v2.y))) > Mth.HALF_PI);
+        return !(Math.acos((v1.x * v2.x + v1.y * v2.y) / (Mth.sqrt(v1.x * v1.x + v1.y * v1.y) * Mth.sqrt(v2.x * v2.x + v2.y * v2.y))) > Mth.HALF_PI);
     }
 
 

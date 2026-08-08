@@ -41,7 +41,7 @@ public class KettleRecipeCategory extends AbstractRecipeCategory<KettleRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, KettleRecipe recipe, IFocusGroup focuses) {
         int offset = 0;
-        for(ItemStack i : recipe.getInputs()){
+        for (ItemStack i : recipe.getInputs()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 5 + offset, 5).addIngredient(VanillaTypes.ITEM_STACK, i);
             offset += 20;
         }

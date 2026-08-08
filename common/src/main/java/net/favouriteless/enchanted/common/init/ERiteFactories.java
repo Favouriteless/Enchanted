@@ -7,7 +7,7 @@ public class ERiteFactories {
 
     public static void load() {
         RiteFactoryRegistry registry = RiteFactoryRegistry.get();
-        
+
         registry.register(ApplyCurseFactory.ID, ApplyCurseFactory.CODEC);
         registry.register(BindFamiliarFactory.ID, BindFamiliarFactory.CODEC);
         registry.register(BindTalismanFactory.ID, BindTalismanFactory.CODEC);

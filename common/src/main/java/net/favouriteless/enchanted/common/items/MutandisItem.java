@@ -25,10 +25,11 @@ public class MutandisItem extends Item {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        if(level instanceof ServerLevel serverLevel) {
-            if(MutagenManager.get().tryStartMutating(serverLevel, pos, isExtremis)) {
-                if(!context.getPlayer().isCreative())
+        if (level instanceof ServerLevel serverLevel) {
+            if (MutagenManager.get().tryStartMutating(serverLevel, pos, isExtremis)) {
+                if (!context.getPlayer().isCreative()) {
                     context.getItemInHand().shrink(1);
+                }
                 serverLevel.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.MASTER);
                 serverLevel.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 25, 0.5D, 0.5D, 0.5D, 0.0D);
             }

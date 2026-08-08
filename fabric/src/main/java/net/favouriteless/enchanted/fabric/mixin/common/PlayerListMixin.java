@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
 
-    @Inject(method="placeNewPlayer", at=@At("TAIL"))
+    @Inject(method = "placeNewPlayer", at = @At("TAIL"))
     private void placeNewPlayer(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
         CommonEvents.onPlayerLoggedIn(player);
     }

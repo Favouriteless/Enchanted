@@ -17,16 +17,20 @@ public class FabricAttachmentType<T> implements EAttachmentType<T> {
 
     public FabricAttachmentType(ResourceLocation name, Supplier<T> defaultSupplier, Codec<T> codec,
                                 StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec, boolean copyOnDeath) {
-        this.attachment = AttachmentRegistry.create(name, builder -> {
-            builder.initializer(defaultSupplier);
-            if(codec != null) {
-                builder.persistent(codec);
-                if(copyOnDeath)
-                    builder.copyOnDeath();
-            }
-            if(streamCodec != null)
-                builder.syncWith(streamCodec, (target, player) -> true);
-        });
+        this.attachment = AttachmentRegistry.create(
+                name, builder -> {
+                    builder.initializer(defaultSupplier);
+                    if (codec != null) {
+                        builder.persistent(codec);
+                        if (copyOnDeath) {
+                            builder.copyOnDeath();
+                        }
+                    }
+                    if (streamCodec != null) {
+                        builder.syncWith(streamCodec, (target, player) -> true);
+                    }
+                }
+        );
         this.defaultSupplier = defaultSupplier;
     }
 

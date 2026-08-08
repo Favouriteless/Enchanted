@@ -21,37 +21,39 @@ import java.util.function.Function;
 
 public abstract class SimpleContainerBlockBase<B extends SimpleContainerBlockBase<?>> extends EBaseEntityBlock<B> {
 
-	public SimpleContainerBlockBase(Function<Properties, B> factory, Properties properties) {
-		super(factory, properties);
-	}
+    public SimpleContainerBlockBase(Function<Properties, B> factory, Properties properties) {
+        super(factory, properties);
+    }
 
-	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if(!level.isClientSide) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if(blockEntity instanceof MenuProvider mp) {
-				EServices.PLATFORM.openMenu((ServerPlayer)player, mp, pos, BlockPos.STREAM_CODEC);
-				return InteractionResult.SUCCESS;
-			}
-		}
-		return InteractionResult.SUCCESS;
-	}
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof MenuProvider mp) {
+                EServices.PLATFORM.openMenu((ServerPlayer) player, mp, pos, BlockPos.STREAM_CODEC);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
 
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
-		if(state.getBlock() != newState.getBlock()) {
-			if(level.getBlockEntity(blockPos) instanceof ContainerBlockEntityBase be)
-				Containers.dropContents(level, blockPos, be.getDroppableInventory());
-			super.onRemove(state, level, blockPos, newState, isMoving);
-		}
-	}
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            if (level.getBlockEntity(blockPos) instanceof ContainerBlockEntityBase be) {
+                Containers.dropContents(level, blockPos, be.getDroppableInventory());
+            }
+            super.onRemove(state, level, blockPos, newState, isMoving);
+        }
+    }
 
-	@Override
-	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
-		if(stack.has(DataComponents.CUSTOM_NAME)) {
-			if(level.getBlockEntity(pos) instanceof ContainerBlockEntityBase be)
-				be.setCustomName(stack.getHoverName());
-		}
-	}
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity livingEntity, ItemStack stack) {
+        if (stack.has(DataComponents.CUSTOM_NAME)) {
+            if (level.getBlockEntity(pos) instanceof ContainerBlockEntityBase be) {
+                be.setCustomName(stack.getHoverName());
+            }
+        }
+    }
 
 }

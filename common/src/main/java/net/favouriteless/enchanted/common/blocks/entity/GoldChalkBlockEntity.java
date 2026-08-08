@@ -1,10 +1,10 @@
 package net.favouriteless.enchanted.common.blocks.entity;
 
 import net.favouriteless.enchanted.api.altar.PowerConsumer;
-import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.PowerHelper;
-import net.favouriteless.enchanted.common.ServerConfig;
+import net.favouriteless.enchanted.api.altar.PowerProvider;
 import net.favouriteless.enchanted.api.altar.SimplePowerPosHolder;
+import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteManager;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.RiteType;
 import net.favouriteless.enchanted.common.enchanted.circle_magic.rites.Rite;
@@ -58,23 +58,21 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
     }
 
     public void use(Level level, BlockPos pos, Player player) {
-        if(!level.isClientSide) {
-            if(isExecuting) {
-                Rite rite = RiteManager.getRiteAt((ServerLevel)level, worldPosition);
-                if(rite != null) {
+        if (!level.isClientSide) {
+            if (isExecuting) {
+                Rite rite = RiteManager.getRiteAt((ServerLevel) level, worldPosition);
+                if (rite != null) {
                     rite.stop();
-                    RiteManager.removeRite((ServerLevel)level, rite);
-                }
-                else {
+                    RiteManager.removeRite((ServerLevel) level, rite);
+                } else {
                     detatch();
                 }
-            }
-            else if(!isInitialising) {
+            } else if (!isInitialising) {
                 type = RiteType.getFirstMatching(level, pos);
-                if(type != null) {
+                if (type != null) {
 
                     ResourceLocation key = level.registryAccess().registryOrThrow(EData.RITE_TYPES_REGISTRY).getKey(type);
-                    if(key == null || ServerConfig.INSTANCE.disabledRites.get().contains(key.toString())) {
+                    if (key == null || ServerConfig.INSTANCE.disabledRites.get().contains(key.toString())) {
                         player.displayClientMessage(Component.literal("This rite has been disabled in the config.").withStyle(ChatFormatting.RED), false);
                         level.playSound(null, worldPosition, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.MASTER, 1.0f, 1.0f);
                         type = null;
@@ -85,8 +83,7 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
                     entitiesToConsume = type.getEntities();
                     caster = player.getUUID();
                     isInitialising = true;
-                }
-                else {
+                } else {
                     level.playSound(null, worldPosition, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.MASTER, 1.0f, 1.0f);
                 }
             }
@@ -94,33 +91,33 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, GoldChalkBlockEntity be) {
-        if(!be.isInitialising) {
-            if(be.isExecuting)
+        if (!be.isInitialising) {
+            if (be.isExecuting) {
                 be.createExecutingParticles();
-        }
-        else {
+            }
+        } else {
             be.createExecutingParticles();
-            if(level.getGameTime() % 20 != 0)
+            if (level.getGameTime() % 20 != 0) {
                 return;
+            }
 
             be.itemsToConsume.removeIf(ItemStack::isEmpty);
-            if(!be.isDoneConsuming()) {
-                if(!be.tryConsumeNext() && !be.isDoneConsuming())
+            if (!be.isDoneConsuming()) {
+                if (!be.tryConsumeNext() && !be.isDoneConsuming()) {
                     be.cancel();
-            }
-            else {
+                }
+            } else {
                 PowerProvider provider = PowerHelper.tryGetProvider(level, be.posHolder);
                 int power = be.type.getPower();
 
-                if(power == 0 || (provider != null && provider.tryConsume(power))) {
+                if (power == 0 || (provider != null && provider.tryConsume(power))) {
                     be.isExecuting = true;
                     be.isInitialising = false;
-                    Rite rite = be.type.create((ServerLevel)level, be.worldPosition, be.caster, be.itemsConsumed);
+                    Rite rite = be.type.create((ServerLevel) level, be.worldPosition, be.caster, be.itemsConsumed);
                     be.itemsConsumed = new ArrayList<>();
-                    RiteManager.addRite((ServerLevel)level, rite);
+                    RiteManager.addRite((ServerLevel) level, rite);
                     rite.start();
-                }
-                else {
+                } else {
                     be.cancel();
                 }
             }
@@ -132,10 +129,12 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
         double dx = worldPosition.getX() + Math.random();
         double dy = worldPosition.getY() + Math.random() * 0.3D;
         double dz = worldPosition.getZ() + Math.random();
-        ((ServerLevel)level).sendParticles(new DustParticleOptions(
-                        new Vector3f(254/255f, 94/255f, 94/255f), 1.0F),
+        ((ServerLevel) level).sendParticles(
+                new DustParticleOptions(
+                        new Vector3f(254 / 255f, 94 / 255f, 94 / 255f), 1.0F),
                 dx, dy, dz, 1,
-                0.0D, 0.0D, 0.0D, 0.0D);
+                0.0D, 0.0D, 0.0D, 0.0D
+        );
     }
 
     protected boolean isDoneConsuming() {
@@ -155,10 +154,10 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
         itemsToConsume = null;
         entitiesToConsume = null;
 
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             level.playSound(null, worldPosition, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.MASTER, 1.0f, 1.0f);
-            for(ItemStack stack : itemsConsumed) {
-                ItemEntity entity = new ItemEntity(level, worldPosition.getX()+0.5d, worldPosition.getY()+0.5d, worldPosition.getZ()+0.5d, stack);
+            for (ItemStack stack : itemsConsumed) {
+                ItemEntity entity = new ItemEntity(level, worldPosition.getX() + 0.5d, worldPosition.getY() + 0.5d, worldPosition.getZ() + 0.5d, stack);
                 level.addFreshEntity(entity);
             }
         }
@@ -166,38 +165,42 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
     }
 
     protected boolean tryConsumeNext() {
-        if(tryConsumeItem())
+        if (tryConsumeItem()) {
             return true;
+        }
         return tryConsumeEntity();
     }
 
     protected boolean tryConsumeItem() {
-        List<ItemEntity> entities = level.getEntitiesOfClass(ItemEntity.class, new AABB(
-                worldPosition.getX()-3, worldPosition.getY(), worldPosition.getZ()-3,
-                worldPosition.getX()+4, worldPosition.getY()+1, worldPosition.getZ()+4
-        ));
+        List<ItemEntity> entities = level.getEntitiesOfClass(
+                ItemEntity.class, new AABB(
+                        worldPosition.getX() - 3, worldPosition.getY(), worldPosition.getZ() - 3,
+                        worldPosition.getX() + 4, worldPosition.getY() + 1, worldPosition.getZ() + 4
+                )
+        );
 
-        for(ItemEntity entity : entities) {
+        for (ItemEntity entity : entities) {
             ItemStack item = entity.getItem();
 
-            for(ItemStack required : itemsToConsume) {
-                if(!ItemUtils.isSameItemPartial(item, required))
+            for (ItemStack required : itemsToConsume) {
+                if (!ItemUtils.isSameItemPartial(item, required)) {
                     continue;
+                }
 
                 createConsumeEffect(entity);
                 int toConsume = Math.min(required.getCount(), item.getCount());
 
-                if(!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
+                if (!entity.getItem().is(EItems.ATTUNED_STONE_CHARGED.get())) {
 
                     ItemStack copy = item.copy();
                     copy.setCount(toConsume);
                     itemsConsumed.add(copy);
 
                     item.shrink(toConsume);
-                    if(item.isEmpty())
+                    if (item.isEmpty()) {
                         entity.discard();
-                }
-                else {
+                    }
+                } else {
                     entity.setItem(new ItemStack(EItems.ATTUNED_STONE.get(), toConsume));
                 }
                 required.shrink(toConsume);
@@ -209,13 +212,15 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
     }
 
     protected boolean tryConsumeEntity() {
-        List<Entity> entities = level.getEntities(null, new AABB(
-                worldPosition.getX()-3, worldPosition.getY(), worldPosition.getZ()-3,
-                worldPosition.getX()+4, worldPosition.getY()+1, worldPosition.getZ()+4
-        ));
+        List<Entity> entities = level.getEntities(
+                null, new AABB(
+                        worldPosition.getX() - 3, worldPosition.getY(), worldPosition.getZ() - 3,
+                        worldPosition.getX() + 4, worldPosition.getY() + 1, worldPosition.getZ() + 4
+                )
+        );
 
-        for(Entity entity : entities) {
-            if(entitiesToConsume.remove(entity.getType())) {
+        for (Entity entity : entities) {
+            if (entitiesToConsume.remove(entity.getType())) {
                 entity.kill();
                 return true;
             }
@@ -225,12 +230,16 @@ public class GoldChalkBlockEntity extends BlockEntity implements PowerConsumer {
     }
 
     protected void createConsumeEffect(Entity entity) {
-        if(!level.isClientSide) {
-            level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHICKEN_EGG,
-                    SoundSource.MASTER, 1.0f, 1.0f);
+        if (!level.isClientSide) {
+            level.playSound(
+                    null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHICKEN_EGG,
+                    SoundSource.MASTER, 1.0f, 1.0f
+            );
 
-            ((ServerLevel)level).sendParticles(ParticleTypes.CLOUD, entity.getX(), entity.getY(), entity.getZ(), 1,
-                    0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(
+                    ParticleTypes.CLOUD, entity.getX(), entity.getY(), entity.getZ(), 1,
+                    0, 0, 0, 0
+            );
         }
     }
 

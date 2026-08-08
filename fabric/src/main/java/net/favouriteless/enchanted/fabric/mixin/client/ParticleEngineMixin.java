@@ -19,13 +19,16 @@ import java.util.List;
 @Mixin(ParticleEngine.class)
 public class ParticleEngineMixin {
 
-	@Shadow @Final @Mutable private static List<ParticleRenderType> RENDER_ORDER;
-	
-	@Inject(method = "<init>", at = @At("RETURN"))
-	private void addParticleRenderTypes(ClientLevel level, TextureManager textureManager, CallbackInfo ci) {
-		RENDER_ORDER = ImmutableList.<ParticleRenderType>builder().addAll(RENDER_ORDER)
-				.add(EParticleRenderTypes.PARTICLE_TRANSLUCENT)
-				.build();
-	}
+    @Shadow
+    @Final
+    @Mutable
+    private static List<ParticleRenderType> RENDER_ORDER;
+
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void addParticleRenderTypes(ClientLevel level, TextureManager textureManager, CallbackInfo ci) {
+        RENDER_ORDER = ImmutableList.<ParticleRenderType>builder().addAll(RENDER_ORDER)
+                                    .add(EParticleRenderTypes.PARTICLE_TRANSLUCENT)
+                                    .build();
+    }
 
 }

@@ -78,19 +78,23 @@ public class PoppetShelfManager extends SavedData {
 
     public void reference(PoppetShelfIdentifier id, int slot, ItemStack stack) {
         EntityRefData ref = stack.get(EDataComponents.ENTITY_REF.get());
-        if(ref == null) return;
+        if (ref == null) {
+            return;
+        }
         poppets.put(ref.uuid(), new PoppetReference(id, slot, stack));
     }
 
     public void dereference(ItemStack stack) {
         EntityRefData ref = stack.get(EDataComponents.ENTITY_REF.get());
-        if(ref == null) return;
+        if (ref == null) {
+            return;
+        }
         poppets.get(ref.uuid()).removeIf(r -> r.references(stack));
     }
 
     public void init() {
         shelves.forEach((id, inventory) -> {
-            for(int i = 0; i < inventory.getContainerSize(); i++) {
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
                 reference(id, i, inventory.getItem(i));
             }
         });
@@ -115,7 +119,7 @@ public class PoppetShelfManager extends SavedData {
 
         ListTag list = tag.getList("shelves", Tag.TAG_COMPOUND);
         list.forEach(t -> {
-            CompoundTag shelfTag = (CompoundTag)t;
+            CompoundTag shelfTag = (CompoundTag) t;
 
             PoppetShelfIdentifier id = PoppetShelfIdentifier.CODEC.parse(NbtOps.INSTANCE, shelfTag.get("id")).getOrThrow();
             PoppetShelfInventory inventory = PoppetShelfInventory.forServer(id, data);

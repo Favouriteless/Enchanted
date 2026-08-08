@@ -21,25 +21,27 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PoppetShelfBlock extends EBaseEntityBlock<PoppetShelfBlock> {
 
-	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+    public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
-	public PoppetShelfBlock(Properties properties) {
-		super(PoppetShelfBlock::new, properties);
-	}
+    public PoppetShelfBlock(Properties properties) {
+        super(PoppetShelfBlock::new, properties);
+    }
 
-	@Override
-	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if(!level.isClientSide && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity be)
-            EServices.PLATFORM.openMenu((ServerPlayer)player, be, pos, BlockPos.STREAM_CODEC);
-		return InteractionResult.SUCCESS;
-	}
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity be) {
+            EServices.PLATFORM.openMenu((ServerPlayer) player, be, pos, BlockPos.STREAM_CODEC);
+        }
+        return InteractionResult.SUCCESS;
+    }
 
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(state.is(newState.getBlock()))
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.is(newState.getBlock())) {
             return;
+        }
 
-        if(level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity shelf) {
+        if (level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof PoppetShelfBlockEntity shelf) {
             ItemUtils.dropContentsNoChange(level, pos.getX(), pos.getY(), pos.getZ(), shelf.getInventory());
             PoppetShelfManager.get(serverLevel).remove(serverLevel, pos);
         }

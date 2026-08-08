@@ -36,11 +36,13 @@ public class MortarRenderer implements BlockEntityRenderer<MortarBlockEntity> {
     @Override
     public void render(MortarBlockEntity be, float partialTicks, PoseStack pose, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         ItemStack input = be.getInput();
-        if(input != null)
+        if (input != null) {
             renderItems(input, pose, bufferSource, packedLight, packedOverlay);
+        }
 
-        if(be.getProgress() != 0)
+        if (be.getProgress() != 0) {
             renderPaste(be, pose, bufferSource, packedLight);
+        }
     }
 
     private void renderItems(ItemStack stack, PoseStack pose, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
@@ -51,7 +53,7 @@ public class MortarRenderer implements BlockEntityRenderer<MortarBlockEntity> {
         pose.scale(0.35F, 0.35F, 0.35F);
         pose.mulPose(Axis.XP.rotationDegrees(90.0F));
 
-        for(int i = 0; i < stack.getCount(); i++) {
+        for (int i = 0; i < stack.getCount(); i++) {
             pose.pushPose();
             pose.translate(0.0F, 0.0F, -i * 0.0625F); // Use Z axis because the pose is rotated 90 degrees
             pose.mulPose(Axis.ZP.rotationDegrees(45.0F * i));
@@ -68,7 +70,7 @@ public class MortarRenderer implements BlockEntityRenderer<MortarBlockEntity> {
         ARGB colour = ColourUtils.intToARGB(be.getColour());
 
         pose.pushPose();
-        pose.translate(0.5D, Mth.lerp(be.getProgress() / (float)be.getMaxProgress(), QUAD_START, QUAD_END), 0.5D);
+        pose.translate(0.5D, Mth.lerp(be.getProgress() / (float) be.getMaxProgress(), QUAD_START, QUAD_END), 0.5D);
         RenderUtils.quad(pose, buffer, sprite, APOTHEM, colour, packedLight);
         pose.popPose();
     }

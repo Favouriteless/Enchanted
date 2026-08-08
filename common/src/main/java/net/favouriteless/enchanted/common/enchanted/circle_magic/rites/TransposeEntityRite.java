@@ -17,23 +17,26 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
 
     @Override
     protected boolean onStart(RiteParams params) {
-        if(!super.onStart(params))
+        if (!super.onStart(params)) {
             return false;
+        }
 
         Entity transposee = getTransposee(params);
-        if(transposee == null)
+        if (transposee == null) {
             return cancel();
+        }
 
-        portalParticles((ServerLevel)transposee.level(), transposee.blockPosition());
+        portalParticles((ServerLevel) transposee.level(), transposee.blockPosition());
         portalParticles(targetLevel, targetPos);
 
         transposee.level().playSound(null, transposee.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1, 1);
 
         Vec3 destination = targetPos.getCenter().add(0, 0.01d, 0);
-        if(targetLevel != transposee.level())
+        if (targetLevel != transposee.level()) {
             transposee.changeDimension(new DimensionTransition(targetLevel, destination, Vec3.ZERO, 0, 0, DimensionTransition.DO_NOTHING));
-        else
+        } else {
             transposee.teleportTo(destination.x, destination.y, destination.z);
+        }
 
         level.playSound(null, targetPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1, 1);
 
@@ -43,7 +46,7 @@ public abstract class TransposeEntityRite extends LocationTargetRite {
     protected abstract Entity getTransposee(RiteParams params);
 
     protected void portalParticles(ServerLevel level, BlockPos pos) {
-        for(int i = 0; i < 25; i++) {
+        for (int i = 0; i < 25; i++) {
             double dx = pos.getX() + (Math.random() * 1.5D);
             double dy = pos.getY() + (Math.random() * 2.0D);
             double dz = pos.getZ() + (Math.random() * 1.5D);

@@ -13,20 +13,21 @@ import net.minecraft.world.level.block.Blocks;
 
 public class BroomItem extends Item {
 
-	public BroomItem(Properties properties) {
-		super(properties);
-	}
+    public BroomItem(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		Level level = context.getLevel();
-		BlockPos pos = context.getClickedPos();
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
 
-		if(!level.isClientSide) {
-			if(level.getBlockState(pos).is(ETags.Blocks.BROOM_SWEEPABLE))
-				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-			level.playSound(null, pos, ESoundEvents.BROOM_SWEEP.value(), SoundSource.PLAYERS, 1.0F, 0.8F + RandomUtils.nextFloat() * 0.2F);
-		}
-		return InteractionResult.sidedSuccess(level.isClientSide);
-	}
+        if (!level.isClientSide) {
+            if (level.getBlockState(pos).is(ETags.Blocks.BROOM_SWEEPABLE)) {
+                level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            }
+            level.playSound(null, pos, ESoundEvents.BROOM_SWEEP.value(), SoundSource.PLAYERS, 1.0F, 0.8F + RandomUtils.nextFloat() * 0.2F);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 }

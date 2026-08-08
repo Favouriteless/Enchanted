@@ -37,7 +37,7 @@ public class BlockPosUtils {
                 float pitch = this.pitch;
 
                 this.pitch += increment;
-                if(this.pitch > Mth.PI) {
+                if (this.pitch > Mth.PI) {
                     this.theta += increment;
                     this.pitch = -Mth.PI;
                 }

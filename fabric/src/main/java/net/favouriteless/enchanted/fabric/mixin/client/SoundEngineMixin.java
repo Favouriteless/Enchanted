@@ -12,12 +12,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SoundEngine.class)
 public class SoundEngineMixin {
 
-    @Shadow private boolean loaded;
+    @Shadow
+    private boolean loaded;
 
-    @Inject(method="play", at=@At("HEAD"))
+    @Inject(method = "play", at = @At("HEAD"))
     private void play(SoundInstance sound, CallbackInfo ci) {
-        if(loaded)
+        if (loaded) {
             ClientEvents.playSound(sound);
+        }
     }
 
 }

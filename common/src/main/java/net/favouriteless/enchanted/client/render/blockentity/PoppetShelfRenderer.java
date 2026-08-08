@@ -22,14 +22,15 @@ public class PoppetShelfRenderer implements BlockEntityRenderer<PoppetShelfBlock
             new Vector3f(0.3125F, 0.515F, 0.6875F)
     };
 
-    public PoppetShelfRenderer(Context context) {}
+    public PoppetShelfRenderer(Context context) {
+    }
 
     @Override
     public void render(PoppetShelfBlockEntity shelf, float partialTicks, PoseStack pose, MultiBufferSource bufferSource, int light, int overlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         PoppetShelfInventory inventory = shelf.getInventory();
 
-        for(int i = 0; i < inventory.getContainerSize(); i++) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
             pose.pushPose();
 
             pose.translate(ITEM_POS[i].x(), ITEM_POS[i].y(), ITEM_POS[i].z());

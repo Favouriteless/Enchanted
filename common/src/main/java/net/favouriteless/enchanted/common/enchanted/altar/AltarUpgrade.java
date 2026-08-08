@@ -23,10 +23,11 @@ public record AltarUpgrade(ResourceLocation type, Block block, double recharge, 
 
     public static AltarUpgrade get(Level level, Block block) {
         Optional<Registry<AltarUpgrade>> optional = level.registryAccess().registry(EData.ALTAR_UPGRADE_REGISTRY);
-        if(optional.isPresent()) {
-            for(AltarUpgrade upgrade : optional.get()) {
-                if(upgrade.block() == block)
+        if (optional.isPresent()) {
+            for (AltarUpgrade upgrade : optional.get()) {
+                if (upgrade.block() == block) {
                     return upgrade;
+                }
             }
         }
         return null;
@@ -34,8 +35,8 @@ public record AltarUpgrade(ResourceLocation type, Block block, double recharge, 
 
     public static AltarUpgrade get(Level level, ResourceLocation location) {
         return level.registryAccess().registry(EData.ALTAR_UPGRADE_REGISTRY)
-                .map(altarUpgrades -> altarUpgrades.get(location))
-                .orElse(null);
+                    .map(altarUpgrades -> altarUpgrades.get(location))
+                    .orElse(null);
     }
 
 }

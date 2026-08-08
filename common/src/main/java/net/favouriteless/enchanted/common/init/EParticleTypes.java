@@ -44,21 +44,24 @@ public class EParticleTypes {
     }
 
     private static <T extends ParticleOptions> Supplier<ParticleType<T>> register(String name, boolean override, Function<ParticleType<T>, MapCodec<T>> codec,
-                                                                                   Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodec) {
-        return register(name, () -> new ParticleType<T>(override) {
+                                                                                  Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodec) {
+        return register(
+                name, () -> new ParticleType<T>(override) {
 
-            public MapCodec<T> codec() {
-                return codec.apply(this);
-            }
+                    public MapCodec<T> codec() {
+                        return codec.apply(this);
+                    }
 
-            public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
-                return streamCodec.apply(this);
-            }
+                    public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
+                        return streamCodec.apply(this);
+                    }
 
-        });
+                }
+        );
     }
 
 
-    public static void load() {} // Method which exists purely to load the class.
+    public static void load() {
+    } // Method which exists purely to load the class.
 
 }

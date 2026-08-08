@@ -18,10 +18,11 @@ public class BoundWaystoneItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        if(stack.has(EDataComponents.BLOCK_POS.get()))
+        if (stack.has(EDataComponents.BLOCK_POS.get())) {
             tooltip.add(Component.literal(stack.get(EDataComponents.BLOCK_POS.get()).toShortString()).withStyle(ChatFormatting.GRAY));
-        else
+        } else {
             tooltip.add(Component.translatable("item.enchanted.bound_waystone.not_bound").withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override

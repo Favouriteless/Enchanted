@@ -6,8 +6,8 @@ import net.favouriteless.enchanted.common.Enchanted;
 import net.favouriteless.enchanted.common.ServerConfig;
 import net.favouriteless.enchanted.common.blocks.altar.AltarBlock;
 import net.favouriteless.enchanted.common.enchanted.altar.AltarPowerData;
-import net.favouriteless.enchanted.common.menus.AltarMenu;
 import net.favouriteless.enchanted.common.enchanted.stateobservers.AltarStateObserver;
+import net.favouriteless.enchanted.common.menus.AltarMenu;
 import net.favouriteless.enchanted.common.util.ImmutableContainerData;
 import net.favouriteless.stateobserver.api.StateObserverManager;
 import net.minecraft.core.BlockPos;
@@ -42,33 +42,39 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AltarBlockEntity be) {
-        if(be.firstTick)
+        if (be.firstTick) {
             be.firstTick();
-        if(level.getGameTime() % 20 == 0)
+        }
+        if (level.getGameTime() % 20 == 0) {
             be.stateObserver.checkChanges();
+        }
 
         double capacity = be.powerData.getCapacity();
 
-        if(be.power < capacity)
+        if (be.power < capacity) {
             be.power += ServerConfig.INSTANCE.altarBaseRecharge.get() * be.powerData.getRechargeMultiplier();
-        if(be.power > capacity)
+        }
+        if (be.power > capacity) {
             be.power = capacity;
+        }
     }
 
     public void firstTick() {
-        if(stateObserver == null)
+        if (stateObserver == null) {
             stateObserver = StateObserverManager.get().getObserver(level, worldPosition, AltarStateObserver.class);
-        if(stateObserver == null) {
+        }
+        if (stateObserver == null) {
             int range = ServerConfig.INSTANCE.altarRange.get();
             stateObserver = StateObserverManager.get().addObserver(new AltarStateObserver(level, worldPosition, range + 4, range + 4, range + 4));
         }
         facingX = level.getBlockState(worldPosition).getValue(AltarBlock.FACING_X);
         centerPos = facingX ?
-                Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
-                Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
+                    Vec3.atLowerCornerOf(worldPosition).add(1.0D, 0.0D, 0.5D) :
+                    Vec3.atLowerCornerOf(worldPosition).add(0.5D, 0.0D, 1.0D);
 
-        if(firstLoad)
+        if (firstLoad) {
             setupPowerData();
+        }
 
         powerData.validate(level);
         firstTick = false;
@@ -78,8 +84,9 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
     public void saveAdditional(CompoundTag nbt, Provider registries) {
         // Completely beyond me why this is even called on the client, but it is. Us modders can never begin to fathom
         // the depths of Mojang's genius.
-        if(level == null || level.isClientSide)
+        if (level == null || level.isClientSide) {
             return;
+        }
 
         nbt.putDouble("power", power);
         nbt.put("powerData", powerData.save(level));
@@ -88,10 +95,11 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
     @Override
     public void loadAdditional(CompoundTag nbt, Provider registries) {
         power = nbt.getDouble("power");
-        if(nbt.contains("powerData"))
+        if (nbt.contains("powerData")) {
             powerData.load(nbt.getCompound("powerData"), registries);
-        else
+        } else {
             Enchanted.LOG.error("Failed to load power data for altar at {}", getBlockPos().toShortString());
+        }
         firstLoad = false;
     }
 
@@ -103,34 +111,39 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
     }
 
     private void setupUpgradeData() {
-        if(level == null || level.isClientSide)
+        if (level == null || level.isClientSide) {
             return;
+        }
 
         BlockPos minPos = worldPosition.above();
         BlockPos maxPos = facingX ? minPos.offset(2, 0, 1) : minPos.offset(1, 0, 2);
 
-        for(BlockPos pos : BlockPos.betweenClosed(minPos, maxPos))
+        for (BlockPos pos : BlockPos.betweenClosed(minPos, maxPos)) {
             powerData.addUpgrade(level, level.getBlockState(pos).getBlock());
+        }
     }
 
     private void setupBlockData() {
-        if(level == null || level.isClientSide)
+        if (level == null || level.isClientSide) {
             return;
+        }
 
         int range = ServerConfig.INSTANCE.altarRange.get();
         BlockPos startingPos = facingX ?
-                BlockPos.containing(centerPos.add(-(range+4), -(range+2), -(range+2))) :
-                BlockPos.containing(centerPos.add(-(range+2), -(range+2), -(range+4)));
+                               BlockPos.containing(centerPos.add(-(range + 4), -(range + 2), -(range + 2))) :
+                               BlockPos.containing(centerPos.add(-(range + 2), -(range + 2), -(range + 4)));
 
-        for(int x = 0; x < (range+2) * 2; x++) {
-            for(int y = 0; y < (range+2) * 2; y++) {
-                for(int z = 0; z < (range+2) * 2; z++) {
+        for (int x = 0; x < (range + 2) * 2; x++) {
+            for (int y = 0; y < (range + 2) * 2; y++) {
+                for (int z = 0; z < (range + 2) * 2; z++) {
                     BlockPos currentPos = startingPos.offset(x, y, z);
-                    if(!posWithinRange(currentPos))
+                    if (!posWithinRange(currentPos)) {
                         continue;
+                    }
 
-                    if(level.getBlockEntity(currentPos) instanceof PowerConsumer consumer)
+                    if (level.getBlockEntity(currentPos) instanceof PowerConsumer consumer) {
                         consumer.getPosHolder().add(worldPosition); // Notify consumers that this altar exists.
+                    }
 
                     addBlock(level.getBlockState(currentPos).getBlock());
                 }
@@ -145,9 +158,9 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
      */
     public boolean posWithinRange(BlockPos pos) {
         int range = ServerConfig.INSTANCE.altarRange.get();
-        if(this.level != null) {
-            double rx = facingX ? range+1 : range;
-            double rz = facingX ? range : range+1;
+        if (this.level != null) {
+            double rx = facingX ? range + 1 : range;
+            double rz = facingX ? range : range + 1;
             double dx = pos.getX() - centerPos.x;
             double dy = pos.getY() - centerPos.y;
             double dz = pos.getZ() - centerPos.z;
@@ -162,11 +175,11 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
      * @return True if position is an upgrade, otherwise false.
      */
     public boolean posIsUpgrade(BlockPos pos) {
-        if(this.level != null) {
+        if (this.level != null) {
             int xMax;
             int zMax;
 
-            if(facingX) {
+            if (facingX) {
                 xMax = 2;
                 zMax = 1;
             } else {
@@ -178,7 +191,7 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
             int zOffset = pos.getZ() - worldPosition.getZ();
             boolean withinX = xOffset >= 0 && xOffset <= xMax;
             boolean withinZ = zOffset >= 0 && zOffset <= zMax;
-            return pos.getY() == worldPosition.getY()+1 && withinX && withinZ;
+            return pos.getY() == worldPosition.getY() + 1 && withinX && withinZ;
         }
         return false;
     }
@@ -222,13 +235,15 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return new AltarMenu(id, this, new ImmutableContainerData() {
+        return new AltarMenu(
+                id, this, new ImmutableContainerData() {
             @Override
             public int get(int index) {
-                return switch(index) {
-                    case 0 -> (int)power;
-                    case 1 -> (int)powerData.getCapacity();
-                    case 2 -> (int)Math.round(powerData.getRechargeMultiplier() * 100); // Multiply by 100 to allow for 2 decimal places.
+                return switch (index) {
+                    case 0 -> (int) power;
+                    case 1 -> (int) powerData.getCapacity();
+                    case 2 ->
+                            (int) Math.round(powerData.getRechargeMultiplier() * 100); // Multiply by 100 to allow for 2 decimal places.
                     default -> throw new IllegalStateException("Unexpected altar container index: " + index);
                 };
             }
@@ -237,12 +252,13 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider, Power
             public int getCount() {
                 return 3;
             }
-        });
+        }
+        );
     }
 
     @Override
     public boolean tryConsume(double amount) {
-        if(power > amount) {
+        if (power > amount) {
             power -= amount;
             return true;
         }

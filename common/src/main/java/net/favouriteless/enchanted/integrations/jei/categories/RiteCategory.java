@@ -60,7 +60,7 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
     @Override
     public void draw(JeiRiteRecipe recipe, IRecipeSlotsView slots, GuiGraphics graphics, double mouseX, double mouseY) {
         background.draw(graphics);
-        for(IDrawableStatic drawable : circles) {
+        for (IDrawableStatic drawable : circles) {
             drawable.draw(graphics, 0, 14);
         }
         glyph_golden.draw(graphics, 0, 14);
@@ -75,20 +75,21 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JeiRiteRecipe recipe, IFocusGroup focuses) {
         List<ItemStack> itemsOut = recipe.rite().getOutputs();
-        if(itemsOut == null)
+        if (itemsOut == null) {
             return;
+        }
 
         List<ItemStack> itemList = new ArrayList<>(recipe.rite().getItems());
 
         int circleNum = 1;
         int itemsRemaining = itemList.size();
 
-        while(itemsRemaining > 0) {
+        while (itemsRemaining > 0) {
             int radius = START_RADIUS + (circleNum - 1) * RADIUS_INCREMENT;
-            int limit = (int)Math.round(Math.pow(6, circleNum));
+            int limit = (int) Math.round(Math.pow(6, circleNum));
             int itemCount = Math.min(itemsRemaining, limit);
 
-            for(int i = 0; i < itemCount; i++) {
+            for (int i = 0; i < itemCount; i++) {
                 ItemStack stack = itemList.getFirst();
                 itemList.remove(stack);
 
@@ -103,24 +104,26 @@ public class RiteCategory extends AbstractRecipeCategory<JeiRiteRecipe> {
         }
 
 
-        int numRows = (int)Math.ceil(itemsOut.size() / 3.0F);
+        int numRows = (int) Math.ceil(itemsOut.size() / 3.0F);
         int height = numRows * 17;
         int startX = 119;
         int startY = 61 - Math.round(height / 2.0F);
-        for(int i = 0; i < itemsOut.size(); i++) {
+        for (int i = 0; i < itemsOut.size(); i++) {
             ItemStack stack = itemsOut.get(i);
             builder.addSlot(RecipeIngredientRole.OUTPUT, startX + (i % 3) * 17, startY + i / 3 * 17).addItemStack(stack);
         }
 
         circles.clear();
-        for(Entry<Holder<CircleMagicShape>, Block> entry : recipe.rite().getShapes().entrySet()) {
+        for (Entry<Holder<CircleMagicShape>, Block> entry : recipe.rite().getShapes().entrySet()) {
             ResourceKey<CircleMagicShape> shape = entry.getKey().unwrapKey().orElse(null);
-            if(shape == null)
+            if (shape == null) {
                 return;
+            }
 
             ResourceLocation tex = EnchantedClient.getShapeGuiTexture(shape, entry.getValue());
-            if(tex != null)
+            if (tex != null) {
                 circles.add(buildTexture(tex, CIRCLE_SIZE, CIRCLE_SIZE));
+            }
         }
     }
 

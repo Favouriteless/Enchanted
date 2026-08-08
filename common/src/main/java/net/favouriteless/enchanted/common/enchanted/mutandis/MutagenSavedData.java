@@ -33,7 +33,7 @@ public class MutagenSavedData extends SavedData {
 
     public void remove(BlockPos pos) {
         Object2BooleanMap<BlockPos> map = mutatingBlocks.get(new ChunkPos(pos));
-        if(map != null) {
+        if (map != null) {
             map.removeBoolean(pos);
             setDirty();
         }
@@ -53,12 +53,13 @@ public class MutagenSavedData extends SavedData {
     public CompoundTag save(CompoundTag nbt, Provider registries) {
         ListTag chunkList = new ListTag();
 
-        for(Entry<ChunkPos, Object2BooleanMap<BlockPos>> entry : mutatingBlocks.entrySet()) {
-            if(entry.getValue().isEmpty())
+        for (Entry<ChunkPos, Object2BooleanMap<BlockPos>> entry : mutatingBlocks.entrySet()) {
+            if (entry.getValue().isEmpty()) {
                 continue;
+            }
 
             ListTag list = new ListTag();
-            for(Object2BooleanMap.Entry<BlockPos> e : entry.getValue().object2BooleanEntrySet()) {
+            for (Object2BooleanMap.Entry<BlockPos> e : entry.getValue().object2BooleanEntrySet()) {
                 CompoundTag tag = new CompoundTag();
                 tag.putLong("pos", e.getKey().asLong());
                 tag.putBoolean("extremis", e.getBooleanValue());
@@ -79,12 +80,12 @@ public class MutagenSavedData extends SavedData {
 
         ListTag chunkList = nbt.getList("chunks", ListTag.TAG_COMPOUND);
 
-        for(Tag t : chunkList) {
-            CompoundTag chunk = (CompoundTag)t;
+        for (Tag t : chunkList) {
+            CompoundTag chunk = (CompoundTag) t;
 
             Object2BooleanMap<BlockPos> posMap = new Object2BooleanOpenHashMap<>();
-            for(Tag p : chunk.getList("positions", ListTag.TAG_LONG)) {
-                CompoundTag pos = (CompoundTag)p;
+            for (Tag p : chunk.getList("positions", ListTag.TAG_LONG)) {
+                CompoundTag pos = (CompoundTag) p;
                 posMap.put(BlockPos.of(pos.getLong("pos")), pos.getBoolean("extremis"));
             }
 

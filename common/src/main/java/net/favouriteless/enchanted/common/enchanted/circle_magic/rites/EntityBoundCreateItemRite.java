@@ -24,19 +24,20 @@ public class EntityBoundCreateItemRite extends Rite {
     protected boolean onStart(RiteParams params) {
         EntityRefData ref = null;
 
-        for(ItemStack stack : params.consumedItems) {
-            if(stack.has(EDataComponents.ENTITY_REF.get())) {
+        for (ItemStack stack : params.consumedItems) {
+            if (stack.has(EDataComponents.ENTITY_REF.get())) {
                 ref = stack.get(EDataComponents.ENTITY_REF.get());
 
                 Entity entity = findEntity(ref.uuid()); // Try to re-grab name if possible.
-                if(entity != null)
+                if (entity != null) {
                     ref = EntityRefData.of(ref.uuid(), entity.getDisplayName().getString());
+                }
 
                 break;
             }
         }
 
-        for(ItemStack stack : items) {
+        for (ItemStack stack : items) {
             stack.set(EDataComponents.ENTITY_REF.get(), ref);
             ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack.copy());
             level.addFreshEntity(itemEntity);

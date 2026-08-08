@@ -18,10 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayerGameMode.class)
 public class ServerPlayerGameModeMixin {
 
-    @Shadow @Final protected ServerPlayer player;
+    @Shadow
+    @Final
+    protected ServerPlayer player;
 
-    @Inject(method="destroyBlock", at=@At(value="INVOKE", target="Lnet/minecraft/world/item/ItemStack;mineBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)V", shift=Shift.AFTER))
-    private void destroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir, @Local(ordinal=0) ItemStack original, @Local(ordinal=1) ItemStack copy) {
+    @Inject(method = "destroyBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;mineBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)V", shift = Shift.AFTER))
+    private void destroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 0) ItemStack original, @Local(ordinal = 1) ItemStack copy) {
         CommonEventsFabric.playerDestroyItemEvent(player, copy, InteractionHand.MAIN_HAND);
     }
 

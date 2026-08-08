@@ -10,13 +10,15 @@ import net.minecraft.world.phys.Vec3;
 
 public class EExtraCodecs {
 
-    public static final Codec<Integer> HEX_INT = Codec.STRING.comapFlatMap(s -> {
-        try {
-            return DataResult.success(Integer.parseUnsignedInt(s, 16));
-        } catch(NumberFormatException e) {
-            return DataResult.error(() -> "Not a valid hex number: " + s + " " + e.getMessage());
-        }
-    }, i -> Integer.toHexString(i).toUpperCase());
+    public static final Codec<Integer> HEX_INT = Codec.STRING.comapFlatMap(
+            s -> {
+                try {
+                    return DataResult.success(Integer.parseUnsignedInt(s, 16));
+                } catch (NumberFormatException e) {
+                    return DataResult.error(() -> "Not a valid hex number: " + s + " " + e.getMessage());
+                }
+            }, i -> Integer.toHexString(i).toUpperCase()
+    );
 
     public static final Codec<Vec3> VEC3 = RecordCodecBuilder.create(instance -> instance.group(
             Codec.DOUBLE.fieldOf("x").forGetter(v -> v.x),

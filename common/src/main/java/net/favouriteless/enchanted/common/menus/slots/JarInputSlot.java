@@ -7,13 +7,13 @@ import net.minecraft.world.item.ItemStack;
 
 public class JarInputSlot extends Slot {
 
-	public JarInputSlot(Container container, int index, int x, int y) {
-		super(container, index, x, y);
-	}
+    public JarInputSlot(Container container, int index, int x, int y) {
+        super(container, index, x, y);
+    }
 
-	@Override
-	public boolean mayPlace(ItemStack stack) {
-		return stack.getItem() == EItems.CLAY_JAR.get();
-	}
+    @Override
+    public boolean mayPlace(ItemStack stack) {
+        return stack.getItem() == EItems.CLAY_JAR.get();
+    }
 
 }

@@ -19,8 +19,9 @@ public class EnchantedClient {
 
     @Nullable
     public static ResourceLocation getShapeGuiTexture(ResourceKey<CircleMagicShape> shape, Block block) {
-        if(shape == null || block == null)
+        if (shape == null || block == null) {
             return null;
+        }
 
         ResourceLocation id = shape.location();
         ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);

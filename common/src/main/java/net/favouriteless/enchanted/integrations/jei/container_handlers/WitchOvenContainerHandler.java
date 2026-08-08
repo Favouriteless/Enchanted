@@ -22,7 +22,7 @@ public class WitchOvenContainerHandler implements IGuiContainerHandler<WitchOven
 
             @Override
             public Rect2i getArea() {
-                return new Rect2i(76,16,24,17);
+                return new Rect2i(76, 16, 24, 17);
             }
 
             @Override

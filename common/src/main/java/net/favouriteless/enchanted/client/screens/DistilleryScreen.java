@@ -27,7 +27,7 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
     public static final int BUBBLES_ICON_U = 176;
     public static final int BUBBLES_ICON_V = 28;
 
-    private static final int[] BUBBLELENGTHS = new int[]{0, 6, 11, 16, 20, 24, 29};
+    private static final int[] BUBBLELENGTHS = new int[] { 0, 6, 11, 16, 20, 24, 29 };
 
     public DistilleryScreen(DistilleryMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -58,8 +58,9 @@ public class DistilleryScreen extends AbstractContainerScreen<DistilleryMenu> {
         gui.blit(TEXTURE, leftPos + COOK_BAR_XPOS, topPos + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, cookProgressionScaled + 1, COOK_BAR_HEIGHT);
 
         int bubbleOffset = BUBBLELENGTHS[cookProgress / 2 % 7];
-        if (bubbleOffset > 0)
+        if (bubbleOffset > 0) {
             gui.blit(TEXTURE, leftPos + BUBBLES_XPOS, topPos + BUBBLES_YPOS - bubbleOffset, BUBBLES_ICON_U, BUBBLES_ICON_V - bubbleOffset, 12, bubbleOffset);
+        }
     }
 
     @Override

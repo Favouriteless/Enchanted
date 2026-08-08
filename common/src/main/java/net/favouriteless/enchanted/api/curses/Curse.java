@@ -10,11 +10,11 @@ import java.util.function.Supplier;
 
 /**
  * <p>
- *     CurseEffect is a server-side object which attaches itself to a target player and ticks. Not to be confused
- *     with {@link Rite}.
+ * CurseEffect is a server-side object which attaches itself to a target player and ticks. Not to be confused
+ * with {@link Rite}.
  * </p>
  * <p>
- *     <b>IMPORTANT:</b> CurseEffects must be registered via {@link CurseManager#register(Type)} to work.
+ * <b>IMPORTANT:</b> CurseEffects must be registered via {@link CurseManager#register(Type)} to work.
  * </p>
  */
 public interface Curse {
@@ -27,31 +27,34 @@ public interface Curse {
      * Called when this curse's target logs on, or when they are cloned (e.g. by respawning). Use this for updating
      * data attachments, attribute modifiers, etc. Will not be called if the curse has been marked for removal.
      *
-     * @param target {@link ServerPlayer} this curse is targeting.
+     * @param target   {@link ServerPlayer} this curse is targeting.
      * @param strength Level of this curse.
-     * @param age Age (in ticks) of this curse, only increments when the target is online.
+     * @param age      Age (in ticks) of this curse, only increments when the target is online.
      */
-    default void onInitialise(ServerPlayer target, int strength, long age) {}
+    default void onInitialise(ServerPlayer target, int strength, long age) {
+    }
 
     /**
      * Called when this curse is removed from its target, either immediately or when the target next joins the server.
      * Use this for updating data attachments, attribute modifiers, etc.
      *
-     * @param target {@link ServerPlayer} this curse is targeting.
+     * @param target   {@link ServerPlayer} this curse is targeting.
      * @param strength Level of this curse.
-     * @param age Age (in ticks) of this curse, only increments when the target is online.
+     * @param age      Age (in ticks) of this curse, only increments when the target is online.
      */
-    default void onRemove(ServerPlayer target, int strength, long age) {}
+    default void onRemove(ServerPlayer target, int strength, long age) {
+    }
 
     /**
      * Called once per tick where this curse's target player is online. Will not be called if the curse has been marked
      * for removal.
      *
-     * @param target {@link ServerPlayer} this curse is targeting.
+     * @param target   {@link ServerPlayer} this curse is targeting.
      * @param strength Level of this curse.
-     * @param age Age (in ticks) of this curse, only increments when the target is online.
+     * @param age      Age (in ticks) of this curse, only increments when the target is online.
      */
-    default void tick(ServerPlayer target, int strength, long age) {}
+    default void tick(ServerPlayer target, int strength, long age) {
+    }
 
     /**
      * @return The maximum level this curse is allowed to be. The default will be raised when more methods of increasing

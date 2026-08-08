@@ -64,9 +64,10 @@ public class KettleRecipe implements Recipe<ListInput> {
     }
 
     public boolean itemsMatch(ListInput input) {
-        for(int i = 0; i < inputs.size() && i < input.size(); i++) {
-            if(!ItemUtils.isSameItemPartial(inputs.get(i), input.getItem(i)))
+        for (int i = 0; i < inputs.size() && i < input.size(); i++) {
+            if (!ItemUtils.isSameItemPartial(inputs.get(i), input.getItem(i))) {
                 return false;
+            }
         }
         return true;
     }

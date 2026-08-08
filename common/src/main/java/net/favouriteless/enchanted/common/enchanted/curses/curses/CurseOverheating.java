@@ -23,13 +23,15 @@ public class CurseOverheating extends AbstractRandomCurse {
     @Override
     protected void execute(ServerPlayer target, int strength, long age) {
         ServerLevel level = target.serverLevel();
-        if(level.dimension() != Level.NETHER && !level.getBiome(target.blockPosition()).is(Biomes.OVERHEATING_BIOMES))
+        if (level.dimension() != Level.NETHER && !level.getBiome(target.blockPosition()).is(Biomes.OVERHEATING_BIOMES)) {
             return;
+        }
 
         int duration = 4;
-        for(int i = 0; i < strength; i++) {
-            if(Math.random() < 0.75D)
+        for (int i = 0; i < strength; i++) {
+            if (Math.random() < 0.75D) {
                 duration += 4;
+            }
         }
         target.setRemainingFireTicks(duration * 20);
     }

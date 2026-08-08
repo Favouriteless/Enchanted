@@ -19,33 +19,36 @@ import java.util.function.Consumer;
 
 public class EarmuffsItem extends ArmorItem implements GeoItem {
 
-	private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
 
-	public EarmuffsItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Properties properties) {
-		super(material, type, properties);
-	}
+    public EarmuffsItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Properties properties) {
+        super(material, type, properties);
+    }
 
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return animationCache;
-	}
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
 
-	@Override
-	public void registerControllers(ControllerRegistrar controllers) {}
+    @Override
+    public void registerControllers(ControllerRegistrar controllers) {
+    }
 
-	@Override
-	public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
-		consumer.accept(new GeoRenderProvider() {
-			private GeoArmorRenderer<?> renderer;
+    @Override
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
+            private GeoArmorRenderer<?> renderer;
 
-			@Override
-			public <T extends LivingEntity> HumanoidModel<?> getGeoArmorRenderer(T livingEntity, ItemStack itemStack,
-																				 EquipmentSlot equipmentSlot,
-																				 HumanoidModel<T> original) {
-				if(renderer == null)
-					renderer = new DefaultedGeoArmorRenderer("earmuffs");
+            @Override
+            public <T extends LivingEntity> HumanoidModel<?> getGeoArmorRenderer(T livingEntity, ItemStack itemStack,
+                                                                                 EquipmentSlot equipmentSlot,
+                                                                                 HumanoidModel<T> original) {
+                if (renderer == null) {
+                    renderer = new DefaultedGeoArmorRenderer("earmuffs");
+                }
 
-				return renderer;
-			}
-		});	}
+                return renderer;
+            }
+        });
+    }
 }

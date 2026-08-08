@@ -52,7 +52,7 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         // INFO: Interactions involving fluids are handled by the respective loader APIs; transfer on fabric & caps on neoforge
-        if(EServices.FLUID.playerHoldingFluidContainer(player, hand)) {
+        if (EServices.FLUID.playerHoldingFluidContainer(player, hand)) {
             EServices.FLUID.tryItemInteraction(stack, state, level, pos, player, hand, hitResult);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -62,28 +62,31 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-         if(level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
-             if(level.isClientSide)
-                 return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        if (level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
+            if (level.isClientSide) {
+                return kettle.isComplete() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            }
 
-             ItemStack result = kettle.takeItem(false);
-             if(result.isEmpty())
-                 return InteractionResult.PASS;
+            ItemStack result = kettle.takeItem(false);
+            if (result.isEmpty()) {
+                return InteractionResult.PASS;
+            }
 
-             ItemUtils.giveOrDrop(player, result, EquipmentSlot.MAINHAND);
-             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
-             return InteractionResult.CONSUME;
-         }
+            ItemUtils.giveOrDrop(player, result, EquipmentSlot.MAINHAND);
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+            return InteractionResult.CONSUME;
+        }
         return InteractionResult.PASS;
     }
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if(level.isClientSide)
+        if (level.isClientSide) {
             return;
+        }
 
-        if(entity instanceof ItemEntity itemEntity && level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
-            if(kettle.addItem(itemEntity.getItem())) {
+        if (entity instanceof ItemEntity itemEntity && level.getBlockEntity(pos) instanceof KettleBlockEntity kettle) {
+            if (kettle.addItem(itemEntity.getItem())) {
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 itemEntity.discard();
             }
@@ -93,8 +96,9 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     public BlockState getKettleState(Level level, BlockPos pos, Direction facing) {
         BlockPos below = pos.below();
 
-        if(level.getBlockState(below).isFaceSturdy(level, below, Direction.UP, SupportType.CENTER))
+        if (level.getBlockState(below).isFaceSturdy(level, below, Direction.UP, SupportType.CENTER)) {
             return withValues(Type.GROUND, facing);
+        }
 
         Direction left = facing.getCounterClockWise();
         Direction right = facing.getClockWise();
@@ -103,11 +107,13 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
         BlockState leftState = level.getBlockState(leftPos);
         BlockState rightState = level.getBlockState(rightPos);
 
-        if(leftState.getBlock() instanceof WallBlock && rightState.getBlock() instanceof WallBlock)
+        if (leftState.getBlock() instanceof WallBlock && rightState.getBlock() instanceof WallBlock) {
             return withValues(Type.HANGING_BEAM, facing);
+        }
 
-        if(leftState.isFaceSturdy(level, leftPos, right) && rightState.isFaceSturdy(level, rightPos, left))
+        if (leftState.isFaceSturdy(level, leftPos, right) && rightState.isFaceSturdy(level, rightPos, left)) {
             return withValues(Type.HANGING_BEAM, facing);
+        }
 
         Direction back = facing.getOpposite();
         BlockPos frontPos = pos.relative(facing);
@@ -115,17 +121,20 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
         BlockState frontState = level.getBlockState(frontPos);
         BlockState backState = level.getBlockState(backPos);
 
-        if(frontState.getBlock() instanceof WallBlock && backState.getBlock() instanceof WallBlock)
+        if (frontState.getBlock() instanceof WallBlock && backState.getBlock() instanceof WallBlock) {
             return withValues(Type.HANGING_BEAM, right);
+        }
 
-        if(frontState.isFaceSturdy(level, frontPos, back) && backState.isFaceSturdy(level, backPos, facing))
+        if (frontState.isFaceSturdy(level, frontPos, back) && backState.isFaceSturdy(level, backPos, facing)) {
             return withValues(Type.HANGING_BEAM, right);
+        }
 
 
         BlockPos above = pos.above();
 
-        if(level.getBlockState(above).isFaceSturdy(level, above, Direction.DOWN, SupportType.RIGID))
+        if (level.getBlockState(above).isFaceSturdy(level, above, Direction.DOWN, SupportType.RIGID)) {
             return withValues(Type.HANGING, facing);
+        }
 
         return withValues(Type.GROUND, facing);
     }
@@ -158,8 +167,9 @@ public class KettleBlock extends EBaseEntityBlock<KettleBlock> {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         BlockState newState = getKettleState(level, pos, state.getValue(FACING));
-        if(state != newState)
+        if (state != newState) {
             level.setBlock(pos, newState, 2);
+        }
     }
 
     @Nullable

@@ -10,40 +10,48 @@ import net.minecraft.world.phys.Vec3;
 
 public class ProtectionRiteObserver extends StateObserver {
 
-	private final BarrierBlock block;
-	private final int radius;
+    private final BarrierBlock block;
+    private final int radius;
 
-	public ProtectionRiteObserver(Level level, BlockPos pos, int radiusX, int radiusY, int radiusZ, BarrierBlock block, int radius) {
-		super(level, pos, radiusX, radiusY, radiusZ);
-		this.block = block;
-		this.radius = radius;
-	}
+    public ProtectionRiteObserver(Level level, BlockPos pos, int radiusX, int radiusY, int radiusZ, BarrierBlock block, int radius) {
+        super(level, pos, radiusX, radiusY, radiusZ);
+        this.block = block;
+        this.radius = radius;
+    }
 
-	@Override
-	protected void handleChanges() {
-		if(!getLevel().isClientSide) {
-			for(StateChange change : getChangeSet().getChanges()) { // For all changes
+    @Override
+    protected void handleChanges() {
+        if (!getLevel().isClientSide) {
+            for (StateChange change : getChangeSet().getChanges()) { // For all changes
 
-				BlockPos pos = change.pos();
-				Vec3 toPos = getPos().getCenter().vectorTo(pos.getCenter());
-				Vec3 clamped = toPos.scale((double)radius / Math.round(toPos.length())).add(getPos().getCenter());
+                BlockPos pos = change.pos();
+                Vec3 toPos = getPos().getCenter().vectorTo(pos.getCenter());
+                Vec3 clamped = toPos.scale((double) radius / Math.round(toPos.length())).add(getPos().getCenter());
 
-				if(!pos.equals(BlockPos.containing(clamped)))
-					continue;
+                if (!pos.equals(BlockPos.containing(clamped))) {
+                    continue;
+                }
 
-				if(change.newState().isAir())
-					getLevel().setBlockAndUpdate(change.pos(), block.defaultBlockState());
-				else if(!change.newState().getFluidState().isEmpty())
-					getLevel().setBlockAndUpdate(change.pos(), block.defaultBlockState().setValue(BarrierBlock.WATERLOGGED,
-							change.newState().getFluidState().getType() == Fluids.WATER));
-			}
-		}
-	}
+                if (change.newState().isAir()) {
+                    getLevel().setBlockAndUpdate(change.pos(), block.defaultBlockState());
+                } else if (!change.newState().getFluidState().isEmpty()) {
+                    getLevel().setBlockAndUpdate(
+                            change.pos(), block.defaultBlockState().setValue(
+                                    BarrierBlock.WATERLOGGED,
+                                    change.newState().getFluidState().getType() == Fluids.WATER
+                            )
+                    );
+                }
+            }
+        }
+    }
 
-	@Override
-	public void onInit() {}
+    @Override
+    public void onInit() {
+    }
 
-	@Override
-	public void onRemove() {}
+    @Override
+    public void onRemove() {
+    }
 
 }

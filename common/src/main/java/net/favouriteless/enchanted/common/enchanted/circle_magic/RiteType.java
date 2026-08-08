@@ -73,44 +73,52 @@ public class RiteType implements Comparable<RiteType> {
         this.factory = factory;
 
         shapes.keySet().stream().map(Holder::value).forEach(shape -> {
-            if(shape.getRadius() > radius)
+            if (shape.getRadius() > radius) {
                 radius = shape.getRadius();
+            }
             interiorPoints.addAll(shape.getInteriorPoints());
         });
     }
 
 
     public boolean matches(Level level, BlockPos pos, List<Entity> inputs) {
-        if(!dimensions.isEmpty() && !dimensions.contains(level.dimension()))
+        if (!dimensions.isEmpty() && !dimensions.contains(level.dimension())) {
             return false;
-        if(!weather.check(level))
+        }
+        if (!weather.check(level)) {
             return false;
+        }
 
         long time = level.getDayTime() % Level.TICKS_PER_DAY;
-        if(time < timeRange.getFirst())
+        if (time < timeRange.getFirst()) {
             return false;
-        if(time > timeRange.getSecond())
+        }
+        if (time > timeRange.getSecond()) {
             return false;
+        }
 
-        for(Entry<Holder<CircleMagicShape>, Block> entry : shapes.entrySet()) {
-            if(!entry.getKey().value().matches(level, pos, entry.getValue()))
+        for (Entry<Holder<CircleMagicShape>, Block> entry : shapes.entrySet()) {
+            if (!entry.getKey().value().matches(level, pos, entry.getValue())) {
                 return false;
+            }
         }
 
         List<EntityType<?>> entities = getEntities();
         inputs.forEach(entity -> entities.remove(entity.getType()));
-        if(!entities.isEmpty())
+        if (!entities.isEmpty()) {
             return false;
+        }
 
         List<ItemStack> items = getItems();
-        for(Entity input : inputs) {
-            if(input instanceof ItemEntity itemEntity) {
+        for (Entity input : inputs) {
+            if (input instanceof ItemEntity itemEntity) {
                 ItemStack item = itemEntity.getItem();
-                if(item.isEmpty())
+                if (item.isEmpty()) {
                     break;
+                }
 
-                for(ItemStack required : items) {
-                    if(ItemUtils.isSameItemPartial(item, required)) {
+                for (ItemStack required : items) {
+                    if (ItemUtils.isSameItemPartial(item, required)) {
                         required.shrink(item.getCount());
                     }
                 }
@@ -186,15 +194,18 @@ public class RiteType implements Comparable<RiteType> {
     public static RiteType getFirstMatching(Level level, BlockPos pos) {
         Registry<RiteType> reg = level.registryAccess().registryOrThrow(EData.RITE_TYPES_REGISTRY);
 
-        List<Entity> entities = level.getEntities(null, new AABB(
-                pos.getX()-3, pos.getY(), pos.getZ()-3,
-                pos.getX()+4, pos.getY()+1, pos.getZ()+4
-                ));
+        List<Entity> entities = level.getEntities(
+                null, new AABB(
+                        pos.getX() - 3, pos.getY(), pos.getZ() - 3,
+                        pos.getX() + 4, pos.getY() + 1, pos.getZ() + 4
+                )
+        );
 
-        for(Iterator<RiteType> it = reg.stream().sorted().iterator(); it.hasNext(); ) {
+        for (Iterator<RiteType> it = reg.stream().sorted().iterator(); it.hasNext(); ) {
             RiteType type = it.next();
-            if(type.matches(level, pos, entities))
+            if (type.matches(level, pos, entities)) {
                 return type;
+            }
         }
 
         return null;
@@ -202,21 +213,25 @@ public class RiteType implements Comparable<RiteType> {
 
     @Override
     public int compareTo(@NotNull RiteType o) {
-        if(shapes.size() == o.shapes.size() && items.size() == o.items.size() && entities.size() == o.entities.size())
+        if (shapes.size() == o.shapes.size() && items.size() == o.items.size() && entities.size() == o.entities.size()) {
             return 0;
+        }
 
-        if(shapes.size() > o.shapes.size())
+        if (shapes.size() > o.shapes.size()) {
             return -1;
-        else if(shapes.size() < o.shapes.size())
+        } else if (shapes.size() < o.shapes.size()) {
             return 1;
+        }
 
-        if(items.size() > o.items.size())
+        if (items.size() > o.items.size()) {
             return -1;
-        else if(items.size() < o.items.size())
+        } else if (items.size() < o.items.size()) {
             return 1;
+        }
 
-        if(entities.size() > o.entities.size())
+        if (entities.size() > o.entities.size()) {
             return -1;
+        }
         return 1;
     }
 

@@ -43,9 +43,10 @@ public class AltarPowerData {
      */
     public void addUpgrade(Level level, Block block) {
         AltarUpgrade upgrade = AltarUpgrade.get(level, block);
-        if(upgrade == null)
+        if (upgrade == null) {
             return;
-        upgrades.computeIfAbsent(upgrade.type(), k -> new Object2IntOpenHashMap<>()).compute(upgrade, (k, v) -> v != null ? v+1 : 1);
+        }
+        upgrades.computeIfAbsent(upgrade.type(), k -> new Object2IntOpenHashMap<>()).compute(upgrade, (k, v) -> v != null ? v + 1 : 1);
         calculateUpgrades();
     }
 
@@ -58,16 +59,18 @@ public class AltarPowerData {
      */
     public void removeUpgrade(Level level, Block block) {
         AltarUpgrade upgrade = AltarUpgrade.get(level, block);
-        if(upgrade == null)
+        if (upgrade == null) {
             return;
+        }
 
         Map<AltarUpgrade, Integer> type = upgrades.get(upgrade.type());
-        if(type != null && type.containsKey(upgrade)) {
+        if (type != null && type.containsKey(upgrade)) {
             int count = type.get(upgrade);
-            if(count <= 1)
+            if (count <= 1) {
                 type.remove(upgrade);
-            else
-                type.put(upgrade, count-1);
+            } else {
+                type.put(upgrade, count - 1);
+            }
         }
         calculateUpgrades();
     }
@@ -102,11 +105,11 @@ public class AltarPowerData {
         blocks.object2IntEntrySet().removeIf(e -> e.getIntValue() == 0 || PowerProvider.get(level, e.getKey()) == null);
         tags.object2IntEntrySet().removeIf(e -> e.getIntValue() == 0 || PowerProvider.get(level, e.getKey()) == null);
 
-        for(Block block : blocks.keySet()) {
+        for (Block block : blocks.keySet()) {
             PowerProvider provider = PowerProvider.get(level, block);
             capacity += Math.min(blocks.getInt(block), provider.limit()) * provider.power();
         }
-        for(TagKey<Block> tag : tags.keySet()) {
+        for (TagKey<Block> tag : tags.keySet()) {
             PowerProvider provider = PowerProvider.get(level, tag);
             capacity += Math.min(tags.getInt(tag), provider.limit()) * provider.power();
         }
@@ -116,15 +119,17 @@ public class AltarPowerData {
         powerMultiplier = 1;
         rechargeMultiplier = 1;
 
-        for(ResourceLocation type : upgrades.keySet()) {
+        for (ResourceLocation type : upgrades.keySet()) {
             double highestPower = 0.0D;
             double highestRecharge = 0.0D;
 
-            for(AltarUpgrade upgrade : upgrades.get(type).keySet()) {
-                if(upgrade.power() > highestPower)
+            for (AltarUpgrade upgrade : upgrades.get(type).keySet()) {
+                if (upgrade.power() > highestPower) {
                     highestPower = upgrade.power();
-                if(upgrade.recharge() > highestRecharge)
+                }
+                if (upgrade.recharge() > highestRecharge) {
                     highestRecharge = upgrade.recharge();
+                }
             }
 
             powerMultiplier += highestPower;
@@ -135,16 +140,16 @@ public class AltarPowerData {
     @SuppressWarnings("deprecation")
     private void tryChangeBlock(Level level, Block block, ApplyFunction apply) {
         PowerProvider provider = PowerProvider.get(level, block);
-        if(provider != null) {
+        if (provider != null) {
             apply.apply(blocks, block, provider);
             return;
         }
 
         block.builtInRegistryHolder().tags()
-                .map(tag -> Pair.of(tag, PowerProvider.get(level, tag)))
-                .filter(pair -> pair.getSecond() != null)
-                .findFirst()
-                .ifPresent(pair -> apply.apply(tags, pair.getFirst(), pair.getSecond()));
+             .map(tag -> Pair.of(tag, PowerProvider.get(level, tag)))
+             .filter(pair -> pair.getSecond() != null)
+             .findFirst()
+             .ifPresent(pair -> apply.apply(tags, pair.getFirst(), pair.getSecond()));
     }
 
     private <T> void applyAdd(Object2IntMap<T> map, T key, PowerProvider provider) {
@@ -154,8 +159,9 @@ public class AltarPowerData {
 
     private <T> void applyRemove(Object2IntMap<T> map, T key, PowerProvider provider) {
         int count = map.compute(key, (k, v) -> v != null ? v - 1 : 0);
-        if(count < 1)
+        if (count < 1) {
             map.removeInt(key);
+        }
         int out = count < provider.limit() ? provider.power() : 0;
         capacity -= out;
     }
@@ -172,11 +178,13 @@ public class AltarPowerData {
 
         Registry<AltarUpgrade> upgradeRegistry = level.registryAccess().registryOrThrow(EData.ALTAR_UPGRADE_REGISTRY);
         upgrades.values().forEach(m -> m.forEach((upg, val) -> {
-            if(val == 0)
+            if (val == 0) {
                 return;
+            }
             ResourceLocation id = upgradeRegistry.getKey(upg);
-            if(id != null)
+            if (id != null) {
                 upgradeTag.putInt(id.toString(), val);
+            }
         }));
 
 
@@ -193,19 +201,23 @@ public class AltarPowerData {
         CompoundTag blockTag = tag.getCompound("blocks");
         CompoundTag tagTag = tag.getCompound("tags");
 
-        for(String name : blockTag.getAllKeys()) {
+        for (String name : blockTag.getAllKeys()) {
             Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(name));
-            if(block != Blocks.AIR) // If AIR we'll assume the block doesn't exist.
+            if (block != Blocks.AIR) // If AIR we'll assume the block doesn't exist.
+            {
                 blocks.put(block, blockTag.getInt(name));
+            }
         }
-        for(String name : tagTag.getAllKeys())
+        for (String name : tagTag.getAllKeys()) {
             tags.put(TagKey.create(Registries.BLOCK, ResourceLocation.parse(name)), tagTag.getInt(name));
+        }
 
         RegistryLookup<AltarUpgrade> lookup = registries.lookupOrThrow(EData.ALTAR_UPGRADE_REGISTRY);
-        for(String name : upgradeTag.getAllKeys()) {
+        for (String name : upgradeTag.getAllKeys()) {
             Optional<Reference<AltarUpgrade>> ref = lookup.get(ResourceKey.create(EData.ALTAR_UPGRADE_REGISTRY, ResourceLocation.parse(name)));
-            if(ref.isEmpty())
+            if (ref.isEmpty()) {
                 continue;
+            }
 
             AltarUpgrade upg = ref.get().value();
             upgrades.computeIfAbsent(upg.type(), k -> new Object2IntOpenHashMap<>()).put(upg, upgradeTag.getInt(name));
